@@ -1,0 +1,66 @@
+*{
+  box-sizing: border-box;
+}
+*:focus{
+  outline: none;
+}
+body{
+  margin: 0;
+  padding: 0;
+  line-height:1;
+  background-color: #f3f3f3;
+}
+p,h1,h2,h3,h4,h5,h6,dl, dt, dd, ol, ul, li,form,fieldset,input,textarea,p,blockquote,th,td{
+  margin: 0;
+  padding: 0;
+}
+li{
+  list-style-type: none;
+}
+table {
+    border-collapse: collapse;
+    border-spacing: 0;
+}
+a{
+  text-decoration: none;
+  color: #333;
+}
+h1,h2,h3,h4,h5,h6 {
+  font-weight: normal;
+  font-size: 100%;
+}
+// mint-ui reset 样式覆盖
+.mint-header{
+  background-color: #343434;
+  height: px2rem(88);
+}
+// 蓝色按钮
+.mint-button--primary{
+  background-color: #1d95d1
+}
+.mint-cell-wrapper{
+  font-size: 14px;
+}
+.mint-button{
+  font-size: 14px;
+}
+.mint-swipe-indicator{
+  background-color: #fff;
+  opacity: 1;
+  &.is-active{
+    opacity: .3
+  }
+}
+.mint-popup-bottom{
+  width: 100%;
+  text-align: center;
+}
+.picker-slot{
+  font-size: 14px;
+}
+.mint-indexsection-index{
+  height: 22px;
+  line-height: 22px;
+  background-color: #dadada;
+  padding: 0 10px;
+}
