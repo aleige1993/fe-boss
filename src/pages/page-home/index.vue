@@ -1,87 +1,92 @@
 <template>
-  <div id="">
-    <Row :gutter="16">
-      <Col span="16">
-        <Card>
-         <p slot="title" class="card-title msg">今日新增进件数</p>
-         <a href="#" slot="extra">更多 <Icon type="ios-arrow-right"></Icon></a>
-         <Row>
-           <Col span="6" class="text-center">
-              <circle-progress :options="{barColor: '#3abb9d', initValue: 80}" ref="firstCircle"></circle-progress>
-              <div class="chart-number">
-                <p>微信: 400</p>
-                <p>占比:    40%</p>
-                <p>较上月:   10.8%</p>
-              </div>
-           </Col>
-           <Col span="6" class="text-center">
-             <div class="" id="secondCircle">
-               <circle-progress :options="{barColor: '#f6ba4a', initValue: 20}"></circle-progress>
+  <div id="page-home">
+    <top-bar></top-bar>
+    <top-nav></top-nav>
+    <div class="wraper">
+      <Row :gutter="16">
+        <Col span="16">
+          <Card>
+           <p slot="title" class="card-title msg">今日新增进件数</p>
+           <a href="#" slot="extra">更多 <Icon type="ios-arrow-right"></Icon></a>
+           <Row>
+             <Col span="6" class="text-center">
+                <circle-progress :options="{barColor: '#3abb9d', initValue: 80}" ref="firstCircle"></circle-progress>
+                <div class="chart-number">
+                  <p>微信: 400</p>
+                  <p>占比:    40%</p>
+                  <p>较上月:   10.8%</p>
+                </div>
+             </Col>
+             <Col span="6" class="text-center">
+               <div class="" id="secondCircle">
+                 <circle-progress :options="{barColor: '#f6ba4a', initValue: 20}"></circle-progress>
+                 <div class="chart-number">
+                   <p>微信: 400</p>
+                   <p>占比:    40%</p>
+                   <p>较上月:   10.8%</p>
+                 </div>
+               </div>
+             </Col>
+             <Col span="6" class="text-center">
+               <circle-progress :options="{barColor: '#e9573e', initValue: 50}"></circle-progress>
                <div class="chart-number">
                  <p>微信: 400</p>
                  <p>占比:    40%</p>
                  <p>较上月:   10.8%</p>
                </div>
-             </div>
-           </Col>
-           <Col span="6" class="text-center">
-             <circle-progress :options="{barColor: '#e9573e', initValue: 50}"></circle-progress>
-             <div class="chart-number">
-               <p>微信: 400</p>
-               <p>占比:    40%</p>
-               <p>较上月:   10.8%</p>
-             </div>
-           </Col>
-           <Col span="6" class="text-center">
-             <circle-progress :options="{barColor: '#eee', initValue: 90}"></circle-progress>
-             <div class="chart-number">
-               <p>微信: 400</p>
-               <p>占比:    40%</p>
-               <p>较上月:   10.8%</p>
-             </div>
-           </Col>
-         </Row>
-       </Card>
-      </Col>
-      <Col span="8">
-        <Card>
-         <p slot="title" class="card-title alert">我的消息</p>
-         <a href="#" slot="extra">更多 <Icon type="ios-arrow-right"></Icon></a>
-         <div class="msg-list">
+             </Col>
+             <Col span="6" class="text-center">
+               <circle-progress :options="{barColor: '#eee', initValue: 90}"></circle-progress>
+               <div class="chart-number">
+                 <p>微信: 400</p>
+                 <p>占比:    40%</p>
+                 <p>较上月:   10.8%</p>
+               </div>
+             </Col>
+           </Row>
+         </Card>
+        </Col>
+        <Col span="8">
+          <Card>
+           <p slot="title" class="card-title alert">我的消息</p>
+           <a href="#" slot="extra">更多 <Icon type="ios-arrow-right"></Icon></a>
+           <div class="msg-list">
+             <ul>
+               <li><a href="#">您有10笔放款前提落实</a></li>
+               <li><a href="#">您有10笔放款前提落实</a></li>
+               <li><a href="#">您有10笔放款前提落实</a></li>
+               <li><a href="#">您有10笔放款前提落实</a></li>
+               <li><a href="#">您有10笔放款前提落实</a></li>
+               <li><a href="#">您有10笔放款前提落实</a></li>
+             </ul>
+           </div>
+         </Card>
+        </Col>
+      </Row>
+      <Row :gutter="16">
+        <Col span="8">
+          <Card>
+           <p slot="title" class="card-title list">今日任务</p>
+           <span slot="extra">今日还款成功数：120</span>
+           <vue2-highcharts :options="todayDutyChartsOptions" ref="paybackChart"></vue2-highcharts>
+         </Card>
+        </Col>
+        <Col span="16">
+          <Card>
+           <p slot="title" class="card-title clock">我的代办</p>
+           <a href="#" slot="extra">更多 <Icon type="ios-arrow-right"></Icon></a>
            <ul>
-             <li><a href="#">您有10笔放款前提落实</a></li>
-             <li><a href="#">您有10笔放款前提落实</a></li>
-             <li><a href="#">您有10笔放款前提落实</a></li>
-             <li><a href="#">您有10笔放款前提落实</a></li>
-             <li><a href="#">您有10笔放款前提落实</a></li>
-             <li><a href="#">您有10笔放款前提落实</a></li>
+
            </ul>
-         </div>
-       </Card>
-      </Col>
-    </Row>
-    <Row :gutter="16">
-      <Col span="8">
-        <Card>
-         <p slot="title" class="card-title list">今日任务</p>
-         <span slot="extra">今日还款成功数：120</span>
-         <vue2-highcharts :options="todayDutyChartsOptions" ref="paybackChart"></vue2-highcharts>
-       </Card>
-      </Col>
-      <Col span="16">
-        <Card>
-         <p slot="title" class="card-title clock">我的代办</p>
-         <a href="#" slot="extra">更多 <Icon type="ios-arrow-right"></Icon></a>
-         <ul>
-
-         </ul>
-       </Card>
-      </Col>
-    </Row>
-
+         </Card>
+        </Col>
+      </Row>
+    </div>
   </div>
 </template>
 <script>
+import Topbar from '@/pages/common/top-bar';
+import Topnav from '@/pages/common/top-nav';
 import VueHighcharts from 'vue2-highcharts';
 import CircleProgress from '@/components/circle-progress';
 import PTModal from '@/components/bs-modal';
@@ -100,7 +105,9 @@ export default {
   components: {
     'vue2-highcharts': VueHighcharts,
     CircleProgress,
-    'pt-modal': PTModal
+    'pt-modal': PTModal,
+    'top-bar': Topbar,
+    'top-nav': Topnav
   },
   mounted() {
     document.body.style.backgroundColor = '#f3f3f3';

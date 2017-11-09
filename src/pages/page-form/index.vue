@@ -14,7 +14,7 @@
       </div>
       <Row>
         <Col span="24">
-          <Form label-position="right" :rules="ruleValidate" :label-width="120">
+          <Form label-position="right" :label-width="120">
             <bs-form-block :title="'客户信息'">
               <Row v-for="item in ary1">
                 <Col span="6">
@@ -55,7 +55,7 @@
   </div>
 </template>
 <script>
-import LeftNav from '@/pages/left-nav';
+import LeftNav from '@/pages/common/left-nav';
 export default {
   name: '',
   data() {

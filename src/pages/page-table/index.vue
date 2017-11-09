@@ -63,7 +63,7 @@
   </div>
 </template>
 <script>
-import LeftNav from '@/pages/left-nav';
+import LeftNav from '@/pages/common/left-nav';
 import PTModal from '@/components/bs-modal';
 export default {
   name: '',

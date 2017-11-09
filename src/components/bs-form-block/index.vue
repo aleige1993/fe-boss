@@ -31,14 +31,14 @@ export default {
   font-weight: bold;
   height: 36px;
   line-height: 36px;
-  background-color: #eee;
+  background-color: #ecf4f8;
   padding: 0 10px;
-  border: 1px solid #ccc;
-  border-left: 6px solid #6D7781;
+  border: 1px solid #dddee1;
+  border-left: 4px solid #2196f3;
   // margin-bottom: 20px;
 }
 .block-body{
-  border: 1px solid #ccc;
+  border: 1px solid #dddee1;
   border-top: 0;
   padding: 20px 0;
 }

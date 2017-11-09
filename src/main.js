@@ -13,7 +13,14 @@ import Http from './utils/HttpUtils';
 Vue.prototype.$http = new Http();
 // 表单区域块组件
 import FormBlock from '@/components/bs-form-block';
-Vue.component('bs-form-block', FormBlock)
+Vue.component('bs-form-block', FormBlock);
+
+// 页面title修改
+Vue.directive('title', {
+  inserted(el, binding) {
+    document.title = binding.value
+  }
+})
 // global filter
 import filter from './filter';
 /* eslint-disable no-new */

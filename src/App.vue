@@ -1,21 +1,14 @@
 <template>
   <div id="app">
-    <top-bar></top-bar>
-    <top-nav></top-nav>
-    <div class="wraper">
-      <router-view/>
-    </div>
+    <router-view/>
   </div>
 </template>
 
 <script>
-import Topbar from './pages/top-bar';
-import Topnav from './pages/top-nav';
 export default {
   name: 'app',
   components: {
-    'top-bar': Topbar,
-    'top-nav': Topnav
+
   }
 }
 </script>

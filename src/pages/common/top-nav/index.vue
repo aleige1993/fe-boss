@@ -3,12 +3,15 @@
     <div class="left-nav">
       <ul>
         <li><router-link :to="{ name: 'home' }">首页</router-link></li>
-        <li><a href="#">进件管理</a></li>
-        <li><a href="#">风控管理</a></li>
+        <li><a href="#">贷款业务</a></li>
         <li><a href="#">合同管理</a></li>
-        <li><a href="#">贷后管理</a></li>
+        <li><a href="#">放款管理</a></li>
         <li><a href="#">财务管理</a></li>
-        <li><a href="#">运营管理</a></li>
+        <li><a href="#">贷后管理</a></li>
+        <li><a href="#">产品管理</a></li>
+        <li><a href="#">资方管理</a></li>
+        <li><a href="#">商户管理</a></li>
+        <li><a href="#">客户管理</a></li>
       </ul>
     </div>
     <div class="right-nav">

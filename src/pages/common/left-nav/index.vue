@@ -1,26 +1,23 @@
 <template>
   <div id="left-nav">
-    <h2>我的代办</h2>
+    <h2>贷款业务</h2>
     <nav>
       <ul>
-        <li><a href="#/form"><Icon v-bind:class="{active: isOpen}" type="ios-arrow-right"></Icon> 我的代办</a></li>
+        <!-- <li><a href="#/form"><Icon v-bind:class="{active: isOpen}" type="ios-arrow-right"></Icon> 贷款业务</a></li> -->
         <li>
-          <bs-collepse title="有二级导航">
+          <bs-collepse title="业务受理">
             <ul class="second-nav">
-              <li><a href="#">我的代办</a></li>
-              <li><a href="#">我的代办</a></li>
-              <li><a href="#">我的代办</a></li>
-              <li><a href="#">我的代办</a></li>
+              <li><a href="#">进单登记</a></li>
+              <li><a href="#">进单查询</a></li>
+              <li><a href="#">客户补件</a></li>
             </ul>
           </bs-collepse>
         </li>
         <li>
-          <bs-collepse title="有二级导航">
+          <bs-collepse title="业务审批">
             <ul class="second-nav">
-              <li><a href="#">我的代办</a></li>
-              <li><a href="#">我的代办</a></li>
-              <li><a href="#">我的代办</a></li>
-              <li><a href="#">我的代办</a></li>
+              <li><a href="#">电核初审</a></li>
+              <li><a href="#">有权审批</a></li>
             </ul>
           </bs-collepse>
         </li>
