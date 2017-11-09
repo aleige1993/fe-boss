@@ -18,14 +18,14 @@ class HttpMock {
       };
     });
     Mock.mock('/productList', function() {
-       return Mock.mock({
-         code: 0,
-         'list|20': [{
-           img: '@image(160X160)',
-           name:'@name',
-           price: '@integer(100, 10000)'
-         }]
-       })
+      return Mock.mock({
+        code: 0,
+        'list|20': [{
+          img: '@image(160X160)',
+          name: '@name',
+          price: '@integer(100, 10000)'
+        }]
+      });
     });
   }
 }

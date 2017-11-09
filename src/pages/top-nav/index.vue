@@ -2,7 +2,7 @@
   <div id="common-topnav">
     <div class="left-nav">
       <ul>
-        <li><a href="#">首页</a></li>
+        <li><router-link :to="{ name: 'home' }">首页</router-link></li>
         <li><a href="#">进件管理</a></li>
         <li><a href="#">风控管理</a></li>
         <li><a href="#">合同管理</a></li>
@@ -19,10 +19,10 @@
 <script>
 export default {
   name: '',
-  data: () => ({
-
-  })
-}
+  data() {
+    return {};
+  }
+};
 </script>
 <style lang="scss" scoped>
 #common-topnav{
@@ -30,6 +30,10 @@ export default {
   box-shadow: 0 4px 4px #dddde0;
   background-color: #fff;
   padding: 10px 50px 0;
+  position: fixed;
+  width: 100%;
+  top: 40px;
+  z-index: 99;
   .left-nav{
     ul li{
       float: left;
@@ -43,13 +47,14 @@ export default {
         min-width: 97px;
         &:hover{
           background-color: $color-primary;
+          text-decoration: none;
           color: #fff;
         }
       }
     }
   }
   .right-nav{
-    
+
   }
 }
 </style>

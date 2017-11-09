@@ -22,7 +22,7 @@ module.exports = {
     'quotes': [2, 'single'], // js必须使用单引号
     'indent': [2, 2], // 两个空格的缩进
     'quotes': [2, 'single'], // js必须使用单引号
-    'linebreak-style': [2, 'unix'], // 换行风格 unix/windows
+    'linebreak-style': [2, 'windows'], // 换行风格 unix/windows
     'semi': [2, 'always'], // 语句强制分号结尾
     'no-console': [1], // 不允许console语句
     'no-unused-vars': [1], // 声明了变量但是没有使用检测
@@ -70,11 +70,16 @@ module.exports = {
     'block-spacing': [2, 'always'],
     'space-before-function-paren': [2, 'never'], //函数定义时括号前面要不要有空格
     'space-in-parens': [2, 'never'], //小括号里面要不要有空格
-    'spaced-comment': [1, 'always', { 'exceptions': ['-', '*', '+'] }] // 注释风格要不要有空格什么的
+    'spaced-comment': [1, 'always', { 'exceptions': ['-', '*', '+'] }], // 注释风格要不要有空格什么的
     'arrow-parens': 0,
     // allow async-await
     'generator-star-spacing': 0,
     // allow debugger during development
     'no-debugger': process.env.NODE_ENV === 'production' ? 2 : 0,
+  },
+  globals: {
+    $: false,
+    jquery: false,
+    radialIndicator: false
   }
 }

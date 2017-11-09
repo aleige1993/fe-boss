@@ -1,3 +1,4 @@
+@import "./var.scss";
 *{
   box-sizing: border-box;
 }
@@ -8,7 +9,7 @@ body{
   margin: 0;
   padding: 0;
   line-height:1;
-  background-color: #f3f3f3;
+  background-color: #fff;
 }
 p,h1,h2,h3,h4,h5,h6,dl, dt, dd, ol, ul, li,form,fieldset,input,textarea,p,blockquote,th,td{
   margin: 0;
@@ -24,43 +25,39 @@ table {
 a{
   text-decoration: none;
   color: #333;
+  &:hover{
+    color: $color-primary;
+    text-decoration: underline;
+  }
 }
 h1,h2,h3,h4,h5,h6 {
   font-weight: normal;
   font-size: 100%;
 }
-// mint-ui reset 样式覆盖
-.mint-header{
-  background-color: #343434;
-  height: px2rem(88);
+// ivew-ui reset 样式覆盖
+.ivu-breadcrumb{
+  padding-bottom: 10px;
+  border-bottom: 1px solid #e9eaec;
 }
-// 蓝色按钮
-.mint-button--primary{
-  background-color: #1d95d1
+.ivu-breadcrumb-item-separator{
+  margin: 0 3px !important
 }
-.mint-cell-wrapper{
-  font-size: 14px;
-}
-.mint-button{
-  font-size: 14px;
-}
-.mint-swipe-indicator{
-  background-color: #fff;
-  opacity: 1;
-  &.is-active{
-    opacity: .3
+.ivu-btn{
+  padding: 4px 8px !important;
+  i{
+    font-size: 12px;
   }
 }
-.mint-popup-bottom{
-  width: 100%;
-  text-align: center;
+.ivu-form{
+  padding-bottom: 27px;
+  &.ivu-form-inline{
+    padding-bottom: 0 !important;
+  }
 }
-.picker-slot{
-  font-size: 14px;
+.ivu-form-item{
+  margin-bottom: 18px !important
 }
-.mint-indexsection-index{
-  height: 22px;
-  line-height: 22px;
-  background-color: #dadada;
-  padding: 0 10px;
+.ivu-form-item:after, .ivu-form-item:before{
+  display: block !important;
+  content: " "
 }

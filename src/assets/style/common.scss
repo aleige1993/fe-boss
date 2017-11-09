@@ -1,12 +1,19 @@
+// 清浮动
+.clearfix:before,.clearfix:after{
+  content: " ";
+  display: table;
+}
+.clearfix:after{
+  clear: both;
+}
+// 浮动
 .pull-left{
   float: left !important;
 }
 .pull-right{
   float: right !important;
 }
-.sc-container{
-  padding: 0 px2rem(30);
-}
+// 字体常用颜色
 .text-danger{
   color: #ff4729 !important;
 }
@@ -16,8 +23,12 @@
 .text-silver{
   color: #999
 }
+// 内容对齐
 .text-center{
   text-align: center;
+}
+.text-right{
+  text-align: right;
 }
 .outer-wraper{
   padding: 0 50px;
@@ -25,6 +36,42 @@
 .my-container{
   padding: 0 15px;
 }
+.right-main{
+  padding-left: 200px;
+}
+.form-top-actions{
+  padding: 10px 0;
+}
+.form-footer-actions{
+  padding: 9px 30px;
+  background-color: #eee;
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  z-index: 5;
+  button{
+    margin-right: 8px;
+  }
+}
+.search-form-container{
+  border-bottom: 1px solid #eee;
+}
+.form-block-title{
+  font-size: 14px;
+  font-weight: bold;
+  height: 30px;
+  line-height: 30px;
+  background-color: #eee;
+  padding: 0 10px;
+  margin-bottom: 20px;
+}
+.page-container{
+  padding: 9px 30px;
+  // background-color: #eee;
+  margin-top: 10px;
+  text-align: right
+}
+// 表单必填项
 .label-required{
   &:before{
     content: "*";
@@ -33,17 +80,26 @@
     margin-right: 3px;
   }
 }
+// 单行文本超出显示省略号
 @mixin single-ellipsis{
   overflow: hidden;
   text-overflow:ellipsis;
   white-space: nowrap;
 }
+// 多行文本超出显示省略号 参数：多少行截取
 @mixin multi-ellipsis($row: 2){
   display: -webkit-box;
   -webkit-box-orient: vertical;
   -webkit-line-clamp: $row;
   overflow: hidden;
 }
+// 从左到右的渐变
+@mixin gradient-bg{
+  background: -moz-linear-gradient(left, #2b90f8, rgba(33, 166, 243, 1));
+  background:         linear-gradient(left, #2b90f8, rgba(33, 166, 243, 1));
+  background: -webkit-gradient(linear, 0 0, right bottom, from(#2b90f8), to(rgba(33, 166, 243, 1)));
+}
+// 外边距
 .mt10{
   margin-top: 10px;
 }

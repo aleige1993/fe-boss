@@ -29,8 +29,5 @@ class Http {
       console.error(err);
     });
   }
-
-
 }
-
 export default Http;

@@ -1,6 +1,6 @@
 <template>
   <div id="common-topbar">
-    <i class="iconfont icon-logo1"></i>
+    <i class="iconfont icon-logo"></i>
     <div class="right-actions">
       <ul>
         <li><a href="#"><img class="top-avatar" src="./img/potrat.png" alt=""/>系统管理员</a></li>
@@ -13,21 +13,23 @@
 <script>
 export default {
   name: '',
-  data: () => ({
-
-  })
-}
+  data() {
+    return {};
+  }
+};
 </script>
 <style lang="scss" scoped>
 #common-topbar{
   height: 40px;
   line-height: 40px;
-  background: -moz-linear-gradient(left, #2b90f8, rgba(33, 166, 243, 1));
-  background:         linear-gradient(left, #2b90f8, rgba(33, 166, 243, 1));
-  background: -webkit-gradient(linear, 0 0, right bottom, from(#2b90f8), to(rgba(33, 166, 243, 1)));
+  @include gradient-bg;
   padding: 0 50px;
+  position: fixed;
+  width: 100%;
+  top: 0;
+  z-index: 99;
   color: #fff;
-  .icon-logo1{
+  .icon-logo{
     font-size: 20px;
   }
   .right-actions{

@@ -37,12 +37,12 @@ export default {
       name: '市场份额',
       data: [
         {
-          name:'代扣还款',
+          name: '代扣还款',
           y: 45.0,
           color: '#f6ba4a'
         },
         {
-          name:'主动还款',
+          name: '主动还款',
           y: 45.0,
           color: '#37bd9c'
         },
@@ -56,70 +56,70 @@ export default {
   },
   circleProgressOptions: {
     chart: {
-       type: 'solidgauge',
-       marginTop: 0,
-       height: 200
-     },
-     credits: {
-       text: 'hcharts.cn',
-       href: 'http://www.hcharts.cn'
-     },
-     title: {
-       text: 'Activity',
-       style: {
+      type: 'solidgauge',
+      marginTop: 0,
+      height: 200
+    },
+    credits: {
+      text: 'hcharts.cn',
+      href: 'http://www.hcharts.cn'
+    },
+    title: {
+      text: 'Activity',
+      style: {
         fontSize: '24px'
-       }
-     },
-     tooltip: {
-       borderWidth: 0,
-       backgroundColor: 'none',
-       shadow: false,
-       style: {
+      }
+    },
+    tooltip: {
+      borderWidth: 0,
+      backgroundColor: 'none',
+      shadow: false,
+      style: {
         fontSize: '16px'
-       },
-       pointFormat: '{series.name}<br><span style="font-size:2em; color: {point.color}; font-weight: bold">{point.y}%</span>',
-       positioner: function (labelWidth, labelHeight) {
-         return {
-           x: 200 - labelWidth / 2,
-           y: 180
-         };
-       }
-     },
-     pane: {
-       startAngle: 0,
-       endAngle: 360,
-       background: [{ // Track for Move
-         outerRadius: '112%',
-         innerRadius: '88%',
-         backgroundColor: '#fff',
-         borderWidth: 0
-       }]
-     },
-     yAxis: {
-       min: 0,
-       max: 100,
-       lineWidth: 0,
-       tickPositions: []
-     },
-     plotOptions: {
-       solidgauge: {
-         borderWidth: '34px',
-         dataLabels: {
-           enabled: false
-         },
-         linecap: 'round',
-         stickyTracking: false
-       }
-     },
-     series: [{
-       name: 'Move',
-       borderColor: '#f00',
-       data: [{
-         color: '#f00',
-         radius: '100%',
-         innerRadius: '100%',
-         y: 80
-       }]
-     }]
+      },
+      pointFormat: '{series.name}<br><span style="font-size:2em; color: {point.color}; font-weight: bold">{point.y}%</span>',
+      positioner(labelWidth, labelHeight) {
+        return {
+          x: 200 - labelWidth / 2,
+          y: 180
+        };
+      }
+    },
+    pane: {
+      startAngle: 0,
+      endAngle: 360,
+      background: [{ // Track for Move
+        outerRadius: '112%',
+        innerRadius: '88%',
+        backgroundColor: '#fff',
+        borderWidth: 0
+      }]
+    },
+    yAxis: {
+      min: 0,
+      max: 100,
+      lineWidth: 0,
+      tickPositions: []
+    },
+    plotOptions: {
+      solidgauge: {
+        borderWidth: '34px',
+        dataLabels: {
+          enabled: false
+        },
+        linecap: 'round',
+        stickyTracking: false
+      }
+    },
+    series: [{
+      name: 'Move',
+      borderColor: '#f00',
+      data: [{
+        color: '#f00',
+        radius: '100%',
+        innerRadius: '100%',
+        y: 80
+      }]
+    }]
   }
-}
+};
