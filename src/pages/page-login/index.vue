@@ -85,5 +85,9 @@ export default {
   .top-bar{
     height: 40px;
     background-color: #48a6f8;
+    .main-container{
+      width: 1200px;
+      margin: 0 auto;
+    }
   }
 </style>
