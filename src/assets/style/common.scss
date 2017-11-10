@@ -6,6 +6,9 @@
 .clearfix:after{
   clear: both;
 }
+.relative{
+  position: relative !important;
+}
 // 浮动
 .pull-left{
   float: left !important;
