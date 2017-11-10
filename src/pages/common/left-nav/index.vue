@@ -43,7 +43,7 @@ export default {
 #left-nav{
   width: 174px;
   float: left;
-  background-color: #eee;
+  background-color: #ecf4f8;
   min-height: 100px;
   padding: 10px 0;
   h2{

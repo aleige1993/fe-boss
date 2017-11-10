@@ -1,6 +1,6 @@
 <template>
   <div id="page-login">
-    <div class="login-box">
+    <!-- <div class="login-box">
       <table>
         <tr v-if="fromOtherPage">
           <td></td>
@@ -24,6 +24,9 @@
           </td>
         </tr>
       </table>
+    </div> -->
+    <div class="top-bar">
+
     </div>
   </div>
 </template>
@@ -78,5 +81,9 @@ export default {
     td{
       padding: 10px 5px;
     }
+  }
+  .top-bar{
+    height: 40px;
+    background-color: #48a6f8;
   }
 </style>
