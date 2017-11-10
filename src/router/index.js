@@ -1,5 +1,6 @@
 import Vue from 'vue';
 import Router from 'vue-router';
+import UserLogin from '@/utils/UserLogin';
 import HelloWorld from '@/components/HelloWorld';
 import Login from '@/pages/page-login';
 import MainPage from '@/pages/page-main';
@@ -9,7 +10,7 @@ import Table from '@/pages/page-table';
 
 Vue.use(Router)
 
-export default new Router({
+let MyRouter = new Router({
   routes: [
     {
       path: '/login',
@@ -38,5 +39,28 @@ export default new Router({
         }
       ]
     }
-  ]
-})
+  ],
+  scrollBehavior (to, from, savedPosition) {
+    return { x: 0, y: 0 }
+  }
+});
+const notNeddLoginPageRouteNames = ['login'];
+MyRouter.beforeEach((to, from, next) => {
+  // 如果要跳转的页面需要登录，验证登录
+  if (!notNeddLoginPageRouteNames.includes(to.name)) {
+    if (UserLogin.isLogin()) {
+      alert('已登录');
+      next();
+    } else {
+      next({
+        path: '/login',
+        query: {
+          redirect_url: to.name
+        }
+      });
+    }
+  } else {
+    next();
+  }
+});
+export default MyRouter;

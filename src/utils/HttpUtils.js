@@ -3,8 +3,9 @@
  */
 import Vue from 'vue';
 import axios from 'axios';
+import Config from './Config';
 // 处理Raw纯json字符串得请求
-axios.defaults.baseURL = 'http://10.164.1.37:8080/';
+axios.defaults.baseURL = Config.HTTPBASEURL;
 axios.defaults.headers.common['Content-Type'] = 'application/json;charset=UTF-8';
 Vue.prototype.$ajax = axios;
 class Http {
@@ -26,7 +27,7 @@ class Http {
       method: 'POST'
     }).catch(err => {
       // error todo
-      console.error(err);
+      alert(err);
     });
   }
 }

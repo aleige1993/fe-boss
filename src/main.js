@@ -11,6 +11,8 @@ import 'iview/dist/styles/iview.css';    // 使用 CSS
 // http utils
 import Http from './utils/HttpUtils';
 Vue.prototype.$http = new Http();
+// http mockjs
+import {} from './utils/HttpMock';
 // 表单区域块组件
 import FormBlock from '@/components/bs-form-block';
 Vue.component('bs-form-block', FormBlock);
@@ -20,7 +22,10 @@ Vue.directive('title', {
   inserted(el, binding) {
     document.title = binding.value
   }
-})
+});
+// 登录工具类
+import UserLogin from '@/utils/UserLogin';
+Vue.prototype.$userLogin = UserLogin;
 // global filter
 import filter from './filter';
 /* eslint-disable no-new */
