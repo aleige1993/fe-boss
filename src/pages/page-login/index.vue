@@ -8,11 +8,11 @@
         </tr>
         <tr>
           <td>用户名</td>
-          <td><Input v-model="loginForm.username" placeholder="用户名" style="width: 280px"></Input></td>
+          <td><Input v-model="loginForm.loginName" placeholder="用户名" style="width: 280px"></Input></td>
         </tr>
         <tr>
           <td>密码</td>
-          <td><Input v-model="loginForm.password" placeholder="密码" style="width: 280px"></Input></td>
+          <td><Input v-model="loginForm.loginPwd" placeholder="密码" style="width: 280px"></Input></td>
         </tr>
         <tr>
           <td></td>
@@ -36,8 +36,8 @@ export default {
       fromOtherPage: false,
       redirectUrl: '',
       loginForm: {
-        username: '',
-        password: ''
+        loginName: 'test',
+        loginPwd: '111111'
       }
     };
   },
@@ -45,12 +45,17 @@ export default {
     async submitLogin() {
       this.$data.loading = true;
       let loginResult = await this.$http.post('/login', this.$data.loginForm);
+      this.$data.loading = false;
       // 登录成功
-      if (loginResult.data.code === 0) {
-        this.$userLogin.setLoginInfo(loginResult.data.data);
-        this.$router.push({
-          name: this.$data.redirectUrl
-        });
+      if (loginResult.reCode === '0000') {
+        this.$userLogin.setLoginInfo(loginResult.body);
+        if (this.$data.fromOtherPage) {
+          this.$router.push({
+            name: this.$data.redirectUrl
+          });
+        } else {
+          this.$router.push('/');
+        }
       }
     }
   },

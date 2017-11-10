@@ -4,6 +4,8 @@
 import Vue from 'vue';
 import axios from 'axios';
 import Config from './Config';
+import MyRouter from '@/router';
+import UserLogin from './UserLogin';
 // 处理Raw纯json字符串得请求
 axios.defaults.baseURL = Config.HTTPBASEURL;
 axios.defaults.headers.common['Content-Type'] = 'application/json;charset=UTF-8';
@@ -17,14 +19,62 @@ class Http {
    * @param _error
    */
   post(_url, _data) {
+    if (Config.XHRLOG) {
+      console.info(`----来自${_url}的请求----`);
+      console.info(JSON.stringify(_data));
+    }
     return axios({
       url: _url,
       dataType: 'json',
       data: _data,
       headers: {
-        // token: UserLogin.getLoginInfo().token
+        token: UserLogin.getLoginInfo().token
       },
       method: 'POST'
+    }).then(res => {
+      if (res.data.reCode === '401') {
+        alert('登录超时');
+        MyRouter.push(
+          {
+            path: '/login',
+            query: {
+              redirect_url: 'home'
+            }
+          }
+        );
+      } else {
+        return res.data;
+      }
+    }).catch(err => {
+      // error todo
+      alert(err);
+    });
+  }
+  get(_url) {
+    if (Config.XHRLOG) {
+      console.info(`----来自${_url}的请求----`);
+    }
+    return axios({
+      url: _url,
+      dataType: 'json',
+      headers: {
+        token: UserLogin.getLoginInfo().token
+      },
+      method: 'GET'
+    }).then(res => {
+      if (res.data.reCode === '401') {
+        alert('登录超时');
+        MyRouter.push(
+          {
+            path: '/login',
+            query: {
+              redirect_url: 'home'
+            }
+          }
+        );
+      } else {
+        return res.data;
+      }
     }).catch(err => {
       // error todo
       alert(err);

@@ -49,7 +49,6 @@ MyRouter.beforeEach((to, from, next) => {
   // 如果要跳转的页面需要登录，验证登录
   if (!notNeddLoginPageRouteNames.includes(to.name)) {
     if (UserLogin.isLogin()) {
-      alert('已登录');
       next();
     } else {
       next({

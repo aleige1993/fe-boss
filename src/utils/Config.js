@@ -1,5 +1,6 @@
 export default {
-  HTTPMOCK_ON: true,
+  HTTPMOCK_ON: false,
   HTTPMOCK_TIMEOUT: 2000,
-  HTTPBASEURL: 'http://localhost:8080'
+  XHRLOG: true,
+  HTTPBASEURL: 'http://10.164.1.89:8091'
 };

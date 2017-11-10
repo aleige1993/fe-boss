@@ -2,13 +2,13 @@ export default [
   {
     url: '/login',
     resp: {
-      code: 0,
-      data: {
+      reCode: '0',
+      body: {
         token: 'XCSDCSXSDSDS',
         username: 'xiaoming',
         userId: 123
       },
-      msg: 'success'
+      reMsg: 'success'
     }
   }
 ];
