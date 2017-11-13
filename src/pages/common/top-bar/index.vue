@@ -1,6 +1,8 @@
 <template>
   <div id="common-topbar">
-    <i class="iconfont icon-logo"></i>
+    <div class="logo">
+      <i class="iconfont icon-logo"></i>
+    </div>
     <div class="right-actions">
       <ul>
         <li><a href="#"><img class="top-avatar" src="./img/potrat.png" alt=""/>系统管理员</a></li>
@@ -29,8 +31,15 @@ export default {
   top: 0;
   z-index: 99;
   color: #fff;
-  .icon-logo{
-    font-size: 20px;
+  .iconfont{
+    line-height: 1;
+  }
+  .logo{
+    float: left;
+    padding-top: 2px;
+    .icon-logo{
+      font-size: 22px;
+    }
   }
   .right-actions{
     float: right;
