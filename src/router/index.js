@@ -7,6 +7,7 @@ import MainPage from '@/pages/page-main';
 import Home from '@/pages/page-home';
 import Form from '@/pages/page-form';
 import Table from '@/pages/page-table';
+import Errors from '@/pages/errors';
 
 Vue.use(Router)
 
@@ -21,6 +22,11 @@ let MyRouter = new Router({
       path: '/',
       name: 'home',
       component: Home
+    },
+    {
+      path: '/errors',
+      name: 'errors',
+      component: Errors
     },
     {
       path: '/index',
