@@ -63,7 +63,7 @@
                 <span class="text-danger" v-if="errorInfo"><Icon type="close-circled"></Icon> {{errorInfo}}</span>
               </div>
               <div class="login-row">
-                <Button style="padding:10px 8px" type="primary" size="large" long>登录</Button>
+                <Button style="padding:10px 8px" type="primary" @click="submitLogin" size="large" long>登录</Button>
               </div>
               <div class="login-row text-center" style="padding-top: 10px;">
                 <a href="#">忘记密码？</a>

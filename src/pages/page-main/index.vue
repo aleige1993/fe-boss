@@ -3,13 +3,19 @@
     <top-bar></top-bar>
     <top-nav></top-nav>
     <div class="wraper">
-      <router-view></router-view>
+      <div id="" class="clearfix">
+        <left-nav></left-nav>
+        <div class="right-main">
+          <router-view></router-view>
+        </div>
+      </div>
     </div>
   </div>
 </template>
 <script>
 import Topbar from '@/pages/common/top-bar';
 import Topnav from '@/pages/common/top-nav';
+import LeftNav from '@/pages/common/left-nav';
 export default {
   name: '',
   data: () => ({
@@ -17,7 +23,8 @@ export default {
   }),
   components: {
     'top-bar': Topbar,
-    'top-nav': Topnav
+    'top-nav': Topnav,
+    LeftNav
   }
 };
 </script>

@@ -7,6 +7,8 @@ import MainPage from '@/pages/page-main';
 import Home from '@/pages/page-home';
 import Form from '@/pages/page-form';
 import Table from '@/pages/page-table';
+// 贷前业务
+import OrderRegister from '@/pages/beforeloan-manage/order-register';
 
 Vue.use(Router)
 
@@ -36,6 +38,11 @@ let MyRouter = new Router({
           path: 'table',
           name: 'table',
           component: Table
+        },
+        {
+          path: 'orderregister',
+          name: 'orderRegister',
+          component: OrderRegister
         }
       ]
     }
