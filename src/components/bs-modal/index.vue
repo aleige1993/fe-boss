@@ -4,7 +4,7 @@
       <div class="pt-modal-title">
         <slot name="title">
           {{title || '标题'}}
-          <i @click="hideCureentModal" class="iconfont icon-cha- close"></i>
+          <i @click="hideCureentModal" class="iconfont icon-cha close"></i>
         </slot>
       </div>
       <div class="pt-modal-body">
