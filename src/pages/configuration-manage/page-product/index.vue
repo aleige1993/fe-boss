@@ -32,29 +32,29 @@
     </div>
     <pt-modal title="添加产品" v-model="showAddModal" :width="600">
       <i-form ref="formValidate" label-position="left" :label-width="100">
-        <i-form-item label="产品类别" prop="type">
-          <i-input placeholder="请输入产品类别" v-model="type"></i-input>
+        <i-form-item label="产品类别" prop="protype">
+          <i-input placeholder="请输入产品类别" v-model="addSubmit.protype"></i-input>
         </i-form-item>
-        <i-form-item label="产品名称" prop="name">
-          <i-input placeholder="请输入产品名称"></i-input>
+        <i-form-item label="产品名称" prop="proname">
+          <i-input placeholder="请输入产品名称" v-model="addSubmit.proname"></i-input>
         </i-form-item>
         <i-form-item label="个人单笔额度" prop="SingleMoney">
-          <i-input placeholder="请输入个人单笔额度">
+          <i-input placeholder="请输入个人单笔额度" v-model="addSubmit.SingleMoney">
             <span slot="append">元</span>
           </i-input>
         </i-form-item>
         <i-form-item label="个人单户额度" prop="familyMoney">
-          <i-input placeholder="请输入个人单户额度">
+          <i-input placeholder="请输入个人单户额度" v-model="addSubmit.familyMoney">
             <span slot="append">元</span>
           </i-input>
         </i-form-item>
         <i-form-item label="企业单笔额度" prop="enterpriseSingleMoney">
-          <i-input placeholder="请输入企业单笔额度">
+          <i-input placeholder="请输入企业单笔额度" v-model="addSubmit.enterpriseSingleMoney">
             <span slot="append">元</span>
           </i-input>
         </i-form-item>
         <i-form-item label="企业单户额度" prop="enterpriseFamilyMoney">
-          <i-input placeholder="请输入企业单户额度">
+          <i-input placeholder="请输入企业单户额度" v-model="addSubmit.enterpriseFamilyMoney">
             <span slot="append">元</span>
           </i-input>
         </i-form-item>
@@ -85,8 +85,12 @@
         formItem: '',
         showAddModal: false,
         addSubmit: {
-          type： '',
-          type： ''
+          protype: '',
+          proname: '',
+          SingleMoney: '',
+          familyMoney: '',
+          enterpriseSingleMoney: '',
+          enterpriseFamilyMoney: ''
         },
         columns1: [
           {
@@ -170,7 +174,7 @@
           }
         ],
         data1: [],
-        type: ''
+        name: ''
       };
     },
     async mounted() {
