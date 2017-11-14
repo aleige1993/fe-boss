@@ -67,3 +67,12 @@ h1,h2,h3,h4,h5,h6 {
 .ivu-select-dropdown-list .ivu-select-item{
   padding: 5px 10px;
 }
+.ivu-form-item.required > .ivu-form-item-label{
+  &:before{
+    content: "*";
+    color: #f00;
+    font-weight: bold;
+    margin-right: 3px;
+    vertical-align: middle;
+  }
+}
