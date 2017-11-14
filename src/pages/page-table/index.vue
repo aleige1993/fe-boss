@@ -104,7 +104,7 @@ export default {
                     this.show(params.index);
                   }
                 }
-              }, '查看'),
+              }, '详情'),
               h('Button', {
                 props: {
                   type: 'error',
