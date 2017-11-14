@@ -28,11 +28,11 @@ class Http {
       dataType: 'json',
       data: _data,
       headers: {
-        token: UserLogin.getLoginInfo().token
+        'token': '' + UserLogin.getLoginToken()
       },
       method: 'POST'
     }).then(res => {
-      if (res.data.reCode === '401') {
+      if (res.data.reCode === '0004') {
         alert('登录超时');
         MyRouter.push(
           {
@@ -58,11 +58,12 @@ class Http {
       url: _url,
       dataType: 'json',
       headers: {
-        token: UserLogin.getLoginInfo().token
+        'token': UserLogin.getLoginInfo().token
       },
       method: 'GET'
     }).then(res => {
-      if (res.data.reCode === '401') {
+      console.log(res);
+      if (res.data.reCode === '0004') {
         alert('登录超时');
         MyRouter.push(
           {

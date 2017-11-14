@@ -40,11 +40,11 @@ module.exports = {
           formatter: require('eslint-friendly-formatter')
         }
       },
-      {
+      /*{
         test: /\.vue$/,
         loader: 'vue-loader',
         options: vueLoaderConfig
-      },
+      },*/
       {
         test: /\.js$/,
         loader: 'babel-loader',
@@ -73,6 +73,22 @@ module.exports = {
           limit: 10000,
           name: utils.assetsPath('fonts/[name].[hash:7].[ext]')
         }
+      },
+      // vue 加载方式和iview前缀设置
+      {
+        test: /\.vue$/,
+        use: [
+          {
+            loader: 'vue-loader',
+            options: vueLoaderConfig
+          },
+          {
+            loader: 'iview-loader',
+            options: {
+              prefix: true //设置为true，允许使用i-select形式的iview标签
+            }
+          }
+        ]
       }
     ]
   },
