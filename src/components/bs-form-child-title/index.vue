@@ -27,6 +27,7 @@
       height: 26px;
       border-bottom: 2px solid $color-primary;
       font-weight: bold;
+      line-height: 22px;
     }
   }
 </style>

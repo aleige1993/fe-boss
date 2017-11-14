@@ -123,9 +123,9 @@ export default {
 //      let promise = await this.$http.get('/sys/menu/list');
       $.ajax({
         url: 'http://10.164.1.89:8091/sys/menu/list',
-        headers: {
+        /*headers: {
           token: UserLogin.getLoginInfo().token
-        },
+        },*/
         type: 'get',
         dataType: 'json',
         success(res) {

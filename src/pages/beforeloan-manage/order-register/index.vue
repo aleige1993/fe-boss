@@ -258,12 +258,12 @@
             </i-row>
             <i-row>
               <i-col span="6">
-                <i-form-item class="required" label="婚姻状况">
-                  <i-select>
-                    <i-option>已婚</i-option>
-                    <i-option>未婚</i-option>
-                    <i-option>离异</i-option>
-                    <i-option>丧偶</i-option>
+                <i-form-item class="required"  label="婚姻状况">
+                  <i-select v-model="formData.user.isWed">
+                    <i-option :value="1">已婚</i-option>
+                    <i-option :value="2">未婚</i-option>
+                    <i-option :value="3">离异</i-option>
+                    <i-option :value="4">丧偶</i-option>
                   </i-select>
                 </i-form-item>
               </i-col>
@@ -281,10 +281,7 @@
               <i-col span="6">
                 <i-form-item class="required" label="职业类型">
                   <i-select>
-                    <i-option>已婚</i-option>
-                    <i-option>未婚</i-option>
-                    <i-option>离异</i-option>
-                    <i-option>丧偶</i-option>
+                    <i-option>IT</i-option>
                   </i-select>
                 </i-form-item>
               </i-col>
@@ -292,9 +289,9 @@
             <i-row>
               <i-col span="6">
                 <i-form-item class="required" label="年收入">
-                  <i-select>
-                    <i-option>100W</i-option>
-                  </i-select>
+                  <i-input>
+                    <span slot="append">元</span>
+                  </i-input>
                 </i-form-item>
               </i-col>
               <i-col span="6">
@@ -337,6 +334,159 @@
                 </i-form-item>
               </i-col>
             </i-row>
+            <i-row>
+              <i-col span="18">
+                <i-form-item class="required" label="户籍地址">
+                  <i-select style="width: 150px">
+                    <i-option>重庆市</i-option>
+                  </i-select>
+                  <i-select style="width: 150px">
+                    <i-option>重庆市</i-option>
+                  </i-select>
+                  <i-select style="width: 150px">
+                    <i-option>重庆市</i-option>
+                  </i-select>
+                  <i-input placeholder="街道信息" style="width: 220px;"></i-input>
+                </i-form-item>
+              </i-col>
+            </i-row>
+            <i-row>
+              <i-col span="18">
+                <i-form-item class="required" label="居住地址">
+                  <i-select style="width: 150px">
+                    <i-option>重庆市</i-option>
+                  </i-select>
+                  <i-select style="width: 150px">
+                    <i-option>重庆市</i-option>
+                  </i-select>
+                  <i-select style="width: 150px">
+                    <i-option>重庆市</i-option>
+                  </i-select>
+                  <i-input placeholder="街道信息" style="width: 220px;"></i-input>
+                </i-form-item>
+              </i-col>
+            </i-row>
+            <i-row>
+              <i-col span="6">
+                <i-form-item class="required" label="身份证正面">
+                  <i-upload action="//jsonplaceholder.typicode.com/posts/">
+                    <div style="padding: 20px 0">
+                      <Icon type="ios-cloud-upload" size="52" style="color: #3399ff"></Icon>
+                      <p>Click or drag files here to upload</p>
+                    </div>
+                  </i-upload>
+                </i-form-item>
+              </i-col>
+              <i-col span="6">
+                <i-form-item class="required" label="身份证反面">
+                  <i-upload action="//jsonplaceholder.typicode.com/posts/">
+                    <div style="padding: 20px 0">
+                      <Icon type="ios-cloud-upload" size="52" style="color: #3399ff"></Icon>
+                      <p>Click or drag files here to upload</p>
+                    </div>
+                  </i-upload>
+                </i-form-item>
+              </i-col>
+              <i-col span="6">
+                <i-form-item class="required" label="手持身份证">
+                  <i-upload action="//jsonplaceholder.typicode.com/posts/">
+                    <div style="padding: 20px 0">
+                      <Icon type="ios-cloud-upload" size="52" style="color: #3399ff"></Icon>
+                      <p>Click or drag files here to upload</p>
+                    </div>
+                  </i-upload>
+                </i-form-item>
+              </i-col>
+            </i-row>
+            <!--配偶信息-->
+            <div v-show="formData.user.isWed===1">
+              <bs-form-child-title :title="'配偶信息'"></bs-form-child-title>
+              <i-row>
+                <i-col span="6">
+                  <i-form-item class="required" label="配偶姓名">
+                    <i-input></i-input>
+                  </i-form-item>
+                </i-col>
+                <i-col span="6">
+                  <i-form-item class="required" label="证件类型">
+                    <i-select>
+                      <i-option>身份证</i-option>
+                    </i-select>
+                  </i-form-item>
+                </i-col>
+                <i-col span="6">
+                  <i-form-item class="required" label="证件号码">
+                    <i-input></i-input>
+                  </i-form-item>
+                </i-col>
+              </i-row>
+              <i-row>
+                <i-col span="6">
+                  <i-form-item class="required" label="教育程度">
+                    <i-select>
+                      <i-option>身份证</i-option>
+                    </i-select>
+                  </i-form-item>
+                </i-col>
+                <i-col span="6">
+                  <i-form-item class="required" label="职业类型">
+                    <i-select>
+                      <i-option>身份证</i-option>
+                    </i-select>
+                  </i-form-item>
+                </i-col>
+                <i-col span="6">
+                  <i-form-item class="required" label="参与类型">
+                    <i-select>
+                      <i-option>身份证</i-option>
+                    </i-select>
+                  </i-form-item>
+                </i-col>
+              </i-row>
+              <i-row>
+                <i-col span="18">
+                  <i-form-item class="required" label="户籍地址">
+                    <i-select style="width: 150px">
+                      <i-option>重庆市</i-option>
+                    </i-select>
+                    <i-select style="width: 150px">
+                      <i-option>重庆市</i-option>
+                    </i-select>
+                    <i-select style="width: 150px">
+                      <i-option>重庆市</i-option>
+                    </i-select>
+                    <i-input placeholder="街道信息" style="width: 220px;"></i-input>
+                  </i-form-item>
+                </i-col>
+              </i-row>
+              <i-row>
+                <i-col span="6">
+                  <i-form-item class="required" label="身份证正面">
+                    <i-upload action="//jsonplaceholder.typicode.com/posts/">
+                      <div style="padding: 20px 0">
+                        <Icon type="ios-cloud-upload" size="52" style="color: #3399ff"></Icon>
+                        <p>Click or drag files here to upload</p>
+                      </div>
+                    </i-upload>
+                  </i-form-item>
+                </i-col>
+                <i-col span="6">
+                  <i-form-item class="required" label="身份证反面">
+                    <i-upload action="//jsonplaceholder.typicode.com/posts/">
+                      <div style="padding: 20px 0">
+                        <Icon type="ios-cloud-upload" size="52" style="color: #3399ff"></Icon>
+                        <p>Click or drag files here to upload</p>
+                      </div>
+                    </i-upload>
+                  </i-form-item>
+                </i-col>
+              </i-row>
+            </div>
+            <!--联系方式-->
+            <bs-form-child-title :title="'联系方式'"></bs-form-child-title>
+            <i-table :columns="contactTableColume"  :data="formData.user.userContacts"></i-table>
+            <!--工作单位信息-->
+            <bs-form-child-title :title="'工作单位信息'"></bs-form-child-title>
           </bs-form-block>
           <div class="form-footer-actions">
             <i-button type="primary"><i class="iconfont icon-tijiao"></i> 提交</i-button>
@@ -353,13 +503,70 @@ export default {
   name: '',
   data() {
     return {
+      contactTableColume: [
+        {
+          title: '姓名',
+          key: 'name'
+        },
+        {
+          title: '关系',
+          key: 'relationShip'
+        },
+        {
+          title: '电话',
+          key: 'phone'
+        },
+        {
+          title: '操作',
+          render: (h, params) => {
+            return h('div', [
+              h('Button', {
+                props: {
+                  type: 'primary',
+                  size: 'small'
+                },
+                style: {
+                  marginRight: '5px'
+                },
+                on: {
+                  click: () => {
+                    this.show(params.index);
+                  }
+                }
+              }, '编辑'),
+              h('Button', {
+                props: {
+                  type: 'error',
+                  size: 'small'
+                },
+                on: {
+                  click: () => {
+                    this.remove(params.index);
+                  }
+                }
+              }, '删除')
+            ]);
+          }
+        }
+      ],
       formData: {
         select: '',
         user: {
-          gender: ''
+          gender: '',
+          isWed: 1,
+          userContacts: [{
+            name: '张三',
+            relationShip: '兄妹',
+            phone: '1584214511'
+          }]
         }
       }
     };
+  },
+  watch: {
+    'formData.user.isWed': (val) => {
+      // alert(val);
+    }
   }
 };
 </script>
