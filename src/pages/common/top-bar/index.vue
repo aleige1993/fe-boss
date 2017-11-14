@@ -7,7 +7,7 @@
       <ul>
         <li><a href="#"><img class="top-avatar" src="./img/potrat.png" alt=""/>系统管理员</a></li>
         <li><a href="#"><i class="iconfont icon-xiugaimima"></i> <span>修改密码</span></a></li>
-        <li><a href="#"><i class="iconfont icon-xiugaimima"></i> <span>退出登录</span></a></li>
+        <li><a href="javascript:;" @click.prevent="logout"><i class="iconfont icon-xiugaimima"></i> <span>退出登录</span></a></li>
       </ul>
     </div>
   </div>
@@ -17,6 +17,19 @@ export default {
   name: '',
   data() {
     return {};
+  },
+  methods: {
+    async logout() {
+      let promise = await this.$http.get('/logout');
+      if (promise.reCode === '0000') {
+        this.$router.push('/login');
+      } else {
+        this.$Notice.error({
+          title: '',
+          desc: '系统繁忙，请稍后重试'
+        });
+      }
+    }
   }
 };
 </script>

@@ -90,6 +90,7 @@ import Topnav from '@/pages/common/top-nav';
 import VueHighcharts from 'vue2-highcharts';
 import CircleProgress from '@/components/circle-progress';
 import PTModal from '@/components/bs-modal';
+import UserLogin from '@/utils/UserLogin';
 // import {} from '@/assets/js/highcharts-more.js';
 import ChartOptions from './chartOptions';
 export default {
@@ -109,14 +110,30 @@ export default {
     'top-bar': Topbar,
     'top-nav': Topnav
   },
-  async mounted() {
+  mounted() {
     document.body.style.backgroundColor = '#f3f3f3';
-    let promise = await this.$http.post('/sys/menu/list');
-    console.log(promise);
+    this.initMenuTree();
   },
   beforeDestroy() {
     // do something before destroying vue instance
     document.body.style.backgroundColor = '#fff';
+  },
+  methods: {
+    initMenuTree() {
+//      let promise = await this.$http.get('/sys/menu/list');
+      $.ajax({
+        url: 'http://10.164.1.89:8091/sys/menu/list',
+        headers: {
+          token: UserLogin.getLoginInfo().token
+        },
+        type: 'get',
+        dataType: 'json',
+        success(res) {
+          console.log(res);
+        }
+      });
+      // console.log(promise);
+    }
   }
 };
 </script>

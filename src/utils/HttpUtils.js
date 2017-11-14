@@ -6,6 +6,7 @@ import axios from 'axios';
 import Config from './Config';
 import MyRouter from '@/router';
 import UserLogin from './UserLogin';
+import toastr from '@/assets/js/toastr';
 // 处理Raw纯json字符串得请求
 axios.defaults.baseURL = Config.HTTPBASEURL;
 axios.defaults.headers.common['Content-Type'] = 'application/json;charset=UTF-8';
@@ -23,6 +24,7 @@ class Http {
       console.info(`----来自${_url}的请求----`);
       console.info(JSON.stringify(_data));
     }
+    // alert(UserLogin.getLoginToken());
     return axios({
       url: _url,
       dataType: 'json',
@@ -47,7 +49,7 @@ class Http {
       }
     }).catch(err => {
       // error todo
-      alert(err);
+      toastr.error(err);
     });
   }
   get(_url) {
@@ -57,9 +59,9 @@ class Http {
     return axios({
       url: _url,
       dataType: 'json',
-      headers: {
-        'token': UserLogin.getLoginInfo().token
-      },
+      // headers: {
+      //   'token': UserLogin.getLoginInfo().token
+      // },
       method: 'GET'
     }).then(res => {
       console.log(res);
@@ -78,7 +80,7 @@ class Http {
       }
     }).catch(err => {
       // error todo
-      alert(err);
+      toastr.error(err);
     });
   }
 }
