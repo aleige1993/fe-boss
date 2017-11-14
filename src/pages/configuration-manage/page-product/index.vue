@@ -21,21 +21,60 @@
       </i-form>
     </div>
     <div class="form-top-actions">
-      <i-button type="info"><i class="iconfont icon-xinzeng"></i> 新增产品</i-button>
+      <i-button @click="addModal" type="info"><i class="iconfont icon-xinzeng"></i> 新增产品</i-button>
       <i-button type="success"><i class="iconfont icon-daochu"></i> 套餐维护</i-button>
       <i-button type="warning"><i class="iconfont icon-daochu"></i> 基础材料维护</i-button>
       <i-button type="ghost"><i class="iconfont icon-daochu"></i> 准入规则维护</i-button>
     </div>
-    <i-table border ref="selection" :columns="columns7" :data="data1"></i-table>
+    <i-table border ref="selection" :columns="columns1" :data="data1"></i-table>
     <div class="page-container">
       <i-page :current="1" :total="40" size="small" show-elevator show-total></i-page>
     </div>
+    <pt-modal title="添加产品" v-model="showAddModal" :width="600">
+      <i-form ref="formValidate" label-position="left" :label-width="100">
+        <i-form-item label="产品类别" prop="type">
+          <i-input placeholder="请输入产品类别" v-model="type"></i-input>
+        </i-form-item>
+        <i-form-item label="产品名称" prop="name">
+          <i-input placeholder="请输入产品名称"></i-input>
+        </i-form-item>
+        <i-form-item label="个人单笔额度" prop="SingleMoney">
+          <i-input placeholder="请输入个人单笔额度">
+            <span slot="append">元</span>
+          </i-input>
+        </i-form-item>
+        <i-form-item label="个人单户额度" prop="familyMoney">
+          <i-input placeholder="请输入个人单户额度">
+            <span slot="append">元</span>
+          </i-input>
+        </i-form-item>
+        <i-form-item label="企业单笔额度" prop="enterpriseSingleMoney">
+          <i-input placeholder="请输入企业单笔额度">
+            <span slot="append">元</span>
+          </i-input>
+        </i-form-item>
+        <i-form-item label="企业单户额度" prop="enterpriseFamilyMoney">
+          <i-input placeholder="请输入企业单户额度">
+            <span slot="append">元</span>
+          </i-input>
+        </i-form-item>
+        <i-form-item label="状态" prop="state">
+          <i-select v-model="formItem.select">
+            <i-option value="0">启用</i-option>
+            <i-option value="1">停用</i-option>
+          </i-select>
+        </i-form-item>
+        <i-form-item class="text-right">
+          <i-button type="primary" @click="formSubmit">提交</i-button>
+          <i-button type="ghost" style="margin-left: 8px">重置</i-button>
+        </i-form-item>
+      </i-form>
+    </pt-modal>
   </div>
 </template>
 
 <script>
   import PTModal from '@/components/bs-modal';
-
   export default {
     name: '',
     components: {
@@ -43,8 +82,13 @@
     },
     data() {
       return {
+        formItem: '',
         showAddModal: false,
-        columns7: [
+        addSubmit: {
+          type： '',
+          type： ''
+        },
+        columns1: [
           {
             title: '产品编号',
             width: 100,
@@ -125,7 +169,8 @@
             }
           }
         ],
-        data1: []
+        data1: [],
+        type: ''
       };
     },
     async mounted() {
@@ -137,8 +182,14 @@
       }
     },
     methods: {
+      addModal() {
+        this.$data.showAddModal = true;
+      },
       remove(index) {
         this.data1.splice(index, 1);
+      },
+      formSubmit() {
+        console.log(this.$refs.formValidate);
       }
     }
   };
