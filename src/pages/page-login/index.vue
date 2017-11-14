@@ -1,5 +1,30 @@
 <template>
   <div id="page-login">
+    <!-- <div class="login-box">
+      <table>
+        <tr v-if="fromOtherPage">
+          <td></td>
+          <td class="text-danger"><Icon type="information-circled"></Icon> 请登录</td>
+        </tr>
+        <tr>
+          <td>用户名</td>
+          <td><Input v-model="loginForm.loginName" placeholder="用户名" style="width: 280px"></Input></td>
+        </tr>
+        <tr>
+          <td>密码</td>
+          <td><Input v-model="loginForm.loginPwd" placeholder="密码" style="width: 280px"></Input></td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>
+            <Button type="primary" size="large" @click="submitLogin" style="width: 120px;">
+              <span v-if="!loading">提交</span>
+              <span v-else>Loading...</span>
+            </Button>
+          </td>
+        </tr>
+      </table>
+    </div> -->
     <div class="top-bar">
       <div class="login-container">
         <i class="iconfont icon-logo1"></i>
@@ -16,21 +41,21 @@
           <div class="login-form">
             <form>
               <div class="login-row">
-                <label for="">用户名</label>
+                <label for="username">用户名</label>
                 <div class="login-input">
-                  <input size="large" placeholder="用户名" v-model="loginForm.loginName"></input>
+                  <input id="username" placeholder="用户名" v-model="loginForm.loginName"></input>
                 </div>
               </div>
               <div class="login-row">
-                <label for="">密码</label>
+                <label for="pwd">密码</label>
                 <div class="login-input">
-                  <input size="large" placeholder="密码" v-model="loginForm.loginPwd"></input>
+                  <input id="pwd" placeholder="密码" v-model="loginForm.loginPwd"></input>
                 </div>
               </div>
               <div class="login-row">
                 <label for="">验证码</label>
                 <div class="login-input">
-                  <input size="large" placeholder="验证码" v-model="loginForm.loginPwd" style="width: 232px;"></input>
+                  <input placeholder="验证码" style="width: 232px;"></input>
                   <img class="verify-code" src="./img/code.png" alt="">
                 </div>
               </div>
@@ -38,7 +63,10 @@
                 <span class="text-danger" v-if="errorInfo"><Icon type="close-circled"></Icon> {{errorInfo}}</span>
               </div>
               <div class="login-row">
-                <Button style="padding:10px 8px" type="primary" @click="submitLogin" size="large" long>登录</Button>
+                <i-button style="padding:10px 8px" type="primary" @click="submitLogin" size="large" long>
+                  <span v-if="!loading">提交</span>
+                  <span v-else>Loading...</span>
+                </i-button>
               </div>
               <div class="login-row text-center" style="padding-top: 10px;">
                 <a href="#">忘记密码？</a>
@@ -59,7 +87,7 @@ export default {
       loading: false,
       fromOtherPage: false,
       redirectUrl: '',
-      errorInfo: '用户名或密码错误',
+      errorInfo: '',
       loginForm: {
         loginName: 'test',
         loginPwd: '111111'
@@ -69,7 +97,7 @@ export default {
   methods: {
     async submitLogin() {
       this.$data.loading = true;
-      let loginResult = axios({
+      let loginResult = await axios({
         url: '/login',
         dataType: 'json',
         data: this.$data.loginForm,
@@ -77,8 +105,9 @@ export default {
       });
       this.$data.loading = false;
       // 登录成功
-      if (loginResult.reCode === '0000') {
-        this.$userLogin.setLoginInfo(loginResult.body);
+      let res = loginResult.data;
+      if (res.reCode === '0000') {
+        this.$userLogin.setLoginInfo(res.body);
         if (this.$data.fromOtherPage) {
           this.$router.push({
             name: this.$data.redirectUrl
@@ -86,6 +115,8 @@ export default {
         } else {
           this.$router.push('/');
         }
+      } else {
+        this.$data.errorInfo = res.reMsg;
       }
     }
   },

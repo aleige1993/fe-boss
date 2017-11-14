@@ -16,6 +16,8 @@ import {} from './utils/HttpMock';
 // 表单区域块组件
 import FormBlock from '@/components/bs-form-block';
 Vue.component('bs-form-block', FormBlock);
+import FormSecondTitle from '@/components/bs-form-child-title';
+Vue.component('bs-form-child-title', FormSecondTitle);
 
 // 页面title修改
 Vue.directive('title', {

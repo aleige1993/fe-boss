@@ -65,6 +65,7 @@
               </i-col>
             </i-row>
           </bs-form-block>
+          <!--车辆信息-->
           <bs-form-block :title="'车辆信息'">
             <i-row>
               <i-col span="6">
@@ -129,7 +130,219 @@
               </i-form-item>
               </i-col>
             </i-row>
+            <i-row>
+              <i-col span="6">
+                <i-form-item class="required" label="生产厂商">
+                  <i-input></i-input>
+                </i-form-item>
+              </i-col>
+              <i-col span="6">
+                <i-form-item class="required" label="发动机号">
+                  <i-input></i-input>
+                </i-form-item>
+              </i-col>
+              <i-col span="6">
+                <i-form-item class="required" label="车架号">
+                  <i-input></i-input>
+                </i-form-item>
+              </i-col>
+            </i-row>
+            <!--二手车信息-->
+            <bs-form-child-title :title="'二手车信息'"></bs-form-child-title>
+            <i-row>
+              <i-col span="6">
+                <i-form-item class="required" label="上牌城市">
+                  <i-input></i-input>
+                </i-form-item>
+              </i-col>
+              <i-col span="6">
+                <i-form-item class="required" label="上牌时间">
+                  <i-date-picker type="date" placeholder="Select date" style="width: 200px"></i-date-picker>
+                </i-form-item>
+              </i-col>
+              <i-col span="6">
+                <i-form-item class="required" label="行驶里程(KM)">
+                  <i-input></i-input>
+                </i-form-item>
+              </i-col>
+            </i-row>
+            <i-row>
+              <i-col span="6">
+                <i-form-item class="required" label="转手次数">
+                  <i-input></i-input>
+                </i-form-item>
+              </i-col>
+              <i-col span="6">
+                <i-form-item class="required" label="车辆状况">
+                  <i-select>
+                    <i-option>良好</i-option>
+                    <i-option>一般般</i-option>
+                  </i-select>
+                </i-form-item>
+              </i-col>
+              <i-col span="6">
+                <i-form-item class="required" label="有误事故">
+                  <i-select>
+                    <i-option>有</i-option>
+                    <i-option>无</i-option>
+                  </i-select>
+                </i-form-item>
+              </i-col>
+            </i-row>
+            <i-row>
+              <i-col span="18">
+                <i-form-item label="特殊说明">
+                  <i-input type="textarea" :rows="4"></i-input>
+                </i-form-item>
+              </i-col>
+            </i-row>
+            <!--车辆保险信息-->
+            <bs-form-child-title :title="'车辆保险信息'"></bs-form-child-title>
+            <i-row>
+              <i-col span="6">
+                <i-form-item class="required" label="保险单号">
+                  <i-input></i-input>
+                </i-form-item>
+              </i-col>
+              <i-col span="6">
+                <i-form-item class="required" label="保险到期日">
+                  <i-date-picker type="date" placeholder="Select date" style="width: 200px"></i-date-picker>
+                </i-form-item>
+              </i-col>
+              <i-col span="6">
+                <i-form-item class="required" label="保险公司">
+                  <i-input></i-input>
+                </i-form-item>
+              </i-col>
+            </i-row>
           </bs-form-block>
+          <!--客户信息-->
+          <bs-form-block title="客户信息">
+            <i-row>
+              <i-col span="6">
+                <i-form-item class="required" label="姓名">
+                  <i-input></i-input>
+                </i-form-item>
+              </i-col>
+              <i-col span="6">
+                <i-form-item class="required" label="身份证号">
+                  <i-input></i-input>
+                </i-form-item>
+              </i-col>
+              <i-col span="6">
+                <i-form-item class="required" label="身份证有效期">
+                  <i-date-picker type="date" placeholder="Select date" style="width: 200px"></i-date-picker>
+                </i-form-item>
+              </i-col>
+            </i-row>
+            <i-row>
+              <i-col span="6">
+                <i-form-item class="required" label="性别">
+                  <i-radio-group v-model="formData.user.gender">
+                    <i-radio label="1" :value="1">男</i-radio>
+                    <i-radio label="0">女</i-radio>
+                    <i-radio label="保密"></i-radio>
+                  </i-radio-group>
+                </i-form-item>
+              </i-col>
+              <i-col span="6">
+                <i-form-item class="required" label="出生日期">
+                  <i-date-picker type="date" placeholder="Select date" style="width: 200px"></i-date-picker>
+                </i-form-item>
+              </i-col>
+              <i-col span="6">
+                <i-form-item class="required" label="年龄">
+                  <i-input readonly="true"></i-input>
+                </i-form-item>
+              </i-col>
+            </i-row>
+            <i-row>
+              <i-col span="6">
+                <i-form-item class="required" label="婚姻状况">
+                  <i-select>
+                    <i-option>已婚</i-option>
+                    <i-option>未婚</i-option>
+                    <i-option>离异</i-option>
+                    <i-option>丧偶</i-option>
+                  </i-select>
+                </i-form-item>
+              </i-col>
+              <i-col span="6">
+                <i-form-item class="required" label="教育程度">
+                  <i-select>
+                    <i-option>博士及以上</i-option>
+                    <i-option>硕士</i-option>
+                    <i-option>本科</i-option>
+                    <i-option>大专</i-option>
+                    <i-option>其他</i-option>
+                  </i-select>
+                </i-form-item>
+              </i-col>
+              <i-col span="6">
+                <i-form-item class="required" label="职业类型">
+                  <i-select>
+                    <i-option>已婚</i-option>
+                    <i-option>未婚</i-option>
+                    <i-option>离异</i-option>
+                    <i-option>丧偶</i-option>
+                  </i-select>
+                </i-form-item>
+              </i-col>
+            </i-row>
+            <i-row>
+              <i-col span="6">
+                <i-form-item class="required" label="年收入">
+                  <i-select>
+                    <i-option>100W</i-option>
+                  </i-select>
+                </i-form-item>
+              </i-col>
+              <i-col span="6">
+                <i-form-item class="required" label="参加工作年薪">
+                  <i-select>
+                    <i-option>1年</i-option>
+                  </i-select>
+                </i-form-item>
+              </i-col>
+              <i-col span="6">
+                <i-form-item class="required" label="是否本地人">
+                  <i-radio-group>
+                    <i-radio label="1" :value="1">是</i-radio>
+                    <i-radio label="0">否</i-radio>
+                  </i-radio-group>
+                </i-form-item>
+              </i-col>
+            </i-row>
+            <i-row>
+              <i-col span="6">
+                <i-form-item class="required" label="本地有否房产">
+                  <i-radio-group>
+                    <i-radio label="1" :value="1">是</i-radio>
+                    <i-radio label="0">否</i-radio>
+                  </i-radio-group>
+                </i-form-item>
+              </i-col>
+              <i-col span="6">
+                <i-form-item class="required" label="本地居住年限">
+                  <i-select>
+                    <i-option>1年</i-option>
+                  </i-select>
+                </i-form-item>
+              </i-col>
+              <i-col span="6">
+                <i-form-item class="required" label="居住性质">
+                  <i-select>
+                    <i-option>购房</i-option>
+                  </i-select>
+                </i-form-item>
+              </i-col>
+            </i-row>
+          </bs-form-block>
+          <div class="form-footer-actions">
+            <i-button type="primary"><i class="iconfont icon-tijiao"></i> 提交</i-button>
+            <i-button type="success"><i class="iconfont icon-jujue"></i> 重置</i-button>
+            <i-button><i class="iconfont icon-dayin"></i> 打印</i-button>
+          </div>
         </i-form>
       </i-col>
     </i-row>
@@ -141,7 +354,10 @@ export default {
   data() {
     return {
       formData: {
-        select: ''
+        select: '',
+        user: {
+          gender: ''
+        }
       }
     };
   }
