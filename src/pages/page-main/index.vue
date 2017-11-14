@@ -1,5 +1,5 @@
 <template>
-  <div id="">
+  <div id="page-index">
     <top-bar></top-bar>
     <top-nav></top-nav>
     <div class="wraper">
@@ -17,7 +17,7 @@ import Topbar from '@/pages/common/top-bar';
 import Topnav from '@/pages/common/top-nav';
 import LeftNav from '@/pages/common/left-nav';
 export default {
-  name: '',
+  name: 'pageIndex',
   data: () => ({
 
   }),
