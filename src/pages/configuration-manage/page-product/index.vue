@@ -92,7 +92,7 @@
                   },
                   on: {
                     click: () => {
-                      console.log(params);
+                      // console.log(params);
                     }
                   }
                 }, '详情'),
@@ -106,7 +106,7 @@
                   },
                   on: {
                     click: () => {
-                      //this.show(params.index);
+                      // this.show(params.index);
                     }
                   }
                 }, '修改'),
