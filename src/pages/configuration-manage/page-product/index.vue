@@ -1,34 +1,34 @@
 <template>
   <div id="page-product">
-    <Breadcrumb separator=">">
-      <BreadcrumbItem href="/">首页</BreadcrumbItem>
-      <BreadcrumbItem>产品管理</BreadcrumbItem>
-    </Breadcrumb>
+    <i-breadcrumb separator="&gt;">
+      <i-breadcrumb-item href="/">首页</i-breadcrumb-item>
+      <i-breadcrumb-item>产品管理</i-breadcrumb-item>
+    </i-breadcrumb>
     <div class="form-block-title">
       查询条件
     </div>
     <div class="search-form-container">
-      <Form inline label-position="left">
-        <FormItem prop="user" label="产品名称" :label-width="100">
-          <Input type="text" placeholder="客户名称"></Input>
-        </FormItem>
-        <FormItem>
-          <Button type="primary">
-            <Icon type="ios-search-strong"></Icon>
+      <i-form inline label-position="left">
+        <i-form-item prop="user" label="产品名称" :label-width="100">
+          <i-input type="text" placeholder="客户名称"></i-input>
+        </i-form-item>
+        <i-form-item>
+          <i-button type="primary">
+            <i-icon type="ios-search-strong"></i-icon>
             搜索
-          </Button>
-        </FormItem>
-      </Form>
+          </i-button>
+        </i-form-item>
+      </i-form>
     </div>
     <div class="form-top-actions">
-      <Button type="info"><i class="iconfont icon-xinzeng"></i> 新增产品</Button>
-      <Button type="success"><i class="iconfont icon-daochu"></i> 套餐维护</Button>
-      <Button type="warning"><i class="iconfont icon-daochu"></i> 基础材料维护</Button>
-      <Button type="ghost"><i class="iconfont icon-daochu"></i> 准入规则维护</Button>
+      <i-button type="info"><i class="iconfont icon-xinzeng"></i> 新增产品</i-button>
+      <i-button type="success"><i class="iconfont icon-daochu"></i> 套餐维护</i-button>
+      <i-button type="warning"><i class="iconfont icon-daochu"></i> 基础材料维护</i-button>
+      <i-button type="ghost"><i class="iconfont icon-daochu"></i> 准入规则维护</i-button>
     </div>
-    <Table border ref="selection" :columns="columns7" :data="data1"></Table>
+    <i-table border ref="selection" :columns="columns7" :data="data1"></i-table>
     <div class="page-container">
-      <Page :current="1" :total="40" size="small" show-elevator show-total></Page>
+      <i-page :current="1" :total="40" size="small" show-elevator show-total></i-page>
     </div>
   </div>
 </template>

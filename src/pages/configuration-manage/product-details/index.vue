@@ -1,23 +1,23 @@
 <template>
 <div id="page-product-details">
-  <Breadcrumb separator=">">
-    <BreadcrumbItem href="/">首页</BreadcrumbItem>
-    <BreadcrumbItem href="/pages/configuration-manage/page-product">产品管理</BreadcrumbItem>
-    <BreadcrumbItem">产品查询</BreadcrumbItem>
-  </Breadcrumb>
+  <i-breadcrumb separator="&gt;">
+    <i-breadcrumb-item href="/">首页</i-breadcrumb-item>
+    <i-breadcrumb-item href="/pages/configuration-manage/page-product">产品管理</i-breadcrumb-item>
+    <i-breadcrumb-item>产品查询</i-breadcrumb-item>
+  </i-breadcrumb>
   <div class="form-block-title">
     基本信息
   </div>
-  <Form :model="formItem" :label-width="80">
-    <Row :gutter="16">
-      <Col span="8">123
-      </Col>
-      <Col span="8">456
-      </Col>
-      <Col span="8">789
-      </Col>
-    </Row>
-  </Form>
+  <i-form :model="formItem" :label-width="80">
+    <i-row :gutter="16">
+      <i-col span="8">123
+      </i-col>
+      <i-col span="8">456
+      </i-col>
+      <i-col span="8">789
+      </i-col>
+    </i-row>
+  </i-form>
 </div>
 </template>
 
