@@ -76,6 +76,7 @@
   </div>
 </template>
 <script>
+import axios from 'axios';
 export default {
   name: 'pageLogin',
   data() {
@@ -93,7 +94,12 @@ export default {
   methods: {
     async submitLogin() {
       this.$data.loading = true;
-      let loginResult = await this.$http.post('/login', this.$data.loginForm);
+      let loginResult = axios({
+        url: '/login',
+        dataType: 'json',
+        data: this.$data.loginForm,
+        method: 'POST'
+      });
       this.$data.loading = false;
       // 登录成功
       if (loginResult.reCode === '0000') {

@@ -109,8 +109,10 @@ export default {
     'top-bar': Topbar,
     'top-nav': Topnav
   },
-  mounted() {
+  async mounted() {
     document.body.style.backgroundColor = '#f3f3f3';
+    let promise = await this.$http.post('/sys/menu/list');
+    console.log(promise);
   },
   beforeDestroy() {
     // do something before destroying vue instance

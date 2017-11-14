@@ -23,7 +23,7 @@ class UserLogin {
     if (this.isLogin()) {
       return JSON.parse(localStorage.getItem(this.LOGININFOKEY));
     } else {
-      alert('未登录');
+      // alert('未登录');
       return {};
     }
   }

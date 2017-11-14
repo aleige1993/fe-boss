@@ -1,5 +1,6 @@
 import Vue from 'vue';
 import Router from 'vue-router';
+import Config from '@/utils/Config';
 import UserLogin from '@/utils/UserLogin';
 import HelloWorld from '@/components/HelloWorld';
 import Login from '@/pages/page-login';
@@ -73,6 +74,10 @@ let MyRouter = new Router({
 });
 const notNeddLoginPageRouteNames = ['login'];
 MyRouter.beforeEach((to, from, next) => {
+  if ('dev' === Config.ENV) {
+    next();
+    return;
+  }
   // 如果要跳转的页面需要登录，验证登录
   if (!notNeddLoginPageRouteNames.includes(to.name)) {
     if (UserLogin.isLogin()) {

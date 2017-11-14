@@ -1,38 +1,34 @@
 <template>
   <div id="" class="clearfix">
-    <left-nav></left-nav>
-    <div class="right-main">
-      <Breadcrumb separator=">">
-        <BreadcrumbItem href="/">首页</BreadcrumbItem>
-        <BreadcrumbItem href="/components/breadcrumb">进件管理</BreadcrumbItem>
-        <BreadcrumbItem>进件申请</BreadcrumbItem>
-      </Breadcrumb>
-      <div class="form-block-title">
-        客户信息
-      </div>
-      <div class="search-form-container">
-        <Form inline>
-          <FormItem prop="user">
-              <Input type="text" placeholder="客户名称"></Input>
-          </FormItem>
-          <FormItem prop="password">
-              <Input type="password" placeholder="客户名称"></Input>
-          </FormItem>
-          <FormItem>
-              <Button type="primary"><Icon type="ios-search-strong"></Icon> 搜索</Button>
-          </FormItem>
-        </Form>
-      </div>
-      <div class="form-top-actions">
-        <Button type="info" @click="addModal"><i class="iconfont icon-xinzeng"></i> 新增</Button>
-        <Button type="error"><i class="iconfont icon-shanchu"></i> 批量删除</Button>
-        <Button type="success"><i class="iconfont icon-daochu"></i> 导出</Button>
-      </div>
-      <Table border ref="selection" :columns="columns4" :data="data1"></Table>
-      <div class="page-container">
-        <Page :total="40" size="small" show-elevator show-sizer show-total></Page>
-      </div>
-
+    <Breadcrumb separator=">">
+      <BreadcrumbItem href="/">首页</BreadcrumbItem>
+      <BreadcrumbItem href="/components/breadcrumb">进件管理</BreadcrumbItem>
+      <BreadcrumbItem>进件申请</BreadcrumbItem>
+    </Breadcrumb>
+    <div class="form-block-title">
+      客户信息
+    </div>
+    <div class="search-form-container">
+      <Form inline>
+        <FormItem prop="user">
+            <Input type="text" placeholder="客户名称"></Input>
+        </FormItem>
+        <FormItem prop="password">
+            <Input type="password" placeholder="客户名称"></Input>
+        </FormItem>
+        <FormItem>
+            <Button type="primary"><Icon type="ios-search-strong"></Icon> 搜索</Button>
+        </FormItem>
+      </Form>
+    </div>
+    <div class="form-top-actions">
+      <Button type="info" @click="addModal"><i class="iconfont icon-xinzeng"></i> 新增</Button>
+      <Button type="error"><i class="iconfont icon-shanchu"></i> 批量删除</Button>
+      <Button type="success"><i class="iconfont icon-daochu"></i> 导出</Button>
+    </div>
+    <Table border ref="selection" :columns="columns4" :data="data1"></Table>
+    <div class="page-container">
+      <Page :total="40" size="small" show-elevator show-sizer show-total></Page>
     </div>
     <pt-modal title="添加产品" v-model="showAddModal" :width="600">
       <Form ref="formValidate" label-position="left" :label-width="80">
