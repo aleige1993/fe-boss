@@ -1,63 +1,59 @@
 <template>
-  <div id="" class="clearfix">
-    <left-nav></left-nav>
-    <div class="right-main">
-      <Breadcrumb separator=">">
-        <BreadcrumbItem href="/">首页</BreadcrumbItem>
-        <BreadcrumbItem href="/components/breadcrumb">进件管理</BreadcrumbItem>
-        <BreadcrumbItem>进件申请</BreadcrumbItem>
-      </Breadcrumb>
-      <div class="form-block-title">
-        客户信息
-      </div>
-      <div class="search-form-container">
-        <Form inline>
-          <FormItem prop="user">
-              <Input type="text" placeholder="客户名称"></Input>
-          </FormItem>
-          <FormItem prop="password">
-              <Input type="password" placeholder="客户名称"></Input>
-          </FormItem>
-          <FormItem>
-              <Button type="primary"><Icon type="ios-search-strong"></Icon> 搜索</Button>
-          </FormItem>
-        </Form>
-      </div>
-      <div class="form-top-actions">
-        <Button type="info" @click="addModal"><i class="iconfont icon-xinzeng"></i> 新增</Button>
-        <Button type="error"><i class="iconfont icon-shanchu"></i> 批量删除</Button>
-        <Button type="success"><i class="iconfont icon-daochu"></i> 导出</Button>
-      </div>
-      <Table border ref="selection" :columns="columns4" :data="data1"></Table>
-      <div class="page-container">
-        <Page :total="40" size="small" show-elevator show-sizer show-total></Page>
-      </div>
-
+  <div id="page-table-demo">
+    <i-breadcrumb separator=">">
+      <i-breadcrumb-item href="/">首页</i-breadcrumb-item>
+      <i-breadcrumb-item href="/components/breadcrumb">进件管理</i-breadcrumb-item>
+      <i-breadcrumb-item>进件申请</i-breadcrumb-item>
+    </i-breadcrumb>
+    <div class="form-block-title">
+      客户信息
+    </div>
+    <div class="search-form-container">
+      <i-form inline>
+        <i-form-item prop="user">
+          <i-input type="text" placeholder="客户名称"></i-input>
+        </i-form-item>
+        <i-form-item prop="password">
+          <i-input type="password" placeholder="客户名称"></i-input>
+        </i-form-item>
+        <i-form-item>
+          <i-button type="primary"><i-icon type="ios-search-strong"></i-icon> 搜索</i-button>
+        </i-form-item>
+      </i-form>
+    </div>
+    <div class="form-top-actions">
+      <i-button type="info" @click="addModal"><i class="iconfont icon-xinzeng"></i> 新增</i-button>
+      <i-button type="error"><i class="iconfont icon-shanchu"></i> 批量删除</i-button>
+      <i-button type="success"><i class="iconfont icon-daochu"></i> 导出</i-button>
+    </div>
+    <Table border ref="selection" :columns="columns4" :data="data1"></Table>
+    <div class="page-container">
+      <Page :total="40" size="small" show-elevator show-sizer show-total></Page>
     </div>
     <pt-modal title="添加产品" v-model="showAddModal" :width="600">
       <Form ref="formValidate" label-position="left" :label-width="80">
-        <FormItem label="姓名" prop="name">
-            <Input placeholder="请输入姓名"></Input>
-        </FormItem>
-        <FormItem label="邮箱" prop="mail">
-            <Input placeholder="请输入邮箱"></Input>
-        </FormItem>
-        <FormItem label="用户密码" prop="mail">
-            <Input placeholder="请输入邮箱"></Input>
-        </FormItem>
-        <FormItem label="姓名" prop="name">
-            <Input placeholder="请输入姓名"></Input>
-        </FormItem>
-        <FormItem label="邮箱" prop="mail">
-            <Input placeholder="请输入邮箱"></Input>
-        </FormItem>
-        <FormItem label="邮箱" prop="mail">
-            <Input placeholder="请输入邮箱"></Input>
-        </FormItem>
-        <FormItem class="text-right">
-            <Button type="primary">提交</Button>
-            <Button type="ghost" style="margin-left: 8px">重置</Button>
-        </FormItem>
+        <i-form-item label="姓名" prop="name">
+          <i-input placeholder="请输入姓名"></i-input>
+        </i-form-item>
+        <i-form-item label="邮箱" prop="mail">
+          <i-input placeholder="请输入邮箱"></i-input>
+        </i-form-item>
+        <i-form-item label="用户密码" prop="mail">
+          <i-input placeholder="请输入邮箱"></i-input>
+        </i-form-item>
+        <i-form-item label="姓名" prop="name">
+          <i-input placeholder="请输入姓名"></i-input>
+        </i-form-item>
+        <i-form-item label="邮箱" prop="mail">
+          <i-input placeholder="请输入邮箱"></i-input>
+        </i-form-item>
+        <i-form-item label="邮箱" prop="mail">
+          <i-input placeholder="请输入邮箱"></i-input>
+        </i-form-item>
+        <i-form-item class="text-right">
+          <i-button type="primary">提交</i-button>
+          <i-button type="ghost" style="margin-left: 8px">重置</i-button>
+        </i-form-item>
       </Form>
     </pt-modal>
   </div>
