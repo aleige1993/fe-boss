@@ -10,6 +10,10 @@ import Table from '@/pages/page-table';
 import Errors from '@/pages/errors';
 // 贷前业务
 import OrderRegister from '@/pages/beforeloan-manage/order-register';
+// 产品管理-产品配置
+import Product from '@/pages/configuration-manage/page-product';
+// 产品管理-产品配置-产品查询
+import ProDetails from '@/pages/configuration-manage/product-details';
 
 Vue.use(Router)
 
@@ -49,6 +53,16 @@ let MyRouter = new Router({
           path: 'orderregister',
           name: 'orderRegister',
           component: OrderRegister
+        },
+        {
+          path: 'product',
+          name: 'product',
+          component: Product
+        },
+        {
+          path: 'ProDetails',
+          name: 'ProDetails',
+          component: ProDetails
         }
       ]
     }
