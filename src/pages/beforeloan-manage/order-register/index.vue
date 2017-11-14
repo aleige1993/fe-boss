@@ -8,24 +8,24 @@
     <div class="form-top-actions"></div>
     <i-row>
       <i-col span="24">
-        <Form label-position="right" :label-width="120">
+        <i-form label-position="right" :label-width="120">
           <bs-form-block :title="'基本信息'">
             <i-row>
               <i-col span="6">
                 <i-form-item label="车类">
                   <i-select v-model="formData.select">
-                    <Option value="beijing">一手车</Option>
-                    <Option value="shanghai">二手车</Option>
-                    <Option value="shenzhen">三手车</Option>
+                    <i-option value="beijing">一手车</i-option>
+                    <i-option value="shanghai">二手车</i-option>
+                    <i-option value="shenzhen">三手车</i-option>
                   </i-select>
                 </i-form-item>
               </i-col>
               <i-col span="6">
                 <i-form-item label="车型">
                   <i-select v-model="formData.select">
-                    <Option value="beijing">一手车</Option>
-                    <Option value="shanghai">二手车</Option>
-                    <Option value="shenzhen">三手车</Option>
+                    <i-option value="beijing">一手车</i-option>
+                    <i-option value="shanghai">二手车</i-option>
+                    <i-option value="shenzhen">三手车</i-option>
                   </i-select>
                 </i-form-item>
               </i-col>
@@ -41,18 +41,18 @@
               <i-col span="6">
               <i-form-item label="产品">
                 <i-select v-model="formData.select">
-                  <Option value="beijing">一手车</Option>
-                  <Option value="shanghai">二手车</Option>
-                  <Option value="shenzhen">三手车</Option>
+                  <i-option value="beijing">一手车</i-option>
+                  <i-option value="shanghai">二手车</i-option>
+                  <i-option value="shenzhen">三手车</i-option>
                 </i-select>
               </i-form-item>
               </i-col>
               <i-col span="6">
               <i-form-item label="费用套餐">
                 <i-select v-model="formData.select">
-                  <Option value="beijing">一手车</Option>
-                  <Option value="shanghai">二手车</Option>
-                  <Option value="shenzhen">三手车</Option>
+                  <i-option value="beijing">一手车</i-option>
+                  <i-option value="shanghai">二手车</i-option>
+                  <i-option value="shenzhen">三手车</i-option>
                 </i-select>
               </i-form-item>
               </i-col>
@@ -70,9 +70,9 @@
               <i-col span="6">
               <i-form-item label="渠道商">
                 <i-select v-model="formData.select">
-                  <Option value="beijing">一手车</Option>
-                  <Option value="shanghai">二手车</Option>
-                  <Option value="shenzhen">三手车</Option>
+                  <i-option value="beijing">一手车</i-option>
+                  <i-option value="shanghai">二手车</i-option>
+                  <i-option value="shenzhen">三手车</i-option>
                 </i-select>
               </i-form-item>
               </i-col>
@@ -91,21 +91,21 @@
               <i-col span="6">
               <i-form-item label="车辆品牌">
                 <i-select filterable>
-                  <Option>宝马</Option>
+                  <i-option>宝马</i-option>
                 </i-select>
               </i-form-item>
               </i-col>
               <i-col span="6">
               <i-form-item label="车系">
                 <i-select filterable>
-                  <Option>宝马</Option>
+                  <i-option>宝马</i-option>
                 </i-select>
               </i-form-item>
               </i-col>
               <i-col span="6">
               <i-form-item label="型号">
                 <i-select filterable>
-                  <Option>宝马</Option>
+                  <i-option>宝马</i-option>
                 </i-select>
               </i-form-item>
               </i-col>
@@ -130,7 +130,7 @@
               </i-col>
             </i-row>
           </bs-form-block>
-        </Form>
+        </i-form>
       </i-col>
     </i-row>
   </div>
