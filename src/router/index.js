@@ -99,6 +99,8 @@ let MyRouter = new Router({
       ]
     }
   ],
+  linkExactActiveClass: 'active',
+  // linkActiveClass: 'active',
   scrollBehavior (to, from, savedPosition) {
     return { x: 0, y: 0 }
   }

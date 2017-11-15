@@ -1,6 +1,6 @@
 <template>
-  <div class="pt-modal-shadow" v-show="showThisModal">
-    <div class="pt-modal-dialog" v-bind:style="{width: width}">
+  <div class="pt-modal-shadow" v-bind:style="{zIndex: zIndex}" v-show="showThisModal">
+    <div class="pt-modal-dialog" v-bind:style="{width: width+'px'}">
       <div class="pt-modal-title">
         <slot name="title">
           {{title || '标题'}}
@@ -37,7 +37,12 @@ export default {
     width: {
       type: Number,
       required: false,
-      default: 720
+      default: 520
+    },
+    zIndex: {
+      type: Number,
+      required: false,
+      default: 100
     }
   },
   methods: {
@@ -104,15 +109,12 @@ export default {
       color: #fff;
       position: absolute;
       right: 10px;
-      top: 8px;
+      top: 3px;
       font-size: 18px;
       cursor: pointer;
       font-weight: 500;
       transition: all .5s;
       line-height: 1;
-      &:hover{
-        transform: scale(1.1);
-      }
     }
   }
   .pt-modal-body{
