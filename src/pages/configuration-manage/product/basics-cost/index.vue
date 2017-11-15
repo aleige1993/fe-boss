@@ -1,15 +1,19 @@
 <template>
 <!--费用类型配置-->
   <div id="page-cost">
-    <bs-form-block :title="'费用类型配置'">
-      <div class="form-top-actions">
-        <i-button type="info"><i class="iconfont icon-xinzeng"></i>&nbsp;新增</i-button>
-      </div>
-      <i-table border ref="selection" :columns="columns1" :data="data1"></i-table>
-      <div class="page-container">
-        <i-page :current="1" :total="40" size="small" show-elevator show-total></i-page>
-      </div>
-    </bs-form-block>
+    <i-breadcrumb separator="&gt;">
+      <i-breadcrumb-item href="/">首页</i-breadcrumb-item>
+      <i-breadcrumb-item href="/index/conf">配置管理</i-breadcrumb-item>
+      <i-breadcrumb-item href="/index/conf/product">产品管理</i-breadcrumb-item>
+      <i-breadcrumb-item>费用类型配置</i-breadcrumb-item>
+    </i-breadcrumb>
+    <div class="form-top-actions">
+      <i-button type="info"><i class="iconfont icon-xinzeng"></i>&nbsp;新增</i-button>
+    </div>
+    <i-table border ref="selection" :columns="columns1" :data="data1"></i-table>
+    <div class="page-container">
+      <i-page :current="1" :total="40" size="small" show-elevator show-total></i-page>
+    </div>
   </div>
 </template>
 

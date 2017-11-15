@@ -32,6 +32,20 @@ export default [
       reMsg: 'success'
     })
   },
+  // 产品管理-贷款材料配置
+  {
+    url: '/productLoan',
+    resp: Mock.mock({
+      reCode: '0',
+      'list|1-5': [
+        {
+          'loanId|+1': 1,
+          'loanName': /[测试字体]{4,30}/
+        }
+      ],
+      reMsg: 'success'
+    })
+  },
   // 产品管理
   {
     url: '/productDetails',
