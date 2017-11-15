@@ -122,7 +122,7 @@ export default {
     async initMenuTree() {
       let promise = await this.$http.get('/sys/menu/list?menuId=98');
       if (promise.reCode === '0000') {
-        this.$store.dispatch('setMenuList', promise.body.children);
+        this.$store.dispatch('setMenuList', promise.body.childMenus);
       }
     }
   }

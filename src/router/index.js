@@ -29,7 +29,9 @@ import BasicsCar from '@/pages/configuration-manage/product/basics-car';
 import BasicsFile from '@/pages/configuration-manage/product/basics-file';
 // 客户管理
 import CustomerManage from '@/pages/customer-manage';
-import PrivateCustomer from '@/pages/customer-manage/private-customer'
+import PrivateCustomer from '@/pages/customer-manage/private-customer';
+import PrivateCustomerList from '@/pages/customer-manage/private-customer/customer-list';
+import PrivateCustomerModify from '@/pages/customer-manage/private-customer/customer-add';
 
 Vue.use(Router)
 
@@ -79,7 +81,19 @@ let MyRouter = new Router({
             {
               path: '/',
               name: 'privateCustomer',
-              component: PrivateCustomer
+              component: PrivateCustomer,
+              children: [
+                {
+                  path:'/',
+                  name: 'listPrivateCustomer',
+                  component: PrivateCustomerList
+                },
+                {
+                  path: 'modify',
+                  name: 'addPrivateCustomer',
+                  component: PrivateCustomerModify
+                }
+              ]
             }
           ]
         },

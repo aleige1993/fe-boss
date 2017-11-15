@@ -2,7 +2,7 @@
  * Created by MarvenGong on 2017/4/21.
  */
 import Mock from 'mockjs';
-import MockConfig from './MockConfig';
+import MockConfig from './mockData';
 import Config from './Config';
 class HttpMock {
   constructor() {

@@ -14,6 +14,9 @@ export default new Vuex.Store({
   getters: {
     menuList(state) {
       return state.global.menuList;
+    },
+    secondMenuList(state) {
+      return state.global.secondMenuList;
     }
   },
   actions,

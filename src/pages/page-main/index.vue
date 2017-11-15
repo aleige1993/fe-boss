@@ -35,7 +35,7 @@ export default {
       let promise = await this.$http.get('/sys/menu/list?menuId=98');
       msg();
       if (promise.reCode === '0000') {
-        this.$store.dispatch('setMenuList', promise.body.children);
+        this.$store.dispatch('setMenuList', promise.body.childMenus);
       }
     }
   },
