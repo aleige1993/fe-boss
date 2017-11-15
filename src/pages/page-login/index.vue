@@ -53,7 +53,7 @@
                 </div>
               </div>
               <div class="login-row">
-                <label for="">验证码</label>
+                <label>验证码</label>
                 <div class="login-input">
                   <input placeholder="验证码" style="width: 232px;"></input>
                   <img class="verify-code" src="./img/code.png" alt="">

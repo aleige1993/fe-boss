@@ -59,9 +59,9 @@ class Http {
     return axios({
       url: _url,
       dataType: 'json',
-      // headers: {
-      //   'token': UserLogin.getLoginInfo().token
-      // },
+      headers: {
+        'token': UserLogin.getLoginInfo().token
+      },
       method: 'GET'
     }).then(res => {
       console.log(res);
