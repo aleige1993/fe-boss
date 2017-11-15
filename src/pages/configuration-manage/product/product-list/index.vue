@@ -2,6 +2,7 @@
   <div id="page-product">
     <i-breadcrumb separator="&gt;">
       <i-breadcrumb-item href="/">首页</i-breadcrumb-item>
+      <i-breadcrumb-item href="/index/conf">配置管理</i-breadcrumb-item>
       <i-breadcrumb-item>产品管理</i-breadcrumb-item>
     </i-breadcrumb>
     <div class="form-block-title">
@@ -33,27 +34,27 @@
       <i-page :current="1" :total="40" size="small" show-elevator show-total></i-page>
     </div>
     <pt-modal title="添加产品" v-model="showAddModal" :width="600">
-      <i-form ref="formValidate" label-position="left" :label-width="100">
+      <i-form ref="formCustom" :model="formCustom" label-position="left" :label-width="100">
         <i-form-item class="required" label="产品类别" prop="protype">
-          <i-input placeholder="请输入产品类别" v-model="addSubmit.protype"></i-input>
+          <i-input placeholder="请输入产品类别" v-model="formCustom.protype"></i-input>
         </i-form-item>
         <i-form-item class="required" label="产品名称" prop="proname">
-          <i-input placeholder="请输入产品名称" v-model="addSubmit.proname"></i-input>
+          <i-input placeholder="请输入产品名称" v-model="formCustom.proname"></i-input>
         </i-form-item>
         <i-form-item label="状态" prop="state">
-          <i-select v-model="addSubmit.formItem.select">
-            <i-option value="0">启用</i-option>
-            <i-option value="1">停用</i-option>
+          <i-select v-model="formCustom.prostusState">
+            <i-option value="启用">启用</i-option>
+            <i-option value="停用">停用</i-option>
           </i-select>
         </i-form-item>
-        <i-form-item label="适用流程" prop="state">
-          <i-select v-model="addSubmit.formItem.select">
-            <i-option value="1">流程一</i-option>
-            <i-option value="2">流程二</i-option>
+        <i-form-item label="适用流程" prop="process">
+          <i-select v-model="formCustom.process">
+            <i-option value="流程一">流程一</i-option>
+            <i-option value="流程二">流程二</i-option>
           </i-select>
         </i-form-item>
-        <i-form-item class="required" label="产品说明" prop="proname">
-          <i-input v-model="addSubmit.formItem.textarea" type="textarea" :autosize="{minRows: 2,maxRows: 5}" placeholder="请输入产品说明..."></i-input>
+        <i-form-item class="required" label="产品说明" prop="explain">
+          <i-input v-model="formCustom.explain" type="textarea" :autosize="{minRows: 2,maxRows: 5}" placeholder="请输入产品说明..."></i-input>
         </i-form-item>
         <i-form-item class="text-right">
           <i-button type="primary" @click="formSubmit">提交</i-button>
@@ -73,14 +74,15 @@
     },
     data() {
       return {
+        isAdd: true,
         showAddModal: false,
-        addSubmit: {
+        listIndex: Number,
+        formCustom: {
           protype: '',
           proname: '',
-          formItem: {
-            select: '',
-            textarea: ''
-          }
+          prostusState: '',
+          process: '',
+          explain: ''
         },
         columns1: [
           {
@@ -120,20 +122,6 @@
             align: 'center',
             render: (h, params) => {
               return h('div', [
-                /*h('Button', {
-                  props: {
-                    type: 'primary',
-                    size: 'small'
-                  },
-                  style: {
-                    marginRight: '5px'
-                  },
-                  on: {
-                    click: () => {
-                      // console.log(params);
-                    }
-                  }
-                }, '详情'),*/
                 h('Button', {
                   props: {
                     type: 'primary',
@@ -144,7 +132,8 @@
                   },
                   on: {
                     click: () => {
-                      // this.show(params.index);
+                      this.listIndex = params.index;
+                      this.setList(params.row);
                     }
                   }
                 }, '修改'),
@@ -182,8 +171,37 @@
       remove(index) {
         this.data1.splice(index, 1);
       },
+      setList(row) {
+        this.isAdd = false;
+        this.$data.showAddModal = true;
+        this.formCustom.proname = row.productName;
+        this.formCustom.protype = row.productType;
+        this.formCustom.prostusState = row.productState;
+      },
       formSubmit() {
-        console.log(this.$refs.formValidate);
+        if (this.isAdd) {
+          this.$data.data1.unshift({
+            productNumber: '003',
+            productName: this.$data.formCustom.proname,
+            productType: this.$data.formCustom.protype,
+            productState: this.$data.formCustom.prostusState,
+            creationTime: 'yyyy-MM-dd HH:mm:ss',
+            updateTime: 'yyyy-MM-dd HH:mm:ss'
+          });
+          this.$data.showAddModal = false;
+        } else {
+          this.$data.data1[this.listIndex].costName = this.$data.formCustom.costName;
+          this.$data.data1[this.listIndex].costDirection = this.$data.formCustom.costDirection;
+          this.$data.showAddModal = false;
+        }
+        this.formReset();
+      },
+      formReset() {
+        this.$data.formCustom.protype = '';
+        this.$data.formCustom.proname = '';
+        this.$data.formCustom.prostusState = '';
+        this.$data.formCustom.process = '';
+        this.$data.formCustom.explain = '';
       }
     }
   };

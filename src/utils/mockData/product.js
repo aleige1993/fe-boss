@@ -20,6 +20,77 @@ export default [
       reMsg: 'success'
     })
   },
+  // 产品管理-贷款材料配置
+  {
+    url: '/productLoan',
+    resp: Mock.mock({
+      reCode: '0',
+      'list|1-5': [
+        {
+          'loanId|+1': 1,
+          'loanName': /[测试字体]{4,30}/
+        }
+      ],
+      reMsg: 'success'
+    })
+  },
+  // 产品管理-费用类型配置
+  {
+    url: '/productCost',
+    resp: Mock.mock({
+      reCode: '0',
+      'list|1-5': [
+        {
+          'costId|+1': 1,
+          'costName': '@name',
+          'costDirection|1': ['收入', '支出']
+        }
+      ],
+      reMsg: 'success'
+    })
+  },
+  // 产品管理-准入规则配置
+  {
+    url: '/productRule',
+    resp: Mock.mock({
+      reCode: '0',
+      'list|1-5': [
+        {
+          'ruleId|+1': 1,
+          'ruleName': /[测试字体]{4,30}/
+        }
+      ],
+      reMsg: 'success'
+    })
+  },
+  // 产品管理-车辆材料配置
+  {
+    url: '/productCar',
+    resp: Mock.mock({
+      reCode: '0',
+      'list|1-5': [
+        {
+          'carId|+1': 1,
+          'carName': /[测试字体]{4,30}/
+        }
+      ],
+      reMsg: 'success'
+    })
+  },
+  // 产品管理-归档材料配置
+  {
+    url: '/productFile',
+    resp: Mock.mock({
+      reCode: '0',
+      'list|1-5': [
+        {
+          'fileId|+1': 1,
+          'fileName': /[测试字体]{4,30}/
+        }
+      ],
+      reMsg: 'success'
+    })
+  },
   // 产品管理
   {
     url: '/productDetails',
