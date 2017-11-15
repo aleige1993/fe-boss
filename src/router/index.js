@@ -17,6 +17,16 @@ import ConfigurationManage from '@/pages/configuration-manage';
 import Product from '@/pages/configuration-manage/product';
 // 配置管理-产品管理-产品列表
 import ProductList from '@/pages/configuration-manage/product/product-list';
+// 配置管理-产品管理-贷款材料配置
+import BasicsLoan from '@/pages/configuration-manage/product/basics-loan';
+// 配置管理-产品管理-费用类型配置
+import BasicsCost from '@/pages/configuration-manage/product/basics-cost';
+// 配置管理-产品管理-准入规则配置
+import BasicsRule from '@/pages/configuration-manage/product/basics-rule';
+// 配置管理-产品管理-车辆材料配置
+import BasicsCar from '@/pages/configuration-manage/product/basics-car';
+// 配置管理-产品管理-归档材料配置
+import BasicsFile from '@/pages/configuration-manage/product/basics-file';
 // 客户管理
 import CustomerManage from '@/pages/customer-manage';
 import PrivateCustomer from '@/pages/customer-manage/private-customer'
@@ -89,8 +99,37 @@ let MyRouter = new Router({
                 {
                   path: '/',
                   name: 'ProductList',
-                  component: ProductList,
-
+                  component: ProductList
+                },
+                // 配置管理-产品管理-贷款材料配置
+                {
+                  path: 'loan',
+                  name: 'BasicsLoan',
+                  component: BasicsLoan
+                },
+                // 配置管理-产品管理-费用类型配置
+                {
+                  path: 'cost',
+                  name: 'BasicsCost',
+                  component: BasicsCost
+                },
+                // 配置管理-产品管理-准入规则配置
+                {
+                  path: 'rule',
+                  name: 'BasicsRule',
+                  component: BasicsRule
+                },
+                // 配置管理-产品管理-车辆材料配置
+                {
+                  path: 'car',
+                  name: 'BasicsCar',
+                  component: BasicsCar
+                },
+                // 配置管理-产品管理-归档材料配置
+                {
+                  path: 'file',
+                  name: 'BasicsFile',
+                  component: BasicsFile
                 }
               ]
             }
