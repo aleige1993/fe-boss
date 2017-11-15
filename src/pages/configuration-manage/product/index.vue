@@ -1,5 +1,6 @@
 <template>
   <div id="page-product-manage">
+    <!--产品管理-->
     <router-view></router-view>
   </div>
 </template>

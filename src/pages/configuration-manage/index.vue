@@ -1,13 +1,13 @@
 <template>
   <div id="page-configuration-manage">
-    conf
+    <!--配置管理-->
     <router-view></router-view>
   </div>
 </template>
 
 <script>
   export default {
-    name: 'pageConfigurationManage',
+    name: 'ConfigurationManage',
     data: () => ({})
   };
 </script>
