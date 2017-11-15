@@ -1,13 +1,12 @@
 <template>
-  <div id="page-configuration-manage">
-    conf
+  <div id="page-product-manage">
     <router-view></router-view>
   </div>
 </template>
 
 <script>
   export default {
-    name: 'pageConfigurationManage',
+    name: 'productmanage',
     data: () => ({})
   };
 </script>
