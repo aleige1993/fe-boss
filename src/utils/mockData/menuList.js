@@ -11,7 +11,21 @@ export default [
             childMenus: [
               {
                 name: '个人客户管理',
-                url: '/index/customer'
+                url: '/index/customer',
+                childMenus: [
+                  {
+                    name: '个人客户列表',
+                    url: '/index/customer'
+                  },
+                  {
+                    name: '个人客户添加',
+                    url: '/index/customer/modify'
+                  }
+                ]
+              },
+              {
+                name: '公司客户管理',
+                url: '/index/customer/company'
               }
             ]
           },

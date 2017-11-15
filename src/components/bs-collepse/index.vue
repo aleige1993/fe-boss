@@ -44,16 +44,16 @@ export default {
     }
   }
   &:hover{
-    color: #333;
     text-decoration: none;
-  }
-  &.active{
     background-color: #c5dcef;
     border-left: 4px solid $color-primary;
     color: $color-primary;
   }
+  &.active{
+
+  }
 }
 .bs-collepse-body{
-  padding-left: 42px;
+  // padding-left: 30px;
 }
 </style>

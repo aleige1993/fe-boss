@@ -8,12 +8,16 @@ export default new Vuex.Store({
     global: {
       currentPlace: '重庆',
       menuList: [],
+      selectedTopMenuIndex: 0,
       secondMenuList: []
     }
   },
   getters: {
     menuList(state) {
       return state.global.menuList;
+    },
+    selectedTopMenuIndex(state) {
+      return state.global.selectedTopMenuIndex;
     },
     secondMenuList(state) {
       return state.global.secondMenuList;
