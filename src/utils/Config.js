@@ -1,5 +1,5 @@
 export default {
-  HTTPMOCK_ON: false,
+  HTTPMOCK_ON: true,
   ENV: 'dev',
   HTTPMOCK_TIMEOUT: 2000,
   XHRLOG: true,
