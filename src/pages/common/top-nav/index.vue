@@ -3,6 +3,7 @@
     <div class="left-nav">
       <ul>
         <li><router-link :to="{ name: 'home' }">首页</router-link></li>
+        <li><router-link :to="{ path: '/index' }">主页面</router-link></li>
         <li v-for="item in topMenuList"><router-link :to="{ name: 'home' }">{{item.text}}</router-link></li>
         <!--<li><a href="#">贷款业务</a></li>-->
         <!--<li><a href="#">合同管理</a></li>-->
@@ -56,6 +57,7 @@ export default {
   .left-nav{
     ul li{
       float: left;
+      margin: 0 10px;
       a{
         display: block;
         height: 40px;
@@ -63,8 +65,8 @@ export default {
         color: #2b333e;
         font-size: 14px;
         text-align: center;
-        min-width: 97px;
-        &:hover{
+        padding: 0 15px;
+        &:hover,&.active{
           background-color: $color-primary;
           text-decoration: none;
           color: #fff;

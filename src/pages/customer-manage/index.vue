@@ -1,6 +1,6 @@
 <template>
-  <div>
-
+  <div id="page-customer-manager">
+    <router-view></router-view>
   </div>
 </template>
 <script>
