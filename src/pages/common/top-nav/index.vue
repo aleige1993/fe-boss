@@ -3,15 +3,16 @@
     <div class="left-nav">
       <ul>
         <li><router-link :to="{ name: 'home' }">首页</router-link></li>
-        <li><a href="#">贷款业务</a></li>
-        <li><a href="#">合同管理</a></li>
-        <li><a href="#">放款管理</a></li>
-        <li><a href="#">财务管理</a></li>
-        <li><a href="#">贷后管理</a></li>
-        <li><router-link :to="{ name: 'product' }">产品管理</router-link></li>
-        <li><a href="#">资方管理</a></li>
-        <li><a href="#">商户管理</a></li>
-        <li><a href="#">客户管理</a></li>
+        <li v-for="item in topMenuList"><router-link :to="{ name: 'home' }">{{item.text}}</router-link></li>
+        <!--<li><a href="#">贷款业务</a></li>-->
+        <!--<li><a href="#">合同管理</a></li>-->
+        <!--<li><a href="#">放款管理</a></li>-->
+        <!--<li><a href="#">财务管理</a></li>-->
+        <!--<li><a href="#">贷后管理</a></li>-->
+        <!--<li><router-link :to="{ name: 'product' }">产品管理</router-link></li>-->
+        <!--<li><a href="#">资方管理</a></li>-->
+        <!--<li><a href="#">商户管理</a></li>-->
+        <!--<li><a href="#">客户管理</a></li>-->
       </ul>
     </div>
     <div class="right-nav">
@@ -24,6 +25,21 @@ export default {
   name: '',
   data() {
     return {};
+  },
+  computed: {
+    topMenuList() {
+      let allMenuList = this.$store.getters.menuList;
+      let ary = [];
+      allMenuList.map((item, index) => {
+        ary.push({
+          text: item.text,
+          topMenuIndex: index,
+          hasChildren: item.hasChildren,
+          url: ''
+        });
+      });
+      return ary;
+    }
   }
 };
 </script>

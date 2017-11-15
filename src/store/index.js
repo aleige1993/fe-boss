@@ -6,7 +6,14 @@ Vue.use(Vuex);
 export default new Vuex.Store({
   state: {
     global: {
-      currentPlace: '重庆'
+      currentPlace: '重庆',
+      menuList: [],
+      secondMenuList: []
+    }
+  },
+  getters: {
+    menuList(state) {
+      return state.global.menuList;
     }
   },
   actions,

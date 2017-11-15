@@ -17,6 +17,9 @@ import ConfigurationManage from '@/pages/configuration-manage';
 import Product from '@/pages/configuration-manage/product';
 // 配置管理-产品管理-产品列表
 import ProductList from '@/pages/configuration-manage/product/product-list';
+// 客户管理
+import CustomerManage from '@/pages/customer-manage';
+import PrivateCustomer from '@/pages/customer-manage/private-customer'
 
 Vue.use(Router)
 
@@ -56,6 +59,19 @@ let MyRouter = new Router({
           path: 'orderregister',
           name: 'orderRegister',
           component: OrderRegister
+        },
+        // 客户管理
+        {
+          path: 'customer',
+          name: 'customer',
+          component: CustomerManage,
+          children: [
+            {
+              path: '/',
+              name: 'privateCustomer',
+              component: PrivateCustomer
+            }
+          ]
         },
         // 配置管理
         {

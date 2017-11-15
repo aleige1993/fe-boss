@@ -119,20 +119,11 @@ export default {
     document.body.style.backgroundColor = '#fff';
   },
   methods: {
-    initMenuTree() {
-//      let promise = await this.$http.get('/sys/menu/list');
-      $.ajax({
-        url: 'http://10.164.1.89:8091/sys/menu/list',
-        /*headers: {
-          token: UserLogin.getLoginInfo().token
-        },*/
-        type: 'get',
-        dataType: 'json',
-        success(res) {
-          console.log(res);
-        }
-      });
-      // console.log(promise);
+    async initMenuTree() {
+      let promise = await this.$http.get('/sys/menu/list');
+      if (promise.reCode === '0000') {
+        this.$store.dispatch('setMenuList', promise.body.children);
+      }
     }
   }
 };
