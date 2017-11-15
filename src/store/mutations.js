@@ -7,5 +7,8 @@ export default {
   },
   setSelectedTopMenuIndex(state, index) {
     state.global.selectedTopMenuIndex = index;
+  },
+  toggleLoading(state, isShow) {
+    state.dataLoadingShow = isShow;
   }
 };

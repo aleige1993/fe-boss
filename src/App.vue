@@ -1,14 +1,21 @@
 <template>
   <div id="app">
     <router-view/>
+    <bs-over-loading :dataLoading="dataLoading"></bs-over-loading>
   </div>
 </template>
 
 <script>
+  import OverLoading from '@/components/bs-over-loading';
 export default {
   name: 'app',
   components: {
-
+    'bs-over-loading': OverLoading
+  },
+  computed:{
+    dataLoading(){
+      return this.$store.state.dataLoadingShow;
+    }
   }
 }
 </script>
