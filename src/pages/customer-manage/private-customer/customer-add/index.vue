@@ -16,7 +16,16 @@
                 <i-row>
                   <i-col span="6">
                     <i-form-item class="required" label="姓名">
-                      <i-input></i-input>
+                      <i-input placeholder="姓名"></i-input>
+                    </i-form-item>
+                  </i-col>
+                </i-row>
+                <i-row>
+                  <i-col span="6">
+                    <i-form-item class="required" label="证件类型">
+                      <i-select>
+                        <i-option>身份证</i-option>
+                      </i-select>
                     </i-form-item>
                   </i-col>
                   <i-col span="6">
@@ -26,7 +35,7 @@
                   </i-col>
                   <i-col span="6">
                     <i-form-item class="required" label="身份证有效期">
-                      <i-date-picker type="date" placeholder="Select date" style="width: 200px"></i-date-picker>
+                      <i-date-picker type="date" placeholder="Select date" style="width: 100%"></i-date-picker>
                     </i-form-item>
                   </i-col>
                 </i-row>
@@ -41,7 +50,7 @@
                   </i-col>
                   <i-col span="6">
                     <i-form-item class="required" label="出生日期">
-                      <i-date-picker type="date" placeholder="Select date" style="width: 200px"></i-date-picker>
+                      <i-date-picker style="width: 100%" type="date" placeholder="Select date"></i-date-picker>
                     </i-form-item>
                   </i-col>
                   <i-col span="6">
@@ -194,13 +203,101 @@
               </bs-form-block>
               <!--工作信息-->
               <bs-form-block :title="'工作信息'">
+                <i-row>
+                  <i-col span="6">
+                    <i-form-item class="required" label="单位名称">
+                      <i-input :readonly="true">
+                        <i-button type="primary" slot="append">选择客户 <Icon type="ios-more"></Icon></i-button>
+                      </i-input>
+                    </i-form-item>
+                  </i-col>
+                  <i-col span="6">
+                    <i-form-item class="required" label="单位性质">
+                      <i-input :readonly="true" placeholder="自动带入"></i-input>
+                    </i-form-item>
+                  </i-col>
+                  <i-col span="6">
+                    <i-form-item class="required" label="行业类别">
+                      <i-input :readonly="true" placeholder="自动带入"></i-input>
+                    </i-form-item>
+                  </i-col>
+                </i-row>
+                <i-row>
+                  <i-col span="6">
+                    <i-form-item class="required" label="职务">
+                      <i-input></i-input>
+                    </i-form-item>
+                  </i-col>
+                  <i-col span="6">
+                    <i-form-item class="required" label="入职时间">
+                      <i-date-picker style="width: 100%" placeholder="入职时间"></i-date-picker>
+                    </i-form-item>
+                  </i-col>
+                  <i-col span="6">
+                    <i-form-item class="required" label="所属部门">
+                      <i-input></i-input>
+                    </i-form-item>
+                  </i-col>
+                </i-row>
+                <i-row>
+                  <i-col span="6">
+                    <i-form-item class="required" label="月收入">
+                      <i-input>
+                        <span slot="append">元</span>
+                      </i-input>
+                    </i-form-item>
+                  </i-col>
+                  <i-col span="6">
+                    <i-form-item class="required" label="单位电话">
+                      <i-input placeholder="自动带入"></i-input>
+                    </i-form-item>
+                  </i-col>
 
+                </i-row>
+                <i-row>
+                  <i-col span="18">
+                    <i-form-item class="required" label="公司地址">
+                      <i-select style="width: 150px">
+                        <i-option>重庆市</i-option>
+                      </i-select>
+                      <i-select style="width: 150px">
+                        <i-option>重庆市</i-option>
+                      </i-select>
+                      <i-select style="width: 150px">
+                        <i-option>重庆市</i-option>
+                      </i-select>
+                      <i-input placeholder="街道信息" style="width: 220px;"></i-input>
+                    </i-form-item>
+                  </i-col>
+                </i-row>
               </bs-form-block>
-
+              <bs-form-block :title="'来源信息'">
+                <i-row>
+                  <i-col span="6">
+                    <i-form-item class="required" label="业务拓展部门">
+                      <i-select>
+                        <i-option>万州分公司</i-option>
+                      </i-select>
+                    </i-form-item>
+                  </i-col>
+                  <i-col span="6">
+                    <i-form-item class="required" label="开始合作时间">
+                      <i-date-picker placeholder="选择时间" style="width: 100%"></i-date-picker>
+                    </i-form-item>
+                  </i-col>
+                  <i-col span="6">
+                    <i-form-item class="required" label="客户经理">
+                      <i-input placeholder="选择时间">
+                        <i-button slot="append">选择客户经理 <Icon type="ios-more"></Icon></i-button>
+                      </i-input>
+                    </i-form-item>
+                  </i-col>
+                </i-row>
+              </bs-form-block>
               <div class="form-footer-actions">
-                <i-button type="primary"><i class="iconfont icon-tijiao"></i> 提交</i-button>
-                <i-button type="success"><i class="iconfont icon-jujue"></i> 重置</i-button>
-                <i-button><i class="iconfont icon-dayin"></i> 打印</i-button>
+                <i-button type="primary"><i class="iconfont icon-tijiao"></i> 保存草稿</i-button>
+                <i-button type="success"><i class="iconfont icon-tijiao"></i> 提交</i-button>
+                <!--<i-button><i class="iconfont icon-dayin"></i> 打印</i-button>-->
               </div>
             </i-form>
           </i-col>
@@ -287,6 +384,12 @@
       'formData.user.isWed': (val) => {
         // alert(val);
       }
+    },
+    mounted() {
+      this.$showLoading();
+      setTimeout(() => {
+        this.$hideLoading();
+      }, 3000);
     }
   };
 </script>

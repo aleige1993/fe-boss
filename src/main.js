@@ -30,6 +30,13 @@ import UserLogin from '@/utils/UserLogin';
 Vue.prototype.$userLogin = UserLogin;
 // global filter
 import filter from './filter';
+//加载效果公共函数
+Vue.prototype.$showLoading = ()=> {
+  store.dispatch("toggleLoading", true);
+};
+Vue.prototype.$hideLoading = ()=> {
+  store.dispatch("toggleLoading", false);
+};
 /* eslint-disable no-new */
 new Vue({
   el: '#app',
@@ -37,4 +44,4 @@ new Vue({
   store,
   template: '<App/>',
   components: { App }
-})
+});

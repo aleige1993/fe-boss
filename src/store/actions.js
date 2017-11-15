@@ -7,5 +7,8 @@ export default {
   },
   setSelectedTopMenuIndex({ commit }, index) {
     commit('setSelectedTopMenuIndex', index);
+  },
+  toggleLoading({ commit }, isShow) {
+    commit('toggleLoading', isShow);
   }
 };

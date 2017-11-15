@@ -22,6 +22,7 @@ export default {
     async logout() {
       let promise = await this.$http.get('/logout');
       if (promise.reCode === '0000') {
+        this.$userLogin.removeLoginInfo();
         this.$router.push('/login');
       } else {
         this.$Notice.error({
