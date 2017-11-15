@@ -4,23 +4,25 @@
     <nav>
       <ul>
         <!-- <li><a href="#/form"><Icon v-bind:class="{active: isOpen}" type="ios-arrow-right"></Icon> 贷款业务</a></li> -->
-        <li>
-          <bs-collepse title="业务受理">
+        <li v-for="second in secondMenuList">
+
+          <bs-collepse v-if="second.childMenus"  :title="second.name">
             <ul class="second-nav">
               <li><a href="#">进单登记</a></li>
               <li><a href="#">进单查询</a></li>
               <li><a href="#">客户补件</a></li>
             </ul>
           </bs-collepse>
+          <router-link v-else :to="second.url"><Icon v-bind:class="{active: isOpen}" type="ios-arrow-right"></Icon> {{second.name}}</router-link>
         </li>
-        <li>
-          <bs-collepse title="业务审批">
-            <ul class="second-nav">
-              <li><a href="#">电核初审</a></li>
-              <li><a href="#">有权审批</a></li>
-            </ul>
-          </bs-collepse>
-        </li>
+        <!--<li>-->
+          <!--<bs-collepse title="业务审批">-->
+            <!--<ul class="second-nav">-->
+              <!--<li><a href="#">电核初审</a></li>-->
+              <!--<li><a href="#">有权审批</a></li>-->
+            <!--</ul>-->
+          <!--</bs-collepse>-->
+        <!--</li>-->
       </ul>
     </nav>
   </div>
@@ -36,6 +38,11 @@ export default {
   },
   components: {
     BsCollepse
+  },
+  computed: {
+    secondMenuList() {
+      return this.$store.getters.secondMenuList;
+    }
   }
 };
 </script>

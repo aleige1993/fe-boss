@@ -3,8 +3,7 @@
     <div class="left-nav">
       <ul>
         <li><router-link :to="{ name: 'home' }">首页</router-link></li>
-        <li><router-link :to="{ path: '/index' }">主页面</router-link></li>
-        <li v-for="item in topMenuList"><router-link :to="{ name: 'home' }">{{item.text}}</router-link></li>
+        <li v-for="item in topMenuList" ><router-link :to="item.url" @click.native.prevent="openSecnodMenus(item)">{{item.text}}</router-link></li>
         <!--<li><a href="#">贷款业务</a></li>-->
         <!--<li><a href="#">合同管理</a></li>-->
         <!--<li><a href="#">放款管理</a></li>-->
@@ -33,13 +32,19 @@ export default {
       let ary = [];
       allMenuList.map((item, index) => {
         ary.push({
-          text: item.text,
+          text: item.name,
           topMenuIndex: index,
-          hasChildren: item.hasChildren,
-          url: ''
+          hasChildren: false,
+          url: item.url
         });
       });
       return ary;
+    }
+  },
+  methods: {
+    openSecnodMenus(nav) {
+      let allMenuList = this.$store.getters.menuList;
+      this.$store.dispatch('setSecondMenuList', allMenuList[nav.topMenuIndex].childMenus);
     }
   }
 };
