@@ -3,6 +3,7 @@
     <div class="left-nav">
       <ul>
         <li><router-link :to="{ name: 'home' }">首页</router-link></li>
+        <!--<li><router-link to="/index">主页</router-link></li>-->
         <li v-for="item in topMenuList" ><router-link :to="item.url" @click.native.prevent="openSecnodMenus(item)">{{item.text}}</router-link></li>
         <!--<li><a href="#">贷款业务</a></li>-->
         <!--<li><a href="#">合同管理</a></li>-->
@@ -44,7 +45,7 @@ export default {
   methods: {
     openSecnodMenus(nav) {
       let allMenuList = this.$store.getters.menuList;
-      this.$store.dispatch('setSecondMenuList', allMenuList[nav.topMenuIndex].childMenus);
+      this.$store.dispatch('setSelectedTopMenuIndex', nav.topMenuIndex);
     }
   }
 };
@@ -71,7 +72,7 @@ export default {
         font-size: 14px;
         text-align: center;
         padding: 0 15px;
-        &:hover,&.active{
+        &:hover,&.link-active{
           background-color: $color-primary;
           text-decoration: none;
           color: #fff;

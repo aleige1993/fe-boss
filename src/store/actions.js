@@ -4,5 +4,8 @@ export default {
   },
   setSecondMenuList({ commit }, list) {
     commit('setSecondMenuList', list);
+  },
+  setSelectedTopMenuIndex({ commit }, index) {
+    commit('setSelectedTopMenuIndex', index);
   }
 };

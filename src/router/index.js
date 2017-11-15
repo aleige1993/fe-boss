@@ -43,7 +43,7 @@ let MyRouter = new Router({
       component: Login
     },
     {
-      path: '/',
+      path: '/home',
       name: 'home',
       component: Home
     },
@@ -152,8 +152,8 @@ let MyRouter = new Router({
       ]
     }
   ],
-  linkExactActiveClass: 'active',
-  // linkActiveClass: 'active',
+  linkExactActiveClass: 'link-exact-active',
+  linkActiveClass: 'link-active',
   scrollBehavior (to, from, savedPosition) {
     return { x: 0, y: 0 }
   }

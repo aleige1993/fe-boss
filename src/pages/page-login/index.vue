@@ -113,7 +113,7 @@ export default {
             name: this.$data.redirectUrl
           });
         } else {
-          this.$router.push('/');
+          this.$router.push('/home');
         }
       } else {
         this.$data.errorInfo = res.reMsg;
