@@ -37,7 +37,6 @@
     },
     data() {
       return {
-        isReset: false,
         isAdd: true,
         showAddModal: false,
         listIndex: Number,
@@ -99,8 +98,7 @@
       let response = await this.$http.post('/productLoan', {});
       try {
         Vm.$data.data1 = response.list;
-      } catch (err) {
-      }
+      } catch (err) {}
     },
     methods: {
       addModal() {
@@ -121,12 +119,12 @@
             loanName: this.$data.formCustom.textarea
           });
           this.$data.showAddModal = false;
-          this.$data.formCustom.textarea = '';
         } else {
           let textData = this.$data.formCustom.textarea;
           this.$data.data1[this.listIndex].loanName = textData;
           this.$data.showAddModal = false;
         }
+        this.$data.formCustom.textarea = '';
       },
       handleReset() {
         this.$data.formCustom.textarea = '';
