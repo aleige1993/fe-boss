@@ -12,9 +12,11 @@ import Errors from '@/pages/errors';
 // 贷前业务
 import OrderRegister from '@/pages/beforeloan-manage/order-register';
 // 产品管理-产品配置
-import Product from '@/pages/configuration-manage/page-product';
-// 产品管理-产品配置-产品查询
-import ProDetails from '@/pages/configuration-manage/product-details';
+import ConfigurationManage from '@/pages/configuration-manage';
+// 产品管理-产品配置
+import ProductList from '@/pages/configuration-manage/page-product/product-list';
+/*// 产品管理-产品配置-产品查询
+import ProDetails from '@/pages/configuration-manage/product-details';*/
 
 Vue.use(Router)
 
@@ -56,14 +58,21 @@ let MyRouter = new Router({
           component: OrderRegister
         },
         {
-          path: 'product',
-          name: 'product',
-          component: Product
-        },
-        {
           path: 'ProDetails',
           name: 'ProDetails',
           component: ProDetails
+        },
+        {
+          path: '/ConfigurationManage',
+          name: 'ConfigurationManage',
+          component: ConfigurationManage,
+          children: [
+            {
+              path: '/ProductList',
+              name: 'ProductList',
+              component: ProductList
+            }
+          ]
         }
       ]
     }
