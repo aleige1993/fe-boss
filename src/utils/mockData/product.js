@@ -9,9 +9,9 @@ export default [
         {
           'codeId|+1': 1,
           'proNumber': 'CP1001',
-          'proName': '@name',
+          'proName|1': ['产品名称1', '产品名称2', '产品名称3', '产品名称4', '产品名称5'],
           'proType|1': ['乘用车', '商用车', '轻卡', '微卡', '新能源'],
-          'proState': '启用',
+          'proState|1': ['启用', '停用'],
           'creationTime': '@DATETIME("yyyy-MM-dd HH:mm:ss")',
           'updateTime': '@now("yyyy-MM-dd HH:mm:ss")',
           'Founder': '@name'

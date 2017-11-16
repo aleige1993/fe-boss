@@ -61,7 +61,7 @@ module.exports = {
     'block-scoped-var': 2, // 块语句中使用var
     'no-dupe-class-members': 2,
     //'no-var': 1, // 禁用var，用let和const代替
-    'object-shorthand': [2, 'always'], // 强制对象字面量缩写语法
+    'object-shorthand': [1, 'always'], // 强制对象字面量缩写语法
     'array-bracket-spacing': [2, 'never'], // 是否允许非空数组里面有多余的空格
     'operator-linebreak': [2, 'after'],// 换行时运算符在行尾还是行首
     'semi-spacing': [2, {'before': false, 'after': true}], // 分号前后空格

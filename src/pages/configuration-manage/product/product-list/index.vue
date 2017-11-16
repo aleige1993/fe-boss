@@ -64,23 +64,30 @@
         </i-form-item>
       </i-form>
     </pt-modal>
+    <!--利率方案配置弹窗-->
+    <pt-modal :title="'['+clickRow.proName+']利率方案配置'" v-model="showLlModal" :width="840">
+      <conf-model-lilv></conf-model-lilv>
+    </pt-modal>
   </div>
 </template>
 
 <script>
   import PTModal from '@/components/bs-modal';
+  import ConfModelLilv from './configure-model-lilv'; //  利率方案配置
   export default {
     name: '',
     components: {
-      'pt-modal': PTModal
+      'pt-modal': PTModal,
+      'conf-model-lilv': ConfModelLilv
     },
     data() {
       return {
         isAdd: true,
         showAddModal: false,
-        showproModal: false,
+        showLlModal: true,
         listIndex: Number,
         clickRow: {},
+        // 列表“新增按钮”的表单
         formCustom: {
           protype: '',
           proname: '',
@@ -168,6 +175,12 @@
       } catch (err) {
       }
     },
+    watch: {
+      /*'formRate.Repayment': function(val, oldVal) {
+        console.log(val);
+        console.log(this.$data);
+      }*/
+    },
     methods: {
       addModal() {
         this.$data.showAddModal = true;
@@ -226,6 +239,7 @@
       },
       lilvClick() {
         if (this.clickRowedFun()) {
+          this.$data.showLlModal = true;
         }
       },
       // 获取当前时间
@@ -257,6 +271,8 @@
         margin-right: 10px;
       }
     }
-
+    & .pt-modal-shadow .bs-form-block .block-body {
+      border: 0;
+    }
   }
 </style>
