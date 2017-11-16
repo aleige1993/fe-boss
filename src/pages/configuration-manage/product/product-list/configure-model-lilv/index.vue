@@ -223,29 +223,54 @@
         <i-button @click="addModal" type="info"><i class="iconfont icon-xinzeng"></i> 新增</i-button>
       </div>
       <i-table highlight-row border ref="proTable" :columns="columns1" :data="data1"></i-table>
+      <br>
+      <br>
       <i-form-item class="text-right">
         <i-button type="primary" @click="formSubmit">提交</i-button>
         <i-button type="ghost" style="margin-left: 8px" @click="formReset">重置</i-button>
       </i-form-item>
     </i-form>
+    <pt-modal title="新增" v-model="showAdd" :width="520">
+      <i-form ref="formInModel" :model="formInModel" label-position="left" :label-width="100">
+        <i-form-item class="required" label="期限" prop="protype">
+          <i-input placeholder="请输入期限" v-model="formInModel.protype">
+          </i-input>
+        </i-form-item>
+        <i-form-item class="required" label="利率标准" prop="protype">
+          <i-input placeholder="请输入利率标准" v-model="formInModel.protype">
+            <span slot="append">%</span>
+          </i-input>
+        </i-form-item>
+        <i-form-item class="text-right">
+          <i-button type="primary" @click="formInSubmit">提交</i-button>
+          <i-button type="ghost" style="margin-left: 8px" @click="formInCancel">取消</i-button>
+        </i-form-item>
+      </i-form>
+    </pt-modal>
   </div>
 </template>
 
 <script>
+  import PTModal from '@/components/bs-modal';
   export default {
     name: '',
+    components: {
+      'pt-modal': PTModal
+    },
     data() {
       return {
-        formRate: {
+        showAdd: false,   // 增删的模态框
+        formRate: {       // 当前的模态框的数据表单
           protype: '',
           Repayment: '',
           rules: ''
         },
+        formInModel: {    // 增删的模态框的数据表单
+        },
         columns1: [
           {
             title: '车类',
-            width: 80,
-            align: 'center',
+            width: 200,
             key: 'car'
           },
           {
@@ -293,14 +318,16 @@
             }
           }
         ],
-        data1: [
-          {
-            car: '中级三厢轿车',
-            month: '中级三厢轿车',
-            rate: 0.15
-          }
-        ]
+        data1: []
       };
+    },
+    async mounted() {
+      const Vm = this;
+      let response = await this.$http.post('/productLilv', {});
+      try {
+        Vm.$data.data1 = response.list;
+      } catch (err) {
+      }
     },
     methods: {
       addModal() {},
@@ -315,6 +342,10 @@
       },
       remove(index) {
         this.data1.splice(index, 1);
+      },
+      formInSubmit() {},
+      formInCancel() {
+        this.$data.showAdd = false;
       }
     }
   };

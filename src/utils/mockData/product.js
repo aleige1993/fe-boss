@@ -91,6 +91,21 @@ export default [
       reMsg: 'success'
     })
   },
+  // 产品管理-利率方案配置
+  {
+    url: '/productLilv',
+    resp: Mock.mock({
+      reCode: '0',
+      'list|1-5': [
+        {
+          'car|1': ['三厢轿车', '两厢轿车', 'SUV', '轻卡', '微卡'],
+          'month|1': ['3', '6', '12', '18', '24'],
+          'rate|1': ['0.1', '0.15', '0.2']
+        }
+      ],
+      reMsg: 'success'
+    })
+  },
   // 产品管理
   {
     url: '/productDetails',
