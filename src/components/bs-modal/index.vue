@@ -63,6 +63,25 @@ export default {
     }
   }
 };
+$(function() {
+  // 弹窗高度自适应
+  let modelFun = function() {
+    let ele = $('.pt-modal-dialog');
+    ele.each(function() {
+      $(this).css({
+        'max-height': '90%'
+      });
+      let _h = $(this).height();
+      $($(this).find('.pt-modal-body')[0]).css({
+        'max-height': _h - 36 + 'px'
+      });
+    });
+  };
+  modelFun();
+  $(window).resize(function() {
+    modelFun(); // 弹窗高度自适应
+  });
+});
 </script>
 <style lang="scss" scoped>
 .pt-modal-shadow{
@@ -85,6 +104,8 @@ export default {
   width: 520px;
   background-color: #fff;
   min-height: 200px;
+  max-height: 90%;
+  overflow: hidden;
   display: inline-block;
   vertical-align: middle;
   box-shadow: 5px 5px 16px rgba(97, 92, 92, .35);
@@ -118,6 +139,8 @@ export default {
     }
   }
   .pt-modal-body{
+    position: relative;
+    overflow-y: auto;
     padding: 20px 40px;
     text-align: left;
   }

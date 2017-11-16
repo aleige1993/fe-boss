@@ -190,34 +190,44 @@
             </i-row>
           </i-form-item>
         </i-col>
+        <!--提前还款利息-->
+        <i-col span="24">
+          <i-form-item class="required" label="个人单户额度" prop="protype">
+            <span>不足</span>
+            <i-input placeholder="" v-model="formRate.protype" style="width: 80px"></i-input>
+            <span>天，按实际发生天数收，否则整月收！最低收</span>
+            <i-input placeholder="" v-model="formRate.protype" style="width: 80px"></i-input>
+            <span>天利息。</span>
+          </i-form-item>
+        </i-col>
+        <!--保证金释放方式-->
+        <i-col span="12">
+          <i-form-item class="required" label="保证金释放方式" prop="protype">
+            <i-select v-model="formRate.select" placeholder="请选择">
+              <i-option value="yes">按还本金额释放</i-option>
+              <i-option value="no">按贷款结清</i-option>
+            </i-select>
+          </i-form-item>
+        </i-col>
+        <!--授信释放方式-->
+        <i-col span="12">
+          <i-form-item class="required" label="授信释放方式" prop="protype">
+            <i-select v-model="formRate.select" placeholder="请选择">
+              <i-option value="yes">按还本金额释放</i-option>
+              <i-option value="no">按贷款结清</i-option>
+            </i-select>
+          </i-form-item>
+        </i-col>
       </i-row>
+      <div class="form-top-actions">
+        <i-button @click="addModal" type="info"><i class="iconfont icon-xinzeng"></i> 新增</i-button>
+      </div>
+      <i-table highlight-row border ref="proTable" :columns="columns1" :data="data1"></i-table>
       <i-form-item class="text-right">
         <i-button type="primary" @click="formSubmit">提交</i-button>
         <i-button type="ghost" style="margin-left: 8px" @click="formReset">重置</i-button>
       </i-form-item>
     </i-form>
-    <br>
-    <br>4564654
-    <br>
-    <br>04564654777
-    <br>
-    <br>4564654
-    <br>
-    <br>14564654898
-    <br>
-    <br>4564654
-    <br>
-    <br>2456465478978
-    <br>
-    <br>4564654
-    <br>
-    <br>34564654789
-    <br>
-    <br>4564654
-    <br>
-    <br>4456
-    <br>
-    <br>4564789654
   </div>
 </template>
 
@@ -230,21 +240,87 @@
           protype: '',
           Repayment: '',
           rules: ''
-        }
+        },
+        columns1: [
+          {
+            title: '车类',
+            width: 80,
+            align: 'center',
+            key: 'car'
+          },
+          {
+            title: '贷款期限(月)',
+            key: 'month'
+          },
+          {
+            title: '贷款利率(%)',
+            key: 'rate'
+          },
+          {
+            title: '操作',
+            key: 'action',
+            width: 200,
+            align: 'center',
+            render: (h, params) => {
+              return h('div', [
+                h('Button', {
+                  props: {
+                    type: 'primary',
+                    size: 'small'
+                  },
+                  style: {
+                    marginRight: '5px'
+                  },
+                  on: {
+                    click: () => {
+                      this.listIndex = params.index;
+                      this.setList(params.row);
+                    }
+                  }
+                }, '修改'),
+                h('Button', {
+                  props: {
+                    type: 'error',
+                    size: 'small'
+                  },
+                  on: {
+                    click: () => {
+                      this.remove(params.index);
+                    }
+                  }
+                }, '删除')
+              ]);
+            }
+          }
+        ],
+        data1: [
+          {
+            car: '中级三厢轿车',
+            month: '中级三厢轿车',
+            rate: 0.15
+          }
+        ]
       };
     },
     methods: {
+      addModal() {},
       formSubmit() {},
-      formReset() {}
+      formReset() {},
+      setList(row) {
+        this.isAdd = false;
+        this.$data.showAddModal = true;
+        this.formCustom.proname = row.proName;
+        this.formCustom.protype = row.proType;
+        this.formCustom.prostusState = row.proState;
+      },
+      remove(index) {
+        this.data1.splice(index, 1);
+      }
     }
   };
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style lang="scss" scoped>
-#conf-model-lilv {
-  & .ivu-col-span-15 {
-    padding: 0;
-  }
-}
+
 </style>
