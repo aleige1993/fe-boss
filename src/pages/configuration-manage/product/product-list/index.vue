@@ -23,16 +23,18 @@
     </div>
     <div class="form-top-actions">
       <i-button @click="addModal" type="info"><i class="iconfont icon-xinzeng"></i> 新增产品</i-button>
-      <i-button type="ghost"><i class="iconfont icon-shenhe"></i> 利率方案配置</i-button>
+      <i-button @click="lilvClick" type="ghost"><i class="iconfont icon-shenhe"></i> 利率方案配置</i-button>
       <i-button type="ghost"><i class="iconfont icon-shenhe"></i> 费用收取配置</i-button>
       <i-button type="ghost"><i class="iconfont icon-shenhe"></i> 贷款材料配置</i-button>
       <i-button type="ghost"><i class="iconfont icon-shenhe"></i> 准入规则配置</i-button>
       <i-button type="ghost"><i class="iconfont icon-shenhe"></i> 归档材料配置</i-button>
     </div>
-    <i-table border ref="selection" :columns="columns1" :data="data1"></i-table>
+    <i-button @click="handleClearCurrentRow" type="ghost"><i class="iconfont icon-shenhe"></i> 取消选中</i-button>
+    <i-table highlight-row border ref="proTable" :columns="columns1" :data="data1" @on-current-change="radioFun"></i-table>
     <div class="page-container">
       <i-page :current="1" :total="40" size="small" show-elevator show-total></i-page>
     </div>
+    <!--新增产品弹窗-->
     <pt-modal title="添加产品" v-model="showAddModal" :width="600">
       <i-form ref="formCustom" :model="formCustom" label-position="left" :label-width="100">
         <i-form-item class="required" label="产品类别" prop="protype">
@@ -58,25 +60,34 @@
         </i-form-item>
         <i-form-item class="text-right">
           <i-button type="primary" @click="formSubmit">提交</i-button>
-          <i-button type="ghost" style="margin-left: 8px">重置</i-button>
+          <i-button type="ghost" style="margin-left: 8px" @click="formReset">重置</i-button>
         </i-form-item>
       </i-form>
+    </pt-modal>
+    <!--利率方案配置弹窗-->
+    <pt-modal :title="'['+clickRow.proName+']利率方案配置'" v-model="showLlModal" :width="840">
+      <conf-model-lilv></conf-model-lilv>
     </pt-modal>
   </div>
 </template>
 
 <script>
   import PTModal from '@/components/bs-modal';
+  import ConfModelLilv from './configure-model-lilv'; //  利率方案配置
   export default {
     name: '',
     components: {
-      'pt-modal': PTModal
+      'pt-modal': PTModal,
+      'conf-model-lilv': ConfModelLilv
     },
     data() {
       return {
         isAdd: true,
         showAddModal: false,
+        showLlModal: true,
         listIndex: Number,
+        clickRow: {},
+        // 列表“新增按钮”的表单
         formCustom: {
           protype: '',
           proname: '',
@@ -89,19 +100,19 @@
             title: '产品编号',
             width: 100,
             align: 'center',
-            key: 'productNumber'
+            key: 'proNumber'
           },
           {
             title: '产品名称',
-            key: 'producName'
+            key: 'proName'
           },
           {
             title: '产品类型',
-            key: 'productType'
+            key: 'proType'
           },
           {
             title: '产品状态',
-            key: 'productState'
+            key: 'proState'
           },
           {
             title: '创建时间',
@@ -164,6 +175,12 @@
       } catch (err) {
       }
     },
+    watch: {
+      /*'formRate.Repayment': function(val, oldVal) {
+        console.log(val);
+        console.log(this.$data);
+      }*/
+    },
     methods: {
       addModal() {
         this.$data.showAddModal = true;
@@ -174,26 +191,26 @@
       setList(row) {
         this.isAdd = false;
         this.$data.showAddModal = true;
-        this.formCustom.proname = row.productName;
-        this.formCustom.protype = row.productType;
-        this.formCustom.prostusState = row.productState;
+        this.formCustom.proname = row.proName;
+        this.formCustom.protype = row.proType;
+        this.formCustom.prostusState = row.proState;
       },
       formSubmit() {
         if (this.isAdd) {
           this.$data.data1.unshift({
-            productNumber: '003',
-            productName: this.$data.formCustom.proname,
-            productType: this.$data.formCustom.protype,
-            productState: this.$data.formCustom.prostusState,
+            proNumber: '003',
+            proName: this.$data.formCustom.proname,
+            proType: this.$data.formCustom.protype,
+            proState: this.$data.formCustom.prostusState,
             creationTime: 'yyyy-MM-dd HH:mm:ss',
-            updateTime: 'yyyy-MM-dd HH:mm:ss'
+            updateTime: this.getNowFormatDate()
           });
-          this.$data.showAddModal = false;
         } else {
-          this.$data.data1[this.listIndex].costName = this.$data.formCustom.costName;
-          this.$data.data1[this.listIndex].costDirection = this.$data.formCustom.costDirection;
-          this.$data.showAddModal = false;
+          this.$data.data1[this.listIndex].proName = this.$data.formCustom.proname;
+          this.$data.data1[this.listIndex].proType = this.$data.formCustom.protype;
+          this.$data.data1[this.listIndex].proState = this.$data.formCustom.prostusState;
         }
+        this.$data.showAddModal = false;
         this.formReset();
       },
       formReset() {
@@ -202,6 +219,44 @@
         this.$data.formCustom.prostusState = '';
         this.$data.formCustom.process = '';
         this.$data.formCustom.explain = '';
+      },
+      // 单选每一行时出触发
+      radioFun(currentRow, oldCurrentRow) {
+        this.$data.clickRow = currentRow;
+      },
+      // 取消选中行的选中状态
+      handleClearCurrentRow() {
+        this.$refs.proTable.clearCurrentRow();
+        this.$data.clickRow = {};
+      },
+      // 点击配置按钮时
+      clickRowedFun() {
+        if (JSON.stringify(this.$data.clickRow) === '{}') {
+          alert('请先选择任意一项产品');
+          return false;
+        }
+        return true;
+      },
+      lilvClick() {
+        if (this.clickRowedFun()) {
+          this.$data.showLlModal = true;
+        }
+      },
+      // 获取当前时间
+      getNowFormatDate() {
+        let date = new Date();
+        let seperator1 = '-';
+        let seperator2 = ':';
+        let month = date.getMonth() + 1;
+        let strDate = date.getDate();
+        if (month >= 1 && month <= 9) {
+          month = '0' + month;
+        }
+        if (strDate >= 0 && strDate <= 9) {
+          strDate = '0' + strDate;
+        }
+        let currentdate = date.getFullYear() + seperator1 + month + seperator1 + strDate + ' ' + date.getHours() + seperator2 + date.getMinutes() + seperator2 + date.getSeconds();
+        return currentdate;
       }
     }
   };
@@ -215,6 +270,9 @@
       & button {
         margin-right: 10px;
       }
+    }
+    & .pt-modal-shadow .bs-form-block .block-body {
+      border: 0;
     }
   }
 </style>
