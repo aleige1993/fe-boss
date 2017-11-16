@@ -7,8 +7,8 @@
       <i-breadcrumb-item>客户添加</i-breadcrumb-item>
     </i-breadcrumb>
     <div class="form-top-actions"></div>
-    <Tabs :animated="false" type="card">
-      <TabPane label="主体信息">
+    <i-tabs :animated="false" type="card" @on-click="tabChange">
+      <i-tab-pane label="主体信息">
         <i-row>
           <i-col span="24">
             <i-form label-position="right" :label-width="120">
@@ -17,6 +17,11 @@
                   <i-col span="6">
                     <i-form-item class="required" label="姓名">
                       <i-input placeholder="姓名"></i-input>
+                    </i-form-item>
+                  </i-col>
+                  <i-col span="6">
+                    <i-form-item class="required" label="手机号">
+                      <i-input placeholder="手机号"></i-input>
                     </i-form-item>
                   </i-col>
                 </i-row>
@@ -172,30 +177,21 @@
                   <i-col span="6">
                     <i-form-item class="required" label="身份证正面">
                       <i-upload action="//jsonplaceholder.typicode.com/posts/">
-                        <div style="padding: 20px 0">
-                          <Icon type="ios-cloud-upload" size="52" style="color: #3399ff"></Icon>
-                          <p>Click or drag files here to upload</p>
-                        </div>
+                          <idcard-placeholder type="face"></idcard-placeholder>
                       </i-upload>
                     </i-form-item>
                   </i-col>
                   <i-col span="6">
                     <i-form-item class="required" label="身份证反面">
                       <i-upload action="//jsonplaceholder.typicode.com/posts/">
-                        <div style="padding: 20px 0">
-                          <Icon type="ios-cloud-upload" size="52" style="color: #3399ff"></Icon>
-                          <p>Click or drag files here to upload</p>
-                        </div>
+                        <idcard-placeholder type="back"></idcard-placeholder>
                       </i-upload>
                     </i-form-item>
                   </i-col>
                   <i-col span="6">
                     <i-form-item class="required" label="手持身份证">
                       <i-upload action="//jsonplaceholder.typicode.com/posts/">
-                        <div style="padding: 20px 0">
-                          <Icon type="ios-cloud-upload" size="52" style="color: #3399ff"></Icon>
-                          <p>Click or drag files here to upload</p>
-                        </div>
+                        <idcard-placeholder type="hand"></idcard-placeholder>
                       </i-upload>
                     </i-form-item>
                   </i-col>
@@ -302,24 +298,50 @@
             </i-form>
           </i-col>
         </i-row>
-      </TabPane>
-      <TabPane label="配偶信息">标签二的内容</TabPane>
-      <TabPane label="联系人信息">标签三的内容</TabPane>
-      <TabPane label="银行账户信息">标签一的内容</TabPane>
-      <TabPane label="征信信息">标签二的内容</TabPane>
-      <TabPane label="旗下公司">标签三的内容</TabPane>
-      <TabPane label="负面调查">标签一的内容</TabPane>
-      <TabPane label="业务往来">标签二的内容</TabPane>
-      <TabPane label="诉讼情况">标签三的内容</TabPane>
-    </Tabs>
+      </i-tab-pane>
+      <i-tab-pane label="配偶信息">
+        <tab-spouse-info :customerId="customerId"></tab-spouse-info>
+      </i-tab-pane>
+      <i-tab-pane label="联系人信息">
+        <tab-contact-info></tab-contact-info>
+      </i-tab-pane>
+      <i-tab-pane label="银行账户信息">
+        <tab-bank-account-info></tab-bank-account-info>
+      </i-tab-pane>
+      <i-tab-pane label="征信信息">
+        <tab-credit-info></tab-credit-info>
+      </i-tab-pane>
+      <i-tab-pane label="旗下公司">
+        <tab-owe-company-info></tab-owe-company-info>
+      </i-tab-pane>
+      <i-tab-pane label="负面调查">
+        <tab-negative-survey-info></tab-negative-survey-info>
+      </i-tab-pane>
+      <i-tab-pane label="业务往来">
+        <tab-business-contact-info></tab-business-contact-info>
+      </i-tab-pane>
+      <i-tab-pane label="诉讼情况">
+        <tab-lawsuit-info></tab-lawsuit-info>
+      </i-tab-pane>
+    </i-tabs>
 
   </div>
 </template>
 <script>
+  import TabSpouseInfo from './spouse-info/index.vue';
+  import TabContactInfo from './contact-info/index.vue';
+  import TabBankAccountInfo from './bank-account-info/index.vue';
+  import TabCreditInfo from './credit-info/index.vue';
+  import TabOweCompanyInfo from './owe-company-info/index.vue';
+  import TabNegativeSurveyInfo from './negative-survey/index.vue';
+  import TabBusinessContactInfo from './business-contact/index.vue';
+  import TabLawsuitInfo from './lawsuit-info/index.vue';
+  import IDCardPlaceholder from '@/components/bs-idcard-placeholder';
   export default {
     name: '',
     data() {
       return {
+        customerId: null,
         contactTableColume: [
           {
             title: '姓名',
@@ -385,11 +407,27 @@
         // alert(val);
       }
     },
+    components: {
+      'tab-spouse-info': TabSpouseInfo,
+      'tab-contact-info': TabContactInfo,
+      TabBankAccountInfo,
+      TabCreditInfo,
+      TabOweCompanyInfo,
+      TabNegativeSurveyInfo,
+      TabBusinessContactInfo,
+      TabLawsuitInfo,
+      'idcard-placeholder': IDCardPlaceholder
+    },
+    methods: {
+      tabChange(name) {
+        // alert(name); // 0,1,2,3
+      }
+    },
     mounted() {
-      this.$showLoading();
-      setTimeout(() => {
-        this.$hideLoading();
-      }, 3000);
+//      this.$showLoading();
+//      setTimeout(() => {
+//        this.$hideLoading();
+//      }, 3000);
     }
   };
 </script>
