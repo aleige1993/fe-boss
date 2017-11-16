@@ -95,82 +95,23 @@
 </template>
 <script>
   import PTModal from '@/components/bs-modal';
-  import Data from './data';
+  import MixinData from './mixin-data';
   export default {
     name: '',
+    mixins: [MixinData],
     data() {
       return {
         'addContactModalTitle': '添加联系人',
         showAddModal: false,
-        loadingContactBook: true,
-        contactColumns: [
-          {
-            title: '联系人姓名',
-            key: 'name'
-          },
-          {
-            title: '关系',
-            key: 'relationShip'
-          },
-          {
-            title: '手机号码',
-            key: 'phone'
-          },
-          {
-            title: '联系人类型',
-            key: 'type'
-          },
-          {
-            title: '操作',
-            key: 'action',
-            render: (h, params) => {
-              return h('div', [
-                h('Button', {
-                  props: {
-                    type: 'primary',
-                    size: 'small'
-                  },
-                  style: {
-                    marginRight: '5px'
-                  },
-                  on: {
-                    click: () => {
-                      this.show(params.index);
-                    }
-                  }
-                }, '编辑'),
-                h('Button', {
-                  props: {
-                    type: 'error',
-                    size: 'small'
-                  },
-                  on: {
-                    click: () => {
-                      this.remove(params.index);
-                    }
-                  }
-                }, '删除')
-              ]);
-            }
-          }
-        ],
-        contactDatas: [
-          {
-            name: 'Joe Black',
-            relationShip: '情人',
-            phone: '15696544221',
-            type: '客户'
-          }
-        ],
-        contactBookColumns: Data.contactBookColumns,
-        contactBookDatas: Data.contactBookDatas,
-        callInColumns: Data.callInColumns,
-        callInDatas: Data.callInDatas
+        loadingContactBook: true
       };
     },
     methods: {
       addContactModal() {
         this.$data.showAddModal = true;
+      },
+      show() {
+        alert(1);
       }
     },
     components: {

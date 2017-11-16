@@ -328,6 +328,7 @@
   </div>
 </template>
 <script>
+  import MixinData from './mixin-data';
   import TabSpouseInfo from './spouse-info/index.vue';
   import TabContactInfo from './contact-info/index.vue';
   import TabBankAccountInfo from './bank-account-info/index.vue';
@@ -339,55 +340,10 @@
   import IDCardPlaceholder from '@/components/bs-idcard-placeholder';
   export default {
     name: '',
+    mixins: [MixinData],
     data() {
       return {
         customerId: null,
-        contactTableColume: [
-          {
-            title: '姓名',
-            key: 'name'
-          },
-          {
-            title: '关系',
-            key: 'relationShip'
-          },
-          {
-            title: '电话',
-            key: 'phone'
-          },
-          {
-            title: '操作',
-            render: (h, params) => {
-              return h('div', [
-                h('Button', {
-                  props: {
-                    type: 'primary',
-                    size: 'small'
-                  },
-                  style: {
-                    marginRight: '5px'
-                  },
-                  on: {
-                    click: () => {
-                      this.show(params.index);
-                    }
-                  }
-                }, '编辑'),
-                h('Button', {
-                  props: {
-                    type: 'error',
-                    size: 'small'
-                  },
-                  on: {
-                    click: () => {
-                      this.remove(params.index);
-                    }
-                  }
-                }, '删除')
-              ]);
-            }
-          }
-        ],
         formData: {
           select: '',
           user: {
