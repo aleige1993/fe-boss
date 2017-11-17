@@ -24,12 +24,12 @@
     <div class="form-top-actions">
       <i-button @click="addModal" type="info"><i class="iconfont icon-xinzeng"></i> 新增产品</i-button>
       <i-button @click="lilvClick" type="ghost"><i class="iconfont icon-shenhe"></i> 利率方案配置</i-button>
-      <i-button type="ghost"><i class="iconfont icon-shenhe"></i> 费用收取配置</i-button>
-      <i-button type="ghost"><i class="iconfont icon-shenhe"></i> 贷款材料配置</i-button>
+      <i-button @click="feiyClick" type="ghost"><i class="iconfont icon-shenhe"></i> 费用收取配置</i-button>
+      <i-button @click="loanClick" type="ghost"><i class="iconfont icon-shenhe"></i> 贷款材料配置</i-button>
       <i-button type="ghost"><i class="iconfont icon-shenhe"></i> 准入规则配置</i-button>
       <i-button type="ghost"><i class="iconfont icon-shenhe"></i> 归档材料配置</i-button>
     </div>
-    <i-button @click="handleClearCurrentRow" type="ghost"><i class="iconfont icon-shenhe"></i> 取消选中</i-button>
+    <i-button @click="handleClearCurrentRow" type="ghost"><Icon type="android-cancel"></Icon> 取消当前选中状态</i-button>
     <i-table highlight-row border ref="proTable" :columns="columns1" :data="data1" @on-current-change="radioFun"></i-table>
     <div class="page-container">
       <i-page :current="1" :total="40" size="small" show-elevator show-total></i-page>
@@ -60,13 +60,21 @@
         </i-form-item>
         <i-form-item class="text-right">
           <i-button type="primary" @click="formSubmit">提交</i-button>
-          <i-button type="ghost" style="margin-left: 8px" @click="formReset">重置</i-button>
+          <i-button type="ghost" style="margin-left: 8px" @click="formReset('formCustom')">重置</i-button>
         </i-form-item>
       </i-form>
     </pt-modal>
     <!--利率方案配置弹窗-->
-    <pt-modal :title="'['+clickRow.proName+']利率方案配置'" v-model="showLlModal" :width="840">
+    <pt-modal :title="'['+clickRow.proName+']利率方案配置'" v-model="LlShowModel" :width="1200">
       <conf-model-lilv></conf-model-lilv>
+    </pt-modal>
+    <!--费用收取配置弹窗-->
+    <pt-modal :title="'['+clickRow.proName+']费用收取配置'" v-model="FyShowModal" :width="1200">
+      <conf-model-fy></conf-model-fy>
+    </pt-modal>
+    <!--贷款材料配置弹窗-->
+    <pt-modal :title="'['+clickRow.proName+']费用收取配置'" v-model="LoanShowModal" :width="1200">
+      <conf-model-loan  ></conf-model-loan>
     </pt-modal>
   </div>
 </template>
@@ -74,17 +82,23 @@
 <script>
   import PTModal from '@/components/bs-modal';
   import ConfModelLilv from './configure-model-lilv'; //  利率方案配置
+  import ConfModelFy from './configure-model-cost'; //  费用收取配置
+  import ConfModelLoan from './configure-model-loan'; //  费用收取配置
   export default {
-    name: '',
+    name: 'prolist',
     components: {
       'pt-modal': PTModal,
-      'conf-model-lilv': ConfModelLilv
+      'conf-model-lilv': ConfModelLilv,
+      'conf-model-fy': ConfModelFy,
+      'conf-model-loan': ConfModelLoan
     },
     data() {
       return {
         isAdd: true,
         showAddModal: false,
-        showLlModal: true,
+        LlShowModel: false,           // 利率方案配置弹窗
+        FyShowModal: false,           // 费用收取配置弹窗
+        LoanShowModal: false,         // 贷款材料配置弹窗
         listIndex: Number,
         clickRow: {},
         // 列表“新增按钮”的表单
@@ -211,14 +225,11 @@
           this.$data.data1[this.listIndex].proState = this.$data.formCustom.prostusState;
         }
         this.$data.showAddModal = false;
-        this.formReset();
+        this.formReset('formCustom');
       },
-      formReset() {
-        this.$data.formCustom.protype = '';
-        this.$data.formCustom.proname = '';
-        this.$data.formCustom.prostusState = '';
-        this.$data.formCustom.process = '';
-        this.$data.formCustom.explain = '';
+      formReset(name) {
+        console.log(name);
+        this.$refs[name].resetFields(); // 重置表单
       },
       // 单选每一行时出触发
       radioFun(currentRow, oldCurrentRow) {
@@ -237,9 +248,23 @@
         }
         return true;
       },
+      // 打开利率配置弹窗
       lilvClick() {
         if (this.clickRowedFun()) {
-          this.$data.showLlModal = true;
+          this.$data.LlShowModel = true;
+        }
+      },
+      // 打开费用配置弹窗
+      feiyClick() {
+        console.log(11111111111111);
+        if (this.clickRowedFun()) {
+          this.$data.FyShowModal = true;
+        }
+      },
+      // 打开贷款材料配置弹窗
+      loanClick() {
+        if (this.clickRowedFun()) {
+          this.$data.LoanShowModal = true;
         }
       },
       // 获取当前时间

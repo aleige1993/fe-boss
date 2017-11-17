@@ -85,7 +85,6 @@ export default {
   width: 520px;
   background-color: #fff;
   min-height: 200px;
-  max-height: 90%;
   overflow: hidden;
   display: inline-block;
   vertical-align: middle;
