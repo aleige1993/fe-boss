@@ -15,7 +15,7 @@
 </template>
 <script>
 export default {
-  name: '',
+  name: 'bsModal',
   data() {
     return {
       isShow: false
@@ -63,25 +63,6 @@ export default {
     }
   }
 };
-$(function() {
-  // 弹窗高度自适应
-  let modelFun = function() {
-    let ele = $('.pt-modal-dialog');
-    ele.each(function() {
-      $(this).css({
-        'max-height': '90%'
-      });
-      let _h = $(this).height();
-      $($(this).find('.pt-modal-body')[0]).css({
-        'max-height': _h - 36 + 'px'
-      });
-    });
-  };
-  modelFun();
-  $(window).resize(function() {
-    modelFun(); // 弹窗高度自适应
-  });
-});
 </script>
 <style lang="scss" scoped>
 .pt-modal-shadow{
@@ -143,6 +124,14 @@ $(function() {
     overflow-y: auto;
     padding: 20px 40px;
     text-align: left;
+    .ivu-form{
+      padding-bottom: 0 !important;
+    }
+  }
+  .pt-modal-footer{
+    border-top: 1px solid #f5f5f5;
+    text-align: right;
+    padding: 10px 40px;
   }
 }
 @keyframes zoomFadeIn {

@@ -11,12 +11,12 @@
       <i-tab-pane label="主体信息">
         <i-row>
           <i-col span="24">
-            <i-form label-position="right" :label-width="120">
+            <i-form label-position="right" :model="formData" ref="formAddCustomer" :label-width="120">
               <bs-form-block :title="'基本信息'">
                 <i-row>
                   <i-col span="6">
-                    <i-form-item class="required" label="姓名">
-                      <i-input placeholder="姓名"></i-input>
+                    <i-form-item :prop="'name'" class="required" label="姓名">
+                      <i-input placeholder="姓名" v-model="formData.name"></i-input>
                     </i-form-item>
                   </i-col>
                   <i-col span="6">
@@ -293,7 +293,7 @@
               <div class="form-footer-actions">
                 <i-button type="primary"><i class="iconfont icon-tijiao"></i> 保存草稿</i-button>
                 <i-button type="success"><i class="iconfont icon-tijiao"></i> 提交</i-button>
-                <!--<i-button><i class="iconfont icon-dayin"></i> 打印</i-button>-->
+                <i-button @click="resetAddCustomerForm">重置</i-button>
               </div>
             </i-form>
           </i-col>
@@ -339,12 +339,13 @@
   import TabLawsuitInfo from './lawsuit-info/index.vue';
   import IDCardPlaceholder from '@/components/bs-idcard-placeholder';
   export default {
-    name: '',
+    name: 'modifyPrivateCustomer',
     mixins: [MixinData],
     data() {
       return {
         customerId: null,
         formData: {
+          name: '',
           select: '',
           user: {
             gender: '',
@@ -377,6 +378,9 @@
     methods: {
       tabChange(name) {
         // alert(name); // 0,1,2,3
+      },
+      resetAddCustomerForm() {
+        this.$refs['formAddCustomer'].resetFields();
       }
     },
     mounted() {

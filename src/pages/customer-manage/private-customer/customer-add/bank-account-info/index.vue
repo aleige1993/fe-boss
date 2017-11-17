@@ -43,7 +43,7 @@
   import PTModal from '@/components/bs-modal';
   import MixinData from './mixin-data';
   export default {
-    name: '',
+    name: 'TabPrivateCustomerAddBankAccountInfo',
     mixins: [MixinData],
     data() {
       return {

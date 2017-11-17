@@ -7,7 +7,7 @@
 import '@/assets/js/radialIndicator.min';
 import Tools from '@/utils/Tools';
 export default {
-  name: '',
+  name: 'bsCircleProgress',
   data() {
     return {
       id: 'rp-' + Tools.generateUUID()

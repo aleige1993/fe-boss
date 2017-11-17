@@ -5,28 +5,39 @@
     </div>
     <i-table :loading="false" :columns="bankAccountColumns" :data="bankAccountDatas"></i-table>
     <!--添加联系人模态框-->
-    <pt-modal :title="addContactModalTitle" v-model="addBankModal">
-      <i-form ref="formValidate" label-position="left" :label-width="80">
-        <i-form-item label="账户名" prop="name">
+    <pt-modal :title="'添加公司信息'" v-model="addBankModal">
+      <i-form ref="formValidate" label-position="left" :label-width="120">
+        <i-form-item label="公司名称" prop="name">
+          <i-input placeholder="">
+            <i-button slot="append">选择公司 <i-icon type="ios-more"></i-icon></i-button>
+          </i-input>
+        </i-form-item>
+        <i-form-item label="统一社会使用代码" prop="mail">
           <i-input placeholder=""></i-input>
         </i-form-item>
-        <i-form-item label="账号" prop="mail">
-          <i-input placeholder=""></i-input>
-        </i-form-item>
-        <i-form-item label="银行名称" prop="mail">
+        <i-form-item label="关系" prop="mail">
           <i-select id="u5568_input" placeholder="">
-            <i-option value="亲属">中国农业银行</i-option>
-            <i-option value="朋友">中国招商银行</i-option>
-            <i-option value="同事">中国建设银行</i-option>
+            <i-option value="1">全资</i-option>
+            <i-option value="2">控股</i-option>
+            <i-option value="3">全资</i-option>
+            <i-option value="4">持股</i-option>
+            <i-option value="5">核心经营人</i-option>
+            <i-option value="6">实际控制人</i-option>
           </i-select>
         </i-form-item>
-        <i-form-item label="开户行" prop="mail">
+        <i-form-item label="联系人" prop="mail">
           <i-input placeholder=""></i-input>
         </i-form-item>
-        <i-form-item label="开户行号" prop="mail">
+        <i-form-item label="联系人电话" prop="mail">
           <i-input placeholder=""></i-input>
         </i-form-item>
-        <i-form-item label="预留手机号" prop="mail">
+        <i-form-item label="注册时间" prop="mail">
+          <i-input placeholder=""></i-input>
+        </i-form-item>
+        <i-form-item label="注册资金" prop="mail">
+          <i-input placeholder=""></i-input>
+        </i-form-item>
+        <i-form-item label="经营地址" prop="mail">
           <i-input placeholder=""></i-input>
         </i-form-item>
         <i-form-item label="备注" prop="mail">
