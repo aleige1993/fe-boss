@@ -31,7 +31,7 @@
 <script>
   import PTModal from '@/components/bs-modal';
   export default {
-    name: '',
+    name: 'basics-file',
     components: {
       'pt-modal': PTModal
     },
