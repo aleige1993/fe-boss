@@ -68,7 +68,7 @@
 <script>
   import PTModal from '@/components/bs-modal';
   export default {
-    name: '',
+    name: 'privateCustomer',
     data() {
       return {
         showAddModal: false,

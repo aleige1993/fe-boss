@@ -7,7 +7,7 @@
 </template>
 <script>
 export default {
-  name: '',
+  name: 'bsOverLoading',
   data() {
     return {
 

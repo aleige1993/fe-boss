@@ -94,7 +94,7 @@ import UserLogin from '@/utils/UserLogin';
 // import {} from '@/assets/js/highcharts-more.js';
 import ChartOptions from './chartOptions';
 export default {
-  name: '',
+  name: 'pageHome',
   data() {
     return {
       id: 'circle-first',
