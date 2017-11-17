@@ -19,6 +19,10 @@ export default {
           key: 'contactNo'
         },
         {
+          title: '最终估价',
+          key: 'contactNo'
+        },
+        {
           title: '本金逾期金额',
           key: 'contactNo'
         },
@@ -44,7 +48,7 @@ export default {
                     alert(params.index);
                   }
                 }
-              }, '详情')
+              }, '纸质抵押物详情')
             ]);
           }
         }

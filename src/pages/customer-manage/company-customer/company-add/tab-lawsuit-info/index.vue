@@ -1,0 +1,49 @@
+<template>
+  <div id="add-customer-owe-company">
+    <div class="form-top-actions" style="padding-top: 0">
+      <i-button type="primary" @click="addModal=!addModal"><i class="iconfont icon-xinzeng"></i> 新增</i-button>
+    </div>
+    <i-table :loading="false" :columns="bankAccountColumns" :data="bankAccountDatas"></i-table>
+    <!--添加联系人模态框-->
+    <pt-modal :title="'添加公司信息'" v-model="addModal">
+      <i-form ref="formValidate" label-position="left" :label-width="120">
+        <i-form-item label="立案时间" prop="name">
+          <i-date-picker placeholder="" style="width: 100%"></i-date-picker>
+        </i-form-item>
+        <i-form-item label="立案原因" prop="mail">
+          <i-input type="textarea" :rows="4" placeholder=""></i-input>
+        </i-form-item>
+        <i-form-item label="案件金额" prop="mail">
+          <i-input placeholder="">
+            <span slot="元"></span>
+          </i-input>
+        </i-form-item>
+        <i-form-item label="案件角色" prop="mail">
+          <i-input placeholder=""></i-input>
+        </i-form-item>
+        <i-form-item label="">
+          <i-button type="primary" size="large" style="width: 80px;">提交</i-button>
+        </i-form-item>
+      </i-form>
+    </pt-modal>
+  </div>
+</template>
+<script>
+  import PTModal from '@/components/bs-modal';
+  import MixinData from './mixin-data';
+  export default {
+    name: 'TabPrivateCustomerAddLawsuitInfo',
+    mixins: [MixinData],
+    data() {
+      return {
+        addModal: false
+      };
+    },
+    components: {
+      'pt-modal': PTModal
+    }
+  };
+</script>
+<style lang="scss">
+
+</style>

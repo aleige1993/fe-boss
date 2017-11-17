@@ -9,6 +9,7 @@ import Home from '@/pages/page-home';
 import Form from '@/pages/page-form';
 import Table from '@/pages/page-table';
 import Errors from '@/pages/errors';
+import PageNotFound from '@/pages/errors';
 // 贷前业务
 import OrderRegister from '@/pages/beforeloan-manage/order-register';
 // 配置管理
@@ -27,16 +28,24 @@ import BasicsRule from '@/pages/configuration-manage/product/basics-rule';
 import BasicsCar from '@/pages/configuration-manage/product/basics-car';
 // 配置管理-产品管理-归档材料配置
 import BasicsFile from '@/pages/configuration-manage/product/basics-file';
-// 客户管理
+// 客户管理--个人客户
 import CustomerManage from '@/pages/customer-manage';
 import PrivateCustomer from '@/pages/customer-manage/private-customer';
 import PrivateCustomerList from '@/pages/customer-manage/private-customer/customer-list';
 import PrivateCustomerModify from '@/pages/customer-manage/private-customer/customer-add';
+// 客户管理--企业客户
+import CompanyCustomer from '@/pages/customer-manage/company-customer';
+import CompanyCustomerList from '@/pages/customer-manage/company-customer/company-list';
+import CompanyCustomerModify from '@/pages/customer-manage/company-customer/company-add';
 
-Vue.use(Router)
+Vue.use(Router);
 
 let MyRouter = new Router({
   routes: [
+    {
+      path: '*',
+      component: PageNotFound
+    },
     {
       path: '/login',
       name: 'login',
@@ -85,13 +94,29 @@ let MyRouter = new Router({
               children: [
                 {
                   path:'/',
-                  name: 'listPrivateCustomer',
                   component: PrivateCustomerList
                 },
                 {
                   path: 'modify',
                   name: 'addPrivateCustomer',
                   component: PrivateCustomerModify
+                }
+              ]
+            },
+            {
+              path: 'companycustomer',
+              name: 'companyCustomer',
+              component: CompanyCustomer,
+              children: [
+                {
+                  path:'/',
+                  name: 'companyCustomerList',
+                  component: CompanyCustomerList
+                },
+                {
+                  path: 'modify',
+                  name: 'addCompanyCustomer',
+                  component: CompanyCustomerModify
                 }
               ]
             }

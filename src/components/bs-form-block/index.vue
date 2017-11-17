@@ -40,6 +40,6 @@ export default {
 .block-body{
   border: 1px solid #dddee1;
   border-top: 0;
-  padding: 20px 0;
+  padding: 20px 15px;
 }
 </style>

@@ -6,7 +6,7 @@
     </div>
     <i-table :loading="false" :columns="spouseColumns" :data="spouseDatas"></i-table>
     <!--添加联系人模态框-->
-    <pt-modal :title="addContactModalTitle" v-model="addBankModal" width="1000">
+    <pt-modal title="选择客户配偶" v-model="addModal" width="1000">
       <i-table border ref="selection" :columns="columns4" :data="data1"></i-table>
     </pt-modal>
   </div>

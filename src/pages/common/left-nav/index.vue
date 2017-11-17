@@ -48,7 +48,8 @@ export default {
       let menuList = this.$store.getters.menuList;
       return menuList.length !== 0 ? menuList[currTopMenuIndex].name : ' ';
     }
-  }
+  },
+  mounted() {}
 };
 </script>
 <style lang="scss" scoped>

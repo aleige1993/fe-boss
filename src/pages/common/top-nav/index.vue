@@ -47,6 +47,18 @@ export default {
       let allMenuList = this.$store.getters.menuList;
       this.$store.dispatch('setSelectedTopMenuIndex', nav.topMenuIndex);
     }
+  },
+  mounted() {
+    let _vm = this;
+    setTimeout(() => {
+      $('.left-nav li').each((index, ele) => {
+        if ($(ele).find('a').is('.link-active')) {
+          let _currIndex = $(ele).index();
+          _vm.$store.dispatch('setSelectedTopMenuIndex', _currIndex - 1);
+        }
+      });
+    }, 1000);
+    // alert($('.left-nav li a.link-exact-active').size());
   }
 };
 </script>

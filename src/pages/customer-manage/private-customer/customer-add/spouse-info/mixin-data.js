@@ -99,11 +99,6 @@ export default {
       ],
       columns4: [
         {
-          type: 'selection',
-          width: 60,
-          align: 'center'
-        },
-        {
           title: '客户编号',
           key: 'name'
         },
@@ -130,7 +125,7 @@ export default {
         {
           title: '操作',
           key: 'action',
-          width: 80,
+          width: 120,
           align: 'center',
           render: (h, params) => {
             return h('div', [
@@ -142,10 +137,10 @@ export default {
                 style: { marginRight: '5px' },
                 on: {
                   click: () => {
-                    this.show(params.index);
+                    alert(params.row);
                   }
                 }
-              }, '选择')
+              }, '选择这个客户')
             ]);
           }
         }
