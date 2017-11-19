@@ -4,10 +4,12 @@
     <i-button @click="addModal" type="info"><i class="iconfont icon-xinzeng"></i> 新增</i-button>
   </div>
   <i-table border ref="FyTable" :columns="columns1" :data="data1"></i-table>
-  <i-form-item class="text-right">
-    <i-button type="primary" @click="formInSubmit">提交</i-button>
-    <i-button type="ghost" style="margin-left: 8px" @click="formInCancel">取消</i-button>
-  </i-form-item>
+  <br>
+  <br>
+  <div class="text-right">
+    <i-button type="primary" @click="formInSubmit">确认</i-button>
+    <i-button type="ghost" style="margin-left: 8px" @click="formCancel">取消</i-button>
+  </div>
   <pt-modal title="新增" v-model="showAdd" :width="520">
     <i-form ref="formInModel" :model="formInModel" label-position="left" :label-width="100">
       <i-form-item class="required" label="费用类型" prop="name">
@@ -103,6 +105,9 @@
           this.$data.data1[this.listIndex].money = this.$data.formInModel.money;
         }
         this.$data.showAdd = false;
+      },
+      formCancel() {
+        this.$emit('notice-cost');// 通知其父组件执行自定义事件“notice-cost”
       },
       formInCancel() {
         this.$data.showAdd = false;
