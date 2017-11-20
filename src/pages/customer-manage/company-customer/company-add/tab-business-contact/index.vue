@@ -4,7 +4,7 @@
       <i-tab-pane label="当前信息">
         <i-table :columns="currentInfoColumns" :data="currentInfoDatas"></i-table>
       </i-tab-pane>
-      <i-tab-pane label="作为第三方凭证">
+      <i-tab-pane label="作为第三方保证">
         <i-table :columns="thirdPartyProofColumns" :data="thirdPartyProofDatas"></i-table>
       </i-tab-pane>
     </i-tabs>

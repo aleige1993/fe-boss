@@ -15,7 +15,7 @@ export default {
   name: 'bsCollepse',
   data() {
     return {
-      isOpen: false
+      isOpen: true
     };
   },
   methods: {
@@ -55,5 +55,16 @@ export default {
 }
 .bs-collepse-body{
   // padding-left: 30px;
+  animation-name: slideDown;
+  transform-origin: top;
+  animation-duration: 2s;
+}
+@keyframes slideDown {
+  0% {
+    scaleY: 0;
+  }
+  100%{
+    scaleY: 1;
+  }
 }
 </style>

@@ -273,7 +273,7 @@
       <i-tab-pane label="关联企业">
         <tab-relation-company></tab-relation-company>
       </i-tab-pane>
-      <i-tab-pane label="业务往来">
+      <i-tab-pane label="大数据信息">
         <tab-business-contact></tab-business-contact>
       </i-tab-pane>
       <i-tab-pane label="诉讼情况">
