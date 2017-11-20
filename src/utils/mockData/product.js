@@ -3,6 +3,7 @@ export default [
   // 产品管理
   {
     url: '/product',
+    on: true,
     resp: Mock.mock({
       reCode: '0',
       'list|1-20': [
@@ -23,6 +24,7 @@ export default [
   // 产品管理-贷款材料配置
   {
     url: '/productLoan',
+    on: true,
     resp: Mock.mock({
       reCode: '0',
       'list|1-5': [
@@ -37,6 +39,7 @@ export default [
   // 产品管理-费用类型配置
   {
     url: '/productCost',
+    on: true,
     resp: Mock.mock({
       reCode: '0',
       'list|1-5': [
@@ -52,6 +55,7 @@ export default [
   // 产品管理-准入规则配置
   {
     url: '/productRule',
+    on: true,
     resp: Mock.mock({
       reCode: '0',
       'list|1-5': [
@@ -66,6 +70,7 @@ export default [
   // 产品管理-车辆材料配置
   {
     url: '/productCar',
+    on: true,
     resp: Mock.mock({
       reCode: '0',
       'list|1-5': [
@@ -80,6 +85,7 @@ export default [
   // 产品管理-归档材料配置
   {
     url: '/productFile',
+    on: true,
     resp: Mock.mock({
       reCode: '0',
       'list|1-5': [
@@ -94,6 +100,7 @@ export default [
   // 产品管理-利率方案配置
   {
     url: '/productLilv',
+    on: true,
     resp: Mock.mock({
       reCode: '0',
       'list|1-5': [
@@ -109,6 +116,7 @@ export default [
   // 产品管理-费用收取配置弹窗
   {
     url: '/productFy',
+    on: true,
     resp: Mock.mock({
       reCode: '0',
       'list|1-5': [
@@ -127,6 +135,7 @@ export default [
   // 产品管理
   {
     url: '/productDetails',
+    on: true,
     resp: Mock.mock({
       reCode: '0',
       list: {

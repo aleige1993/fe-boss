@@ -32,6 +32,8 @@ import BasicsFile from '@/pages/configuration-manage/product/basics-file';
 import Invest from '@/pages/configuration-manage/invest';
 // 配置管理-资方管理-资方维护
 import Maintain from '@/pages/configuration-manage/invest/maintain';
+// 配置管理-资方管理-资方映射配置
+import Mapping from '@/pages/configuration-manage/invest/mapping';
 // 客户管理--个人客户
 import CustomerManage from '@/pages/customer-manage';
 import PrivateCustomer from '@/pages/customer-manage/private-customer';
@@ -187,6 +189,12 @@ let MyRouter = new Router({
                   path:'/',
                   name: 'maintain',
                   component: Maintain
+                },
+                {
+                  // 配置管理-资方管理-资方映射配置
+                  path:'mapping',
+                  name: 'mapping',
+                  component: Mapping
                 }
               ]
             }// 配置管理-资方管理end
