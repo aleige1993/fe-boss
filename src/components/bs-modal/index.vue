@@ -48,6 +48,13 @@ export default {
   methods: {
     hideCureentModal() {
       this.$data.isShow = false;
+    },
+    toggleModalStatus(isShow) {
+      if (isShow) {
+        document.body.style.overflow = 'hidden';
+      } else {
+        document.body.style.overflow = 'auto';
+      }
     }
   },
   mounted() {
@@ -60,6 +67,7 @@ export default {
     },
     isShow(val) {
       this.$emit('input', val);
+      this.toggleModalStatus(val);
     }
   }
 };
@@ -73,6 +81,7 @@ export default {
   left: 0; top: 0;
   z-index: 100;
   text-align: center;
+  overflow-y: auto;
   &:before{
     content: " ";
     display: inline-block;

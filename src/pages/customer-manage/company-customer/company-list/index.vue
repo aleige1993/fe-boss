@@ -70,7 +70,7 @@
     },
     methods: {
       goToAdd() {
-        this.$router.push('/index/customer/modify');
+        this.$router.push('/index/customer/companycustomer/modify');
       }
     },
     components: {
