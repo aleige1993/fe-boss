@@ -37,6 +37,7 @@ import PrivateCustomerModify from '@/pages/customer-manage/private-customer/cust
 import CompanyCustomer from '@/pages/customer-manage/company-customer';
 import CompanyCustomerList from '@/pages/customer-manage/company-customer/company-list';
 import CompanyCustomerModify from '@/pages/customer-manage/company-customer/company-add';
+import CustomerBlacklist from '@/pages/customer-manage/blacklist-manage';
 
 Vue.use(Router);
 
@@ -119,7 +120,14 @@ let MyRouter = new Router({
                   component: CompanyCustomerModify
                 }
               ]
+            },
+            // 黑名单管理
+            {
+              path: 'blacklist',
+              component: CustomerBlacklist,
+              name: 'customerBlacklist'
             }
+
           ]
         },
         // 配置管理

@@ -16,38 +16,38 @@
                 <i-row>
                   <i-col span="6">
                     <i-form-item :prop="'name'" class="required" label="姓名">
-                      <i-input placeholder="姓名" v-model="formData.name"></i-input>
+                      <i-input :readonly="isFromDetail" placeholder="姓名" v-model="formData.name"></i-input>
                     </i-form-item>
                   </i-col>
                   <i-col span="6">
                     <i-form-item class="required" label="手机号">
-                      <i-input placeholder="手机号"></i-input>
+                      <i-input :readonly="isFromDetail" placeholder="手机号"></i-input>
                     </i-form-item>
                   </i-col>
                 </i-row>
                 <i-row>
                   <i-col span="6">
                     <i-form-item class="required" label="证件类型">
-                      <i-select>
-                        <i-option>身份证</i-option>
+                      <i-select :disabled="isFromDetail">
+                        <i-option :value="1">身份证</i-option>
                       </i-select>
                     </i-form-item>
                   </i-col>
                   <i-col span="6">
                     <i-form-item class="required" label="身份证号">
-                      <i-input></i-input>
+                      <i-input :readonly="isFromDetail"></i-input>
                     </i-form-item>
                   </i-col>
                   <i-col span="6">
                     <i-form-item class="required" label="身份证有效期">
-                      <i-date-picker type="date" placeholder="Select date" style="width: 100%"></i-date-picker>
+                      <i-date-picker :readonly="isFromDetail" type="date" placeholder="Select date" style="width: 100%"></i-date-picker>
                     </i-form-item>
                   </i-col>
                 </i-row>
                 <i-row>
                   <i-col span="6">
                     <i-form-item class="required" label="性别">
-                      <i-select v-model="formData.select">
+                      <i-select :disabled="isFromDetail" v-model="formData.select">
                         <i-option value="beijing">男</i-option>
                         <i-option value="shanghai">女</i-option>
                       </i-select>
@@ -55,7 +55,7 @@
                   </i-col>
                   <i-col span="6">
                     <i-form-item class="required" label="出生日期">
-                      <i-date-picker style="width: 100%" type="date" placeholder="Select date"></i-date-picker>
+                      <i-date-picker :readonly="isFromDetail" style="width: 100%" type="date" placeholder="Select date"></i-date-picker>
                     </i-form-item>
                   </i-col>
                   <i-col span="6">
@@ -67,7 +67,7 @@
                 <i-row>
                   <i-col span="6">
                     <i-form-item class="required" label="婚姻状况">
-                      <i-select v-model="formData.select">
+                      <i-select :disabled="isFromDetail" v-model="formData.select">
                         <i-option value="beijing">男</i-option>
                         <i-option value="shanghai">女</i-option>
                       </i-select>
@@ -75,7 +75,7 @@
                   </i-col>
                   <i-col span="6">
                     <i-form-item class="required" label="教育程度">
-                      <i-select v-model="formData.select">
+                      <i-select :disabled="isFromDetail" v-model="formData.select">
                         <i-option value="beijing">男</i-option>
                         <i-option value="shanghai">女</i-option>
                       </i-select>
@@ -83,7 +83,7 @@
                   </i-col>
                   <i-col span="6">
                     <i-form-item class="required" label="职业类型">
-                      <i-select v-model="formData.select">
+                      <i-select :disabled="isFromDetail" v-model="formData.select">
                         <i-option value="beijing">政府机关</i-option>
                         <i-option value="shanghai">自由职业者</i-option>
                       </i-select>
@@ -93,14 +93,14 @@
                 <i-row>
                   <i-col span="6">
                     <i-form-item class="required" label="年收入">
-                      <i-input v-model="formData.select">
+                      <i-input :readonly="isFromDetail" v-model="formData.select">
                         <span slot="append">元</span>
                       </i-input>
                     </i-form-item>
                   </i-col>
                   <i-col span="6">
                     <i-form-item class="required" label="参加工作年限">
-                      <i-select v-model="formData.select">
+                      <i-select :disabled="isFromDetail" v-model="formData.select">
                         <i-option value="beijing">1</i-option>
                         <i-option value="shanghai">2</i-option>
                       </i-select>
@@ -108,7 +108,7 @@
                   </i-col>
                   <i-col span="6">
                     <i-form-item class="required" label="是否本地人">
-                      <i-select v-model="formData.select">
+                      <i-select :disabled="isFromDetail" v-model="formData.select">
                         <i-option value="Y">是</i-option>
                         <i-option value="N">否</i-option>
                       </i-select>
@@ -118,7 +118,7 @@
                 <i-row>
                   <i-col span="6">
                     <i-form-item class="required" label="本地有否房产">
-                      <i-select v-model="formData.select">
+                      <i-select :disabled="isFromDetail" v-model="formData.select">
                         <i-option value="Y">是</i-option>
                         <i-option value="N">否</i-option>
                       </i-select>
@@ -126,7 +126,7 @@
                   </i-col>
                   <i-col span="6">
                     <i-form-item class="required" label="本地居住年限">
-                      <i-select v-model="formData.select">
+                      <i-select :disabled="isFromDetail" v-model="formData.select">
                         <i-option value="beijing">1</i-option>
                         <i-option value="shanghai">2</i-option>
                       </i-select>
@@ -134,7 +134,7 @@
                   </i-col>
                   <i-col span="6">
                     <i-form-item class="required" label="居住性质">
-                      <i-select v-model="formData.select">
+                      <i-select :disabled="isFromDetail" v-model="formData.select">
                         <i-option value="Y">是</i-option>
                         <i-option value="N">否</i-option>
                       </i-select>
@@ -143,7 +143,7 @@
                 </i-row>
                 <i-row>
                   <i-col span="18">
-                    <i-form-item class="required" label="户籍地址">
+                    <i-form-item v-if="!isFromDetail" class="required" label="户籍地址">
                       <i-select style="width: 150px">
                         <i-option>重庆市</i-option>
                       </i-select>
@@ -155,11 +155,14 @@
                       </i-select>
                       <i-input placeholder="街道信息" style="width: 220px;"></i-input>
                     </i-form-item>
+                    <i-form-item v-else label="户籍地址">
+                      重庆市云阳县
+                    </i-form-item>
                   </i-col>
                 </i-row>
                 <i-row>
                   <i-col span="18">
-                    <i-form-item class="required" label="居住地址">
+                    <i-form-item v-if="!isFromDetail" class="required" label="居住地址">
                       <i-select style="width: 150px">
                         <i-option>重庆市</i-option>
                       </i-select>
@@ -170,6 +173,9 @@
                         <i-option>重庆市</i-option>
                       </i-select>
                       <i-input placeholder="街道信息" style="width: 220px;"></i-input>
+                    </i-form-item>
+                    <i-form-item v-else label="居住地址">
+                      重庆市云阳县
                     </i-form-item>
                   </i-col>
                 </i-row>
@@ -177,7 +183,7 @@
                   <i-col span="6">
                     <i-form-item class="required" label="身份证正面">
                       <i-upload action="//jsonplaceholder.typicode.com/posts/">
-                          <idcard-placeholder type="face"></idcard-placeholder>
+                        <idcard-placeholder type="face"></idcard-placeholder>
                       </i-upload>
                     </i-form-item>
                   </i-col>
@@ -300,28 +306,28 @@
         </i-row>
       </i-tab-pane>
       <i-tab-pane label="配偶信息">
-        <tab-spouse-info :customerId="customerId"></tab-spouse-info>
+        <tab-spouse-info :customerId="customerId" :isFromDetail="isFromDetail"></tab-spouse-info>
       </i-tab-pane>
       <i-tab-pane label="联系人信息">
-        <tab-contact-info></tab-contact-info>
+        <tab-contact-info :isFromDetail="isFromDetail"></tab-contact-info>
       </i-tab-pane>
       <i-tab-pane label="银行账户信息">
-        <tab-bank-account-info></tab-bank-account-info>
+        <tab-bank-account-info :isFromDetail="isFromDetail"></tab-bank-account-info>
       </i-tab-pane>
       <i-tab-pane label="征信信息">
-        <tab-credit-info></tab-credit-info>
+        <tab-credit-info :isFromDetail="isFromDetail"></tab-credit-info>
       </i-tab-pane>
       <i-tab-pane label="旗下公司">
-        <tab-owe-company-info></tab-owe-company-info>
+        <tab-owe-company-info :isFromDetail="isFromDetail"></tab-owe-company-info>
       </i-tab-pane>
       <i-tab-pane label="负面调查">
-        <tab-negative-survey-info></tab-negative-survey-info>
+        <tab-negative-survey-info :isFromDetail="isFromDetail"></tab-negative-survey-info>
       </i-tab-pane>
       <i-tab-pane label="大数据信息">
-        <tab-business-contact-info></tab-business-contact-info>
+        <tab-business-contact-info :isFromDetail="isFromDetail"></tab-business-contact-info>
       </i-tab-pane>
       <i-tab-pane label="诉讼情况">
-        <tab-lawsuit-info></tab-lawsuit-info>
+        <tab-lawsuit-info :isFromDetail="isFromDetail"></tab-lawsuit-info>
       </i-tab-pane>
     </i-tabs>
 
@@ -344,6 +350,7 @@
     data() {
       return {
         customerId: null,
+        isFromDetail: false,
         formData: {
           name: '',
           select: '',
@@ -381,13 +388,14 @@
       },
       resetAddCustomerForm() {
         this.$refs['formAddCustomer'].resetFields();
+      },
+      initPageData() {
+        // get data
       }
     },
     mounted() {
-//      this.$showLoading();
-//      setTimeout(() => {
-//        this.$hideLoading();
-//      }, 3000);
+      let pageFrom = this.$route.query.from;
+      this.$data.isFromDetail = (pageFrom === 'detail');
     }
   };
 </script>

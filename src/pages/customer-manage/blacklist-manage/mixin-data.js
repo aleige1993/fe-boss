@@ -3,40 +3,27 @@ export default {
     return {
       columns4: [
         {
-          type: 'selection',
-          width: 60,
-          align: 'center'
-        },
-        {
-          title: '客户编号',
+          title: '姓名',
           key: 'name'
         },
         {
-          title: '公司名称',
+          title: '身份证号',
           key: 'name'
         },
         {
-          title: '统一社会信用代码',
+          title: '原因',
           key: 'name'
         },
         {
-          title: '法定代表人',
+          title: '来源',
           key: 'name'
         },
         {
-          title: '注册时间',
+          title: '开始时间',
           key: 'name'
         },
         {
-          title: '注册资金',
-          key: 'age'
-        },
-        {
-          title: '公司电话',
-          key: 'age'
-        },
-        {
-          title: '状态',
+          title: '结束时间',
           key: 'age'
         },
         {
@@ -88,18 +75,7 @@ export default {
                     this.remove(params.index);
                   }
                 }
-              }, '删除'),
-              h('Button', {
-                props: {
-                  type: 'primary',
-                  size: 'small'
-                },
-                on: {
-                  click: () => {
-                    this.remove(params.index);
-                  }
-                }
-              }, '激活/冻结')
+              }, '删除')
             ]);
           }
         }

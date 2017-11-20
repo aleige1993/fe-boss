@@ -9,14 +9,17 @@ class HttpMock {
     Mock.setup({
       timeout: Config.HTTPMOCK_TIMEOUT
     });
+    // 判断是否全局开启mock
     if (!Config.HTTPMOCK_ON) {
       return;
     }
     MockConfig.map(item => {
-      // console.log(item);
-      Mock.mock(Config.HTTPBASEURL + item.url, () => {
-        return item.resp;
-      });
+      // 判断是否单个mock的开启状态
+      if (item.on) {
+        Mock.mock(Config.HTTPBASEURL + item.url, () => {
+          return item.resp;
+        });
+      }
     });
   }
 }

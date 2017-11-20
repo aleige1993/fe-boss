@@ -13,6 +13,7 @@ import Http from './utils/HttpUtils';
 Vue.prototype.$http = new Http();
 // http mockjs
 import {} from './utils/HttpMock';
+import {} from './assets/js/boss';
 // 表单区域块组件
 import FormBlock from '@/components/bs-form-block';
 Vue.component('bs-form-block', FormBlock);
