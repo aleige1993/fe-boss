@@ -1,34 +1,34 @@
 <template>
-<div id="configure-model-loan">
-  <i-table border ref="proTable" :columns="columns1" :data="data1" @on-selection-change="selectRow"></i-table>
-  <br>
-  <br>
-  <div class="text-right">
-    <i-button type="primary" @click="formSubmit">确认</i-button>
-    <i-button type="ghost" style="margin-left: 8px" @click="formCancel">取消</i-button>
+  <div id="configure-model-rule">
+    <i-table border ref="proTable" :columns="columns1" :data="data1" @on-selection-change="selectRow"></i-table>
+    <br>
+    <br>
+    <div class="text-right">
+      <i-button type="primary" @click="formSubmit">确认</i-button>
+      <i-button type="ghost" style="margin-left: 8px" @click="formCancel">取消</i-button>
+    </div>
   </div>
-</div>
 </template>
 
 <script>
   export default {
-    name: 'configure-model-loan',
+    name: 'configure-model-rule',
     submitData: {},
     data() {
       return {
         columns1: [
           {
+            title: '选择',
             type: 'selection',
             width: 60,
             align: 'center'
           },
           {
-            title: '贷款材料ID',
-            width: 100,
+            title: '准入规则ID',
             key: 'id'
           },
           {
-            title: '贷款材料名称',
+            title: '准入规则名称',
             key: 'name'
           }
         ],
@@ -52,7 +52,7 @@
       formSubmit() {
       },
       formCancel() {
-        this.$emit('notice-loan');// 通知其父组件执行自定义事件“notice-loan”
+        this.$emit('notice-rule');// 通知其父组件执行自定义事件“notice-rule”
       },
       selectRow(selection) {      // selection 已选项数据
         this.$data.submitData = selection;

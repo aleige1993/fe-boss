@@ -1,5 +1,5 @@
 <template>
-<div id="configure-model-loan">
+<div id="configure-model-file">
   <i-table border ref="proTable" :columns="columns1" :data="data1" @on-selection-change="selectRow"></i-table>
   <br>
   <br>
@@ -12,7 +12,7 @@
 
 <script>
   export default {
-    name: 'configure-model-loan',
+    name: 'configure-model-file',
     submitData: {},
     data() {
       return {
@@ -23,12 +23,11 @@
             align: 'center'
           },
           {
-            title: '贷款材料ID',
-            width: 100,
+            title: '归档材料ID',
             key: 'id'
           },
           {
-            title: '贷款材料名称',
+            title: '归档材料名称',
             key: 'name'
           }
         ],
@@ -52,7 +51,7 @@
       formSubmit() {
       },
       formCancel() {
-        this.$emit('notice-loan');// 通知其父组件执行自定义事件“notice-loan”
+        this.$emit('notice-file');// 通知其父组件执行自定义事件“notice-file”
       },
       selectRow(selection) {      // selection 已选项数据
         this.$data.submitData = selection;

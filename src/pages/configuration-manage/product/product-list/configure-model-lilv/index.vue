@@ -71,7 +71,7 @@
         <i-col span="8">
           <i-form-item class="required" label="模型设定" prop="protype">
             <i-select v-model="formRate.select" placeholder="请选择">
-              <i-option value="不算偷不算尾">不算偷不算尾</i-option>
+              <i-option value="不算偷不算尾">不算头不算尾</i-option>
               <i-option value="算头不算尾">算头不算尾</i-option>
               <i-option value="算头又算尾">算头又算尾</i-option>
             </i-select>
@@ -227,7 +227,7 @@
       <br>
       <i-form-item class="text-right">
         <i-button type="primary" @click="formSubmit">提交</i-button>
-        <i-button type="ghost" style="margin-left: 8px" @click="formReset">重置</i-button>
+        <i-button type="ghost" style="margin-left: 8px" @click="formCancel">取消</i-button>
       </i-form-item>
     </i-form>
     <pt-modal title="新增" v-model="showAdd" :width="520">
@@ -348,11 +348,13 @@
         this.modelFOrmReset();
       },
       formSubmit() {},
-      formReset() {},
+      // 告知父组件关闭利率配置窗口
+      formCancel() {
+        this.$emit('notice-lilv');// 通知其父组件执行自定义事件“notice-lilv”
+      },
       setList(row) {
         this.isAdd = false;
         this.$data.showAdd = true;
-        console.log(row);
         this.formInModel.car = row.car;
         this.formInModel.month = row.month;
         this.formInModel.rate = row.rate;
@@ -377,12 +379,11 @@
       formInCancel() {
         this.modelFOrmReset();
         this.$data.showAdd = false;
-        this.$data.modelFOrmReset();
+        this.modelFOrmReset();
       },
       modelFOrmReset() {
-        this.$data.formInModel.car = '';
-        this.$data.formInModel.month = '';
-        this.$data.formInModel.rate = '';
+        let formName = 'formInModel';
+        this.$refs[formName].resetFields();
       }
     }
   };
