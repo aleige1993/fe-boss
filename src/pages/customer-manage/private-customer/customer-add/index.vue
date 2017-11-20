@@ -317,7 +317,7 @@
       <i-tab-pane label="负面调查">
         <tab-negative-survey-info></tab-negative-survey-info>
       </i-tab-pane>
-      <i-tab-pane label="业务往来">
+      <i-tab-pane label="大数据信息">
         <tab-business-contact-info></tab-business-contact-info>
       </i-tab-pane>
       <i-tab-pane label="诉讼情况">
