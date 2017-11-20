@@ -28,6 +28,12 @@ import BasicsRule from '@/pages/configuration-manage/product/basics-rule';
 import BasicsCar from '@/pages/configuration-manage/product/basics-car';
 // 配置管理-产品管理-归档材料配置
 import BasicsFile from '@/pages/configuration-manage/product/basics-file';
+// 配置管理-资方管理
+import Invest from '@/pages/configuration-manage/invest';
+// 配置管理-资方管理-资方维护
+import Maintain from '@/pages/configuration-manage/invest/maintain';
+// 配置管理-资方管理-资方映射配置
+import Mapping from '@/pages/configuration-manage/invest/mapping';
 // 客户管理--个人客户
 import CustomerManage from '@/pages/customer-manage';
 import PrivateCustomer from '@/pages/customer-manage/private-customer';
@@ -179,9 +185,29 @@ let MyRouter = new Router({
                   component: BasicsFile
                 }
               ]
-            }
+            },// 配置管理-产品管理end
+            // 配置管理-资方管理
+            {
+              path: 'invest',
+              name: 'invest',
+              component: Invest,
+              children: [
+                {
+                  // 配置管理-资方管理-资方维护
+                  path:'/',
+                  name: 'maintain',
+                  component: Maintain
+                },
+                {
+                  // 配置管理-资方管理-资方映射配置
+                  path:'mapping',
+                  name: 'mapping',
+                  component: Mapping
+                }
+              ]
+            }// 配置管理-资方管理end
           ]
-        }
+        }// 配置管理end
       ]
     }
   ],

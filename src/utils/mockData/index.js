@@ -1,6 +1,7 @@
 import Mock from 'mockjs';
 import menuList from './menuList';
 import product from './product';
+import invest from './invest';
 let ary = [
   {
     url: '/login',
@@ -16,5 +17,5 @@ let ary = [
     }
   }
 ];
-let result = [...ary, ...menuList, ...product];
+let result = [...ary, ...menuList, ...product, ...invest];
 export default result;
