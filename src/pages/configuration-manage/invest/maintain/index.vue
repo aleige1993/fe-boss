@@ -23,103 +23,103 @@
             <!--资方名称-->
             <i-col span="8">
               <i-form-item class="required" label="资方名称" prop="protype">
-                <i-input v-model="formMaintain.name">
+                <i-input v-model="formMaintain.name" :readonly="iSsee">
                 </i-input>
               </i-form-item>
             </i-col>
             <!--合作状态-->
             <i-col span="8">
               <i-form-item class="required" label="合作状态" prop="protype">
-                <i-input v-model="formMaintain.state">
+                <i-input v-model="formMaintain.state" :readonly="iSsee">
                 </i-input>
               </i-form-item>
             </i-col>
             <!--法定代表人-->
             <i-col span="8">
               <i-form-item label="法定代表人" prop="protype">
-                <i-input v-model="formMaintain.LegalPerson">
+                <i-input v-model="formMaintain.LegalPerson" :readonly="iSsee">
                 </i-input>
               </i-form-item>
             </i-col>
             <!--法人证件号码-->
             <i-col span="8">
               <i-form-item label="法人证件号码" prop="protype">
-                <i-input v-model="formMaintain.LegalPhone">
+                <i-input v-model="formMaintain.LegalPhone"  :readonly="iSsee">
                 </i-input>
               </i-form-item>
             </i-col>
             <!--成立时间-->
             <i-col span="8">
               <i-form-item label="成立时间" prop="protype">
-                <i-input v-model="formMaintain.time">
+                <i-input v-model="formMaintain.time" :readonly="iSsee">
                 </i-input>
               </i-form-item>
             </i-col>
             <!--统一社会信用代码-->
             <i-col span="8">
               <i-form-item label="统一社会信用代码" prop="protype">
-                <i-input v-model="formMaintain.redit ">
+                <i-input v-model="formMaintain.redit " :readonly="iSsee">
                 </i-input>
               </i-form-item>
             </i-col>
             <!--账户名称-->
             <i-col span="8">
               <i-form-item label="账户名称" prop="protype">
-                <i-input v-model="formMaintain.uesrName">
+                <i-input v-model="formMaintain.uesrName" :readonly="iSsee">
                 </i-input>
               </i-form-item>
             </i-col>
             <!--账号-->
             <i-col span="8">
               <i-form-item label="账户名称" prop="protype">
-                <i-input v-model="formMaintain.uesrId">
+                <i-input v-model="formMaintain.uesrId" :readonly="iSsee">
                 </i-input>
               </i-form-item>
             </i-col>
             <!--开户银行-->
             <i-col span="8">
               <i-form-item label="开户银行" prop="protype">
-                <i-input v-model="formMaintain.bank">
+                <i-input v-model="formMaintain.bank" :readonly="iSsee">
                 </i-input>
               </i-form-item>
             </i-col>
             <!--主要联系人-->
             <i-col span="8">
               <i-form-item label="主要联系人" prop="protype">
-                <i-input v-model="formMaintain.primaryContact">
+                <i-input v-model="formMaintain.primaryContact" :readonly="iSsee">
                 </i-input>
               </i-form-item>
             </i-col>
             <!--联系电话-->
             <i-col span="8">
               <i-form-item label="联系电话" prop="protype">
-                <i-input v-model="formMaintain.contactNumber">
+                <i-input v-model="formMaintain.contactNumber" :readonly="iSsee">
                 </i-input>
               </i-form-item>
             </i-col>
             <!--联系邮箱-->
             <i-col span="8">
               <i-form-item label="联系邮箱" prop="protype">
-                <i-input v-model="formMaintain.contactEmail">
+                <i-input v-model="formMaintain.contactEmail" :readonly="iSsee">
                 </i-input>
               </i-form-item>
             </i-col>
             <!--地址-->
             <i-col span="24">
               <i-form-item label="地址" prop="protype">
-                <i-select v-model="formMaintain.province" style="width: 10%">
+                <i-select v-model="formMaintain.province" style="width: 10%" :disabled="iSsee">
                   <i-option value="重庆">重庆</i-option>
                   <i-option value="上海">上海</i-option>
                 </i-select>
-                <i-select v-model="formMaintain.city" style="width: 10%">
+                <i-select v-model="formMaintain.city" style="width: 10%" :disabled="iSsee">
                   <i-option value="重庆">重庆</i-option>
                   <i-option value="上海">重庆</i-option>
                 </i-select>
-                <i-select v-model="formMaintain.area" style="width: 10%">
+                <i-select v-model="formMaintain.area" style="width: 10%" :disabled="iSsee">
                   <i-option value="重庆">九龙坡区</i-option>
                   <i-option value="上海">渝中区</i-option>
                 </i-select>
-                <i-input v-model="formMaintain.Street" style="width: calc(70% - 16px); margin-left: 5px;">
+                <i-input v-model="formMaintain.Street" style="width: calc(70% - 16px); margin-left: 5px;" :readonly="iSsee">
                 </i-input>
               </i-form-item>
             </i-col>
@@ -128,15 +128,15 @@
 
       </bs-form-block>
       <bs-form-block :title="'合作协议'" padding="20px 0" borderWidth="0px">
-        <div class="form-top-actions">
+        <div class="form-top-actions" v-if="!iSsee">
           <i-button @click="addModalTwo" type="info"><i class="iconfont icon-xinzeng"></i> 新增</i-button>
         </div>
         <i-table highlight-row border ref="proTable" :columns="columns2" :data="data2"></i-table>
         <br>
         <br>
         <div class="text-right">
-          <i-button type="primary" @click="formSubmit">提交</i-button>
-          <i-button type="ghost" style="margin-left: 8px" @click="formCancel">取消</i-button>
+          <i-button type="primary" @click="formSubmit" v-if="!iSsee">提交</i-button>
+          <i-button type="ghost" style="margin-left: 8px" @click="formCancel">{{iSsee ? '返回' : '取消'}}</i-button>
         </div>
         <bs-modal :title="'合作协议'" v-model="ShowModalTwo" :width="600">
           <modal-two @parModel='closeModelTwo' ></modal-two>
@@ -160,6 +160,7 @@
         ShowModalOne: false,
         ShowModalTwo: false,
         formMaintain: {},
+        iSsee: false,           // 是否是查看页面
         columns1: [
           {
             title: '资方编号',
@@ -247,6 +248,9 @@
             width: 200,
             align: 'center',
             render: (h, params) => {
+              if (this.$data.iSsee) {
+                return;
+              }
               return h('div', [
                 h('Button', {
                   props: {
@@ -279,6 +283,7 @@
     methods: {
       // 新增弹窗
       addModal() {
+        this.$data.iSsee = false;   // 不是查看状态
         this.$data.ShowModalOne = true;
       },
       // 新增弹窗
@@ -295,6 +300,7 @@
       },
       // 修改弹窗
       setList() {
+        this.$data.iSsee = false;   // 不是查看状态
       },
       // 提交 按钮
       formSubmit() {},
