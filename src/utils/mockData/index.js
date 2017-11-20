@@ -5,6 +5,7 @@ import invest from './invest';
 let ary = [
   {
     url: '/login',
+    on: false,
     resp: {
       reCode: '0',
       body: {

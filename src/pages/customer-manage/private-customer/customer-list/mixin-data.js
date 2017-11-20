@@ -12,28 +12,20 @@ export default {
           key: 'name'
         },
         {
-          title: '公司名称',
+          title: '姓名',
           key: 'name'
         },
         {
-          title: '统一社会信用代码',
+          title: '性别',
           key: 'name'
         },
         {
-          title: '法定代表人',
+          title: '证件类型',
           key: 'name'
         },
         {
-          title: '注册时间',
+          title: '证件号码',
           key: 'name'
-        },
-        {
-          title: '注册资金',
-          key: 'age'
-        },
-        {
-          title: '公司电话',
-          key: 'age'
         },
         {
           title: '状态',
@@ -54,7 +46,13 @@ export default {
                 style: { marginRight: '5px' },
                 on: {
                   click: () => {
-                    this.show(params.index);
+                    this.$router.push({
+                      path: '/index/customer/modify',
+                      query: {
+                        id: params.row.id,
+                        from: 'detail'
+                      }
+                    });
                   }
                 }
               }, '详情'),
@@ -70,10 +68,9 @@ export default {
                       path: '/index/customer/modify',
                       query: {
                         id: params.row.id,
-                        from: 'detail'
+                        from: 'modify'
                       }
                     });
-                    // this.remove(params.index);
                   }
                 }
               }, '修改'),
@@ -99,7 +96,7 @@ export default {
                     this.remove(params.index);
                   }
                 }
-              }, '激活/冻结')
+              }, '冻结')
             ]);
           }
         }

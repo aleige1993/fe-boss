@@ -80,6 +80,7 @@ module.exports = {
   globals: {
     $: false,
     jquery: false,
-    radialIndicator: false
+    radialIndicator: false,
+    bsWait: false
   }
 }

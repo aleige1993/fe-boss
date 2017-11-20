@@ -3,7 +3,7 @@
     <i-tabs :animated="false">
       <i-tab-pane label="联系人信息">
         <div class="form-top-actions" style="padding-top: 0">
-          <i-button type="primary" @click="addContactModal"><i class="iconfont icon-xinzeng"></i> 新增</i-button>
+          <i-button v-if="!isFromDetail" type="primary" @click="addContactModal"><i class="iconfont icon-xinzeng"></i> 新增</i-button>
         </div>
         <i-table :columns="contactColumns" :data="contactDatas"></i-table>
       </i-tab-pane>
@@ -56,10 +56,10 @@
         </div>
       </i-tab-pane>
     </i-tabs>
-    <div class="form-footer-actions">
+    <!-- <div class="form-footer-actions">
       <i-button type="primary"><i class="iconfont icon-tijiao"></i> 保存草稿</i-button>
       <i-button type="success"><i class="iconfont icon-tijiao"></i> 提交</i-button>
-    </div>
+    </div> -->
     <!--添加联系人模态框-->
     <pt-modal :title="addContactModalTitle" v-model="showAddModal">
       <i-form ref="formValidate" label-position="left" :label-width="80">
@@ -86,9 +86,9 @@
             <i-option value="同事">家庭联系人</i-option>
           </i-select>
         </i-form-item>
-        <i-form-item label="">
+        <!-- <i-form-item label="">
           <i-button type="primary" size="large" style="width: 80px;">提交</i-button>
-        </i-form-item>
+        </i-form-item> -->
       </i-form>
     </pt-modal>
   </div>
@@ -106,6 +106,7 @@
         loadingContactBook: true
       };
     },
+    props: ['isFromDetail'],
     methods: {
       addContactModal() {
         this.$data.showAddModal = true;

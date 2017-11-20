@@ -1,8 +1,10 @@
 <template>
   <div>
     <div class="form-top-actions" style="padding-top: 0">
-      <i-button type="success" @click="addModal=!addModal">从客户中选择</i-button>
-      <i-button type="primary" @click="gotoAddCustomer">去添加配偶为客户</i-button>
+      <div v-if="!isFromDetail">
+        <i-button type="success" @click="addModal=!addModal">从客户中选择</i-button>
+        <i-button type="primary" @click="gotoAddCustomer">去添加配偶为客户</i-button>
+      </div>
     </div>
     <i-table :loading="false" :columns="spouseColumns" :data="spouseDatas"></i-table>
     <!--添加联系人模态框-->
@@ -22,6 +24,7 @@
         addModal: false
       };
     },
+    props: ['isFromDetail'],
     components: {
       'pt-modal': PTModal
     },
