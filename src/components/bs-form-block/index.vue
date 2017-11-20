@@ -3,7 +3,7 @@
     <div class="block-title">
       {{title}}
     </div>
-    <div class="block-body">
+    <div class="block-body" v-bind:style="{padding: padding, borderWidth: borderWidth}" >
       <slot></slot>
     </div>
   </div>
@@ -17,6 +17,14 @@ export default {
   props: {
     title: {
       default: '标题',
+      type: String
+    },
+    padding: {
+      default: '20px 15px',
+      type: String
+    },
+    borderWidth: {
+      default: '1px',
       type: String
     }
   }

@@ -193,8 +193,7 @@
             }
           }
         ],
-        data1: [],
-        name: ''
+        data1: []
       };
     },
     async mounted() {
