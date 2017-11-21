@@ -11,12 +11,12 @@
       查询条件
     </div>
     <div class="search-form-container">
-      <i-form inline label-position="left">
-        <i-form-item prop="user" label="合同名称" :label-width="100">
-          <i-input type="text" placeholder="合同名称"></i-input>
+      <i-form inline label-position="left" ref="searchForm" :model="searchForm">
+        <i-form-item prop="name" label="合同名称" :label-width="100">
+          <i-input type="text" placeholder="合同名称"  v-model="searchForm.name"></i-input>
         </i-form-item>
         <i-form-item>
-          <i-button type="primary">
+          <i-button type="primary" @click="search">
             <i-icon type="ios-search-strong"></i-icon>
             搜索
           </i-button>
@@ -26,9 +26,9 @@
     <div class="form-top-actions">
       <i-button @click="addModal" type="info"><i class="iconfont icon-xinzeng"></i> 新增</i-button>
     </div>
-    <i-table highlight-row border :loading="loading" ref="proTable" :columns="columns1" :data="data1"></i-table>
+    <i-table highlight-row border :loading="dataLoading" ref="proTable" :columns="columns1" :data="data1"></i-table>
     <div class="page-container">
-      <i-page :current="1" :total="40" size="small" show-elevator show-total>
+      <i-page :current="currentPage" :total="total" size="small" show-elevator show-total @on-change="pageChange">
       </i-page>
     </div>
     <bs-modal :title="'新增合同模板'" v-model="ShowModal" :width="600">
@@ -69,9 +69,11 @@
 </template>
 
 <script>
+  import DataMixin from './mixin-data';
   import BSModal from '@/components/bs-modal';
   export default {
     name: 'invest-maintain',
+    mixins: [DataMixin],
     components: {
       'bs-modal': BSModal
     },
@@ -80,95 +82,38 @@
         ShowModal: false,
         formMaintain: {},
         iSsee: false,           // 是否是查看页面
-        loading: true,
+        dataLoading: false,
         uploadurl: '',
-        formContract: {},
-        columns1: [
-          {
-            title: '合同模板ID',
-            width: 100,
-            align: 'center',
-            key: 'id'
-          },
-          {
-            title: '合同名称',
-            key: 'name'
-          },
-          {
-            title: '合同类型',
-            key: 'type'
-          },
-          {
-            title: '模板附件',
-            key: 'enclosure'
-          },
-          {
-            title: '签约平台模板ID',
-            key: 'SignId'
-          },
-          {
-            title: '操作',
-            key: 'action',
-            width: 200,
-            align: 'center',
-            render: (h, params) => {
-              return h('div', [
-                h('Button', {
-                  props: {
-                    type: 'primary',
-                    size: 'small'
-                  },
-                  style: {
-                    marginRight: '5px'
-                  },
-                  on: {
-                    click: () => {
-                    }
-                  }
-                }, '详情'),
-                h('Button', {
-                  props: {
-                    type: 'primary',
-                    size: 'small'
-                  },
-                  style: {
-                    marginRight: '5px'
-                  },
-                  on: {
-                    click: () => {
-                      this.listIndex = params.index;
-                      this.setList(params.row);
-                    }
-                  }
-                }, '修改'),
-                h('Button', {
-                  props: {
-                    type: 'error',
-                    size: 'small'
-                  },
-                  on: {
-                    click: () => {
-                      this.remove1(params.index);
-                    }
-                  }
-                }, '删除')
-              ]);
-            }
-          }
-        ],
-        data1: []
+        currentPage: 1,
+        total: 0,
+        searchForm: {
+          name: '',
+          currentPage: 1
+        },
+        formContract: {}
       };
     }, // end data
-    async mounted() {
-      const Vm = this;
-      let response = await this.$http.post('/contract', {});
-      try {
-        Vm.$data.data1 = response.list;
-        this.$data.loading = false;
-      } catch (err) {
-      }
+    mounted() {
+      this.getList();
     },
     methods: {
+      async getList(page) {
+        this.$data.dataLoading = true;
+        if (page) {
+          this.searchForm.currentPage = page;
+        }
+        let resp = await this.$http.get('/contract', this.$data.searchForm);
+        this.$data.dataLoading = false;
+        this.$data.data1 = resp.body.resultList;
+        this.$data.currentPage = resp.body.currentPage;
+        this.$data.total = resp.body.totalNum;
+      },
+      search() {
+        this.getList();
+      },
+      pageChange(page) {
+        this.getList(page);
+      },
       // 新增弹窗
       addModal() {
         this.$data.iSsee = false;   // 不是查看状态
