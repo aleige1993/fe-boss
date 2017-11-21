@@ -14,12 +14,12 @@
             <i-form label-position="right" :model="formData" ref="formAddCustomer" :label-width="140">
               <bs-form-block :title="'基本信息'">
                 <i-row>
-                  <i-col span="6">
+                  <i-col span="8">
                     <i-form-item :prop="'name'" class="required" label="公司名称">
                       <i-input placeholder="" v-model="formData.name"></i-input>
                     </i-form-item>
                   </i-col>
-                  <i-col span="6">
+                  <i-col span="8">
                     <i-form-item class="required" label="公司性质">
                       <i-select placeholder="手机号">
                         <i-option selected="" value="国有企业">国有企业
@@ -34,31 +34,31 @@
                       </i-select>
                     </i-form-item>
                   </i-col>
-                  <i-col span="6">
+                  <i-col span="8">
                     <i-form-item :prop="'name'" class="required" label="统一社会信用代码">
                       <i-input placeholder="失去焦点自动查重" v-model="formData.name"></i-input>
                     </i-form-item>
                   </i-col>
                 </i-row>
                 <i-row>
-                  <i-col span="6">
+                  <i-col span="8">
                     <i-form-item class="required" label="注册资金">
                       <i-input placeholder="输入字符串（如100万）"></i-input>
                     </i-form-item>
                   </i-col>
-                  <i-col span="6">
+                  <i-col span="8">
                     <i-form-item class="required" label="成立日期">
                       <i-date-picker type="date" placeholder="Select date" style="width: 100%"></i-date-picker>
                     </i-form-item>
                   </i-col>
-                  <i-col span="6">
+                  <i-col span="8">
                     <i-form-item class="required" label="营业期限">
                       <i-date-picker type="date" placeholder="Select date" style="width: 100%"></i-date-picker>
                     </i-form-item>
                   </i-col>
                 </i-row>
                 <i-row>
-                  <i-col span="6">
+                  <i-col span="8">
                     <i-form-item class="required" label="行业类型">
                       <i-select v-model="formData.select">
                         <i-option value="beijing">IT物联网</i-option>
@@ -66,36 +66,36 @@
                       </i-select>
                     </i-form-item>
                   </i-col>
-                  <i-col span="6">
+                  <i-col span="8">
                     <i-form-item class="required" label="实际控制人">
                       <i-input  placeholder=""></i-input>
                     </i-form-item>
                   </i-col>
-                  <i-col span="6">
+                  <i-col span="8">
                     <i-form-item class="required" label="实际控制人联系电话">
                       <i-input  placeholder=""></i-input>
                     </i-form-item>
                   </i-col>
                 </i-row>
                 <i-row>
-                  <i-col span="6">
+                  <i-col span="8">
                     <i-form-item class="required" label="公司电话">
                       <i-input  placeholder=""></i-input>
                     </i-form-item>
                   </i-col>
-                  <i-col span="6">
+                  <i-col span="8">
                     <i-form-item class="required" label="公司传真">
                       <i-input  placeholder=""></i-input>
                     </i-form-item>
                   </i-col>
-                  <i-col span="6">
+                  <i-col span="8">
                     <i-form-item class="required" label="公司网址（如有）">
                       <i-input placeholder=""></i-input>
                     </i-form-item>
                   </i-col>
                 </i-row>
                 <i-row>
-                  <i-col span="6">
+                  <i-col span="8">
                     <i-form-item class="required" label="是否合作渠道商">
                       <i-select>
                         <i-option>是</i-option>
@@ -147,36 +147,36 @@
               <!--法定代表人姓名-->
               <bs-form-block :title="'法定代表人信息'">
                 <i-row>
-                  <i-col span="6">
+                  <i-col span="8">
                     <i-form-item class="required" label="法定代表人姓名">
                       <i-input :readonly="true">
                         <i-button type="primary" slot="append">选择代表人 <Icon type="ios-more"></Icon></i-button>
                       </i-input>
                     </i-form-item>
                   </i-col>
-                  <i-col span="6">
+                  <i-col span="8">
                     <i-form-item class="required" label="性别">
                       <i-input :readonly="true">男</i-input>
                     </i-form-item>
                   </i-col>
-                  <i-col span="6">
+                  <i-col span="8">
                     <i-form-item class="required" label="手机号码">
                       <i-input :readonly="true" placeholder="自动带入"></i-input>
                     </i-form-item>
                   </i-col>
                 </i-row>
                 <i-row>
-                  <i-col span="6">
+                  <i-col span="8">
                     <i-form-item class="required" label="证件类型">
                       <i-input></i-input>
                     </i-form-item>
                   </i-col>
-                  <i-col span="6">
+                  <i-col span="8">
                     <i-form-item class="required" label="证件号码">
                       <i-input></i-input>
                     </i-form-item>
                   </i-col>
-                  <i-col span="6">
+                  <i-col span="8">
                     <i-form-item class="required" label="持股比例">
                       <i-input>
                         <span slot="append">%</span>
@@ -188,36 +188,36 @@
               <!--主联系人-->
               <bs-form-block :title="'主联系人信息'">
                 <i-row>
-                  <i-col span="6">
+                  <i-col span="8">
                     <i-form-item class="required" label="联系人人姓名">
                       <i-input></i-input>
                     </i-form-item>
                   </i-col>
-                  <i-col span="6">
+                  <i-col span="8">
                     <i-form-item class="required" label="性别">
                       <i-select>
                         <i-option>男</i-option>
                       </i-select>
                     </i-form-item>
                   </i-col>
-                  <i-col span="6">
+                  <i-col span="8">
                     <i-form-item class="required" label="联系电话">
                       <i-input placeholder="自动带入"></i-input>
                     </i-form-item>
                   </i-col>
                 </i-row>
                 <i-row>
-                  <i-col span="6">
+                  <i-col span="8">
                     <i-form-item class="required" label="职务">
                       <i-input></i-input>
                     </i-form-item>
                   </i-col>
-                  <i-col span="6">
+                  <i-col span="8">
                     <i-form-item class="required" label="身份证号">
                       <i-input></i-input>
                     </i-form-item>
                   </i-col>
-                  <i-col span="6">
+                  <i-col span="8">
                     <i-form-item class="required" label="邮箱">
                       <i-input></i-input>
                     </i-form-item>
@@ -227,19 +227,19 @@
               <!--来源信息-->
               <bs-form-block :title="'来源信息'">
                 <i-row>
-                  <i-col span="6">
+                  <i-col span="8">
                     <i-form-item class="required" label="业务拓展部门">
                       <i-select>
                         <i-option>万州分公司</i-option>
                       </i-select>
                     </i-form-item>
                   </i-col>
-                  <i-col span="6">
+                  <i-col span="8">
                     <i-form-item class="required" label="开始合作时间">
                       <i-date-picker placeholder="选择时间" style="width: 100%"></i-date-picker>
                     </i-form-item>
                   </i-col>
-                  <i-col span="6">
+                  <i-col span="8">
                     <i-form-item class="required" label="客户经理">
                       <i-input placeholder="选择时间">
                         <i-button slot="append" :readonly="true">选择客户经理 <Icon type="ios-more"></Icon></i-button>

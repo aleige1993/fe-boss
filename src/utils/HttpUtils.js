@@ -64,7 +64,7 @@ class Http {
       },
       method: 'GET'
     }).then(res => {
-      console.log(res);
+      // console.log(res);
       if (res.data.reCode === '0004') {
         alert('登录超时');
         MyRouter.push(

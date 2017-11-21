@@ -83,7 +83,7 @@ export default {
                 },
                 on: {
                   click: () => {
-                    this.remove(params.index);
+                    alert('click');
                   }
                 }
               }, '删除')
@@ -125,28 +125,6 @@ export default {
         {
           title: '状态',
           key: 'age'
-        },
-        {
-          title: '操作',
-          key: 'action',
-          width: 120,
-          align: 'center',
-          render: (h, params) => {
-            return h('div', [
-              h('Button', {
-                props: {
-                  type: 'primary',
-                  size: 'small'
-                },
-                style: { marginRight: '5px' },
-                on: {
-                  click: () => {
-                    alert(params.row);
-                  }
-                }
-              }, '选择这个客户')
-            ]);
-          }
         }
       ],
       data1: [
