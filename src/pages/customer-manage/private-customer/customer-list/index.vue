@@ -115,6 +115,7 @@
     },
     mounted() {
       this.getPrivateCustomerList();
+      // alert(this.$store.getters.enumSelectData.get('YesNoEnum'));
     }
   };
 </script>

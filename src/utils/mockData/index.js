@@ -3,6 +3,7 @@ import menuList from './menuList';
 import product from './product';
 import invest from './invest';
 import customerManage from './customer-manage';
+import enumSelectData from './enum-select-data';
 let ary = [
   {
     url: '/login',
@@ -18,5 +19,5 @@ let ary = [
     }
   }
 ];
-let result = [...ary, ...menuList, ...product, ...invest, ...customerManage];
+let result = [...ary, ...menuList, ...product, ...invest, ...customerManage, ...enumSelectData];
 export default result;

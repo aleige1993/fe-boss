@@ -10,7 +10,8 @@ export default new Vuex.Store({
       currentPlace: '重庆',
       menuList: [],
       selectedTopMenuIndex: 0,
-      secondMenuList: []
+      secondMenuList: [],
+      enumSelectData: null
     }
   },
   getters: {
@@ -22,6 +23,9 @@ export default new Vuex.Store({
     },
     secondMenuList(state) {
       return state.global.secondMenuList;
+    },
+    enumSelectData(state) {
+      return state.global.enumSelectData;
     }
   },
   actions,
