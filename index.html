@@ -4,9 +4,42 @@
     <meta charset="utf-8">
     <link rel="stylesheet" href="//at.alicdn.com/t/font_458334_lih4xxavm18aor.css">
     <title>颂车贷portal</title>
+    <style media="screen">
+    .page-loading{
+      box-sizing: border-box;
+      position: fixed;
+      left: 0; top: 0;
+      width: 100%;
+      height: 100%;
+      background-color: #fff;
+      z-index: 1000;
+      text-align: center;
+      display: none;
+    }
+    .page-loading:before{
+      height: 100%;
+      content: " ";
+      display: inline-block;
+      width: 0;
+      vertical-align: middle;
+    }
+    .page-loading p{
+      display: inline-block;
+      vertical-align: middle;
+      font-size: 18px;
+      font-weight: bold;
+      color: #666;
+    }
+    </style>
   </head>
   <body>
     <div id="app"></div>
     <!-- built files will be auto injected -->
+    <div class="page-loading">
+      <p>
+        <img src="./static/img/loader.gif" alt="">
+        <br/>正在初始化页面数据请稍后...
+      </p>
+    </div>
   </body>
 </html>

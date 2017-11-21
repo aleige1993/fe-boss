@@ -39,10 +39,21 @@ Vue.prototype.$hideLoading = ()=> {
   store.dispatch("toggleLoading", false);
 };
 /* eslint-disable no-new */
-new Vue({
-  el: '#app',
-  router,
-  store,
-  template: '<App/>',
-  components: { App }
+$('.page-loading').show();
+new Http().post('/common/items', {}).then(response => {
+  $('.page-loading').hide();
+  let data = response.body;
+  let storeData = new Map();
+  data.map(item => {
+    storeData.set(item.groupKey, item.items);
+  });
+  // console.log(storeData);
+  store.dispatch('updateEnumSelectData', storeData);
+  new Vue({
+    el: '#app',
+    router,
+    store,
+    template: '<App/>',
+    components: { App }
+  });
 });
