@@ -34,6 +34,8 @@ import Invest from '@/pages/configuration-manage/invest';
 import Maintain from '@/pages/configuration-manage/invest/maintain';
 // 配置管理-资方管理-资方映射配置
 import Mapping from '@/pages/configuration-manage/invest/mapping';
+// 配置管理-资方管理-Contract
+import Contract from '@/pages/configuration-manage/invest/contract';
 // 客户管理--个人客户
 import CustomerManage from '@/pages/customer-manage';
 import PrivateCustomer from '@/pages/customer-manage/private-customer';
@@ -203,6 +205,12 @@ let MyRouter = new Router({
                   path:'mapping',
                   name: 'mapping',
                   component: Mapping
+                },
+                {
+                  // 配置管理-资方管理-合同模板维护
+                  path:'contract',
+                  name: 'contract',
+                  component: Contract
                 }
               ]
             }// 配置管理-资方管理end

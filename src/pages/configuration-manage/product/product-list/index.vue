@@ -11,7 +11,7 @@
     <div class="search-form-container">
       <i-form inline label-position="left">
         <i-form-item prop="user" label="产品名称" :label-width="100">
-          <i-input type="text" placeholder="客户名称"></i-input>
+          <i-input type="text" placeholder="产品名称"></i-input>
         </i-form-item>
         <i-form-item>
           <i-button type="primary">
@@ -30,7 +30,7 @@
       <i-button @click="FileClick" type="ghost"><i class="iconfont icon-shenhe"></i> 归档材料配置</i-button>
       <i-button v-if="isClickRow" @click="handleClearCurrentRow" type="text"><i-icon type="android-cancel" class="button-cancel"></i-icon> 取消当前选中状态</i-button>
     </div>
-    <i-table highlight-row border ref="proTable" :columns="columns1" :data="data1" @on-current-change="radioFun"></i-table>
+    <i-table highlight-row border :loading="loading" ref="proTable" :columns="columns1" :data="data1" @on-current-change="radioFun"></i-table>
     <div class="page-container">
       <i-page :current="1" :total="40" size="small" show-elevator show-total>
       </i-page>
@@ -108,6 +108,7 @@
     data() {
       return {
         isAdd: true,
+        loading: true,
         showAddModal: false,
         isClickRow: false,        // 是否已经选择了某一行
         LlShowModel: false,           // 利率方案配置弹窗
@@ -202,6 +203,7 @@
       let response = await this.$http.post('/product', {});
       try {
         Vm.$data.data1 = response.list;
+        this.$data.loading = false;
       } catch (err) {
       }
     },
@@ -301,7 +303,10 @@
       // 点击配置按钮时
       clickRowedFun() {
         if (JSON.stringify(this.$data.clickRow) === '{}') {
-          alert('请先选择需要配置的产品');
+          this.$Notice.open({
+            title: '请先选择需要配置的产品',
+            duration: 2
+          });
           return false;
         }
         return true;

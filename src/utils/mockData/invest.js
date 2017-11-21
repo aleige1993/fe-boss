@@ -50,5 +50,23 @@ export default [
       ],
       reMsg: 'success'
     })
+  },
+  // 资方管理 - 合同模板维护
+  {
+    url: '/contract',
+    on: true,
+    resp: Mock.mock({
+      reCode: '0',
+      'list|5': [
+        {
+          'id|+1': 1,
+          'name|1': ['海尔云贷贷款合同', '@name'],
+          'type|1': ['贷款合同01', '贷款合同02', '贷款合同03'],
+          'enclosure': /[a-z][A-Z][0-9]{3}\.pdf/,
+          'SignId': /[A-Z]{2}[0-9]{9}/
+        }
+      ],
+      reMsg: 'success'
+    })
   }
 ];
