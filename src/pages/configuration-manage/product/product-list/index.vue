@@ -32,7 +32,7 @@
     </div>
     <i-table highlight-row border :loading="loading" ref="proTable" :columns="columns1" :data="data1" @on-current-change="radioFun"></i-table>
     <div class="page-container">
-      <i-page :current="1" :total="40" size="small" show-elevator show-total>
+      <i-page :current="1" :total="40" size="small" show-elevator show-total @on-change="pageChangeFun">
       </i-page>
     </div>
     <!--新增产品弹窗-->
@@ -332,6 +332,8 @@
         }
         let currentdate = date.getFullYear() + seperator1 + month + seperator1 + strDate + ' ' + date.getHours() + seperator2 + date.getMinutes() + seperator2 + date.getSeconds();
         return currentdate;
+      },
+      pageChangeFun() {
       }
     }
   };
