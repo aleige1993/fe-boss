@@ -10,5 +10,8 @@ export default {
   },
   toggleLoading(state, isShow) {
     state.dataLoadingShow = isShow;
+  },
+  updateEnumSelectData(state, data) {
+    state.global.enumSelectData = data;
   }
 };

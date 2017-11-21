@@ -10,5 +10,8 @@ export default {
   },
   toggleLoading({ commit }, isShow) {
     commit('toggleLoading', isShow);
+  },
+  updateEnumSelectData({ commit }, data) {
+    commit('updateEnumSelectData', data);
   }
 };
