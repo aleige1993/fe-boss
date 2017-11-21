@@ -1,13 +1,14 @@
-import Mock from 'mockjs';
+// import Mock from 'mockjs';
 import menuList from './menuList';
 import product from './product';
 import invest from './invest';
+import customerManage from './customer-manage';
 let ary = [
   {
     url: '/login',
-    on: false,
+    on: true,
     resp: {
-      reCode: '0',
+      reCode: '0000',
       body: {
         token: 'XCSDCSXSDSDS',
         username: 'xiaoming',
@@ -17,5 +18,5 @@ let ary = [
     }
   }
 ];
-let result = [...ary, ...menuList, ...product, ...invest];
+let result = [...ary, ...menuList, ...product, ...invest, ...customerManage];
 export default result;

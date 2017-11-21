@@ -8,23 +8,23 @@ export default {
         },
         {
           title: '身份证号',
-          key: 'name'
+          key: 'certNo'
         },
         {
           title: '原因',
-          key: 'name'
+          key: 'blacklistReason'
         },
         {
           title: '来源',
-          key: 'name'
+          key: 'blacklistReason'
         },
         {
           title: '开始时间',
-          key: 'name'
+          key: 'blacklistTime'
         },
         {
           title: '结束时间',
-          key: 'age'
+          key: 'gmtModified'
         },
         {
           title: '操作',
@@ -80,32 +80,7 @@ export default {
           }
         }
       ],
-      data1: [
-        {
-          id: 1,
-          name: '王小明',
-          age: 18,
-          address: '北京市朝阳区芍药居'
-        },
-        {
-          id: 2,
-          name: '张小刚',
-          age: 25,
-          address: '北京市海淀区西二旗'
-        },
-        {
-          id: 3,
-          name: '李小红',
-          age: 30,
-          address: '上海市浦东新区世纪大道'
-        },
-        {
-          id: 4,
-          name: '周小伟',
-          age: 26,
-          address: '深圳市南山区深南大道'
-        }
-      ]
+      blacklistData: []
     };
   }
 };

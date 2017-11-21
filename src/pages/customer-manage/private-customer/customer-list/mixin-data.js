@@ -9,7 +9,7 @@ export default {
         },
         {
           title: '客户编号',
-          key: 'name'
+          key: 'memberNo'
         },
         {
           title: '姓名',
@@ -17,19 +17,23 @@ export default {
         },
         {
           title: '性别',
-          key: 'name'
+          key: 'sex'
         },
         {
           title: '证件类型',
-          key: 'name'
+          key: 'certType'
         },
         {
           title: '证件号码',
-          key: 'name'
+          key: 'certNo'
+        },
+        {
+          title: '手机号码',
+          key: 'mobile'
         },
         {
           title: '状态',
-          key: 'age'
+          key: 'status'
         },
         {
           title: '操作',
@@ -101,32 +105,7 @@ export default {
           }
         }
       ],
-      data1: [
-        {
-          id: 1,
-          name: '王小明',
-          age: 18,
-          address: '北京市朝阳区芍药居'
-        },
-        {
-          id: 2,
-          name: '张小刚',
-          age: 25,
-          address: '北京市海淀区西二旗'
-        },
-        {
-          id: 3,
-          name: '李小红',
-          age: 30,
-          address: '上海市浦东新区世纪大道'
-        },
-        {
-          id: 4,
-          name: '周小伟',
-          age: 26,
-          address: '深圳市南山区深南大道'
-        }
-      ]
+      privateCustomerList: []
     };
   }
 };

@@ -21,7 +21,7 @@
     <div class="form-top-actions">
       <i-button type="info" @click="addModal=!addModal"><i class="iconfont icon-xinzeng"></i> 新增</i-button>
     </div>
-    <Table :loading="dataLoading" border ref="selection" :columns="columns4" :data="data1"></Table>
+    <Table :loading="dataLoading" border ref="selection" :columns="columns4" :data="blacklistData"></Table>
     <div class="page-container">
       <Page :total="40" size="small" show-elevator show-sizer show-total></Page>
     </div>
@@ -57,7 +57,7 @@
   import MixinData from './mixin-data';
   import PTModal from '@/components/bs-modal';
   export default {
-    name: 'companyCustomer',
+    name: 'blacklist',
     mixins: [MixinData],
     data() {
       return {
@@ -66,15 +66,20 @@
       };
     },
     methods: {
-      goToAdd() {
-        this.$router.push('/index/customer/companycustomer/modify');
-      },
       async getBlacklist() {
         // get data
+        this.$data.dataLoading = true;
+        let resp = await this.$http.post('/member/blacklist/list', {});
+        this.$data.dataLoading = false;
+        let data = resp.body;
+        this.$data.blacklistData = data;
       }
     },
     components: {
       'pt-modal': PTModal
+    },
+    mounted() {
+      this.getBlacklist();
     }
   };
 </script>
