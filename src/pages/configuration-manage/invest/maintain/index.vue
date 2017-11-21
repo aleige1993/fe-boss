@@ -11,9 +11,9 @@
       <i-button @click="addModal" type="info"><i class="iconfont icon-xinzeng"></i> 新增产品</i-button>
     </div>
 
-    <i-table highlight-row border ref="proTable" :columns="columns1" :data="data1"></i-table>
+    <i-table :loading="dataLoading" highlight-row border ref="proTable" :columns="columns1" :data="data1"></i-table>
     <div class="page-container">
-      <i-page :current="1" :total="40" size="small" show-elevator show-total>
+      <i-page :current="currentPage" :total="total" size="small" show-elevator show-total @on-change="jumpPage">
       </i-page>
     </div>
     <bs-modal :title="'新增'" v-model="ShowModalOne" :width="1200">
@@ -125,7 +125,6 @@
             </i-col>
           </i-row>
         </i-form>
-
       </bs-form-block>
       <bs-form-block :title="'合作协议'" padding="20px 0" borderWidth="0px">
         <div class="form-top-actions" v-if="!iSsee">
@@ -148,139 +147,45 @@
 
 <script>
   import BSModal from '@/components/bs-modal';
+  import MixinData from './mixin-data';
   import ModalTwo from './modal-two.vue';
   export default {
     name: 'invest-maintain',
+    mixins: [MixinData],
     components: {
       'bs-modal': BSModal,
       'modal-two': ModalTwo
     },
     data() {
       return {
+        dataLoading: false,
         ShowModalOne: false,
         ShowModalTwo: false,
+        total: 0,
+        currentPage: 1,
         formMaintain: {},
-        iSsee: false,           // 是否是查看页面
-        columns1: [
-          {
-            title: '资方编号',
-            width: 100,
-            align: 'center',
-            key: 'id'
-          },
-          {
-            title: '资方名称',
-            key: 'name'
-          },
-          {
-            title: '状态',
-            key: 'state'
-          },
-          {
-            title: '操作',
-            key: 'action',
-            width: 200,
-            align: 'center',
-            render: (h, params) => {
-              return h('div', [
-                h('Button', {
-                  props: {
-                    type: 'primary',
-                    size: 'small'
-                  },
-                  style: {
-                    marginRight: '5px'
-                  },
-                  on: {
-                    click: () => {
-                    }
-                  }
-                }, '详情'),
-                h('Button', {
-                  props: {
-                    type: 'primary',
-                    size: 'small'
-                  },
-                  style: {
-                    marginRight: '5px'
-                  },
-                  on: {
-                    click: () => {
-                      this.listIndex = params.index;
-                      this.setList(params.row);
-                    }
-                  }
-                }, '修改'),
-                h('Button', {
-                  props: {
-                    type: 'error',
-                    size: 'small'
-                  },
-                  on: {
-                    click: () => {
-                      this.remove1(params.index);
-                    }
-                  }
-                }, '删除')
-              ]);
-            }
-          }
-        ],
-        data1: [],
-        columns2: [
-          {
-            title: '协议编号',
-            width: 100,
-            align: 'center',
-            key: 'id'
-          },
-          {
-            title: '协议名称',
-            key: 'name'
-          },
-          {
-            title: '协议附件',
-            key: 'enclosure'
-          },
-          {
-            title: '操作',
-            key: 'action',
-            width: 200,
-            align: 'center',
-            render: (h, params) => {
-              if (this.$data.iSsee) {
-                return;
-              }
-              return h('div', [
-                h('Button', {
-                  props: {
-                    type: 'error',
-                    size: 'small'
-                  },
-                  on: {
-                    click: () => {
-                      this.remove2(params.index);
-                    }
-                  }
-                }, '删除')
-              ]);
-            }
-          }
-        ],
-        data2: []
+        iSsee: false           // 是否是查看页面
       };
     }, // end data
-    async mounted() {
-      const Vm = this;
-      let response = await this.$http.post('/maintain', {});
-      let responseAgreement = await this.$http.post('/agreement', {});
-      try {
-        Vm.$data.data1 = response.list;
-        Vm.$data.data2 = responseAgreement.list;
-      } catch (err) {
-      }
+    mounted() {
+      this.getList();
     },
     methods: {
+      async getList(page) {
+        this.$data.dataLoading = true;
+        if (page) {
+          this.$data.currentPage = page;
+        }
+        let resp = await this.$http.get('/maintain', {});
+        this.$data.dataLoading = false;
+        this.$data.data1 = resp.body.resultList;
+        this.$data.currentPage = resp.body.currentPage;
+        this.$data.total = resp.body.totalNum;
+      },
+      // 分页跳转
+      jumpPage() {
+        this.getList();
+      },
       // 新增弹窗
       addModal() {
         this.$data.iSsee = false;   // 不是查看状态

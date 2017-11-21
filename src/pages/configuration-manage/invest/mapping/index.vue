@@ -9,12 +9,12 @@
     </i-breadcrumb>
     <div class="form-block-title">查询条件</div>
     <div class="search-form-container">
-      <i-form inline label-position="left">
-        <i-form-item prop="user" label="资方名称" :label-width="80">
-          <i-input type="text" placeholder="资方名称"></i-input>
+      <i-form inline label-position="left" ref="searchForm" :model="searchForm">
+        <i-form-item prop="name" label="资方名称" :label-width="80">
+          <i-input type="text" placeholder="资方名称" v-model="searchForm.name"></i-input>
         </i-form-item>
         <i-form-item>
-          <i-button type="primary">
+          <i-button type="primary" @click="search">
             <i-icon type="ios-search-strong"></i-icon>
             搜索
           </i-button>
@@ -24,9 +24,9 @@
     <div class="form-top-actions">
       <i-button @click="addModal" type="info"><i class="iconfont icon-xinzeng"></i> 新增</i-button>
     </div>
-    <i-table highlight-row border ref="proTable" :columns="columns1" :data="data1"></i-table>
+    <i-table :loading="dataLoading" highlight-row border ref="proTable" :columns="columns1" :data="data1"></i-table>
     <div class="page-container">
-      <i-page :current="1" :total="40" size="small" show-elevator show-total>
+      <i-page :current="currentPage" :total="total" size="small" show-elevator show-total @on-change="pageChange">
       </i-page>
     </div>
     <bs-modal :title="'资方映射配置'" v-model="ShowModel" :width="600">
@@ -82,18 +82,27 @@
 </template>
 
 <script>
+  import MixinData from './mixin-data';
   import BSModal from '@/components/bs-modal';
   export default {
     name: '',
+    mixins: [MixinData],
     components: {
       'bs-modal': BSModal
     },
     data() {
       return {
         isAdd: true,
+        dataLoading: false,
         ShowModel: false,         // 新增和修改弹窗
         ContractModel: false,      // 关联合同模板弹窗
         listIndex: Number,
+        currentPage: 1,
+        total: 0,
+        searchForm: {
+          name: '',
+          currentPage: 1
+        },
         formMapping: {
           proName: '',
           investName: '',
@@ -104,119 +113,30 @@
           rangeStart: '',
           rangeEnd: ''
         },
-        ContractformData: {},     // 关联合同模板已选的数据
-        columns1: [
-          {
-            title: '产品编号',
-            width: 100,
-            align: 'center',
-            key: 'proNumber'
-          },
-          {
-            title: '产品名称',
-            key: 'proName'
-          },
-          {
-            title: '资方名称',
-            key: 'investName'
-          },
-          {
-            title: '资方产品编号',
-            key: 'investProNumber'
-          },
-          {
-            title: '渠道编号',
-            key: 'channelNumber'
-          },
-          {
-            title: '客户经理编号',
-            key: 'managerNumber'
-          },
-          {
-            title: '操作',
-            key: 'action',
-            width: 200,
-            align: 'center',
-            render: (h, params) => {
-              return h('div', [
-                h('Button', {
-                  props: {
-                    type: 'primary',
-                    size: 'small'
-                  },
-                  style: {
-                    marginRight: '5px'
-                  },
-                  on: {
-                    click: () => {
-                      this.listIndex = params.index;
-                    }
-                  }
-                }, '合同模板'),
-                h('Button', {
-                  props: {
-                    type: 'primary',
-                    size: 'small'
-                  },
-                  style: {
-                    marginRight: '5px'
-                  },
-                  on: {
-                    click: () => {
-                      this.listIndex = params.index;
-                      this.setList(params.row);
-                    }
-                  }
-                }, '修改'),
-                h('Button', {
-                  props: {
-                    type: 'error',
-                    size: 'small'
-                  },
-                  on: {
-                    click: () => {
-                      this.remove(params.index);
-                    }
-                  }
-                }, '删除')
-              ]);
-            }
-          }
-        ],
-        data1: [],
-        // 关联合同模板
-        columns2: [
-          {
-            type: 'selection',
-            width: 60,
-            align: 'center'
-          },
-          {
-            title: '模板ID',
-            key: 'templateId'
-          },
-          {
-            title: '合同名称',
-            key: 'templateName'
-          }
-        ],
-        data2: [
-          {
-            templateId: '01',
-            templateName: '合同名称01'
-          }
-        ]
+        ContractformData: {}     // 关联合同模板已选的数据
       };
     },
-    async mounted() {
-      const Vm = this;
-      let response = await this.$http.post('/mapping', {});
-      try {
-        Vm.$data.data1 = response.list;
-      } catch (err) {
-      }
+    mounted() {
+      this.getList();
     },
     methods: {
+      search() {
+        this.getList();
+      },
+      pageChange(page) {
+        this.getList(page);
+      },
+      async getList(page) {
+        this.$data.dataLoading = true;
+        if (page) {
+          this.$data.searchForm.currentPage = page;
+        }
+        let resp = await this.$http.get('/mapping', this.$data.searchForm);
+        this.$data.dataLoading = false;
+        this.$data.data1 = resp.body.resultList;
+        this.$data.currentPage = resp.body.currentPage;
+        this.$data.total = resp.body.totalNum;
+      },
       // 新增按钮的弹窗
       addModal() {
         this.$data.ShowModel = true;

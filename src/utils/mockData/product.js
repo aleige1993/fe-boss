@@ -5,20 +5,29 @@ export default [
     url: '/product',
     on: true,
     resp: Mock.mock({
-      reCode: '0',
-      'list|1-20': [
-        {
-          'codeId|+1': 1,
-          'proNumber': 'CP1001',
-          'proName|1': ['产品名称1', '产品名称2', '产品名称3', '产品名称4', '产品名称5'],
-          'proType|1': ['乘用车', '商用车', '轻卡', '微卡', '新能源'],
-          'proState|1': ['启用', '停用'],
-          'creationTime': '@DATETIME("yyyy-MM-dd HH:mm:ss")',
-          'updateTime': '@now("yyyy-MM-dd HH:mm:ss")',
-          'Founder': '@name'
-        }
-      ],
-      reMsg: 'success'
+      'body': {
+        'currentPage': 1,
+        'isMore': 0,
+        'pageSize': 15,
+        'resultList|10': [
+          {
+            'codeId|+1': 1,
+            'proNumber': 'CP1001',
+            'proName|1': ['产品名称1', '产品名称2', '产品名称3', '产品名称4', '产品名称5'],
+            'proType|1': ['乘用车', '商用车', '轻卡', '微卡', '新能源'],
+            'proState|1': ['启用', '停用'],
+            'creationTime': '@DATETIME("yyyy-MM-dd HH:mm:ss")',
+            'updateTime': '@now("yyyy-MM-dd HH:mm:ss")',
+            'Founder': '@name'
+          }
+        ],
+        'startIndex': 0,
+        'totalNum': 100,
+        'totalPage': 1
+      },
+      'reCode': '0',
+      'reMsg': '成功',
+      'success': true
     })
   },
   // 产品管理-贷款材料配置

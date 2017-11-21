@@ -9,12 +9,12 @@
       查询条件
     </div>
     <div class="search-form-container">
-      <i-form inline label-position="left">
-        <i-form-item prop="user" label="产品名称" :label-width="100">
-          <i-input type="text" placeholder="产品名称"></i-input>
+      <i-form inline label-position="left" ref="formSearch" :model="formSearch">
+        <i-form-item prop="name" label="产品名称" :label-width="100">
+          <i-input type="text" placeholder="产品名称" v-model="formSearch.name"></i-input>
         </i-form-item>
         <i-form-item>
-          <i-button type="primary">
+          <i-button @click="search" type="primary">
             <i-icon type="ios-search-strong"></i-icon>
             搜索
           </i-button>
@@ -30,10 +30,9 @@
       <i-button @click="FileClick" type="ghost"><i class="iconfont icon-shenhe"></i> 归档材料配置</i-button>
       <i-button v-if="isClickRow" @click="handleClearCurrentRow" type="text"><i-icon type="android-cancel" class="button-cancel"></i-icon> 取消当前选中状态</i-button>
     </div>
-    <i-table highlight-row border :loading="loading" ref="proTable" :columns="columns1" :data="data1" @on-current-change="radioFun"></i-table>
+    <i-table highlight-row border :loading="dataLoading" ref="proTable" :columns="columns1" :data="data1" @on-current-change="radioFun"></i-table>
     <div class="page-container">
-      <i-page :current="1" :total="40" size="small" show-elevator show-total @on-change="pageChangeFun">
-      </i-page>
+      <i-page :total="total" :page-size="15" :current="currentPage" @on-change="jumpPage" size="small" show-elevator show-total></i-page>
     </div>
     <!--新增产品弹窗-->
     <pt-modal title="添加产品" v-model="showAddModal" :width="600">
@@ -90,6 +89,7 @@
 
 <script>
   import PTModal from '@/components/bs-modal';
+  import MixinData from './mixin-data';
   import ConfModelLilv from './configure-model-lilv'; //  利率方案配置
   import ConfModelFy from './configure-model-cost'; //  费用收取配置
   import ConfModelLoan from './configure-model-loan'; //  贷款材料配置
@@ -97,6 +97,7 @@
   import ConfModelFile from './configure-model-file'; //  准入规则配置
   export default {
     name: 'prolist',
+    mixins: [MixinData],
     components: {
       'pt-modal': PTModal,
       'conf-model-lilv': ConfModelLilv,
@@ -108,7 +109,7 @@
     data() {
       return {
         isAdd: true,
-        loading: true,
+        dataLoading: false,
         showAddModal: false,
         isClickRow: false,        // 是否已经选择了某一行
         LlShowModel: false,           // 利率方案配置弹窗
@@ -118,6 +119,13 @@
         FileShowModal: false,         // 归档材料配置弹窗
         listIndex: Number,
         clickRow: {},
+        total: 0,
+        currentPage: 1,
+        formSearch: {
+          name: '',
+          currentPage: 1,
+          pageSize: 15
+        },
         // 列表“新增按钮”的表单
         formCustom: {
           protype: '',
@@ -125,89 +133,28 @@
           prostusState: '',
           process: '',
           explain: ''
-        },
-        columns1: [
-          {
-            title: '产品编号',
-            width: 100,
-            align: 'center',
-            key: 'proNumber'
-          },
-          {
-            title: '产品名称',
-            key: 'proName'
-          },
-          {
-            title: '产品类型',
-            key: 'proType'
-          },
-          {
-            title: '产品状态',
-            key: 'proState'
-          },
-          {
-            title: '创建时间',
-            key: 'creationTime'
-          },
-          {
-            title: '更新时间',
-            key: 'updateTime'
-          },
-          {
-            title: '创建人',
-            key: 'Founder'
-          },
-          {
-            title: '操作',
-            key: 'action',
-            width: 200,
-            align: 'center',
-            render: (h, params) => {
-              return h('div', [
-                h('Button', {
-                  props: {
-                    type: 'primary',
-                    size: 'small'
-                  },
-                  style: {
-                    marginRight: '5px'
-                  },
-                  on: {
-                    click: () => {
-                      this.listIndex = params.index;
-                      this.setList(params.row);
-                    }
-                  }
-                }, '修改'),
-                h('Button', {
-                  props: {
-                    type: 'error',
-                    size: 'small'
-                  },
-                  on: {
-                    click: () => {
-                      this.remove(params.index);
-                    }
-                  }
-                }, '删除')
-              ]);
-            }
-          }
-        ],
-        data1: [],
-        name: ''
+        }
       };
     },
-    async mounted() {
-      const Vm = this;
-      let response = await this.$http.post('/product', {});
-      try {
-        Vm.$data.data1 = response.list;
-        this.$data.loading = false;
-      } catch (err) {
-      }
-    },
     methods: {
+      async getPrivateCustomerList(page) {
+        this.$data.dataLoading = true;
+        if (page) {
+          this.$data.searchForm.currentPage = page;
+        }
+        let resp = await this.$http.get('/product', this.$data.searchForm);
+        this.$data.dataLoading = false;
+        console.log(resp);
+        this.$data.data1 = resp.body.resultList;
+        this.$data.currentPage = resp.body.currentPage;
+        this.$data.total = resp.body.totalNum;
+      },
+      jumpPage() {
+        this.getPrivateCustomerList();
+      },
+      search() {
+        this.getPrivateCustomerList();
+      },
       // 打开费用配置弹窗
       feiyClick() {
         if (this.clickRowedFun()) {
@@ -316,25 +263,10 @@
         if (this.clickRowedFun()) {
           this.$data.LlShowModel = true;
         }
-      },
-      // 获取当前时间
-      getNowFormatDate() {
-        let date = new Date();
-        let seperator1 = '-';
-        let seperator2 = ':';
-        let month = date.getMonth() + 1;
-        let strDate = date.getDate();
-        if (month >= 1 && month <= 9) {
-          month = '0' + month;
-        }
-        if (strDate >= 0 && strDate <= 9) {
-          strDate = '0' + strDate;
-        }
-        let currentdate = date.getFullYear() + seperator1 + month + seperator1 + strDate + ' ' + date.getHours() + seperator2 + date.getMinutes() + seperator2 + date.getSeconds();
-        return currentdate;
-      },
-      pageChangeFun() {
       }
+    },
+    mounted() {
+      this.getPrivateCustomerList();
     }
   };
 </script>
