@@ -18,20 +18,9 @@ export default {
     }
   },
   methods: {
-    async getEnumSelectData() {
-      let response = await this.$http.post('/common/items', {});
-      let data = response.body;
-      let storeData = new Map();
-      data.map(item => {
-        storeData.set(item.groupKey, item.items);
-      });
-      // console.log(storeData);
-      this.$store.dispatch('updateEnumSelectData', storeData);
-    }
+
   },
-  mounted() {
-    this.getEnumSelectData();
-  }
+  created() {}
 }
 </script>
 

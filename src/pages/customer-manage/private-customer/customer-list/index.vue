@@ -104,7 +104,7 @@
         this.$data.total = resp.body.totalNum;
       },
       jumpPage(page) {
-        this.getPrivateCustomerList();
+        this.getPrivateCustomerList(page);
       },
       search() {
         this.getPrivateCustomerList();
@@ -115,7 +115,7 @@
     },
     mounted() {
       this.getPrivateCustomerList();
-      // alert(this.$store.getters.enumSelectData.get('YesNoEnum'));
+      console.log(this.$store.getters.enumSelectData.get('YesNoEnum'));
     }
   };
 </script>
