@@ -32,13 +32,13 @@
     <bs-modal :title="'资方映射配置'" v-model="ShowModel" :width="600">
       <i-form ref="formMapping" :model="formMapping" label-position="right" :label-width="100">
         <i-form-item class="required" label="产品" prop="pro">
-          <i-select v-model="formMapping.pro">
+          <i-select v-model="formMapping.proName">
             <i-option value="欢乐颂">欢乐颂</i-option>
             <i-option value="任分期">任分期</i-option>
           </i-select>
         </i-form-item>
-        <i-form-item class="required" label="资方" prop="inest">
-          <i-select v-model="formMapping.inest">
+        <i-form-item class="required" label="资方" prop="investName">
+          <i-select v-model="formMapping.investName">
             <i-option value="海尔云贷">海尔云贷</i-option>
             <i-option value="海乐行融资租赁">海乐行融资租赁</i-option>
           </i-select>
@@ -69,6 +69,15 @@
         </i-form-item>
       </i-form>
     </bs-modal>
+    <bs-modal :title="'关联合同模板'" v-model="ContractModel" :width="600">
+      <i-table highlight-row border ref="ContractTable" :columns="columns2" :data="data2" @on-selection-change="selectRow"></i-table>
+      <br>
+      <br>
+      <div class="text-right">
+        <i-button type="primary" @click="ContractformSubmit">提交</i-button>
+        <i-button type="ghost" style="margin-left: 8px" @click="ContractformCancel">取消</i-button>
+      </div>
+    </bs-modal>
   </div>
 </template>
 
@@ -82,11 +91,12 @@
     data() {
       return {
         isAdd: true,
-        ShowModel: false,
+        ShowModel: false,         // 新增和修改弹窗
+        ContractModel: false,      // 关联合同模板弹窗
         listIndex: Number,
         formMapping: {
-          pro: '',
-          inest: '',
+          proName: '',
+          investName: '',
           investProNumber: '',
           channelNumber: '',
           managerNumber: '',
@@ -94,6 +104,7 @@
           rangeStart: '',
           rangeEnd: ''
         },
+        ContractformData: {},     // 关联合同模板已选的数据
         columns1: [
           {
             title: '产品编号',
@@ -139,7 +150,6 @@
                   on: {
                     click: () => {
                       this.listIndex = params.index;
-                      console.log(params.row);
                     }
                   }
                 }, '合同模板'),
@@ -173,7 +183,29 @@
             }
           }
         ],
-        data1: []
+        data1: [],
+        // 关联合同模板
+        columns2: [
+          {
+            type: 'selection',
+            width: 60,
+            align: 'center'
+          },
+          {
+            title: '模板ID',
+            key: 'templateId'
+          },
+          {
+            title: '合同名称',
+            key: 'templateName'
+          }
+        ],
+        data2: [
+          {
+            templateId: '01',
+            templateName: '合同名称01'
+          }
+        ]
       };
     },
     async mounted() {
@@ -189,25 +221,51 @@
       addModal() {
         this.$data.ShowModel = true;
         const formName01 = 'formMapping';
-        this.$refs['formMapping'].resetFields(); // 重置表单
+        this.$refs[formName01].resetFields(); // 重置表单
       },
       // 新增里的 修改按钮
       setList(row) {
-        console.log(row);
         this.isAdd = false;
         this.$data.ShowModel = true;
-        this.formMapping.pro = row.proName;
+        this.formMapping.proName = row.proName;
+        this.formMapping.investName = row.investName;
         this.formMapping.investProNumber = row.investProNumber;
         this.formMapping.channelNumber = row.channelNumber;
         this.formMapping.managerNumber = row.managerNumber;
       },
       // 新增里的 提交按钮
       addformSubmit() {
-
+        if (this.isAdd) {
+          this.$data.data1.unshift({
+            proNumber: '003',
+            proName: this.$data.formMapping.proName,
+            investName: this.$data.formMapping.investName,
+            investProNumber: this.$data.formMapping.investProNumber,
+            channelNumber: this.$data.formMapping.channelNumber,
+            managerNumber: this.$data.formMapping.managerNumber
+          });
+        } else {
+          this.$data.data1[this.listIndex].proName = this.$data.formMapping.proName;
+          this.$data.data1[this.listIndex].investName = this.$data.formMapping.investName;
+          this.$data.data1[this.listIndex].investProNumber = this.$data.formMapping.investProNumber;
+          this.$data.data1[this.listIndex].channelNumber = this.$data.formMapping.channelNumber;
+          this.$data.data1[this.listIndex].managerNumber = this.$data.formMapping.managerNumber;
+        }
+        this.$data.ShowModel = false;
       },
       // 新增里的 取消按钮
       addformCancel() {
         this.$data.ShowModel = false;
+      },
+      selectRow(selection) {      // selection 已选项数据
+        this.$data.ContractformData = selection;
+        alert(JSON.stringify(selection));
+      },
+      ContractformSubmit() {
+        console.log(this.$data.ContractformData);
+      },
+      ContractformCancel() {
+        this.$data.ContractModel = false;
       }
     }
   };
