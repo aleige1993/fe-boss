@@ -28,7 +28,7 @@
     </div>
     <i-table highlight-row border :loading="dataLoading" ref="proTable" :columns="columns1" :data="data1"></i-table>
     <div class="page-container">
-      <i-page :current="currentPage" :total="total" size="small" show-elevator show-total @on-change="pageChange">
+      <i-page :current="currentPage" :total="total" size="small" show-elevator show-total @on-change="jumpPage">
       </i-page>
     </div>
     <bs-modal :title="'新增合同模板'" v-model="ShowModal" :width="600">
@@ -111,7 +111,7 @@
       search() {
         this.getList();
       },
-      pageChange(page) {
+      jumpPage(page) {
         this.getList(page);
       },
       // 新增弹窗
