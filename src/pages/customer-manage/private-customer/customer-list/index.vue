@@ -8,35 +8,12 @@
     <div class="form-block-title">
       客户信息
     </div>
-    <div class="search-form-container">
-      <i-form inline>
-        <i-form-item prop="user">
-          <i-input type="text" v-model="searchForm.name" placeholder="客户姓名"></i-input>
-        </i-form-item>
-        <i-form-item prop="password">
-          <i-select style="width: 120px;" v-model="searchForm.certType" placeholder="证件类型">
-            <i-option v-for="item in certTypeEnum" :value="item.itemCode">{{item.itemName}}</i-option>
-          </i-select>
-        </i-form-item>
-        <i-form-item prop="password">
-          <i-input v-model="searchForm.certNo" type="text" placeholder="证件号码"></i-input>
-        </i-form-item>
-        <i-form-item prop="password">
-          <i-input v-model="searchForm.mobile" type="text" placeholder="手机号码"></i-input>
-        </i-form-item>
-        <i-form-item>
-          <i-button @click="search" type="primary"><i-icon type="ios-search-strong"></i-icon> 搜索</i-button>
-        </i-form-item>
-      </i-form>
-    </div>
-    <div class="form-top-actions">
-      <i-button type="info" @click="goToAdd"><i class="iconfont icon-xinzeng"></i> 新增</i-button>
-      <i-button type="error"><i class="iconfont icon-shanchu"></i> 加入黑名单</i-button>
-    </div>
-    <i-table :loading="dataLoading" border ref="selection" :columns="columns4" :data="privateCustomerList"></i-table>
-    <div class="page-container">
-      <i-page :total="total" :page-size="15" :current="currentPage" @on-change="jumpPage" size="small" show-elevator show-total></i-page>
-    </div>
+    <table-customer-list type="page" @on-row-dbclick="selectSpouseRow">
+      <div class="form-top-actions" slot="topAction">
+        <i-button type="info" @click="goToAdd"><i class="iconfont icon-xinzeng"></i> 新增</i-button>
+        <i-button type="error"><i class="iconfont icon-shanchu"></i> 加入黑名单</i-button>
+      </div>
+    </table-customer-list>
     <pt-modal title="添加客户" v-model="showAddModal" :width="600" :zIndex="200">
       <Form ref="formValidate" label-position="left" :label-width="80">
         <i-form-item label="姓名" prop="name">
@@ -68,6 +45,7 @@
 <script>
   import MixinData from './mixin-data';
   import PTModal from '@/components/bs-modal';
+  import TableCustomerList from '@/components/table-customer-list';
   export default {
     name: 'privateCustomer',
     mixins: [MixinData],
@@ -108,10 +86,16 @@
       },
       search() {
         this.getPrivateCustomerList();
+      },
+      selectSpouseRow(row, index) {
+        this.$Modal.info({
+          content: index
+        });
       }
     },
     components: {
-      'pt-modal': PTModal
+      'pt-modal': PTModal,
+      TableCustomerList
     },
     mounted() {
       this.getPrivateCustomerList();

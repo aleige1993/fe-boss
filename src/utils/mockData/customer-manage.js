@@ -73,7 +73,7 @@ export default [
               'creditCode': '@Integer(5)',
               'legalPerson': '@name',
               'regDate': '@date',
-              'regCapital': '@double(10)',
+              'regCapital': '@float(10, 100000)',
               'telephone': '@integer(11)',
               'status': '@pick(["1", "2", "3"])'
             }
@@ -87,5 +87,34 @@ export default [
         'success': true
       }
     )
+  },
+  {
+    url: '/member/account/query',
+    on: true,
+    resp: Mock.mock({
+      'body|10': [
+        {
+          'bankCode': '@integer(10)',
+          'gmtModified': '@date',
+          'bankCardNo': '@integer(10)',
+          'createUserCode': '',
+          'bankCardType': '',
+          'bankMobile': '',
+          'bankName': '@name',
+          'openBankCode': '@integer(5)',
+          'remark': '',
+          'gmtCreate': '',
+          'openBankName': '@name',
+          'memberNo': '',
+          'certNo': '',
+          'name': '@name',
+          'modifiedUserCode': '',
+          'id': ''
+        }
+      ],
+      'reCode': '0000',
+      'reMsg': '成功',
+      'success': true
+    })
   }
 ];

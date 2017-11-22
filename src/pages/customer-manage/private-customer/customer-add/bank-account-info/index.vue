@@ -3,37 +3,40 @@
     <div class="form-top-actions" style="padding-top: 0">
       <i-button type="primary" @click="addBankModal=!addBankModal"><i class="iconfont icon-xinzeng"></i> 新增</i-button>
     </div>
-    <i-table :loading="false" :columns="bankAccountColumns" :data="bankAccountDatas"></i-table>
+    <i-table :loading="dataLoading" :columns="bankAccountColumns" :data="bankAccountDatas"></i-table>
     <!--添加联系人模态框-->
     <pt-modal title="添加联系人" v-model="addBankModal">
       <i-form ref="formValidate" label-position="left" :label-width="80">
-        <i-form-item label="账户名" prop="name">
-          <i-input placeholder=""></i-input>
+        <i-form-item label="账户名" prop="name"
+          :rules="{required: true, message: '账户名不能为空', trigger: 'blur'}">
+          <i-input v-model="formData.name" placeholder=""></i-input>
         </i-form-item>
-        <i-form-item label="账号" prop="mail">
-          <i-input placeholder=""></i-input>
+        <i-form-item label="账号" prop="mail"
+          :rules="{required: true, message: '账号不能为空', trigger: 'submit'}">
+          <i-input v-model="formData.bankCardNo" placeholder=""></i-input>
         </i-form-item>
         <i-form-item label="银行名称" prop="mail">
-          <i-select id="u5568_input" placeholder="">
-            <i-option value="亲属">中国农业银行</i-option>
-            <i-option value="朋友">中国招商银行</i-option>
-            <i-option value="同事">中国建设银行</i-option>
+          <i-select v-model="formData.bankCode" placeholder="">
+            <i-option v-for="item in bankList" :key="item.bankCode" :value="item.bankCode">{{item.bankName}}</i-option>
           </i-select>
         </i-form-item>
         <i-form-item label="开户行" prop="mail">
-          <i-input placeholder=""></i-input>
+          <i-input v-model="formData.openBankCode" placeholder=""></i-input>
         </i-form-item>
         <i-form-item label="开户行号" prop="mail">
-          <i-input placeholder=""></i-input>
+          <i-input v-model="formData.openBankName" placeholder=""></i-input>
         </i-form-item>
         <i-form-item label="预留手机号" prop="mail">
-          <i-input placeholder=""></i-input>
+          <i-input v-model="formData.bankMobile" placeholder=""></i-input>
         </i-form-item>
         <i-form-item label="备注" prop="mail">
-          <i-input placeholder=""></i-input>
+          <i-input v-model="formData.remark" placeholder=""></i-input>
         </i-form-item>
         <i-form-item label="">
-          <i-button type="primary" size="large" style="width: 80px;">提交</i-button>
+          <i-button :loading="submitLoading" @click="submitForm" type="primary" size="large" style="width: 80px;">
+            <span v-if="!submitLoading">提交</span>
+            <span v-else>Loading...</span>
+          </i-button>
         </i-form-item>
       </i-form>
     </pt-modal>
@@ -47,11 +50,49 @@
     mixins: [MixinData],
     data() {
       return {
-        addBankModal: false
+        addBankModal: false,
+        submitLoading: false,
+        dataLoading: false,
+        bankList: [],
+        formData: {
+          memberNo: '',
+          name: '',
+          bankCardNo: '',
+          bankCode: '',
+          bankName: '',
+          openBankCode: '',
+          openBankName: '',
+          bankMobile: '',
+          remark: ''
+        }
       };
+    },
+    methods: {
+      async submitForm() {
+        this.$data.submitLoading = true;
+        let resp = await this.$http.post('/member/account/insert', this.$data.formData);
+        this.$data.submitLoading = false;
+        if (resp.reCode === '0000') {
+          alert('添加成功');
+        }
+      },
+      async getCustomerBankList() {
+        this.$data.dataLoading = true;
+        let resp = await this.$http.post('/member/account/query', { memberNo: '' });
+        this.$data.dataLoading = false;
+        this.$data.bankAccountDatas = resp.body;
+      },
+      async getBankList() {
+        let resp = await this.$http.post('/common/support/bank/list');
+        this.$data.bankList = resp.body;
+      }
     },
     components: {
       'pt-modal': PTModal
+    },
+    mounted() {
+      this.getCustomerBankList();
+      this.getBankList();
     }
   };
 </script>

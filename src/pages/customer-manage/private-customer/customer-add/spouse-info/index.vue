@@ -9,7 +9,7 @@
     <i-table :loading="false" :columns="spouseColumns" :data="spouseDatas"></i-table>
     <!--添加联系人模态框-->
     <pt-modal title="选择客户配偶" v-model="addModal" :width="1000">
-      <table-customer-list @on-row-dbclick="selectSpouseRow"></table-customer-list>
+      <table-customer-list type="modal" @on-row-dbclick="selectSpouseRow"></table-customer-list>
     </pt-modal>
   </div>
 </template>

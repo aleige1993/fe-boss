@@ -4,11 +4,11 @@ export default {
       bankAccountColumns: [
         {
           title: '账户名',
-          key: 'accountName'
+          key: 'name'
         },
         {
           title: '账号',
-          key: 'accountNo'
+          key: 'bankCardNo'
         },
         {
           title: '银行名称',
@@ -16,11 +16,11 @@ export default {
         },
         {
           title: '开户行号',
-          key: 'bankNo'
+          key: 'openBankCode'
         },
         {
           title: '开户行',
-          key: 'bankBranchName'
+          key: 'openBankName'
         },
         {
           title: '操作',
@@ -56,16 +56,7 @@ export default {
           }
         }
       ],
-      bankAccountDatas: [
-        {
-          accountName: 'Joe Black',
-          accountNo: '25645415842142151',
-          bankName: '中国工商银行',
-          type: '客户',
-          bankNo: '2254',
-          bankBranchName: '上清寺支行'
-        }
-      ]
+      bankAccountDatas: []
     };
   }
 };

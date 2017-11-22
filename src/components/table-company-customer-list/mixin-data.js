@@ -1,37 +1,35 @@
 export default {
   data() {
     return {
-      customerColumns: [
+      companyCustomerColumns: [
         {
           title: '客户编号',
-          key: 'memberNo'
+          key: 'corpNo'
         },
         {
-          title: '姓名',
-          key: 'name'
+          title: '公司名称',
+          key: 'corpName'
         },
         {
-          title: '性别',
-          key: 'sex',
-          width: 100,
-          render: (h, params) => {
-            return h('span', {}, this.enumCode2Name(params.row.sex, 'SexEnum'));
-          }
+          title: '统一社会信用代码',
+          key: 'creditCode',
+          width: 150
         },
         {
-          title: '证件类型',
-          key: 'certType',
-          render: (h, params) => {
-            return h('span', {}, this.enumCode2Name(params.row.certType, 'CertTypeEnum'));
-          }
+          title: '法定代表人',
+          key: 'legalPerson'
         },
         {
-          title: '证件号码',
-          key: 'certNo'
+          title: '注册时间',
+          key: 'regDate'
         },
         {
-          title: '手机号码',
-          key: 'mobile'
+          title: '注册资金',
+          key: 'regCapital'
+        },
+        {
+          title: '公司电话',
+          key: 'telephone'
         },
         {
           title: '状态',
@@ -41,13 +39,18 @@ export default {
           }
         }
       ],
-      customerActionColumns: [
+      companyCustomerActionColumns: [
         {
           title: '操作',
           key: 'action',
-          width: 300,
+          width: 250,
           align: 'center',
+          fixed: true,
+          className: '',
           render: (h, params) => {
+            if (this.type === 'modal') {
+              return '';
+            }
             return h('div', [
               h('Button', {
                 props: {
@@ -57,13 +60,7 @@ export default {
                 style: { marginRight: '5px' },
                 on: {
                   click: () => {
-                    this.$router.push({
-                      path: '/index/customer/modify',
-                      query: {
-                        id: params.row.id,
-                        from: 'detail'
-                      }
-                    });
+                    this.show(params.index);
                   }
                 }
               }, '详情'),
@@ -79,9 +76,10 @@ export default {
                       path: '/index/customer/modify',
                       query: {
                         id: params.row.id,
-                        from: 'modify'
+                        from: 'detail'
                       }
                     });
+                    // this.remove(params.index);
                   }
                 }
               }, '修改'),
@@ -107,12 +105,12 @@ export default {
                     this.remove(params.index);
                   }
                 }
-              }, params.row.status === '1' ? '冻结' : '激活')
+              }, '激活/冻结')
             ]);
           }
         }
       ],
-      privateCustomerList: []
+      companyCustomerData: []
     };
   }
 };
