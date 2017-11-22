@@ -5,7 +5,7 @@
     </div>
     <i-table :loading="false" :columns="bankAccountColumns" :data="bankAccountDatas"></i-table>
     <!--添加联系人模态框-->
-    <pt-modal :title="addContactModalTitle" v-model="addBankModal">
+    <pt-modal title="添加联系人" v-model="addBankModal">
       <i-form ref="formValidate" label-position="left" :label-width="80">
         <i-form-item label="账户名" prop="name">
           <i-input placeholder=""></i-input>

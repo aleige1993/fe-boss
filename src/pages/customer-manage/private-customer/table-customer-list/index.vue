@@ -1,13 +1,5 @@
 <template>
   <div id="page-table-demo">
-    <i-breadcrumb separator=">">
-      <i-breadcrumb-item href="/">首页</i-breadcrumb-item>
-      <i-breadcrumb-item href="/components/breadcrumb">客户档案</i-breadcrumb-item>
-      <i-breadcrumb-item>个人客户管理</i-breadcrumb-item>
-    </i-breadcrumb>
-    <div class="form-block-title">
-      客户信息
-    </div>
     <div class="search-form-container">
       <i-form inline>
         <i-form-item prop="user">
@@ -29,15 +21,11 @@
         </i-form-item>
       </i-form>
     </div>
-    <div class="form-top-actions">
-      <i-button type="info" @click="goToAdd"><i class="iconfont icon-xinzeng"></i> 新增</i-button>
-      <i-button type="error"><i class="iconfont icon-shanchu"></i> 加入黑名单</i-button>
-    </div>
-    <i-table :loading="dataLoading" border ref="selection" :columns="columns4" :data="privateCustomerList"></i-table>
+    <i-table :loading="dataLoading" @on-row-dblclick="selectRow" border ref="selection" :columns="columns4" :data="privateCustomerList"></i-table>
     <div class="page-container">
       <i-page :total="total" :page-size="15" :current="currentPage" @on-change="jumpPage" size="small" show-elevator show-total></i-page>
     </div>
-    <pt-modal title="添加客户" v-model="showAddModal" :width="600" :zIndex="200">
+    <!-- <pt-modal title="添加客户" v-model="showAddModal" :width="600" :zIndex="200">
       <Form ref="formValidate" label-position="left" :label-width="80">
         <i-form-item label="姓名" prop="name">
           <i-input placeholder="请输入姓名"></i-input>
@@ -62,7 +50,7 @@
           <i-button type="ghost" style="margin-left: 8px">重置</i-button>
         </i-form-item>
       </Form>
-    </pt-modal>
+    </pt-modal> -->
   </div>
 </template>
 <script>
@@ -108,6 +96,9 @@
       },
       search() {
         this.getPrivateCustomerList();
+      },
+      selectRow(row, index) {
+        this.$emit('on-row-dbclick', row, index);
       }
     },
     components: {

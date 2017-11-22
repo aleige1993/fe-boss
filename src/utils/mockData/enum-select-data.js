@@ -278,6 +278,56 @@ export default [
               'itemName': '其他'
             }
           ]
+        },
+        {
+          'groupKey': 'RelativeEnum',
+          'items': [
+            {
+              'itemCode': '1',
+              'itemName': '亲属'
+            },
+            {
+              'itemCode': '2',
+              'itemName': '朋友'
+            },
+            {
+              'itemCode': '3',
+              'itemName': '同事'
+            },
+            {
+              'itemCode': '4',
+              'itemName': '父母'
+            },
+            {
+              'itemCode': '5',
+              'itemName': '子女'
+            },
+            {
+              'itemCode': '6',
+              'itemName': '兄弟/妹'
+            },
+            {
+              'itemCode': '7',
+              'itemName': '同学'
+            }
+          ]
+        },
+        {
+          'groupKey': 'ContactTypeEnum',
+          'items': [
+            {
+              'itemCode': '1',
+              'itemName': '紧急联系人'
+            },
+            {
+              'itemCode': '2',
+              'itemName': '工作证明人'
+            },
+            {
+              'itemCode': '3',
+              'itemName': '家庭联系人'
+            }
+          ]
         }
       ],
       'success': true
