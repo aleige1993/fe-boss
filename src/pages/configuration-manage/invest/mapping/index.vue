@@ -26,7 +26,7 @@
     </div>
     <i-table :loading="dataLoading" highlight-row border ref="proTable" :columns="columns1" :data="data1"></i-table>
     <div class="page-container">
-      <i-page :current="currentPage" :total="total" size="small" show-elevator show-total @on-change="pageChange">
+      <i-page :current="currentPage" :total="total" size="small" show-elevator show-total @on-change="junmpPage">
       </i-page>
     </div>
     <bs-modal :title="'资方映射配置'" v-model="ShowModel" :width="600">
@@ -123,7 +123,7 @@
       search() {
         this.getList();
       },
-      pageChange(page) {
+      junmpPage(page) {
         this.getList(page);
       },
       async getList(page) {
