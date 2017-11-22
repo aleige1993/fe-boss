@@ -37,13 +37,36 @@
     <!--新增产品弹窗-->
     <pt-modal title="添加产品" v-model="showAddModal" :width="600">
       <i-form ref="formCustom" :model="formCustom" label-position="left" :label-width="100">
-        <i-form-item class="required" label="产品类别" prop="protype">
-          <i-select placeholder="请选择" v-model="formCustom.protype">
-            <i-option value="乘用车">乘用车</i-option>
-            <i-option value="商用车">商用车</i-option>
-            <i-option value="轻卡">轻卡</i-option>
-            <i-option value="微卡">微卡</i-option>
-            <i-option value="新能源">新能源</i-option>
+        <i-form-item class="required" label="产品类别" prop="ProductTypeEnum">
+          <i-select placeholder="请选择" v-model="formCustom.ProductTypeEnum">
+            <!--
+          {
+          'groupKey': 'ProductTypeEnum',
+          'items': [
+            {
+              'itemCode': '1',
+              'itemName': '乘用车'
+            },
+            {
+              'itemCode': '2',
+              'itemName': '商用车'
+            },
+            {
+              'itemCode': '3',
+              'itemName': '轻卡'
+            },
+            {
+              'itemCode': '4',
+              'itemName': '微卡'
+            },
+            {
+              'itemCode': '5',
+              'itemName': '新能源'
+            }
+          ]
+        }
+          -->
+            <i-option v-for="item in enumSelectData.get('ProductTypeEnum')" :value="item.itemCode">{{item.itemName}}</i-option>
           </i-select>
         </i-form-item>
         <i-form-item class="required" label="产品名称" prop="proname">
@@ -140,7 +163,7 @@
         },
         // 列表“新增按钮”的表单
         formCustom: {
-          protype: '',
+          ProductTypeEnum: '',
           proname: '',
           ProductStatusEnum: '',
           process: '',

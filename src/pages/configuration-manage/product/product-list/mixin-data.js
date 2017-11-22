@@ -14,7 +14,10 @@ export default {
         },
         {
           title: '产品类型',
-          key: 'proType'
+          key: 'ProductTypeEnum',
+          render: (h, params) => {
+            return h('span', {}, this.enumCode2Name(params.row.ProductTypeEnum, 'ProductTypeEnum'));
+          }
         },
         {
           title: '产品状态',

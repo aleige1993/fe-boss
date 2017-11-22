@@ -367,7 +367,172 @@ export default [
               'itemName': '支出'
             }
           ]
-        }
+        },
+        {
+          'groupKey': 'ProductTypeEnum',
+          'items': [
+            {
+              'itemCode': '1',
+              'itemName': '乘用车'
+            },
+            {
+              'itemCode': '2',
+              'itemName': '商用车'
+            },
+            {
+              'itemCode': '3',
+              'itemName': '轻卡'
+            },
+            {
+              'itemCode': '4',
+              'itemName': '微卡'
+            },
+            {
+              'itemCode': '5',
+              'itemName': '新能源'
+            }
+          ]
+        },
+        // 保证金释放方式/CreditTypeEnum
+        {
+          'groupKey': 'FreedTypeEnum',
+          'items': [
+            {
+              'itemCode': '1',
+              'itemName': '按还本金额释放'
+            },
+            {
+              'itemCode': '2',
+              'itemName': '按贷款结清'
+            }
+          ]
+        }, // 保证金释放方式/CreditTypeEnum end
+        // 月息方式
+        {
+          'groupKey': 'InterestTypeEnum',
+          'items': [
+            {
+              'itemCode': '1',
+              'itemName': '按实际天数计算'
+            },
+            {
+              'itemCode': '2',
+              'itemName': '按固定30天计算'
+            }
+          ]
+        }, // 月息方式 end
+        // 模型设定
+        {
+          'groupKey': 'ModelTypeEnum',
+          'items': [
+            {
+              'itemCode': '1',
+              'itemName': '算头不算尾'
+            },
+            {
+              'itemCode': '2',
+              'itemName': '算头又算尾'
+            },
+            {
+              'itemCode': '3',
+              'itemName': '不算头不算尾'
+            }
+          ]
+        }, // 模型设定 end
+        // 逾期计算方式/罚息计算方式
+        {
+          'groupKey': 'OverdueTypeEnum',
+          'items': [
+            {
+              'itemCode': '1',
+              'itemName': '按合同金额收取'
+            },
+            {
+              'itemCode': '2',
+              'itemName': '按应还未还金额收取'
+            }
+          ]
+        }, // 逾期计算方式/罚息计算方式 end
+        // 还款周期
+        {
+          'groupKey': 'RepaymentPeriodEnum',
+          'items': [
+            {
+              'itemCode': '1',
+              'itemName': '按日'
+            },
+            {
+              'itemCode': '2',
+              'itemName': '按月'
+            },
+            {
+              'itemCode': '3',
+              'itemName': '按季'
+            },
+            {
+              'itemCode': '4',
+              'itemName': '按半年'
+            },
+            {
+              'itemCode': '5',
+              'itemName': '按年'
+            },
+            {
+              'itemCode': '6',
+              'itemName': '自定义'
+            }
+          ]
+        }, // 还款周期 end
+        // 还款日规则
+        {
+          'groupKey': 'RepaymentRuleEnum',
+          'items': [
+            {
+              'itemCode': '1',
+              'itemName': '对日还款'
+            },
+            {
+              'itemCode': '2',
+              'itemName': '指定日还款'
+            }
+          ]
+        }, // 还款日规则 end
+        // 还款方式
+        {
+          'groupKey': 'RepaymentTypeEnum',
+          'items': [
+            {
+              'itemCode': '1',
+              'itemName': '等额本金'
+            },
+            {
+              'itemCode': '2',
+              'itemName': '等额本息'
+            },
+            {
+              'itemCode': '3',
+              'itemName': '等本等息'
+            },
+            {
+              'itemCode': '4',
+              'itemName': '按期收息，期末收本'
+            }
+          ]
+        }, // 还款方式 end
+        // 年模型
+        {
+          'groupKey': 'YearModelEnum',
+          'items': [
+            {
+              'itemCode': '1',
+              'itemName': '按360天计算'
+            },
+            {
+              'itemCode': '2',
+              'itemName': '按365天计算'
+            }
+          ]
+        } // 年模型 end
       ],
       'success': true
     }
