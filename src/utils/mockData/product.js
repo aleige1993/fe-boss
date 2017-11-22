@@ -42,7 +42,7 @@ export default [
           'loanName': /[测试字体]{4,30}/
         }
       ],
-      reMsg: 'success'
+      reMsg: '成功'
     })
   },
   // 产品管理-费用类型配置
@@ -58,7 +58,7 @@ export default [
           'costDirection|1': ['收入', '支出']
         }
       ],
-      reMsg: 'success'
+      reMsg: '成功'
     })
   },
   // 产品管理-准入规则配置
@@ -73,7 +73,7 @@ export default [
           'ruleName': /[测试字体]{4,30}/
         }
       ],
-      reMsg: 'success'
+      reMsg: '成功'
     })
   },
   // 产品管理-车辆材料配置
@@ -88,7 +88,7 @@ export default [
           'carName': /[测试字体]{4,30}/
         }
       ],
-      reMsg: 'success'
+      reMsg: '成功'
     })
   },
   // 产品管理-归档材料配置
@@ -119,7 +119,7 @@ export default [
           'rate|1': ['0.1', '0.15', '0.2']
         }
       ],
-      reMsg: 'success'
+      reMsg: '成功'
     })
   },
   // 产品管理-费用收取配置弹窗
@@ -138,7 +138,7 @@ export default [
           'money|50-3000': 50
         }
       ],
-      reMsg: 'success'
+      reMsg: '成功'
     })
   },
   // 产品管理
@@ -179,7 +179,7 @@ export default [
           }
         ]
       },
-      reMsg: 'success'
+      reMsg: '成功'
     })
   }
 ];
