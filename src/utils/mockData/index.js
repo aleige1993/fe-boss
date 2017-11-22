@@ -3,7 +3,9 @@ import menuList from './menuList';
 import product from './product';
 import invest from './invest';
 import customerManage from './customer-manage';
+import employerManage from './employer-manage';
 import enumSelectData from './enum-select-data';
+
 let ary = [
   {
     url: '/login',
@@ -18,6 +20,7 @@ let ary = [
       reMsg: 'success'
     }
   },
+  // 文件上传
   {
     url: '/common/upload',
     on: true,
@@ -29,6 +32,7 @@ let ary = [
       reMsg: 'success'
     }
   },
+  // 地址获取
   {
     url: '/common/region/list',
     on: true,
@@ -43,5 +47,5 @@ let ary = [
     })
   }
 ];
-let result = [...ary, ...menuList, ...product, ...invest, ...customerManage, ...enumSelectData];
+let result = [...ary, ...menuList, ...product, ...invest, ...customerManage, ...enumSelectData, ...employerManage];
 export default result;

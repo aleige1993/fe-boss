@@ -17,11 +17,18 @@ export default {
         },
         {
           title: '性别',
-          key: 'sex'
+          key: 'sex',
+          width: 100,
+          render: (h, params) => {
+            return h('span', {}, this.enumCode2Name(params.row.sex, 'SexEnum'));
+          }
         },
         {
           title: '证件类型',
-          key: 'certType'
+          key: 'certType',
+          render: (h, params) => {
+            return h('span', {}, this.enumCode2Name(params.row.certType, 'CertTypeEnum'));
+          }
         },
         {
           title: '证件号码',
@@ -33,7 +40,10 @@ export default {
         },
         {
           title: '状态',
-          key: 'status'
+          key: 'status',
+          render: (h, params) => {
+            return h('span', {}, this.enumCode2Name(params.row.status, 'MemberStatusEnum'));
+          }
         },
         {
           title: '操作',
@@ -100,7 +110,7 @@ export default {
                     this.remove(params.index);
                   }
                 }
-              }, '冻结')
+              }, params.row.status === '1' ? '冻结' : '激活')
             ]);
           }
         }
