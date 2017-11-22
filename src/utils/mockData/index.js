@@ -1,4 +1,4 @@
-// import Mock from 'mockjs';
+import Mock from 'mockjs';
 import menuList from './menuList';
 import product from './product';
 import invest from './invest';
@@ -17,6 +17,30 @@ let ary = [
       },
       reMsg: 'success'
     }
+  },
+  {
+    url: '/common/upload',
+    on: true,
+    resp: {
+      reCode: '0000',
+      body: {
+        url: 'http://www.sinaimg.cn/qc/autoimg/car/30/34/129863430_950.jpg'
+      },
+      reMsg: 'success'
+    }
+  },
+  {
+    url: '/common/region/list',
+    on: true,
+    resp: Mock.mock({
+      reCode: '0000',
+      'body|10': [
+        {
+          regionCode: '@integer(10)',
+          regionName: '@name'
+        }
+      ]
+    })
   }
 ];
 let result = [...ary, ...menuList, ...product, ...invest, ...customerManage, ...enumSelectData];

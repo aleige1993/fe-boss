@@ -4,6 +4,8 @@ import Vue from 'vue';
 import App from './App';
 import router from './router';
 import store from './store';
+import Config from './utils/Config';
+Vue.prototype.$config = Config;
 Vue.config.productionTip = false;
 import iView from 'iview';
 Vue.use(iView);
@@ -29,8 +31,9 @@ Vue.directive('title', {
 // 登录工具类
 import UserLogin from '@/utils/UserLogin';
 Vue.prototype.$userLogin = UserLogin;
-// global filter
+// 全局filter和全局mixins
 import filter from './filter';
+import mixins from './mixins';
 //加载效果公共函数
 Vue.prototype.$showLoading = ()=> {
   store.dispatch("toggleLoading", true);
