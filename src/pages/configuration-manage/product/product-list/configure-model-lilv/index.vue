@@ -4,8 +4,13 @@
       <i-row :gutter="16">
         <!--个人单笔额度-->
         <i-col span="8">
-          <i-form-item class="required" label="个人单笔额度" prop="protype">
-            <i-input placeholder="个人单笔额度" v-model="formRate.protype">
+          <i-form-item
+            label="个人单笔额度" prop="protype"
+            :rules="{required: true, message: '请输入个人单笔额度', trigger: 'blur'}">
+            <i-input
+              placeholder="个人单笔额度"
+              v-model="formRate.protype"
+            >
               <span slot="append">元</span>
             </i-input>
           </i-form-item>

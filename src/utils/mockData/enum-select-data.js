@@ -328,6 +328,45 @@ export default [
               'itemName': '家庭联系人'
             }
           ]
+        },
+        {
+          'groupKey': 'ProductStatusEnum',
+          'items': [
+            {
+              'itemCode': '1',
+              'itemName': '启用'
+            },
+            {
+              'itemCode': '2',
+              'itemName': '停用'
+            }
+          ]
+        },
+        {
+          'groupKey': 'ReceiveTypeEnum',
+          'items': [
+            {
+              'itemCode': '1',
+              'itemName': '比例'
+            },
+            {
+              'itemCode': '2',
+              'itemName': '金额'
+            }
+          ]
+        },
+        {
+          'groupKey': 'FeeTypeEnum',
+          'items': [
+            {
+              'itemCode': 'C',
+              'itemName': '收入'
+            },
+            {
+              'itemCode': 'D',
+              'itemName': '支出'
+            }
+          ]
         }
       ],
       'success': true
