@@ -280,10 +280,5 @@
         margin-right: 10px;
       }
     }
-    & .pt-modal-shadow .bs-form-block .block-body {
-      border: 0;
-    }
-    & .button-cancel {
-    }
   }
 </style>

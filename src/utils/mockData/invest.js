@@ -17,7 +17,7 @@ export default [
         ]
       },
       reCode: '0',
-      reMsg: 'success'
+      reMsg: '成功'
     })
   },
   // 资方管理 - 新增弹窗 - 合同协议
@@ -33,7 +33,7 @@ export default [
         }
       ],
       reCode: '0',
-      reMsg: 'success'
+      reMsg: '成功'
     })
   },
   // 资方管理 - 资方映射配置
@@ -56,7 +56,7 @@ export default [
         ]
       },
       reCode: '0',
-      reMsg: 'success'
+      reMsg: '成功'
     })
   },
   // 资方管理 - 合同模板维护
@@ -78,7 +78,7 @@ export default [
         ]
       },
       reCode: '0',
-      reMsg: 'success'
+      reMsg: '成功'
     })
   }
 ];
