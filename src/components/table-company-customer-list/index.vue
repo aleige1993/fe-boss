@@ -13,15 +13,18 @@
         </i-form-item>
       </i-form>
     </div>
-    <i-table border :loading="dataLoading" ref="selection" @on-row-dblclick="selectRow" :columns="companyCustomerColumns" :data="companyCustomerData"></i-table>
+    <slot name="topAction"></slot>
+    <i-table border :loading="dataLoading" ref="selection" @on-row-dblclick="selectRow" :columns="resultCompanyCustomerColumns" :data="companyCustomerData"></i-table>
     <div class="page-container">
       <i-page @on-change="jumpPage" :total="40" size="small" show-elevator show-total></i-page>
     </div>
   </div>
 </template>
 <script>
+import MixinData from './mixin-data';
 export default {
   name: 'tableCompanyCustomerList',
+  mixins: [MixinData],
   data() {
     return {
       dataLoading: false,
@@ -30,44 +33,22 @@ export default {
         creditCode: '',
         currentPage: 1,
         pageSize: 15
-      },
-      companyCustomerColumns: [
-        {
-          title: '客户编号',
-          key: 'corpNo'
-        },
-        {
-          title: '公司名称',
-          key: 'corpName'
-        },
-        {
-          title: '统一社会信用代码',
-          key: 'creditCode',
-          width: 150
-        },
-        {
-          title: '法定代表人',
-          key: 'legalPerson'
-        },
-        {
-          title: '注册时间',
-          key: 'regDate'
-        },
-        {
-          title: '注册资金',
-          key: 'regCapital'
-        },
-        {
-          title: '公司电话',
-          key: 'telephone'
-        },
-        {
-          title: '状态',
-          key: 'age'
-        }
-      ],
-      companyCustomerData: []
+      }
     };
+  },
+  computed: {
+    resultCompanyCustomerColumns() {
+      if (this.type === 'modal') {
+        return this.$data.companyCustomerColumns;
+      } else {
+        return [...this.$data.companyCustomerColumns, ...this.$data.companyCustomerActionColumns];
+      }
+    }
+  },
+  props: {
+    type: String,
+    default: 'page',
+    required: false
   },
   methods: {
     async getCompanyCustomerList(page) {

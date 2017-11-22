@@ -21,7 +21,8 @@
         </i-form-item>
       </i-form>
     </div>
-    <i-table :loading="dataLoading" @on-row-dblclick="selectRow" border ref="selection" :columns="columns4" :data="privateCustomerList"></i-table>
+    <slot name="topAction"></slot>
+    <i-table :loading="dataLoading" @on-row-dblclick="selectRow" border ref="selection" :columns="resultCustomerColumns" :data="privateCustomerList"></i-table>
     <div class="page-container">
       <i-page :total="total" :page-size="15" :current="currentPage" @on-change="jumpPage" size="small" show-elevator show-total></i-page>
     </div>
@@ -48,6 +49,20 @@
           pageSize: 15
         }
       };
+    },
+    computed: {
+      resultCustomerColumns() {
+        if (this.type === 'modal') {
+          return this.$data.customerColumns;
+        } else {
+          return [...this.$data.customerColumns, ...this.$data.customerActionColumns];
+        }
+      }
+    },
+    props: {
+      type: String,
+      default: 'page',
+      required: false
     },
     methods: {
       goToAdd() {

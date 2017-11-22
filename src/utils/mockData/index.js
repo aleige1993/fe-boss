@@ -45,6 +45,20 @@ let ary = [
         }
       ]
     })
+  },
+  // 银行下拉
+  {
+    url: '/common/support/bank/list',
+    on: true,
+    resp: Mock.mock({
+      reCode: '0000',
+      'body|10': [
+        {
+          bankCode: '@integer(10)',
+          bankName: '@name'
+        }
+      ]
+    })
   }
 ];
 let result = [...ary, ...menuList, ...product, ...invest, ...customerManage, ...enumSelectData, ...employerManage];

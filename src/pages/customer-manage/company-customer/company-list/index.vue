@@ -8,27 +8,12 @@
     <div class="form-block-title">
       客户信息
     </div>
-    <div class="search-form-container">
-      <i-form inline>
-        <i-form-item prop="user">
-          <i-input type="text" placeholder="公司名称"></i-input>
-        </i-form-item>
-        <i-form-item prop="password">
-          <i-input type="password" placeholder="统一社会信用编码"></i-input>
-        </i-form-item>
-        <i-form-item>
-          <i-button type="primary"><i-icon type="ios-search-strong"></i-icon> 搜索</i-button>
-        </i-form-item>
-      </i-form>
-    </div>
-    <div class="form-top-actions">
-      <i-button type="info" @click="goToAdd"><i class="iconfont icon-xinzeng"></i> 新增</i-button>
-      <i-button type="error"><i class="iconfont icon-shanchu"></i> 加入黑名单</i-button>
-    </div>
-    <Table border ref="selection" :columns="columns4" :data="data1"></Table>
-    <div class="page-container">
-      <Page :total="40" size="small" show-elevator show-sizer show-total></Page>
-    </div>
+    <table-company-customer-list type="page" @on-row-dbclick="selectCompanyCustomer">
+      <div class="form-top-actions" slot="topAction">
+        <i-button type="info" @click="goToAdd"><i class="iconfont icon-xinzeng"></i> 新增</i-button>
+        <i-button type="error"><i class="iconfont icon-shanchu"></i> 加入黑名单</i-button>
+      </div>
+    </table-company-customer-list>
     <pt-modal title="添加客户" v-model="showAddModal" :width="600" :zIndex="200">
       <Form ref="formValidate" label-position="left" :label-width="80">
         <i-form-item label="姓名" prop="name">
@@ -60,6 +45,7 @@
 <script>
   import MixinData from './mixin-data';
   import PTModal from '@/components/bs-modal';
+  import TableCompanyCustomerList from '@/components/table-company-customer-list';
   export default {
     name: 'companyCustomer',
     mixins: [MixinData],
@@ -71,10 +57,16 @@
     methods: {
       goToAdd() {
         this.$router.push('/index/customer/companycustomer/modify');
+      },
+      selectCompanyCustomer(row, index) {
+        this.$Modal.info({
+          content: index
+        });
       }
     },
     components: {
-      'pt-modal': PTModal
+      'pt-modal': PTModal,
+      TableCompanyCustomerList
     }
   };
 </script>

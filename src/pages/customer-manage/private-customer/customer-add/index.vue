@@ -327,10 +327,10 @@
     </i-tabs>
     <!-- 选择企业的弹窗 -->
     <bs-modal title="选择企业" :width="1200" v-model="showSelectCompany">
-      <table-company-customer-list @on-row-dbclick="selectCompanyCustomer"></table-company-customer-list>
+      <table-company-customer-list type="modal" @on-row-dbclick="selectCompanyCustomer"></table-company-customer-list>
     </bs-modal>
     <!-- 选择客户经理的弹窗 -->
-    <bs-modal title="选择企业" :width="1200" v-model="showSelectEmployer">
+    <bs-modal title="选择客户经理" :width="1200" v-model="showSelectEmployer">
       <table-employer-list @on-row-dbclick="selectEmployer"></table-employer-list>
     </bs-modal>
   </div>
