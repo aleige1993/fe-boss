@@ -16,7 +16,7 @@
 <script>
   import PTModal from '@/components/bs-modal';
   import MixinData from './mixin-data';
-  import TableCustomerList from '@/pages/customer-manage/private-customer/table-customer-list';
+  import TableCustomerList from '@/components/table-customer-list';
   export default {
     name: '',
     mixins: [MixinData],

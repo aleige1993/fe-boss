@@ -39,12 +39,43 @@ export default [
           'resultList|10': [
             {
               'certNo': '@Integer(18)',
-              'certType': '1',
+              'certType': '@pick(["1", "2"])',
               'memberNo': '@Integer(5)',
               'mobile': '@Integer(10)',
               'name': '@name',
-              'sex': '1',
-              'status': '1'
+              'sex': '@pick(["1", "2"])',
+              'status': '@pick(["1", "2", "3"])'
+            }
+          ],
+          'startIndex': 0,
+          'totalNum': 100,
+          'totalPage': 1
+        },
+        'reCode': '0000',
+        'reMsg': '成功',
+        'success': true
+      }
+    )
+  },
+  {
+    url: '/corp/listCorp',
+    on: true,
+    resp: Mock.mock(
+      {
+        'body': {
+          'currentPage': 1,
+          'isMore': 0,
+          'pageSize': 15,
+          'resultList|10': [
+            {
+              'corpNo': '@Integer(18)',
+              'corpName': '@name',
+              'creditCode': '@Integer(5)',
+              'legalPerson': '@name',
+              'regDate': '@date',
+              'regCapital': '@double(10)',
+              'telephone': '@integer(11)',
+              'status': '@pick(["1", "2", "3"])'
             }
           ],
           'startIndex': 0,

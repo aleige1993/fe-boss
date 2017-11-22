@@ -286,7 +286,7 @@
                   <i-col span="8">
                     <i-form-item class="required" label="客户经理">
                       <i-input v-model="formData.mbMemberDTO.custMgrNo" :readonly="true" placeholder="选择客户经理">
-                        <i-button slot="append">选择客户经理 <Icon type="ios-more"></Icon></i-button>
+                        <i-button @click="showSelectEmployer=!showSelectEmployer" slot="append">选择客户经理 <Icon type="ios-more"></Icon></i-button>
                       </i-input>
                     </i-form-item>
                   </i-col>
@@ -327,23 +327,11 @@
     </i-tabs>
     <!-- 选择企业的弹窗 -->
     <bs-modal title="选择企业" :width="1200" v-model="showSelectCompany">
-      <div class="search-form-container">
-        <i-form inline>
-          <i-form-item prop="user">
-            <i-input type="text" placeholder="公司名称"></i-input>
-          </i-form-item>
-          <i-form-item prop="password">
-            <i-input type="password" placeholder="统一社会信用编码"></i-input>
-          </i-form-item>
-          <i-form-item>
-            <i-button type="primary"><i-icon type="ios-search-strong"></i-icon> 搜索</i-button>
-          </i-form-item>
-        </i-form>
-      </div>
-      <Table border ref="selection" @on-row-dblclick="selectCompany" :columns="companyColumns" :data="companyList"></Table>
-      <div class="page-container">
-        <Page :total="40" size="small" show-elevator show-total></Page>
-      </div>
+      <table-company-customer-list @on-row-dbclick="selectCompanyCustomer"></table-company-customer-list>
+    </bs-modal>
+    <!-- 选择客户经理的弹窗 -->
+    <bs-modal title="选择企业" :width="1200" v-model="showSelectEmployer">
+      <table-employer-list @on-row-dbclick="selectEmployer"></table-employer-list>
     </bs-modal>
   </div>
 </template>
@@ -360,6 +348,8 @@
   import TabLawsuitInfo from './lawsuit-info/index.vue';
   import IDCardPlaceholder from '@/components/bs-idcard-placeholder';
   import BsModal from '@/components/bs-modal';
+  import TableEmployerList from '@/components/table-employer-list';
+  import TableCompanyCustomerList from '@/components/table-company-customer-list';
   export default {
     name: 'modifyPrivateCustomer',
     mixins: [MixinData, MixinMethods],
@@ -368,6 +358,7 @@
         customerId: null,
         isFromDetail: false,
         showSelectCompany: false,
+        showSelectEmployer: false,
         // 地址下拉
         shengDropList: [],
         censusDistrictDropList: [],
@@ -398,7 +389,9 @@
       TabBusinessContactInfo,
       TabLawsuitInfo,
       'idcard-placeholder': IDCardPlaceholder,
-      BsModal
+      BsModal,
+      TableEmployerList,
+      TableCompanyCustomerList
     },
     methods: {
       tabChange(name) {
@@ -416,6 +409,12 @@
           regionCode: _code
         };
         return this.$http.post('/common/region/list', data);
+      },
+      selectEmployer(row, index) {
+        alert(index);
+      },
+      selectCompanyCustomer(row, index) {
+        alert(index);
       }
     },
     async mounted() {
