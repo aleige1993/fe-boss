@@ -1,4 +1,5 @@
 <template>
+  <!--费用收取配置-->
 <div id="conf-model-lilv">
   <div class="form-top-actions">
     <i-button @click="addModal" type="info"><i class="iconfont icon-xinzeng"></i> 新增</i-button>

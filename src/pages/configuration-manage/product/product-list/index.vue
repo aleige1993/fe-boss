@@ -144,7 +144,6 @@
         }
         let resp = await this.$http.get('/product', this.$data.searchForm);
         this.$data.dataLoading = false;
-        console.log(resp);
         this.$data.data1 = resp.body.resultList;
         this.$data.currentPage = resp.body.currentPage;
         this.$data.total = resp.body.totalNum;
