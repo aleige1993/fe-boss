@@ -72,7 +72,7 @@
                   }
                 ]
               }-->
-              <i-option v-for="item in enumSelectData.get('RepaymentTypeEnum')" :value="item.itemCode">{{item.itemName}}</i-option>
+              <i-option v-for="item in enumSelectData.get('RepaymentTypeEnum')" :key="item.itemCode" :value="item.itemCode">{{item.itemName}}</i-option>
             </i-select>
           </i-form-item>
         </i-col>
@@ -116,7 +116,7 @@
                     ]
                   }
                   -->
-                  <i-option v-for="item in enumSelectData.get('RepaymentPeriodEnum')" :value="item.itemCode">{{item.itemName}}</i-option>
+                  <i-option v-for="item in enumSelectData.get('RepaymentPeriodEnum')" :key="item.itemCode" :value="item.itemCode">{{item.itemName}}</i-option>
                 </i-select>
               </i-col>
               <i-col span="15" style="padding: 0">
@@ -153,7 +153,7 @@
                 ]
               }
               -->
-              <i-option v-for="item in enumSelectData.get('ModelTypeEnum')" :value="item.itemCode">{{item.itemName}}</i-option>
+              <i-option v-for="item in enumSelectData.get('ModelTypeEnum')":key="item.itemCode" :value="item.itemCode">{{item.itemName}}</i-option>
             </i-select>
           </i-form-item>
         </i-col>
@@ -164,7 +164,7 @@
             label="月息方式"
             prop="InterestTypeEnum">
             <i-select v-model="formRate.InterestTypeEnum" placeholder="请选择">
-              <i-option v-for="item in enumSelectData.get('InterestTypeEnum')" :value="item.itemCode">{{item.itemName}}</i-option>
+              <i-option v-for="item in enumSelectData.get('InterestTypeEnum')" :key="item.itemCode" :value="item.itemCode">{{item.itemName}}</i-option>
             </i-select>
           </i-form-item>
         </i-col>
@@ -185,7 +185,7 @@
                   }
                 ]
               }-->
-              <i-option v-for="item in enumSelectData.get('YearModelEnum')" :value="item.itemCode">{{item.itemName}}</i-option>
+              <i-option v-for="item in enumSelectData.get('YearModelEnum')" :key="item.itemCode" :value="item.itemCode">{{item.itemName}}</i-option>
             </i-select>
           </i-form-item>
         </i-col>
@@ -213,7 +213,7 @@
                     ]
                   }
                   -->
-                  <i-option v-for="item in enumSelectData.get('RepaymentRuleEnum')" :value="item.itemCode">{{item.itemName}}</i-option>
+                  <i-option v-for="item in enumSelectData.get('RepaymentRuleEnum')" :key="item.itemCode" :value="item.itemCode">{{item.itemName}}</i-option>
                 </i-select>
               </i-col>
               <i-col span="12"  style="padding: 0">
@@ -246,7 +246,7 @@
                 ]
               }
               -->
-              <i-option v-for="item in enumSelectData.get('OverdueTypeEnum')" :value="item.itemCode">{{item.itemName}}</i-option>
+              <i-option v-for="item in enumSelectData.get('OverdueTypeEnum')" :key="item.itemCode" :value="item.itemCode">{{item.itemName}}</i-option>
             </i-select>
           </i-form-item>
         </i-col>
@@ -290,7 +290,7 @@
             label="罚息计算方式"
             prop="PenaltyTypeEnum">
             <i-select v-model="formRate.PenaltyTypeEnum" placeholder="请选择">
-              <i-option v-for="item in enumSelectData.get('OverdueTypeEnum')" :value="item.itemCode">{{item.itemName}}</i-option>
+              <i-option v-for="item in enumSelectData.get('OverdueTypeEnum')" :key="item.itemCode" :value="item.itemCode">{{item.itemName}}</i-option>
             </i-select>
           </i-form-item>
         </i-col>
@@ -312,7 +312,7 @@
             label="是否允许提前还款"
             prop="YesNoEnum">
             <i-select v-model="formRate.YesNoEnum" placeholder="请选择">
-              <i-option v-for="item in enumSelectData.get('YesNoEnum')" :value="item.itemCode">{{item.itemName}}</i-option>
+              <i-option v-for="item in enumSelectData.get('YesNoEnum')" :key="item.itemCode" :value="item.itemCode">{{item.itemName}}</i-option>
             </i-select>
           </i-form-item>
         </i-col>
@@ -357,7 +357,7 @@
             label="保证金释放方式"
             prop="protype">
             <i-select v-model="formRate.FreedTypeEnum" placeholder="请选择">
-              <i-option v-for="item in enumSelectData.get('FreedTypeEnum')" :value="item.itemCode">{{item.itemName}}</i-option>
+              <i-option v-for="item in enumSelectData.get('FreedTypeEnum')" :key="item.itemCode" :value="item.itemCode">{{item.itemName}}</i-option>
             </i-select>
           </i-form-item>
         </i-col>
@@ -368,7 +368,7 @@
             label="授信释放方式"
             prop="CreditTypeEnum">
             <i-select v-model="formRate.CreditTypeEnum" placeholder="请选择">
-              <i-option v-for="item in enumSelectData.get('FreedTypeEnum')" :value="item.itemCode">{{item.itemName}}</i-option>
+              <i-option v-for="item in enumSelectData.get('FreedTypeEnum')" :key="item.itemCode" :value="item.itemCode">{{item.itemName}}</i-option>
             </i-select>
           </i-form-item>
         </i-col>
@@ -426,11 +426,11 @@
         showAdd: false, // 增删的模态框
         formRate: { // 当前的模态框的数据表单
           protype: '',  // 产品类型
-          ModelTypeEnum: '',  //模型设定
-          YearModelEnum: '',  //年模型
-          RepaymentTypeEnum: '',  //还款方式
-          OverdueTypeEnum: '',  //逾期计算方式
-          PenaltyTypeEnum: '',  //罚息计算方式
+          ModelTypeEnum: '',  // 模型设定
+          YearModelEnum: '',  // 年模型
+          RepaymentTypeEnum: '',  // 还款方式
+          OverdueTypeEnum: '',  // 逾期计算方式
+          PenaltyTypeEnum: '',  // 罚息计算方式
           InterestTypeEnum: '', // 月息方式
           FreedTypeEnum: '',  // 保证金释放方式
           CreditTypeEnum: '',  // 授信释放方式

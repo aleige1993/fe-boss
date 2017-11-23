@@ -18,9 +18,7 @@ import Topnav from '@/pages/common/top-nav';
 import LeftNav from '@/pages/common/left-nav';
 export default {
   name: 'pageIndex',
-  data: () => ({
-
-  }),
+  data: () => ({}),
   components: {
     'top-bar': Topbar,
     'top-nav': Topnav,

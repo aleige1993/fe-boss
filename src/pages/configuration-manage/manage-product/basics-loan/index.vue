@@ -10,9 +10,9 @@
     <div class="form-top-actions">
       <i-button @click="addModal" type="info"><i class="iconfont icon-xinzeng"></i>&nbsp;新增产品</i-button>
     </div>
-    <i-table border ref="selection" :columns="columns1" :data="data1"></i-table>
+    <i-table :loading="dataLoading" border ref="selection" :columns="columns1" :data="data1"></i-table>
     <div class="page-container">
-      <i-page :current="1" :total="40" size="small" show-elevator show-total></i-page>
+      <i-page :current="currentPage" :total="total" size="small" show-elevator show-total @on-change="jumpPage"></i-page>
     </div>
     <pt-modal title="新增" v-model="showAddModal">
       <i-form  ref="formCustom" :model="formCustom" label-position="left" :label-width="100">
@@ -21,7 +21,7 @@
         </i-form-item>
         <i-form-item class="text-right">
           <i-button type="primary" @click="formSubmit">提交</i-button>
-          <i-button type="ghost" @click="handleReset()" style="margin-left: 8px">重置</i-button>
+          <i-button type="ghost" @click="formCancel" style="margin-left: 8px">取消</i-button>
         </i-form-item>
       </i-form>
     </pt-modal>
@@ -30,77 +30,47 @@
 
 <script>
   import PTModal from '@/components/bs-modal';
+  import MixinData from './mixin-data';
   export default {
     name: 'basics-loan',
+    mixins: [MixinData],
     components: {
       'pt-modal': PTModal
     },
     data() {
       return {
         isAdd: true,
+        dataLoading: false,
         showAddModal: false,
         listIndex: Number,
+        currentPage: 1,
+        total: 0,
         formCustom: {
           textarea: ''
-        },
-        columns1: [
-          {
-            title: '贷款材料ID',
-            align: 'center',
-            key: 'loanId'
-          },
-          {
-            title: '贷款材料名称',
-            key: 'loanName'
-          },
-          {
-            title: '操作',
-            key: 'action',
-            width: 200,
-            align: 'center',
-            render: (h, params) => {
-              return h('div', [
-                h('Button', {
-                  props: {
-                    type: 'primary',
-                    size: 'small'
-                  },
-                  style: {
-                    marginRight: '5px'
-                  },
-                  on: {
-                    click: () => {
-                      this.listIndex = params.index;
-                      this.setList(params.row);
-                    }
-                  }
-                }, '修改'),
-                h('Button', {
-                  props: {
-                    type: 'error',
-                    size: 'small'
-                  },
-                  on: {
-                    click: () => {
-                      this.remove(params.index);
-                    }
-                  }
-                }, '删除')
-              ]);
-            }
-          }
-        ],
-        data1: []
+        }
       };
     },
-    async mounted() {
-      const Vm = this;
-      let response = await this.$http.post('/productLoan', {});
-      try {
-        Vm.$data.data1 = response.list;
-      } catch (err) {}
+    mounted() {
+      this.getPrivateCustomerList();
     },
     methods: {
+      async getPrivateCustomerList(page) {
+        this.$data.dataLoading = true;
+        if (page) {
+          this.$data.currentPage = page;
+        }
+        let resp = await this.$http.get('/pms/cfgLoanDoc/list', {
+          currentPage: this.$data.currentPage,
+          pageSize: 15
+        });
+        this.$data.dataLoading = false;
+        this.$data.data1 = resp.body.resultList;
+        this.$data.currentPage = resp.body.currentPage;
+        this.$data.total = resp.body.totalNum;
+      },
+      jumpPage() {
+        this.getPrivateCustomerList();
+      },
       addModal() {
         this.$data.showAddModal = true;
       },
@@ -112,13 +82,15 @@
         this.$data.showAddModal = true;
         this.formCustom.textarea = row.loanName;
       },
-      formSubmit() {
+      async formSubmit() {
         if (this.isAdd) {
-          this.$data.data1.unshift({
-            loanId: '003',
-            loanName: this.$data.formCustom.textarea
+          console.log('进来了');
+          let respSubmit = await this.$http.post('/pms/cfgLoanDoc/save', {
+            loanDocName: this.$data.formCustom.textarea
           });
           this.$data.showAddModal = false;
+          this.$Message.success('新增成功');
+          this.getPrivateCustomerList(1);
         } else {
           let textData = this.$data.formCustom.textarea;
           this.$data.data1[this.listIndex].loanName = textData;
@@ -126,7 +98,8 @@
         }
         this.$data.formCustom.textarea = '';
       },
-      handleReset() {
+      formCancel() {
+        this.showAddModal = false;
         this.$data.formCustom.textarea = '';
       }
     }

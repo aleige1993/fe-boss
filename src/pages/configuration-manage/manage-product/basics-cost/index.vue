@@ -10,9 +10,9 @@
     <div class="form-top-actions">
       <i-button @click="addModal" type="info"><i class="iconfont icon-xinzeng"></i>&nbsp;新增</i-button>
     </div>
-    <i-table border ref="selection" :columns="columns1" :data="data1"></i-table>
+    <i-table :loading="dataLoading" border ref="selection" :columns="columns1" :data="data1"></i-table>
     <div class="page-container">
-      <i-page :current="1" :total="40" size="small" show-elevator show-total></i-page>
+      <i-page :current="currentPage" :total="40" size="small" show-elevator show-total @on-change="jumpPage"></i-page>
     </div>
     <pt-modal title="新增" v-model="showAddModal">
       <i-form  ref="formCustom" :model="formCustom" label-position="left" :label-width="100">
@@ -36,83 +36,45 @@
 
 <script>
   import PTModal from '@/components/bs-modal';
+  import MixinData from './mixin-data';
   export default {
     name: 'basics-cost',
     components: {
       'pt-modal': PTModal
     },
+    mixins: [MixinData],
     data() {
       return {
         isAdd: true,
+        dataLoading: false,
         listIndex: Number,
         showAddModal: false,
+        currentPage: 1,
+        total: 0,
         formCustom: {
           costName: '',
           textarea: ''
-        },
-        columns1: [
-          {
-            title: '费用类型ID',
-            align: 'center',
-            key: 'costId'
-          },
-          {
-            title: '费用类型名称',
-            key: 'costName'
-          },
-          {
-            title: '收支方向',
-            key: 'costDirection'
-          },
-          {
-            title: '操作',
-            key: 'action',
-            width: 200,
-            align: 'center',
-            render: (h, params) => {
-              return h('div', [
-                h('Button', {
-                  props: {
-                    type: 'primary',
-                    size: 'small'
-                  },
-                  style: {
-                    marginRight: '5px'
-                  },
-                  on: {
-                    click: () => {
-                      this.listIndex = params.index;
-                      this.setList(params.row);
-                    }
-                  }
-                }, '修改'),
-                h('Button', {
-                  props: {
-                    type: 'error',
-                    size: 'small'
-                  },
-                  on: {
-                    click: () => {
-                      this.remove(params.index);
-                    }
-                  }
-                }, '删除')
-              ]);
-            }
-          }
-        ],
-        data1: []
+        }
       };
     },
-    async mounted() {
-      const Vm = this;
-      let response = await this.$http.post('/pms/cfgFeeType/list', {});
-      try {
-        console.log(response);
-        Vm.$data.data1 = response.list;
-      } catch (err) {}
+    mounted() {
+      this.getPrivateCustomerList();
     },
     methods: {
+      async getPrivateCustomerList(page) {
+        this.$data.dataLoading = true;
+        if (page) {
+          this.$data.currentPage = page;
+        }
+        let resp = await this.$http.get('/productCost', {});
+        this.$data.dataLoading = false;
+        this.$data.data1 = resp.body.resultList;
+        this.$data.currentPage = resp.body.currentPage;
+        this.$data.total = resp.body.totalNum;
+      },
+      jumpPage() {
+        this.getPrivateCustomerList();
+      },
       addModal() {
         this.$data.showAddModal = true;
       },

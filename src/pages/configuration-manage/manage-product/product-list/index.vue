@@ -66,7 +66,7 @@
           ]
         }
           -->
-            <i-option v-for="item in enumSelectData.get('ProductTypeEnum')" :value="item.itemCode">{{item.itemName}}</i-option>
+            <i-option v-for="item in enumSelectData.get('ProductTypeEnum')" :key="item.itemCode" :value="item.itemCode">{{item.itemName}}</i-option>
           </i-select>
         </i-form-item>
         <i-form-item class="required" label="产品名称" prop="proname">
@@ -81,7 +81,7 @@
                 {'itemCode': '2','itemName': '停用'}
               ]
             }-->
-            <i-option v-for="item in enumSelectData.get('ProductStatusEnum')" :value="item.itemCode">{{item.itemName}}</i-option>
+            <i-option v-for="item in enumSelectData.get('ProductStatusEnum')" :key="item.itemCode" :value="item.itemCode">{{item.itemName}}</i-option>
           </i-select>
         </i-form-item>
         <i-form-item label="适用流程" prop="process">
