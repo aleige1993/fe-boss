@@ -15,6 +15,9 @@ export default {
     selectCompany(row, index) {
       alert(index);
     },
+    certValidDateChange(val) {
+      this.$data.formData.mbMemberDTO.certValidDate = val;
+    },
     // 户籍地址联动
     async censusProvinceChange(val) {
       this.$data.formData.mbMemberDTO.censusProvinceName = val.label;

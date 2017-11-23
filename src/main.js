@@ -21,6 +21,8 @@ import FormBlock from '@/components/bs-form-block';
 Vue.component('bs-form-block', FormBlock);
 import FormSecondTitle from '@/components/bs-form-child-title';
 Vue.component('bs-form-child-title', FormSecondTitle);
+import bsDatePicker from '@/components/bs-datepicker';
+Vue.component('bs-datepicker', bsDatePicker);
 
 // 页面title修改
 Vue.directive('title', {

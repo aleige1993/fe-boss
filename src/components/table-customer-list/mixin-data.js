@@ -57,10 +57,11 @@ export default {
                 style: { marginRight: '5px' },
                 on: {
                   click: () => {
+                    // console.log(params.row);
                     this.$router.push({
                       path: '/index/customer/modify',
                       query: {
-                        id: params.row.id,
+                        id: params.row.memberNo,
                         from: 'detail'
                       }
                     });
@@ -78,7 +79,7 @@ export default {
                     this.$router.push({
                       path: '/index/customer/modify',
                       query: {
-                        id: params.row.id,
+                        id: params.row.memberNo,
                         from: 'modify'
                       }
                     });
