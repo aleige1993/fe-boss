@@ -37,16 +37,51 @@
     <!--新增产品弹窗-->
     <pt-modal title="添加产品" v-model="showAddModal" :width="600">
       <i-form ref="formCustom" :model="formCustom" label-position="left" :label-width="100">
-        <i-form-item class="required" label="产品类别" prop="protype">
-          <i-input placeholder="请输入产品类别" v-model="formCustom.protype"></i-input>
+        <i-form-item class="required" label="产品类别" prop="ProductTypeEnum">
+          <i-select placeholder="请选择" v-model="formCustom.ProductTypeEnum">
+            <!--
+          {
+          'groupKey': 'ProductTypeEnum',
+          'items': [
+            {
+              'itemCode': '1',
+              'itemName': '乘用车'
+            },
+            {
+              'itemCode': '2',
+              'itemName': '商用车'
+            },
+            {
+              'itemCode': '3',
+              'itemName': '轻卡'
+            },
+            {
+              'itemCode': '4',
+              'itemName': '微卡'
+            },
+            {
+              'itemCode': '5',
+              'itemName': '新能源'
+            }
+          ]
+        }
+          -->
+            <i-option v-for="item in enumSelectData.get('ProductTypeEnum')" :value="item.itemCode">{{item.itemName}}</i-option>
+          </i-select>
         </i-form-item>
         <i-form-item class="required" label="产品名称" prop="proname">
           <i-input placeholder="请输入产品名称" v-model="formCustom.proname"></i-input>
         </i-form-item>
         <i-form-item label="状态" prop="state">
-          <i-select v-model="formCustom.prostusState">
-            <i-option value="启用">启用</i-option>
-            <i-option value="停用">停用</i-option>
+          <i-select v-model="formCustom.ProductStatusEnum">
+            <!--{
+              'groupKey': 'ProductStatusEnum',
+              'items': [
+                {'itemCode': '1','itemName': '启用'},
+                {'itemCode': '2','itemName': '停用'}
+              ]
+            }-->
+            <i-option v-for="item in enumSelectData.get('ProductStatusEnum')" :value="item.itemCode">{{item.itemName}}</i-option>
           </i-select>
         </i-form-item>
         <i-form-item label="适用流程" prop="process">
@@ -128,9 +163,9 @@
         },
         // 列表“新增按钮”的表单
         formCustom: {
-          protype: '',
+          ProductTypeEnum: '',
           proname: '',
-          prostusState: '',
+          ProductStatusEnum: '',
           process: '',
           explain: ''
         }
@@ -209,7 +244,7 @@
         this.$data.showAddModal = true;
         this.formCustom.proname = row.proName;
         this.formCustom.protype = row.proType;
-        this.formCustom.prostusState = row.proState;
+        this.formCustom.ProductStatusEnum = row.ProductStatusEnum;
       },
       formSubmit() {
         if (this.isAdd) {
@@ -217,14 +252,14 @@
             proNumber: '003',
             proName: this.$data.formCustom.proname,
             proType: this.$data.formCustom.protype,
-            proState: this.$data.formCustom.prostusState,
+            ProductStatusEnum: this.$data.formCustom.ProductStatusEnum,
             creationTime: 'yyyy-MM-dd HH:mm:ss',
             updateTime: this.getNowFormatDate()
           });
         } else {
           this.$data.data1[this.listIndex].proName = this.$data.formCustom.proname;
           this.$data.data1[this.listIndex].proType = this.$data.formCustom.protype;
-          this.$data.data1[this.listIndex].proState = this.$data.formCustom.prostusState;
+          this.$data.data1[this.listIndex].ProductStatusEnum = this.$data.formCustom.ProductStatusEnum;
         }
         this.$data.showAddModal = false;
         this.formReset('formCustom');

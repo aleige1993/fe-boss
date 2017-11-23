@@ -1,6 +1,6 @@
 <template>
   <!--费用收取配置-->
-<div id="conf-model-lilv">
+<div id="conf-model-fee">
   <div class="form-top-actions">
     <i-button @click="addModal" type="info"><i class="iconfont icon-xinzeng"></i> 新增</i-button>
   </div>
@@ -15,30 +15,41 @@
     <i-form ref="formInModel" :model="formInModel" label-position="left" :label-width="100">
       <i-form-item class="required" label="费用类型" prop="name">
         <i-select v-model="formInModel.name" placeholder="请选择">
-          <i-option value="费用类型名称1">费用类型名称1</i-option>
-          <i-option value="费用类型名称2">费用类型名称2</i-option>
-          <i-option value="费用类型名称3">费用类型名称3</i-option>
-          <i-option value="费用类型名称4">费用类型名称4</i-option>
+          <i-option value="费用类型1">费用类型1</i-option>
+          <i-option value="费用类型2">费用类型2</i-option>
+          <i-option value="费用类型3">费用类型3</i-option>
+          <i-option value="费用类型4">费用类型4</i-option>
         </i-select>
       </i-form-item>
       <i-form-item class="required" label="收取方式" prop="mode">
         <i-select transfer v-model="formInModel.mode" placeholder="请选择" @on-change="selpro">
-          <i-option value="按比例">按比例</i-option>
-          <i-option value="按固定金额">按固定金额</i-option>
+          <!--
+          [
+            {itemCode:1,itemName:比例},
+            {itemCode:1,itemName:金额}
+          ]
+          -->
+          <i-option v-for="item in enumSelectData.get('ReceiveTypeEnum')" :value="item.itemCode">{{item.itemName}}</i-option>
         </i-select>
       </i-form-item>
       <i-form-item class="required" label="收支方向" prop="direction">
         <i-select v-model="formInModel.direction" placeholder="请选择">
-          <i-option value="收入">收入</i-option>
-          <i-option value="支出">支出</i-option>
+          <!--{
+            'groupKey': 'FeeTypeEnum',
+            'items': [
+              {'itemCode': 'C','itemName': '收入'},
+              {'itemCode': 'D','itemName': '支出'}
+            ]
+          }-->
+          <i-option v-for="item in enumSelectData.get('FeeTypeEnum')" :value="item.itemCode">{{item.itemName}}</i-option>
         </i-select>
       </i-form-item>
-      <i-form-item class="required" label="利率标准" prop="standard" v-if="formInModel.mode === '按比例'">
+      <i-form-item class="required" label="利率标准" prop="standard" v-if="formInModel.mode === '1'">
         <i-input placeholder="利率标准" v-model="formInModel.standard">
           <span slot="append">%</span>
         </i-input>
       </i-form-item>
-      <i-form-item class="required" label="固定金额" prop="money" v-if="formInModel.mode === '按固定金额'">
+      <i-form-item class="required" label="固定金额" prop="money" v-if="formInModel.mode === '2'">
         <i-input placeholder="利率标准" v-model="formInModel.money">
           <span slot="append">元</span>
         </i-input>
@@ -56,7 +67,7 @@
   import PTModal from '@/components/bs-modal';
   import MixinData from './mixin-data';
   export default {
-    name: 'conf-model-feiyong',
+    name: 'conf-model-fee',
     components: {
       'pt-modal': PTModal
     },
