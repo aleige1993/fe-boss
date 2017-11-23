@@ -15,7 +15,11 @@ import Http from './utils/HttpUtils';
 Vue.prototype.$http = new Http();
 // http mockjs
 import {} from './utils/HttpMock';
+// 其他插件和库的引入
 import {} from './assets/js/boss';
+import './assets/js/alertify';
+import './assets/style/alertify.core.css';
+import './assets/style/alertify.bootstrap.css';
 // 表单区域块组件
 import FormBlock from '@/components/bs-form-block';
 Vue.component('bs-form-block', FormBlock);

@@ -59,6 +59,30 @@ export default {
     },
     companyCityChange(val) {
       this.$data.formData.mbMemberWorkDTO.cityName = val.label;
+    },
+    // 保存草稿
+    async saveBasicCustomerInfo() {
+      this.$data.submitLoading = true;
+      let resp = await this.$http.post('/member/account/insert', this.$data.formData);
+      this.$data.submitLoading = false;
+      if (resp.reCode === '0000') {
+        alert('添加成功');
+      }
+    },
+    saveBasicInfo() {
+
+    },
+    submitBasicInfo() {
+      this.$data.formData.mbMemberDTO.status = '';
+      this.$refs['formAddCustomer'].validate((valid) => {
+        if (valid) {
+          this.saveBasicCustomerInfo();
+        } else {
+          this.$Notice.error({
+            desc: '清完善银行信息!'
+          });
+        }
+      });
     }
   }
 };

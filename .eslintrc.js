@@ -81,6 +81,7 @@ module.exports = {
     $: false,
     jquery: false,
     radialIndicator: false,
-    bsWait: false
+    bsWait: false,
+    Alertify: false
   }
 }
