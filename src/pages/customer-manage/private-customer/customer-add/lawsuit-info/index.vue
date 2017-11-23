@@ -1,6 +1,6 @@
 <template>
   <div id="add-customer-owe-company">
-    <div class="form-top-actions" style="padding-top: 0">
+    <div class="form-top-actions" style="padding-top: 0" v-if="!isFromDetail">
       <i-button type="primary" @click="addModal=!addModal"><i class="iconfont icon-xinzeng"></i> 新增</i-button>
     </div>
     <i-table :loading="false" :columns="bankAccountColumns" :data="bankAccountDatas"></i-table>
@@ -39,6 +39,7 @@
         addModal: false
       };
     },
+    props: ['isFromDetail'],
     components: {
       'pt-modal': PTModal
     }

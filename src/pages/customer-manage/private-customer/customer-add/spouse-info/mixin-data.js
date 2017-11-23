@@ -4,40 +4,49 @@ export default {
       spouseColumns: [
         {
           title: '配偶客户编号',
-          key: 'accountName'
+          key: 'spoMemberNo'
         },
         {
           title: '配偶姓名',
-          key: 'accountNo'
+          key: 'name'
         },
         {
           title: '学历',
-          key: 'bankName'
+          key: 'education',
+          render: (h, params) => {
+            return h('span', {}, this.enumCode2Name(params.row.education, 'EducationEnum'));
+          }
         },
         {
           title: '证件类型',
-          key: 'bankNo'
+          key: 'certType',
+          render: (h, params) => {
+            return h('span', {}, this.enumCode2Name(params.row.certType, 'CertTypeEnum'));
+          }
         },
         {
           title: '证件号码',
-          key: 'bankBranchName'
+          key: 'certNo'
         },
         {
           title: '手机号码',
-          key: 'accountNo'
+          key: 'mobile'
         },
         {
           title: '单位编号',
-          key: 'bankName'
+          key: 'companyCode'
         },
         {
           title: '单位名称',
-          key: 'bankNo'
+          key: 'companyName'
         },
-        {
-          title: '婚姻关系',
-          key: 'bankBranchName'
-        },
+        // {
+        //   title: '婚姻关系',
+        //   key: 'marriageStatus',
+        //   render: (h, params) => {
+        //     return h('span', {}, this.enumCode2Name(params.row.marriageStatus, 'MaritalStatusEnum'));
+        //   }
+        // },
         {
           title: '操作',
           key: 'action',
@@ -54,25 +63,32 @@ export default {
                 },
                 on: {
                   click: () => {
-                    this.show(params.index);
+                    this.$router.replace({
+                      path: '/index/customer/modify',
+                      query: {
+                        id: params.row.spoMemberNo,
+                        from: 'detail'
+                      }
+                    });
+                    this.$router.go(0);
                   }
                 }
               }, '详情'),
-              h('Button', {
-                props: {
-                  type: 'primary',
-                  size: 'small'
-                },
-                style: {
-                  marginRight: '5px',
-                  display: this.isFromDetail ? 'none' : ''
-                },
-                on: {
-                  click: () => {
-                    this.show(params.index);
-                  }
-                }
-              }, '修改'),
+              // h('Button', {
+              //   props: {
+              //     type: 'primary',
+              //     size: 'small'
+              //   },
+              //   style: {
+              //     marginRight: '5px',
+              //     display: this.isFromDetail ? 'none' : ''
+              //   },
+              //   on: {
+              //     click: () => {
+              //       this.show(params.index);
+              //     }
+              //   }
+              // }, '修改'),
               h('Button', {
                 props: {
                   type: 'error',
@@ -83,24 +99,15 @@ export default {
                 },
                 on: {
                   click: () => {
-                    alert('click');
+                    this.deleteSpouse(params.row);
                   }
                 }
-              }, '删除')
+              }, '解除关系')
             ]);
           }
         }
       ],
-      spouseDatas: [
-        {
-          accountName: 'Joe Black',
-          accountNo: '25645415842142151',
-          bankName: '中国工商银行',
-          type: '客户',
-          bankNo: '2254',
-          bankBranchName: '上清寺支行'
-        }
-      ],
+      spouseDatas: [],
       columns4: [
         {
           title: '客户编号',

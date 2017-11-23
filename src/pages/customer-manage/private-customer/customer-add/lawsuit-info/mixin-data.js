@@ -34,7 +34,8 @@ export default {
               h('Button', {
                 props: {
                   type: 'error',
-                  size: 'small'
+                  size: 'small',
+                  disabled: this.isFromDetail
                 },
                 on: {
                   click: () => {

@@ -24,7 +24,6 @@ class Http {
       console.info(`----来自${_url}的请求----`);
       console.info(JSON.stringify(_data));
     }
-    // alert(UserLogin.getLoginToken());
     return axios({
       url: _url,
       dataType: 'json',
@@ -35,7 +34,7 @@ class Http {
       method: 'POST'
     }).then(res => {
       if (res.data.reCode === '0004') {
-        alert('登录超时');
+        toastr.error('登录超时');
         MyRouter.push(
           {
             path: '/login',
@@ -66,7 +65,7 @@ class Http {
     }).then(res => {
       // console.log(res);
       if (res.data.reCode === '0004') {
-        alert('登录超时');
+        toastr.error('登录超时');
         MyRouter.push(
           {
             path: '/login',

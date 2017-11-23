@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="form-top-actions" style="padding-top: 0">
+    <div class="form-top-actions" v-if="!isFromDetail" style="padding-top: 0">
       <i-button type="primary" @click="addBankModal=!addBankModal"><i class="iconfont icon-xinzeng"></i> 新增</i-button>
     </div>
     <i-table :loading="dataLoading" :columns="bankAccountColumns" :data="bankAccountDatas"></i-table>
@@ -71,6 +71,7 @@
         }
       };
     },
+    props: ['isFromDetail'],
     methods: {
       submitForm() {
         this.$refs['bankForm'].validate(async (valid) => {

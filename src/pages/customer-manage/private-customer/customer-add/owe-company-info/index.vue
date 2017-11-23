@@ -1,15 +1,15 @@
 <template>
   <div id="add-customer-owe-company">
-    <div class="form-top-actions" style="padding-top: 0">
+    <div class="form-top-actions" style="padding-top: 0" v-if="!isFromDetail">
       <i-button type="primary" @click="addBankModal=!addBankModal"><i class="iconfont icon-xinzeng"></i> 新增</i-button>
     </div>
     <i-table :loading="false" :columns="bankAccountColumns" :data="bankAccountDatas"></i-table>
     <!--添加联系人模态框-->
-    <pt-modal :title="'添加公司信息'" v-model="addBankModal">
+    <bs-modal :title="'添加公司信息'" v-model="addBankModal">
       <i-form ref="formValidate" label-position="left" :label-width="120">
         <i-form-item label="公司名称" prop="name">
           <i-input placeholder="">
-            <i-button slot="append">选择公司 <i-icon type="ios-more"></i-icon></i-button>
+            <i-button @click="slectOweCompanyModal=!slectOweCompanyModal" slot="append">选择公司 <i-icon type="ios-more"></i-icon></i-button>
           </i-input>
         </i-form-item>
         <i-form-item label="统一社会使用代码" prop="mail">
@@ -47,22 +47,45 @@
           <i-button type="primary" size="large" style="width: 80px;">提交</i-button>
         </i-form-item>
       </i-form>
-    </pt-modal>
+    </bs-modal>
+    <!-- 选择企业的弹窗 -->
+    <bs-modal title="选择企业" :width="1200" v-model="slectOweCompanyModal">
+      <table-company-customer-list type="modal" @on-row-dbclick="selectCompany">
+        <div class="form-top-actions" slot="topAction">
+          <i-button type="info" @click="addCompanyCustomerModal=!addCompanyCustomerModal"><i class="iconfont icon-xinzeng"></i> 新增</i-button>
+        </div>
+      </table-company-customer-list>
+    </bs-modal>
+    <bs-modal title="新增企业客户" :width="1280" v-model="addCompanyCustomerModal">
+      <company-customer-basic-info type="modal"></company-customer-basic-info>
+    </bs-modal>
   </div>
 </template>
 <script>
-  import PTModal from '@/components/bs-modal';
+  import BsModal from '@/components/bs-modal';
   import MixinData from './mixin-data';
+  import CompanyCustomerBasicInfo from '@/components/form-company-customer-basic/index.vue';
+  import TableCompanyCustomerList from '@/components/table-company-customer-list';
   export default {
     name: '',
     mixins: [MixinData],
     data() {
       return {
-        addBankModal: false
+        addBankModal: false,
+        slectOweCompanyModal: false,
+        addCompanyCustomerModal: false
       };
     },
+    props: ['isFromDetail'],
     components: {
-      'pt-modal': PTModal
+      'bs-modal': BsModal,
+      TableCompanyCustomerList,
+      'company-customer-basic-info': CompanyCustomerBasicInfo
+    },
+    methods: {
+      selectCompany(row, index) {
+        Alertify.alert('您选择的企业id：' + index);
+      }
     }
   };
 </script>

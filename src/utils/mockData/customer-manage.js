@@ -1,5 +1,6 @@
 import Mock from 'mockjs';
 export default [
+  // 黑名单列表
   {
     url: '/member/blacklist/list',
     on: true,
@@ -27,6 +28,7 @@ export default [
       'success': true
     })
   },
+  // 分页查询个人客户
   {
     url: '/member/page',
     on: true,
@@ -57,6 +59,7 @@ export default [
       }
     )
   },
+  //
   {
     url: '/corp/listCorp',
     on: true,
@@ -88,6 +91,7 @@ export default [
       }
     )
   },
+  // 根据id查询个人客户的银行账户信息
   {
     url: '/member/account/query',
     on: true,
@@ -117,6 +121,7 @@ export default [
       'success': true
     })
   },
+  // 根据id查询个人客户
   {
     url: '/member/find',
     on: true,
@@ -135,7 +140,7 @@ export default [
           'censusCityName': '1',
           'censusDistrictCode': '1',
           'custMgrNo': '1',
-          'certHandUrl': '1',
+          'certHandUrl': 'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1511441518597&di=45e14b60c976ae013cc75ee3598f4b22&imgtype=0&src=http%3A%2F%2Fimage.tianjimedia.com%2FuploadImages%2F2015%2F216%2F18%2F6XNFV7K4F34R.jpg',
           'isNative': '1',
           'censusProvinceName': '1',
           'censusDistrictName': '1',
@@ -143,7 +148,7 @@ export default [
           'bizDepartmentCode': '1',
           'modifiedUserCode': '1',
           'certValidDate': '1',
-          'certFrontUrl': '1',
+          'certFrontUrl': 'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1511441518597&di=45e14b60c976ae013cc75ee3598f4b22&imgtype=0&src=http%3A%2F%2Fimage.tianjimedia.com%2FuploadImages%2F2015%2F216%2F18%2F6XNFV7K4F34R.jpg',
           'workYears': '1',
           'nowRoadAddr': '1',
           'isLocalHouse': '1',
@@ -160,7 +165,7 @@ export default [
           'certNo': '1',
           'censusCityCode': '1',
           'nowProvinceCode': '1',
-          'certBackUrl': '1',
+          'certBackUrl': 'https://gss0.bdstatic.com/70cFfyinKgQIm2_p8IuM_a/daf/pic/item/72f082025aafa40f12647690a064034f79f019d8.jpg',
           'name': '11',
           'workType': '1',
           'maritalStatus': '1',
@@ -194,6 +199,61 @@ export default [
       'reCode': '0000',
       'reMsg': '成功',
       'success': true
+    }
+  },
+  // 保存个人客户
+  {
+    url: '/member/account/insert',
+    on: true,
+    resp: {
+      'reCode': '0000',
+      'reMsg': '成功',
+      'success': true,
+      body: {
+        mbMemberDTO: {
+          'memberNo': '123456',
+          'certNo': '123456',
+          'name': '龚明华',
+          'mobile': '15696544221',
+          'workType': '1',
+          'maritalStatus': '1',
+          'status': '1'
+        }
+      }
+    }
+  },
+  // 配偶列表
+  {
+    url: '/member/spo/query',
+    on: true,
+    resp: Mock.mock({
+      'body|4': [
+        {
+          'companyCode': '@integer(5)',
+          'certNo': '@integer(5)',
+          'certType': '@pick(["1", "2"])',
+          'spoMemberNo': '@integer(5)',
+          'education': '@pick(["1", "2"])',
+          'companyName': '@name',
+          'name': '@name',
+          'mobile': '110',
+          'marriageStatus': '@pick(["1", "2", "3"])'
+        }
+      ],
+      'reCode': '0000',
+      'reMsg': '成功了',
+      'success': true
+    })
+  },
+  // 添加配偶
+  {
+    url: '/member/spo/save',
+    on: true,
+    resp: {
+      'reCode': '0000',
+      'reMsg': '成功',
+      'success': true,
+      body: {}
     }
   }
 ];

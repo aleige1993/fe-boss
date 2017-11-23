@@ -90,7 +90,6 @@ import Topnav from '@/pages/common/top-nav';
 import VueHighcharts from 'vue2-highcharts';
 import CircleProgress from '@/components/circle-progress';
 import PTModal from '@/components/bs-modal';
-import UserLogin from '@/utils/UserLogin';
 // import {} from '@/assets/js/highcharts-more.js';
 import ChartOptions from './chartOptions';
 export default {

@@ -1,37 +1,23 @@
 export default {
   data() {
     return {
-      bankAccountColumns: [
+      companyAttachFileColumns: [
         {
-          title: '账户名',
+          title: '附件名称',
           key: 'name'
         },
         {
-          title: '账号',
-          key: 'bankCardNo'
-        },
-        {
-          title: '银行名称',
-          key: 'bankName'
-        },
-        {
-          title: '开户行号',
-          key: 'openBankCode'
-        },
-        {
-          title: '开户行',
-          key: 'openBankName'
+          title: '附件文件',
+          key: 'url'
         },
         {
           title: '操作',
-          key: 'action',
           render: (h, params) => {
             return h('div', [
               h('Button', {
                 props: {
                   type: 'primary',
-                  size: 'small',
-                  disabled: this.isFromDetail
+                  size: 'small'
                 },
                 style: {
                   marginRight: '5px'
@@ -41,12 +27,11 @@ export default {
                     this.show(params.index);
                   }
                 }
-              }, '编辑'),
+              }, '下载'),
               h('Button', {
                 props: {
                   type: 'error',
-                  size: 'small',
-                  disabled: this.isFromDetail
+                  size: 'small'
                 },
                 on: {
                   click: () => {
@@ -58,7 +43,12 @@ export default {
           }
         }
       ],
-      bankAccountDatas: []
+      companyAttachFiles: [
+        {
+          name: '仓井空.av',
+          url: 'http://www.baidu.com'
+        }
+      ]
     };
   }
 };
