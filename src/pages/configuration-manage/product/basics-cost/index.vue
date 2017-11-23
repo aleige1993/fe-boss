@@ -106,8 +106,9 @@
     },
     async mounted() {
       const Vm = this;
-      let response = await this.$http.post('/productCost', {});
+      let response = await this.$http.post('/pms/cfgFeeType/list', {});
       try {
+        console.log(response);
         Vm.$data.data1 = response.list;
       } catch (err) {}
     },
