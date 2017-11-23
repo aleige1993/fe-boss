@@ -1,11 +1,11 @@
 <template>
-<!--费用类型配置-->
-  <div id="page-cost">
+<!--车辆材料配置-->
+  <div id="page-car">
     <i-breadcrumb separator="&gt;">
       <i-breadcrumb-item href="/">首页</i-breadcrumb-item>
       <i-breadcrumb-item href="/index/conf">配置管理</i-breadcrumb-item>
-      <i-breadcrumb-item href="/index/conf/product">产品管理</i-breadcrumb-item>
-      <i-breadcrumb-item>费用类型配置</i-breadcrumb-item>
+      <i-breadcrumb-item href="/index/conf/product">产品配置</i-breadcrumb-item>
+      <i-breadcrumb-item>车辆材料配置</i-breadcrumb-item>
     </i-breadcrumb>
     <div class="form-top-actions">
       <i-button @click="addModal" type="info"><i class="iconfont icon-xinzeng"></i>&nbsp;新增</i-button>
@@ -16,18 +16,12 @@
     </div>
     <pt-modal title="新增" v-model="showAddModal">
       <i-form  ref="formCustom" :model="formCustom" label-position="left" :label-width="100">
-        <i-form-item label="费用类型名称" prop="protype">
-          <i-input placeholder="请输入费用类型名称" v-model="formCustom.costName"></i-input>
-        </i-form-item>
-        <i-form-item label="收支方向" prop="state">
-          <i-select v-model="formCustom.costDirection">
-            <i-option value="收入">收入</i-option>
-            <i-option value="支出">支出</i-option>
-          </i-select>
+        <i-form-item label="车辆材料名称" prop="proname">
+          <i-input v-model="formCustom.textarea" type="textarea" :autosize="{minRows: 2,maxRows: 5}" placeholder="请输入车辆材料名称..."></i-input>
         </i-form-item>
         <i-form-item class="text-right">
           <i-button type="primary" @click="formSubmit">提交</i-button>
-          <i-button type="ghost" @click="handleCancel" style="margin-left: 8px">取消</i-button>
+          <i-button type="ghost" @click="handleCancel()" style="margin-left: 8px">取消</i-button>
         </i-form-item>
       </i-form>
     </pt-modal>
@@ -37,32 +31,27 @@
 <script>
   import PTModal from '@/components/bs-modal';
   export default {
-    name: 'basics-cost',
+    name: 'basics-car',
     components: {
       'pt-modal': PTModal
     },
     data() {
       return {
         isAdd: true,
-        listIndex: Number,
         showAddModal: false,
+        listIndex: Number,
         formCustom: {
-          costName: '',
           textarea: ''
         },
         columns1: [
           {
-            title: '费用类型ID',
+            title: '车辆材料ID',
             align: 'center',
-            key: 'costId'
+            key: 'carId'
           },
           {
-            title: '费用类型名称',
-            key: 'costName'
-          },
-          {
-            title: '收支方向',
-            key: 'costDirection'
+            title: '车辆材料名称',
+            key: 'carName'
           },
           {
             title: '操作',
@@ -101,14 +90,22 @@
             }
           }
         ],
-        data1: []
+        data1: [
+          {
+            carId: '001',
+            carName: '456'
+          },
+          {
+            carId: '002',
+            carName: '789'
+          }
+        ]
       };
     },
     async mounted() {
       const Vm = this;
-      let response = await this.$http.post('/pms/cfgFeeType/list', {});
+      let response = await this.$http.post('/productCar', {});
       try {
-        console.log(response);
         Vm.$data.data1 = response.list;
       } catch (err) {}
     },
@@ -122,30 +119,25 @@
       setList(row) {
         this.isAdd = false;
         this.$data.showAddModal = true;
-        this.formCustom.costName = row.costName;
-        this.formCustom.costDirection = row.costDirection;
+        this.formCustom.textarea = row.carName;
       },
       formSubmit() {
         if (this.isAdd) {
           this.$data.data1.unshift({
-            loanId: '003',
-            costName: this.$data.formCustom.costName,
-            costDirection: this.$data.formCustom.costDirection
+            carId: '003',
+            carName: this.$data.formCustom.textarea
           });
           this.$data.showAddModal = false;
         } else {
-          this.$data.data1[this.listIndex].costName = this.$data.formCustom.costName;
-          this.$data.data1[this.listIndex].costDirection = this.$data.formCustom.costDirection;
+          let textData = this.$data.formCustom.textarea;
+          this.$data.data1[this.listIndex].carName = textData;
           this.$data.showAddModal = false;
         }
-        this.formReset();
+        this.$data.formCustom.textarea = '';
       },
       handleCancel() {
         this.$data.showAddModal = false;
-      },
-      formReset() {
-        this.formCustom.costName = '';
-        this.formCustom.costDirection = '';
+        this.$data.formCustom.textarea = '';
       }
     }
   };
@@ -153,7 +145,7 @@
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style lang="scss" scoped>
-  #page-cost {
+  #page-car {
     & .bs-form-block .block-body {
       border: 0;
     }

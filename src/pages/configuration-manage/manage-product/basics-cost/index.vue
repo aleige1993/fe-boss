@@ -1,14 +1,14 @@
 <template>
-<!--贷款材料配置-->
-  <div id="page-loan">
+<!--费用类型配置-->
+  <div id="page-cost">
     <i-breadcrumb separator="&gt;">
       <i-breadcrumb-item href="/">首页</i-breadcrumb-item>
       <i-breadcrumb-item href="/index/conf">配置管理</i-breadcrumb-item>
-      <i-breadcrumb-item href="/index/conf/product">产品管理</i-breadcrumb-item>
-      <i-breadcrumb-item>贷款材料配置</i-breadcrumb-item>
+      <i-breadcrumb-item href="/index/conf/product">产品配置</i-breadcrumb-item>
+      <i-breadcrumb-item>费用类型配置</i-breadcrumb-item>
     </i-breadcrumb>
     <div class="form-top-actions">
-      <i-button @click="addModal" type="info"><i class="iconfont icon-xinzeng"></i>&nbsp;新增产品</i-button>
+      <i-button @click="addModal" type="info"><i class="iconfont icon-xinzeng"></i>&nbsp;新增</i-button>
     </div>
     <i-table border ref="selection" :columns="columns1" :data="data1"></i-table>
     <div class="page-container">
@@ -16,12 +16,18 @@
     </div>
     <pt-modal title="新增" v-model="showAddModal">
       <i-form  ref="formCustom" :model="formCustom" label-position="left" :label-width="100">
-        <i-form-item label="贷款材料名称" prop="proname">
-          <i-input v-model="formCustom.textarea" type="textarea" :autosize="{minRows: 2,maxRows: 5}" placeholder="请输入贷款材料名称..."></i-input>
+        <i-form-item label="费用类型名称" prop="protype">
+          <i-input placeholder="请输入费用类型名称" v-model="formCustom.costName"></i-input>
+        </i-form-item>
+        <i-form-item label="收支方向" prop="state">
+          <i-select v-model="formCustom.costDirection">
+            <i-option value="收入">收入</i-option>
+            <i-option value="支出">支出</i-option>
+          </i-select>
         </i-form-item>
         <i-form-item class="text-right">
           <i-button type="primary" @click="formSubmit">提交</i-button>
-          <i-button type="ghost" @click="handleReset()" style="margin-left: 8px">重置</i-button>
+          <i-button type="ghost" @click="handleCancel" style="margin-left: 8px">取消</i-button>
         </i-form-item>
       </i-form>
     </pt-modal>
@@ -31,27 +37,32 @@
 <script>
   import PTModal from '@/components/bs-modal';
   export default {
-    name: 'basics-loan',
+    name: 'basics-cost',
     components: {
       'pt-modal': PTModal
     },
     data() {
       return {
         isAdd: true,
-        showAddModal: false,
         listIndex: Number,
+        showAddModal: false,
         formCustom: {
+          costName: '',
           textarea: ''
         },
         columns1: [
           {
-            title: '贷款材料ID',
+            title: '费用类型ID',
             align: 'center',
-            key: 'loanId'
+            key: 'costId'
           },
           {
-            title: '贷款材料名称',
-            key: 'loanName'
+            title: '费用类型名称',
+            key: 'costName'
+          },
+          {
+            title: '收支方向',
+            key: 'costDirection'
           },
           {
             title: '操作',
@@ -95,8 +106,9 @@
     },
     async mounted() {
       const Vm = this;
-      let response = await this.$http.post('/productLoan', {});
+      let response = await this.$http.post('/pms/cfgFeeType/list', {});
       try {
+        console.log(response);
         Vm.$data.data1 = response.list;
       } catch (err) {}
     },
@@ -110,24 +122,30 @@
       setList(row) {
         this.isAdd = false;
         this.$data.showAddModal = true;
-        this.formCustom.textarea = row.loanName;
+        this.formCustom.costName = row.costName;
+        this.formCustom.costDirection = row.costDirection;
       },
       formSubmit() {
         if (this.isAdd) {
           this.$data.data1.unshift({
             loanId: '003',
-            loanName: this.$data.formCustom.textarea
+            costName: this.$data.formCustom.costName,
+            costDirection: this.$data.formCustom.costDirection
           });
           this.$data.showAddModal = false;
         } else {
-          let textData = this.$data.formCustom.textarea;
-          this.$data.data1[this.listIndex].loanName = textData;
+          this.$data.data1[this.listIndex].costName = this.$data.formCustom.costName;
+          this.$data.data1[this.listIndex].costDirection = this.$data.formCustom.costDirection;
           this.$data.showAddModal = false;
         }
-        this.$data.formCustom.textarea = '';
+        this.formReset();
       },
-      handleReset() {
-        this.$data.formCustom.textarea = '';
+      handleCancel() {
+        this.$data.showAddModal = false;
+      },
+      formReset() {
+        this.formCustom.costName = '';
+        this.formCustom.costDirection = '';
       }
     }
   };
@@ -135,7 +153,7 @@
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style lang="scss" scoped>
-  #page-loan {
+  #page-cost {
     & .bs-form-block .block-body {
       border: 0;
     }

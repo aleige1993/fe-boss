@@ -150,7 +150,7 @@
   import MixinData from './mixin-data';
   import ModalTwo from './modal-two.vue';
   export default {
-    name: 'invest-maintain',
+    name: 'manage-invest-maintain',
     mixins: [MixinData],
     components: {
       'bs-modal': BSModal,

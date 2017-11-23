@@ -1,13 +1,12 @@
 <template>
-  <div id="page-product-manage">
-    <!--产品管理-->
-    <router-view></router-view>
-  </div>
+<!--资方管理-->
+  <router-view></router-view>
 </template>
 
 <script>
+  import BSModal from '@/components/bs-modal';
   export default {
-    name: 'productmanage',
+    name: 'manage-invest',
     data: () => ({})
   };
 </script>
