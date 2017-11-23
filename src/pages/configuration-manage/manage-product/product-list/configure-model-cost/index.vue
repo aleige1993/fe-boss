@@ -97,7 +97,12 @@
         this.formInModel.money = row.money;
       },
       remove(index) {
-        this.data1.splice(index, 1);
+        Alertify.confirm('确定要删除吗？', (confirm) => {
+          if (confirm) {
+            this.data1.splice(index, 1);
+            // Alertify.alert('确定');
+          } else {}
+        });
       },
       formInSubmit() {
         if (this.isAdd) {
