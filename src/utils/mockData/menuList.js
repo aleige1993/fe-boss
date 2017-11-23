@@ -20,7 +20,7 @@ export default [
                   },
                   {
                     name: '个人客户添加',
-                    url: '/index/customer/modify'
+                    url: '/index/customer/add'
                   }
                 ]
               },

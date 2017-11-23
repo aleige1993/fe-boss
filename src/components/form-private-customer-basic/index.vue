@@ -53,33 +53,37 @@
                 </i-form-item>
               </i-col>
               <i-col span="8">
-                <i-form-item label="出生日期">
+                <i-form-item label="出生日期" prop="mbMemberDTO.birthday"
+                  :rules="{required: true, message: '请选择出生日期', trigger: 'change'}">
                   <bs-datepicker :readonly="isFromDetail" v-model="formData.mbMemberDTO.birthday"></bs-datepicker>
                 </i-form-item>
               </i-col>
               <i-col span="8">
                 <i-form-item label="年龄">
-                  <i-input :readonly="true" v-model="formData.mbMemberDTO.age" placeholder="根据出生日期计算"></i-input>
+                  <i-input :readonly="true" v-model="age" placeholder="根据出生日期计算"></i-input>
                 </i-form-item>
               </i-col>
             </i-row>
             <i-row>
               <i-col span="8">
-                <i-form-item label="婚姻状况">
+                <i-form-item label="婚姻状况" prop="mbMemberDTO.maritalStatus"
+                  :rules="{required: true, message: '请选择婚况', trigger: 'change'}">
                   <i-select :disabled="isFromDetail" v-model="formData.mbMemberDTO.maritalStatus">
                     <i-option v-for="item in enumSelectData.get('MaritalStatusEnum')"  :key="item.itemCode" :value="item.itemCode">{{item.itemName}}</i-option>
                   </i-select>
                 </i-form-item>
               </i-col>
               <i-col span="8">
-                <i-form-item label="教育程度">
+                <i-form-item label="教育程度" prop="mbMemberDTO.education"
+                  :rules="{required: true, message: '请选择教育程度', trigger: 'change'}">
                   <i-select :disabled="isFromDetail" v-model="formData.mbMemberDTO.education">
                     <i-option v-for="item in enumSelectData.get('EducationEnum')" :key="item.itemCode" :value="item.itemCode">{{item.itemName}}</i-option>
                   </i-select>
                 </i-form-item>
               </i-col>
               <i-col span="8">
-                <i-form-item label="职业类型">
+                <i-form-item label="职业类型" prop="mbMemberDTO.workType"
+                  :rules="{required: true, message: '请选择职业类型', trigger: 'change'}">
                   <i-select :disabled="isFromDetail" v-model="formData.mbMemberDTO.workType">
                     <i-option v-for="item in enumSelectData.get('WorkTypeEnum')" :key="item.itemCode" :value="item.itemCode">{{item.itemName}}</i-option>
                   </i-select>
@@ -88,21 +92,24 @@
             </i-row>
             <i-row>
               <i-col span="8">
-                <i-form-item label="年收入">
+                <i-form-item label="年收入" prop="mbMemberDTO.annualRevenue"
+                  :rules="{required: true, message: '年收入不能为空', trigger: 'change'}">
                   <i-input :readonly="isFromDetail" v-model="formData.mbMemberDTO.annualRevenue">
                     <span slot="append">元</span>
                   </i-input>
                 </i-form-item>
               </i-col>
               <i-col span="8">
-                <i-form-item label="参加工作年限">
+                <i-form-item label="参加工作年限" prop="mbMemberDTO.workYears"
+                  :rules="{required: true, message: '请选择工作年限', trigger: 'change'}">
                   <i-select :disabled="isFromDetail" v-model="formData.mbMemberDTO.workYears">
                     <i-option v-for="item in enumSelectData.get('YearsEnum')" :key="item.itemCode" :value="item.itemCode">{{item.itemName}}</i-option>
                   </i-select>
                 </i-form-item>
               </i-col>
               <i-col span="8">
-                <i-form-item label="是否本地人">
+                <i-form-item label="是否本地人" prop="mbMemberDTO.isNative"
+                  :rules="{required: true, message: '请选择是否本地人', trigger: 'change'}">
                   <i-select :disabled="isFromDetail" v-model="formData.mbMemberDTO.isNative">
                     <i-option v-for="item in enumSelectData.get('YesNoEnum')" :key="item.itemCode" :value="item.itemCode">{{item.itemName}}</i-option>
                   </i-select>
@@ -111,21 +118,24 @@
             </i-row>
             <i-row>
               <i-col span="8">
-                <i-form-item label="本地有否房产">
+                <i-form-item label="本地有否房产" prop="mbMemberDTO.isLocalHouse"
+                  :rules="{required: true, message: '请选择是否本地有房产', trigger: 'change'}">
                   <i-select :disabled="isFromDetail" v-model="formData.mbMemberDTO.isLocalHouse">
                     <i-option v-for="item in enumSelectData.get('YesNoEnum')" :key="item.itemCode" :value="item.itemCode">{{item.itemName}}</i-option>
                   </i-select>
                 </i-form-item>
               </i-col>
               <i-col span="8">
-                <i-form-item label="本地居住年限">
+                <i-form-item label="本地居住年限" prop="mbMemberDTO.liveYears"
+                  :rules="{required: true, message: '请选择居住年限', trigger: 'change'}">
                   <i-select :disabled="isFromDetail" v-model="formData.mbMemberDTO.liveYears">
                     <i-option v-for="item in enumSelectData.get('YearsEnum')" :key="item.itemCode" :value="item.itemCode">{{item.itemName}}</i-option>
                   </i-select>
                 </i-form-item>
               </i-col>
               <i-col span="8">
-                <i-form-item label="居住性质">
+                <i-form-item label="居住性质" prop="mbMemberDTO.liveType"
+                  :rules="{required: true, message: '请选择居住性质', trigger: 'change'}">
                   <i-select :disabled="isFromDetail" v-model="formData.mbMemberDTO.liveType">
                     <i-option v-for="item in enumSelectData.get('LiveTypeEnum')" :key="item.itemCode" :value="item.itemCode">{{item.itemName}}</i-option>
                   </i-select>
@@ -138,6 +148,7 @@
                   <i-select :label-in-value="true" @on-change="censusProvinceChange" style="width: 150px" v-model="formData.mbMemberDTO.censusProvinceCode">
                     <i-option v-for="item in shengDropList" :value="item.regionCode" :key="item.regionCode">{{item.regionName}}</i-option>
                   </i-select>
+
                   <i-select :label-in-value="true" @on-change="censusDistrictChange" style="width: 150px"  v-model="formData.mbMemberDTO.censusDistrictCode">
                     <i-option v-for="item in censusDistrictDropList" :value="item.regionCode" :key="item.regionCode">{{item.regionName}}</i-option>
                   </i-select>
@@ -173,8 +184,8 @@
             <i-row>
               <i-col span="8">
                 <i-form-item label="身份证正面">
-                  <input type="hidden" v-model="formData.mbMemberDTO.certFrontUrl"></input>
-                  <img v-if="formData.mbMemberDTO"  width="149" height="95" :src="formData.mbMemberDTO.certFrontUrl" alt="">
+                  <input type="hidden" v-model="formData.mbMemberDTO.certFrontUrl"/>
+                  <img v-if="formData.mbMemberDTO.certFrontUrl!==''"  width="149" height="95" :src="formData.mbMemberDTO.certFrontUrl" alt="">
                   <i-upload v-else @on-success="uploadFaceSuccess" :action="$config.HTTPBASEURL+'/common/upload'">
                     <idcard-placeholder type="face"></idcard-placeholder>
                   </i-upload>
@@ -182,8 +193,8 @@
               </i-col>
               <i-col span="8">
                 <i-form-item label="身份证反面">
-                  <input type="hidden" v-model="formData.mbMemberDTO.certBackUrl"></input>
-                  <img v-if="formData.mbMemberDTO" width="149" height="95" :src="formData.mbMemberDTO.certBackUrl" alt="">
+                  <input type="hidden" v-model="formData.mbMemberDTO.certBackUrl"/>
+                  <img v-if="formData.mbMemberDTO.certBackUrl!==''" width="149" height="95" :src="formData.mbMemberDTO.certBackUrl" alt="">
                   <i-upload v-else @on-success="uploadBackSuccess" action="/common/upload">
                     <idcard-placeholder type="back"></idcard-placeholder>
                   </i-upload>
@@ -192,7 +203,7 @@
               <i-col span="8">
                 <i-form-item label="手持身份证">
                   <input type="hidden" v-model="formData.mbMemberDTO.certHandUrl"></input>
-                  <img v-if="formData.mbMemberDTO" width="149" height="95" :src="formData.mbMemberDTO.certHandUrl" alt="">
+                  <img v-if="formData.mbMemberDTO.certHandUrl!==''" width="149" height="95" :src="formData.mbMemberDTO.certHandUrl" alt="">
                   <i-upload v-else @on-success="uploadHandSuccess" action="/common/upload">
                     <idcard-placeholder type="hand"></idcard-placeholder>
                   </i-upload>
@@ -325,6 +336,7 @@ import IDCardPlaceholder from '@/components/bs-idcard-placeholder';
 import TableEmployerList from '@/components/table-employer-list';
 import TableCompanyCustomerList from '@/components/table-company-customer-list';
 import BsModal from '@/components/bs-modal';
+import Tools from '@/utils/Tools';
 export default {
   name: 'formCustomerBsicInfo',
   mixins: [MxinData, MxinMethods],
@@ -358,12 +370,7 @@ export default {
     },
     age() {
       let birthday = this.$data.formData.mbMemberDTO.birthday;
-      if (birthday === '') {
-        return '';
-      } else {
-        let nowYear = new Date().getFullYear();
-        alert(nowYear);
-      }
+      return Tools.getAgeFromBirthday(birthday);
     }
   },
   components: {

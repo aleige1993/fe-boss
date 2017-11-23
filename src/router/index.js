@@ -37,10 +37,10 @@ import Mapping from '@/pages/configuration-manage/manage-invest/mapping';
 // 配置管理-资方管理-Contract
 import Contract from '@/pages/configuration-manage/manage-invest/contract';
 // 客户管理--个人客户
-import CustomerManage from '@/pages/customer-manage';
-import PrivateCustomer from '@/pages/customer-manage/private-customer';
-import PrivateCustomerList from '@/pages/customer-manage/private-customer/customer-list';
-import PrivateCustomerModify from '@/pages/customer-manage/private-customer/customer-add';
+// import CustomerManage from '@/pages/customer-manage';
+// import PrivateCustomer from '@/pages/customer-manage/private-customer';
+// import PrivateCustomerList from '@/pages/customer-manage/private-customer/customer-list';
+// import PrivateCustomerModify from '@/pages/customer-manage/private-customer/customer-add';
 // 客户管理--企业客户
 import CompanyCustomer from '@/pages/customer-manage/company-customer';
 import CompanyCustomerList from '@/pages/customer-manage/company-customer/company-list';
@@ -94,21 +94,35 @@ let MyRouter = new Router({
         {
           path: 'customer',
           name: 'customer',
-          component: CustomerManage,
+          component: resolve => require(['@/pages/customer-manage'],resolve),
           children: [
             {
               path: '/',
               name: 'privateCustomer',
-              component: PrivateCustomer,
+              component: resolve => require(['@/pages/customer-manage/private-customer'],resolve),
               children: [
                 {
                   path:'/',
-                  component: PrivateCustomerList
+                  component: resolve => require(['@/pages/customer-manage/private-customer/customer-list'],resolve), //PrivateCustomerList
+                  meta: {keepAlive: false}
                 },
                 {
-                  path: 'modify',
+                  path: 'add',
                   name: 'addPrivateCustomer',
-                  component: PrivateCustomerModify
+                  component: resolve => require(['@/pages/customer-manage/private-customer/customer-add'],resolve),
+                  meta: {keepAlive: false}
+                },
+                {
+                  path: 'update',
+                  name: 'updatePrivateCustomer',
+                  component: resolve => require(['@/pages/customer-manage/private-customer/customer-add/update.vue'],resolve),
+                  meta: {keepAlive: false}
+                },
+                {
+                  path: 'detail',
+                  name: 'detailPrivateCustomer',
+                  component: resolve => require(['@/pages/customer-manage/private-customer/customer-add/detail.vue'],resolve),
+                  meta: {keepAlive: false}
                 }
               ]
             },

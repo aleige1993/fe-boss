@@ -59,7 +59,7 @@ export default {
                   click: () => {
                     // console.log(params.row);
                     this.$router.push({
-                      path: '/index/customer/modify',
+                      path: '/index/customer/detail',
                       query: {
                         id: params.row.memberNo,
                         from: 'detail'
@@ -76,12 +76,13 @@ export default {
                 style: { marginRight: '5px' },
                 on: {
                   click: () => {
-                    this.$router.push({
-                      path: '/index/customer/modify',
+                    this.$router.go({
+                      path: '/index/customer/update',
                       query: {
                         id: params.row.memberNo,
                         from: 'modify'
-                      }
+                      },
+                      force: true
                     });
                   }
                 }
