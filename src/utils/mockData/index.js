@@ -40,7 +40,7 @@ let ary = [
       reCode: '0000',
       'body|10': [
         {
-          regionCode: '@integer(10)',
+          regionCode: '1',
           regionName: '@name'
         }
       ]
@@ -54,7 +54,7 @@ let ary = [
       reCode: '0000',
       'body|10': [
         {
-          bankCode: '@integer(10)',
+          bankCode: '@name',
           bankName: '@name'
         }
       ]
