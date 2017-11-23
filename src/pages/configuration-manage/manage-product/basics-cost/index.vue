@@ -4,7 +4,7 @@
     <i-breadcrumb separator="&gt;">
       <i-breadcrumb-item href="/">首页</i-breadcrumb-item>
       <i-breadcrumb-item href="/index/conf">配置管理</i-breadcrumb-item>
-      <i-breadcrumb-item href="/index/conf/product">产品管理</i-breadcrumb-item>
+      <i-breadcrumb-item href="/index/conf/product">产品配置</i-breadcrumb-item>
       <i-breadcrumb-item>费用类型配置</i-breadcrumb-item>
     </i-breadcrumb>
     <div class="form-top-actions">
@@ -106,8 +106,9 @@
     },
     async mounted() {
       const Vm = this;
-      let response = await this.$http.post('/productCost', {});
+      let response = await this.$http.post('/pms/cfgFeeType/list', {});
       try {
+        console.log(response);
         Vm.$data.data1 = response.list;
       } catch (err) {}
     },

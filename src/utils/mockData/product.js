@@ -1,8 +1,8 @@
 import Mock from 'mockjs';
 export default [
-  // 产品管理
+  // 产品配置
   {
-    url: '/product',
+    url: '/manage-product',
     on: true,
     resp: Mock.mock({
       'body': {
@@ -30,7 +30,7 @@ export default [
       'success': true
     })
   },
-  // 产品管理-贷款材料配置
+  // 产品配置-贷款材料配置
   {
     url: '/productLoan',
     on: true,
@@ -45,7 +45,7 @@ export default [
       reMsg: '成功'
     })
   },
-  // 产品管理-费用类型配置
+  // 产品配置-费用类型配置
   {
     url: '/productCost',
     on: true,
@@ -61,7 +61,7 @@ export default [
       reMsg: '成功'
     })
   },
-  // 产品管理-准入规则配置
+  // 产品配置-准入规则配置
   {
     url: '/productRule',
     on: true,
@@ -76,7 +76,7 @@ export default [
       reMsg: '成功'
     })
   },
-  // 产品管理-车辆材料配置
+  // 产品配置-车辆材料配置
   {
     url: '/productCar',
     on: true,
@@ -91,7 +91,7 @@ export default [
       reMsg: '成功'
     })
   },
-  // 产品管理-归档材料配置
+  // 产品配置-归档材料配置
   {
     url: '/productFile',
     on: true,
@@ -106,7 +106,7 @@ export default [
       reMsg: 'success'
     })
   },
-  // 产品管理-利率方案配置
+  // 产品配置-利率方案配置
   {
     url: '/productLilv',
     on: true,
@@ -122,7 +122,7 @@ export default [
       reMsg: '成功'
     })
   },
-  // 产品管理-费用收取配置弹窗
+  // 产品配置-费用收取配置弹窗
   {
     url: '/productFy',
     on: true,
@@ -141,7 +141,7 @@ export default [
       reMsg: '成功'
     })
   },
-  // 产品管理
+  // 产品配置
   {
     url: '/productDetails',
     on: true,

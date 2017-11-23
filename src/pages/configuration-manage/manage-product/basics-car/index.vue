@@ -1,14 +1,14 @@
 <template>
-<!--贷款材料配置-->
-  <div id="page-loan">
+<!--车辆材料配置-->
+  <div id="page-car">
     <i-breadcrumb separator="&gt;">
       <i-breadcrumb-item href="/">首页</i-breadcrumb-item>
       <i-breadcrumb-item href="/index/conf">配置管理</i-breadcrumb-item>
-      <i-breadcrumb-item href="/index/conf/product">产品管理</i-breadcrumb-item>
-      <i-breadcrumb-item>贷款材料配置</i-breadcrumb-item>
+      <i-breadcrumb-item href="/index/conf/product">产品配置</i-breadcrumb-item>
+      <i-breadcrumb-item>车辆材料配置</i-breadcrumb-item>
     </i-breadcrumb>
     <div class="form-top-actions">
-      <i-button @click="addModal" type="info"><i class="iconfont icon-xinzeng"></i>&nbsp;新增产品</i-button>
+      <i-button @click="addModal" type="info"><i class="iconfont icon-xinzeng"></i>&nbsp;新增</i-button>
     </div>
     <i-table border ref="selection" :columns="columns1" :data="data1"></i-table>
     <div class="page-container">
@@ -16,12 +16,12 @@
     </div>
     <pt-modal title="新增" v-model="showAddModal">
       <i-form  ref="formCustom" :model="formCustom" label-position="left" :label-width="100">
-        <i-form-item label="贷款材料名称" prop="proname">
-          <i-input v-model="formCustom.textarea" type="textarea" :autosize="{minRows: 2,maxRows: 5}" placeholder="请输入贷款材料名称..."></i-input>
+        <i-form-item label="车辆材料名称" prop="proname">
+          <i-input v-model="formCustom.textarea" type="textarea" :autosize="{minRows: 2,maxRows: 5}" placeholder="请输入车辆材料名称..."></i-input>
         </i-form-item>
         <i-form-item class="text-right">
           <i-button type="primary" @click="formSubmit">提交</i-button>
-          <i-button type="ghost" @click="handleReset()" style="margin-left: 8px">重置</i-button>
+          <i-button type="ghost" @click="handleCancel()" style="margin-left: 8px">取消</i-button>
         </i-form-item>
       </i-form>
     </pt-modal>
@@ -31,7 +31,7 @@
 <script>
   import PTModal from '@/components/bs-modal';
   export default {
-    name: 'basics-loan',
+    name: 'basics-car',
     components: {
       'pt-modal': PTModal
     },
@@ -45,13 +45,13 @@
         },
         columns1: [
           {
-            title: '贷款材料ID',
+            title: '车辆材料ID',
             align: 'center',
-            key: 'loanId'
+            key: 'carId'
           },
           {
-            title: '贷款材料名称',
-            key: 'loanName'
+            title: '车辆材料名称',
+            key: 'carName'
           },
           {
             title: '操作',
@@ -90,12 +90,21 @@
             }
           }
         ],
-        data1: []
+        data1: [
+          {
+            carId: '001',
+            carName: '456'
+          },
+          {
+            carId: '002',
+            carName: '789'
+          }
+        ]
       };
     },
     async mounted() {
       const Vm = this;
-      let response = await this.$http.post('/productLoan', {});
+      let response = await this.$http.post('/productCar', {});
       try {
         Vm.$data.data1 = response.list;
       } catch (err) {}
@@ -110,23 +119,24 @@
       setList(row) {
         this.isAdd = false;
         this.$data.showAddModal = true;
-        this.formCustom.textarea = row.loanName;
+        this.formCustom.textarea = row.carName;
       },
       formSubmit() {
         if (this.isAdd) {
           this.$data.data1.unshift({
-            loanId: '003',
-            loanName: this.$data.formCustom.textarea
+            carId: '003',
+            carName: this.$data.formCustom.textarea
           });
           this.$data.showAddModal = false;
         } else {
           let textData = this.$data.formCustom.textarea;
-          this.$data.data1[this.listIndex].loanName = textData;
+          this.$data.data1[this.listIndex].carName = textData;
           this.$data.showAddModal = false;
         }
         this.$data.formCustom.textarea = '';
       },
-      handleReset() {
+      handleCancel() {
+        this.$data.showAddModal = false;
         this.$data.formCustom.textarea = '';
       }
     }
@@ -135,7 +145,7 @@
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style lang="scss" scoped>
-  #page-loan {
+  #page-car {
     & .bs-form-block .block-body {
       border: 0;
     }

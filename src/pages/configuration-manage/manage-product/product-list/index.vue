@@ -3,7 +3,7 @@
     <i-breadcrumb separator="&gt;">
       <i-breadcrumb-item href="/">首页</i-breadcrumb-item>
       <i-breadcrumb-item href="/index/conf">配置管理</i-breadcrumb-item>
-      <i-breadcrumb-item>产品管理</i-breadcrumb-item>
+      <i-breadcrumb-item>产品列表</i-breadcrumb-item>
     </i-breadcrumb>
     <div class="form-block-title">
       查询条件
@@ -26,7 +26,7 @@
       <i-button @click="lilvClick" type="ghost"><i class="iconfont icon-shenhe"></i> 利率方案配置</i-button>
       <i-button @click="feiyClick" type="ghost"><i class="iconfont icon-shenhe"></i> 费用收取配置</i-button>
       <i-button @click="loanClick" type="ghost"><i class="iconfont icon-shenhe"></i> 贷款材料配置</i-button>
-      <i-button @click="RuleClick"type="ghost"><i class="iconfont icon-shenhe"></i> 准入规则配置</i-button>
+      <i-button @click="RuleClick" type="ghost"><i class="iconfont icon-shenhe"></i> 准入规则配置</i-button>
       <i-button @click="FileClick" type="ghost"><i class="iconfont icon-shenhe"></i> 归档材料配置</i-button>
       <i-button v-if="isClickRow" @click="handleClearCurrentRow" type="text"><i-icon type="android-cancel" class="button-cancel"></i-icon> 取消当前选中状态</i-button>
     </div>
@@ -177,7 +177,7 @@
         if (page) {
           this.$data.searchForm.currentPage = page;
         }
-        let resp = await this.$http.get('/product', this.$data.searchForm);
+        let resp = await this.$http.get('/manage-product', this.$data.searchForm);
         this.$data.dataLoading = false;
         this.$data.data1 = resp.body.resultList;
         this.$data.currentPage = resp.body.currentPage;

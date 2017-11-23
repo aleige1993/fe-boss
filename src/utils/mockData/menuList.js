@@ -56,7 +56,51 @@ export default [
             childMenus: [
               {
                 name: '产品配置',
-                url: '/index/conf/product'
+                url: '/index/conf/product',
+                childMenus: [
+                  {
+                    name: '产品列表',
+                    url: '/index/conf/product'
+                  },
+                  {
+                    name: '贷款材料配置',
+                    url: '/index/conf/product/loan'
+                  },
+                  {
+                    name: '费用类型配置',
+                    url: '/index/conf/product/cost'
+                  },
+                  {
+                    name: '准入规则配置',
+                    url: '/index/conf/product/rule'
+                  },
+                  {
+                    name: '车辆材料配置',
+                    url: '/index/conf/product/car'
+                  },
+                  {
+                    name: '归档材料配置',
+                    url: '/index/conf/product/file'
+                  }
+                ]
+              },
+              {
+                name: '资方管理',
+                url: '/index/conf/invest',
+                childMenus: [
+                  {
+                    name: '资方维护',
+                    url: '/index/conf/invest/'
+                  },
+                  {
+                    name: '资方映射配置',
+                    url: '/index/conf/invest/mapping'
+                  },
+                  {
+                    name: '合同模板维护',
+                    url: '/index/conf/invest/contract'
+                  }
+                ]
               }
             ]
           }

@@ -72,7 +72,7 @@
   import DataMixin from './mixin-data';
   import BSModal from '@/components/bs-modal';
   export default {
-    name: 'invest-maintain',
+    name: 'manage-invest-maintain',
     mixins: [DataMixin],
     components: {
       'bs-modal': BSModal
