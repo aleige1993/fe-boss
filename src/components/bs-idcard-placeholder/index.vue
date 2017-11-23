@@ -40,6 +40,7 @@
     width: 150px; height: 94px;
     img{
       width: 150px; height: 94px;
+      border-radius: 4px;
     }
   }
   .text{

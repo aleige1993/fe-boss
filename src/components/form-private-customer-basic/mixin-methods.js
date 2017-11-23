@@ -60,23 +60,29 @@ export default {
     companyCityChange(val) {
       this.$data.formData.mbMemberWorkDTO.cityName = val.label;
     },
-    // 保存草稿
-    async saveBasicCustomerInfo() {
-      this.$data.submitLoading = true;
-      let resp = await this.$http.post('/member/account/insert', this.$data.formData);
-      this.$data.submitLoading = false;
+    // 保存信息
+    async saveBasicCustomerInfo(data) {
+      this.$data.initFormLoading = true;
+      let resp = await this.$http.post('/member/account/insert', data);
+      this.$data.initFormLoading = false;
       if (resp.reCode === '0000') {
-        alert('添加成功');
+        this.$emit('on-submit-success', resp.body);
       }
     },
+    // 保存草稿
     saveBasicInfo() {
-
+      let _data = this.$data.formData;
+      _data.mbMemberDTO.status = '3';
+      this.saveBasicCustomerInfo(_data);
     },
+    // 提交
     submitBasicInfo() {
       this.$data.formData.mbMemberDTO.status = '';
+      let _data = this.$data.formData;
+      _data.mbMemberDTO.status = '1';
       this.$refs['formAddCustomer'].validate((valid) => {
         if (valid) {
-          this.saveBasicCustomerInfo();
+          this.saveBasicCustomerInfo(_data);
         } else {
           this.$Notice.error({
             desc: '清完善银行信息!'

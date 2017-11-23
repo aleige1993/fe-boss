@@ -10,7 +10,6 @@ export default {
           certValidDate: '', // 证件有效期
           sex: '', // 性别
           birthday: '', // 出生日期
-          age: '', // 根据出生日期计算
           maritalStatus: '', // 婚姻状况
           education: '', // 教育程度
           workType: '', // 工作性质
