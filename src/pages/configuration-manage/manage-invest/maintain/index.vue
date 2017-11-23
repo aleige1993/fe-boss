@@ -106,19 +106,20 @@
             </i-col>
             <!--地址-->
             <i-col span="24">
-              <i-form-item label="地址" prop="protype">
-                <i-select v-model="formMaintain.province" style="width: 10%" :disabled="iSsee">
-                  <i-option value="重庆">重庆</i-option>
-                  <i-option value="上海">上海</i-option>
+              <i-form-item label="地址" prop="provinceCode">
+                <!--省份-->
+                <i-select :label-in-value="true" v-model="formMaintain.provinceCode" style="width: 10%" :disabled="iSsee" @on-change="provinceChange">
+                  <i-option v-for="item in provinceArray" :value="item.regionCode" :key="item.regionCode">{{item.regionName}}</i-option>
                 </i-select>
-                <i-select v-model="formMaintain.city" style="width: 10%" :disabled="iSsee">
-                  <i-option value="重庆">重庆</i-option>
-                  <i-option value="上海">重庆</i-option>
+                <!--市区-->
+                <i-select :label-in-value="true" v-model="formMaintain.cityCode" style="width: 10%" :disabled="iSsee"  @on-change="cityChange">
+                  <i-option v-for="item in cityArray" :value="item.regionCode" :key="item.regionCode">{{item.regionName}}</i-option>
                 </i-select>
-                <i-select v-model="formMaintain.area" style="width: 10%" :disabled="iSsee">
-                  <i-option value="重庆">九龙坡区</i-option>
-                  <i-option value="上海">渝中区</i-option>
+                <!--区县-->
+                <i-select :label-in-value="true" v-model="formMaintain.areaCode" style="width: 10%" :disabled="iSsee"  @on-change="areaChange">
+                  <i-option v-for="item in areaArray" :value="item.regionCode" :key="item.regionCode">{{item.regionName}}</i-option>
                 </i-select>
+                <!--街道信息-->
                 <i-input v-model="formMaintain.Street" style="width: calc(70% - 16px); margin-left: 5px;" :readonly="iSsee">
                 </i-input>
               </i-form-item>
@@ -148,10 +149,11 @@
 <script>
   import BSModal from '@/components/bs-modal';
   import MixinData from './mixin-data';
+  import MixinMethods from './mixin-methods';
   import ModalTwo from './modal-two.vue';
   export default {
     name: 'manage-invest-maintain',
-    mixins: [MixinData],
+    mixins: [MixinData, MixinMethods],
     components: {
       'bs-modal': BSModal,
       'modal-two': ModalTwo
@@ -163,14 +165,37 @@
         ShowModalTwo: false,
         total: 0,
         currentPage: 1,
-        formMaintain: {},
-        iSsee: false           // 是否是查看页面
+        formMaintain: {
+          provinceCode: '',
+          provinceName: '',
+          cityCode: '',
+          cityName: '',
+          areaCode: '',
+          areaName: ''
+        },
+        iSsee: false,           // 是否是查看页面
+        // 地区三级联动
+        provinceArray: [],  // 省份列表
+        cityArray: [],  // 市区列表
+        areaArray: []  // 区县列表
       };
     }, // end data
     mounted() {
       this.getList();
+      this.getCitySelectList();
     },
     methods: {
+      getAddressDropList(code) {
+        let _code = code || '';
+        let data = {
+          regionCode: _code
+        };
+        return this.$http.post('/common/region/list', data);
+      },
+      async getCitySelectList() {
+        let resp = await this.getAddressDropList();
+        this.$data.provinceArray = resp.body;
+      },
       async getList(page) {
         this.$data.dataLoading = true;
         if (page) {

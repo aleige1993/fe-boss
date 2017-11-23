@@ -41,7 +41,7 @@ let ary = [
       'body|10': [
         {
           regionCode: '1',
-          regionName: '@name'
+          regionName: '@province'
         }
       ]
     })
