@@ -29,7 +29,7 @@
             {itemCode:1,itemName:金额}
           ]
           -->
-          <i-option v-for="item in enumSelectData.get('ReceiveTypeEnum')" :value="item.itemCode">{{item.itemName}}</i-option>
+          <i-option v-for="item in enumSelectData.get('ReceiveTypeEnum')" :key="item.itemCode" :value="item.itemCode">{{item.itemName}}</i-option>
         </i-select>
       </i-form-item>
       <i-form-item class="required" label="收支方向" prop="direction">
@@ -41,7 +41,7 @@
               {'itemCode': 'D','itemName': '支出'}
             ]
           }-->
-          <i-option v-for="item in enumSelectData.get('FeeTypeEnum')" :value="item.itemCode">{{item.itemName}}</i-option>
+          <i-option v-for="item in enumSelectData.get('FeeTypeEnum')" :key="item.itemCode" :value="item.itemCode">{{item.itemName}}</i-option>
         </i-select>
       </i-form-item>
       <i-form-item class="required" label="利率标准" prop="standard" v-if="formInModel.mode === '1'">

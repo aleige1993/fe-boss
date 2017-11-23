@@ -10,9 +10,9 @@
     <div class="form-top-actions">
       <i-button @click="addModal" type="info"><i class="iconfont icon-xinzeng"></i>&nbsp;新增</i-button>
     </div>
-    <i-table border ref="selection" :columns="columns1" :data="data1"></i-table>
+    <i-table :loading="dataLoading" border ref="selection" :columns="columns1" :data="data1"></i-table>
     <div class="page-container">
-      <i-page :current="1" :total="40" size="small" show-elevator show-total></i-page>
+      <i-page :loading="dataLoading" :current="currentPage" :total="total" size="small" show-elevator show-total @on-change="jumpPage"></i-page>
     </div>
     <pt-modal title="新增" v-model="showAddModal">
       <i-form  ref="formCustom" :model="formCustom" label-position="left" :label-width="100">
@@ -30,86 +30,44 @@
 
 <script>
   import PTModal from '@/components/bs-modal';
+  import MixinData from './mixin-data';
   export default {
     name: 'basics-car',
     components: {
       'pt-modal': PTModal
     },
+    mixins: [MixinData],
     data() {
       return {
         isAdd: true,
         showAddModal: false,
+        dataLoading: false,
         listIndex: Number,
+        currentPage: 1,
+        total: 0,
         formCustom: {
           textarea: ''
-        },
-        columns1: [
-          {
-            title: '车辆材料ID',
-            align: 'center',
-            key: 'carId'
-          },
-          {
-            title: '车辆材料名称',
-            key: 'carName'
-          },
-          {
-            title: '操作',
-            key: 'action',
-            width: 200,
-            align: 'center',
-            render: (h, params) => {
-              return h('div', [
-                h('Button', {
-                  props: {
-                    type: 'primary',
-                    size: 'small'
-                  },
-                  style: {
-                    marginRight: '5px'
-                  },
-                  on: {
-                    click: () => {
-                      this.listIndex = params.index;
-                      this.setList(params.row);
-                    }
-                  }
-                }, '修改'),
-                h('Button', {
-                  props: {
-                    type: 'error',
-                    size: 'small'
-                  },
-                  on: {
-                    click: () => {
-                      this.remove(params.index);
-                    }
-                  }
-                }, '删除')
-              ]);
-            }
-          }
-        ],
-        data1: [
-          {
-            carId: '001',
-            carName: '456'
-          },
-          {
-            carId: '002',
-            carName: '789'
-          }
-        ]
+        }
       };
     },
-    async mounted() {
-      const Vm = this;
-      let response = await this.$http.post('/productCar', {});
-      try {
-        Vm.$data.data1 = response.list;
-      } catch (err) {}
+    mounted() {
+      this.getPrivateCustomerList();
     },
     methods: {
+      async getPrivateCustomerList(page) {
+        this.$data.dataLoading = true;
+        if (page) {
+          this.$data.currentPage = page;
+        }
+        let resp = await this.$http.get('/productCar', { 'currentPage': this.$data.currentPage });
+        this.$data.dataLoading = false;
+        this.$data.data1 = resp.body.resultList;
+        // this.$data.currentPage = resp.body.currentPage;
+        this.$data.total = resp.body.totalNum;
+      },
+      jumpPage(page) {
+        this.getPrivateCustomerList(page);
+      },
       addModal() {
         this.$data.showAddModal = true;
       },

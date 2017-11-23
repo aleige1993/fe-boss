@@ -10,9 +10,9 @@
     <div class="form-top-actions">
       <i-button @click="addModal" type="info"><i class="iconfont icon-xinzeng"></i>&nbsp;新增</i-button>
     </div>
-    <i-table border ref="selection" :columns="columns1" :data="data1"></i-table>
+    <i-table border :loading="dataLoading" ref="selection" :columns="columns1" :data="data1"></i-table>
     <div class="page-container">
-      <i-page :current="1" :total="40" size="small" show-elevator show-total></i-page>
+      <i-page :current="currentPage" :total="total" size="small" show-elevator show-total @on-change="jumpPage"></i-page>
     </div>
     <pt-modal title="新增" v-model="showAddModal">
       <i-form  ref="formCustom" :model="formCustom" label-position="left" :label-width="100">
@@ -29,87 +29,45 @@
 </template>
 
 <script>
+  import MixinData from './mixin-data';
   import PTModal from '@/components/bs-modal';
   export default {
     name: 'basics-file',
     components: {
       'pt-modal': PTModal
     },
+    mixins: [MixinData],
     data() {
       return {
         isAdd: true,
         showAddModal: false,
+        dataLoading: false,
         listIndex: Number,
+        currentPage: 1,
+        total: 0,
         formCustom: {
           textarea: ''
-        },
-        columns1: [
-          {
-            title: '归档材料ID',
-            align: 'center',
-            key: 'fileId'
-          },
-          {
-            title: '归档材料名称',
-            key: 'fileName'
-          },
-          {
-            title: '操作',
-            key: 'action',
-            width: 200,
-            align: 'center',
-            render: (h, params) => {
-              return h('div', [
-                h('Button', {
-                  props: {
-                    type: 'primary',
-                    size: 'small'
-                  },
-                  style: {
-                    marginRight: '5px'
-                  },
-                  on: {
-                    click: () => {
-                      this.listIndex = params.index;
-                      this.setList(params.row);
-                    }
-                  }
-                }, '修改'),
-                h('Button', {
-                  props: {
-                    type: 'error',
-                    size: 'small'
-                  },
-                  on: {
-                    click: () => {
-                      this.remove(params.index);
-                    }
-                  }
-                }, '删除')
-              ]);
-            }
-          }
-        ],
-        data1: [
-          {
-            fileId: '001',
-            fileName: '456'
-          },
-          {
-            fileId: '002',
-            fileName: '789'
-          }
-        ]
+        }
       };
     },
-    async mounted() {
-      const Vm = this;
-      let response = await this.$http.post('/productFile', {});
-      try {
-        Vm.$data.data1 = response.list;
-      } catch (err) {}
+    mounted() {
+      this.getPrivateCustomerList();
     },
     methods: {
+      async getPrivateCustomerList(page) {
+        this.$data.dataLoading = true;
+        if (page) {
+          this.$data.currentPage = page;
+        }
+        let resp = await this.$http.get('/productFile', {});
+        this.$data.dataLoading = false;
+        this.$data.data1 = resp.body.resultList;
+        this.$data.currentPage = resp.body.currentPage;
+        this.$data.total = resp.body.totalNum;
+      },
+      jumpPage(page) {
+        this.getPrivateCustomerList();
+      },
       addModal() {
         this.$data.showAddModal = true;
       },

@@ -32,17 +32,26 @@ export default [
   },
   // 产品配置-贷款材料配置
   {
-    url: '/productLoan',
-    on: true,
+    url: '/pms/cfgLoanDoc/list',
+    on: false,
     resp: Mock.mock({
-      reCode: '0',
-      'list|1-5': [
-        {
-          'loanId|+1': 1,
-          'loanName': /[测试字体]{4,30}/
-        }
-      ],
-      reMsg: '成功'
+      'body': {
+        'currentPage': 1,
+        'isMore': 0,
+        'pageSize': 15,
+        'resultList|10': [
+          {
+            'loanId|+1': 1,
+            'loanName': /[测试字体]{4,30}/
+          }
+        ],
+        'startIndex': 0,
+        'totalNum': 100,
+        'totalPage': 1
+      },
+      'reCode': '0',
+      'reMsg': '成功',
+      'success': true
     })
   },
   // 产品配置-费用类型配置
@@ -50,15 +59,24 @@ export default [
     url: '/productCost',
     on: true,
     resp: Mock.mock({
-      reCode: '0',
-      'list|1-5': [
-        {
-          'costId|+1': 1,
-          'costName': '@name',
-          'costDirection|1': ['收入', '支出']
-        }
-      ],
-      reMsg: '成功'
+      'body': {
+        'currentPage': 1,
+        'isMore': 0,
+        'pageSize': 15,
+        'resultList|10': [
+          {
+            'costId|+1': 1,
+            'costName': '@name',
+            'costDirection|1': ['收入', '支出']
+          }
+        ],
+        'startIndex': 0,
+        'totalNum': 100,
+        'totalPage': 1
+      },
+      'reCode': '0',
+      'reMsg': '成功',
+      'success': true
     })
   },
   // 产品配置-准入规则配置
@@ -66,14 +84,23 @@ export default [
     url: '/productRule',
     on: true,
     resp: Mock.mock({
-      reCode: '0',
-      'list|1-5': [
-        {
-          'ruleId|+1': 1,
-          'ruleName': /[测试字体]{4,30}/
-        }
-      ],
-      reMsg: '成功'
+      'body': {
+        'currentPage': 1,
+        'isMore': 0,
+        'pageSize': 15,
+        'resultList|10': [
+          {
+            'ruleId|+1': 1,
+            'ruleName': /[测试字体]{4,30}/
+          }
+        ],
+        'startIndex': 0,
+        'totalNum': 100,
+        'totalPage': 1
+      },
+      'reCode': '0',
+      'reMsg': '成功',
+      'success': true
     })
   },
   // 产品配置-车辆材料配置
@@ -81,14 +108,23 @@ export default [
     url: '/productCar',
     on: true,
     resp: Mock.mock({
-      reCode: '0',
-      'list|1-5': [
-        {
-          'carId|+1': 1,
-          'carName': /[测试字体]{4,30}/
-        }
-      ],
-      reMsg: '成功'
+      'body': {
+        'currentPage': 1,
+        'isMore': 0,
+        'pageSize': 15,
+        'resultList|10': [
+          {
+            'carId|+1': 1,
+            'carName': /[测试字体]{4,30}/
+          }
+        ],
+        'startIndex': 0,
+        'totalNum': 100,
+        'totalPage': 1
+      },
+      'reCode': '0',
+      'reMsg': '成功',
+      'success': true
     })
   },
   // 产品配置-归档材料配置
@@ -96,14 +132,23 @@ export default [
     url: '/productFile',
     on: true,
     resp: Mock.mock({
+      'body': {
+        'currentPage': 1,
+        'isMore': 0,
+        'pageSize': 15,
+        'resultList|10': [
+          {
+            'fileId|+1': 1,
+            'fileName': /[测试字体]{4,30}/
+          }
+        ],
+        'startIndex': 0,
+        'totalNum': 100,
+        'totalPage': 1
+      },
       reCode: '0',
-      'list|1-5': [
-        {
-          'fileId|+1': 1,
-          'fileName': /[测试字体]{4,30}/
-        }
-      ],
-      reMsg: 'success'
+      reMsg: '成功',
+      'success': true
     })
   },
   // 产品配置-利率方案配置

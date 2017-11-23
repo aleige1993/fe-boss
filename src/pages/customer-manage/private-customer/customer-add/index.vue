@@ -32,7 +32,7 @@
                     <i-form-item label="证件类型" prop="mbMemberDTO.certType"
                       :rules="{required: true, message: '请选择证件类型', trigger: 'change'}">
                       <i-select :disabled="isFromDetail" v-model="formData.mbMemberDTO.certType">
-                        <i-option v-for="item in enumSelectData.get('CertTypeEnum')" :value="item.itemCode">{{item.itemName}}</i-option>
+                        <i-option v-for="item in enumSelectData.get('CertTypeEnum')" :key="item.itemCode" :value="item.itemCode">{{item.itemName}}</i-option>
                       </i-select>
                     </i-form-item>
                   </i-col>
@@ -57,7 +57,7 @@
                     <i-form-item label="性别" prop="mbMemberDTO.sex"
                       :rules="{required: true, message: '请选择性别', trigger: 'change'}">
                       <i-select :disabled="isFromDetail" v-model="formData.mbMemberDTO.sex">
-                        <i-option v-for="item in enumSelectData.get('SexEnum')" :value="item.itemCode">{{item.itemName}}</i-option>
+                        <i-option v-for="item in enumSelectData.get('SexEnum')" :key="item.itemCode" :value="item.itemCode">{{item.itemName}}</i-option>
                       </i-select>
                     </i-form-item>
                   </i-col>
@@ -76,21 +76,21 @@
                   <i-col span="8">
                     <i-form-item label="婚姻状况">
                       <i-select :disabled="isFromDetail" v-model="formData.mbMemberDTO.maritalStatus">
-                        <i-option v-for="item in enumSelectData.get('MaritalStatusEnum')" :value="item.itemCode">{{item.itemName}}</i-option>
+                        <i-option v-for="item in enumSelectData.get('MaritalStatusEnum')" :key="item.itemCode" :value="item.itemCode">{{item.itemName}}</i-option>
                       </i-select>
                     </i-form-item>
                   </i-col>
                   <i-col span="8">
                     <i-form-item label="教育程度">
                       <i-select :disabled="isFromDetail" v-model="formData.mbMemberDTO.education">
-                        <i-option v-for="item in enumSelectData.get('EducationEnum')" :value="item.itemCode">{{item.itemName}}</i-option>
+                        <i-option v-for="item in enumSelectData.get('EducationEnum')" :key="item.itemCode" :value="item.itemCode">{{item.itemName}}</i-option>
                       </i-select>
                     </i-form-item>
                   </i-col>
                   <i-col span="8">
                     <i-form-item label="职业类型">
                       <i-select :disabled="isFromDetail" v-model="formData.mbMemberDTO.workType">
-                        <i-option v-for="item in enumSelectData.get('WorkTypeEnum')" :value="item.itemCode">{{item.itemName}}</i-option>
+                        <i-option v-for="item in enumSelectData.get('WorkTypeEnum')" :key="item.itemCode" :value="item.itemCode">{{item.itemName}}</i-option>
                       </i-select>
                     </i-form-item>
                   </i-col>
@@ -106,14 +106,14 @@
                   <i-col span="8">
                     <i-form-item label="参加工作年限">
                       <i-select :disabled="isFromDetail" v-model="formData.mbMemberDTO.workYears">
-                        <i-option v-for="item in enumSelectData.get('YearsEnum')" :value="item.itemCode">{{item.itemName}}</i-option>
+                        <i-option v-for="item in enumSelectData.get('YearsEnum')" :key="item.itemCode" :value="item.itemCode">{{item.itemName}}</i-option>
                       </i-select>
                     </i-form-item>
                   </i-col>
                   <i-col span="8">
                     <i-form-item label="是否本地人">
                       <i-select :disabled="isFromDetail" v-model="formData.mbMemberDTO.isNative">
-                        <i-option v-for="item in enumSelectData.get('YesNoEnum')" :value="item.itemCode">{{item.itemName}}</i-option>
+                        <i-option v-for="item in enumSelectData.get('YesNoEnum')" :key="item.itemCode" :value="item.itemCode">{{item.itemName}}</i-option>
                       </i-select>
                     </i-form-item>
                   </i-col>
@@ -122,21 +122,21 @@
                   <i-col span="8">
                     <i-form-item label="本地有否房产">
                       <i-select :disabled="isFromDetail" v-model="formData.mbMemberDTO.isLocalHouse">
-                        <i-option v-for="item in enumSelectData.get('YesNoEnum')" :value="item.itemCode">{{item.itemName}}</i-option>
+                        <i-option v-for="item in enumSelectData.get('YesNoEnum')" :key="item.itemCode" :value="item.itemCode">{{item.itemName}}</i-option>
                       </i-select>
                     </i-form-item>
                   </i-col>
                   <i-col span="8">
                     <i-form-item label="本地居住年限">
                       <i-select :disabled="isFromDetail" v-model="formData.mbMemberDTO.liveYears">
-                        <i-option v-for="item in enumSelectData.get('YearsEnum')" :value="item.itemCode">{{item.itemName}}</i-option>
+                        <i-option v-for="item in enumSelectData.get('YearsEnum')" :key="item.itemCode" :value="item.itemCode">{{item.itemName}}</i-option>
                       </i-select>
                     </i-form-item>
                   </i-col>
                   <i-col span="8">
                     <i-form-item label="居住性质">
                       <i-select :disabled="isFromDetail" v-model="formData.mbMemberDTO.liveType">
-                        <i-option v-for="item in enumSelectData.get('LiveTypeEnum')" :value="item.itemCode">{{item.itemName}}</i-option>
+                        <i-option v-for="item in enumSelectData.get('LiveTypeEnum')" :key="item.itemCode" :value="item.itemCode">{{item.itemName}}</i-option>
                       </i-select>
                     </i-form-item>
                   </i-col>
@@ -231,7 +231,7 @@
                   <i-col span="8">
                     <i-form-item label="职务">
                       <i-select :disabled="isFromDetail" v-model="formData.mbMemberWorkDTO.duty">
-                        <i-option v-for="item in enumSelectData.get('DutyEnum')" :value="item.itemCode">{{item.itemName}}</i-option>
+                        <i-option v-for="item in enumSelectData.get('DutyEnum')" :key="item.itemCode" :value="item.itemCode">{{item.itemName}}</i-option>
                       </i-select>
                     </i-form-item>
                   </i-col>
