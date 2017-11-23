@@ -80,5 +80,10 @@ h1,h2,h3,h4,h5,h6 {
   }
 }
 .ivu-form-item-error-tip{
-  padding-top: 0 
+  padding-top: 0
+}
+// jquery confirm 样式覆盖
+.jconfirm .container{
+  width: 320px;
+  margin: 0 auto;
 }
