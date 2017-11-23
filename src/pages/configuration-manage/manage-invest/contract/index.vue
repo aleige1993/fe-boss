@@ -121,7 +121,12 @@
       },
       // 合同模板维护列表的删除
       remove1(index) {
-        this.data1.splice(index, 1);
+        Alertify.confirm('确定要删除吗？', (confirm) => {
+          if (confirm) {
+            this.data1.splice(index, 1);
+            // Alertify.alert('确定');
+          } else {}
+        });
       },
       // 修改弹窗
       setList() {

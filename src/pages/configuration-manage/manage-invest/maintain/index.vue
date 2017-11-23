@@ -197,11 +197,21 @@
       },
       // 资方维护列表的删除
       remove1(index) {
-        this.data1.splice(index, 1);
+        Alertify.confirm('确定要删除吗？', (confirm) => {
+          if (confirm) {
+            this.data1.splice(index, 1);
+            // Alertify.alert('确定');
+          } else {}
+        });
       },
       // 资方维护弹窗的列表删除
       remove2(index) {
-        this.data2.splice(index, 1);
+        Alertify.confirm('确定要删除吗？', (confirm) => {
+          if (confirm) {
+            this.data2.splice(index, 1);
+            // Alertify.alert('确定');
+          } else {}
+        });
       },
       // 修改弹窗
       setList() {

@@ -237,7 +237,11 @@
         this.$data.showAddModal = true;
       },
       remove(index) {
-        this.data1.splice(index, 1);
+        Alertify.confirm('确定要删除吗？', (confirm) => {
+          if (confirm) {
+            this.data1.splice(index, 1);
+          } else {}
+        });
       },
       setList(row) {
         this.isAdd = false;
