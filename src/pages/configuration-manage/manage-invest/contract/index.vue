@@ -32,24 +32,26 @@
       </i-page>
     </div>
     <bs-modal :title="'新增合同模板'" v-model="ShowModal" :width="600">
-      <i-form ref="formContract" :model="formContract" label-position="right" :label-width="120">
-        <i-form-item label="合同类型" prop="protype">
-          <i-select v-model="formContract.type">
+      <i-form ref="formContract" :model="formContract" label-position="right" :label-width="150">
+        <i-form-item label="合同类型" prop="type">
+          <i-select v-model="formContract.type" :disabled="iSsee">
             <i-option value="贷款合同01">贷款合同01</i-option>
             <i-option value="贷款合同02">贷款合同02</i-option>
             <i-option value="贷款合同03">贷款合同03</i-option>
           </i-select>
         </i-form-item>
-        <i-form-item label="合同名称" prop="protype">
-          <i-input v-model="formContract.name">
+        <i-form-item label="合同名称" prop="name">
+          <i-input v-model="formContract.name" :readonly ="iSsee">
           </i-input>
         </i-form-item>
-        <i-form-item label="合同名称" prop="protype">
-          <i-input v-model="formContract.name" placeholder="非必填项">
+        <i-form-item label="云贷签约平台模板ID" prop="ContractId">
+          <i-input v-model="formContract.ContractId" placeholder="非必填项" :readonly ="iSsee">
           </i-input>
         </i-form-item>
-        <i-form-item label="合同模板附件" prop="protype">
+        <i-form-item label="合同模板附件" prop="enclosure">
+          <div v-if="iSsee" v-text="uploadFile"></div>
           <i-upload
+            v-else
             multiple
             type="drag"
             :action="uploadurl">
@@ -60,8 +62,8 @@
           </i-upload>
         </i-form-item>
         <i-form-item class="text-right">
-          <i-button type="primary" @click="formSubmit">提交</i-button>
-          <i-button type="ghost" style="margin-left: 8px" @click="formCancel">取消</i-button>
+          <i-button type="primary" @click="formSubmit" v-if="!iSsee">提交</i-button>
+          <i-button type="ghost" style="margin-left: 8px" @click="formCancel">{{ iSsee ? '返回' : '取消'  }}</i-button>
         </i-form-item>
       </i-form>
     </bs-modal>
@@ -90,7 +92,13 @@
           name: '',
           currentPage: 1
         },
-        formContract: {}
+        uploadFile: '',
+        formContract: {
+          type: '', // 合同类型
+          name: '', // 合同名称
+          ContractId: '', // 云贷签约平台模板ID
+          Enclosure: '' //合同附件
+        }
       };
     }, // end data
     mounted() {
@@ -116,6 +124,8 @@
       },
       // 新增弹窗
       addModal() {
+        const FormName = 'formContract';
+        this.$refs[FormName].resetFields(); //重置表单
         this.$data.iSsee = false;   // 不是查看状态
         this.$data.ShowModal = true;
       },
@@ -127,6 +137,12 @@
             // Alertify.alert('确定');
           } else {}
         });
+      },
+      // 查看详情
+      detailsFun(row) {
+        this.$data.iSsee = true;
+        this.$data.uploadFile = row.enclosure;
+        this.$data.ShowModal = true;
       },
       // 修改弹窗
       setList() {

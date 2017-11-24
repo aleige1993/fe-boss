@@ -41,6 +41,7 @@ export default {
                 },
                 on: {
                   click: () => {
+                    this.detailsFun(params.row);
                   }
                 }
               }, '详情'),
