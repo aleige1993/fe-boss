@@ -6,11 +6,11 @@ export default {
           title: '准入规则ID',
           align: 'center',
           width: 200,
-          key: 'ruleId'
+          key: 'approveRuleCode'
         },
         {
           title: '准入规则名称',
-          key: 'ruleName'
+          key: 'approveRuleName'
         },
         {
           title: '操作',
@@ -41,7 +41,7 @@ export default {
                 },
                 on: {
                   click: () => {
-                    this.remove(params.index);
+                    this.remove(params.row);
                   }
                 }
               }, '删除')

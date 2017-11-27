@@ -5,15 +5,18 @@ export default {
         {
           title: '费用类型ID',
           align: 'center',
-          key: 'costId'
+          key: 'feeTypeNo'
         },
         {
           title: '费用类型名称',
-          key: 'costName'
+          key: 'feeTypeName'
         },
         {
           title: '收支方向',
-          key: 'costDirection'
+          key: 'feeType',
+          render: (h, params) => {
+            return h('span', {}, this.enumCode2Name(params.row.feeType, 'FeeTypeEnum'));
+          }
         },
         {
           title: '操作',
@@ -44,7 +47,7 @@ export default {
                 },
                 on: {
                   click: () => {
-                    this.remove(params.index);
+                    this.remove(params.row);
                   }
                 }
               }, '删除')

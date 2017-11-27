@@ -6,37 +6,37 @@ export default {
           title: '产品编号',
           width: 100,
           align: 'center',
-          key: 'proNumber'
+          key: 'productNo'
         },
         {
           title: '产品名称',
-          key: 'proName'
+          key: 'productName'
         },
         {
           title: '产品类型',
-          key: 'ProductTypeEnum',
+          key: 'productType',
           render: (h, params) => {
-            return h('span', {}, this.enumCode2Name(params.row.ProductTypeEnum, 'ProductTypeEnum'));
+            return h('span', {}, this.enumCode2Name(params.row.productType, 'ProductTypeEnum'));
           }
         },
         {
           title: '产品状态',
-          key: 'ProductStatusEnum',
+          key: 'status',
           render: (h, params) => {
-            return h('span', {}, this.enumCode2Name(params.row.ProductStatusEnum, 'ProductStatusEnum'));
+            return h('span', {}, this.enumCode2Name(params.row.status, 'ProductStatusEnum'));
           }
         },
         {
           title: '创建时间',
-          key: 'creationTime'
+          key: 'gmtCreate'
         },
         {
           title: '更新时间',
-          key: 'updateTime'
+          key: 'gmtModified'
         },
         {
           title: '创建人',
-          key: 'Founder'
+          key: 'createUserCode'
         },
         {
           title: '操作',
@@ -55,7 +55,6 @@ export default {
                 },
                 on: {
                   click: () => {
-                    this.listIndex = params.index;
                     this.setList(params.row);
                   }
                 }
@@ -67,7 +66,7 @@ export default {
                 },
                 on: {
                   click: () => {
-                    this.remove(params.index);
+                    this.remove(params.row);
                   }
                 }
               }, '删除')
@@ -77,23 +76,5 @@ export default {
       ],
       data1: []
     };
-  },
-  methods: {
-    // 获取当前时间
-    getNowFormatDate() {
-      let date = new Date();
-      let seperator1 = '-';
-      let seperator2 = ':';
-      let month = date.getMonth() + 1;
-      let strDate = date.getDate();
-      if (month >= 1 && month <= 9) {
-        month = '0' + month;
-      }
-      if (strDate >= 0 && strDate <= 9) {
-        strDate = '0' + strDate;
-      }
-      let currentdate = date.getFullYear() + seperator1 + month + seperator1 + strDate + ' ' + date.getHours() + seperator2 + date.getMinutes() + seperator2 + date.getSeconds();
-      return currentdate;
-    }
   }
 };

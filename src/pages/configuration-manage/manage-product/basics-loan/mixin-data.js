@@ -5,11 +5,11 @@ export default {
         {
           title: '贷款材料ID',
           align: 'center',
-          key: 'loanId'
+          key: 'loanDocCode'
         },
         {
           title: '贷款材料名称',
-          key: 'loanName'
+          key: 'loanDocName'
         },
         {
           title: '操作',
@@ -28,7 +28,6 @@ export default {
                 },
                 on: {
                   click: () => {
-                    this.listIndex = params.index;
                     this.setList(params.row);
                   }
                 }
@@ -40,7 +39,7 @@ export default {
                 },
                 on: {
                   click: () => {
-                    this.remove(params.index);
+                    this.remove(params.row);
                   }
                 }
               }, '删除')

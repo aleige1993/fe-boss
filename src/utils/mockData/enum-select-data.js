@@ -368,6 +368,7 @@ export default [
             }
           ]
         },
+        // 车类
         {
           'groupKey': 'ProductTypeEnum',
           'items': [
@@ -532,7 +533,39 @@ export default [
               'itemName': '按365天计算'
             }
           ]
-        } // 年模型 end
+        }, // 年模型 end
+        // 车辆类型
+        {
+          'groupKey': 'BizTypeEnum',
+          'items': [
+            {
+              'itemCode': '1',
+              'itemName': '一手车'
+            },
+            {
+              'itemCode': '2',
+              'itemName': '二手车'
+            }
+          ]
+        }, // 车辆类型 end
+        // 授信释放方式
+        {
+          'groupKey': 'CreditFreedTypeEnum',
+          'items': [
+            {
+              'itemCode': '1',
+              'itemName': '按还本金额释放'
+            },
+            {
+              'itemCode': '2',
+              'itemName': '按贷款结清'
+            },
+            {
+              'itemCode': '3',
+              'itemName': '按权证方式入库'
+            }
+          ]
+        } // 授信释放方式 end
       ],
       'success': true
     }

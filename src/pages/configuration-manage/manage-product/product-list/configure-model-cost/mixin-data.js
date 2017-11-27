@@ -53,7 +53,6 @@ export default {
                 },
                 on: {
                   click: () => {
-                    this.listIndex = params.index;
                     this.setList(params.row);
                   }
                 }

@@ -357,7 +357,7 @@
             label="保证金释放方式"
             prop="protype">
             <i-select v-model="formRate.FreedTypeEnum" placeholder="请选择">
-              <i-option v-for="item in enumSelectData.get('FreedTypeEnum')" :key="item.itemCode" :value="item.itemCode">{{item.itemName}}</i-option>
+              <i-option v-for="item in enumSelectData.get('CreditFreedTypeEnum')" :key="item.itemCode" :value="item.itemCode">{{item.itemName}}</i-option>
             </i-select>
           </i-form-item>
         </i-col>
