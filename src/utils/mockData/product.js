@@ -81,8 +81,8 @@ export default [
   },
   // 产品配置-准入规则配置
   {
-    url: '/productRule',
-    on: true,
+    url: '/pms/cfgApproveRule/list',
+    on: false,
     resp: Mock.mock({
       'body': {
         'currentPage': 1,

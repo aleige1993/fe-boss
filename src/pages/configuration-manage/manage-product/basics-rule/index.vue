@@ -58,8 +58,9 @@
         if (page) {
           this.$data.currentPage = page;
         }
-        let resp = await this.$http.get('/productRule', {});
+        let resp = await this.$http.get('/pms/cfgApproveRule/list?currentPage=' + this.$data.currentPage + '&pageSize=15');
         this.$data.dataLoading = false;
+        console.log(resp);
         this.$data.data1 = resp.body.resultList;
         this.$data.currentPage = resp.body.currentPage;
         this.$data.total = resp.body.totalNum;

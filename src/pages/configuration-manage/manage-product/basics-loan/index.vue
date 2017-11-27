@@ -63,6 +63,7 @@
           currentPage: this.$data.currentPage,
           pageSize: 15
         });
+        console.log(resp.body.resultList);
         this.$data.dataLoading = false;
         this.$data.data1 = resp.body.resultList;
         this.$data.currentPage = resp.body.currentPage;
