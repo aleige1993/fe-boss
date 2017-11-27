@@ -185,27 +185,30 @@
               <i-col span="8">
                 <i-form-item label="身份证正面">
                   <input type="hidden" v-model="formData.mbMemberDTO.certFrontUrl"/>
-                  <img v-if="formData.mbMemberDTO.certFrontUrl!==''"  width="149" height="95" :src="formData.mbMemberDTO.certFrontUrl" alt="">
-                  <i-upload v-else @on-success="uploadFaceSuccess" :action="$config.HTTPBASEURL+'/common/upload'">
-                    <idcard-placeholder type="face"></idcard-placeholder>
+                  <img v-if="formData.mbMemberDTO.certFrontUrl!==''&&isFromDetail"  width="149" height="95" :src="formData.mbMemberDTO.certFrontUrl" alt="">
+                  <i-upload v-else :on-success="uploadFaceSuccess" :on-error="uploadError" :action="$config.HTTPBASEURL+'/common/upload'" :show-upload-list="false">
+                    <img v-if="formData.mbMemberDTO.certFrontUrl!==''"  width="149" height="95" :src="formData.mbMemberDTO.certFrontUrl" alt="">
+                    <idcard-placeholder v-else type="face"></idcard-placeholder>
                   </i-upload>
                 </i-form-item>
               </i-col>
               <i-col span="8">
                 <i-form-item label="身份证反面">
                   <input type="hidden" v-model="formData.mbMemberDTO.certBackUrl"/>
-                  <img v-if="formData.mbMemberDTO.certBackUrl!==''" width="149" height="95" :src="formData.mbMemberDTO.certBackUrl" alt="">
-                  <i-upload v-else @on-success="uploadBackSuccess" action="/common/upload">
-                    <idcard-placeholder type="back"></idcard-placeholder>
+                  <img v-if="formData.mbMemberDTO.certBackUrl!==''&&isFromDetail" width="149" height="95" :src="formData.mbMemberDTO.certBackUrl" alt="">
+                  <i-upload v-else :on-success="uploadBackSuccess" :action="$config.HTTPBASEURL+'/common/upload'" :show-upload-list="false">
+                    <img v-if="formData.mbMemberDTO.certBackUrl!==''" width="149" height="95" :src="formData.mbMemberDTO.certBackUrl" alt="">
+                    <idcard-placeholder v-else type="back"></idcard-placeholder>
                   </i-upload>
                 </i-form-item>
               </i-col>
               <i-col span="8">
                 <i-form-item label="手持身份证">
                   <input type="hidden" v-model="formData.mbMemberDTO.certHandUrl"></input>
-                  <img v-if="formData.mbMemberDTO.certHandUrl!==''" width="149" height="95" :src="formData.mbMemberDTO.certHandUrl" alt="">
-                  <i-upload v-else @on-success="uploadHandSuccess" action="/common/upload">
-                    <idcard-placeholder type="hand"></idcard-placeholder>
+                  <img v-if="formData.mbMemberDTO.certHandUrl!==''&&isFromDetail" width="149" height="95" :src="formData.mbMemberDTO.certHandUrl" alt="">
+                  <i-upload v-else :on-success="uploadHandSuccess" :action="$config.HTTPBASEURL+'/common/upload'" :show-upload-list="false">
+                    <img v-if="formData.mbMemberDTO.certHandUrl!==''" width="149" height="95" :src="formData.mbMemberDTO.certHandUrl" alt="">
+                    <idcard-placeholder v-else type="hand"></idcard-placeholder>
                   </i-upload>
                 </i-form-item>
               </i-col>
@@ -223,12 +226,14 @@
               </i-col>
               <i-col span="8">
                 <i-form-item label="单位性质">
-                  <i-input :readonly="true" v-model="formData.mbMemberWorkDTO.unitType" placeholder="自动带入"></i-input>
+                  <input v-model="formData.mbMemberWorkDTO.unitType" type="hidden"/>
+                  <i-input :readonly="true" :value="enumCode2Name(formData.mbMemberWorkDTO.unitType, 'UnitTypeEnum')" placeholder="自动带入"></i-input>
                 </i-form-item>
               </i-col>
               <i-col span="8">
                 <i-form-item label="行业类别">
-                  <i-input :readonly="true" v-model="formData.mbMemberWorkDTO.industryType" placeholder="自动带入"></i-input>
+                  <input  v-model="formData.mbMemberWorkDTO.industryType" type="hidden" />
+                  <i-input :readonly="true" :value="enumCode2Name(formData.mbMemberWorkDTO.industryType, 'UnitTypeEnum')" placeholder="自动带入"></i-input>
                 </i-form-item>
               </i-col>
             </i-row>
@@ -278,7 +283,7 @@
                   <i-select :label-in-value="true" @on-change="companyCityChange" v-model="formData.mbMemberWorkDTO.cityCode" style="width: 150px">
                     <i-option v-for="item in companyCityDropList" :value="item.regionCode" :key="item.regionCode">{{item.regionName}}</i-option>
                   </i-select>
-                  <i-input placeholder="街道信息" style="width: 220px;"></i-input>
+                  <i-input v-model="formData.mbMemberWorkDTO.roadAddr" placeholder="街道信息" style="width: 220px;"></i-input>
                 </i-form-item>
               </i-col>
             </i-row>
@@ -287,8 +292,9 @@
             <i-row>
               <i-col span="8">
                 <i-form-item label="业务拓展部门">
+                  <input type="hidden" v-model="formData.mbMemberDTO.bizDepartmentCode"/>
                   <i-input v-model="formData.mbMemberDTO.bizDepartmentName" :readonly="true" placeholder="选择客户经理">
-                    <i-button v-if="!isFromDetail" slot="append">选择拓展部门 <Icon type="ios-more"></Icon></i-button>
+                    <i-button @click="selectDepartmentModal=!selectDepartmentModal" v-if="!isFromDetail" slot="append">选择拓展部门 <Icon type="ios-more"></Icon></i-button>
                   </i-input>
                 </i-form-item>
               </i-col>
@@ -299,7 +305,8 @@
               </i-col>
               <i-col span="8">
                 <i-form-item label="客户经理">
-                  <i-input v-model="formData.mbMemberDTO.custMgrNo" :readonly="true" placeholder="选择客户经理">
+                  <input type="hidden" v-model="formData.mbMemberDTO.custMgrNo"/>
+                  <i-input v-model="formData.mbMemberDTO.custMgrName" :readonly="true" placeholder="选择客户经理">
                     <i-button v-if="!isFromDetail" @click="showSelectEmployer=!showSelectEmployer" slot="append">选择客户经理 <Icon type="ios-more"></Icon></i-button>
                   </i-input>
                 </i-form-item>
@@ -326,6 +333,10 @@
     <bs-modal title="选择客户经理" :width="1200" v-model="showSelectEmployer">
       <table-employer-list @on-row-dbclick="selectEmployer"></table-employer-list>
     </bs-modal>
+    <!-- 选择业务拓展部门的弹窗 -->
+    <bs-modal :width="880" v-model="selectDepartmentModal" title="选择业务拓展部门">
+      <tree-grid v-if="selectDepartmentModal" @on-row-dblclick="selectDep" :columns="depColumns" :data="depData"></tree-grid>
+    </bs-modal>
     <i-spin size="large" fix v-if="initFormLoading"></i-spin>
   </div>
 </template>
@@ -337,6 +348,7 @@ import TableEmployerList from '@/components/table-employer-list';
 import TableCompanyCustomerList from '@/components/table-company-customer-list';
 import BsModal from '@/components/bs-modal';
 import Tools from '@/utils/Tools';
+import TreeGrid from '@/components/bs-tree-grid';
 export default {
   name: 'formCustomerBsicInfo',
   mixins: [MxinData, MxinMethods],
@@ -346,6 +358,7 @@ export default {
       isFromDetail: false,
       initFormLoading: false,
       showSelectCompany: false,
+      selectDepartmentModal: false,
       showSelectEmployer: false,
       // 地址下拉
       shengDropList: [],
@@ -377,30 +390,51 @@ export default {
     'idcard-placeholder': IDCardPlaceholder,
     TableEmployerList,
     TableCompanyCustomerList,
-    BsModal
+    BsModal,
+    TreeGrid
   },
   methods: {
     selectEmployer(row, index) {
-      alert(index);
+      this.$data.formData.mbMemberDTO.custMgrNo = row.userCode;
+      this.$data.formData.mbMemberDTO.custMgrName = row.userName;
+      this.$data.showSelectEmployer = false;
     },
     selectCompanyCustomer(row, index) {
-      alert(index);
+      console.log(row);
+      let companyName = row.corpName;
+      let companyType = row.corpType;
+      let industryType = row.industryType;
+      this.formData.mbMemberWorkDTO.companyName = companyName;
+      this.$data.showSelectCompany = false;
+      this.formData.mbMemberWorkDTO.unitType = companyType;
+      this.formData.mbMemberWorkDTO.industryType = industryType;
+      this.formData.mbMemberWorkDTO.companyTel = row.telephone;
+      this.formData.mbMemberWorkDTO.provinceCode = row.bizProvinceCode;
+      this.formData.mbMemberWorkDTO.districtCode = row.bizCityCode;
+      this.formData.mbMemberWorkDTO.cityCode = row.bizDistrictCode;
+      this.formData.mbMemberWorkDTO.roadAddr = row.bizRoadAddr;
     },
     async initPageData() {
       this.$data.initFormLoading = true;
-      let resp = await this.$http.post('/member/find', {
-        memberNo: this.id
-      });
-      this.$data.initFormLoading = false;
-      this.$data.formData = resp.body;
-      this.$emit('on-submit-success', resp.body);
+      try {
+        let resp = await this.$http.post('/member/find', {
+          memberNo: this.id
+        });
+        this.$data.initFormLoading = false;
+        this.$data.formData = resp.body;
+        this.$emit('on-submit-success', resp.body);
+      } catch (e) {
+        this.$data.initFormLoading = false;
+      }
     },
-    getAddressDropList(code) {
-      let _code = code || '';
-      let data = {
-        regionCode: _code
-      };
-      return this.$http.post('/common/region/list', data);
+    async getDepList() {
+      let resp = await this.$http.post('/common/dept/tree', {});
+      this.$data.depData = resp.body.children;
+    },
+    selectDep(id, row, data) {
+      this.$data.formData.mbMemberDTO.bizDepartmentCode = data.id;
+      this.$data.formData.mbMemberDTO.bizDepartmentName = data.text;
+      this.$data.selectDepartmentModal = false;
     }
   },
   async mounted() {
@@ -408,6 +442,7 @@ export default {
     this.$data.isFromDetail = (pageFrom === 'detail');
     let resp = await this.getAddressDropList();
     this.$data.shengDropList = resp.body;
+    this.getDepList();
     // 如果有id，初始化页面数据
     if (this.id) {
       this.initPageData();

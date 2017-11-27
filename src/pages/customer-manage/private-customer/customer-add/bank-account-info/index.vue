@@ -37,9 +37,9 @@
           <i-input v-model="formData.remark" placeholder=""></i-input>
         </i-form-item>
         <i-form-item label="">
-          <i-button :loading="submitLoading" @click="submitForm" type="primary" size="large" style="width: 80px;">
+          <i-button :loading="submitLoading" @click="submitForm" type="primary" size="large" style="width: 120px;">
             <span v-if="!submitLoading">提交</span>
-            <span v-else>Loading...</span>
+            <span v-else>请求中...</span>
           </i-button>
         </i-form-item>
       </i-form>
@@ -59,6 +59,7 @@
         dataLoading: false,
         bankList: [],
         formData: {
+          recordId: '',
           memberNo: '',
           name: '',
           bankCardNo: '',
@@ -71,7 +72,16 @@
         }
       };
     },
-    props: ['isFromDetail'],
+    computed: {
+      memberNo() {
+        if (this.$route.query.id) {
+          return this.$route.query.id;
+        } else {
+          return this.customer.mbMemberDTO.memberNo;
+        }
+      }
+    },
+    props: ['isFromDetail', 'customer'],
     methods: {
       submitForm() {
         this.$refs['bankForm'].validate(async (valid) => {

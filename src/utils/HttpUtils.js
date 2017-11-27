@@ -1,5 +1,5 @@
 /**
- * Created by marven on 2017/4/23.
+ * Created by marven on 2017/09/23.
  */
 import Vue from 'vue';
 import axios from 'axios';
@@ -16,21 +16,24 @@ class Http {
    * 发起post请求
    * @param _url
    * @param _data
-   * @param _success
-   * @param _error
+   * @param isNeedLogin 是否需要登录token默认为需要，不需要传递false即可
    */
-  post(_url, _data) {
+  post(_url, _data, isNeedLogin = true) {
     if (Config.XHRLOG) {
       console.info(`----来自${_url}的请求----`);
       console.info(JSON.stringify(_data));
+    }
+    let _headers = {};
+    if (isNeedLogin) {
+      _headers = {
+        'token': '' + UserLogin.getLoginToken()
+      };
     }
     return axios({
       url: _url,
       dataType: 'json',
       data: _data,
-      headers: {
-        'token': '' + UserLogin.getLoginToken()
-      },
+      headers: _headers,
       method: 'POST'
     }).then(res => {
       if (res.data.reCode === '0004') {
@@ -43,25 +46,37 @@ class Http {
             }
           }
         );
-      } else {
+      } else if (res.data.reCode === '0000') {
         return res.data;
+      } else {
+        toastr.error(res.data.reMsg);
       }
     }).catch(err => {
       // error todo
       toastr.error(err);
     });
   }
-  get(_url) {
+  /**
+   * 发起get请求
+   * @param _url
+   * @param isNeedLogin 是否需要登录token默认为需要，不需要传递false即可
+   */
+  get(_url, _params = {}, isNeedLogin = true) {
     if (Config.XHRLOG) {
-      console.info(`----来自${_url}的请求----`);
+      // console.info(`----来自${_url}的请求----`);
+    }
+    let _headers = {};
+    if (isNeedLogin) {
+      _headers = {
+        'token': '' + UserLogin.getLoginToken()
+      };
     }
     return axios({
       url: _url,
       dataType: 'json',
-      headers: {
-        'token': UserLogin.getLoginInfo().token
-      },
-      method: 'GET'
+      headers: _headers,
+      method: 'GET',
+      params: _params
     }).then(res => {
       // console.log(res);
       if (res.data.reCode === '0004') {
@@ -74,8 +89,10 @@ class Http {
             }
           }
         );
-      } else {
+      } else if (res.data.reCode === '0000') {
         return res.data;
+      } else {
+        toastr.error(res.data.reMsg);
       }
     }).catch(err => {
       // error todo

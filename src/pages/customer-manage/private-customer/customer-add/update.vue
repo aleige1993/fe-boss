@@ -71,15 +71,15 @@
         return this.$route.query.id;
       },
       otherDisabled() {
-        return this.$data.addCustomer == null;
+        return this.$data.addCustomer === null;
       },
       spouseDisabled() {
-        return this.$data.addCustomer == null || this.$data.addCustomer.mbMemberDTO.maritalStatus !== '1';
+        return this.$data.addCustomer === null || this.$data.addCustomer.mbMemberDTO.maritalStatus !== '1';
       }
     },
     watch: {
       '$route'(to, from) {
-        console.log(this.$forceUpdate);
+        // console.log(this.$forceUpdate);
       }
     },
     components: {
@@ -109,9 +109,7 @@
       }
     },
     mounted() {
-      if (this.$route.query.from === 'detail') {
-        this.$data.isFromDetail = true;
-      }
+      // qa
     }
   };
 </script>
