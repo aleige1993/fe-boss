@@ -31,19 +31,30 @@
     </div>
     <bs-modal :title="'资方映射配置'" v-model="ShowModel" :width="600">
       <i-form ref="formMapping" :model="formMapping" label-position="right" :label-width="100">
-        <i-form-item class="required" label="产品" prop="pro">
+        <i-form-item
+          :rules="{required: true, message: '产品不能为空', trigger: 'change'}"
+          label="产品"
+          prop="proName">
           <i-select v-model="formMapping.proName">
+            <i-option value="">空值（测试用）</i-option>
             <i-option value="欢乐颂">欢乐颂</i-option>
             <i-option value="任分期">任分期</i-option>
           </i-select>
         </i-form-item>
-        <i-form-item class="required" label="资方" prop="investName">
+        <i-form-item
+          :rules="{required: true, message: '资方不能为空', trigger: 'change'}"
+          label="资方"
+          prop="investName">
           <i-select v-model="formMapping.investName">
+            <i-option value="">空值（测试用）</i-option>
             <i-option value="海尔云贷">海尔云贷</i-option>
             <i-option value="海乐行融资租赁">海乐行融资租赁</i-option>
           </i-select>
         </i-form-item>
-        <i-form-item class="required" label="资方产品编号" prop="investProNumber">
+        <i-form-item
+          :rules="{required: true, message: '资方产品编号不能为空', trigger: 'blur'}"
+          label="资方产品编号"
+          prop="investProNumber">
           <i-input v-model="formMapping.investProNumber"></i-input>
         </i-form-item>
         <i-form-item label="渠道编号" prop="channelNumber">
@@ -52,17 +63,37 @@
         <i-form-item label="客户经理编号" prop="managerNumber">
           <i-input v-model="formMapping.managerNumber"></i-input>
         </i-form-item>
-        <i-form-item class="required" label="贴息方式" prop="subsidy ">
+        <i-form-item
+          :rules="{required: true, message: '贴息方式不能为空', trigger: 'change'}"
+          label="贴息方式"
+          prop="subsidy ">
           <i-select v-model="formMapping.subsidy ">
+            <i-option value="">空值（测试用）</i-option>
             <i-option value="全贴">全贴</i-option>
             <i-option value="不贴">不贴</i-option>
           </i-select>
         </i-form-item>
-        <i-form-item class="required" label="贷款金额范围" prop="range">
-          <i-input v-model="formMapping.rangeStart" style="width: 40%"></i-input>
-          <span>~</span>
-          <i-input v-model="formMapping.rangeEnd" style="width: 40%"></i-input>
-        </i-form-item>
+        <i-row :gutter="16" class-name="row-inline" type="flex" justify="start" align="top">
+          <i-col span="11">
+            <i-form-item
+              :rules="{required: true, message: '贷款金额范围不能为空', trigger: 'blur'}"
+              label="贷款金额范围"
+              prop="rangeStart">
+              <i-input v-model="formMapping.rangeStart"></i-input>
+            </i-form-item>
+          </i-col>
+          <i-col span="2">
+            <span>~</span>
+          </i-col>
+          <i-col span="11" style="margin-left: -100px;">
+            <i-form-item
+              :rules="{required: true, message: '贷款金额范围不能为空', trigger: 'blur'}"
+              label=""
+              prop="rangeEnd">
+              <i-input v-model="formMapping.rangeEnd"></i-input>
+            </i-form-item>
+          </i-col>
+        </i-row>
         <i-form-item class="text-right">
           <i-button type="primary" @click="addformSubmit">提交</i-button>
           <i-button type="ghost" style="margin-left: 8px" @click="addformCancel">取消</i-button>
@@ -193,5 +224,17 @@
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style lang="scss" scoped>
-
+#invest-mapping {
+  & .row-inline {
+    &>.ivu-col {
+      & span {
+        width: 100%;
+        display: inline-block;
+        line-height: 34px;
+        text-align: center;
+        font-size: 18px;
+      }
+    }
+  }
+}
 </style>

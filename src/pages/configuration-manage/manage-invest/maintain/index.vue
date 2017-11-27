@@ -22,14 +22,20 @@
           <i-row :gutter="16">
             <!--资方名称-->
             <i-col span="8">
-              <i-form-item class="required" label="资方名称" prop="protype">
+              <i-form-item
+                :rules="{required: true, message: '资方名称不能为空', trigger: 'blur'}"
+                label="资方名称"
+                prop="name">
                 <i-input v-model="formMaintain.name" :readonly="iSsee">
                 </i-input>
               </i-form-item>
             </i-col>
             <!--合作状态-->
             <i-col span="8">
-              <i-form-item class="required" label="合作状态" prop="protype">
+              <i-form-item
+                :rules="{required: true, message: '合作状态不能为空', trigger: 'blur'}"
+                label="合作状态"
+                prop="state">
                 <i-input v-model="formMaintain.state" :readonly="iSsee">
                 </i-input>
               </i-form-item>
@@ -105,28 +111,51 @@
               </i-form-item>
             </i-col>
             <!--地址-->
-            <i-col span="24">
-              <i-form-item label="地址" prop="protype">
-                <i-select v-model="formMaintain.province" style="width: 10%" :disabled="iSsee">
-                  <i-option value="重庆">重庆</i-option>
-                  <i-option value="上海">上海</i-option>
+            <i-col span="24" class-name="city-select">
+              <!--省份-->
+              <i-form-item
+                :rules="{required: true, message: '省份不能为空', trigger: 'change'}"
+                label="地址"
+                prop="provinceCode">
+                <i-select :label-in-value="true" v-model="formMaintain.provinceCode" :disabled="iSsee" @on-change="provinceChange" placeholder="请选择省/直辖市">
+                  <i-option value="">此项控制（测试用）</i-option>
+                  <i-option v-for="item in provinceArray" :value="item.regionCode" :key="item.regionCode">{{item.regionName}}</i-option>
                 </i-select>
-                <i-select v-model="formMaintain.city" style="width: 10%" :disabled="iSsee">
-                  <i-option value="重庆">重庆</i-option>
-                  <i-option value="上海">重庆</i-option>
+              </i-form-item>
+                <!--市区-->
+              <i-form-item
+                :rules="{required: true, message: '市区不能为空', trigger: 'change'}"
+                label=""
+                prop="regionCode"
+                style="margin-left: -110px;">
+                <i-select :label-in-value="true" v-model="formMaintain.cityCode" :disabled="iSsee"  @on-change="cityChange" placeholder="请选择市区">
+                  <i-option v-for="item in cityArray" :value="item.regionCode" :key="item.regionCode">{{item.regionName}}</i-option>
                 </i-select>
-                <i-select v-model="formMaintain.area" style="width: 10%" :disabled="iSsee">
-                  <i-option value="重庆">九龙坡区</i-option>
-                  <i-option value="上海">渝中区</i-option>
+              </i-form-item>
+              <!--区县-->
+              <i-form-item
+                :rules="{required: true, message: '区县不能为空', trigger: 'change'}"
+                label=""
+                prop="areaCode"
+                style="margin-left: -110px;">
+                <i-select :label-in-value="true" v-model="formMaintain.areaCode" :disabled="iSsee"  @on-change="areaChange" placeholder="请选择区县">
+                  <i-option v-for="item in areaArray" :value="item.regionCode" :key="item.regionCode">{{item.regionName}}</i-option>
                 </i-select>
-                <i-input v-model="formMaintain.Street" style="width: calc(70% - 16px); margin-left: 5px;" :readonly="iSsee">
+              </i-form-item>
+              <!--街道信息-->
+              <i-form-item
+                :rules="{required: true, message: '区县不能为空', trigger: 'blur'}"
+                label=""
+                prop="Street"
+                style="margin-left: -110px;">
+                <i-input v-model="formMaintain.Street" :readonly="iSsee" placeholder="详细地址">
                 </i-input>
               </i-form-item>
             </i-col>
           </i-row>
         </i-form>
       </bs-form-block>
-      <bs-form-block :title="'合作协议'" padding="20px 0" borderWidth="0px">
+      <bs-form-block :title="'合作协议'" padding="20px 0" borderWidth="0">
         <div class="form-top-actions" v-if="!iSsee">
           <i-button @click="addModalTwo" type="info"><i class="iconfont icon-xinzeng"></i> 新增</i-button>
         </div>
@@ -148,10 +177,11 @@
 <script>
   import BSModal from '@/components/bs-modal';
   import MixinData from './mixin-data';
+  import MixinMethods from './mixin-methods';
   import ModalTwo from './modal-two.vue';
   export default {
     name: 'manage-invest-maintain',
-    mixins: [MixinData],
+    mixins: [MixinData, MixinMethods],
     components: {
       'bs-modal': BSModal,
       'modal-two': ModalTwo
@@ -163,14 +193,39 @@
         ShowModalTwo: false,
         total: 0,
         currentPage: 1,
-        formMaintain: {},
-        iSsee: false           // 是否是查看页面
+        formMaintain: {
+          name: '', // 资方名称
+          state: '', // 合作状态
+          provinceCode: '',
+          provinceName: '',
+          cityCode: '',
+          cityName: '',
+          areaCode: '',
+          areaName: ''
+        },
+        iSsee: false,           // 是否是查看页面
+        // 地区三级联动
+        provinceArray: [],  // 省份列表
+        cityArray: [],  // 市区列表
+        areaArray: []  // 区县列表
       };
     }, // end data
     mounted() {
       this.getList();
+      this.getCitySelectList();
     },
     methods: {
+      getAddressDropList(code) {
+        let _code = code || '';
+        let data = {
+          regionCode: _code
+        };
+        return this.$http.post('/common/region/list', data);
+      },
+      async getCitySelectList() {
+        let resp = await this.getAddressDropList();
+        this.$data.provinceArray = resp.body;
+      },
       async getList(page) {
         this.$data.dataLoading = true;
         if (page) {
@@ -233,4 +288,19 @@
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style lang="scss" scoped>
+  $from-item-width: 100%;
+  $from-item-other-width: 570px;
+  #invest-maintain {
+    & .city-select {
+      font-size: 0;
+      & .ivu-form-item {
+        font-size: 12px;
+        display: inline-block;
+        width: 300px;
+        &:last-of-type {
+          width: calc(100% - 570px);
+        }
+      }
+    }
+  }
 </style>

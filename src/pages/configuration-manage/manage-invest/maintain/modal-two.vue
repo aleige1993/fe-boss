@@ -1,13 +1,22 @@
 <template>
 <div id="maintain-modal-two">
   <i-form ref="formAgreement" :model="formAgreement" label-position="left" :label-width="100">
-    <i-form-item class="required" label="协议名称" prop="name">
+    <i-form-item
+      :rules="{required: true, message: '协议名称不能为空', trigger: 'blur'}"
+      label="协议名称"
+      prop="name">
       <i-input v-model="formAgreement.name"></i-input>
     </i-form-item>
-    <i-form-item class="required" label="协议编号" prop="number">
+    <i-form-item
+      :rules="{required: true, message: '协议编号不能为空', trigger: 'blur'}"
+      label="协议编号"
+      prop="number">
       <i-input v-model="formAgreement.number"></i-input>
     </i-form-item>
-    <i-form-item class="required" label="协议附件" prop="Enclosure">
+    <i-form-item
+      :rules="{required: true, message: '协议附件不能为空', trigger: 'blur'}"
+      label="协议附件"
+      prop="Enclosure">
       <i-upload
         multiple
         type="drag"

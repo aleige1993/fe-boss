@@ -342,11 +342,11 @@
           <i-form-item
             :rules="{required: true, message: '个人单户额度不能为空', trigger: 'blur'}"
             label="个人单户额度"
-            prop="protype">
+            prop="[protype1, protype2]">
             <span>不足</span>
-            <i-input placeholder="" v-model="formRate.protype" style="width: 80px"></i-input>
+            <i-input placeholder="" v-model="formRate.protype1" style="width: 80px"></i-input>
             <span>天，按实际发生天数收，否则整月收！最低收</span>
-            <i-input placeholder="" v-model="formRate.protype" style="width: 80px"></i-input>
+            <i-input placeholder="" v-model="formRate.protype2" style="width: 80px"></i-input>
             <span>天利息。</span>
           </i-form-item>
         </i-col>
@@ -440,7 +440,9 @@
         },
         formInModel: {  // 增删的模态框的数据表单
           term: '',
-          standard: ''
+          standard: '',
+          protype1: '',
+          protype2: ''
         },
         columns1: [
           {
