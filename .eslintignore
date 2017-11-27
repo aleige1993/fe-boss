@@ -4,4 +4,4 @@ node_modules/**/*.js
 src/router/index.js
 src/App.vue
 src/main.js
-src/assets/js/*.js
+src/assets/*

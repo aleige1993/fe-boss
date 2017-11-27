@@ -76,7 +76,7 @@ export default {
                 style: { marginRight: '5px' },
                 on: {
                   click: () => {
-                    this.$router.go({
+                    this.$router.push({
                       path: '/index/customer/update',
                       query: {
                         id: params.row.memberNo,
@@ -95,7 +95,16 @@ export default {
                 style: { marginRight: '5px' },
                 on: {
                   click: () => {
-                    this.remove(params.index);
+                    Alertify.confirm('确定删除当前客户吗？', async (ok) => {
+                      if (ok) {
+                        let resp = await this.$http.post('/member/delete', {
+                          memberNo: params.row.memberNo
+                        });
+                        if (resp.success) {
+                          this.getPrivateCustomerList();
+                        }
+                      }
+                    });
                   }
                 }
               }, '删除'),
@@ -105,8 +114,22 @@ export default {
                   size: 'small'
                 },
                 on: {
-                  click: () => {
-                    this.remove(params.index);
+                  click: async () => {
+                    let status = params.row.status === '1' ? '2' : '1';
+                    let text = params.row.status === '1' ? '冻结' : '激活';
+                    Alertify.confirm(`确定要${text}当前用户吗？`, async (ok) => {
+                      if (ok) {
+                        const msg = this.$Message.loading(`正在${text}`, 0);
+                        let resp = await this.$http.post('/member/change/status', {
+                          memberNo: params.row.memberNo,
+                          status
+                        });
+                        msg();
+                        if (resp.success) {
+                          this.getPrivateCustomerList();
+                        }
+                      }
+                    });
                   }
                 }
               }, params.row.status === '1' ? '冻结' : '激活')

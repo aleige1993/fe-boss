@@ -40,13 +40,6 @@ export default {
           title: '单位名称',
           key: 'companyName'
         },
-        // {
-        //   title: '婚姻关系',
-        //   key: 'marriageStatus',
-        //   render: (h, params) => {
-        //     return h('span', {}, this.enumCode2Name(params.row.marriageStatus, 'MaritalStatusEnum'));
-        //   }
-        // },
         {
           title: '操作',
           key: 'action',
@@ -63,32 +56,16 @@ export default {
                 },
                 on: {
                   click: () => {
-                    this.$router.replace({
-                      path: '/index/customer/modify',
+                    this.$router.push({
+                      path: '/index/customer/detail',
                       query: {
                         id: params.row.spoMemberNo,
                         from: 'detail'
                       }
                     });
-                    this.$router.go(0);
                   }
                 }
               }, '详情'),
-              // h('Button', {
-              //   props: {
-              //     type: 'primary',
-              //     size: 'small'
-              //   },
-              //   style: {
-              //     marginRight: '5px',
-              //     display: this.isFromDetail ? 'none' : ''
-              //   },
-              //   on: {
-              //     click: () => {
-              //       this.show(params.index);
-              //     }
-              //   }
-              // }, '修改'),
               h('Button', {
                 props: {
                   type: 'error',

@@ -16,7 +16,7 @@
     <slot name="topAction"></slot>
     <i-table border :loading="dataLoading" ref="selection" @on-row-dblclick="selectRow" :columns="resultCompanyCustomerColumns" :data="companyCustomerData"></i-table>
     <div class="page-container">
-      <i-page @on-change="jumpPage" :total="40" size="small" show-elevator show-total></i-page>
+      <i-page @on-change="jumpPage" :total="total" size="small" show-elevator show-total></i-page>
     </div>
   </div>
 </template>
@@ -28,6 +28,7 @@ export default {
   data() {
     return {
       dataLoading: false,
+      total: 0,
       searchForm: {
         corpName: '',
         creditCode: '',

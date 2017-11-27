@@ -59,9 +59,18 @@
           this.getSpouseList();
         }
       },
-      async removeSpouse() {
-        // aaa
+      // 删除配偶信息
+      async removeSpouse(spouse) {
+        const msg = this.$Message.loading('正在删除配偶', 0);
+        let resp = this.$http.post('/member/spo/delete', {
+          spoMemberNo: spouse.spoMemberNo
+        });
+        msg();
+        if (resp.success) {
+          this.getSpouseList();
+        }
       },
+      // 获取配偶信息列表
       async getSpouseList() {
         this.$data.listLoading = true;
         let resp = await this.$http.post('/member/spo/query', {
@@ -73,7 +82,7 @@
       deleteSpouse(spouse) {
         Alertify.confirm('确定要删除当前配偶信息吗？', (conf) => {
           if (conf) {
-            this.removeSpouse();
+            this.removeSpouse(spouse);
           }
         });
       }

@@ -1,16 +1,20 @@
 export default {
   methods: {
-    uploadFaceSuccess(res) {
-      alert(res.body.url);
-      this.$data.formData.certFrontUrl = res.body.url;
+    uploadFaceSuccess(res, file, fileList) {
+      this.$data.formData.mbMemberDTO.certFrontUrl = res.body.url;
     },
     uploadBackSuccess(res) {
       // aa
-      this.$data.formData.certBackUrl = res.body.url;
+      this.$data.formData.mbMemberDTO.certBackUrl = res.body.url;
     },
     uploadHandSuccess(res) {
       // aa
-      this.$data.formData.certHandUrl = res.body.url;
+      this.$data.formData.mbMemberDTO.certHandUrl = res.body.url;
+    },
+    uploadError(err, file, fileList) {
+      this.$Notice.error({
+        desc: err
+      });
     },
     selectCompany(row, index) {
       alert(index);
@@ -19,6 +23,12 @@ export default {
       this.$data.formData.mbMemberDTO.certValidDate = val;
     },
     // 户籍地址联动
+    getAddressDropList(code = '') {
+      let data = {
+        regionCode: code
+      };
+      return this.$http.post('/common/region/list', data, false);
+    },
     async censusProvinceChange(val) {
       this.$data.formData.mbMemberDTO.censusProvinceName = val.label;
       let resp = await this.getAddressDropList(val.value);
@@ -63,7 +73,7 @@ export default {
     // 保存信息
     async saveBasicCustomerInfo(data) {
       this.$data.initFormLoading = true;
-      let resp = await this.$http.post('/member/account/insert', data);
+      let resp = await this.$http.post('/member/save', data);
       this.$data.initFormLoading = false;
       if (resp.reCode === '0000') {
         this.$emit('on-submit-success', resp.body);

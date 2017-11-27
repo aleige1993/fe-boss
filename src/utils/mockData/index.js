@@ -5,6 +5,7 @@ import invest from './invest';
 import customerManage from './customer-manage';
 import employerManage from './employer-manage';
 import enumSelectData from './enum-select-data';
+import department from './department';
 
 let ary = [
   {
@@ -61,5 +62,5 @@ let ary = [
     })
   }
 ];
-let result = [...ary, ...menuList, ...product, ...invest, ...customerManage, ...enumSelectData, ...employerManage];
+let result = [...ary, ...menuList, ...product, ...invest, ...customerManage, ...enumSelectData, ...employerManage, ...department];
 export default result;

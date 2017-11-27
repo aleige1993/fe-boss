@@ -4,19 +4,19 @@ export default {
       contactColumns: [
         {
           title: '联系人姓名',
-          key: 'name'
+          key: 'contactsName'
         },
         {
           title: '关系',
-          key: 'relationShip'
+          key: 'relative'
         },
         {
           title: '手机号码',
-          key: 'phone'
+          key: 'contactsMobile'
         },
         {
           title: '联系人类型',
-          key: 'type'
+          key: 'contactType'
         },
         {
           title: '操作',
@@ -34,7 +34,8 @@ export default {
                 },
                 on: {
                   click: () => {
-                    this.show(params.index);
+                    this.$data.addForm = params.row;
+                    this.$data.showAddModal = true;
                   }
                 }
               }, '编辑'),
@@ -46,7 +47,18 @@ export default {
                 },
                 on: {
                   click: () => {
-                    this.remove(params.index);
+                    Alertify.confirm('确定删除这个联系人吗？', async (ok) => {
+                      if (ok) {
+                        const msg = this.$Message.loading('正在删除联系人', 0);
+                        let resp = await this.$http.post('/member/ohter/contacts/delete', {
+                          id: params.row.id
+                        });
+                        msg();
+                        if (resp.success) {
+                          this.getContactList();
+                        }
+                      }
+                    });
                   }
                 }
               }, '删除')
@@ -54,76 +66,54 @@ export default {
           }
         }
       ],
-      contactDatas: [
-        {
-          name: 'Joe Black',
-          relationShip: '情人',
-          phone: '15696544221',
-          type: '客户'
-        }
-      ],
+      contactDatas: [],
       contactBookColumns: [
         {
           title: '联系人姓名',
-          key: 'name'
+          key: 'contactsName'
         },
         {
           title: '邮箱',
-          key: 'email'
+          key: 'contactsEmail'
         },
         {
           title: '电话',
-          key: 'phone'
+          key: 'contactsPhone'
         },
         {
           title: '联系人地址',
-          key: 'address'
+          key: 'contactsAddr'
         },
         {
           title: '联系人备注',
-          key: 'mark'
+          key: 'contactsRemark'
         }
       ],
-      contactBookDatas: [
-        {
-          name: 'Joe Black',
-          email: '62652654@qq.com',
-          phone: '15696544221',
-          address: '阴曹地府128号',
-          mark: '黑白无常的小弟'
-        }
-      ],
+      contactBookDatas: [],
       callInColumns: [
         {
           title: '联系人姓名',
-          key: 'name'
+          key: 'contactsName'
         },
         {
           title: '电话',
-          key: 'phone'
+          key: 'contactsPhone'
         },
         {
           title: '通话时间',
-          key: 'callDate'
+          key: 'gmtCreate'
         },
         {
           title: '通话时长',
-          key: 'callDuration'
+          key: 'callTime'
         },
         {
           title: '通话次数',
-          key: 'callTimes'
+          key: 'callCount'
         }
       ],
-      callInDatas: [
-        {
-          name: '张三',
-          phone: '110110110',
-          callDate: '2017-12-25',
-          callDuration: 3000,
-          callTimes: 100
-        }
-      ]
+      callInDatas: [],
+      callOutDatas: []
     };
   }
 };

@@ -59,6 +59,26 @@ export default [
       }
     )
   },
+  {
+    url: '/member/delete',
+    on: true,
+    resp: {
+      'reCode': '0000',
+      'reMsg': '成功',
+      'success': true,
+      'body': {}
+    }
+  },
+  {
+    url: '/member/change/status',
+    on: true,
+    resp: {
+      'reCode': '0000',
+      'reMsg': '成功',
+      'success': true,
+      'body': {}
+    }
+  },
   //
   {
     url: '/corp/listCorp',
@@ -78,7 +98,13 @@ export default [
               'regDate': '@date',
               'regCapital': '@float(10, 100000)',
               'telephone': '@integer(11)',
-              'status': '@pick(["1", "2", "3"])'
+              'status': '@pick(["1", "2", "3"])',
+              'corpType': '1',
+              'industryType': '1',
+              bizProvinceCode: '1',
+              bizCityCode: '1',
+              bizDistrictCode: '1',
+              bizRoadAddr: '@county(true)'
             }
           ],
           'startIndex': 0,
@@ -120,6 +146,28 @@ export default [
       'reMsg': '成功',
       'success': true
     })
+  },
+  // 添加会员银行卡
+  {
+    url: '/member/account/insert',
+    on: true,
+    resp: {
+      'reCode': '0000',
+      'reMsg': '成功',
+      'success': true,
+      'body': {}
+    }
+  },
+  // 编辑会员银行卡
+  {
+    url: '/member/account/update',
+    on: true,
+    resp: {
+      'reCode': '0000',
+      'reMsg': '成功',
+      'success': true,
+      'body': {}
+    }
   },
   // 根据id查询个人客户
   {
@@ -206,7 +254,7 @@ export default [
   },
   // 保存个人客户
   {
-    url: '/member/account/insert',
+    url: '/member/save',
     on: true,
     resp: {
       'reCode': '0000',
@@ -248,6 +296,17 @@ export default [
       'success': true
     })
   },
+  // 删除配偶
+  {
+    url: '/member/spo/delete',
+    on: true,
+    resp: {
+      'reCode': '0000',
+      'reMsg': '成功了',
+      'success': true,
+      body: {}
+    }
+  },
   // 添加配偶
   {
     url: '/member/spo/save',
@@ -258,5 +317,151 @@ export default [
       'success': true,
       body: {}
     }
+  },
+  // 联系人信心
+  {
+    url: '/member/ohter/contacts/query',
+    on: true,
+    resp: Mock.mock({
+      'reCode': '0000',
+      'reMsg': '成功',
+      'success': true,
+      'body|10': [
+        {
+          'memberNo': '@integer(10)',
+          'gmtModified': '2011-12-12',
+          'createUserCode': '@integer(5)',
+          'modifiedUserCode': '@integer(5)',
+          'contactType': '@pick(["2", "1", "3"])',
+          'id': '@integer(4)',
+          'gmtCreate': '2011-12-12',
+          'contactsName': '@name',
+          'relative': '@pick(["2", "1", "3"])',
+          'contactsMobile': '@integer(11)'
+        }
+      ]
+    })
+  },
+  // 联系人新增
+  {
+    url: '/member/ohter/contacts/insert',
+    on: true,
+    resp: {
+      'reCode': '0000',
+      'reMsg': '成功',
+      'success': true,
+      'body': {}
+    }
+  },
+  // 联系人修改
+  {
+    url: '/member/ohter/contacts/update',
+    on: true,
+    resp: {
+      'reCode': '0000',
+      'reMsg': '成功',
+      'success': true,
+      'body': {}
+    }
+  },
+  // 联系人删除
+  {
+    url: '/member/ohter/contacts/delete',
+    on: true,
+    resp: {
+      'reCode': '0000',
+      'reMsg': '成功',
+      'success': true,
+      'body': {}
+    }
+  },
+  // 电话本
+  {
+    url: '/member/telephone/page',
+    on: true,
+    resp: Mock.mock({
+      'reCode': '0000',
+      'reMsg': '成功',
+      'success': true,
+      'body': {
+        'resultList|10': [
+          {
+            'memberNo': '@integer(10)',
+            'gmtModified': '2011-12-12',
+            'createUserCode': '@integer(5)',
+            'modifiedUserCode': '@integer(5)',
+            'contactType': '@pick(["2", "1", "3"])',
+            'id': '@integer(4)',
+            'gmtCreate': '2011-12-12',
+            'contactsName': '@name',
+            'relative': '@pick(["2", "1", "3"])',
+            'contactsEmail': '@email',
+            'contactsPhone': '@integer(11)',
+            'contactsRemark': 'asdasdas',
+            'contactsAddr': '@county(true)'
+          }
+        ],
+        currentPage: 1,
+        totalNum: 50
+      }
+    })
+  },
+  // 呼入
+  {
+    url: '/member/call/in/page',
+    on: true,
+    resp: Mock.mock({
+      'reCode': '0000',
+      'reMsg': '成功',
+      'success': true,
+      'body': {
+        'resultList|10': [
+          {
+            'memberNo': '@integer',
+            'contactsPhone': '@integer(10)',
+            'gmtModified': '2011-11-11',
+            'serialVersionUID': 1,
+            'createUserCode': '@integer(11)',
+            'callCount': '200',
+            'modifiedUserCode': '',
+            'id': '@integer(5)',
+            'gmtCreate': '2011-11-11',
+            'contactsName': '@name',
+            'callTime': '2011-11-11'
+          }
+        ],
+        currentPage: 1,
+        totalNum: 50
+      }
+    })
+  },
+  // 呼出
+  {
+    url: '/member/call/out/page',
+    on: true,
+    resp: Mock.mock({
+      'reCode': '0000',
+      'reMsg': '成功',
+      'success': true,
+      'body': {
+        'resultList|10': [
+          {
+            'memberNo': '@integer',
+            'contactsPhone': '@integer(10)',
+            'gmtModified': '2011-11-11',
+            'serialVersionUID': 1,
+            'createUserCode': '@integer(11)',
+            'callCount': '200',
+            'modifiedUserCode': '',
+            'id': '@integer(5)',
+            'gmtCreate': '2011-11-11',
+            'contactsName': '@name',
+            'callTime': '2011-11-11'
+          }
+        ],
+        currentPage: 1,
+        totalNum: 50
+      }
+    })
   }
 ];
