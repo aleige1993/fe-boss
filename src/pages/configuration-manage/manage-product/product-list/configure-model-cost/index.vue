@@ -4,7 +4,7 @@
   <div class="form-top-actions">
     <i-button @click="addModal" type="info"><i class="iconfont icon-xinzeng"></i> 新增</i-button>
   </div>
-  <i-table border ref="FyTable" :columns="columns1" :data="data1"></i-table>
+  <i-table :loading="dataLoading" border ref="FyTable" :columns="columns1" :data="data1"></i-table>
   <br>
   <br>
   <div class="text-right">
@@ -13,16 +13,13 @@
   </div>
   <pt-modal title="新增" v-model="showAdd" :width="520">
     <i-form ref="formInModel" :model="formInModel" label-position="left" :label-width="100">
-      <i-form-item class="required" label="费用类型" prop="name">
-        <i-select v-model="formInModel.name" placeholder="请选择">
-          <i-option value="费用类型1">费用类型1</i-option>
-          <i-option value="费用类型2">费用类型2</i-option>
-          <i-option value="费用类型3">费用类型3</i-option>
-          <i-option value="费用类型4">费用类型4</i-option>
+      <i-form-item class="required" label="费用类型" prop="feeTypeNo">
+        <i-select v-model="formInModel.feeTypeNo" placeholder="请选择">
+          <i-option v-for="item in costTypeSelect" :key="item.feeTypeNo" :value="item.feeTypeNo">{{item.feeTypeName}}</i-option>
         </i-select>
       </i-form-item>
-      <i-form-item class="required" label="收取方式" prop="mode">
-        <i-select transfer v-model="formInModel.mode" placeholder="请选择" @on-change="selpro">
+      <i-form-item class="required" label="收取方式" prop="incomeType">
+        <i-select transfer v-model="formInModel.incomeType" placeholder="请选择" @on-change="selpro">
           <!--
           [
             {itemCode:1,itemName:比例},
@@ -32,8 +29,8 @@
           <i-option v-for="item in enumSelectData.get('ReceiveTypeEnum')" :key="item.itemCode" :value="item.itemCode">{{item.itemName}}</i-option>
         </i-select>
       </i-form-item>
-      <i-form-item class="required" label="收支方向" prop="direction">
-        <i-select v-model="formInModel.direction" placeholder="请选择">
+      <i-form-item class="required" label="收支方向" prop="feeType">
+        <i-select v-model="formInModel.feeType" placeholder="请选择">
           <!--{
             'groupKey': 'FeeTypeEnum',
             'items': [
@@ -44,18 +41,21 @@
           <i-option v-for="item in enumSelectData.get('FeeTypeEnum')" :key="item.itemCode" :value="item.itemCode">{{item.itemName}}</i-option>
         </i-select>
       </i-form-item>
-      <i-form-item class="required" label="利率标准" prop="standard" v-if="formInModel.mode === '1'">
-        <i-input placeholder="利率标准" v-model="formInModel.standard">
+      <i-form-item class="required" label="利率标准" prop="ratio" v-if="formInModel.incomeType === '1'">
+        <i-input placeholder="利率标准" v-model="formInModel.ratio">
           <span slot="append">%</span>
         </i-input>
       </i-form-item>
-      <i-form-item class="required" label="固定金额" prop="money" v-if="formInModel.mode === '2'">
-        <i-input placeholder="利率标准" v-model="formInModel.money">
+      <i-form-item class="required" label="固定金额" prop="fixedAmount" v-if="formInModel.incomeType === '2'">
+        <i-input placeholder="利率标准" v-model="formInModel.fixedAmount">
           <span slot="append">元</span>
         </i-input>
       </i-form-item>
       <i-form-item class="text-right">
-        <i-button type="primary" @click="formInSubmit">提交</i-button>
+        <i-button type="primary" @click="formInSubmit" :loading="buttonLoading">
+          <span v-if="!buttonLoading">提交</span>
+          <span v-else>Loading...</span>
+        </i-button>
         <i-button type="ghost" style="margin-left: 8px" @click="formInCancel">取消</i-button>
       </i-form-item>
     </i-form>
@@ -67,61 +67,161 @@
   import PTModal from '@/components/bs-modal';
   import MixinData from './mixin-data';
   export default {
-    name: 'conf-model-fee',
+    name: 'confmodelfee',
     components: {
       'pt-modal': PTModal
     },
+    props: {
+      childMsg: Object
+    },
     mixins: [MixinData],
-    async mounted() {
-      const Vm = this;
-      let response = await this.$http.post('/productFy', {});
-      try {
-        Vm.$data.data1 = response.list;
-      } catch (err) {
-      }
+    data() {
+      return {
+        isAdd: true,
+        showAdd: false,
+        dataLoading: false,
+        buttonLoading: false,
+        costTypeSelect: [], // 费用类型的下拉数据
+        formInModel: {
+          feeTypeNo: '',  // 费用类型编号
+          incomeType: '',  // 收取类型
+          feeTypeName: '',  // 费用类型名称
+          feeType: '',  // 收支方向
+          productName: '',  // 产品名称
+          fixedAmount: '',  // 固定金额
+          productNo: '',  // 产品编号
+          ratio: '',  // 标准比例
+          productId: ''  // 产品ID
+        }
+      };
+    },
+    mounted() {
+      this.getCostSelectData(); // 费用类型的下拉数据
+      this.getPrivateCustomerList();  // 获取模态框列表数据
     },
     methods: {
+      // 获取模态框列表数据
+      async getPrivateCustomerList() {
+        this.$data.dataLoading = true;
+        let productNo = this.childMsg.productNo;
+        let resp = await this.$http.get('/pms/productFeeDetail/queryByProductNo', {
+          productNo: productNo
+        });
+        this.$data.dataLoading = false;
+        if (resp.body.resultList.length !== 0) {
+          this.$data.data1 = resp.body.resultList;
+        } else {
+          this.$Notice.warning({
+            title: '列表没有数据可加载',
+            duration: 2
+          });
+          this.$data.data1 = [];
+        }
+      },
+      // 获取 基础配置-费用类型配置的数据
+      async getCostSelectData() {
+        let SelectResp = await this.$http.get('/pms/cfgFeeType/list', {
+          currentPage: 1,
+          pageSize: 99999
+        });
+        if (SelectResp.body.resultList.length !== 0) {
+          this.$data.costTypeSelect = SelectResp.body.resultList;
+        } else {
+          this.$Notice.warning({
+            title: '基础配置-费用类型：无数据加载',
+            duration: 2
+          });
+        }
+      },
+      getFeeTypeName() {
+        let selectSize = this.$data.costTypeSelect.length;
+        let feeTypeName = '';
+        for (let i = 0; i < selectSize; i++) {
+          if (this.$data.costTypeSelect[i].feeTypeNo === this.$data.formInModel.feeTypeNo) {
+            feeTypeName = this.$data.costTypeSelect[i].feeTypeName;
+          }
+        }
+        return feeTypeName;
+      },
+      // 新增的保存请求方法
+      async addSuBmit() {
+        let feeTypeName = this.getFeeTypeName();
+        let resAdd = await this.$http.post('/pms/productFeeDetail/save', {
+          feeTypeNo: this.$data.formInModel.feeTypeNo,  // 费用类型编号
+          incomeType: this.$data.formInModel.incomeType, // 收取类型
+          feeTypeName: feeTypeName,  // 费用类型名称
+          feeType: this.$data.formInModel.feeType,  // 收支方向
+          productName: this.childMsg.productName,  // 产品名称
+          fixedAmount: this.$data.formInModel.fixedAmount,  // 固定金额
+          productNo: this.childMsg.productNo,  // 产品编号
+          ratio: this.$data.formInModel.ratio,  // 标准比例
+          productId: this.childMsg.id // 产品ID
+        });
+        if (resAdd.success) {
+          this.$data.buttonLoading = false; // 关闭按钮的loading状态
+          this.$Message.success('添加费用类型成功');
+          this.$data.showAdd = false;
+          this.$data.buttonLoading = false;
+          this.getPrivateCustomerList();
+        }
+      },
       addModal() {
         this.$data.isAdd = true;
         this.$data.showAdd = true;   // 增删的模态框
-        let FormName = 'formInModel';
-        this.$refs[FormName].resetFields(); // 重置表单
+        this.$data.formInModel = {};
       },
       setList(row) {
         this.isAdd = false;
         this.$data.showAdd = true;
-        this.formInModel.name = row.name;
-        this.formInModel.mode = row.mode;
-        this.formInModel.direction = row.direction;
-        this.formInModel.standard = row.standard;
-        this.formInModel.money = row.money;
+        this.formInModel = row;
       },
-      remove(index) {
-        Alertify.confirm('确定要删除吗？', (confirm) => {
-          if (confirm) {
-            this.data1.splice(index, 1);
-            // Alertify.alert('确定');
-          } else {}
+      // 修改情况下的提交数据
+      async setSubmit() {
+        let feeTypeName = this.getFeeTypeName();
+        let resModify = await this.$http.post('/pms/productFeeDetail/modify', {
+          feeTypeNo: this.$data.formInModel.feeTypeNo,  // 费用类型编号
+          incomeType: this.$data.formInModel.incomeType, // 收取类型
+          feeTypeName: feeTypeName,  // 费用类型名称
+          feeType: this.$data.formInModel.feeType,  // 收支方向
+          productName: this.childMsg.productName,  // 产品名称
+          fixedAmount: this.$data.formInModel.fixedAmount,  // 固定金额
+          productNo: this.childMsg.productNo,  // 产品编号
+          ratio: this.$data.formInModel.ratio  // 标准比例
+        });
+        if (resModify.success) {
+          this.$data.showAdd = false;
+          this.$data.buttonLoading = false;
+          this.$Message.success('修改费用类型成功');
+          this.getPrivateCustomerList();
+        }
+      },
+      // 删除数据的请求
+      async remove(row) {
+        Alertify.confirm('确定要删除吗？', async (ok) => {
+          if (ok) {
+            let feeTypeNo = row.feeTypeNo;
+            const loadingMsg = this.$Message.loading('删除中...', 0);
+            let respDel = await this.$http.post('/pms/productFeeDetail/remove', {
+              feeTypeNo: feeTypeNo,
+              productNo: this.childMsg.productNo  // 产品编号
+            });
+            if (respDel.success) {
+              loadingMsg();
+              this.$Message.success('删除费用类型成功');
+              this.getPrivateCustomerList();
+            }
+          }
         });
       },
+      // 新增模态框的保存按钮点击事件
       formInSubmit() {
+        this.$data.buttonLoading = true;
+        // 如果是新增
         if (this.isAdd) {
-          this.$data.data1.unshift({
-            id: '01',
-            name: this.$data.formInModel.name,
-            mode: this.$data.formInModel.mode,
-            direction: this.$data.formInModel.direction,
-            standard: this.$data.formInModel.standard,
-            money: this.$data.formInModel.money
-          });
+          this.addSuBmit();
         } else {
-          this.$data.data1[this.listIndex].name = this.$data.formInModel.name;
-          this.$data.data1[this.listIndex].mode = this.$data.formInModel.mode;
-          this.$data.data1[this.listIndex].direction = this.$data.formInModel.direction;
-          this.$data.data1[this.listIndex].standard = this.$data.formInModel.standard;
-          this.$data.data1[this.listIndex].money = this.$data.formInModel.money;
+          this.setSubmit();
         }
-        this.$data.showAdd = false;
       },
       formCancel() {
         this.$emit('notice-cost');// 通知其父组件执行自定义事件“notice-cost”
@@ -133,8 +233,8 @@
       // 在新增状态下 下拉菜单清空相应显示的输入框
       selpro() {
         if (this.$data.isAdd) {
-          this.$data.formInModel.standard = '';
-          this.$data.formInModel.money = '';
+          this.$data.formInModel.ratio = '';
+          this.$data.formInModel.fixedAmount = '';
         }
       }
     }

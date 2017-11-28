@@ -374,7 +374,7 @@
             label="授信释放方式"
             prop="CreditTypeEnum">
             <i-select v-model="formRate.CreditTypeEnum" placeholder="请选择">
-              <i-option v-for="item in enumSelectData.get('CreditFreedTypeEnum')" :key="item.itemCode" :value="item.itemCode">{{item.itemName}}</i-option>
+              <i-option v-for="item in enumSelectData.get('CreditFreedTypeEnum')" :key="item.itemCode" :value="item.itemCode"></i-option>
             </i-select>
           </i-form-item>
         </i-col>
@@ -393,7 +393,7 @@
       <div class="form-top-actions">
         <i-button @click="addModal" type="info"><i class="iconfont icon-xinzeng"></i> 新增</i-button>
       </div>
-      <i-table border ref="proTable" :columns="columns1" :data="data1"></i-table>
+      <i-table border ref="lilvTable" :columns="columns1" :data="data1"></i-table>
       <br>
       <br>
       <i-form-item class="text-right">
@@ -429,20 +429,26 @@
         </i-form-item>
       </i-form>
     </pt-modal>
+    <pt-modal :title="'资方利率'" v-model="zfLilvModel" :width="1200">
+      <zf-lilv-Model></zf-lilv-Model>
+    </pt-modal>
   </div>
 </template>
 
 <script>
   import PTModal from '@/components/bs-modal';
+  import zfLilvModel from './zf-lilv-Model';
   export default {
     name: 'conf-model-lilv',
     components: {
-      'pt-modal': PTModal
+      'pt-modal': PTModal,
+      'zf-lilv-Model': zfLilvModel
     },
     data() {
       return {
         isAdd: true,
         showAdd: false, // 增删的模态框
+        zfLilvModel: false, // 增删的模态框
         formRate: { // 当前的模态框的数据表单
           protype: '',  // 产品类型
           ModelTypeEnum: '',  // 模型设定
@@ -497,7 +503,7 @@
                   },
                   on: {
                     click: () => {
-                      this.setList(params.row);
+                      this.openZF(params.row);
                     }
                   }
                 }, '资方利率'),
@@ -549,13 +555,16 @@
     async mounted() {
       const Vm = this;
       let resp = await this.$http.get('/productLilv', {});
-      console.log(resp);
       try {
         Vm.$data.data1 = resp.list;
       } catch (err) {
       }
     },
     methods: {
+      // 打开资方模态框
+      openZF(row) {
+        this.$data.zfLilvModel = true;
+      },
       addModal() {
         this.$data.isAdd = true;
         this.$data.showAdd = true;   // 增删的模态框

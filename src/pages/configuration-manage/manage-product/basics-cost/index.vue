@@ -19,11 +19,11 @@
         <i-form-item label="费用类型名称" prop="feeTypeName">
           <i-input placeholder="请输入费用类型名称" v-model="formCustom.feeTypeName"></i-input>
         </i-form-item>
-        <i-form-item label="收支方向" prop="feeType">
+        <!--<i-form-item label="收支方向" prop="feeType">
           <i-select v-model="formCustom.feeType">
             <i-option v-for="item in enumSelectData.get('FeeTypeEnum')" :key="item.itemCode" :value="item.itemCode">{{item.itemName}}</i-option>
           </i-select>
-        </i-form-item>
+        </i-form-item>-->
         <i-form-item class="text-right">
           <i-button type="primary" @click="formSubmit" :loading="buttonLoading">
             <span v-if="!buttonLoading">提交</span>
@@ -50,7 +50,6 @@
         isAdd: true,
         dataLoading: false,
         buttonLoading: false,
-        listIndex: Number,
         showAddModal: false,
         currentPage: 1,
         total: 0,
@@ -77,6 +76,7 @@
         });
         this.$data.dataLoading = false;
         if (resp.body.resultList.length !== 0) {
+          console.log(resp.body.resultList);
           this.$data.data1 = resp.body.resultList;
           this.$data.currentPage = resp.body.currentPage;
           this.$data.total = resp.body.totalNum;
@@ -94,7 +94,6 @@
           feeTypeName: this.$data.formCustom.feeTypeName,
           feeType: this.$data.formCustom.feeType
         });
-        console.log(resAdd);
         if (resAdd.success) {
           this.$data.buttonLoading = false; // 关闭按钮的loading状态
           this.$Message.success('添加费用类型成功');
@@ -109,8 +108,6 @@
       addModal() {
         this.isAdd = true;
         this.$data.formCustom = {};
-        const formName = 'formCustom';
-        this.$refs[formName].resetFields();// 重置表单
         this.$data.showAddModal = true;
       },
       // 删除数据的请求

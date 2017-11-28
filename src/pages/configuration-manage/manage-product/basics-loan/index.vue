@@ -65,7 +65,6 @@
           currentPage: this.$data.currentPage,
           pageSize: this.$data.pageSize
         });
-        console.log(resp.body);
         this.$data.dataLoading = false;
         if (resp.body.resultList.length !== 0) {
           this.$data.data1 = resp.body.resultList;
@@ -84,7 +83,6 @@
         let resAdd = await this.$http.post('/pms/cfgLoanDoc/save', {
           loanDocName: this.$data.formCustom.loanDocName
         });
-        console.log(resAdd);
         if (resAdd.success) {
           this.$data.buttonLoading = false; // 关闭按钮的loading状态
           this.$Message.success('添加贷款材料成功');

@@ -3,35 +3,17 @@ export default {
     return {
       columns1: [
         {
-          title: '费用类型ID',
+          title: '资方',
           width: 200,
-          key: 'feeTypeNo'
+          key: 'zf'
         },
         {
-          title: '费用类型名称',
-          key: 'feeTypeName'
+          title: '名义利率(%/年)',
+          key: 'nominal'
         },
         {
-          title: '收取方式',
-          key: 'incomeType',
-          render: (h, params) => {
-            return h('span', {}, this.enumCode2Name(params.row.incomeType, 'ReceiveTypeEnum'));
-          }
-        },
-        {
-          title: '收支方向',
-          key: 'feeType',
-          render: (h, params) => {
-            return h('span', {}, this.enumCode2Name(params.row.feeType, 'FeeTypeEnum'));
-          }
-        },
-        {
-          title: '利率标准(%)',
-          key: 'ratio'
-        },
-        {
-          title: '固定金额(元)',
-          key: 'fixedAmount'
+          title: '实际利率(%/年)',
+          key: 'actual'
         },
         {
           title: '操作',
@@ -61,7 +43,7 @@ export default {
                 },
                 on: {
                   click: () => {
-                    this.remove(params.row);
+                    this.remove(params.index);
                   }
                 }
               }, '删除')
@@ -69,7 +51,18 @@ export default {
           }
         }
       ],
-      data1: []
+      data1: [
+        {
+          zf: '海尔云贷',
+          nominal: 0.15,
+          actual: 0.25
+        },
+        {
+          zf: '海乐行',
+          nominal: 0.2,
+          actual: 0.3
+        }
+      ]
     };
   }
 };
