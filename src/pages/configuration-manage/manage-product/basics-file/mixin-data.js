@@ -6,11 +6,11 @@ export default {
           title: '归档材料ID',
           align: 'center',
           width: 200,
-          key: 'fileId'
+          key: 'finishedDocCode'
         },
         {
           title: '归档材料名称',
-          key: 'fileName'
+          key: 'finishedDocName'
         },
         {
           title: '操作',
@@ -29,7 +29,6 @@ export default {
                 },
                 on: {
                   click: () => {
-                    this.listIndex = params.index;
                     this.setList(params.row);
                   }
                 }
@@ -41,7 +40,7 @@ export default {
                 },
                 on: {
                   click: () => {
-                    this.remove(params.index);
+                    this.remove(params.row);
                   }
                 }
               }, '删除')

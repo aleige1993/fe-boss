@@ -2,7 +2,7 @@ import Mock from 'mockjs';
 export default [
   // 产品配置
   {
-    url: '/manage-product',
+    url: '/pms/product/list',
     on: true,
     resp: Mock.mock({
       'body': {
@@ -12,13 +12,13 @@ export default [
         'resultList|10': [
           {
             'codeId|+1': 1,
-            'proNumber': 'CP1001',
-            'proName|1': ['产品名称1', '产品名称2', '产品名称3', '产品名称4', '产品名称5'],
-            'ProductTypeEnum|1': ['1', '2', '3', '4', '5'],
-            'ProductStatusEnum|1': ['1', '2'],
-            'creationTime': '@DATETIME("yyyy-MM-dd HH:mm:ss")',
-            'updateTime': '@now("yyyy-MM-dd HH:mm:ss")',
-            'Founder': '@name'
+            'productNo': 'CP1001',
+            'productName|1': ['产品名称1', '产品名称2', '产品名称3', '产品名称4', '产品名称5'],
+            'productType|1': ['1', '2', '3', '4', '5'],
+            'status|1': ['1', '2'],
+            'gmtCreate': '@DATETIME("yyyy-MM-dd HH:mm:ss")',
+            'gmtModified': '@now("yyyy-MM-dd HH:mm:ss")',
+            'createUserCode': '@name'
           }
         ],
         'startIndex': 0,
@@ -41,8 +41,8 @@ export default [
         'pageSize': 15,
         'resultList|10': [
           {
-            'loanId|+1': 1,
-            'loanName': /[测试字体]{4,30}/
+            'loanDocCode|+1': 1,
+            'loanDocName': /[测试字体]{4,30}/
           }
         ],
         'startIndex': 0,
@@ -56,8 +56,8 @@ export default [
   },
   // 产品配置-费用类型配置
   {
-    url: '/productCost',
-    on: true,
+    url: '/pms/cfgFeeType/list',
+    on: false,
     resp: Mock.mock({
       'body': {
         'currentPage': 1,
@@ -65,9 +65,9 @@ export default [
         'pageSize': 15,
         'resultList|10': [
           {
-            'costId|+1': 1,
-            'costName': '@name',
-            'costDirection|1': ['收入', '支出']
+            'feeTypeNo|+1': 1,
+            'feeTypeName': '@name',
+            'feeType|1': ['收入', '支出']
           }
         ],
         'startIndex': 0,
@@ -81,8 +81,8 @@ export default [
   },
   // 产品配置-准入规则配置
   {
-    url: '/productRule',
-    on: true,
+    url: '/pms/cfgApproveRule/list',
+    on: false,
     resp: Mock.mock({
       'body': {
         'currentPage': 1,
@@ -90,8 +90,8 @@ export default [
         'pageSize': 15,
         'resultList|10': [
           {
-            'ruleId|+1': 1,
-            'ruleName': /[测试字体]{4,30}/
+            'approveRuleCode|+1': 1,
+            'approveRuleName': /[测试字体]{4,30}/
           }
         ],
         'startIndex': 0,
@@ -105,8 +105,8 @@ export default [
   },
   // 产品配置-车辆材料配置
   {
-    url: '/productCar',
-    on: true,
+    url: '/pms/cfgVehicleDoc/list',
+    on: false,
     resp: Mock.mock({
       'body': {
         'currentPage': 1,
@@ -114,8 +114,8 @@ export default [
         'pageSize': 15,
         'resultList|10': [
           {
-            'carId|+1': 1,
-            'carName': /[测试字体]{4,30}/
+            'vehicleDocName|+1': 1,
+            'vehicleDocCode': /[测试字体]{4,30}/
           }
         ],
         'startIndex': 0,
@@ -129,8 +129,8 @@ export default [
   },
   // 产品配置-归档材料配置
   {
-    url: '/productFile',
-    on: true,
+    url: '/pms/cfgFinishedDoc/list',
+    on: false,
     resp: Mock.mock({
       'body': {
         'currentPage': 1,
@@ -138,16 +138,16 @@ export default [
         'pageSize': 15,
         'resultList|10': [
           {
-            'fileId|+1': 1,
-            'fileName': /[测试字体]{4,30}/
+            'finishedDocCode|+1': 1,
+            'finishedDocName': /[测试字体]{4,30}/
           }
         ],
         'startIndex': 0,
         'totalNum': 100,
         'totalPage': 1
       },
-      reCode: '0',
-      reMsg: '成功',
+      'reCode': '0',
+      'reMsg': '成功',
       'success': true
     })
   },

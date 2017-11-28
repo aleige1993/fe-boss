@@ -12,21 +12,23 @@
     </div>
     <i-table :loading="dataLoading" border ref="selection" :columns="columns1" :data="data1"></i-table>
     <div class="page-container">
-      <i-page :current="currentPage" :total="40" size="small" show-elevator show-total @on-change="jumpPage"></i-page>
+      <i-page :current="currentPage" :total="total" size="small" show-elevator show-total @on-change="jumpPage" :page-size="pageSize"></i-page>
     </div>
-    <pt-modal title="新增" v-model="showAddModal">
+    <pt-modal :title="isAdd ? '新增' : '修改'" v-model="showAddModal">
       <i-form  ref="formCustom" :model="formCustom" label-position="left" :label-width="100">
-        <i-form-item label="费用类型名称" prop="protype">
-          <i-input placeholder="请输入费用类型名称" v-model="formCustom.costName"></i-input>
+        <i-form-item label="费用类型名称" prop="feeTypeName">
+          <i-input placeholder="请输入费用类型名称" v-model="formCustom.feeTypeName"></i-input>
         </i-form-item>
-        <i-form-item label="收支方向" prop="state">
-          <i-select v-model="formCustom.costDirection">
-            <i-option value="收入">收入</i-option>
-            <i-option value="支出">支出</i-option>
+        <i-form-item label="收支方向" prop="feeType">
+          <i-select v-model="formCustom.feeType">
+            <i-option v-for="item in enumSelectData.get('FeeTypeEnum')" :key="item.itemCode" :value="item.itemCode">{{item.itemName}}</i-option>
           </i-select>
         </i-form-item>
         <i-form-item class="text-right">
-          <i-button type="primary" @click="formSubmit">提交</i-button>
+          <i-button type="primary" @click="formSubmit" :loading="buttonLoading">
+            <span v-if="!buttonLoading">提交</span>
+            <span v-else>Loading...</span>
+          </i-button>
           <i-button type="ghost" @click="handleCancel" style="margin-left: 8px">取消</i-button>
         </i-form-item>
       </i-form>
@@ -47,13 +49,15 @@
       return {
         isAdd: true,
         dataLoading: false,
+        buttonLoading: false,
         listIndex: Number,
         showAddModal: false,
         currentPage: 1,
         total: 0,
+        pageSize: 15,
         formCustom: {
-          costName: '',
-          textarea: ''
+          feeTypeName: '',
+          feeType: ''
         }
       };
     },
@@ -61,58 +65,102 @@
       this.getPrivateCustomerList();
     },
     methods: {
+      // 查询列表数据
       async getPrivateCustomerList(page) {
         this.$data.dataLoading = true;
         if (page) {
           this.$data.currentPage = page;
         }
-        let resp = await this.$http.get('/productCost', {});
+        let resp = await this.$http.get('/pms/cfgFeeType/list', {
+          currentPage: this.$data.currentPage,
+          pageSize: this.$data.pageSize
+        });
         this.$data.dataLoading = false;
-        this.$data.data1 = resp.body.resultList;
-        this.$data.currentPage = resp.body.currentPage;
-        this.$data.total = resp.body.totalNum;
+        if (resp.body.resultList.length !== 0) {
+          this.$data.data1 = resp.body.resultList;
+          this.$data.currentPage = resp.body.currentPage;
+          this.$data.total = resp.body.totalNum;
+        } else {
+          this.$Notice.open({
+            title: '没有数据可加载',
+            duration: 2
+          });
+          this.$data.data1 = [];
+        }
       },
-      jumpPage() {
-        this.getPrivateCustomerList();
+      // 新增的保存请求方法
+      async addSuBmit() {
+        let resAdd = await this.$http.post('/pms/cfgFeeType/save', {
+          feeTypeName: this.$data.formCustom.feeTypeName,
+          feeType: this.$data.formCustom.feeType
+        });
+        console.log(resAdd);
+        if (resAdd.success) {
+          this.$data.buttonLoading = false; // 关闭按钮的loading状态
+          this.$Message.success('添加费用类型成功');
+          this.$data.showAddModal = false;
+          this.$data.buttonLoading = false;
+          this.getPrivateCustomerList();
+        }
+      },
+      jumpPage(page) {
+        this.getPrivateCustomerList(page);
       },
       addModal() {
+        this.isAdd = true;
+        this.$data.formCustom = {};
+        const formName = 'formCustom';
+        this.$refs[formName].resetFields();// 重置表单
         this.$data.showAddModal = true;
       },
-      remove(index) {
-        Alertify.confirm('确定要删除吗？', (confirm) => {
-          if (confirm) {
-            this.data1.splice(index, 1);
-            // Alertify.alert('确定');
-          } else {}
+      // 删除数据的请求
+      async remove(row) {
+        Alertify.confirm('确定要删除吗？', async (ok) => {
+          if (ok) {
+            let feeTypeNo = row.feeTypeNo;
+            const loadingMsg = this.$Message.loading('删除中...', 0);
+            let respDel = await this.$http.get('/pms/cfgFeeType/remove', {
+              feeTypeNo: feeTypeNo
+            });
+            if (respDel.success) {
+              loadingMsg();
+              this.$Message.success('删除费用类型成功');
+              this.getPrivateCustomerList(1);
+            }
+          }
         });
       },
       setList(row) {
         this.isAdd = false;
         this.$data.showAddModal = true;
-        this.formCustom.costName = row.costName;
-        this.formCustom.costDirection = row.costDirection;
+        this.formCustom = row;
       },
-      formSubmit() {
-        if (this.isAdd) {
-          this.$data.data1.unshift({
-            loanId: '003',
-            costName: this.$data.formCustom.costName,
-            costDirection: this.$data.formCustom.costDirection
-          });
+      // 修改情况下的提交数据
+      async setSubmit() {
+        let resModify = await this.$http.post('/pms/cfgFeeType/modify', {
+          feeTypeName: this.$data.formCustom.feeTypeName,
+          feeType: this.$data.formCustom.feeType,
+          feeTypeNo: this.$data.formCustom.feeTypeNo
+        });
+        if (resModify.success) {
           this.$data.showAddModal = false;
-        } else {
-          this.$data.data1[this.listIndex].costName = this.$data.formCustom.costName;
-          this.$data.data1[this.listIndex].costDirection = this.$data.formCustom.costDirection;
-          this.$data.showAddModal = false;
+          this.$data.buttonLoading = false;
+          this.$Message.success('修改费用类型成功');
+          this.getPrivateCustomerList();
         }
-        this.formReset();
+      },
+      // 新增模态框的保存按钮点击事件
+      formSubmit() {
+        this.$data.buttonLoading = true;
+        // 如果是新增
+        if (this.isAdd) {
+          this.addSuBmit();
+        } else {
+          this.setSubmit();
+        }
       },
       handleCancel() {
         this.$data.showAddModal = false;
-      },
-      formReset() {
-        this.formCustom.costName = '';
-        this.formCustom.costDirection = '';
       }
     }
   };

@@ -5,11 +5,11 @@ export default {
         {
           title: '车辆材料ID',
           align: 'center',
-          key: 'carId'
+          key: 'vehicleDocCode'
         },
         {
           title: '车辆材料名称',
-          key: 'carName'
+          key: 'vehicleDocName'
         },
         {
           title: '操作',
@@ -28,7 +28,6 @@ export default {
                 },
                 on: {
                   click: () => {
-                    this.listIndex = params.index;
                     this.setList(params.row);
                   }
                 }
@@ -40,7 +39,7 @@ export default {
                 },
                 on: {
                   click: () => {
-                    this.remove(params.index);
+                    this.remove(params.row);
                   }
                 }
               }, '删除')

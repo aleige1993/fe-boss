@@ -32,13 +32,13 @@
     </div>
     <i-table highlight-row border :loading="dataLoading" ref="proTable" :columns="columns1" :data="data1" @on-current-change="radioFun"></i-table>
     <div class="page-container">
-      <i-page :total="total" :page-size="15" :current="currentPage" @on-change="jumpPage" size="small" show-elevator show-total></i-page>
+      <i-page :total="total" :page-size="pageSize" :current="currentPage" @on-change="jumpPage" size="small" show-elevator show-total></i-page>
     </div>
     <!--新增产品弹窗-->
-    <pt-modal title="添加产品" v-model="showAddModal" :width="600">
+    <pt-modal :title="isAdd ? '新增' : '修改'" v-model="showAddModal" :width="600">
       <i-form ref="formCustom" :model="formCustom" label-position="left" :label-width="100">
-        <i-form-item class="required" label="产品类别" prop="ProductTypeEnum">
-          <i-select placeholder="请选择" v-model="formCustom.ProductTypeEnum">
+        <i-form-item class="required" label="产品类别" prop="productType">
+          <i-select placeholder="请选择" v-model="formCustom.productType">
             <!--
           {
           'groupKey': 'ProductTypeEnum',
@@ -69,11 +69,11 @@
             <i-option v-for="item in enumSelectData.get('ProductTypeEnum')" :key="item.itemCode" :value="item.itemCode">{{item.itemName}}</i-option>
           </i-select>
         </i-form-item>
-        <i-form-item class="required" label="产品名称" prop="proname">
-          <i-input placeholder="请输入产品名称" v-model="formCustom.proname"></i-input>
+        <i-form-item class="required" label="产品名称" prop="productName">
+          <i-input placeholder="请输入产品名称" v-model="formCustom.productName"></i-input>
         </i-form-item>
-        <i-form-item label="状态" prop="state">
-          <i-select v-model="formCustom.ProductStatusEnum">
+        <i-form-item label="状态" prop="status">
+          <i-select v-model="formCustom.status">
             <!--{
               'groupKey': 'ProductStatusEnum',
               'items': [
@@ -84,17 +84,20 @@
             <i-option v-for="item in enumSelectData.get('ProductStatusEnum')" :key="item.itemCode" :value="item.itemCode">{{item.itemName}}</i-option>
           </i-select>
         </i-form-item>
-        <i-form-item label="适用流程" prop="process">
-          <i-select v-model="formCustom.process">
+        <i-form-item label="适用流程" prop="flowName">
+          <i-select v-model="formCustom.flowName">
             <i-option value="流程一">流程一</i-option>
             <i-option value="流程二">流程二</i-option>
           </i-select>
         </i-form-item>
-        <i-form-item class="required" label="产品说明" prop="explain">
-          <i-input v-model="formCustom.explain" type="textarea" :autosize="{minRows: 2,maxRows: 5}" placeholder="请输入产品说明..."></i-input>
+        <i-form-item class="required" label="产品说明" prop="remark">
+          <i-input v-model="formCustom.remark" type="textarea" :autosize="{minRows: 2,maxRows: 5}" placeholder="请输入产品说明..."></i-input>
         </i-form-item>
         <i-form-item class="text-right">
-          <i-button type="primary" @click="formSubmit">提交</i-button>
+          <i-button type="primary" @click="formSubmit"> :loading="buttonLoading">
+            <span v-if="!buttonLoading">提交</span>
+            <span v-else>Loading...</span>
+          </i-button>
           <i-button type="ghost" style="margin-left: 8px" @click="formReset('formCustom')">重置</i-button>
         </i-form-item>
       </i-form>
@@ -145,6 +148,7 @@
       return {
         isAdd: true,
         dataLoading: false,
+        buttonLoading: false,
         showAddModal: false,
         isClickRow: false,        // 是否已经选择了某一行
         LlShowModel: false,           // 利率方案配置弹窗
@@ -155,6 +159,7 @@
         listIndex: Number,
         clickRow: {},
         total: 0,
+        pageSize: 4,
         currentPage: 1,
         formSearch: {
           name: '',
@@ -163,31 +168,153 @@
         },
         // 列表“新增按钮”的表单
         formCustom: {
-          ProductTypeEnum: '',
-          proname: '',
-          ProductStatusEnum: '',
-          process: '',
-          explain: ''
+          flowCode: '', // 适用流程编号
+          remark: '', // 备注
+          flowName: '', // 适用流程名称
+          productNo: '', // 产品编号
+          productNmae: '',  // 产品名称
+          productType: '',  // 产品类型
+          status: ''  // 产品状态
         }
       };
     },
     methods: {
+      // 查询列表数据
       async getPrivateCustomerList(page) {
         this.$data.dataLoading = true;
         if (page) {
-          this.$data.searchForm.currentPage = page;
+          this.$data.currentPage = page;
         }
-        let resp = await this.$http.get('/manage-product', this.$data.searchForm);
+        let resp = await this.$http.get('/pms/product/list', {
+          currentPage: this.$data.currentPage,
+          pageSize: this.$data.pageSize
+        });
         this.$data.dataLoading = false;
-        this.$data.data1 = resp.body.resultList;
-        this.$data.currentPage = resp.body.currentPage;
-        this.$data.total = resp.body.totalNum;
+        if (resp.body.resultList.length !== 0) {
+          this.$data.data1 = resp.body.resultList;
+          this.$data.currentPage = resp.body.currentPage;
+          this.$data.total = resp.body.totalNum;
+        } else {
+          this.$Notice.open({
+            title: '没有数据可加载',
+            duration: 2
+          });
+          this.$data.data1 = [];
+        }
       },
-      jumpPage() {
-        this.getPrivateCustomerList();
+      // 新增的保存请求方法
+      async addSuBmit() {
+        let resAdd = await this.$http.post('/pms/product/save', {
+          flowCode: this.$data.formCustom.flowCode,
+          remark: this.$data.formCustom.remark,
+          flowName: this.$data.formCustom.flowName,
+          productType: this.$data.formCustom.productType,
+          status: this.$data.formCustom.status
+        });
+        if (resAdd.success) {
+          this.$data.buttonLoading = false; // 关闭按钮的loading状态
+          this.$Message.success('新增产品成功');
+          this.$data.showAddModal = false;
+          this.$data.buttonLoading = false;
+          this.getPrivateCustomerList();
+        }
+      },
+      jumpPage(page) {
+        this.getPrivateCustomerList(page);
       },
       search() {
         this.getPrivateCustomerList();
+      },
+      addModal() {
+        this.isAdd = true;
+        this.formReset('formCustom');
+        this.$data.formCustom = {};
+        this.$data.showAddModal = true;
+      },
+      setList(row) {
+        this.isAdd = false;
+        this.$data.showAddModal = true;
+        this.formCustom = row;
+      },
+      // 修改情况下的提交数据
+      async setSubmit() {
+        let resModify = await this.$http.post('/pms/product/modify', {
+          flowCode: this.$data.formCustom.flowCode, // 适用流程编号
+          remark: this.$data.formCustom.remark, // 备注
+          flowName: this.$data.formCustom.flowName, // 适用流程名称
+          productNo: this.$data.formCustom.productNo, // 产品编号
+          productNmae: this.$data.formCustom.productNmae,  // 产品名称
+          productType: this.$data.formCustom.productType,  // 产品类型
+          status: this.$data.formCustom.status  // 产品状态
+        });
+        if (resModify.success) {
+          this.$data.showAddModal = false;
+          this.$data.buttonLoading = false;
+          this.$Message.success('修改产品成功');
+          this.getPrivateCustomerList();
+        }
+      },
+      // 删除数据的请求
+      async remove(row) {
+        Alertify.confirm('确定要删除吗？', async (ok) => {
+          if (ok) {
+            let productNo = row.productNo;
+            const loadingMsg = this.$Message.loading('删除中...', 0);
+            let respDel = await this.$http.get('/pms/product/remove', {
+              productNo
+            });
+            if (respDel.success) {
+              loadingMsg();
+              this.$Message.success('删除产品成功');
+              this.getPrivateCustomerList(1);
+            }
+          }
+        });
+      },
+      // 新增模态框的保存按钮点击事件
+      formSubmit() {
+        this.$data.buttonLoading = true;
+        // 如果是新增
+        if (this.isAdd) {
+          this.addSuBmit();
+        } else {
+          this.setSubmit();
+        }
+      },
+      // 重置表单
+      formReset(name) {
+        this.$refs[name].resetFields();
+      },
+      // 单选每一行时出触发
+      radioFun(currentRow, oldCurrentRow) {
+        this.$data.clickRow = currentRow;
+        if (JSON.stringify(this.$data.clickRow) === '{}') {
+          this.$data.isClickRow = false;
+        }
+        this.$data.isClickRow = true;
+      },
+      // 取消选中行的选中状态
+      handleClearCurrentRow() {
+        this.$refs.proTable.clearCurrentRow();
+        this.$data.isClickRow = false;
+        this.$data.clickRow = {};
+      },
+      // 点击配置按钮时
+      clickRowedFun() {
+        if (JSON.stringify(this.$data.clickRow) === '{}') {
+          this.$Notice.open({
+            title: '请先选择需要配置的产品',
+            duration: 2
+          });
+          return false;
+        }
+        return true;
+      },
+      // 打开利率配置弹窗
+      lilvClick() {
+        if (this.clickRowedFun()) {
+          this.$data.LlShowModel = true;
+        }
       },
       // 打开费用配置弹窗
       feiyClick() {
@@ -232,75 +359,6 @@
       // 归档材料配置弹窗传参
       noticeFileFun() {
         this.$data.FileShowModal = false;
-      },
-      addModal() {
-        this.$data.showAddModal = true;
-      },
-      remove(index) {
-        Alertify.confirm('确定要删除吗？', (confirm) => {
-          if (confirm) {
-            this.data1.splice(index, 1);
-          } else {}
-        });
-      },
-      setList(row) {
-        this.isAdd = false;
-        this.$data.showAddModal = true;
-        this.formCustom.proname = row.proName;
-        this.formCustom.protype = row.proType;
-        this.formCustom.ProductStatusEnum = row.ProductStatusEnum;
-      },
-      formSubmit() {
-        if (this.isAdd) {
-          this.$data.data1.unshift({
-            proNumber: '003',
-            proName: this.$data.formCustom.proname,
-            proType: this.$data.formCustom.protype,
-            ProductStatusEnum: this.$data.formCustom.ProductStatusEnum,
-            creationTime: 'yyyy-MM-dd HH:mm:ss',
-            updateTime: this.getNowFormatDate()
-          });
-        } else {
-          this.$data.data1[this.listIndex].proName = this.$data.formCustom.proname;
-          this.$data.data1[this.listIndex].proType = this.$data.formCustom.protype;
-          this.$data.data1[this.listIndex].ProductStatusEnum = this.$data.formCustom.ProductStatusEnum;
-        }
-        this.$data.showAddModal = false;
-        this.formReset('formCustom');
-      },
-      formReset(name) {
-        this.$refs[name].resetFields(); // 重置表单
-      },
-      // 单选每一行时出触发
-      radioFun(currentRow, oldCurrentRow) {
-        this.$data.clickRow = currentRow;
-        if (JSON.stringify(this.$data.clickRow) === '{}') {
-          this.$data.isClickRow = false;
-        }
-        this.$data.isClickRow = true;
-      },
-      // 取消选中行的选中状态
-      handleClearCurrentRow() {
-        this.$refs.proTable.clearCurrentRow();
-        this.$data.isClickRow = false;
-        this.$data.clickRow = {};
-      },
-      // 点击配置按钮时
-      clickRowedFun() {
-        if (JSON.stringify(this.$data.clickRow) === '{}') {
-          this.$Notice.open({
-            title: '请先选择需要配置的产品',
-            duration: 2
-          });
-          return false;
-        }
-        return true;
-      },
-      // 打开利率配置弹窗
-      lilvClick() {
-        if (this.clickRowedFun()) {
-          this.$data.LlShowModel = true;
-        }
       }
     },
     mounted() {
