@@ -10,8 +10,8 @@
     </div>
     <div class="search-form-container">
       <i-form inline label-position="left" ref="formSearch" :model="formSearch">
-        <i-form-item prop="name" label="产品名称" :label-width="100">
-          <i-input type="text" placeholder="产品名称" v-model="formSearch.name"></i-input>
+        <i-form-item prop="productName" label="产品名称" :label-width="100">
+          <i-input type="text" placeholder="产品名称" v-model="formSearch.productName"></i-input>
         </i-form-item>
         <i-form-item>
           <i-button @click="search" type="primary">
@@ -86,19 +86,19 @@
         </i-form-item>
         <i-form-item label="适用流程" prop="flowName">
           <i-select v-model="formCustom.flowName">
-            <i-option value="流程一">流程一</i-option>
-            <i-option value="流程二">流程二</i-option>
+            <i-option value="1">流程一</i-option>
+            <i-option value="2">流程二</i-option>
           </i-select>
         </i-form-item>
         <i-form-item class="required" label="产品说明" prop="remark">
           <i-input v-model="formCustom.remark" type="textarea" :autosize="{minRows: 2,maxRows: 5}" placeholder="请输入产品说明..."></i-input>
         </i-form-item>
         <i-form-item class="text-right">
-          <i-button type="primary" @click="formSubmit"> :loading="buttonLoading">
+          <i-button type="primary" @click="formSubmit" :loading="buttonLoading">
             <span v-if="!buttonLoading">提交</span>
             <span v-else>Loading...</span>
           </i-button>
-          <i-button type="ghost" style="margin-left: 8px" @click="formReset('formCustom')">重置</i-button>
+          <i-button type="ghost" style="margin-left: 8px" @click="formCancel">取消</i-button>
         </i-form-item>
       </i-form>
     </pt-modal>
@@ -151,7 +151,7 @@
         buttonLoading: false,
         showAddModal: false,
         isClickRow: false,        // 是否已经选择了某一行
-        LlShowModel: false,           // 利率方案配置弹窗
+        LlShowModel: true,           // 利率方案配置弹窗
         FyShowModal: false,           // 费用收取配置弹窗
         LoanShowModal: false,         // 贷款材料配置弹窗
         RuleShowModal: false,         // 准入规则配置弹窗
@@ -159,10 +159,10 @@
         listIndex: Number,
         clickRow: {},
         total: 0,
-        pageSize: 4,
+        pageSize: 10,
         currentPage: 1,
         formSearch: {
-          name: '',
+          productName: '',
           currentPage: 1,
           pageSize: 15
         },
@@ -172,7 +172,7 @@
           remark: '', // 备注
           flowName: '', // 适用流程名称
           productNo: '', // 产品编号
-          productNmae: '',  // 产品名称
+          productName: '',  // 产品名称
           productType: '',  // 产品类型
           status: ''  // 产品状态
         }
@@ -183,19 +183,22 @@
       async getPrivateCustomerList(page) {
         this.$data.dataLoading = true;
         if (page) {
+          this.$data.formSearch.currentPage = page;
           this.$data.currentPage = page;
         }
         let resp = await this.$http.get('/pms/product/list', {
           currentPage: this.$data.currentPage,
-          pageSize: this.$data.pageSize
+          pageSize: this.$data.pageSize,
+          productName: this.$data.formSearch.productName
         });
+        console.log(resp);
         this.$data.dataLoading = false;
         if (resp.body.resultList.length !== 0) {
           this.$data.data1 = resp.body.resultList;
           this.$data.currentPage = resp.body.currentPage;
           this.$data.total = resp.body.totalNum;
         } else {
-          this.$Notice.open({
+          this.$Notice.warning({
             title: '没有数据可加载',
             duration: 2
           });
@@ -209,6 +212,7 @@
           remark: this.$data.formCustom.remark,
           flowName: this.$data.formCustom.flowName,
           productType: this.$data.formCustom.productType,
+          productName: this.$data.formCustom.productName,
           status: this.$data.formCustom.status
         });
         if (resAdd.success) {
@@ -227,7 +231,6 @@
       },
       addModal() {
         this.isAdd = true;
-        this.formReset('formCustom');
         this.$data.formCustom = {};
         this.$data.showAddModal = true;
       },
@@ -243,10 +246,11 @@
           remark: this.$data.formCustom.remark, // 备注
           flowName: this.$data.formCustom.flowName, // 适用流程名称
           productNo: this.$data.formCustom.productNo, // 产品编号
-          productNmae: this.$data.formCustom.productNmae,  // 产品名称
+          productName: this.$data.formCustom.productName,  // 产品名称
           productType: this.$data.formCustom.productType,  // 产品类型
           status: this.$data.formCustom.status  // 产品状态
         });
+        console.log(this.$data.formCustom.productName);
         if (resModify.success) {
           this.$data.showAddModal = false;
           this.$data.buttonLoading = false;
@@ -261,7 +265,7 @@
             let productNo = row.productNo;
             const loadingMsg = this.$Message.loading('删除中...', 0);
             let respDel = await this.$http.get('/pms/product/remove', {
-              productNo
+              productNo: productNo
             });
             if (respDel.success) {
               loadingMsg();
@@ -281,9 +285,9 @@
           this.setSubmit();
         }
       },
-      // 重置表单
-      formReset(name) {
-        this.$refs[name].resetFields();
+      // 取消
+      formCancel(name) {
+        this.$data.showAddModal = false;
       },
       // 单选每一行时出触发
       radioFun(currentRow, oldCurrentRow) {
@@ -302,7 +306,7 @@
       // 点击配置按钮时
       clickRowedFun() {
         if (JSON.stringify(this.$data.clickRow) === '{}') {
-          this.$Notice.open({
+          this.$Notice.error({
             title: '请先选择需要配置的产品',
             duration: 2
           });

@@ -534,7 +534,7 @@ export default [
             }
           ]
         }, // 年模型 end
-        // 车辆类型
+        // 车类
         {
           'groupKey': 'BizTypeEnum',
           'items': [
@@ -547,7 +547,7 @@ export default [
               'itemName': '二手车'
             }
           ]
-        }, // 车辆类型 end
+        }, // 车类 end
         // 授信释放方式
         {
           'groupKey': 'CreditFreedTypeEnum',

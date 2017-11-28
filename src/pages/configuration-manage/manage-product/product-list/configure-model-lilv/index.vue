@@ -338,14 +338,20 @@
           </i-form-item>
         </i-col>
         <!--个人单户额度-->
-        <i-col span="16">
+        <i-col span="16" class-name="col-inline">
           <i-form-item
             :rules="{required: true, message: '个人单户额度不能为空', trigger: 'blur'}"
             label="个人单户额度"
-            prop="[protype1, protype2]">
+            prop="protype1">
             <span>不足</span>
             <i-input placeholder="" v-model="formRate.protype1" style="width: 80px"></i-input>
             <span>天，按实际发生天数收，否则整月收！最低收</span>
+          </i-form-item>
+          <i-form-item
+            :rules="{required: true, message: '个人单户额度不能为空', trigger: 'blur'}"
+            label=""
+            style="margin-left: -120px;"
+            prop="protype2">
             <i-input placeholder="" v-model="formRate.protype2" style="width: 80px"></i-input>
             <span>天利息。</span>
           </i-form-item>
@@ -357,7 +363,7 @@
             label="保证金释放方式"
             prop="protype">
             <i-select v-model="formRate.FreedTypeEnum" placeholder="请选择">
-              <i-option v-for="item in enumSelectData.get('CreditFreedTypeEnum')" :key="item.itemCode" :value="item.itemCode">{{item.itemName}}</i-option>
+              <i-option v-for="item in enumSelectData.get('FreedTypeEnum')" :key="item.itemCode" :value="item.itemCode">{{item.itemName}}</i-option>
             </i-select>
           </i-form-item>
         </i-col>
@@ -368,7 +374,18 @@
             label="授信释放方式"
             prop="CreditTypeEnum">
             <i-select v-model="formRate.CreditTypeEnum" placeholder="请选择">
-              <i-option v-for="item in enumSelectData.get('FreedTypeEnum')" :key="item.itemCode" :value="item.itemCode">{{item.itemName}}</i-option>
+              <i-option v-for="item in enumSelectData.get('CreditFreedTypeEnum')" :key="item.itemCode" :value="item.itemCode">{{item.itemName}}</i-option>
+            </i-select>
+          </i-form-item>
+        </i-col>
+        <!--是否海乐行垫付-->
+        <i-col span="8">
+          <i-form-item
+            :rules="{required: true, message: '是否海乐行垫付不能为空', trigger: 'change'}"
+            label="是否海乐行垫付"
+            prop="YesNoEnum">
+            <i-select v-model="formRate.YesNoEnum" placeholder="请选择">
+              <i-option v-for="item in enumSelectData.get('YesNoEnum')" :key="item.itemCode" :value="item.itemCode">{{item.itemName}}</i-option>
             </i-select>
           </i-form-item>
         </i-col>
@@ -384,23 +401,26 @@
         <i-button type="ghost" style="margin-left: 8px" @click="formCancel">取消</i-button>
       </i-form-item>
     </i-form>
-    <pt-modal title="新增" v-model="showAdd" :width="520">
+    <pt-modal :title="isAdd ? '新增' : '修改'" v-model="showAdd" :width="520">
       <i-form ref="formInModel" :model="formInModel" label-position="left" :label-width="100">
-        <i-form-item class="required" label="车类" prop="protype">
+        <i-form-item label="车类" prop="protype">
           <i-select v-model="formInModel.car" placeholder="请选择">
-            <i-option value="轿车">轿车</i-option>
-            <i-option value="轻卡">轻卡</i-option>
-            <i-option value="微卡">微卡</i-option>
-            <i-option value="SUV">SUV</i-option>
+            <i-option v-for="item in enumSelectData.get('BizTypeEnum')" :key="item.itemCode" :value="item.itemCode">{{item.itemName}}</i-option>
           </i-select>
         </i-form-item>
-        <i-form-item class="required" label="期限" prop="protype">
+        <i-form-item label="期限" prop="month">
           <i-input placeholder="期限" v-model="formInModel.month">
+            <span slot="append">月</span>
           </i-input>
         </i-form-item>
-        <i-form-item class="required" label="利率标准" prop="protype">
-          <i-input placeholder="利率标准" v-model="formInModel.rate">
-            <span slot="append">%</span>
+        <i-form-item label="名义利率" prop="nominal">
+          <i-input placeholder="名义利率" v-model="formInModel.nominal">
+            <span slot="append">%/年</span>
+          </i-input>
+        </i-form-item>
+        <i-form-item label="实际利率" prop="actual">
+          <i-input placeholder="实际利率" v-model="formInModel.actual">
+            <span slot="append">%/年</span>
           </i-input>
         </i-form-item>
         <i-form-item class="text-right">
@@ -422,7 +442,6 @@
     data() {
       return {
         isAdd: true,
-        listIndex: Number,
         showAdd: false, // 增删的模态框
         formRate: { // 当前的模态框的数据表单
           protype: '',  // 产品类型
@@ -435,14 +454,13 @@
           FreedTypeEnum: '',  // 保证金释放方式
           CreditTypeEnum: '',  // 授信释放方式
           RepaymentPeriodEnum: '', // 还款周期
-          YesNoEnum: '',
           RepaymentRuleEnum: '' // 还款日规则
         },
         formInModel: {  // 增删的模态框的数据表单
-          term: '',
-          standard: '',
-          protype1: '',
-          protype2: ''
+          car: '',
+          month: '',
+          nominal: '',
+          actual: ''
         },
         columns1: [
           {
@@ -455,8 +473,12 @@
             key: 'month'
           },
           {
-            title: '贷款利率(%)',
-            key: 'rate'
+            title: '名义利率(%/年)',
+            key: 'nominal'
+          },
+          {
+            title: '实际利率(%/年)',
+            key: 'actual'
           },
           {
             title: '操作',
@@ -475,7 +497,20 @@
                   },
                   on: {
                     click: () => {
-                      this.listIndex = params.index;
+                      this.setList(params.row);
+                    }
+                  }
+                }, '资方利率'),
+                h('Button', {
+                  props: {
+                    type: 'primary',
+                    size: 'small'
+                  },
+                  style: {
+                    marginRight: '5px'
+                  },
+                  on: {
+                    click: () => {
                       this.setList(params.row);
                     }
                   }
@@ -495,14 +530,28 @@
             }
           }
         ],
-        data1: []
+        data1: [
+          {
+            car: '一手车',
+            month: 3,
+            nominal: 0.15,
+            actual: 0.25
+          },
+          {
+            car: '二手车',
+            month: 4,
+            nominal: 0.2,
+            actual: 0.3
+          }
+        ]
       };
     },
     async mounted() {
       const Vm = this;
-      let response = await this.$http.post('/productLilv', {});
+      let resp = await this.$http.get('/productLilv', {});
+      console.log(resp);
       try {
-        Vm.$data.data1 = response.list;
+        Vm.$data.data1 = resp.list;
       } catch (err) {
       }
     },
@@ -540,9 +589,9 @@
             rate: this.$data.formInModel.rate
           });
         } else {
-          this.$data.data1[this.listIndex].car = this.$data.formInModel.car;
+          /*this.$data.data1[this.listIndex].car = this.$data.formInModel.car;
           this.$data.data1[this.listIndex].month = this.$data.formInModel.month;
-          this.$data.data1[this.listIndex].rate = this.$data.formInModel.rate;
+          this.$data.data1[this.listIndex].rate = this.$data.formInModel.rate;*/
         }
         this.$data.showAdd = false;
       },
@@ -561,5 +610,11 @@
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style lang="scss" scoped>
-
+#conf-model-lilv {
+  & .col-inline {
+    & .ivu-form-item {
+      display: inline-block;
+    }
+  }
+}
 </style>

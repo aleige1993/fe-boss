@@ -81,7 +81,7 @@
           this.$data.currentPage = resp.body.currentPage;
           this.$data.total = resp.body.totalNum;
         } else {
-          this.$Notice.open({
+          this.$Notice.warning({
             title: '没有数据可加载',
             duration: 2
           });
