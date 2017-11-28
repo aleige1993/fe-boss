@@ -4,31 +4,31 @@ export default {
       currentInfoColumns: [
         {
           title: '项目编号',
-          key: 'contactNo'
+          key: 'orderNo'
         },
         {
           title: '项目金额',
-          key: 'contactNo'
+          key: 'orderAmt'
         },
         {
           title: '开始时间',
-          key: 'contactNo'
+          key: 'startDate'
         },
         {
           title: '结束时间',
-          key: 'contactNo'
+          key: 'endDate'
         },
         {
           title: '本金逾期金额',
-          key: 'contactNo'
+          key: 'capitalOverdueAmt'
         },
         {
           title: '利息逾期金额',
-          key: 'contactNo'
+          key: 'accrualOverdueAmt'
         },
         {
           title: '状态',
-          key: 'contactNo'
+          key: 'status'
         },
         {
           title: '操作',
@@ -49,39 +49,35 @@ export default {
           }
         }
       ],
-      currentInfoDatas: [
-        {
-          contactNo: '1'
-        }
-      ],
+      currentInfoDatas: [],
       thirdPartyProofColumns: [
         {
           title: '项目编号',
-          key: 'contactNo'
+          key: 'orderNo'
         },
         {
           title: '担保类型',
-          key: 'contactNo'
+          key: 'warrantType'
         },
         {
           title: '纸质抵押物类型',
-          key: 'contactNo'
+          key: 'mortgageType'
         },
         {
           title: '纸质抵押物名称',
-          key: 'contactNo'
+          key: 'mortgageName'
         },
         {
           title: '最终估价',
-          key: 'contactNo'
+          key: 'assessAmt'
         },
         {
           title: '登记日期',
-          key: 'contactNo'
+          key: 'regDate'
         },
         {
           title: '状态',
-          key: 'contactNo'
+          key: 'status'
         },
         {
           title: '操作',
@@ -102,14 +98,7 @@ export default {
           }
         }
       ],
-      thirdPartyProofDatas: [
-        {
-          contactNo: '1'
-        },
-        {
-          contactNo: '1'
-        }
-      ]
+      thirdPartyProofDatas: []
     };
   }
 };

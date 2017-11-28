@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="form-top-actions" v-if="!isFromDetail" style="padding-top: 0">
-      <i-button type="primary" @click="addBankModal=!addBankModal"><i class="iconfont icon-xinzeng"></i> 新增</i-button>
+      <i-button type="primary" @click="openAddModal"><i class="iconfont icon-xinzeng"></i> 新增</i-button>
     </div>
     <i-table :loading="dataLoading" :columns="bankAccountColumns" :data="bankAccountDatas"></i-table>
     <!--添加联系人模态框-->
@@ -34,7 +34,7 @@
           <i-input v-model="formData.bankMobile" placeholder=""></i-input>
         </i-form-item>
         <i-form-item label="备注" prop="remark">
-          <i-input v-model="formData.remark" placeholder=""></i-input>
+          <i-input type="textarea" :rows="4" v-model="formData.remark" placeholder=""></i-input>
         </i-form-item>
         <i-form-item label="">
           <i-button :loading="submitLoading" @click="submitForm" type="primary" size="large" style="width: 120px;">
@@ -59,7 +59,7 @@
         dataLoading: false,
         bankList: [],
         formData: {
-          recordId: '',
+          id: '',
           memberNo: '',
           name: '',
           bankCardNo: '',
@@ -83,14 +83,28 @@
     },
     props: ['isFromDetail', 'customer'],
     methods: {
+      openAddModal() {
+        this.$data.formData = {};
+        this.$data.addBankModal = true;
+      },
       submitForm() {
         this.$refs['bankForm'].validate(async (valid) => {
           if (valid) {
+            let url = '';
+            let recordId = this.$data.formData.id;
+            if (recordId && recordId !== '') {
+              url = '/member/account/update';
+            } else {
+              url = '/member/account/insert';
+            }
             this.$data.submitLoading = true;
-            let resp = await this.$http.post('/member/account/insert', this.$data.formData);
+            this.$data.formData.memberNo = this.memberNo;
+            let resp = await this.$http.post(url, this.$data.formData);
             this.$data.submitLoading = false;
             if (resp.reCode === '0000') {
-              alert('添加成功');
+              this.$Message.success('保存成功');
+              this.$data.addBankModal = false;
+              this.getCustomerBankList();
             }
           } else {
             this.$Notice.error({
@@ -101,7 +115,7 @@
       },
       async getCustomerBankList() {
         this.$data.dataLoading = true;
-        let resp = await this.$http.post('/member/account/query', { memberNo: '' });
+        let resp = await this.$http.post('/member/account/query', { memberNo: this.memberNo });
         this.$data.dataLoading = false;
         this.$data.bankAccountDatas = resp.body;
       },

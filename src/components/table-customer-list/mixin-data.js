@@ -126,6 +126,7 @@ export default {
                         });
                         msg();
                         if (resp.success) {
+                          this.$Message.success('删除成功');
                           this.getPrivateCustomerList();
                         }
                       }

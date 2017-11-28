@@ -58,7 +58,7 @@
     </i-tabs>
     <!--添加联系人模态框-->
     <pt-modal :title="addContactModalTitle" v-model="showAddModal">
-      <i-form ref="formValidate" label-position="left" :label-width="80">
+      <i-form ref="formAddContact" label-position="left" :label-width="80">
         <i-form-item label="姓名" prop="name">
           <i-input v-model="addForm.contactsName" placeholder="请输入姓名"></i-input>
         </i-form-item>
@@ -80,7 +80,7 @@
              <span v-if="submitLoading">请求中...</span>
              <span v-else>保存</span>
            </i-button>
-            <i-button v-else @click="submitContact" :loading="submitLoading" type="primary" size="large" style="width: 80px;">
+            <i-button v-else @click="submitContact" :loading="submitLoading" type="primary" size="large" style="width: 120px;">
               <span v-if="submitLoading">请求中...</span>
               <span v-else>保存</span>
             </i-button>
@@ -152,25 +152,33 @@
       show() {
         alert(1);
       },
-      async submitContact() {
-        this.$data.submitLoading = true;
-        this.$data.addForm.memberNo = this.memberNo;
-        let resp = await this.$http.post('/member/ohter/contacts/insert', this.$data.addForm);
-        this.$data.submitLoading = false;
-        if (resp.success) {
-          this.$data.showAddModal = false;
-          this.getContactList();
-        }
+      submitContact() {
+        this.$refs['formAddContact'].validate(async (valid) => {
+          if (valid) {
+            this.$data.submitLoading = true;
+            this.$data.addForm.memberNo = this.memberNo;
+            let resp = await this.$http.post('/member/ohter/contacts/insert', this.$data.addForm);
+            this.$data.submitLoading = false;
+            if (resp.success) {
+              this.$data.showAddModal = false;
+              this.getContactList();
+            }
+          }
+        });
       },
       async saveContact() {
-        this.$data.submitLoading = true;
-        this.$data.addForm.memberNo = this.memberNo;
-        let resp = await this.$http.post('/member/ohter/contacts/update', this.$data.addForm);
-        this.$data.submitLoading = false;
-        if (resp.success) {
-          this.$data.showAddModal = false;
-          this.getContactList();
-        }
+        this.$refs['formAddContact'].validate(async (valid) => {
+          if (valid) {
+            this.$data.submitLoading = true;
+            this.$data.addForm.memberNo = this.memberNo;
+            let resp = await this.$http.post('/member/ohter/contacts/update', this.$data.addForm);
+            this.$data.submitLoading = false;
+            if (resp.success) {
+              this.$data.showAddModal = false;
+              this.getContactList();
+            }
+          }
+        });
       },
       searchContactBooks() {
         this.getContactBooks();

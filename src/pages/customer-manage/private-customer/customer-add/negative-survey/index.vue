@@ -3,37 +3,73 @@
     <div class="form-top-actions" style="padding-top: 0" v-if="!isFromDetail">
       <i-button type="primary" @click="addModal=!addModal"><i class="iconfont icon-xinzeng"></i> 新增</i-button>
     </div>
-    <i-table :loading="false" :columns="negativeSurveyColumns" :data="negativeSurveyDatas"></i-table>
+    <i-table :loading="dataLoading" :columns="negativeSurveyColumns" :data="negativeSurveyDatas"></i-table>
     <!--添加联系人模态框-->
-    <pt-modal v-model="addModal" :title="'添加负面调查'">
+    <bs-modal v-model="addModal" :title="'添加负面调查'">
       <i-form ref="formValidate" label-position="left" :label-width="120">
         <i-form-item label="调查时间" prop="name">
-          <i-date-picker placeholder="" style="width: 100%"></i-date-picker>
+          <bs-datepicker v-model="formData.examineDate" placeholder="" style="width: 100%"></bs-datepicker>
         </i-form-item>
         <i-form-item label="说明" prop="mail">
-          <i-input type="textarea" :rows="4" placeholder=""></i-input>
+          <i-input v-model="formData.examineReason" type="textarea" :rows="4" placeholder=""></i-input>
         </i-form-item>
         <i-form-item label="">
-          <i-button type="primary" size="large" style="width: 80px;">提交</i-button>
+          <i-button @click="submitForm" type="primary" :loading="submitLoading" size="large" style="width: 120px;">
+            <span v-if="submitLoading">请求中...</span>
+            <span v-else>提交</span>
+          </i-button>
         </i-form-item>
       </i-form>
-    </pt-modal>
+    </bs-modal>
   </div>
 </template>
 <script>
   import PTModal from '@/components/bs-modal';
   import MixinData from './mixin-data';
+  import MixinComputed from '../mixin-tab-computed';
   export default {
     name: '',
-    mixins: [MixinData],
+    mixins: [MixinData, MixinComputed],
     data() {
       return {
-        addModal: false
+        addModal: false,
+        dataLoading: false,
+        submitLoading: false,
+        formData: {
+          'memberNo': '',
+          'examineReason': '',
+          'examineDate': ''
+        }
       };
     },
     props: ['isFromDetail'],
     components: {
-      'pt-modal': PTModal
+      'bs-modal': PTModal
+    },
+    methods: {
+      async getList() {
+        this.$data.dataLoading = true;
+        let resp = await this.$http.post('/member/negative/examine/list', {
+          memberNo: this.memberNo
+        });
+        this.$data.dataLoading = false;
+        if (resp.success) {
+          this.$data.negativeSurveyDatas = resp.body;
+        }
+      },
+      async submitForm() {
+        this.$data.formData.memberNo = this.memberNo;
+        this.$data.submitLoading = true;
+        let resp = await this.$http.post('/member/negative/examine/insert', this.$data.formData);
+        this.$data.submitLoading = false;
+        this.$data.addModal = false;
+        if (resp.success) {
+          this.getList();
+        }
+      }
+    },
+    mounted() {
+      this.getList();
     }
   };
 </script>

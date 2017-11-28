@@ -39,9 +39,17 @@ let ary = [
     on: true,
     resp: Mock.mock({
       reCode: '0000',
-      'body|10': [
+      'body': [
         {
           regionCode: '1',
+          regionName: '@province'
+        },
+        {
+          regionCode: '2',
+          regionName: '@province'
+        },
+        {
+          regionCode: '3',
           regionName: '@province'
         }
       ]
@@ -55,7 +63,7 @@ let ary = [
       reCode: '0000',
       'body|10': [
         {
-          bankCode: '@name',
+          bankCode: '1',
           bankName: '@name'
         }
       ]

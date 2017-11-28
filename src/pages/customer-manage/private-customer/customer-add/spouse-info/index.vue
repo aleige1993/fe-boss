@@ -8,7 +8,7 @@
     <i-table :loading="listLoading" :columns="spouseColumns" :data="spouseDatas"></i-table>
     <!--添加联系人模态框-->
     <pt-modal title="选择客户配偶" v-model="addModal" :width="1200">
-      <table-customer-list type="modal" @on-row-dbclick="selectSpouseRow">
+      <table-customer-list ref="addCustomerSpouseModalTable" type="modal" @on-row-dbclick="selectSpouseRow">
         <div class="form-top-actions" slot="topAction">
           <i-button type="info" @click="addCustomerModal=!addCustomerModal"><i class="iconfont icon-xinzeng"></i> 新增</i-button>
         </div>
@@ -16,7 +16,7 @@
     </pt-modal>
     <!-- 新增联系人模态框 -->
     <pt-modal title="新增客户" v-model="addCustomerModal" :width="1200">
-      <form-basic-info type="modal"></form-basic-info>
+      <form-basic-info type="modal" @on-submit-success="addedNewCustomer"></form-basic-info>
     </pt-modal>
   </div>
 </template>
@@ -49,7 +49,7 @@
       async selectSpouseRow(row, index) {
         this.$Message.loading('正在添加配偶信息');
         let spouseMemberNo = row.memberNo;
-        let resp = await this.$http.post('/member/spo/query', {
+        let resp = await this.$http.post('/member/spo/save', {
           memberNo: this.$data.memberNo,
           spoMemberNo: spouseMemberNo
         });
@@ -62,7 +62,8 @@
       // 删除配偶信息
       async removeSpouse(spouse) {
         const msg = this.$Message.loading('正在删除配偶', 0);
-        let resp = this.$http.post('/member/spo/delete', {
+        let resp = await this.$http.post('/member/spo/delete', {
+          memberNo: this.$data.memberNo,
           spoMemberNo: spouse.spoMemberNo
         });
         msg();
@@ -85,6 +86,10 @@
             this.removeSpouse(spouse);
           }
         });
+      },
+      addedNewCustomer() {
+        this.$refs['addCustomerSpouseModalTable'].getPrivateCustomerList();
+        this.$data.addCustomerModal = false;
       }
     },
     mounted() {

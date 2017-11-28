@@ -330,6 +330,57 @@ export default [
           ]
         },
         {
+          'groupKey': 'WarrantTypeEnum',
+          'items': [
+            {
+              'itemCode': '1',
+              'itemName': '个人'
+            },
+            {
+              'itemCode': '2',
+              'itemName': '公司'
+            }
+          ]
+        },
+        {
+          'groupKey': 'MortgageTypeEnum',
+          'items': [
+            {
+              'itemCode': '1',
+              'itemName': '车辆'
+            },
+            {
+              'itemCode': '2',
+              'itemName': '房产'
+            }
+          ]
+        },
+        {
+          'groupKey': 'HaveCompanyRelativeEnum',
+          'items': [
+            {
+              'itemCode': '1',
+              'itemName': '全资'
+            },
+            {
+              'itemCode': '2',
+              'itemName': '控股'
+            },
+            {
+              'itemCode': '3',
+              'itemName': '持股'
+            },
+            {
+              'itemCode': '4',
+              'itemName': '核心经营者'
+            },
+            {
+              'itemCode': '5',
+              'itemName': '实际控制人'
+            }
+          ]
+        },
+        {
           'groupKey': 'ProductStatusEnum',
           'items': [
             {
@@ -393,7 +444,6 @@ export default [
             }
           ]
         },
-        // 保证金释放方式/CreditTypeEnum
         {
           'groupKey': 'FreedTypeEnum',
           'items': [
@@ -406,8 +456,7 @@ export default [
               'itemName': '按贷款结清'
             }
           ]
-        }, // 保证金释放方式/CreditTypeEnum end
-        // 月息方式
+        },
         {
           'groupKey': 'InterestTypeEnum',
           'items': [
@@ -420,26 +469,24 @@ export default [
               'itemName': '按固定30天计算'
             }
           ]
-        }, // 月息方式 end
-        // 模型设定
+        },
         {
           'groupKey': 'ModelTypeEnum',
           'items': [
             {
               'itemCode': '1',
-              'itemName': '算头不算尾'
+              'itemName': '不算头不算尾'
             },
             {
               'itemCode': '2',
-              'itemName': '算头又算尾'
+              'itemName': '算头不算尾'
             },
             {
               'itemCode': '3',
-              'itemName': '不算头不算尾'
+              'itemName': '算头又算尾'
             }
           ]
-        }, // 模型设定 end
-        // 逾期计算方式/罚息计算方式
+        },
         {
           'groupKey': 'OverdueTypeEnum',
           'items': [
@@ -452,8 +499,7 @@ export default [
               'itemName': '按应还未还金额收取'
             }
           ]
-        }, // 逾期计算方式/罚息计算方式 end
-        // 还款周期
+        },
         {
           'groupKey': 'RepaymentPeriodEnum',
           'items': [
@@ -482,8 +528,7 @@ export default [
               'itemName': '自定义'
             }
           ]
-        }, // 还款周期 end
-        // 还款日规则
+        },
         {
           'groupKey': 'RepaymentRuleEnum',
           'items': [
@@ -496,8 +541,7 @@ export default [
               'itemName': '指定日还款'
             }
           ]
-        }, // 还款日规则 end
-        // 还款方式
+        },
         {
           'groupKey': 'RepaymentTypeEnum',
           'items': [
@@ -518,21 +562,20 @@ export default [
               'itemName': '按期收息，期末收本'
             }
           ]
-        }, // 还款方式 end
-        // 年模型
+        },
         {
           'groupKey': 'YearModelEnum',
           'items': [
             {
-              'itemCode': '1',
+              'itemCode': '360',
               'itemName': '按360天计算'
             },
             {
-              'itemCode': '2',
+              'itemCode': '365',
               'itemName': '按365天计算'
             }
           ]
-        } // 年模型 end
+        }
       ],
       'success': true
     }

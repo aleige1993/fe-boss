@@ -68,7 +68,7 @@
     },
     methods: {
       goToAdd() {
-        this.$router.push('/index/customer/modify');
+        this.$router.push('/index/customer/add');
       },
       async getPrivateCustomerList(page) {
         this.$data.dataLoading = true;
