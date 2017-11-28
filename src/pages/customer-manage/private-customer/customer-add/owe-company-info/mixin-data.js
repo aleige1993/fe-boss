@@ -4,7 +4,7 @@ export default {
       bankAccountColumns: [
         {
           title: '公司编号',
-          key: 'companyNo'
+          key: 'companyCode'
         },
         {
           title: '公司名称',
@@ -12,27 +12,27 @@ export default {
         },
         {
           title: '统一社会信用代码',
-          key: 'creditNo'
+          key: 'suCreditCode'
         },
         {
           title: '关系',
-          key: 'relationShip'
+          key: 'relative'
         },
         {
           title: '联系人',
-          key: 'contact'
+          key: 'contactUser'
         },
         {
           title: '联系电话',
-          key: 'phone'
+          key: 'contactUserPhone'
         },
         {
           title: '注册时间',
-          key: 'registerDate'
+          key: 'regDate'
         },
         {
           title: '注册资金',
-          key: 'registerMoney'
+          key: 'regCapital'
         },
         {
           title: '操作',
@@ -50,7 +50,9 @@ export default {
                 },
                 on: {
                   click: () => {
-                    this.show(params.index);
+                    // console.log(params.row);
+                    this.$data.formData = params.row;
+                    this.$data.addBankModal = true;
                   }
                 }
               }, '编辑'),
@@ -62,7 +64,19 @@ export default {
                 },
                 on: {
                   click: () => {
-                    this.remove(params.index);
+                    Alertify.confirm('是否确定删除', async (ok) => {
+                      if (ok) {
+                        const loading = this.$Message.loading('删除中...', 0);
+                        let respn = await this.$http.post('/member/have/company/delete', {
+                          recordId: params.row.id
+                        });
+                        if (respn.success) {
+                          loading();
+                          this.$Message.success('操作成功');
+                          this.getOweComList();
+                        }
+                      }
+                    });
                   }
                 }
               }, '删除')
@@ -70,18 +84,7 @@ export default {
           }
         }
       ],
-      bankAccountDatas: [
-        {
-          companyNo: 'Joe Black',
-          companyName: '25645415842142151',
-          creditNo: '中国工商银行',
-          relationShip: '客户',
-          contact: '2254',
-          phone: '上清寺支行',
-          registerDate: '2017-12-25',
-          registerMoney: 120500505
-        }
-      ]
+      bankAccountDatas: []
     };
   }
 };

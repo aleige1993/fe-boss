@@ -42,7 +42,7 @@ export default [
             {
               'certNo': '@Integer(18)',
               'certType': '@pick(["1", "2"])',
-              'memberNo': '@Integer(5)',
+              'memberNo': 383609955686547422,
               'mobile': '@Integer(10)',
               'name': '@name',
               'sex': '@pick(["1", "2"])',
@@ -79,7 +79,7 @@ export default [
       'body': {}
     }
   },
-  //
+  // 企业客户列表
   {
     url: '/corp/listCorp',
     on: true,
@@ -104,7 +104,48 @@ export default [
               bizProvinceCode: '1',
               bizCityCode: '1',
               bizDistrictCode: '1',
-              bizRoadAddr: '@county(true)'
+              bizRoadAddr: '@county(true)',
+              'mainLinkmanName': '@name',
+              'actualControllersTel': '2123',
+              'joinStartDate': '2017-12-12',
+              'about': '321321',
+              'isMerchant': '21',
+              'legalPersonMobile': '2121',
+              'isPermanentlyValid': '1',
+              'regRoadAddr': '1',
+              'regProvinceName': '1',
+              'legalPersonNo': '1',
+              'legalPersonStock': '1',
+              'modifiedUserCode': '1',
+              'mainLinkmanNo': '1',
+              'fax': '1',
+              'bizProvinceName': 'aa',
+              'mainLinkmanSex': '1',
+              'mainLinkmanPhone': '1',
+              'bizCityName': '1aaa',
+              'mainLinkmanEmail': '1',
+              'legalPersonSex': '1',
+              'actualControllers': '1',
+              'regCityName': '1',
+              'gmtModified': '1',
+              'bizExpDate': '1',
+              'custMgrName': '1',
+              'custMgrNo': '1',
+              'serialVersionUID': '1',
+              'mainLinkmanDuty': '1',
+              'legalPersonCertno': '1',
+              'bizDepartmentCode': '1',
+              'regCityCode': '1',
+              'regDistrictCode': '1',
+              'website': '1',
+              'regProvinceCode': '1',
+              'createUserCode': '1',
+              'gmtCreate': '1',
+              'mainLinkmanCertno': '1',
+              'legalPersonCerttype': '1',
+              'regDistrictName': '1',
+              'bizDistrictName': '1dsss',
+              'bizDepartmentName': '1'
             }
           ],
           'startIndex': 0,
@@ -124,16 +165,16 @@ export default [
     resp: Mock.mock({
       'body|10': [
         {
-          'bankCode': '@integer(10)',
+          'bankCode': '1',
           'gmtModified': '@date',
           'bankCardNo': '@integer(10)',
           'createUserCode': '',
           'bankCardType': '',
-          'bankMobile': '',
+          'bankMobile': '@integer(11)',
           'bankName': '@name',
           'openBankCode': '@integer(5)',
-          'remark': '',
-          'gmtCreate': '',
+          'remark': '@name',
+          'gmtCreate': '@date',
           'openBankName': '@name',
           'memberNo': '',
           'certNo': '',
@@ -161,6 +202,16 @@ export default [
   // 编辑会员银行卡
   {
     url: '/member/account/update',
+    on: true,
+    resp: {
+      'reCode': '0000',
+      'reMsg': '成功',
+      'success': true,
+      'body': {}
+    }
+  },
+  {
+    url: '/member/account/delete',
     on: true,
     resp: {
       'reCode': '0000',
@@ -463,5 +514,93 @@ export default [
         totalNum: 50
       }
     })
+  },
+  // 旗下公司
+  {
+    url: '/member/have/company/list',
+    on: true,
+    resp: Mock.mock(
+      {
+        'body|10': [
+          {
+            'companyCode': '123456',
+            'gmtModified': '@date',
+            'regCapital': '21',
+            'companyName': '@name',
+            'createUserCode': '213',
+            'regDate': '@date',
+            'gmtCreate': '@date',
+            'memberNo': '1234567891234',
+            'suCreditCode': '12321312',
+            'contactUserPhone': '312312312',
+            'modifiedUserCode': '32132',
+            'id': '21',
+            'contactUser': '321321',
+            'relative': '3'
+          }
+        ],
+        'reCode': '0000',
+        'reMsg': '成功',
+        'success': false
+      }
+    )
+  },
+  // 旗下公司 == 保存
+  {
+    url: '/member/have/company/save',
+    on: true,
+    resp: {
+      'reCode': '0000',
+      'reMsg': '成功',
+      'success': true,
+      body: {}
+    }
+  },
+  // 旗下公司 == 删除
+  {
+    url: '/member/have/company/delete',
+    on: true,
+    resp: {
+      'reCode': '0000',
+      'reMsg': '成功',
+      'success': true,
+      body: {}
+    }
+  },
+  // 负面调查
+  {
+    url: '/member/negative/examine/list',
+    on: true,
+    resp: Mock.mock(
+      {
+        'body|10': [
+          {
+            'memberNo': '@integer(10)',
+            'gmtModified': '2017-10-12',
+            'examineReason': '大四的撒大所多撒所',
+            'inputUserCode': '12',
+            'examineDate': '12',
+            'createUserCode': '12',
+            'modifiedUserCode': '12',
+            'inputTime': '2017-10-12',
+            'id': '1',
+            'gmtCreate': '2017-10-12'
+          }
+        ],
+        'reCode': '0000',
+        'reMsg': '成功',
+        'success': true
+      }
+    )
+  },
+  {
+    url: '/member/negative/examine/insert',
+    on: true,
+    resp: {
+      'reCode': '0000',
+      'reMsg': '成功',
+      'success': true,
+      body: {}
+    }
   }
 ];

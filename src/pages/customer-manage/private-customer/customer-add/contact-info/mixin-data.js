@@ -51,7 +51,7 @@ export default {
                       if (ok) {
                         const msg = this.$Message.loading('正在删除联系人', 0);
                         let resp = await this.$http.post('/member/ohter/contacts/delete', {
-                          id: params.row.id
+                          recordId: params.row.id
                         });
                         msg();
                         if (resp.success) {

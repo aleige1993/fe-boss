@@ -38,7 +38,9 @@ export default {
                 },
                 on: {
                   click: () => {
-                    this.show(params.index);
+                    // this.remove(params.index);
+                    this.$data.formData = params.row;
+                    this.$data.addBankModal = true;
                   }
                 }
               }, '编辑'),
@@ -50,7 +52,21 @@ export default {
                 },
                 on: {
                   click: () => {
-                    this.remove(params.index);
+                    // this.remove(params.index);
+                    Alertify.confirm('确定要删除吗？', async (ok) => {
+                      if (ok) {
+                        let recordId = params.row.id;
+                        const loadingMsg = this.$Message.loading('删除中...', 0);
+                        let resp = await this.$http.post('/member/account/delete', {
+                          recordId: params.row.id
+                        });
+                        if (resp.success) {
+                          loadingMsg();
+                          this.$Message.success('删除银行账户信息成功');
+                          this.getCustomerBankList();
+                        }
+                      }
+                    });
                   }
                 }
               }, '删除')

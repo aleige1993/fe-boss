@@ -30,7 +30,7 @@
               <i-col span="8">
                 <i-form-item label="证件号码" prop="mbMemberDTO.certNo"
                   :rules="{required: true, message: '证件号码不能为空', trigger: 'blur'}">
-                  <i-input :readonly="isFromDetail" v-model="formData.mbMemberDTO.certNo"></i-input>
+                  <i-input :readonly="isFromDetail" @blur="alert(1)" v-model.lazy="formData.mbMemberDTO.certNo"></i-input>
                 </i-form-item>
               </i-col>
               <i-col span="8">
@@ -93,7 +93,7 @@
             <i-row>
               <i-col span="8">
                 <i-form-item label="年收入" prop="mbMemberDTO.annualRevenue"
-                  :rules="{required: true, message: '年收入不能为空', trigger: 'change'}">
+                  :rules="{required: true, message: '年收入不能为空'}">
                   <i-input :readonly="isFromDetail" v-model="formData.mbMemberDTO.annualRevenue">
                     <span slot="append">元</span>
                   </i-input>
@@ -101,7 +101,7 @@
               </i-col>
               <i-col span="8">
                 <i-form-item label="参加工作年限" prop="mbMemberDTO.workYears"
-                  :rules="{required: true, message: '请选择工作年限', trigger: 'change'}">
+                  :rules="{required: true, message: '请选择工作年限'}">
                   <i-select :disabled="isFromDetail" v-model="formData.mbMemberDTO.workYears">
                     <i-option v-for="item in enumSelectData.get('YearsEnum')" :key="item.itemCode" :value="item.itemCode">{{item.itemName}}</i-option>
                   </i-select>
@@ -127,7 +127,7 @@
               </i-col>
               <i-col span="8">
                 <i-form-item label="本地居住年限" prop="mbMemberDTO.liveYears"
-                  :rules="{required: true, message: '请选择居住年限', trigger: 'change'}">
+                  :rules="{required: true, message: '请选择居住年限'}">
                   <i-select :disabled="isFromDetail" v-model="formData.mbMemberDTO.liveYears">
                     <i-option v-for="item in enumSelectData.get('YearsEnum')" :key="item.itemCode" :value="item.itemCode">{{item.itemName}}</i-option>
                   </i-select>
@@ -145,39 +145,35 @@
             <i-row>
               <i-col span="18">
                 <i-form-item v-if="!isFromDetail" label="户籍地址">
-                  <i-select :label-in-value="true" @on-change="censusProvinceChange" style="width: 150px" v-model="formData.mbMemberDTO.censusProvinceCode">
-                    <i-option v-for="item in shengDropList" :value="item.regionCode" :key="item.regionCode">{{item.regionName}}</i-option>
-                  </i-select>
-
-                  <i-select :label-in-value="true" @on-change="censusDistrictChange" style="width: 150px"  v-model="formData.mbMemberDTO.censusDistrictCode">
-                    <i-option v-for="item in censusDistrictDropList" :value="item.regionCode" :key="item.regionCode">{{item.regionName}}</i-option>
-                  </i-select>
-                  <i-select @on-change="censusCityChange" :label-in-value="true" style="width: 150px" v-model="formData.mbMemberDTO.censusCityCode">
-                    <i-option v-for="item in censusCityDropList" :value="item.regionCode" :key="item.regionCode">{{item.regionName}}</i-option>
-                  </i-select>
+                  <bs-dispicker :currProvinceCode="formData.mbMemberDTO.censusProvinceCode"
+                                :currDistrictCode="formData.mbMemberDTO.censusDistrictCode"
+                                :currCityCode="formData.mbMemberDTO.censusCityCode"
+                                @on-change="selectCensusDistance">
+                  </bs-dispicker>
                   <i-input placeholder="街道信息" v-model="formData.mbMemberDTO.censusRoadAddr" style="width: 320px;"></i-input>
                 </i-form-item>
                 <i-form-item v-else label="户籍地址">
-                  重庆市云阳县
+                  {{formData.mbMemberDTO.censusProvinceName}}
+                  {{formData.mbMemberDTO.censusDistrictName}}
+                  {{formData.mbMemberDTO.censusCityName}}
+                  {{formData.mbMemberDTO.censusRoadAddr}}
                 </i-form-item>
               </i-col>
             </i-row>
             <i-row>
               <i-col span="18">
                 <i-form-item v-if="!isFromDetail" label="居住地址">
-                  <i-select :label-in-value="true" @on-change="nowProvinceChange" style="width: 150px" v-model="formData.mbMemberDTO.nowProvinceCode">
-                    <i-option v-for="item in shengDropList" :value="item.regionCode" :key="item.regionCode">{{item.regionName}}</i-option>
-                  </i-select>
-                  <i-select :label-in-value="true" @on-change="nowDistrictChange" style="width: 150px"  v-model="formData.mbMemberDTO.nowDistrictCode">
-                    <i-option v-for="item in nowDistrictDropList" :value="item.regionCode" :key="item.regionCode">{{item.regionName}}</i-option>
-                  </i-select>
-                  <i-select @on-change="nowCityChange" :label-in-value="true" style="width: 150px" v-model="formData.mbMemberDTO.nowCityCode">
-                    <i-option v-for="item in nowCityDropList" :value="item.regionCode" :key="item.regionCode">{{item.regionName}}</i-option>
-                  </i-select>
+                  <bs-dispicker :currProvinceCode="formData.mbMemberDTO.nowProvinceCode"
+                                :currDistrictCode="formData.mbMemberDTO.nowDistrictCode"
+                                :currCityCode="formData.mbMemberDTO.nowCityCode"
+                                @on-change="selectNowDistance"></bs-dispicker>
                   <i-input placeholder="街道信息" v-model="formData.mbMemberDTO.nowRoadAddr" style="width: 320px;"></i-input>
                 </i-form-item>
                 <i-form-item v-else label="居住地址">
-                  重庆市云阳县
+                  {{formData.mbMemberDTO.nowProvinceName}}
+                  {{formData.mbMemberDTO.nowDistrictName}}
+                  {{formData.mbMemberDTO.nowCityName}}
+                  {{formData.mbMemberDTO.nowRoadAddr}}
                 </i-form-item>
               </i-col>
             </i-row>
@@ -252,38 +248,39 @@
               </i-col>
               <i-col span="8">
                 <i-form-item label="所属部门">
-                  <i-input v-model="formData.mbMemberWorkDTO.department"></i-input>
+                  <i-input :readonly="isFromDetail" v-model="formData.mbMemberWorkDTO.department"></i-input>
                 </i-form-item>
               </i-col>
             </i-row>
             <i-row>
               <i-col span="8">
                 <i-form-item label="月收入">
-                  <i-input v-model="formData.mbMemberWorkDTO.monthRevenue">
+                  <i-input :readonly="isFromDetail" v-model="formData.mbMemberWorkDTO.monthRevenue">
                     <span slot="append">元</span>
                   </i-input>
                 </i-form-item>
               </i-col>
               <i-col span="8">
                 <i-form-item label="单位电话">
-                  <i-input v-model="formData.mbMemberWorkDTO.companyTel" placeholder=""></i-input>
+                  <i-input :readonly="isFromDetail" v-model="formData.mbMemberWorkDTO.companyTel" placeholder=""></i-input>
                 </i-form-item>
               </i-col>
 
             </i-row>
             <i-row>
               <i-col span="18">
-                <i-form-item label="公司地址">
-                  <i-select :label-in-value="true" v-model="formData.mbMemberWorkDTO.provinceCode"  @on-change="companyProvinceChange" style="width: 150px">
-                    <i-option v-for="item in shengDropList" :value="item.regionCode" :key="item.regionCode">{{item.regionName}}</i-option>
-                  </i-select>
-                  <i-select :label-in-value="true" v-model="formData.mbMemberWorkDTO.districtCode" @on-change="companyDistrictChange" style="width: 150px">
-                    <i-option v-for="item in companyDistictDropList" :value="item.regionCode" :key="item.regionCode">{{item.regionName}}</i-option>
-                  </i-select>
-                  <i-select :label-in-value="true" @on-change="companyCityChange" v-model="formData.mbMemberWorkDTO.cityCode" style="width: 150px">
-                    <i-option v-for="item in companyCityDropList" :value="item.regionCode" :key="item.regionCode">{{item.regionName}}</i-option>
-                  </i-select>
+                <i-form-item label="公司地址" v-if="!isFromDetail">
+                  <bs-dispicker :currProvinceCode="formData.mbMemberWorkDTO.provinceCode"
+                                :currDistrictCode="formData.mbMemberWorkDTO.districtCode"
+                                :currCityCode="formData.mbMemberWorkDTO.cityCode"
+                                @on-change="selectCompanyDistance"></bs-dispicker>
                   <i-input v-model="formData.mbMemberWorkDTO.roadAddr" placeholder="街道信息" style="width: 220px;"></i-input>
+                </i-form-item>
+                <i-form-item v-else label="公司地址">
+                  {{formData.mbMemberWorkDTO.provinceName}}
+                  {{formData.mbMemberWorkDTO.districtName}}
+                  {{formData.mbMemberWorkDTO.cityName}}
+                  {{formData.mbMemberWorkDTO.roadAddr}}
                 </i-form-item>
               </i-col>
             </i-row>
@@ -349,25 +346,20 @@ import TableCompanyCustomerList from '@/components/table-company-customer-list';
 import BsModal from '@/components/bs-modal';
 import Tools from '@/utils/Tools';
 import TreeGrid from '@/components/bs-tree-grid';
+import BsDispicker from '@/components/bs-dispicker';
 export default {
   name: 'formCustomerBsicInfo',
   mixins: [MxinData, MxinMethods],
   data() {
     return {
+      checkoutCertNoTimer: null,
+      checkingCertNo: false,
       submitLoading: false,
       isFromDetail: false,
       initFormLoading: false,
       showSelectCompany: false,
       selectDepartmentModal: false,
-      showSelectEmployer: false,
-      // 地址下拉
-      shengDropList: [],
-      censusDistrictDropList: [],
-      censusCityDropList: [],
-      nowDistrictDropList: [],
-      nowCityDropList: [],
-      companyDistictDropList: [],
-      companyCityDropList: []
+      showSelectEmployer: false
     };
   },
   props: {
@@ -391,7 +383,23 @@ export default {
     TableEmployerList,
     TableCompanyCustomerList,
     BsModal,
-    TreeGrid
+    TreeGrid,
+    BsDispicker
+  },
+  watch: {
+    'formData.mbMemberDTO.certNo'(newVal, oldVal) {
+      if (this.$data.checkoutCertNoTimer) {
+        this.$data.checkoutCertNoTimer = null;
+      }
+      this.$data.checkoutCertNoTimer = setTimeout(async () => {
+        this.$data.checkingCertNo = true;
+        let resp = await this.$http.post('/member/isExists', { certNo: newVal });
+        this.$data.checkingCertNo = false;
+        if (resp.body.exists) {
+          Alertify.alert('您输入的证件号已经存在，请换一个证件再试');
+        }
+      }, 500);
+    }
   },
   methods: {
     selectEmployer(row, index) {
@@ -440,12 +448,12 @@ export default {
   async mounted() {
     let pageFrom = this.$route.query.from;
     this.$data.isFromDetail = (pageFrom === 'detail');
-    let resp = await this.getAddressDropList();
-    this.$data.shengDropList = resp.body;
     this.getDepList();
     // 如果有id，初始化页面数据
     if (this.id) {
       this.initPageData();
+    } else {
+      // 如果不是编辑，清空表单
     }
   }
 };

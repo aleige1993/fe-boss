@@ -35,9 +35,9 @@ export default {
           nowDistrictName: '重庆', // 户籍地区名称
           nowCityName: '重庆', // 户籍城市名称
           nowRoadAddr: '重庆渝中蔡袁路', // 户籍街道地址
-          certFrontUrl: '', // 身份证正面
-          certBackUrl: '', // 身份证反面
-          certHandUrl: '', // 身份证手持
+          certFrontUrl: '1', // 身份证正面
+          certBackUrl: '1', // 身份证反面
+          certHandUrl: '1', // 身份证手持
           // 其他信息
           bizDepartmentCode: '', // 业务拓展部门
           bizDepartmentName: '',
@@ -58,7 +58,7 @@ export default {
           provinceName: '重庆',
           districtCode: '1',
           districtName: '渝中',
-          cityCode: '2',
+          cityCode: '1',
           cityName: '渝中山咔咔',
           roadAddr: ''
         }
