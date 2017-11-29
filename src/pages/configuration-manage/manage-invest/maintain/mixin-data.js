@@ -46,8 +46,7 @@ export default {
                 },
                 on: {
                   click: () => {
-                    this.listIndex = params.index;
-                    this.setList(params.row);
+                    this.setList($.extend({}, params.row));
                   }
                 }
               }, '修改'),
@@ -58,7 +57,7 @@ export default {
                 },
                 on: {
                   click: () => {
-                    this.remove1(params.row);
+                    this.remove1($.extend({}, params.row));
                   }
                 }
               }, '删除')

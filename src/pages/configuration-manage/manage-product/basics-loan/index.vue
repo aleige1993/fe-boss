@@ -43,7 +43,6 @@
         dataLoading: false,
         buttonLoading: false,
         showAddModal: false,
-        listIndex: Number,
         currentPage: 1,
         total: 0,
         pageSize: 4,

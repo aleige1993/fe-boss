@@ -41,7 +41,8 @@ export default {
                 },
                 on: {
                   click: () => {
-                    this.detailsFun(params.row);
+                    let rowData = $.extend({}, params.row);
+                    this.detailsFun(rowData);
                   }
                 }
               }, '详情'),
@@ -55,8 +56,7 @@ export default {
                 },
                 on: {
                   click: () => {
-                    this.listIndex = params.index;
-                    this.setList(params.row);
+                    this.setList($.extend({}, params.row));
                   }
                 }
               }, '修改'),

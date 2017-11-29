@@ -34,7 +34,7 @@ export default {
                 },
                 on: {
                   click: () => {
-                    this.$data.addForm = params.row;
+                    this.$data.addForm = $.extend({}, params.row);
                     this.$data.showAddModal = true;
                   }
                 }

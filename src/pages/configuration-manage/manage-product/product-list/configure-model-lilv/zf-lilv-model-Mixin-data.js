@@ -32,7 +32,7 @@ export default {
                 },
                 on: {
                   click: () => {
-                    this.setList(params.row);
+                    this.setList($.extend({}, params.row));
                   }
                 }
               }, '修改'),
