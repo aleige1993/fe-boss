@@ -4,11 +4,11 @@ export default {
       bankAccountColumns: [
         {
           title: '账户名',
-          key: 'accountName'
+          key: 'acctName'
         },
         {
           title: '账号',
-          key: 'accountNo'
+          key: 'acctNo'
         },
         {
           title: '银行名称',
@@ -16,11 +16,11 @@ export default {
         },
         {
           title: '开户行号',
-          key: 'bankNo'
+          key: 'openBankNo'
         },
         {
           title: '开户行',
-          key: 'bankBranchName'
+          key: 'openBankName'
         },
         {
           title: '操作',
@@ -30,25 +30,43 @@ export default {
               h('Button', {
                 props: {
                   type: 'primary',
-                  size: 'small'
+                  size: 'small',
+                  disabled: this.isFromDetail
                 },
                 style: {
                   marginRight: '5px'
                 },
                 on: {
                   click: () => {
-                    this.show(params.index);
+                    // this.remove(params.index);
+                    Object.assign(this.$data.formData, params.row);
+                    this.$data.addBankModal = true;
                   }
                 }
               }, '编辑'),
               h('Button', {
                 props: {
                   type: 'error',
-                  size: 'small'
+                  size: 'small',
+                  disabled: this.isFromDetail
                 },
                 on: {
                   click: () => {
-                    this.remove(params.index);
+                    // this.remove(params.index);
+                    Alertify.confirm('确定要删除吗？', async (ok) => {
+                      if (ok) {
+                        const loadingMsg = this.$Message.loading('删除中...', 0);
+                        let resp = await this.$http.post('/corp/deleteCorpAcct', {
+                          corpNo: this.corpNo,
+                          acctNo: params.row.acctNo
+                        });
+                        if (resp.success) {
+                          loadingMsg();
+                          this.$Message.success('删除银行账户信息成功');
+                          this.getCustomerBankList();
+                        }
+                      }
+                    });
                   }
                 }
               }, '删除')
@@ -56,16 +74,7 @@ export default {
           }
         }
       ],
-      bankAccountDatas: [
-        {
-          accountName: 'Joe Black',
-          accountNo: '25645415842142151',
-          bankName: '中国工商银行',
-          type: '客户',
-          bankNo: '2254',
-          bankBranchName: '上清寺支行'
-        }
-      ]
+      bankAccountDatas: []
     };
   }
 };

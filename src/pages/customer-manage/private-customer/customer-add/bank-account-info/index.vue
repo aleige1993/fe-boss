@@ -17,7 +17,7 @@
         </i-form-item>
         <i-form-item label="银行名称" prop="bankCode"
           :rules="{required: true, message: '银行名称不能为空', trigger: 'change'}">
-          <i-select v-model="formData.bankCode" placeholder="">
+          <i-select @on-change="selectBank" v-model="formData.bankCode" :label-in-value="true" placeholder="">
             <i-option v-for="item in bankList" :key="item.bankCode" :value="item.bankCode">{{item.bankName}}</i-option>
           </i-select>
         </i-form-item>
@@ -86,6 +86,9 @@
       openAddModal() {
         this.$data.formData = {};
         this.$data.addBankModal = true;
+      },
+      selectBank(select) {
+        this.$data.formData.bankName = select.label;
       },
       submitForm() {
         this.$refs['bankForm'].validate(async (valid) => {

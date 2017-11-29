@@ -1,38 +1,38 @@
 export default {
   data() {
     return {
-      bankAccountColumns: [
+      relationCorpColumns: [
         {
           title: '公司编号',
-          key: 'accountName'
+          key: 'relatedCorpNo'
         },
         {
           title: '公司名称',
-          key: 'accountNo'
+          key: 'relatedCorpName'
         },
         {
           title: '统一社会信用代码',
-          key: 'bankName'
+          key: 'relatedCorpCreditCode'
         },
         {
           title: '关系',
-          key: 'bankNo'
+          key: 'relation'
         },
         {
           title: '联系人',
-          key: 'bankBranchName'
+          key: 'linkmanName'
         },
         {
           title: '联系电话',
-          key: 'bankBranchName'
+          key: 'linkmanMobile'
         },
         {
           title: '注册时间',
-          key: 'bankBranchName'
+          key: 'regDate'
         },
         {
           title: '注册资金',
-          key: 'bankBranchName'
+          key: 'regCapital'
         },
         {
           title: '操作',
@@ -68,16 +68,7 @@ export default {
           }
         }
       ],
-      bankAccountDatas: [
-        {
-          accountName: 'Joe Black',
-          accountNo: '25645415842142151',
-          bankName: '中国工商银行',
-          type: '客户',
-          bankNo: '2254',
-          bankBranchName: '上清寺支行'
-        }
-      ]
+      relationCorpDatas: []
     };
   }
 };
