@@ -390,6 +390,10 @@ export default [
             {
               'itemCode': '2',
               'itemName': '停用'
+            },
+            {
+              'itemCode': '3',
+              'itemName': '初始化'
             }
           ]
         },

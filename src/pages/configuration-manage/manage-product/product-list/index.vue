@@ -282,6 +282,7 @@
             let respDel = await this.$http.get('/pms/product/remove', {
               productNo: productNo
             });
+            console.log(respDel);
             if (respDel.success) {
               loadingMsg();
               this.$Message.success('删除产品成功');

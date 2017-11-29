@@ -58,7 +58,7 @@ export default {
                 },
                 on: {
                   click: () => {
-                    this.remove1(params.index);
+                    this.remove1(params.row);
                   }
                 }
               }, '删除')

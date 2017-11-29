@@ -8,7 +8,7 @@
       <i-breadcrumb-item>资方维护</i-breadcrumb-item>
     </i-breadcrumb>
     <div class="form-top-actions">
-      <i-button @click="addModal" type="info"><i class="iconfont icon-xinzeng"></i> 新增产品</i-button>
+      <i-button @click="addModal" type="info"><i class="iconfont icon-xinzeng"></i> 新增</i-button>
     </div>
 
     <i-table :loading="dataLoading" highlight-row border ref="proTable" :columns="columns1" :data="data1"></i-table>
@@ -112,44 +112,19 @@
             </i-col>
             <!--地址-->
             <i-col span="24" class-name="city-select">
-              <!--省份-->
-              <i-form-item
-                :rules="{required: true, message: '省份不能为空', trigger: 'change'}"
-                label="地址"
-                prop="provinceCode">
-                <i-select :label-in-value="true" v-model="formMaintain.provinceCode" :disabled="iSsee" @on-change="provinceChange" placeholder="请选择省/直辖市">
-                  <i-option value="">此项控制（测试用）</i-option>
-                  <i-option v-for="item in provinceArray" :value="item.regionCode" :key="item.regionCode">{{item.regionName}}</i-option>
-                </i-select>
+              <i-form-item v-if="!iSsee" label="地址">
+                <bs-dispicker :currProvinceCode="formMaintain.censusProvinceCode"
+                              :currDistrictCode="formMaintain.censusDistrictCode"
+                              :currCityCode="formMaintain.censusCityCode"
+                              @on-change="selectCensusDistance">
+                </bs-dispicker>
+                <i-input placeholder="街道信息" v-model="formMaintain.censusRoadAddr" style="width: 320px;"></i-input>
               </i-form-item>
-                <!--市区-->
-              <i-form-item
-                :rules="{required: true, message: '市区不能为空', trigger: 'change'}"
-                label=""
-                prop="regionCode"
-                style="margin-left: -110px;">
-                <i-select :label-in-value="true" v-model="formMaintain.cityCode" :disabled="iSsee"  @on-change="cityChange" placeholder="请选择市区">
-                  <i-option v-for="item in cityArray" :value="item.regionCode" :key="item.regionCode">{{item.regionName}}</i-option>
-                </i-select>
-              </i-form-item>
-              <!--区县-->
-              <i-form-item
-                :rules="{required: true, message: '区县不能为空', trigger: 'change'}"
-                label=""
-                prop="areaCode"
-                style="margin-left: -110px;">
-                <i-select :label-in-value="true" v-model="formMaintain.areaCode" :disabled="iSsee"  @on-change="areaChange" placeholder="请选择区县">
-                  <i-option v-for="item in areaArray" :value="item.regionCode" :key="item.regionCode">{{item.regionName}}</i-option>
-                </i-select>
-              </i-form-item>
-              <!--街道信息-->
-              <i-form-item
-                :rules="{required: true, message: '区县不能为空', trigger: 'blur'}"
-                label=""
-                prop="Street"
-                style="margin-left: -110px;">
-                <i-input v-model="formMaintain.Street" :readonly="iSsee" placeholder="详细地址">
-                </i-input>
+              <i-form-item v-else label="户籍地址">
+                {{formMaintain.censusProvinceName}}
+                {{formMaintain.censusDistrictName}}
+                {{formMaintain.censusCityName}}
+                {{formMaintain.censusRoadAddr}}
               </i-form-item>
             </i-col>
           </i-row>
@@ -179,15 +154,24 @@
   import MixinData from './mixin-data';
   import MixinMethods from './mixin-methods';
   import ModalTwo from './modal-two.vue';
+  import BsDispicker from '@/components/bs-dispicker';
   export default {
     name: 'manage-invest-maintain',
     mixins: [MixinData, MixinMethods],
     components: {
       'bs-modal': BSModal,
-      'modal-two': ModalTwo
+      'modal-two': ModalTwo,
+      'bs-dispicker': BsDispicker
+    },
+    props: {
+      childMsg: {
+        required: false,
+        type: Object
+      }
     },
     data() {
       return {
+        iSsee: false,           // 是否是查看页面
         dataLoading: false,
         ShowModalOne: false,
         ShowModalTwo: false,
@@ -196,50 +180,45 @@
         formMaintain: {
           name: '', // 资方名称
           state: '', // 合作状态
-          provinceCode: '',
-          provinceName: '',
-          cityCode: '',
-          cityName: '',
-          areaCode: '',
-          areaName: ''
+          censusProvinceCode: '', // 省份code
+          censusProvinceName: '', // 省份name
+          censusDistrictCode: '', // 市区code
+          censusDistrictName: '', // 市区name
+          censusCityCode: '', // 区县code
+          censusCityName: '' // 区县name
         },
-        iSsee: false,           // 是否是查看页面
-        // 地区三级联动
-        provinceArray: [],  // 省份列表
-        cityArray: [],  // 市区列表
-        areaArray: []  // 区县列表
+        seleformList: {
+          provinceCode: '1',
+          provinceName: '重庆',
+          districtCode: '1',
+          districtName: '渝中',
+          cityCode: '1',
+          cityName: '渝中山咔咔',
+          roadAddr: ''
+        }
       };
     }, // end data
     mounted() {
-      this.getList();
-      this.getCitySelectList();
+      this.getPrivateCustomerList();
+      console.log(this.childMsg);
     },
     methods: {
-      getAddressDropList(code) {
-        let _code = code || '';
-        let data = {
-          regionCode: _code
-        };
-        return this.$http.post('/common/region/list', data);
-      },
-      async getCitySelectList() {
-        let resp = await this.getAddressDropList();
-        this.$data.provinceArray = resp.body;
-      },
-      async getList(page) {
+      // 获取资方维护列表数据
+      async getPrivateCustomerList(page) {
         this.$data.dataLoading = true;
         if (page) {
           this.$data.currentPage = page;
         }
-        let resp = await this.$http.get('/maintain', {});
+        let resp = await this.$http.post('/maintain', {});
         this.$data.dataLoading = false;
+        console.log(resp);
         this.$data.data1 = resp.body.resultList;
         this.$data.currentPage = resp.body.currentPage;
         this.$data.total = resp.body.totalNum;
       },
       // 分页跳转
-      jumpPage() {
-        this.getList();
+      jumpPage(page) {
+        this.getPrivateCustomerList(page);
       },
       // 新增弹窗
       addModal() {
@@ -288,19 +267,6 @@
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style lang="scss" scoped>
-  $from-item-width: 100%;
-  $from-item-other-width: 570px;
   #invest-maintain {
-    & .city-select {
-      font-size: 0;
-      & .ivu-form-item {
-        font-size: 12px;
-        display: inline-block;
-        width: 300px;
-        &:last-of-type {
-          width: calc(100% - 570px);
-        }
-      }
-    }
   }
 </style>

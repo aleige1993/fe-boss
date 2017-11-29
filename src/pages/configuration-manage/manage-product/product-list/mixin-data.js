@@ -4,7 +4,7 @@ export default {
       columns1: [
         {
           title: '产品编号',
-          width: 100,
+          width: 170,
           align: 'center',
           key: 'productNo'
         },
@@ -21,6 +21,7 @@ export default {
         },
         {
           title: '产品状态',
+          width: 100,
           key: 'status',
           render: (h, params) => {
             return h('span', {}, this.enumCode2Name(params.row.status, 'ProductStatusEnum'));
@@ -62,7 +63,8 @@ export default {
               h('Button', {
                 props: {
                   type: 'error',
-                  size: 'small'
+                  size: 'small',
+                  disabled: params.row.status !== '3'
                 },
                 on: {
                   click: () => {

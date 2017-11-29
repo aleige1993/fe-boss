@@ -79,7 +79,6 @@
         <!--还款周期-->
         <i-col span="8">
           <i-form-item
-            :rules="{required: true, message: '还款周期不能为空', trigger: 'change'}"
             label="还款周期"
             prop="RepaymentPeriodEnum">
             <i-row>
@@ -130,7 +129,6 @@
         <!--模型设定-->
         <i-col span="8">
           <i-form-item
-            :rules="{required: true, message: '模型设定不能为空', trigger: 'change'}"
             label="模型设定"
             prop="ModelTypeEnum">
             <i-select v-model="formRate.ModelTypeEnum" placeholder="请选择">
@@ -160,7 +158,6 @@
         <!--月息方式-->
         <i-col span="8">
           <i-form-item
-            :rules="{required: true, message: '月息方式不能为空', trigger: 'change'}"
             label="月息方式"
             prop="InterestTypeEnum">
             <i-select v-model="formRate.InterestTypeEnum" placeholder="请选择">
@@ -192,7 +189,6 @@
         <!--还款日规则-->
         <i-col span="8">
           <i-form-item
-            :rules="{required: true, message: '还款日规则不能为空', trigger: 'change'}"
             label="还款日规则"
             prop="RepaymentRuleEnum">
             <i-row>
@@ -227,7 +223,6 @@
         <!--逾期计算方式-->
         <i-col span="8">
           <i-form-item
-            :rules="{required: true, message: '逾期计算方式不能为空', trigger: 'change'}"
             label="逾期计算方式"
             prop="OverdueTypeEnum">
             <i-select v-model="formRate.OverdueTypeEnum" placeholder="请选择">
@@ -264,7 +259,6 @@
         <!--逾期管理费-->
         <i-col span="8">
           <i-form-item
-            :rules="{required: true, message: '逾期管理费不能为空', trigger: 'blur'}"
             label="逾期管理费"
             prop="protype">
             <i-input placeholder="逾期管理费" v-model="formRate.protype">
@@ -275,7 +269,6 @@
         <!--逾期宽限天数-->
         <i-col span="8">
           <i-form-item
-            :rules="{required: true, message: '逾期宽限天数不能为空', trigger: 'blur'}"
             label="逾期宽限天数"
             prop="protype">
             <i-input placeholder="逾期宽限天数" v-model="formRate.protype">
@@ -286,7 +279,6 @@
         <!--罚息计算方式-->
         <i-col span="8">
           <i-form-item
-            :rules="{required: true, message: '罚息计算方式不能为空', trigger: 'change'}"
             label="罚息计算方式"
             prop="PenaltyTypeEnum">
             <i-select v-model="formRate.PenaltyTypeEnum" placeholder="请选择">
@@ -297,7 +289,6 @@
         <!--罚息利率-->
         <i-col span="8">
           <i-form-item
-            :rules="{required: true, message: '罚息利率不能为空', trigger: 'blur'}"
             label="罚息利率"
             prop="protype">
             <i-input placeholder="罚息利率" v-model="formRate.protype">
@@ -308,7 +299,6 @@
         <!--是否允许提前还款-->
         <i-col span="8">
           <i-form-item
-            :rules="{required: true, message: '是否允许提前还款不能为空', trigger: 'change'}"
             label="是否允许提前还款"
             prop="YesNoEnum">
             <i-select v-model="formRate.YesNoEnum" placeholder="请选择">
@@ -337,10 +327,10 @@
             </i-row>
           </i-form-item>
         </i-col>
-        <!--个人单户额度-->
+        <!--提前还款利息-->
         <i-col span="16" class-name="col-inline">
           <i-form-item
-            :rules="{required: true, message: '个人单户额度不能为空', trigger: 'blur'}"
+            :rules="{required: true, message: '提前还款利息天数不能为空', trigger: 'blur'}"
             label="个人单户额度"
             prop="protype1">
             <span>不足</span>
@@ -348,7 +338,7 @@
             <span>天，按实际发生天数收，否则整月收！最低收</span>
           </i-form-item>
           <i-form-item
-            :rules="{required: true, message: '个人单户额度不能为空', trigger: 'blur'}"
+            :rules="{required: true, message: '提前还款利息天数不能为空', trigger: 'blur'}"
             label=""
             style="margin-left: -120px;"
             prop="protype2">
@@ -393,7 +383,7 @@
       <div class="form-top-actions">
         <i-button @click="addModal" type="info"><i class="iconfont icon-xinzeng"></i> 新增</i-button>
       </div>
-      <i-table border ref="lilvTable" :columns="columns1" :data="data1"></i-table>
+      <i-table border ref="lilvTable" :columns="columns1" :data="data1" :loading="dataLoading"></i-table>
       <br>
       <br>
       <i-form-item class="text-right">
@@ -424,7 +414,10 @@
           </i-input>
         </i-form-item>
         <i-form-item class="text-right">
-          <i-button type="primary" @click="formInSubmit">提交</i-button>
+          <i-button type="primary" @click="formInSubmit" :loading="buttonLoading">
+            <span v-if="!buttonLoading">提交</span>
+            <span v-else>loading...</span>
+          </i-button>
           <i-button type="ghost" style="margin-left: 8px" @click="formInCancel">取消</i-button>
         </i-form-item>
       </i-form>
@@ -444,9 +437,14 @@
       'pt-modal': PTModal,
       'zf-lilv-Model': zfLilvModel
     },
+    props: {
+      childMsg: Object
+    },
     data() {
       return {
         isAdd: true,
+        dataLoading: false, // 表格的loading
+        buttonLoading: false, // 提交按钮的loading
         showAdd: false, // 增删的模态框
         zfLilvModel: false, // 增删的模态框
         formRate: { // 当前的模态框的数据表单
@@ -472,7 +470,10 @@
           {
             title: '车类',
             width: 200,
-            key: 'car'
+            key: 'car',
+            render: (h, params) => {
+              return h('span', {}, this.enumCode2Name(params.row.car, 'BizTypeEnum'));
+            }
           },
           {
             title: '贷款期限(月)',
@@ -528,7 +529,7 @@
                   },
                   on: {
                     click: () => {
-                      this.remove(params.index);
+                      this.remove(params.row);
                     }
                   }
                 }, '删除')
@@ -538,29 +539,66 @@
         ],
         data1: [
           {
-            car: '一手车',
-            month: 3,
-            nominal: 0.15,
-            actual: 0.25
-          },
-          {
-            car: '二手车',
-            month: 4,
-            nominal: 0.2,
-            actual: 0.3
+            'car': '1',
+            'month': 3,
+            'nominal': 0.15,
+            'actual': 0.25
           }
         ]
       };
     },
-    async mounted() {
+    /*async mounted() {
       const Vm = this;
-      let resp = await this.$http.get('/productLilv', {});
+      let resp = await this.$http.get('/productLilv');
       try {
-        Vm.$data.data1 = resp.list;
+        console.log(resp);
+        Vm.$data.data1 = resp.body;
       } catch (err) {
       }
+    },*/
+    mounted() {
+      this.getFormList();  // 获取表单数据
+      this.getPrivateCustomerList();  // 获取模态框列表数据
     },
     methods: {
+      // 获取模态框列表数据
+      /*async getFormList() {
+        this.$data.dataLoading = true;
+        // let productNo = this.childMsg.productNo;
+        let resp = await this.$http.get('/pms/productRate/list', {
+          // productNo: productNo
+        });
+        console.log(resp);
+        this.$data.dataLoading = false;
+        if (resp.resultList !== 0) {
+          this.$data.data1 = resp.resultList;
+        } else {
+          this.$Notice.warning({
+            title: '列表没有数据可加载',
+            duration: 2
+          });
+          this.$data.data1 = [];
+        }
+      },*/
+      // 获取模态框列表数据
+      async getPrivateCustomerList() {
+        this.$data.dataLoading = true;
+        // let productNo = this.childMsg.productNo;
+        let resp = await this.$http.get('/pms/productRate/productList', {
+          // productNo: productNo
+        });
+        console.log(resp);
+        this.$data.dataLoading = false;
+        if (resp.resultList !== 0) {
+          this.$data.data1 = resp.resultList;
+        } else {
+          this.$Notice.warning({
+            title: '列表没有数据可加载',
+            duration: 2
+          });
+          this.$data.data1 = [];
+        }
+      },
       // 打开资方模态框
       openZF(row) {
         this.$data.zfLilvModel = true;
@@ -591,6 +629,20 @@
         });
       },
       formInSubmit() {
+        let formName = 'formRate';
+        this.$refs[formName].validate((valid) => {
+          if (valid) {
+            this.$data.buttonLoading = true;
+            // 如果是新增
+            if (this.isAdd) {
+              this.addSuBmit();
+            } else {
+              this.setSubmit();
+            }
+          } else {
+            this.$Message.error('<span style="color: red">*</span>项不能为空');
+          }
+        });
         if (this.isAdd) {
           this.$data.data1.unshift({
             car: this.$data.formInModel.car,

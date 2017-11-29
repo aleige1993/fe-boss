@@ -152,19 +152,20 @@ export default [
   },
   // 产品配置-利率方案配置
   {
-    url: '/productLilv',
+    url: '/pms/productRate/productList',
     on: true,
     resp: Mock.mock({
-      reCode: '0',
-      'list|3': [
+      'reCode': '0',
+      'reMsg': '成功',
+      'success': true,
+      'resultList|5': [
         {
-          'car|1': ['轿车', 'SUV', '轻卡', '微卡'],
+          'car|1': ['1', '2'],
           'month|1': ['3', '6', '12', '18', '24'],
-          'nominal|1': ['3', '6', '12', '18', '24'],
-          'actual|1': ['3', '6', '12', '18', '24']
+          'nominal|1': ['0.15', '0.25', '0.2', '0.3', '0.1'],
+          'actual|1': ['0.15', '0.25', '0.2', '0.3', '0.1']
         }
-      ],
-      reMsg: '成功'
+      ]
     })
   },
   // 产品配置-费用收取配置弹窗

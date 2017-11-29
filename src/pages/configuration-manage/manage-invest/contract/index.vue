@@ -97,7 +97,7 @@
           type: '', // 合同类型
           name: '', // 合同名称
           ContractId: '', // 云贷签约平台模板ID
-          Enclosure: '' //合同附件
+          Enclosure: '' // 合同附件
         }
       };
     }, // end data
@@ -125,7 +125,7 @@
       // 新增弹窗
       addModal() {
         const FormName = 'formContract';
-        this.$refs[FormName].resetFields(); //重置表单
+        this.$refs[FormName].resetFields(); // 重置表单
         this.$data.iSsee = false;   // 不是查看状态
         this.$data.ShowModal = true;
       },

@@ -105,7 +105,10 @@
       <br>
       <br>
       <div class="text-right">
-        <i-button type="primary" @click="ContractformSubmit">提交</i-button>
+        <i-button type="primary" @click="ContractformSubmit" :loading="buttonLoading">
+          <span v-if="!buttonLoading">提价</span>
+          <span v-else>loading...</span>
+        </i-button>
         <i-button type="ghost" style="margin-left: 8px" @click="ContractformCancel">取消</i-button>
       </div>
     </bs-modal>
@@ -116,7 +119,7 @@
   import MixinData from './mixin-data';
   import BSModal from '@/components/bs-modal';
   export default {
-    name: '',
+    name: 'investMapping',
     mixins: [MixinData],
     components: {
       'bs-modal': BSModal
@@ -125,6 +128,7 @@
       return {
         isAdd: true,
         dataLoading: false,
+        buttonLoading: false,
         ShowModel: false,         // 新增和修改弹窗
         ContractModel: false,      // 关联合同模板弹窗
         listIndex: Number,
