@@ -46,7 +46,6 @@
         buttonLoading: false,
         isAdd: true,
         showAddModal: false,
-        listIndex: Number,
         total: 0,
         pageSize: 15,
         currentPage: 1,

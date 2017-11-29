@@ -16,7 +16,7 @@ export default [
           }
         ]
       },
-      reCode: '0',
+      reCode: '0000',
       reMsg: '成功'
     })
   },
@@ -32,7 +32,7 @@ export default [
           'enclosure|1': ['001.jpg', '002.jpg', '003.jpg']
         }
       ],
-      reCode: '0',
+      reCode: '0000',
       reMsg: '成功'
     })
   },
@@ -55,7 +55,7 @@ export default [
           }
         ]
       },
-      reCode: '0',
+      reCode: '0000',
       reMsg: '成功'
     })
   },
@@ -77,7 +77,7 @@ export default [
           }
         ]
       },
-      reCode: '0',
+      reCode: '0000',
       reMsg: '成功'
     })
   }

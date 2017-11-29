@@ -48,7 +48,7 @@ export default [
         'totalNum': 100,
         'totalPage': 1
       },
-      'reCode': '0',
+      'reCode': '0000',
       'reMsg': '成功',
       'success': true
     })
@@ -73,7 +73,7 @@ export default [
         'totalNum': 100,
         'totalPage': 1
       },
-      'reCode': '0',
+      'reCode': '0000',
       'reMsg': '成功',
       'success': true
     })
@@ -97,7 +97,7 @@ export default [
         'totalNum': 100,
         'totalPage': 1
       },
-      'reCode': '0',
+      'reCode': '0000',
       'reMsg': '成功',
       'success': true
     })
@@ -121,7 +121,7 @@ export default [
         'totalNum': 100,
         'totalPage': 1
       },
-      'reCode': '0',
+      'reCode': '0000',
       'reMsg': '成功',
       'success': true
     })
@@ -145,7 +145,7 @@ export default [
         'totalNum': 100,
         'totalPage': 1
       },
-      'reCode': '0',
+      'reCode': '0000',
       'reMsg': '成功',
       'success': true
     })
@@ -155,7 +155,7 @@ export default [
     url: '/pms/productRate/productList',
     on: true,
     resp: Mock.mock({
-      'reCode': '0',
+      'reCode': '0000',
       'reMsg': '成功',
       'success': true,
       'resultList|5': [
@@ -173,7 +173,7 @@ export default [
     url: '/productFy',
     on: true,
     resp: Mock.mock({
-      reCode: '0',
+      reCode: '0000',
       'list|1-5': [
         {
           'id|+1': 1,
@@ -192,7 +192,7 @@ export default [
     url: '/productDetails',
     on: true,
     resp: Mock.mock({
-      reCode: '0',
+      reCode: '0000',
       list: {
         'data1|1-5': [
           {

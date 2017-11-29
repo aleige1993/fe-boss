@@ -504,7 +504,7 @@
                   },
                   on: {
                     click: () => {
-                      this.openZF(params.row);
+                      this.openZF($.extend({}, params.row));
                     }
                   }
                 }, '资方利率'),
@@ -518,7 +518,7 @@
                   },
                   on: {
                     click: () => {
-                      this.setList(params.row);
+                      this.setList($.extend({}, params.row));
                     }
                   }
                 }, '修改'),
@@ -529,7 +529,7 @@
                   },
                   on: {
                     click: () => {
-                      this.remove(params.row);
+                      this.remove($.extend({}, params.row));
                     }
                   }
                 }, '删除')

@@ -173,7 +173,6 @@
         RuleShowModal: false,         // 准入规则配置弹窗
         FileShowModal: false,         // 归档材料配置弹窗
         ContractShowModal: false,         // 合同模板配置弹窗
-        listIndex: Number,
         clickRow: {},
         total: 0,
         pageSize: 10,
