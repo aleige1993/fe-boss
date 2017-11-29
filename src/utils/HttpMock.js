@@ -16,7 +16,13 @@ class HttpMock {
     MockConfig.map(item => {
       // 判断是否单个mock的开启状态
       if (item.on) {
-        // let rtype = item.type ? item.type : 'post';
+        let rtype = item.type ? item.type : 'post';
+        let url = '';
+        if (rtype === 'post') {
+          url = item.url;
+        } else {
+          url = '/^' + item.url + '\?/'; // eslint-disable-line
+        }
         // console.log(rtype);
         Mock.mock(Config.HTTPBASEURL + item.url, () => {
           return item.resp;
