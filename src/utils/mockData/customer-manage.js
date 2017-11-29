@@ -101,10 +101,10 @@ export default [
               'status': '@pick(["1", "2", "3"])',
               'corpType': '1',
               'industryType': '1',
-              bizProvinceCode: '1',
-              bizCityCode: '1',
-              bizDistrictCode: '1',
-              bizRoadAddr: '@county(true)',
+              'bizProvinceCode': '1',
+              'bizCityCode': '1',
+              'bizDistrictCode': '1',
+              'bizRoadAddr': '@county(true)',
               'mainLinkmanName': '@name',
               'actualControllersTel': '2123',
               'joinStartDate': '2017-12-12',
@@ -157,6 +157,18 @@ export default [
         'success': true
       }
     )
+  },
+  {
+    url: '/corp/saveCorp',
+    on: true,
+    resp: {
+      reCode: '0000',
+      success: true,
+      body: {
+        corpNo: '1',
+        status: '1'
+      }
+    }
   },
   // 根据id查询个人客户的银行账户信息
   {

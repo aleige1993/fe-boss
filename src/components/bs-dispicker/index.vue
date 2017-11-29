@@ -57,13 +57,17 @@
       async provinceChange(val) {
         this.$data.distanceData.provinceName = val.label;
         let resp = await this.getAddressDropList(val.value);
-        this.$data.districtDropList = resp.body;
+        if (resp.success) {
+          this.$data.districtDropList = resp.body;
+        }
         this.$emit('on-change', this.$data.distanceData);
       },
       async districtChange(val) {
         this.$data.distanceData.districtName = val.label;
         let resp = await this.getAddressDropList(val.value);
-        this.$data.cityDropList = resp.body;
+        if (resp.success) {
+          this.$data.cityDropList = resp.body;
+        }
         this.$emit('on-change', this.$data.distanceData);
       },
       cityChange(val) {
@@ -73,15 +77,21 @@
     },
     async mounted() {
       let resp = await this.getAddressDropList();
-      this.$data.provinceDropList = resp.body;
+      if (resp.success) {
+        this.$data.provinceDropList = resp.body;
+      }
       if (this.currProvinceCode !== '') {
         let resp = await this.getAddressDropList(this.currProvinceCode);
-        this.$data.districtDropList = resp.body;
+        if (resp.success) {
+          this.$data.districtDropList = resp.body;
+        }
         this.$data.distanceData.provinceCode = this.currProvinceCode;
       }
       if (this.currDistrictCode !== '') {
         let resp = await this.getAddressDropList(this.currDistrictCode);
-        this.$data.cityDropList = resp.body;
+        if (resp.success) {
+          this.$data.cityDropList = resp.body;
+        }
         this.$data.distanceData.districtCode = this.currDistrictCode;
       }
       if (this.currCityCode !== '') {

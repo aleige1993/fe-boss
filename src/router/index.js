@@ -37,14 +37,7 @@ import Mapping from '@/pages/configuration-manage/manage-invest/mapping';
 // 配置管理-资方管理-Contract
 import Contract from '@/pages/configuration-manage/manage-invest/contract';
 // 客户管理--个人客户
-// import CustomerManage from '@/pages/customer-manage';
-// import PrivateCustomer from '@/pages/customer-manage/private-customer';
-// import PrivateCustomerList from '@/pages/customer-manage/private-customer/customer-list';
-// import PrivateCustomerModify from '@/pages/customer-manage/private-customer/customer-add';
 // 客户管理--企业客户
-import CompanyCustomer from '@/pages/customer-manage/company-customer';
-import CompanyCustomerList from '@/pages/customer-manage/company-customer/company-list';
-import CompanyCustomerModify from '@/pages/customer-manage/company-customer/company-add';
 import CustomerBlacklist from '@/pages/customer-manage/blacklist-manage';
 
 Vue.use(Router);
@@ -126,20 +119,31 @@ let MyRouter = new Router({
                 }
               ]
             },
+            // 客户管理 == 企业客户
             {
               path: 'companycustomer',
               name: 'companyCustomer',
-              component: CompanyCustomer,
+              component: resolve => require(['@/pages/customer-manage/company-customer'], resolve),
               children: [
                 {
                   path:'/',
                   name: 'companyCustomerList',
-                  component: CompanyCustomerList
+                  component: resolve => require(['@/pages/customer-manage/company-customer/company-list'], resolve)
                 },
                 {
-                  path: 'modify',
+                  path: 'add',
                   name: 'addCompanyCustomer',
-                  component: CompanyCustomerModify
+                  component: resolve => require(['@/pages/customer-manage/company-customer/company-add'], resolve)
+                },
+                {
+                  path: 'update',
+                  name: 'addCompanyCustomer',
+                  component: resolve => require(['@/pages/customer-manage/company-customer/company-add/update.vue'], resolve)
+                },
+                {
+                  path: 'detail',
+                  name: 'addCompanyCustomer',
+                  component: resolve => require(['@/pages/customer-manage/company-customer/company-add/detail.vue'], resolve)
                 }
               ]
             },

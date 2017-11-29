@@ -77,9 +77,11 @@
         }
         let resp = await this.$http.post('/member/page', this.$data.searchForm);
         this.$data.dataLoading = false;
-        this.$data.privateCustomerList = resp.body.resultList;
-        this.$data.currentPage = resp.body.currentPage;
-        this.$data.total = resp.body.totalNum;
+        if (resp.success) {
+          this.$data.privateCustomerList = resp.body.resultList;
+          this.$data.currentPage = resp.body.currentPage;
+          this.$data.total = resp.body.totalNum;
+        }
       },
       jumpPage(page) {
         this.getPrivateCustomerList(page);

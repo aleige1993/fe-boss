@@ -11,6 +11,15 @@ import toastr from '@/assets/js/toastr';
 axios.defaults.baseURL = Config.HTTPBASEURL;
 axios.defaults.headers.common['Content-Type'] = 'application/json;charset=UTF-8';
 Vue.prototype.$ajax = axios;
+toastr.options = {
+  closeButton: true,
+  progressBar: true,
+  positionClass: 'toast-top-right',
+  showDuration: '300',
+  hideDuration: '1000',
+  timeOut: '3000',
+  extendedTimeOut: '1000'
+};
 class Http {
   /**
    * 发起post请求
@@ -20,7 +29,7 @@ class Http {
    */
   post(_url, _data, isNeedLogin = true) {
     if (Config.XHRLOG) {
-      console.info(`----来自${_url}的请求----`);
+      console.info(`----来自${_url}的POST请求----`);
       console.info(JSON.stringify(_data));
     }
     let _headers = {};
@@ -49,7 +58,7 @@ class Http {
       } else if (res.data.reCode === '0000') {
         return res.data;
       } else {
-        toastr.error(res.data.reMsg);
+        toastr.error(res.data.reCode + ' = ' + res.data.reMsg);
       }
     }).catch(err => {
       // error todo
@@ -63,7 +72,7 @@ class Http {
    */
   get(_url, _params = {}, isNeedLogin = true) {
     if (Config.XHRLOG) {
-      // console.info(`----来自${_url}的请求----`);
+      console.info(`----来自${_url}的GET请求----`);
     }
     let _headers = {};
     if (isNeedLogin) {

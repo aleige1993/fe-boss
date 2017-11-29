@@ -39,6 +39,7 @@ let ary = [
     on: true,
     resp: Mock.mock({
       reCode: '0000',
+      success: true,
       'body': [
         {
           regionCode: '1',

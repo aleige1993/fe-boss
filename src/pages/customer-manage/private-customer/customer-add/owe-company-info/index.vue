@@ -106,7 +106,6 @@
     methods: {
       selectCompany(row, index) {
         // Alertify.alert('您选择的企业id：' + index);
-        console.log(row);
         this.$data.formData.companyCode = row.corpNo;
         this.$data.formData.companyName = row.corpName;
         this.$data.formData.suCreditCode = row.creditCode;
@@ -123,7 +122,9 @@
           memberNo: this.memberNo
         });
         this.$data.loadingData = false;
-        this.$data.bankAccountDatas = resp.body;
+        if (resp.success) {
+          this.$data.bankAccountDatas = resp.body;
+        }
       },
       addOweCompany() {
         this.$data.formData = {};
@@ -137,8 +138,10 @@
             this.$data.formData.memberNo = this.memberNo;
             let resp = await this.$http.post('/member/have/company/save', this.$data.formData);
             this.$data.submitLoading = false;
-            this.$data.addBankModal = false;
-            this.getOweComList();
+            if (resp.success) {
+              this.getOweComList();
+              this.$data.addBankModal = false;
+            }
           }
         });
       }
