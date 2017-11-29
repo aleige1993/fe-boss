@@ -408,7 +408,6 @@ export default {
       this.$data.showSelectEmployer = false;
     },
     selectCompanyCustomer(row, index) {
-      console.log(row);
       let companyName = row.corpName;
       let companyType = row.corpType;
       let industryType = row.industryType;

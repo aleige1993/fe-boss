@@ -1,4 +1,5 @@
 <template>
+  <!--归档材料-->
 <div id="configure-model-file">
   <i-table border ref="proTable" :columns="columns1" :data="data1" @on-selection-change="selectRow"></i-table>
   <br>
@@ -12,8 +13,11 @@
 
 <script>
   export default {
-    name: 'configure-model-file',
-    submitData: {},
+    name: 'configureModelFile',
+    props: {
+      childMsg: Object
+    },
+    finishedDocCode: [],
     data() {
       return {
         columns1: [
@@ -24,38 +28,68 @@
           },
           {
             title: '归档材料ID',
-            key: 'id'
+            key: 'finishedDocCode'
           },
           {
             title: '归档材料名称',
-            key: 'name'
+            key: 'finishedDocName'
           }
         ],
-        data1: [
-          {
-            id: '001',
-            name: 'adasdasd'
-          },
-          {
-            id: '002',
-            name: 'cvbcvbcvb'
-          },
-          {
-            id: '003',
-            name: 'yuiyuif'
-          }
-        ]
+        data1: []
       };
     },
+    mounted() {
+      this.getPrivateCustomerList();  // 获取模态框列表数据
+    },
     methods: {
-      formSubmit() {
+      // 获取模态框列表数据
+      async getPrivateCustomerList() {
+        this.$data.dataLoading = true;
+        let productNo = this.childMsg.productNo;
+        let resp = await this.$http.get('/pms/product/finishedDocList', {
+          productNo: productNo
+        });
+        this.$data.dataLoading = false;
+        if (resp.body.length !== 0) {
+          let _data = resp.body.map(item => {
+            if (item.isSelected === 1) {
+              item._checked = true;
+            }
+            return item;
+          });
+          this.$data.data1 = _data;
+        } else {
+          this.$Notice.warning({
+            title: '列表没有数据可加载',
+            duration: 2
+          });
+          this.$data.data1 = [];
+        }
+      },
+      async formSubmit() {
+        let productNo = this.childMsg.productNo;
+        let productName = this.childMsg.productName;
+        let resp = await this.$http.post('/pms/product/bindFinishedDoc', {
+          productNo: productNo,
+          productName: productName,
+          finishedDocCode: this.$data.finishedDocCode
+        });
+        if (resp.success) {
+          this.$Message.success('配置成功');
+          this.$emit('notice-file');
+        }
       },
       formCancel() {
         this.$emit('notice-file');// 通知其父组件执行自定义事件“notice-file”
       },
       selectRow(selection) {      // selection 已选项数据
-        this.$data.submitData = selection;
-        alert(JSON.stringify(selection));
+        let _dataArray = selection.map(item => {
+          let json = {};
+          json['finishedDocCode'] = item.finishedDocCode;
+          json['finishedDocName'] = item.finishedDocName;
+          return json;
+        });
+        this.$data.finishedDocCode = _dataArray;
       }
     }
   };

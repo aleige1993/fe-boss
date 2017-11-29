@@ -3,7 +3,7 @@ export default [
   // 产品配置
   {
     url: '/pms/product/list',
-    on: true,
+    on: false,
     resp: Mock.mock({
       'body': {
         'currentPage': 1,
@@ -11,7 +11,6 @@ export default [
         'pageSize': 15,
         'resultList|10': [
           {
-            'codeId|+1': 1,
             'productNo': 'CP1001',
             'productName|1': ['产品名称1', '产品名称2', '产品名称3', '产品名称4', '产品名称5'],
             'productType|1': ['1', '2', '3', '4', '5'],
@@ -157,11 +156,12 @@ export default [
     on: true,
     resp: Mock.mock({
       reCode: '0',
-      'list|1-5': [
+      'list|3': [
         {
           'car|1': ['轿车', 'SUV', '轻卡', '微卡'],
           'month|1': ['3', '6', '12', '18', '24'],
-          'rate|1': ['0.1', '0.15', '0.2']
+          'nominal|1': ['3', '6', '12', '18', '24'],
+          'actual|1': ['3', '6', '12', '18', '24']
         }
       ],
       reMsg: '成功'
