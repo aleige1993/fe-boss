@@ -16,8 +16,9 @@ class HttpMock {
     MockConfig.map(item => {
       // 判断是否单个mock的开启状态
       if (item.on) {
-        let rtype = item.type || 'post';
-        Mock.mock(Config.HTTPBASEURL + item.url, rtype, () => {
+        // let rtype = item.type ? item.type : 'post';
+        // console.log(rtype);
+        Mock.mock(Config.HTTPBASEURL + item.url, () => {
           return item.resp;
         });
       }

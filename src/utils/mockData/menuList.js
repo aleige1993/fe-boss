@@ -2,6 +2,7 @@ export default [
   {
     url: '/sys/menu/list?menuId=98',
     on: true,
+    type: 'get',
     resp: {
       reCode: '0000',
       body: {

@@ -2,8 +2,8 @@ import Mock from 'mockjs';
 export default [
   // 产品配置
   {
-    url: '/pms/product/list',
-    on: false,
+    url: '/pms/product/list?currentPage=1&pageSize=10&productName=',
+    on: true,
     resp: Mock.mock({
       'body': {
         'currentPage': 1,
@@ -24,7 +24,7 @@ export default [
         'totalNum': 100,
         'totalPage': 1
       },
-      'reCode': '0',
+      'reCode': '0000',
       'reMsg': '成功',
       'success': true
     })
