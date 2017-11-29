@@ -224,6 +224,91 @@ export default [
       })
     }
   },
+  // 企业客户银行账户信息
+  {
+    url: '/corp/listCorpAcct',
+    on: true,
+    resp: Mock.mock({
+      reCode: '0000',
+      success: true,
+      body: {
+        'resultList|10': [{
+          'corpNo': '@integer(11)',
+          'corpName': '@name',
+          'acctName': '@name',
+          'acctNo': '@integer(11)',
+          'bankName': '@name',
+          'openBankName': '@name',
+          'openBankNo': '12',
+          'openBankClearingNo': '12',
+          'remark': 'dasdasdsa'
+        }]
+      }
+    })
+  },
+  {
+    url: '/corp/saveCorpAcct',
+    on: true,
+    resp: Mock.mock({
+      reCode: '0000',
+      success: true,
+      body: {}
+    })
+  },
+  {
+    url: '/corp/deleteCorpAcct',
+    on: true,
+    resp: Mock.mock({
+      reCode: '0000',
+      success: true,
+      body: {}
+    })
+  },
+  // 企业客户关联企业
+  {
+    url: '/corp/listCorpRelationShip',
+    on: true,
+    resp: {
+      reCode: '0000',
+      success: true,
+      body: Mock.mock({
+        'resultList|5-20': [
+          {
+            'corpNo': '1',
+            'corpName': '海尔云贷',
+            'relatedCorpNo': '2',
+            'relatedCorpName': '海尔集团',
+            'relatedCorpCreditCode': '123',
+            'relation': '1',
+            'linkmanName': '打算',
+            'linkmanMobile': '123',
+            'regDate': '2017-11-11',
+            'regCapital': '1',
+            'bizAddress': '大萨达撒多撒多',
+            'remark': '大萨达撒大所多'
+          }
+        ]
+      })
+    }
+  },
+  {
+    url: '/corp/saveCorpRelationShip',
+    on: true,
+    resp: {
+      reCode: '0000',
+      success: true,
+      body: {}
+    }
+  },
+  {
+    url: '/corp/deleteCorpRelationShip',
+    on: true,
+    resp: {
+      reCode: '0000',
+      success: true,
+      body: {}
+    }
+  },
   // 根据id查询个人客户的银行账户信息
   {
     url: '/member/account/query',

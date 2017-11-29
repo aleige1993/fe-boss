@@ -41,7 +41,7 @@
           <i-input v-model="formData.remark" type="textarea" :rows="4" placeholder=""></i-input>
         </i-form-item>
         <i-form-item label="">
-          <i-button @click="saveShareholer" :loading="addLoading" type="primary" size="large" style="width: 80px;">
+          <i-button @click="saveShareholer" :loading="addLoading" type="primary" size="large" style="width: 120px;">
             <span v-if="addLoading">处理中...</span>
             <span v-else>提交</span>
           </i-button>

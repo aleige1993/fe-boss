@@ -16,9 +16,23 @@ class HttpMock {
     MockConfig.map(item => {
       // 判断是否单个mock的开启状态
       if (item.on) {
-        // let rtype = item.type ? item.type : 'post';
-        // console.log(rtype);
-        Mock.mock(Config.HTTPBASEURL + item.url, () => {
+        let rtype = item.type ? item.type : 'post';
+        let url = '';
+        if (rtype === 'post') {
+          url = Config.HTTPBASEURL + item.url;
+        } else {
+          /*eslint-disable */
+          String.prototype.replaceAll = function(s1,s2){
+            return this.replace(new RegExp(s1,"gm"),s2);
+          };
+          let urlTemp = (Config.HTTPBASEURL + item.url).replaceAll('\/', '\\/');
+          urlTemp = urlTemp.replaceAll('\:', '\\:');
+          urlTemp = urlTemp.replaceAll('\[\.]', '\\.');
+          url = new RegExp('^' + urlTemp + '\\?');
+          /*eslint-disable */
+        }
+        //console.log('url========' + url);
+        Mock.mock(url, () => {
           return item.resp;
         });
       }

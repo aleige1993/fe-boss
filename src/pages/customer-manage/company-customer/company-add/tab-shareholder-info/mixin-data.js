@@ -41,7 +41,7 @@ export default {
                 },
                 on: {
                   click: () => {
-                    this.$data.formData = params.row;
+                    Object.assign(this.$data.formData, params.row);
                     this.$data.addShareholerModal = true;
                   }
                 }

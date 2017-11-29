@@ -1,6 +1,6 @@
 export default [
   {
-    url: '/sys/menu/list?menuId=98',
+    url: '/sys/menu/list',
     on: true,
     type: 'get',
     resp: {

@@ -59,6 +59,7 @@ class Http {
         return res.data;
       } else {
         toastr.error(res.data.reCode + ' = ' + res.data.reMsg);
+        return res.data;
       }
     }).catch(err => {
       // error todo
@@ -102,6 +103,7 @@ class Http {
         return res.data;
       } else {
         toastr.error(res.data.reMsg);
+        return res.data;
       }
     }).catch(err => {
       // error todo

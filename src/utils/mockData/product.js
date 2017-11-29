@@ -2,8 +2,9 @@ import Mock from 'mockjs';
 export default [
   // 产品配置
   {
-    url: '/pms/product/list?currentPage=1&pageSize=10&productName=',
+    url: '/pms/product/list',
     on: true,
+    type: 'get',
     resp: Mock.mock({
       'body': {
         'currentPage': 1,

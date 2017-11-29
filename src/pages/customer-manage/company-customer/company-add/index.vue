@@ -80,15 +80,15 @@
       },
       submitBssicSuccess(res) {
         this.$data.addCustomer = res;
-      }
-    },
-    initPage() {
-      if (this.$route.query.id) {
-        this.$data.currentPageBreadcrumb = '修改客户信息';
-      } else if (this.$route.query.from === 'detail') {
-        this.$data.currentPageBreadcrumb = '客户信息详情';
-      } else {
-        this.$data.currentPageBreadcrumb = '添加客户';
+      },
+      initPage() {
+        if (this.$route.query.id) {
+          this.$data.currentPageBreadcrumb = '修改客户信息';
+        } else if (this.$route.query.from === 'detail') {
+          this.$data.currentPageBreadcrumb = '客户信息详情';
+        } else {
+          this.$data.currentPageBreadcrumb = '添加客户';
+        }
       }
     },
     mounted() {
