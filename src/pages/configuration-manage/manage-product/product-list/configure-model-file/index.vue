@@ -17,7 +17,7 @@
     props: {
       childMsg: Object
     },
-    loanDocCode: [],
+    finishedDocCode: [],
     data() {
       return {
         columns1: [
@@ -28,28 +28,14 @@
           },
           {
             title: '归档材料ID',
-            key: 'id'
+            key: 'finishedDocCode'
           },
           {
             title: '归档材料名称',
-            key: 'name'
+            key: 'finishedDocName'
           }
         ],
-        data1: [
-          {
-            id: '001',
-            name: 'adasdasd'
-          },
-          {
-            id: '002',
-            name: 'cvbcvbcvb'
-          },
-          {
-            id: '003',
-            name: 'yuiyuif',
-            _checked: true
-          }
-        ]
+        data1: []
       };
     },
     mounted() {
@@ -66,7 +52,7 @@
         this.$data.dataLoading = false;
         if (resp.body.length !== 0) {
           let _data = resp.body.map(item => {
-            if (item.isSelectd === 1) {
+            if (item.isSelected === 1) {
               item._checked = true;
             }
             return item;
@@ -86,9 +72,10 @@
         let resp = await this.$http.post('/pms/product/bindFinishedDoc', {
           productNo: productNo,
           productName: productName,
-          loanDocCode: this.$data.loanDocCode
+          finishedDocCode: this.$data.finishedDocCode
         });
         if (resp.success) {
+          this.$Message.success('配置成功');
           this.$emit('notice-file');
         }
       },
@@ -98,11 +85,11 @@
       selectRow(selection) {      // selection 已选项数据
         let _dataArray = selection.map(item => {
           let json = {};
-          json['loanDocCode'] = item.loanDocCode;
-          json['loanDocName'] = item.loanDocName;
+          json['finishedDocCode'] = item.finishedDocCode;
+          json['finishedDocName'] = item.finishedDocName;
           return json;
         });
-        this.$data.loanDocCode = _dataArray;
+        this.$data.finishedDocCode = _dataArray;
       }
     }
   };

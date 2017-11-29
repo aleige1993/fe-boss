@@ -49,7 +49,6 @@
         let resp = await this.$http.get('/pms/product/loanDocList', {
           productNo: productNo
         });
-        console.log(resp);
         this.$data.dataLoading = false;
         if (resp.body.length !== 0) {
           let _data = resp.body.map(item => {
@@ -75,8 +74,8 @@
           productName: productName,
           loanDocCode: this.$data.loanDocCode
         });
-        console.log(resp);
         if (resp.success) {
+          this.$Message.success('配置成功');
           this.$emit('notice-loan');
         }
       },

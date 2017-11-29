@@ -12,8 +12,8 @@
 
 <script>
   export default {
-    name: 'configure-model-rule',
-    loanDocCode: [],
+    name: 'configureModelRule',
+    approveRuleCode: [],
     props: {
       childMsg: Object
     },
@@ -29,27 +29,14 @@
           },
           {
             title: '准入规则ID',
-            key: 'id'
+            key: 'approveRuleCode'
           },
           {
             title: '准入规则名称',
-            key: 'name'
+            key: 'approveRuleName'
           }
         ],
-        data1: [
-          {
-            id: '001',
-            name: 'adasdasd'
-          },
-          {
-            id: '002',
-            name: 'cvbcvbcvb'
-          },
-          {
-            id: '003',
-            name: 'yuiyuif'
-          }
-        ]
+        data1: []
       };
     },
     mounted() {
@@ -66,7 +53,7 @@
         this.$data.dataLoading = false;
         if (resp.body.length !== 0) {
           let _data = resp.body.map(item => {
-            if (item.isSelectd === 1) {
+            if (item.isSelected === 1) {
               item._checked = true;
             }
             return item;
@@ -86,9 +73,10 @@
         let resp = await this.$http.post('/pms/product/bindApproveRule', {
           productNo: productNo,
           productName: productName,
-          loanDocCode: this.$data.loanDocCode
+          approveRuleCode: this.$data.approveRuleCode
         });
         if (resp.success) {
+          this.$Message.success('配置成功');
           this.$emit('notice-rule');
         }
       },
@@ -98,11 +86,11 @@
       selectRow(selection) {      // selection 已选项数据
         let _dataArray = selection.map(item => {
           let json = {};
-          json['loanDocCode'] = item.loanDocCode;
-          json['loanDocName'] = item.loanDocName;
+          json['approveRuleCode'] = item.approveRuleCode;
+          json['approveRuleName'] = item.approveRuleName;
           return json;
         });
-        this.$data.loanDocCode = _dataArray;
+        this.$data.approveRuleCode = _dataArray;
       }
     }
   };
