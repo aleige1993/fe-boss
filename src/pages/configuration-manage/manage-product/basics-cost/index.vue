@@ -76,7 +76,6 @@
         });
         this.$data.dataLoading = false;
         if (resp.body.resultList.length !== 0) {
-          console.log(resp.body.resultList);
           this.$data.data1 = resp.body.resultList;
           this.$data.currentPage = resp.body.currentPage;
           this.$data.total = resp.body.totalNum;
@@ -98,7 +97,6 @@
           this.$data.buttonLoading = false; // 关闭按钮的loading状态
           this.$Message.success('添加费用类型成功');
           this.$data.showAddModal = false;
-          this.$data.buttonLoading = false;
           this.getPrivateCustomerList();
         }
       },

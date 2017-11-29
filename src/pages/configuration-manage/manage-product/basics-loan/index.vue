@@ -86,7 +86,6 @@
           this.$data.buttonLoading = false; // 关闭按钮的loading状态
           this.$Message.success('添加贷款材料成功');
           this.$data.showAddModal = false;
-          this.$data.buttonLoading = false;
           this.getPrivateCustomerList();
         }
       },

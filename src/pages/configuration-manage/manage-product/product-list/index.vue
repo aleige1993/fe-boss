@@ -113,27 +113,27 @@
       </i-form>
     </pt-modal>
     <!--利率方案配置弹窗-->
-    <pt-modal :title="'['+clickRow.productName+']利率方案配置'" v-model="LlShowModel" :width="1200">
+    <pt-modal :title="'[ '+clickRow.productName+' ]利率方案配置'" v-model="LlShowModel" :width="1200">
       <conf-model-lilv  @notice-lilv="noticeLilvFun" :child-msg="clickRow" v-if="LlShowModel"></conf-model-lilv>
     </pt-modal>
     <!--费用收取配置弹窗-->
-    <pt-modal :title="'['+clickRow.productName+']费用收取配置'" v-model="FyShowModal" :width="1200">
+    <pt-modal :title="'[ '+clickRow.productName+' ]费用收取配置'" v-model="FyShowModal" :width="1200">
       <conf-model-fy  @notice-cost="noticeCostFun" :child-msg="clickRow" v-if="FyShowModal"></conf-model-fy>
     </pt-modal>
     <!--贷款材料配置弹窗-->
-    <pt-modal :title="'['+clickRow.productName+']贷款材料配置'" v-model="LoanShowModal" :width="1200">
+    <pt-modal :title="'[ '+clickRow.productName+' ]贷款材料配置'" v-model="LoanShowModal" :width="1200">
       <conf-model-loan @notice-loan="noticeLoanFun" :child-msg="clickRow" v-if="LoanShowModal"></conf-model-loan>
     </pt-modal>
     <!--准入规则配置弹窗-->
-    <pt-modal :title="'['+clickRow.productName+']准入规则配置'" v-model="RuleShowModal" :width="1200">
+    <pt-modal :title="'[ '+clickRow.productName+' ]准入规则配置'" v-model="RuleShowModal" :width="1200">
       <conf-model-rule @notice-rule="noticeRuleFun" :child-msg="clickRow" v-if="RuleShowModal"></conf-model-rule>
     </pt-modal>
     <!--归档材料配置弹窗-->
-    <pt-modal :title="'['+clickRow.productName+']归档材料配置'" v-model="FileShowModal" :width="1200">
+    <pt-modal :title="'[ '+clickRow.productName+' ]归档材料配置'" v-model="FileShowModal" :width="1200">
       <conf-model-file @notice-file="noticeFileFun" :child-msg="clickRow" v-if="FileShowModal"></conf-model-file>
     </pt-modal>
     <!--合同模板配置弹窗-->
-    <pt-modal :title="'['+clickRow.productName+']合同模板配置'" v-model="ContractShowModal" :width="1200">
+    <pt-modal :title="'[ '+clickRow.productName+' ]合同模板配置'" v-model="ContractShowModal" :width="1200">
       <conf-model-contract @notice-file="noticeContractFun" :child-msg="clickRow" v-if="ContractShowModal"></conf-model-contract>
     </pt-modal>
   </div>
@@ -234,7 +234,6 @@
           this.$data.buttonLoading = false; // 关闭按钮的loading状态
           this.$Message.success('新增产品成功');
           this.$data.showAddModal = false;
-          this.$data.buttonLoading = false;
           this.getPrivateCustomerList();
         }
       },
@@ -281,7 +280,6 @@
             let respDel = await this.$http.get('/pms/product/remove', {
               productNo: productNo
             });
-            console.log(respDel);
             if (respDel.success) {
               loadingMsg();
               this.$Message.success('删除产品成功');

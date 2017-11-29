@@ -152,18 +152,19 @@ export default [
   },
   // 产品配置-利率方案配置
   {
-    url: '/pms/productRate/productList',
+    url: '/pms/productPackage/list?productNo=CP1001',
     on: true,
+    type: 'get',
     resp: Mock.mock({
       'reCode': '0000',
       'reMsg': '成功',
       'success': true,
       'resultList|5': [
         {
-          'car|1': ['1', '2'],
-          'month|1': ['3', '6', '12', '18', '24'],
-          'nominal|1': ['0.15', '0.25', '0.2', '0.3', '0.1'],
-          'actual|1': ['0.15', '0.25', '0.2', '0.3', '0.1']
+          'bizType|1': ['1', '2'],
+          'loanPeriods|1': ['3', '6', '12', '18', '24'],
+          'loanNominalRate|1': ['0.15', '0.25', '0.2', '0.3', '0.1'],
+          'loanRealRate|1': ['0.15', '0.25', '0.2', '0.3', '0.1']
         }
       ]
     })

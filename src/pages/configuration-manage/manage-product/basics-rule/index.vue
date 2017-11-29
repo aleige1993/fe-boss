@@ -46,6 +46,7 @@
         buttonLoading: false,
         isAdd: true,
         showAddModal: false,
+        listIndex: Number,
         total: 0,
         pageSize: 15,
         currentPage: 1,
@@ -92,7 +93,6 @@
           this.$data.buttonLoading = false; // 关闭按钮的loading状态
           this.$Message.success('添加准入规则成功');
           this.$data.showAddModal = false;
-          this.$data.buttonLoading = false;
           this.getPrivateCustomerList();
         }
       },

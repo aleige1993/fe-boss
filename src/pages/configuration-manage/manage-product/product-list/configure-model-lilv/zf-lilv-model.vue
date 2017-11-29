@@ -3,31 +3,33 @@
     <div class="form-top-actions">
       <i-button @click="addModal" type="info"><i class="iconfont icon-xinzeng"></i> 新增</i-button>
     </div>
-    <i-table border ref="zfTable" :columns="columns1" :data="data1"></i-table>
+    <i-table :loading="dataLoading" border ref="zfTable" :columns="columns1" :data="data1"></i-table>
     <br>
     <br>
     <bs-model :title="isAdd ? '新增' : '修改'" v-model="showAddModal">
       <i-form ref="rateForm" :model="rateForm" label-position="right" :label-width="100" style="padding-bottom:0;">
-        <i-form-item label="资方" prop="capital">
-          <i-select v-model="rateForm.capital" placeholder="请选择">
+        <i-form-item label="资方" prop="fund">
+          <i-select v-model="rateForm.fund" placeholder="请选择">
             <i-option value="1">海尔云贷</i-option>
             <i-option value="2">海乐行</i-option>
           </i-select>
         </i-form-item>
-        <i-form-item label="名义利率" prop="nominal">
-          <i-input placeholder="名义利率" v-model="rateForm.nominal">
+        <i-form-item label="名义利率" prop="nominalRate">
+          <i-input placeholder="名义利率" v-model="rateForm.nominalRate">
             <span slot="append">%/年</span>
           </i-input>
         </i-form-item>
-
-        <i-form-item label="实际利率" prop="actual">
-          <i-input placeholder="实际利率" v-model="rateForm.actual">
+        <i-form-item label="实际利率" prop="realRate">
+          <i-input placeholder="实际利率" v-model="rateForm.realRate">
             <span slot="append">%/年</span>
           </i-input>
         </i-form-item>
         <i-form-item class="text-right">
-          <i-button type="primary" @click="formInSubmit">提交</i-button>
-          <i-button type="ghost" style="margin-left: 8px" @click="formInCancel">取消</i-button>
+          <i-button type="primary" @click="formSubmit" :loading="btnLoading">
+            <span v-if="!btnLoading">提交</span>
+            <span v-else>loading...</span>
+          </i-button>
+          <i-button type="ghost" style="margin-left: 8px" @click="formCancel">取消</i-button>
         </i-form-item>
       </i-form>
     </bs-model>
@@ -38,35 +40,121 @@
   import BSModal from '@/components/bs-modal';
   import MixinData from './zf-lilv-model-Mixin-data';
   export default {
-    name: 'zf-lilv-model',
+    name: 'zfLilvModel',
     components: {
       'bs-model': BSModal
+    },
+    props: {
+      zfMsg: Object
     },
     mixins: [MixinData],
     data() {
       return {
         isAdd: true,
+        btnLoading: false,
+        dataLoading: false,
         showAddModal: false,
         rateForm: {
-          capital: '',  // 资方
-          nominal: '',  // 名义利率
-          actual: ''  // 实际利率
+          fund: '', // 出资方
+          nominalRate: '', // 名义利率
+          realRate: '' // 实际利率
         }
       };
     },
+    mounted() {
+      this.getPrivateCustomerList();
+    },
     methods: {
+      // 查询列表数据
+      async getPrivateCustomerList() {
+        this.$data.dataLoading = true;
+        let resp = await this.$http.get('/pms/productRate/fundRateList', {
+          packageRateNo: this.zfMsg.packageRateNo
+        });
+        this.$data.dataLoading = false;
+        if (resp.body.length !== 0) {
+          this.$data.data1 = resp.body;
+        } else {
+          this.$Notice.warning({
+            title: '没有数据可加载',
+            duration: 2
+          });
+          this.$data.data1 = [];
+        }
+      },
+      // 新增的保存请求方法
+      async addSuBmit() {
+        let resAdd = await this.$http.post('/pms/productRate/fundRateSave', {
+          packageRateNo: this.zfMsg.packageRateNo,
+          fund: this.$data.rateForm.fund, // 出资方
+          nominalRate: this.$data.rateForm.nominalRate, // 名义利率
+          realRate: this.$data.rateForm.realRate // 名义利率
+        });
+        this.$data.buttonLoading = false; // 关闭按钮的loading状态
+        this.$data.showAddModal = false;
+        if (resAdd.success) {
+          this.$Message.success('新增成功');
+          this.getPrivateCustomerList();
+        }
+      },
       addModal() {
         this.isAdd = true;
-        this.showBtn = false;
-        this.showAddModal = true;
         this.$data.rateForm = {};
-        this.$data.rateForm.capital = '';
-        this.$data.rateForm.nominal = '';
-        this.$data.rateForm.actual = '';
-        this.$data.rateForm = true;
+        this.$data.showAddModal = true;
       },
-      formInSubmit() {},
-      formInCancel() {}
+      setList(row) {
+        this.isAdd = false;
+        this.$data.showAddModal = true;
+        this.rateForm = row;
+      },
+      // 修改情况下的提交数据
+      async setSubmit() {
+        let fundRateNo = this.rateForm.fundRateNo;
+        let resModify = await this.$http.post('/pms/productRate/fundRateModify', {
+          fundRateNo: fundRateNo,
+          packageRateNo: this.zfMsg.packageRateNo,
+          fund: this.$data.rateForm.fund, // 出资方
+          nominalRate: this.$data.rateForm.nominalRate, // 名义利率
+          realRate: this.$data.rateForm.realRate // 名义利率
+        });
+        this.$data.showAddModal = false;
+        this.$data.buttonLoading = false;
+        if (resModify.success) {
+          this.$Message.success('修改成功');
+          this.getPrivateCustomerList();
+        }
+      },
+      // 删除数据的请求
+      async remove(row) {
+        Alertify.confirm('确定要删除吗？', async (ok) => {
+          if (ok) {
+            let fundRateNo = row.fundRateNo;
+            const loadingMsg = this.$Message.loading('删除中...', 0);
+            let respDel = await this.$http.post('/pms/productRate/fundRateRemove', {
+              fundRateNo: fundRateNo
+            });
+            if (respDel.success) {
+              loadingMsg();
+              this.$Message.success('删除成功');
+              this.getPrivateCustomerList();
+            }
+          }
+        });
+      },
+      // 新增模态框的保存按钮点击事件
+      formSubmit() {
+        this.$data.buttonLoading = true;
+        // 如果是新增
+        if (this.isAdd) {
+          this.addSuBmit();
+        } else {
+          this.setSubmit();
+        }
+      },
+      formCancel() {
+        this.$data.showAddModal = false;
+        this.$data.rateForm = {};
+      }
     }
   };
 </script>
