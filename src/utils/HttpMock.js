@@ -19,12 +19,20 @@ class HttpMock {
         let rtype = item.type ? item.type : 'post';
         let url = '';
         if (rtype === 'post') {
-          url = item.url;
+          url = Config.HTTPBASEURL + item.url;
         } else {
-          url = '/^' + item.url + '\?/'; // eslint-disable-line
+          /*eslint-disable */
+          String.prototype.replaceAll = function(s1,s2){
+            return this.replace(new RegExp(s1,"gm"),s2);
+          };
+          let urlTemp = (Config.HTTPBASEURL + item.url).replaceAll('\/', '\\/');
+          urlTemp = urlTemp.replaceAll('\:', '\\:');
+          urlTemp = urlTemp.replaceAll('\[\.]', '\\.');
+          url = new RegExp('^' + urlTemp + '\\?');
+          /*eslint-disable */
         }
-        // console.log(rtype);
-        Mock.mock(Config.HTTPBASEURL + item.url, () => {
+        //console.log('url========' + url);
+        Mock.mock(url, () => {
           return item.resp;
         });
       }
