@@ -1,12 +1,12 @@
 <template>
   <span>
-    <i-select :label-in-value="true" v-model="distanceData.provinceCode"  @on-change="provinceChange" style="width: 150px">
+    <i-select :disabled="readonly"  :label-in-value="true" v-model="distanceData.provinceCode"  @on-change="provinceChange" style="width: 150px">
       <i-option v-for="item in provinceDropList" :value="item.regionCode" :key="item.regionCode">{{item.regionName}}</i-option>
     </i-select>
-    <i-select :label-in-value="true" v-model="distanceData.districtCode" @on-change="districtChange" style="width: 150px">
+    <i-select :disabled="readonly" :label-in-value="true" v-model="distanceData.districtCode" @on-change="districtChange" style="width: 150px">
       <i-option v-for="item in districtDropList" :value="item.regionCode" :key="item.regionCode">{{item.regionName}}</i-option>
     </i-select>
-    <i-select :label-in-value="true" @on-change="cityChange" v-model="distanceData.cityCode" style="width: 150px">
+    <i-select :disabled="readonly" :label-in-value="true" @on-change="cityChange" v-model="distanceData.cityCode" style="width: 150px">
       <i-option v-for="item in cityDropList" :value="item.regionCode" :key="item.regionCode">{{item.regionName}}</i-option>
     </i-select>
   </span>
@@ -44,6 +44,11 @@
         default: '',
         required: false,
         type: String
+      },
+      readonly: {
+        default: false,
+        required: false,
+        type: Boolean
       }
     },
     methods: {
@@ -57,13 +62,17 @@
       async provinceChange(val) {
         this.$data.distanceData.provinceName = val.label;
         let resp = await this.getAddressDropList(val.value);
-        this.$data.districtDropList = resp.body;
+        if (resp.success) {
+          this.$data.districtDropList = resp.body;
+        }
         this.$emit('on-change', this.$data.distanceData);
       },
       async districtChange(val) {
         this.$data.distanceData.districtName = val.label;
         let resp = await this.getAddressDropList(val.value);
-        this.$data.cityDropList = resp.body;
+        if (resp.success) {
+          this.$data.cityDropList = resp.body;
+        }
         this.$emit('on-change', this.$data.distanceData);
       },
       cityChange(val) {
@@ -73,15 +82,21 @@
     },
     async mounted() {
       let resp = await this.getAddressDropList();
-      this.$data.provinceDropList = resp.body;
+      if (resp.success) {
+        this.$data.provinceDropList = resp.body;
+      }
       if (this.currProvinceCode !== '') {
         let resp = await this.getAddressDropList(this.currProvinceCode);
-        this.$data.districtDropList = resp.body;
+        if (resp.success) {
+          this.$data.districtDropList = resp.body;
+        }
         this.$data.distanceData.provinceCode = this.currProvinceCode;
       }
       if (this.currDistrictCode !== '') {
         let resp = await this.getAddressDropList(this.currDistrictCode);
-        this.$data.cityDropList = resp.body;
+        if (resp.success) {
+          this.$data.cityDropList = resp.body;
+        }
         this.$data.distanceData.districtCode = this.currDistrictCode;
       }
       if (this.currCityCode !== '') {

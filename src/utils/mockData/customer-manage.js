@@ -1,4 +1,5 @@
 import Mock from 'mockjs';
+import companyCustomerBasicData from '@/components/form-company-customer-basic/mixin-data';
 export default [
   // 黑名单列表
   {
@@ -101,10 +102,10 @@ export default [
               'status': '@pick(["1", "2", "3"])',
               'corpType': '1',
               'industryType': '1',
-              bizProvinceCode: '1',
-              bizCityCode: '1',
-              bizDistrictCode: '1',
-              bizRoadAddr: '@county(true)',
+              'bizProvinceCode': '1',
+              'bizCityCode': '1',
+              'bizDistrictCode': '1',
+              'bizRoadAddr': '@county(true)',
               'mainLinkmanName': '@name',
               'actualControllersTel': '2123',
               'joinStartDate': '2017-12-12',
@@ -157,6 +158,71 @@ export default [
         'success': true
       }
     )
+  },
+  {
+    url: '/corp/saveCorp',
+    on: true,
+    resp: {
+      reCode: '0000',
+      success: true,
+      body: {
+        corpNo: '1',
+        status: '1'
+      }
+    }
+  },
+  // 企业客户股东信息
+  {
+    url: '/corp/listCorpPartner',
+    on: true,
+    resp: Mock.mock({
+      reCode: '0000',
+      success: true,
+      body: {
+        'resultList|10': [
+          {
+            partnerName: '@name',
+            partnerType: '1',
+            investAmt: '10000',
+            investType: '1',
+            investPercent: '60',
+            remark: '1111',
+            partnerNo: '1'
+          }
+        ]
+      }
+    })
+  },
+  // 企业客户股东信息--保存
+  {
+    url: '/corp/savePartner',
+    on: true,
+    resp: {
+      success: true,
+      reCode: '0000',
+      body: {}
+    }
+  },
+  // 企业客户股东信息--删除
+  {
+    url: '/corp/deleteCorpPartner',
+    on: true,
+    resp: {
+      success: true,
+      reCode: '0000',
+      body: {}
+    }
+  },
+  {
+    url: '/corp/getCorpDetail',
+    on: true,
+    resp: {
+      success: true,
+      reCode: '0000',
+      body: $.extend(companyCustomerBasicData.data().formDataInit, {
+        baseDTO: { corpNo: '1', 'corpName': '海尔云贷编辑测试' }
+      })
+    }
   },
   // 根据id查询个人客户的银行账户信息
   {

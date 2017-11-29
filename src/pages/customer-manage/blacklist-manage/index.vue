@@ -71,8 +71,10 @@
         this.$data.dataLoading = true;
         let resp = await this.$http.post('/member/blacklist/list', {});
         this.$data.dataLoading = false;
-        let data = resp.body;
-        this.$data.blacklistData = data;
+        if (resp.success) {
+          let data = resp.body;
+          this.$data.blacklistData = data;
+        }
       }
     },
     components: {

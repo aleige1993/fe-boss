@@ -78,7 +78,9 @@
           memberNo: this.$data.memberNo
         });
         this.$data.listLoading = false;
-        this.$data.spouseDatas = resp.body;
+        if (resp.success) {
+          this.$data.spouseDatas = resp.body;
+        }
       },
       deleteSpouse(spouse) {
         Alertify.confirm('确定要删除当前配偶信息吗？', (conf) => {

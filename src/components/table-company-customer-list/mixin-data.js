@@ -60,7 +60,13 @@ export default {
                 style: { marginRight: '5px' },
                 on: {
                   click: () => {
-                    this.show(params.index);
+                    this.$router.push({
+                      path: '/index/customer/companycustomer/modify',
+                      query: {
+                        id: params.row.corpNo,
+                        from: 'detail'
+                      }
+                    });
                   }
                 }
               }, '详情'),
@@ -73,10 +79,9 @@ export default {
                 on: {
                   click: () => {
                     this.$router.push({
-                      path: '/index/customer/modify',
+                      path: '/index/customer/companycustomer/modify',
                       query: {
-                        id: params.row.id,
-                        from: 'detail'
+                        id: params.row.corpNo
                       }
                     });
                     // this.remove(params.index);
@@ -91,7 +96,11 @@ export default {
                 style: { marginRight: '5px' },
                 on: {
                   click: () => {
-                    this.remove(params.index);
+                    Alertify.confirm('确定要删除当前客户吗', ok => {
+                      if (ok) {
+                        // ok
+                      }
+                    });
                   }
                 }
               }, '删除'),

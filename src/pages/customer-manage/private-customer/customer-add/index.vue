@@ -71,10 +71,10 @@
         return this.$route.query.id;
       },
       otherDisabled() {
-        return this.$data.addCustomer == null;
+        return this.$data.addCustomer === null;
       },
       spouseDisabled() {
-        return this.$data.addCustomer == null || this.$data.addCustomer.mbMemberDTO.maritalStatus !== '1';
+        return this.$data.addCustomer === null || this.$data.addCustomer.mbMemberDTO.maritalStatus !== '1';
       }
     },
     watch: {

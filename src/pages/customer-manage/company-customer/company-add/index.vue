@@ -4,29 +4,30 @@
       <i-breadcrumb-item href="/">首页</i-breadcrumb-item>
       <i-breadcrumb-item href="/index/customer">客户档案</i-breadcrumb-item>
       <i-breadcrumb-item href="/index/customer">个人客户管理</i-breadcrumb-item>
-      <i-breadcrumb-item>客户添加</i-breadcrumb-item>
+      <i-breadcrumb-item>{{currentPageBreadcrumb}}</i-breadcrumb-item>
     </i-breadcrumb>
     <div class="form-top-actions"></div>
-    <i-tabs :animated="false" type="card" @on-click="tabChange">
+    <i-tabs v-model="tabIndex" :animated="false" type="card">
       <i-tab-pane label="主体信息">
-        <tab-company-customer-basic-info></tab-company-customer-basic-info>
+        <tab-company-customer-basic-info v-if="tabIndex===0" @on-submit-success="submitBssicSuccess"></tab-company-customer-basic-info>
       </i-tab-pane>
-      <i-tab-pane label="股东信息">
-        <tab-shareholder-info></tab-shareholder-info>
+      <i-tab-pane :disabled="otherDisabled" label="股东信息">
+        <tab-shareholder-info :customer="addCustomer" v-if="tabIndex===1"></tab-shareholder-info>
       </i-tab-pane>
-      <i-tab-pane label="银行账户信息">
-        <tab-bank-account-info></tab-bank-account-info>
+      <i-tab-pane :disabled="otherDisabled" label="银行账户信息">
+        <tab-bank-account-info :customer="addCustomer" v-if="tabIndex===2"></tab-bank-account-info>
       </i-tab-pane>
-      <i-tab-pane label="关联企业">
-        <tab-relation-company></tab-relation-company>
+      <i-tab-pane :disabled="otherDisabled" label="关联企业">
+        <tab-relation-company :customer="addCustomer" v-if="tabIndex===3"></tab-relation-company>
       </i-tab-pane>
-      <i-tab-pane label="大数据信息">
-        <tab-business-contact></tab-business-contact>
+      <i-tab-pane :disabled="otherDisabled" label="大数据信息">
+        <tab-business-contact :customer="addCustomer" v-if="tabIndex===4"></tab-business-contact>
       </i-tab-pane>
-      <i-tab-pane label="诉讼情况">
-        <tab-lawsuit-info></tab-lawsuit-info>
+      <i-tab-pane :disabled="otherDisabled" label="诉讼情况">
+        <tab-lawsuit-info :customer="addCustomer" v-if="tabIndex===5"></tab-lawsuit-info>
       </i-tab-pane>
     </i-tabs>
+
   </div>
 </template>
 <script>
@@ -44,12 +45,23 @@
     mixins: [MixinData],
     data() {
       return {
-        customerId: null
+        tabIndex: 0,
+        addCustomer: null,
+        currentPageBreadcrumb: '添加客户'
       };
     },
+    computed: {
+      otherDisabled() {
+        return this.$data.addCustomer === null;
+      }
+    },
     watch: {
-      'formData.user.isWed': (val) => {
-        // alert(val);
+      '$route': {
+        handler(newVal, oldVal) {
+          this.$data.tabIndex = 0;
+          this.initPage();
+        },
+        deep: true
       }
     },
     components: {
@@ -63,14 +75,25 @@
       TabLawsuitInfo
     },
     methods: {
-      tabChange(name) {
-        // alert(name); // 0,1,2,3
-      },
       resetAddCustomerForm() {
         this.$refs['formAddCustomer'].resetFields();
+      },
+      submitBssicSuccess(res) {
+        this.$data.addCustomer = res;
       }
     },
-    mounted() {}
+    initPage() {
+      if (this.$route.query.id) {
+        this.$data.currentPageBreadcrumb = '修改客户信息';
+      } else if (this.$route.query.from === 'detail') {
+        this.$data.currentPageBreadcrumb = '客户信息详情';
+      } else {
+        this.$data.currentPageBreadcrumb = '添加客户';
+      }
+    },
+    mounted() {
+      this.initPage();
+    }
   };
 </script>
 <style lang="scss" scoped>

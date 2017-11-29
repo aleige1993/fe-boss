@@ -51,13 +51,15 @@ Vue.prototype.$hideLoading = ()=> {
 $('.page-loading').show();
 new Http().post('/common/items', {}).then(response => {
   $('.page-loading').hide();
-  let data = response.body;
-  let storeData = new Map();
-  data.map(item => {
-    storeData.set(item.groupKey, item.items);
-  });
-  // console.log(storeData);
-  store.dispatch('updateEnumSelectData', storeData);
+  if (response.success) {
+    let data = response.body;
+    let storeData = new Map();
+    data.map(item => {
+      storeData.set(item.groupKey, item.items);
+    });
+    // console.log(storeData);
+    store.dispatch('updateEnumSelectData', storeData);
+  }
   new Vue({
     el: '#app',
     router,

@@ -27,25 +27,6 @@ export default {
       this.$data.formData.mbMemberDTO.certValidDate = val;
     },
     // 户籍地址联动
-    /*getAddressDropList(code = '') {
-      let data = {
-        regionCode: code
-      };
-      return this.$http.post('/common/region/list', data, false);
-    },
-    async censusProvinceChange(val) {
-      this.$data.formData.mbMemberDTO.censusProvinceName = val.label;
-      let resp = await this.getAddressDropList(val.value);
-      this.$data.censusDistrictDropList = resp.body;
-    },
-    async censusDistrictChange(val) {
-      this.$data.formData.mbMemberDTO.censusDistrictName = val.label;
-      let resp = await this.getAddressDropList(val.value);
-      this.$data.censusCityDropList = resp.body;
-    },
-    censusCityChange(val) {
-      this.$data.formData.mbMemberDTO.censusCityName = val.label;
-    },*/
     selectCensusDistance(distance) {
       this.$data.formData.mbMemberDTO.censusProvinceCode = distance.provinceCode;
       this.$data.formData.mbMemberDTO.censusProvinceName = distance.provinceName;
@@ -55,19 +36,6 @@ export default {
       this.$data.formData.mbMemberDTO.censusCityName = distance.cityName;
     },
     // 居住地址联动
-    /*async nowProvinceChange(val) {
-      this.$data.formData.mbMemberDTO.nowProvinceName = val.label;
-      let resp = await this.getAddressDropList(val.value);
-      this.$data.nowDistrictDropList = resp.body;
-    },
-    async nowDistrictChange(val) {
-      this.$data.formData.mbMemberDTO.nowDistrictName = val.label;
-      let resp = await this.getAddressDropList(val.value);
-      this.$data.nowCityDropList = resp.body;
-    },
-    nowCityChange(val) {
-      this.$data.formData.mbMemberDTO.nowCityName = val.label;
-    },*/
     selectNowDistance(distance) {
       this.$data.formData.mbMemberDTO.nowProvinceName = distance.provinceCode;
       this.$data.formData.mbMemberDTO.nowProvinceName = distance.provinceName;
@@ -77,19 +45,6 @@ export default {
       this.$data.formData.mbMemberDTO.nowCityName = distance.cityName;
     },
     // 公司地址联动
-    /*async companyProvinceChange(val) {
-      this.$data.formData.mbMemberWorkDTO.provinceName = val.label;
-      let resp = await this.getAddressDropList(val.value);
-      this.$data.companyDistictDropList = resp.body;
-    },
-    async companyDistrictChange(val) {
-      this.$data.formData.mbMemberWorkDTO.districtName = val.label;
-      let resp = await this.getAddressDropList(val.value);
-      this.$data.companyCityDropList = resp.body;
-    },
-    companyCityChange(val) {
-      this.$data.formData.mbMemberWorkDTO.cityName = val.label;
-    },*/
     selectCompanyDistance(distance) {
       this.$data.formData.mbMemberWorkDTO.provinceCode = distance.provinceCode;
       this.$data.formData.mbMemberWorkDTO.provinceName = distance.provinceName;
