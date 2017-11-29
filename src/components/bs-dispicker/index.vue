@@ -1,12 +1,12 @@
 <template>
   <span>
-    <i-select :label-in-value="true" v-model="distanceData.provinceCode"  @on-change="provinceChange" style="width: 150px">
+    <i-select :disabled="readonly"  :label-in-value="true" v-model="distanceData.provinceCode"  @on-change="provinceChange" style="width: 150px">
       <i-option v-for="item in provinceDropList" :value="item.regionCode" :key="item.regionCode">{{item.regionName}}</i-option>
     </i-select>
-    <i-select :label-in-value="true" v-model="distanceData.districtCode" @on-change="districtChange" style="width: 150px">
+    <i-select :disabled="readonly" :label-in-value="true" v-model="distanceData.districtCode" @on-change="districtChange" style="width: 150px">
       <i-option v-for="item in districtDropList" :value="item.regionCode" :key="item.regionCode">{{item.regionName}}</i-option>
     </i-select>
-    <i-select :label-in-value="true" @on-change="cityChange" v-model="distanceData.cityCode" style="width: 150px">
+    <i-select :disabled="readonly" :label-in-value="true" @on-change="cityChange" v-model="distanceData.cityCode" style="width: 150px">
       <i-option v-for="item in cityDropList" :value="item.regionCode" :key="item.regionCode">{{item.regionName}}</i-option>
     </i-select>
   </span>
@@ -44,6 +44,11 @@
         default: '',
         required: false,
         type: String
+      },
+      readonly: {
+        default: false,
+        required: false,
+        type: Boolean
       }
     },
     methods: {

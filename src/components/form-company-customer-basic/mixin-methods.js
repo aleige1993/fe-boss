@@ -38,7 +38,8 @@ export default {
     },
     // 选择法人代表
     selectRulerRow(row, index) {
-      // console.log(row);
+      console.log(row);
+      this.$data.formData.baseDTO.legalPersonNo = row.memberNo;
       this.$data.formData.baseDTO.legalPerson = row.name;
       this.$data.formData.baseDTO.legalPersonSex = row.sex;
       this.$data.formData.baseDTO.legalPersonMobile = row.mobile;
@@ -47,25 +48,60 @@ export default {
       this.$data.selectRulerModal = false;
     },
     // 上传附件
+    openAddAttachModal() {
+      this.$data.addAttachModal = true;
+      this.$data.attachFormData = {
+        attachName: '',
+        attachUrl: ''
+      };
+    },
     uploadAttachSuccess(res) {
-      this.$data.attachFormData.url = res.body.url;
+      this.$data.attachFormData.attachUrl = res.body.url;
+    },
+    submitAttach() {
+      console.log(this.$data.attachFormData);
+      this.$data.formData.attachDTOs.push(this.$data.attachFormData);
+      this.$data.addAttachModal = false;
+    },
+    // 初始化页面
+    async initFormData(corpNo) {
+      this.$data.initFormLoading = true;
+      let resp = await this.$http.post('/corp/getCorpDetail', {
+        corpNo
+      });
+      this.$data.initFormLoading = false;
+      if (resp.success) {
+        this.$data.formData = resp.body;
+        this.$emit('on-submit-success', {
+          corpNo: resp.body.baseDTO.corpNo
+        });
+      } else {
+        this.$Notice.error({
+          desc: '初始化页面失败'
+        });
+      }
     },
     // 保存草稿 status 1激活  2冻结  3草稿
+    async postCompanyBasic() {
+      this.$data.formData.baseDTO.status = '1';
+      this.$data.initFormLoading = true;
+      let resp = await this.$http.post('/corp/saveCorp', this.$data.formData);
+      this.$data.initFormLoading = false;
+      if (resp.success) {
+        this.$Message.success('保存基础信息成功');
+        this.$data.formData.baseDTO.corpNo = resp.body.corpNo;
+        this.$emit('on-submit-success', resp.body);
+      }
+    },
     saveCompanyCustomerBasic() {
       this.$data.formData.baseDTO.status = '3';
+      this.postCompanyBasic();
     },
     // 提交
     submitCompanyCustomerBasic() {
-      this.$refs['formCompanyCustomerBasicInfo'].validate(async (valid) => {
+      this.$refs['formCompanyCustomerBasicInfo'].validate((valid) => {
         if (valid) {
-          this.$data.formData.baseDTO.status = '1';
-          this.$data.initFormLoading = true;
-          let resp = await this.$http.post('/corp/saveCorp', this.$data.formData);
-          this.$data.initFormLoading = false;
-          if (resp.success) {
-            this.$Message.success('保存基础信息成功');
-            this.$emit('on-submit-success', resp.body);
-          }
+          this.postCompanyBasic();
         }
       });
     }

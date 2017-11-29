@@ -131,10 +131,10 @@ let MyRouter = new Router({
                   component: resolve => require(['@/pages/customer-manage/company-customer/company-list'], resolve)
                 },
                 {
-                  path: 'add',
+                  path: 'modify',
                   name: 'addCompanyCustomer',
                   component: resolve => require(['@/pages/customer-manage/company-customer/company-add'], resolve)
-                },
+                }/*,
                 {
                   path: 'update',
                   name: 'addCompanyCustomer',
@@ -144,7 +144,7 @@ let MyRouter = new Router({
                   path: 'detail',
                   name: 'addCompanyCustomer',
                   component: resolve => require(['@/pages/customer-manage/company-customer/company-add/detail.vue'], resolve)
-                }
+                }*/
               ]
             },
             // 黑名单管理

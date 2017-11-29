@@ -8,13 +8,13 @@
               <i-col span="8">
                 <i-form-item prop="baseDTO.corpName" label="公司名称"
                              :rules="{required: true, message: '请输入公司名称'}">
-                  <i-input placeholder="" v-model="formData.baseDTO.corpName"></i-input>
+                  <i-input :readonly="isFromDetail" placeholder="" v-model="formData.baseDTO.corpName"></i-input>
                 </i-form-item>
               </i-col>
               <i-col span="8">
                 <i-form-item label="公司性质" prop="baseDTO.corpType"
                   :rules="{required: true, message: '请输入公司性质', trigger: 'change'}">
-                  <i-select v-model="formData.baseDTO.corpType" placeholder="公司性质">
+                  <i-select :disabled="isFromDetail" v-model="formData.baseDTO.corpType" placeholder="公司性质">
                     <i-option v-for="item in enumSelectData.get('UnitTypeEnum')" :key="item.itemCode" :value="item.itemCode">{{item.itemName}}</i-option>
                   </i-select>
                 </i-form-item>
@@ -22,7 +22,7 @@
               <i-col span="8">
                 <i-form-item prop="baseDTO.creditCode" label="统一社会信用代码"
                              :rules="{required: true, message: '请输入公司名称'}">
-                  <i-input v-model="formData.baseDTO.creditCode" placeholder="失去焦点自动查重"></i-input>
+                  <i-input :readonly="isFromDetail" v-model="formData.baseDTO.creditCode" placeholder="失去焦点自动查重"></i-input>
                 </i-form-item>
               </i-col>
             </i-row>
@@ -30,7 +30,7 @@
               <i-col span="8">
                 <i-form-item label="注册资金" prop="baseDTO.regCapital"
                              :rules="{required: true, message: '请输入注册资金'}">
-                  <i-input v-model="formData.baseDTO.regCapital" placeholder="输入字符串（如100万）">
+                  <i-input :readonly="isFromDetail" v-model="formData.baseDTO.regCapital" placeholder="输入字符串（如100万）">
                     <span slot="append">万元</span>
                   </i-input>
                 </i-form-item>
@@ -38,13 +38,13 @@
               <i-col span="8">
                 <i-form-item label="成立日期" prop="baseDTO.regDate"
                              :rules="{required: true, message: '请输入成立日期'}">
-                  <bs-datepicker v-model="formData.baseDTO.regDate" type="date" placeholder="Select date" style="width: 100%"></bs-datepicker>
+                  <bs-datepicker :readonly="isFromDetail" v-model="formData.baseDTO.regDate" type="date" placeholder="Select date" style="width: 100%"></bs-datepicker>
                 </i-form-item>
               </i-col>
               <i-col span="8">
                 <i-form-item label="营业期限" prop="baseDTO.bizExpDate"
                              :rules="{required: true, message: '请输入营业期限'}">
-                  <bs-datepicker v-model="formData.baseDTO.bizExpDate" type="date" placeholder="Select date" style="width: 100%"></bs-datepicker>
+                  <bs-datepicker :readonly="isFromDetail" v-model="formData.baseDTO.bizExpDate" type="date" placeholder="Select date" style="width: 100%"></bs-datepicker>
                 </i-form-item>
               </i-col>
             </i-row>
@@ -52,7 +52,7 @@
               <i-col span="8">
                 <i-form-item label="行业类型" prop="baseDTO.industryType"
                              :rules="{required: true, message: '请输入行业类型'}">
-                  <i-select v-model="formData.baseDTO.industryType">
+                  <i-select :disabled="isFromDetail" v-model="formData.baseDTO.industryType">
                     <i-option v-for="item in enumSelectData.get('UnitTypeEnum')" :key="item.itemCode" :value="item.itemCode">{{item.itemName}}</i-option>
                   </i-select>
                 </i-form-item>
@@ -60,13 +60,13 @@
               <i-col span="8">
                 <i-form-item label="实际控制人" prop="baseDTO.actualControllers"
                              :rules="{required: true, message: '请输入实际控制人'}">
-                  <i-input v-model="formData.baseDTO.actualControllers" placeholder=""></i-input>
+                  <i-input :readonly="isFromDetail" v-model="formData.baseDTO.actualControllers" placeholder=""></i-input>
                 </i-form-item>
               </i-col>
               <i-col span="8">
                 <i-form-item label="实际控制人联系电话" prop="baseDTO.actualControllersTel"
                              :rules="{required: true, message: '请输入实际控制人联系电话'}">
-                  <i-input v-model="formData.baseDTO.actualControllersTel" placeholder=""></i-input>
+                  <i-input :readonly="isFromDetail" v-model="formData.baseDTO.actualControllersTel" placeholder=""></i-input>
                 </i-form-item>
               </i-col>
             </i-row>
@@ -74,18 +74,18 @@
               <i-col span="8">
                 <i-form-item label="公司电话" prop="baseDTO.telephone"
                              :rules="{required: true, message: '请输入公司电话'}">
-                  <i-input v-model="formData.baseDTO.telephone" placeholder=""></i-input>
+                  <i-input :readonly="isFromDetail" v-model="formData.baseDTO.telephone" placeholder=""></i-input>
                 </i-form-item>
               </i-col>
               <i-col span="8">
                 <i-form-item label="公司传真" prop="baseDTO.fax"
                              :rules="{required: true, message: '请输入公司传真'}">
-                  <i-input  v-model="formData.baseDTO.fax" placeholder=""></i-input>
+                  <i-input :readonly="isFromDetail" v-model="formData.baseDTO.fax" placeholder=""></i-input>
                 </i-form-item>
               </i-col>
               <i-col span="8">
                 <i-form-item label="公司网址（如有）">
-                  <i-input v-model="formData.baseDTO.website" placeholder=""></i-input>
+                  <i-input :readonly="isFromDetail" v-model="formData.baseDTO.website" placeholder=""></i-input>
                 </i-form-item>
               </i-col>
             </i-row>
@@ -93,7 +93,7 @@
               <i-col span="8">
                 <i-form-item label="是否合作渠道商" prop="baseDTO.isMerchant"
                              :rules="{required: true, message: '请选择是否合作渠道商'}">
-                  <i-select v-model="formData.baseDTO.isMerchant">
+                  <i-select :disabled="isFromDetail" v-model="formData.baseDTO.isMerchant">
                     <i-option v-for="item in enumSelectData.get('YesNoEnum')" :key="item.itemCode" :value="item.itemCode">{{item.itemName}}</i-option>
                   </i-select>
                 </i-form-item>
@@ -106,8 +106,9 @@
                   <bs-dispicker :currProvinceCode="formData.baseDTO.regProvinceCode"
                                 :currDistrictCode="formData.baseDTO.regDistrictCode"
                                 :currCityCode="formData.baseDTO.regCityCode"
+                                :readonly="isFromDetail"
                                 @on-change="selectRegDistance"></bs-dispicker>
-                  <i-input v-model="formData.baseDTO.regRoadAddr" placeholder="街道信息" style="width: 220px;"></i-input>
+                  <i-input :readonly="isFromDetail" v-model="formData.baseDTO.regRoadAddr" placeholder="街道信息" style="width: 220px;"></i-input>
                 </i-form-item>
               </i-col>
             </i-row>
@@ -118,15 +119,16 @@
                   <bs-dispicker :currProvinceCode="formData.baseDTO.bizProvinceCode"
                                 :currDistrictCode="formData.baseDTO.bizDistrictCode"
                                 :currCityCode="formData.baseDTO.bizCityCode"
+                                :readonly="isFromDetail"
                                 @on-change="selectBizDistance"></bs-dispicker>
-                  <i-input v-model="formData.baseDTO.bizRoadAddr" placeholder="街道信息" style="width: 220px;"></i-input>
+                  <i-input :readonly="isFromDetail" v-model="formData.baseDTO.bizRoadAddr" placeholder="街道信息" style="width: 220px;"></i-input>
                 </i-form-item>
               </i-col>
             </i-row>
             <i-row>
               <i-col span="18">
                 <i-form-item label="公司简介/营业范围">
-                  <i-input v-model="formData.baseDTO.about" type="textarea" :rows="4"></i-input>
+                  <i-input :readonly="isFromDetail" v-model="formData.baseDTO.about" type="textarea" :rows="4"></i-input>
                 </i-form-item>
               </i-col>
             </i-row>
@@ -159,7 +161,7 @@
               <i-col span="8">
                 <i-form-item label="证件类型" prop="baseDTO.legalPersonCerttype"
                              :rules="{required: true, message: '请选择证件类型'}">
-                  <i-select v-model="formData.baseDTO.legalPersonCerttype">
+                  <i-select :disabled="isFromDetail" v-model="formData.baseDTO.legalPersonCerttype">
                     <i-option v-for="item in enumSelectData.get('CertTypeEnum')" :key="item.itemCode" :value="item.itemCode">{{item.itemName}}</i-option>
                   </i-select>
                 </i-form-item>
@@ -167,13 +169,13 @@
               <i-col span="8">
                 <i-form-item label="证件号码" prop="baseDTO.legalPersonCertno"
                              :rules="{required: true, message: '请输入证件号码'}">
-                  <i-input v-model="formData.baseDTO.legalPersonCertno"></i-input>
+                  <i-input :readonly="isFromDetail" v-model="formData.baseDTO.legalPersonCertno"></i-input>
                 </i-form-item>
               </i-col>
               <i-col span="8">
                 <i-form-item label="持股比例" prop="baseDTO.legalPersonStock"
                              :rules="{required: true, message: '请输入持股比例'}">
-                  <i-input v-model="formData.baseDTO.legalPersonStock">
+                  <i-input :readonly="isFromDetail" v-model="formData.baseDTO.legalPersonStock">
                     <span slot="append">%</span>
                   </i-input>
                 </i-form-item>
@@ -186,13 +188,13 @@
               <i-col span="8">
                 <i-form-item label="联系人人姓名" prop="baseDTO.mainLinkmanName"
                              :rules="{required: true, message: '请输入姓名'}">
-                  <i-input v-model="formData.baseDTO.mainLinkmanName"></i-input>
+                  <i-input :readonly="isFromDetail" v-model="formData.baseDTO.mainLinkmanName"></i-input>
                 </i-form-item>
               </i-col>
               <i-col span="8">
                 <i-form-item label="性别" prop="baseDTO.mainLinkmanSex"
                              :rules="{required: true, message: '请选择性别'}">
-                  <i-select v-model="formData.baseDTO.mainLinkmanSex">
+                  <i-select :disabled="isFromDetail" v-model="formData.baseDTO.mainLinkmanSex">
                     <i-option v-for="item in enumSelectData.get('SexEnum')" :key="item.itemCode" :value="item.itemCode">{{item.itemName}}</i-option>
                   </i-select>
                 </i-form-item>
@@ -200,7 +202,7 @@
               <i-col span="8">
                 <i-form-item label="联系电话" prop="baseDTO.mainLinkmanPhone"
                              :rules="{required: true, message: '请输入联系电话'}">
-                  <i-input v-model="formData.baseDTO.mainLinkmanPhone" placeholder="自动带入"></i-input>
+                  <i-input :readonly="isFromDetail" v-model="formData.baseDTO.mainLinkmanPhone" placeholder="自动带入"></i-input>
                 </i-form-item>
               </i-col>
             </i-row>
@@ -208,19 +210,19 @@
               <i-col span="8">
                 <i-form-item label="职务" prop="baseDTO.mainLinkmanDuty"
                              :rules="{required: true, message: '请输入职务'}">
-                  <i-input v-model="formData.baseDTO.mainLinkmanDuty"></i-input>
+                  <i-input :readonly="isFromDetail" v-model="formData.baseDTO.mainLinkmanDuty"></i-input>
                 </i-form-item>
               </i-col>
               <i-col span="8">
                 <i-form-item label="身份证号" prop="baseDTO.mainLinkmanCertno"
                              :rules="{required: true, message: '请输入身份证号码'}">
-                  <i-input v-model="formData.baseDTO.mainLinkmanCertno"></i-input>
+                  <i-input :readonly="isFromDetail" v-model="formData.baseDTO.mainLinkmanCertno"></i-input>
                 </i-form-item>
               </i-col>
               <i-col span="8">
                 <i-form-item label="邮箱" prop="baseDTO.mainLinkmanEmail"
                              :rules="{required: true, message: '请输入邮箱'}">
-                  <i-input v-model="formData.baseDTO.mainLinkmanEmail"></i-input>
+                  <i-input :readonly="isFromDetail" v-model="formData.baseDTO.mainLinkmanEmail"></i-input>
                 </i-form-item>
               </i-col>
             </i-row>
@@ -233,12 +235,12 @@
                              :rules="{required: true, message: '请选择业务拓展部门'}">
                   <input type="hidden" v-model="formData.baseDTO.bizDepartmentCode"/>
                   <i-input v-model="formData.baseDTO.bizDepartmentName" :readonly="true" placeholder="选择拓展部门">
-                    <i-button @click="selectDepartmentModal=!selectDepartmentModal" v-if="!isFromDetail" slot="append">选择拓展部门 <Icon type="ios-more"></Icon></i-button>
+                    <i-button v-if="!isFromDetail" @click="selectDepartmentModal=!selectDepartmentModal" slot="append">选择拓展部门 <Icon type="ios-more"></Icon></i-button>
                   </i-input>
                 </i-form-item>
               </i-col>
               <i-col span="8">
-                <i-form-item label="开始合作时间" prop="baseDTO.joinStartDate"
+                <i-form-item :readonly="!isFromDetail" label="开始合作时间" prop="baseDTO.joinStartDate"
                              :rules="{required: true, message: '请选择开始合作时间'}">
                   <bs-datepicker :readonly="isFromDetail" placement="top-start" v-model="formData.baseDTO.joinStartDate"></bs-datepicker>
                 </i-form-item>
@@ -257,16 +259,25 @@
           <!--附件信息-->
           <bs-form-block v-if="type==='page'" :title="'附件信息'">
             <div class="form-top-actions">
-              <i-button type="primary" @click="addAttachModal=!addAttachModal">添加附件</i-button>
+              <i-button type="primary" v-if="!isFromDetail" @click="openAddAttachModal">添加附件</i-button>
             </div>
-            <i-table :columns="companyAttachFileColumns" :data="companyAttachFiles"></i-table>
+            <i-table :columns="companyAttachFileColumns" :data="formData.attachDTOs"></i-table>
           </bs-form-block>
           <i-row v-if="type=='modal'" style="text-align:center">
-            <i-button @click="submitCompanyCustomerBasic" type="success"><i class="iconfont icon-tijiao"></i> 提交</i-button>
+            <i-button @click="submitCompanyCustomerBasic" :loading="initFormLoading" type="success">
+              <span v-if="!initFormLoading"><i class="iconfont icon-tijiao"></i> 提交</span>
+              <span v-else> 处理中</span>
+            </i-button>
           </i-row>
-          <div v-if="type==='page'" class="form-footer-actions">
-            <i-button @click="saveCompanyCustomerBasic" :loading="initFormLoading" type="primary"><i class="iconfont icon-tijiao"></i> 保存草稿</i-button>
-            <i-button @click="submitCompanyCustomerBasic" :loading="initFormLoading" type="success"><i class="iconfont icon-tijiao"></i> 提交</i-button>
+          <div v-if="type==='page'&&!isFromDetail" class="form-footer-actions">
+            <i-button @click="saveCompanyCustomerBasic" :loading="initFormLoading" type="primary">
+              <span v-if="!initFormLoading"><i class="iconfont icon-tijiao"></i> 保存草稿</span>
+              <span v-else> 处理中</span>
+            </i-button>
+            <i-button @click="submitCompanyCustomerBasic" :loading="initFormLoading" type="success">
+              <span v-if="!initFormLoading"><i class="iconfont icon-tijiao"></i> 提交</span>
+              <span v-else> 处理中</span>
+            </i-button>
           </div>
         </i-form>
       </i-col>
@@ -274,7 +285,7 @@
     <bs-modal v-model="addAttachModal" title="上传附件">
       <i-form :model="formData" :label-width="80">
         <i-form-item label="文件名">
-          <i-input v-model="attachFormData.name"></i-input>
+          <i-input v-model="attachFormData.attachName"></i-input>
         </i-form-item>
         <i-form-item label="文件">
           <Upload
@@ -288,7 +299,7 @@
           </Upload>
         </i-form-item>
         <i-form-item label="">
-          <i-button style="width: 80px;" type="primary" size="large">保存</i-button>
+          <i-button @click="submitAttach" style="width: 80px;" type="primary" size="large">保存</i-button>
         </i-form-item>
       </i-form>
     </bs-modal>
@@ -325,16 +336,27 @@ export default {
   data() {
     return {
       addAttachModal: false,
-      isFromDetail: false,
       showSelectEmployer: false,
       selectDepartmentModal: false,
       initFormLoading: false,
       selectRulerModal: false,
       attachFormData: {
-        name: '',
-        url: ''
+        attachName: '',
+        attachUrl: ''
       }
     };
+  },
+  computed: {
+    corpNo() {
+      if (this.$route.query.id) {
+        return this.$route.query.id;
+      } else {
+        return null;
+      }
+    },
+    isFromDetail() {
+      return this.$route.query.from === 'detail';
+    }
   },
   props: {
     type: {
@@ -350,8 +372,33 @@ export default {
     TreeGrid,
     TableCustomerList
   },
+  methods: {
+    resetFormByStatus() {
+      let _id = this.$route.query.id;
+      if (_id) {
+        // 如果是编辑或者详情初始化表单
+        this.initFormData(_id);
+      } else {
+        // 如果是添加，重置所有数据
+        this.$data.formData = $.extend({}, this.$data.formDataInit);
+      }
+    }
+  },
+  watch: {
+    '$route': {
+      handler(newVal, oldVal) {
+        this.resetFormByStatus();
+      },
+      deep: true
+    }
+  },
   mounted() {
     this.getDepList();
+    if (this.type !== 'page') {
+      this.$data.formData = $.extend({}, this.$data.formDataInit);
+    } else {
+      this.resetFormByStatus();
+    }
   }
 };
 </script>
