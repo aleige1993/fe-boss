@@ -111,7 +111,7 @@
     <div class="form-top-actions">
       <i-button @click="openShowModal" type="info"><i class="iconfont icon-xinzeng"></i> 新增</i-button>
     </div>
-    <i-table highlight-row border ref="proTable" :columns="columns1" :data="data1" :loading="dataloading"></i-table>
+    <i-table border ref="proTable" :columns="columns1" :data="data1" :loading="dataloading"></i-table>
     <br>
     <br>
     <div class="text-right">
@@ -180,7 +180,15 @@
       },
       // 提交
       formSubmit() {
-        this.$emit('model-addSet');// 通知其父组件执行自定义事件“model-addSet”
+        // formMaintain
+        let formName = 'formMaintain';
+        this.$refs[formName].validate((valid) => {
+          if (valid) {
+            this.$emit('model-addSet');// 通知其父组件执行自定义事件“model-addSet”
+          } else {
+            this.$Message.error('"<span style="color: red">*</span>"必填项不能为空');
+          }
+        });
       },
       // 关闭合同协议的模态框
       closeModel() {

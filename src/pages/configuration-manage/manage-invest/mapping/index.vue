@@ -24,13 +24,13 @@
     <div class="form-top-actions">
       <i-button @click="addModal" type="info"><i class="iconfont icon-xinzeng"></i> 新增</i-button>
     </div>
-    <i-table :loading="dataLoading" highlight-row border ref="proTable" :columns="columns1" :data="data1"></i-table>
+    <i-table :loading="dataLoading" border ref="proTable" :columns="columns1" :data="data1"></i-table>
     <div class="page-container">
       <i-page :current="currentPage" :total="total" size="small" show-elevator show-total @on-change="junmpPage">
       </i-page>
     </div>
     <bs-modal :title="'资方映射配置'" v-model="ShowModel" :width="600">
-      <i-form ref="formMapping" :model="formMapping" label-position="right" :label-width="100">
+      <i-form ref="formMapping" :model="formMapping" label-position="right" :label-width="150">
         <i-form-item
           :rules="{required: true, message: '产品不能为空', trigger: 'change'}"
           label="产品"
@@ -52,7 +52,6 @@
           </i-select>
         </i-form-item>
         <i-form-item
-          :rules="{required: true, message: '资方产品编号不能为空', trigger: 'blur'}"
           label="资方产品编号"
           prop="investProNumber">
           <i-input v-model="formMapping.investProNumber"></i-input>
@@ -73,44 +72,22 @@
             <i-option value="不贴">不贴</i-option>
           </i-select>
         </i-form-item>
-        <i-row :gutter="16" class-name="row-inline" type="flex" justify="start" align="top">
-          <i-col span="11">
-            <i-form-item
-              :rules="{required: true, message: '贷款金额范围不能为空', trigger: 'blur'}"
-              label="贷款金额范围"
-              prop="rangeStart">
-              <i-input v-model="formMapping.rangeStart"></i-input>
-            </i-form-item>
-          </i-col>
-          <i-col span="2">
-            <span>~</span>
-          </i-col>
-          <i-col span="11" style="margin-left: -100px;">
-            <i-form-item
-              :rules="{required: true, message: '贷款金额范围不能为空', trigger: 'blur'}"
-              label=""
-              prop="rangeEnd">
-              <i-input v-model="formMapping.rangeEnd"></i-input>
-            </i-form-item>
-          </i-col>
-        </i-row>
+        <i-form-item
+          :rules="{required: true, message: '是否查询人行征信不能为空', trigger: 'change'}"
+          label="是否查询人行征信"
+          prop="isCredit">
+          <i-select v-model="formMapping.isCredit">
+            <i-option v-for="item in enumSelectData.get('YesNoEnum')" :key="item.itemCode" :value="item.itemCode">{{item.itemName}}</i-option>
+          </i-select>
+        </i-form-item>
         <i-form-item class="text-right">
           <i-button type="primary" @click="addformSubmit">提交</i-button>
           <i-button type="ghost" style="margin-left: 8px" @click="addformCancel">取消</i-button>
         </i-form-item>
       </i-form>
     </bs-modal>
-    <bs-modal :title="'关联合同模板'" v-model="ContractModel" :width="600">
-      <i-table highlight-row border ref="ContractTable" :columns="columns2" :data="data2" @on-selection-change="selectRow"></i-table>
-      <br>
-      <br>
-      <div class="text-right">
-        <i-button type="primary" @click="ContractformSubmit" :loading="buttonLoading">
-          <span v-if="!buttonLoading">提价</span>
-          <span v-else>loading...</span>
-        </i-button>
-        <i-button type="ghost" style="margin-left: 8px" @click="ContractformCancel">取消</i-button>
-      </div>
+    <bs-modal :title="'资方合同模板配置'" v-model="ContractModel" :width="1200">
+      <modal-contract v-if="ContractModel"></modal-contract>
     </bs-modal>
   </div>
 </template>
@@ -118,11 +95,13 @@
 <script>
   import MixinData from './mixin-data';
   import BSModal from '@/components/bs-modal';
+  import ContractConf from './contract-configuration';
   export default {
     name: 'investMapping',
     mixins: [MixinData],
     components: {
-      'bs-modal': BSModal
+      'bs-modal': BSModal,
+      'modal-contract': ContractConf
     },
     data() {
       return {
@@ -130,8 +109,7 @@
         dataLoading: false,
         buttonLoading: false,
         ShowModel: false,         // 新增和修改弹窗
-        ContractModel: false,      // 关联合同模板弹窗
-        listIndex: Number,
+        ContractModel: false,      // 资方合同模板配置弹窗
         currentPage: 1,
         total: 0,
         searchForm: {
@@ -144,11 +122,10 @@
           investProNumber: '',
           channelNumber: '',
           managerNumber: '',
-          subsidy: '',
-          rangeStart: '',
-          rangeEnd: ''
+          isCredit: '',
+          subsidy: ''
         },
-        ContractformData: {}     // 关联合同模板已选的数据
+        ContractformData: {}     // 资方合同模板配置已选的数据
       };
     },
     mounted() {
@@ -166,7 +143,7 @@
         if (page) {
           this.$data.searchForm.currentPage = page;
         }
-        let resp = await this.$http.get('/mapping', this.$data.searchForm);
+        let resp = await this.$http.post('/mapping', this.$data.searchForm);
         this.$data.dataLoading = false;
         this.$data.data1 = resp.body.resultList;
         this.$data.currentPage = resp.body.currentPage;
@@ -190,37 +167,15 @@
       },
       // 新增里的 提交按钮
       addformSubmit() {
-        if (this.isAdd) {
-          this.$data.data1.unshift({
-            proNumber: '003',
-            proName: this.$data.formMapping.proName,
-            investName: this.$data.formMapping.investName,
-            investProNumber: this.$data.formMapping.investProNumber,
-            channelNumber: this.$data.formMapping.channelNumber,
-            managerNumber: this.$data.formMapping.managerNumber
-          });
-        } else {
-          this.$data.data1[this.listIndex].proName = this.$data.formMapping.proName;
-          this.$data.data1[this.listIndex].investName = this.$data.formMapping.investName;
-          this.$data.data1[this.listIndex].investProNumber = this.$data.formMapping.investProNumber;
-          this.$data.data1[this.listIndex].channelNumber = this.$data.formMapping.channelNumber;
-          this.$data.data1[this.listIndex].managerNumber = this.$data.formMapping.managerNumber;
-        }
         this.$data.ShowModel = false;
       },
       // 新增里的 取消按钮
       addformCancel() {
         this.$data.ShowModel = false;
       },
-      selectRow(selection) {      // selection 已选项数据
-        this.$data.ContractformData = selection;
-        alert(JSON.stringify(selection));
-      },
-      ContractformSubmit() {
-        console.log(this.$data.ContractformData);
-      },
-      ContractformCancel() {
-        this.$data.ContractModel = false;
+      // 打开合同模板配置弹窗
+      contractModelOpen() {
+        this.$data.ContractModel = true;
       }
     }
   };

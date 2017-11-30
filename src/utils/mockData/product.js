@@ -159,33 +159,33 @@ export default [
     resp: Mock.mock({
       'body|5': [
         {
-          packageNo: '', // 套餐编号
-          personalSingleCarLimit: '123', // 个人单笔额度
-          personalSingleDoorLimit: '123',  // 个人单户额度
-          companySingleCarLimit: '123',  // 企业单笔额度
-          companySingleDoorLimit: '123', // 企业单户额度
-          loanMode: '', // 还款方式
-          loanCycleMode: '',  // 还款周期
-          loanCycle: '',  // 还款周期天数
-          modelSet: '', // 模型设定
-          monthAccrualMode: '', // 月息方式
-          yearModel: '',  // 年模型
-          loanDayMode: '',  // 还款日规则
-          loanDay: '12',  // 还款日
-          overdueCountMode: '', // 逾期计算方式
-          dayOverduePenaltyRatio: '', // 逾期利率
-          dayOverdueManageFee: '',  // 逾期管理费
-          overdueExtendDays: '',  // 逾期宽限天数
-          penaltyCountMode: '', // 罚息计算方式
-          penaltyDayRatio: '',  // 罚息利率
-          isUpRepay: '',  // 是否允许提前还款
-          upRepayPenaltyCountMode: '',  // 提前还款违约金计算方式
-          upRepayPenaltyRatio: '',  // 提前还款违约金比例
-          upRepayCountDays: '', // 提前还款利息不足天数
-          upRepayMinCountDays: '12',  // 提前还款利息最低天数
-          depositReleaseMode: '34', // 保证金释放方式
-          creditLimitReleaseMode: '', // 授信释放方式
-          isAdvance: '1' // 是否海乐行垫付
+          'packageNo': '', // 套餐编号
+          'personalSingleCarLimit': '123', // 个人单笔额度
+          'personalSingleDoorLimit': '123',  // 个人单户额度
+          'companySingleCarLimit': '123',  // 企业单笔额度
+          'companySingleDoorLimit': '123', // 企业单户额度
+          'loanMode': '', // 还款方式
+          'loanCycleMode': '',  // 还款周期
+          'loanCycle': '',  // 还款周期天数
+          'modelSet': '', // 模型设定
+          'monthAccrualMode': '', // 月息方式
+          'yearModel': '',  // 年模型
+          'loanDayMode': '',  // 还款日规则
+          'loanDay': '12',  // 还款日
+          'overdueCountMode': '', // 逾期计算方式
+          'dayOverduePenaltyRatio': '', // 逾期利率
+          'dayOverdueManageFee': '',  // 逾期管理费
+          'overdueExtendDays': '',  // 逾期宽限天数
+          'penaltyCountMode': '', // 罚息计算方式
+          'penaltyDayRatio': '',  // 罚息利率
+          'isUpRepay': '',  // 是否允许提前还款
+          'upRepayPenaltyCountMode': '',  // 提前还款违约金计算方式
+          'upRepayPenaltyRatio': '',  // 提前还款违约金比例
+          'upRepayCountDays': '', // 提前还款利息不足天数
+          'upRepayMinCountDays': '12',  // 提前还款利息最低天数
+          'depositReleaseMode': '34', // 保证金释放方式
+          'creditLimitReleaseMode': '', // 授信释放方式
+          'isAdvance|1': ['1', '2'] // 是否海乐行垫付
         }
       ],
       'reCode': '0000'
