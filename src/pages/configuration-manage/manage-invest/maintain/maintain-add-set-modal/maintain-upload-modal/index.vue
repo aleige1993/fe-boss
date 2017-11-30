@@ -1,5 +1,5 @@
 <template>
-<div id="maintain-modal-two">
+<div id="maintain-modal-upload">
   <i-form ref="formAgreement" :model="formAgreement" label-position="left" :label-width="100">
     <i-form-item
       :rules="{required: true, message: '协议名称不能为空', trigger: 'blur'}"
@@ -28,7 +28,10 @@
       </i-upload>
     </i-form-item>
     <i-form-item class="text-right">
-      <i-button type="primary" @click="formSubmit">提交</i-button>
+      <i-button type="primary" @click="formSubmit" :loading="buttonLoading">
+        <span v-if="!buttonLoading">提交</span>
+        <span v-else>loading...</span>
+      </i-button>
       <i-button type="ghost" style="margin-left: 8px" @click="formCancel">取消</i-button>
     </i-form-item>
   </i-form>
@@ -37,15 +40,17 @@
 
 <script>
   export default {
-    name: '',
+    name: 'maintainModalUpload',
     data() {
       return {
+        buttonLoading: false,
         formAgreement: {},
         uploadUrl: ''
       };
     },
     methods: {
       formSubmit() {
+        this.$emit('parModel');
       },
       formCancel() {
         this.$emit('parModel');

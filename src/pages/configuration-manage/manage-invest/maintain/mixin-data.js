@@ -33,7 +33,7 @@ export default {
                 },
                 on: {
                   click: () => {
-                    this.setList($.extend({}, params.row));
+                    this.setListZf($.extend({}, params.row));
                   }
                 }
               }, '修改'),
@@ -47,7 +47,7 @@ export default {
                 },
                 on: {
                   click: () => {
-                    this.remove1($.extend({}, params.row));
+                    this.removeZf($.extend({}, params.row));
                   }
                 }
               }, '删除'),
@@ -61,6 +61,7 @@ export default {
                 },
                 on: {
                   click: () => {
+                    this.showUser($.extend({}, params.row));
                   }
                 }
               }, '账户信息')
@@ -68,48 +69,7 @@ export default {
           }
         }
       ],
-      data1: [],
-      columns2: [
-        {
-          title: '协议编号',
-          width: 100,
-          align: 'center',
-          key: 'id'
-        },
-        {
-          title: '协议名称',
-          key: 'name'
-        },
-        {
-          title: '协议附件',
-          key: 'enclosure'
-        },
-        {
-          title: '操作',
-          key: 'action',
-          width: 200,
-          align: 'center',
-          render: (h, params) => {
-            if (this.$data.iSsee) {
-              return;
-            }
-            return h('div', [
-              h('Button', {
-                props: {
-                  type: 'error',
-                  size: 'small'
-                },
-                on: {
-                  click: () => {
-                    this.remove2(params.index);
-                  }
-                }
-              }, '删除')
-            ]);
-          }
-        }
-      ],
-      data2: []
+      data1: []
     };
   }
 };
