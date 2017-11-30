@@ -82,6 +82,11 @@ h1,h2,h3,h4,h5,h6 {
 .ivu-form-item-error-tip{
   padding-top: 0
 }
+// iview选中行的样式覆盖
+.ivu-table-row-highlight td{
+  background-color: #23A1F4 !important;
+  color: #fff;
+}
 // jquery confirm 样式覆盖
 .jconfirm .container{
   width: 320px;

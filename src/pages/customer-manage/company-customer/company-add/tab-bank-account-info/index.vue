@@ -17,7 +17,7 @@
         </i-form-item>
         <i-form-item label="银行名称" prop="bankCode"
           :rules="{required: true, message: '银行名称不能为空', trigger: 'change'}">
-          <i-select @on-change="selectBank" :label-in-value="true" v-model="formData.bankName" placeholder="">
+          <i-select @on-change="selectBank" :label-in-value="true" v-model="formData.bankCode" placeholder="">
             <i-option v-for="item in bankList" :key="item.bankCode" :value="item.bankCode">{{item.bankName}}</i-option>
           </i-select>
         </i-form-item>

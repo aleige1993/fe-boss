@@ -54,14 +54,14 @@
     </bs-modal>
     <!-- 选择企业的弹窗 -->
     <bs-modal title="选择企业" :width="1200" v-model="slectOweCompanyModal">
-      <table-company-customer-list type="modal" @on-row-dbclick="selectCompany">
+      <table-company-customer-list ref="tableCompanyCustomer" type="modal" @on-row-dbclick="selectCompany">
         <div class="form-top-actions" slot="topAction">
           <i-button type="info" @click="addCompanyCustomerModal=!addCompanyCustomerModal"><i class="iconfont icon-xinzeng"></i> 新增</i-button>
         </div>
       </table-company-customer-list>
     </bs-modal>
     <bs-modal title="新增企业客户" :width="1280" v-model="addCompanyCustomerModal">
-      <company-customer-basic-info @on-row-click="selectCompany" type="modal"></company-customer-basic-info>
+      <company-customer-basic-info @on-submit-success="addCompanySuccess" type="modal"></company-customer-basic-info>
     </bs-modal>
   </div>
 </template>
@@ -129,6 +129,11 @@
       addOweCompany() {
         this.$data.formData = {};
         this.$data.addBankModal = true;
+      },
+      addCompanySuccess() {
+        // alert('添加成功');
+        this.$data.addCompanyCustomerModal = false;
+        this.$refs['tableCompanyCustomer'].getCompanyCustomerList();
       },
       submitForm() {
         this.$refs['formAddOweCompany'].validate(async (valid) => {

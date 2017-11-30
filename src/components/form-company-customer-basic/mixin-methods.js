@@ -70,15 +70,22 @@ export default {
         corpNo
       });
       this.$data.initFormLoading = false;
+      this.$data.loadingAttachFile = true;
+      let resp2 = await this.$http.post('/corp/listCorpAttach', {
+        corpNo,
+        currentPage: 1,
+        pageSize: 9999
+      });
+      this.$data.loadingAttachFile = false;
       if (resp.success) {
-        this.$data.formData = resp.body;
+        this.$data.formData.baseDTO = resp.body.baseDTO;
         this.$emit('on-submit-success', {
-          corpNo: resp.body.baseDTO.corpNo
+          corpNo: resp.body.baseDTO.corpNo,
+          corpName: resp.body.baseDTO.corpName
         });
-      } else {
-        this.$Notice.error({
-          desc: '初始化页面失败'
-        });
+      }
+      if (resp2.success) {
+        this.$data.formData.attachDTOs = resp2.body.resultList;
       }
     },
     // 保存草稿 status 1激活  2冻结  3草稿

@@ -1,30 +1,30 @@
 export default {
   data() {
     return {
-      bankAccountColumns: [
+      cusomerLawsuitColumns: [
         {
           title: '立案时间',
-          key: 'companyNo'
+          key: 'lawCaseDate'
         },
         {
           title: '立案原因',
-          key: 'companyName'
+          key: 'lawCaseCause'
         },
         {
           title: '案件金额',
-          key: 'creditNo'
+          key: 'lawCaseAmt'
         },
         {
           title: '案件角色',
-          key: 'relationShip'
+          key: 'lawCaseRole'
         },
         {
           title: '录入人',
-          key: 'contact'
+          key: 'createUserCode'
         },
         {
           title: '录入时间',
-          key: 'phone'
+          key: 'gmtCreate'
         },
         {
           title: '操作',
@@ -34,11 +34,25 @@ export default {
               h('Button', {
                 props: {
                   type: 'error',
-                  size: 'small'
+                  size: 'small',
+                  disabled: this.isFromDetail
                 },
                 on: {
                   click: () => {
-                    alert('删除' + params.index);
+                    Alertify.confirm('是否确认删除这条记录', async (ok) => {
+                      if (ok) {
+                        const loading = this.$Message.loading('处理中...', 0);
+                        let resp = await this.$http.post('/corp/deleteCorpLawcase', {
+                          corpNo: params.row.corpNo,
+                          lawCaseNo: params.row.lawCaseNo
+                        });
+                        loading();
+                        if (resp.success) {
+                          this.$Message.success('删除成功');
+                          this.getList();
+                        }
+                      }
+                    });
                   }
                 }
               }, '删除')
@@ -46,18 +60,7 @@ export default {
           }
         }
       ],
-      bankAccountDatas: [
-        {
-          companyNo: 'Joe Black',
-          companyName: '25645415842142151',
-          creditNo: '中国工商银行',
-          relationShip: '客户',
-          contact: '2254',
-          phone: '上清寺支行',
-          registerDate: '2017-12-25',
-          registerMoney: 120500505
-        }
-      ]
+      cusomerLawsuitDatas: []
     };
   }
 };

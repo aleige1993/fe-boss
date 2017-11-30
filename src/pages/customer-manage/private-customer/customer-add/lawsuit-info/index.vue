@@ -73,7 +73,9 @@
         this.$refs['formAdd'].validate(async (valid) => {
           if (valid) {
             this.$data.formData.memberNo = this.memberNo;
+            this.$data.submitLoading = true;
             let resp = await this.$http.post('/member/case/manage/insert', this.$data.formData);
+            this.$data.submitLoading = false;
             if (resp.success) {
               this.$data.addModal = false;
               this.getList();
