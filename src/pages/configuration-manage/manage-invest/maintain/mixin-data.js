@@ -19,23 +19,10 @@ export default {
         {
           title: '操作',
           key: 'action',
-          width: 200,
+          width: 220,
           align: 'center',
           render: (h, params) => {
             return h('div', [
-              h('Button', {
-                props: {
-                  type: 'primary',
-                  size: 'small'
-                },
-                style: {
-                  marginRight: '5px'
-                },
-                on: {
-                  click: () => {
-                  }
-                }
-              }, '详情'),
               h('Button', {
                 props: {
                   type: 'primary',
@@ -55,12 +42,28 @@ export default {
                   type: 'error',
                   size: 'small'
                 },
+                style: {
+                  marginRight: '5px'
+                },
                 on: {
                   click: () => {
                     this.remove1($.extend({}, params.row));
                   }
                 }
-              }, '删除')
+              }, '删除'),
+              h('Button', {
+                props: {
+                  type: 'success',
+                  size: 'small'
+                },
+                style: {
+                  marginRight: '5px'
+                },
+                on: {
+                  click: () => {
+                  }
+                }
+              }, '账户信息')
             ]);
           }
         }
