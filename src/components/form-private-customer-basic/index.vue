@@ -395,8 +395,10 @@ export default {
         this.$data.checkingCertNo = true;
         let resp = await this.$http.post('/member/isExists', { certNo: newVal });
         this.$data.checkingCertNo = false;
-        if (resp.body.exists) {
-          Alertify.alert('您输入的证件号已经存在，请换一个证件再试');
+        if (resp.success) {
+          if (resp.body.exists) {
+            Alertify.alert('您输入的证件号已经存在，请换一个证件再试');
+          }
         }
       }, 500);
     }

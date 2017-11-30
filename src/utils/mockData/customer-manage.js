@@ -167,6 +167,7 @@ export default [
       success: true,
       body: {
         corpNo: '1',
+        corpName: '海尔云贷',
         status: '1'
       }
     }
@@ -233,10 +234,10 @@ export default [
       success: true,
       body: {
         'resultList|10': [{
-          'corpNo': '@integer(11)',
+          'corpNo': '12',
           'corpName': '@name',
           'acctName': '@name',
-          'acctNo': '@integer(11)',
+          'acctNo': '12',
           'bankName': '@name',
           'openBankName': '@name',
           'openBankNo': '12',
@@ -302,6 +303,98 @@ export default [
   },
   {
     url: '/corp/deleteCorpRelationShip',
+    on: true,
+    resp: {
+      reCode: '0000',
+      success: true,
+      body: {}
+    }
+  },
+  // 企业客户--业务往来
+  {
+    url: '/corp/listCorpBiz',
+    on: true,
+    resp: {
+      reCode: '0000',
+      success: true,
+      body: Mock.mock({
+        'resultList|10': [
+          {
+            corpNo: '@integer(11)',
+            corpName: '@name',
+            orderNo: '@integer(11)',
+            orderAmt: 500,
+            startDate: '2017-12-12',
+            endDate: '2017-14-10',
+            capitalOverdateAmt: 500,
+            rateOverdateAmt: 500,
+            status: '1'
+          }
+        ]
+      })
+    }
+  },
+  // 企业客户--第三方凭证
+  {
+    url: '/corp/listCorpPawn',
+    on: true,
+    resp: {
+      reCode: '0000',
+      success: true,
+      body: Mock.mock({
+        'resultList|10': [
+          {
+            corpNo: '@integer(11)',
+            corpName: '@name',
+            orderNo: '@integer(11)',
+            orderAmt: 500,
+            guaranteeType: '1',
+            pawnType: '1',
+            finalEstimate: '2000',
+            regDate: '2014-15-15',
+            pawnName: '@name',
+            status: '1'
+          }
+        ]
+      })
+    }
+  },
+  // 企业客户--诉讼信息
+  {
+    url: '/corp/listCorpLawcase',
+    on: true,
+    resp: {
+      reCode: '0000',
+      success: true,
+      body: Mock.mock({
+        'resultList|10': [
+          {
+            corpNo: '@integer(11)',
+            corpName: '@name',
+            lawCaseNo: '@integer(11)',
+            lawCaseDate: '2014-15-15',
+            lawCaseCause: '1',
+            lawCaseAmt: '1',
+            lawCaseRole: '2000',
+            createUserCode: '1',
+            gmtCreate: '2014-15-15'
+          }
+        ]
+      })
+    }
+  },
+  // 企业客户--诉讼信息保存 corp/deleteCorpLawcase
+  {
+    url: '/corp/saveCorpLawcase',
+    on: true,
+    resp: {
+      reCode: '0000',
+      success: true,
+      body: {}
+    }
+  },
+  {
+    url: '/corp/deleteCorpLawcase',
     on: true,
     resp: {
       reCode: '0000',

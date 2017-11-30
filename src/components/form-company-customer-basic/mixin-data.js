@@ -149,7 +149,7 @@ export default {
                 },
                 on: {
                   click: () => {
-                    this.show(params.index);
+                    window.open(params.row.attachUrl, '_blank');
                   }
                 }
               }, '下载'),

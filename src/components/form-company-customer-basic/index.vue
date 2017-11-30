@@ -261,7 +261,7 @@
             <div class="form-top-actions">
               <i-button type="primary" v-if="!isFromDetail" @click="openAddAttachModal">添加附件</i-button>
             </div>
-            <i-table :columns="companyAttachFileColumns" :data="formData.attachDTOs"></i-table>
+            <i-table :loading="loadingAttachFile" :columns="companyAttachFileColumns" :data="formData.attachDTOs"></i-table>
           </bs-form-block>
           <i-row v-if="type=='modal'" style="text-align:center">
             <i-button @click="submitCompanyCustomerBasic" :loading="initFormLoading" type="success">
@@ -292,10 +292,11 @@
             multiple
             type="drag" :on-success="uploadAttachSuccess"
             :action="$config.HTTPBASEURL+'/common/upload'">
-            <div style="padding: 20px 0">
+            <div style="padding: 20px 0" v-if="attachFormData.attachUrl===''">
               <Icon type="ios-cloud-upload" size="52" style="color: #3399ff"></Icon>
               <p>点击选择文件或者拖放文件到这里</p>
             </div>
+            <p v-else>{{attachFormData.attachUrl}}</p>
           </Upload>
         </i-form-item>
         <i-form-item label="">
@@ -339,6 +340,7 @@ export default {
       showSelectEmployer: false,
       selectDepartmentModal: false,
       initFormLoading: false,
+      loadingAttachFile: false,
       selectRulerModal: false,
       attachFormData: {
         attachName: '',

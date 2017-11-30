@@ -42,25 +42,42 @@ export default {
               h('Button', {
                 props: {
                   type: 'primary',
-                  size: 'small'
+                  size: 'small',
+                  disabled: this.isFromDetail
                 },
                 style: {
                   marginRight: '5px'
                 },
                 on: {
                   click: () => {
-                    this.show(params.index);
+                    this.$data.formData = { ...params.row };
+                    this.$data.addRelationCorpModal = true;
                   }
                 }
               }, '编辑'),
               h('Button', {
                 props: {
                   type: 'error',
-                  size: 'small'
+                  size: 'small',
+                  disabled: this.isFromDetail
                 },
                 on: {
                   click: () => {
-                    this.remove(params.index);
+                    // this.remove(params.index);
+                    Alertify.confirm('确定要删除吗？', async (ok) => {
+                      if (ok) {
+                        const loadingMsg = this.$Message.loading('删除中...', 0);
+                        let resp = await this.$http.post('/corp/deleteCorpRelationShip', {
+                          corpNo: this.corpNo,
+                          relatedCorpNo: params.row.relatedCorpNo
+                        });
+                        if (resp.success) {
+                          loadingMsg();
+                          this.$Message.success('删除关联企业信息成功');
+                          this.getRelationList();
+                        }
+                      }
+                    });
                   }
                 }
               }, '删除')

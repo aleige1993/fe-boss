@@ -64,6 +64,7 @@ export default {
                       path: '/index/customer/companycustomer/modify',
                       query: {
                         id: params.row.corpNo,
+                        name: params.row.corpName,
                         from: 'detail'
                       }
                     });
@@ -81,7 +82,8 @@ export default {
                     this.$router.push({
                       path: '/index/customer/companycustomer/modify',
                       query: {
-                        id: params.row.corpNo
+                        id: params.row.corpNo,
+                        name: params.row.corpName
                       }
                     });
                     // this.remove(params.index);
@@ -96,9 +98,17 @@ export default {
                 style: { marginRight: '5px' },
                 on: {
                   click: () => {
-                    Alertify.confirm('确定要删除当前客户吗', ok => {
+                    Alertify.confirm('确定要删除当前客户吗', async ok => {
                       if (ok) {
-                        // ok
+                        const msg = this.$Message.loading('正在删除客户...', 0);
+                        let resp = await this.$http.post('/corp/deleteCorp', {
+                          corpNo: params.row.corpNo
+                        });
+                        msg();
+                        if (resp.success) {
+                          this.$Message.success('删除成功');
+                          this.getCompanyCustomerList();
+                        }
                       }
                     });
                   }
@@ -114,7 +124,7 @@ export default {
                     this.remove(params.index);
                   }
                 }
-              }, '激活/冻结')
+              }, this.status === '1' ? '冻结' : '激活')  // status 1激活  2冻结  3草稿
             ]);
           }
         }

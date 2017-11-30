@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="form-top-actions" style="padding-top: 0">
+    <div class="form-top-actions" v-if="!isFromDetail" style="padding-top: 0">
       <i-button type="primary" @click="openAddModal"><i class="iconfont icon-xinzeng"></i> 新增</i-button>
     </div>
     <i-table :loading="loadingData" :columns="shareHolerColumns" :data="shareHolerDatas"></i-table>
@@ -11,9 +11,9 @@
                      :rules="{required: true, message: '请选择股东类别'}">
           <i-input placeholder="" v-model="formData.partnerName"></i-input>
         </i-form-item>
-        <i-form-item label="股东类别" prop="investType"
+        <i-form-item label="股东类别" prop="partnerType"
                      :rules="{required: true, message: '请选择股东类别'}">
-          <i-select v-model="formData.investType" id="u5568_input" placeholder="">
+          <i-select v-model="formData.partnerType" id="u5568_input" placeholder="">
             <i-option value="1">公司</i-option>
             <i-option value="2">个人</i-option>
           </i-select>
