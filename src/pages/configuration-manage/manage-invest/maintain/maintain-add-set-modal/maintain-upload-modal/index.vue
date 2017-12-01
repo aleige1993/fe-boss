@@ -16,8 +16,11 @@
     <i-form-item
       :rules="{required: true, message: '协议附件不能为空', trigger: 'blur'}"
       label="协议附件"
-      prop="Enclosure">
+      prop="enclosure">
+      <input type="text" v-model="formAgreement.enclosure">
       <i-upload
+        :on-success="uploadSuccess"
+        :on-error="uploadError"
         multiple
         type="drag"
         :action="uploadUrl">
@@ -44,14 +47,32 @@
     data() {
       return {
         buttonLoading: false,
-        formAgreement: {},
-        uploadUrl: ''
+        formAgreement: {
+          name: '',
+          number: '',
+          enclosure: ''
+        },
+        uploadUrl: '//jsonplaceholder.typicode.com/posts/'
       };
     },
     methods: {
       formSubmit() {
-        this.$emit('parModel');
+        let formName = 'formAgreement';
+        this.$refs[formName].validate((valid) => {
+          if (valid) {
+            this.$emit('parModel');
+          } else {
+            this.$Message.error('"<span style="color: red">*</span>"必填项不能为空');
+          }
+        });
       },
+      // 上传成功
+      uploadSuccess(res, file, fileList) {
+        console.log(res);
+        this.$data.formAgreement.enclosure = res.body.url;
+      },
+      // 上传失败
+      uploadError() {},
       formCancel() {
         this.$emit('parModel');
       }

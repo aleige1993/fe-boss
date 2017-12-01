@@ -138,12 +138,12 @@
           } else {}
         });
       },
-      // 查看详情
+      /*// 查看详情
       detailsFun(row) {
         this.$data.iSsee = true;
         this.$data.uploadFile = row.enclosure;
         this.$data.ShowModal = true;
-      },
+      },*/
       // 修改弹窗
       setList() {
         this.$data.iSsee = false;   // 不是查看状态

@@ -31,7 +31,7 @@ export default {
           align: 'center',
           render: (h, params) => {
             return h('div', [
-              h('Button', {
+              /*h('Button', {
                 props: {
                   type: 'primary',
                   size: 'small'
@@ -45,7 +45,7 @@ export default {
                     this.detailsFun(rowData);
                   }
                 }
-              }, '详情'),
+              }, '详情'),*/
               h('Button', {
                 props: {
                   type: 'primary',

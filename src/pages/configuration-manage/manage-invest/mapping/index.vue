@@ -59,8 +59,13 @@
         <i-form-item label="渠道编号" prop="channelNumber">
           <i-input v-model="formMapping.channelNumber"></i-input>
         </i-form-item>
-        <i-form-item label="客户经理编号" prop="managerNumber">
-          <i-input v-model="formMapping.managerNumber"></i-input>
+        <i-form-item
+          label="客户经理编号"
+          prop="managerName">
+          <input type="hidden" v-model="formMapping.managerNo"/>
+          <i-input v-model="formMapping.managerNo" :readonly="true" placeholder="选择客户经理编号">
+            <i-button @click="showSelectEmployer=!showSelectEmployer" slot="append">客户经理编号 <Icon type="ios-more"></Icon></i-button>
+          </i-input>
         </i-form-item>
         <i-form-item
           :rules="{required: true, message: '贴息方式不能为空', trigger: 'change'}"
@@ -89,6 +94,10 @@
     <bs-modal :title="'资方合同模板配置'" v-model="ContractModel" :width="1200">
       <modal-contract v-if="ContractModel"></modal-contract>
     </bs-modal>
+    <!-- 选择客户经理的弹窗 -->
+    <bs-modal title="选择客户经理" :width="1200" v-model="showSelectEmployer">
+      <table-employer-list @on-row-dbclick="selectEmployer"></table-employer-list>
+    </bs-modal>
   </div>
 </template>
 
@@ -96,12 +105,14 @@
   import MixinData from './mixin-data';
   import BSModal from '@/components/bs-modal';
   import ContractConf from './contract-configuration';
+  import TableEmployerList from '@/components/table-employer-list';
   export default {
     name: 'investMapping',
     mixins: [MixinData],
     components: {
       'bs-modal': BSModal,
-      'modal-contract': ContractConf
+      'modal-contract': ContractConf,
+      'table-employer-list': TableEmployerList
     },
     data() {
       return {
@@ -110,6 +121,7 @@
         buttonLoading: false,
         ShowModel: false,         // 新增和修改弹窗
         ContractModel: false,      // 资方合同模板配置弹窗
+        showSelectEmployer: false,      // 选择客户经理的弹窗
         currentPage: 1,
         total: 0,
         searchForm: {
@@ -121,7 +133,8 @@
           investName: '',
           investProNumber: '',
           channelNumber: '',
-          managerNumber: '',
+          managerNo: '',
+          managerName: '',
           isCredit: '',
           subsidy: ''
         },
@@ -176,6 +189,12 @@
       // 打开合同模板配置弹窗
       contractModelOpen() {
         this.$data.ContractModel = true;
+      },
+      // 选择客户经理
+      selectEmployer(row, index) {
+        this.$data.formMapping.managerNo = row.userCode;
+        this.$data.formMapping.managerName = row.userName;
+        this.$data.showSelectEmployer = false;
       }
     }
   };
