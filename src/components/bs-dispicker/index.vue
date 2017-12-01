@@ -1,12 +1,12 @@
 <template>
   <span>
-    <i-select :disabled="readonly"  :label-in-value="true" v-model="distanceData.provinceCode"  @on-change="provinceChange" style="width: 150px">
+    <i-select :placeholder="currProvince" :disabled="readonly"  :label-in-value="true" v-model="distanceData.provinceCode"  @on-change="provinceChange" style="width: 150px">
       <i-option v-for="item in provinceDropList" :value="item.regionCode" :key="item.regionCode">{{item.regionName}}</i-option>
     </i-select>
-    <i-select :disabled="readonly" :label-in-value="true" v-model="distanceData.districtCode" @on-change="districtChange" style="width: 150px">
+    <i-select :placeholder="currDistrict" :="readonly" :label-in-value="true" v-model="distanceData.districtCode" @on-change="districtChange" style="width: 150px">
       <i-option v-for="item in districtDropList" :value="item.regionCode" :key="item.regionCode">{{item.regionName}}</i-option>
     </i-select>
-    <i-select :disabled="readonly" :label-in-value="true" @on-change="cityChange" v-model="distanceData.cityCode" style="width: 150px">
+    <i-select :placeholder="currCity" :disabled="readonly" :label-in-value="true" @on-change="cityChange" v-model="distanceData.cityCode" style="width: 150px">
       <i-option v-for="item in cityDropList" :value="item.regionCode" :key="item.regionCode">{{item.regionName}}</i-option>
     </i-select>
   </span>
@@ -30,17 +30,17 @@
       };
     },
     props: {
-      currProvinceCode: {
+      currProvince: {
         default: '',
         required: false,
         type: String
       },
-      currDistrictCode: {
+      currDistrict: {
         default: '',
         required: false,
         type: String
       },
-      currCityCode: {
+      currCity: {
         default: '',
         required: false,
         type: String
@@ -65,7 +65,7 @@
         if (resp.success) {
           this.$data.districtDropList = resp.body;
         }
-        this.$emit('on-change', this.$data.distanceData);
+        this.$emit('on-change', { ...this.$data.distanceData });
       },
       async districtChange(val) {
         this.$data.distanceData.districtName = val.label;
@@ -73,11 +73,31 @@
         if (resp.success) {
           this.$data.cityDropList = resp.body;
         }
-        this.$emit('on-change', this.$data.distanceData);
+        this.$emit('on-change', Object.assign({}, this.$data.distanceData));
       },
       cityChange(val) {
         this.$data.distanceData.cityName = val.label;
-        this.$emit('on-change', this.$data.distanceData);
+        this.$emit('on-change', { ...this.$data.distanceData });
+      },
+      async initData() {
+        // alert(1);
+        if (this.currProvinceCode !== '') {
+          let resp = await this.getAddressDropList(this.currProvinceCode);
+          if (resp.success) {
+            this.$data.districtDropList = resp.body;
+          }
+          this.$data.distanceData = Object.assign(this.$data.distanceData, { provinceCode: this.currProvinceCode });
+        }
+        if (this.currDistrictCode !== '') {
+          let resp = await this.getAddressDropList(this.currDistrictCode);
+          if (resp.success) {
+            this.$data.cityDropList = resp.body;
+          }
+          this.$data.distanceData = Object.assign(this.$data.distanceData, { districtCode: this.currDistrictCode });
+        }
+        if (this.currCityCode !== '') {
+          this.$data.distanceData = Object.assign(this.$data.distanceData, { cityCode: this.currCityCode });
+        }
       }
     },
     async mounted() {
@@ -85,32 +105,8 @@
       if (resp.success) {
         this.$data.provinceDropList = resp.body;
       }
-      if (this.currProvinceCode !== '') {
-        let resp = await this.getAddressDropList(this.currProvinceCode);
-        if (resp.success) {
-          this.$data.districtDropList = resp.body;
-        }
-        this.$data.distanceData.provinceCode = this.currProvinceCode;
-      }
-      if (this.currDistrictCode !== '') {
-        let resp = await this.getAddressDropList(this.currDistrictCode);
-        if (resp.success) {
-          this.$data.cityDropList = resp.body;
-        }
-        this.$data.distanceData.districtCode = this.currDistrictCode;
-      }
-      if (this.currCityCode !== '') {
-        this.$data.distanceData.cityCode = this.currCityCode;
-      }
-    },
-    watch: {
-      /*distanceData: {
-        handler(newVal, oldVal) {
-          // console.log(newVal);
-          this.$emit('on-change', newVal);
-        },
-        deep: true
-      }*/
+      // await bsWait(2000);
+      // this.initData();
     }
   };
 </script>

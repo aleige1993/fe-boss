@@ -20,6 +20,19 @@ export default [
           ]
         },
         {
+          'groupKey': 'HaveNoEnum',
+          'items': [
+            {
+              'itemCode': '1',
+              'itemName': '是'
+            },
+            {
+              'itemCode': '0',
+              'itemName': '否'
+            }
+          ]
+        },
+        {
           'groupKey': 'SexEnum',
           'items': [
             {
@@ -612,7 +625,43 @@ export default [
               'itemName': '按权证方式入库'
             }
           ]
-        } // 授信释放方式 end
+        }, // 授信释放方式 end
+        // 月收入方式
+        {
+          'groupKey': 'MonthRevenueEnum',
+          'items': [
+            {
+              'itemCode': '1',
+              'itemName': '1-2'
+            },
+            {
+              'itemCode': '2',
+              'itemName': '3-4'
+            },
+            {
+              'itemCode': '3',
+              'itemName': '5-6'
+            }
+          ]
+        }, // 授信释放方式 end
+        // 信用情况
+        {
+          'groupKey': 'CreditTypeEnum',
+          'items': [
+            {
+              'itemCode': '1',
+              'itemName': '1-2'
+            },
+            {
+              'itemCode': '2',
+              'itemName': '3-4'
+            },
+            {
+              'itemCode': '3',
+              'itemName': '5-6'
+            }
+          ]
+        } // 信用情况 end
       ],
       'success': true
     }

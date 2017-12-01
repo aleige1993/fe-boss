@@ -7,6 +7,7 @@ export default [
       reCode: '0000',
       body: {
         'childMenus': [
+          // 客户档案
           {
             name: '客户档案',
             url: '/index/customer',
@@ -51,6 +52,58 @@ export default [
               }
             ]
           },
+          // 贷款业务
+          {
+            name: '贷款业务',
+            url: '/index/loanbusiness',
+            childMenus: [
+              {
+                name: '业务查询',
+                url: '/index/loanbusiness',
+                childMenus: [
+                  {
+                    name: '业务查询',
+                    url: '/index/loanbusiness'
+                  }
+                ]
+              },
+              {
+                name: '业务受理',
+                url: '/index/loanbusiness/accept',
+                childMenus: [
+                  {
+                    name: '业务申请',
+                    url: '/index/loanbusiness/accept'
+                  },
+                  {
+                    name: '我的草稿',
+                    url: '/index/customer/companycustomer/modify'
+                  }
+                ]
+              },
+              {
+                name: '业务审批',
+                url: '',
+                childMenus: [
+                  {
+                    name: '黑名单列表',
+                    url: '/index/customer/blacklist'
+                  }
+                ]
+              },
+              {
+                name: '授信管理',
+                url: '',
+                childMenus: [
+                  {
+                    name: '黑名单列表',
+                    url: '/index/customer/blacklist'
+                  }
+                ]
+              }
+            ]
+          },
+          // 配置管理
           {
             name: '配置管理',
             url: '/index/conf',
@@ -105,6 +158,7 @@ export default [
               }
             ]
           }
+          // 配置管理 end
         ]
       }
     }

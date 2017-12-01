@@ -16,14 +16,14 @@
           <i-input v-model="formData.acctNo" placeholder=""></i-input>
         </i-form-item>
         <i-form-item label="银行名称" prop="bankCode"
-          :rules="{required: true, message: '银行名称不能为空', trigger: 'change'}">
+          :rules="{required: true, message: '银行名称不能为空', trigger: 'blur'}">
           <i-select @on-change="selectBank" :label-in-value="true" v-model="formData.bankCode" placeholder="">
             <i-option v-for="item in bankList" :key="item.bankCode" :value="item.bankCode">{{item.bankName}}</i-option>
           </i-select>
         </i-form-item>
         <i-form-item label="开户行" prop="openBankName"
-          :rules="{required: true, message: '开户行不能为空', trigger: 'blur'}">
-          <i-input v-model="formData.openBankName" placeholder=""></i-input>
+          :rules="{required: true, message: '开户行不能为空', type: 'string', trigger: 'blur'}">
+          <i-input type="text" v-model="formData.openBankName" placeholder=""></i-input>
         </i-form-item>
         <i-form-item label="开户行号" prop="openBankNo"
         :rules="{required: true, message: '开户行号不能为空', trigger: 'blur'}">
@@ -95,6 +95,7 @@
             }
             this.$data.submitLoading = true;
             this.$data.formData.corpNo = this.corpNo;
+            this.$data.formData.corpName = this.corpName;
             let resp = await this.$http.post(url, this.$data.formData);
             this.$data.submitLoading = false;
             if (resp.reCode === '0000') {

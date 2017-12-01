@@ -101,11 +101,17 @@
             </i-row>
             <i-row>
               <i-col span="18">
-                <i-form-item label="注册地址"
-                             :rules="{required: true, message: '请输入公司名称'}">
-                  <bs-dispicker :currProvinceCode="formData.baseDTO.regProvinceCode"
-                                :currDistrictCode="formData.baseDTO.regDistrictCode"
-                                :currCityCode="formData.baseDTO.regCityCode"
+                <i-form-item v-if="isFromDetail" label="注册地址">
+                  {{formData.baseDTO.regProvinceName}}
+                  {{formData.baseDTO.regDistrictName}}
+                  {{formData.baseDTO.regCityName}}
+                </i-form-item>
+                <i-form-item v-else label="注册地址" prop="baseDTO.regCityCode"
+                             :rules="{required: true, message: '请输入公司注册地址', trigger: 'blur'}">
+                  <input type="hidden" v-model="formData.baseDTO.regCityCode"/>
+                  <bs-dispicker :currProvince="''+formData.baseDTO.regProvinceName"
+                                :currDistrict="''+formData.baseDTO.regDistrictName"
+                                :currCity="''+formData.baseDTO.regCityName"
                                 :readonly="isFromDetail"
                                 @on-change="selectRegDistance"></bs-dispicker>
                   <i-input :readonly="isFromDetail" v-model="formData.baseDTO.regRoadAddr" placeholder="街道信息" style="width: 220px;"></i-input>
@@ -114,11 +120,17 @@
             </i-row>
             <i-row>
               <i-col span="18">
-                <i-form-item label="营业地址" prop="baseDTO.bizCityCode"
+                <i-form-item v-if="isFromDetail" label="营业地址">
+                  {{formData.baseDTO.bizProvinceName}}
+                  {{formData.baseDTO.bizDistrictName}}
+                  {{formData.baseDTO.bizCityName}}
+                </i-form-item>
+                <i-form-item v-else label="营业地址" prop="baseDTO.bizCityCode"
                              :rules="{required: true, message: '请输入营业地址'}">
-                  <bs-dispicker :currProvinceCode="formData.baseDTO.bizProvinceCode"
-                                :currDistrictCode="formData.baseDTO.bizDistrictCode"
-                                :currCityCode="formData.baseDTO.bizCityCode"
+                  <input type="hidden" v-model="formData.baseDTO.bizCityCode"/>
+                  <bs-dispicker :currProvince="formData.baseDTO.bizProvinceName"
+                                :currDistrict="formData.baseDTO.bizDistrictName"
+                                :currCity="formData.baseDTO.bizCityName"
                                 :readonly="isFromDetail"
                                 @on-change="selectBizDistance"></bs-dispicker>
                   <i-input :readonly="isFromDetail" v-model="formData.baseDTO.bizRoadAddr" placeholder="街道信息" style="width: 220px;"></i-input>
@@ -140,7 +152,7 @@
                 <i-form-item label="法定代表人姓名" prop="baseDTO.legalPerson"
                              :rules="{required: true, message: '请输入姓名'}">
                   <i-input v-model="formData.baseDTO.legalPerson" :readonly="true">
-                    <i-button type="primary" @click="selectRulerModal=!selectRulerModal" slot="append">选择代表人 <Icon type="ios-more"></Icon></i-button>
+                    <i-button v-if="!isFromDetail" type="primary" @click="selectRulerModal=!selectRulerModal" slot="append">选择代表人 <Icon type="ios-more"></Icon></i-button>
                   </i-input>
                 </i-form-item>
               </i-col>

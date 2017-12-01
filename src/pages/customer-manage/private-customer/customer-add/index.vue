@@ -9,7 +9,7 @@
     <div class="form-top-actions"></div>
     <i-tabs v-model="tabIndex" :animated="false" type="card" @on-click="tabChange">
       <i-tab-pane label="主体信息">
-        <tab-basic-info type="page" @on-submit-success="basicInfoSaved"></tab-basic-info>
+        <tab-basic-info type="page" :customer="addCustomer" @on-submit-success="basicInfoSaved"></tab-basic-info>
       </i-tab-pane>
       <i-tab-pane :disabled="spouseDisabled" label="配偶信息">
         <tab-spouse-info v-if="tabIndex === 1" :customer="addCustomer" :isFromDetail="isFromDetail"></tab-spouse-info>

@@ -48,6 +48,7 @@ export default {
   methods: {
     hideCureentModal() {
       this.$data.isShow = false;
+      this.$emit('on-close');
     },
     toggleModalStatus(isShow) {
       if (isShow) {

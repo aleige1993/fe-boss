@@ -4,50 +4,61 @@ export default {
       customerColumns: [
         {
           title: '项目编号',
-          key: 'memberNo'
+          key: 'memberNo',
+          width: 200
         },
         {
           title: '主借人',
-          key: 'name'
+          key: 'name',
+          width: 200
         },
-        /*{
+        {
           title: '证件类型',
+          width: 120,
           key: 'certType',
           render: (h, params) => {
             return h('span', {}, this.enumCode2Name(params.row.certType, 'CertTypeEnum'));
           }
-        },*/
+        },
         {
-          title: '身份证号',
-          key: 'certNo'
+          title: '证件号',
+          key: 'certNo',
+          width: 200
         },
         {
           title: '产品',
-          key: 'mobile'
+          key: 'mobile',
+          width: 200
         },
         {
           title: '期数',
-          key: 'mobile'
+          key: 'mobile',
+          width: 200
         },
         {
           title: '申请金额（元）',
-          key: 'mobile'
+          key: 'mobile',
+          width: 200
         },
         {
           title: '申请时间',
-          key: 'mobile'
+          key: 'mobile',
+          width: 200
         },
         {
           title: '当前欢姐',
-          key: 'mobile'
+          key: 'mobile',
+          width: 120
         },
         {
           title: '当前处理人',
-          key: 'mobile'
+          key: 'mobile',
+          width: 200
         },
         {
           title: '状态',
           key: 'status',
+          width: 120,
           render: (h, params) => {
             return h('span', {}, this.enumCode2Name(params.row.status, 'MemberStatusEnum'));
           }
@@ -57,7 +68,8 @@ export default {
         {
           title: '操作',
           key: 'action',
-          width: 300,
+          width: 260,
+          fixed: 'right',
           align: 'center',
           render: (h, params) => {
             return h('div', [
@@ -66,6 +78,7 @@ export default {
                   type: 'primary',
                   size: 'small'
                 },
+                style: { marginRight: '5px' },
                 on: {
                   click: async () => {
                     let status = params.row.status === '1' ? '2' : '1';
@@ -89,7 +102,7 @@ export default {
               }, '撤回'),
               h('Button', {
                 props: {
-                  type: 'primary',
+                  type: 'success',
                   size: 'small'
                 },
                 style: { marginRight: '5px' },

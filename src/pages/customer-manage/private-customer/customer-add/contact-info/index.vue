@@ -76,7 +76,7 @@
           </i-select>
         </i-form-item>
          <i-form-item label="">
-           <i-button v-if="addForm.id" @click="saveContact" :loading="submitLoading" type="primary" size="large" style="width: 80px;">
+           <i-button v-if="addForm.id" @click="saveContact" :loading="submitLoading" type="primary" size="large" style="width: 120px;">
              <span v-if="submitLoading">请求中...</span>
              <span v-else>保存</span>
            </i-button>

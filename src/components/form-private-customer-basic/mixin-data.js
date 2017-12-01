@@ -6,6 +6,9 @@ export default {
           name: '小明', // 姓名
           mobile: '1569564214', // 电话
           certType: '1', // 证件类型
+          isSocialSecurity: '',
+          isPublicReserveFunds: '',
+          creditType: '',
           certNo: '521421452142', // 证件号码
           certValidDate: '2018-12-12', // 证件有效期
           sex: '1', // 性别
@@ -20,20 +23,20 @@ export default {
           liveYears: '8', // 本地居住年限
           liveType: '1', // 居住性质
           // 户籍信息
-          censusProvinceCode: '1', // 户籍省份编号
-          censusDistrictCode: '1', // 户籍地区编号
-          censusCityCode: '1', // 户籍城市编号
-          censusProvinceName: '重庆', // 户籍省份名称
-          censusDistrictName: '重庆', // 户籍地区名称
-          censusCityName: '重庆', // 户籍城市名称
+          censusProvinceCode: '', // 户籍省份编号
+          censusDistrictCode: '', // 户籍地区编号
+          censusCityCode: '', // 户籍城市编号
+          censusProvinceName: '', // 户籍省份名称
+          censusDistrictName: '', // 户籍地区名称
+          censusCityName: '', // 户籍城市名称
           censusRoadAddr: '重庆云阳江口金子村', // 户籍街道地址
           // 居住信息
-          nowProvinceCode: '1', // 户籍省份编号
-          nowDistrictCode: '1', // 户籍地区编号
-          nowCityCode: '1', // 户籍城市编号
-          nowProvinceName: '重庆', // 户籍省份名称
-          nowDistrictName: '重庆', // 户籍地区名称
-          nowCityName: '重庆', // 户籍城市名称
+          nowProvinceCode: '', // 户籍省份编号
+          nowDistrictCode: '', // 户籍地区编号
+          nowCityCode: '', // 户籍城市编号
+          nowProvinceName: '', // 户籍省份名称
+          nowDistrictName: '', // 户籍地区名称
+          nowCityName: '', // 户籍城市名称
           nowRoadAddr: '重庆渝中蔡袁路', // 户籍街道地址
           certFrontUrl: 'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1511847552791&di=53d39cf20' +
           'd92f864cd86ddba4a79c5d9&imgtype=0&src=http%3A%2F%2Fatt2.citysbs.com%2Ftaizhou%2' +
@@ -60,12 +63,12 @@ export default {
           department: '3',
           monthRevenue: '1',
           companyTel: '110-119110120',
-          provinceCode: '1',
-          provinceName: '重庆',
-          districtCode: '1',
-          districtName: '渝中',
-          cityCode: '1',
-          cityName: '渝中山咔咔',
+          provinceCode: '',
+          provinceName: '',
+          districtCode: '',
+          districtName: '',
+          cityCode: '',
+          cityName: '',
           roadAddr: ''
         }
       },

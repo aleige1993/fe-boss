@@ -1,30 +1,5 @@
 <template>
   <div id="page-login">
-    <!-- <div class="login-box">
-      <table>
-        <tr v-if="fromOtherPage">
-          <td></td>
-          <td class="text-danger"><Icon type="information-circled"></Icon> 请登录</td>
-        </tr>
-        <tr>
-          <td>用户名</td>
-          <td><Input v-model="loginForm.loginName" placeholder="用户名" style="width: 280px"></Input></td>
-        </tr>
-        <tr>
-          <td>密码</td>
-          <td><Input v-model="loginForm.loginPwd" placeholder="密码" style="width: 280px"></Input></td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>
-            <Button type="primary" size="large" @click="submitLogin" style="width: 120px;">
-              <span v-if="!loading">提交</span>
-              <span v-else>Loading...</span>
-            </Button>
-          </td>
-        </tr>
-      </table>
-    </div> -->
     <div class="top-bar">
       <div class="login-container">
         <i class="iconfont icon-logo1"></i>
@@ -106,7 +81,8 @@ export default {
       this.$data.loading = false;
       // 登录成功
       let res = loginResult.data;
-      if (res.reCode === '0000') {
+      // alert('BS0000'.substring(res.reCode.length - 4) === '0000');
+      if (res.success) {
         this.$userLogin.setLoginInfo(res.body);
         if (this.$data.fromOtherPage) {
           this.$router.push({

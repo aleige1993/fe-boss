@@ -100,12 +100,15 @@
         this.$refs['formShareHoler'].validate(async valid => {
           if (valid) {
             this.$data.addLoading = true;
+            this.$data.formData.corpNo = this.corpNo;
+            this.$data.formData.corpName = this.corpName;
             let resp = await this.$http.post('/corp/savePartner', this.$data.formData);
             this.$data.addLoading = false;
             if (resp.success) {
               this.$data.addShareholerModal = false;
               this.$Message.success('提交成功');
               this.$data.addShareholerModal = false;
+              this.getShareHolderList();
             }
           }
         });

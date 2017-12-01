@@ -60,7 +60,7 @@ export default {
                         const msg = this.$Message.loading('正在删除股东信息...', 0);
                         let resp = await this.$http.post('/corp/deleteCorpPartner', {
                           corpNo: this.corpNo,
-                          partnerNo: params.row.corpNo
+                          partnerNo: params.row.partnerNo
                         });
                         msg();
                         if (resp.success) {
