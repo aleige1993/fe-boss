@@ -45,7 +45,7 @@ export default {
                 },
                 on: {
                   click: () => {
-                    this.listIndex = params.index;
+                    this.contractModelOpen($.extend({}, params.row));
                   }
                 }
               }, '合同模板'),
@@ -59,7 +59,6 @@ export default {
                 },
                 on: {
                   click: () => {
-                    this.listIndex = params.index;
                     this.setList($.extend({}, params.row));
                   }
                 }
@@ -71,7 +70,7 @@ export default {
                 },
                 on: {
                   click: () => {
-                    this.remove(params.index);
+                    this.remove($.extend({}, params.row));
                   }
                 }
               }, '删除')
@@ -79,29 +78,7 @@ export default {
           }
         }
       ],
-      data1: [],
-      // 关联合同模板
-      columns2: [
-        {
-          type: 'selection',
-          width: 60,
-          align: 'center'
-        },
-        {
-          title: '模板ID',
-          key: 'templateId'
-        },
-        {
-          title: '合同名称',
-          key: 'templateName'
-        }
-      ],
-      data2: [
-        {
-          templateId: '01',
-          templateName: '合同名称01'
-        }
-      ]
+      data1: []
     };
   }
 };

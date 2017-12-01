@@ -5,9 +5,9 @@
         <!--个人单笔额度-->
         <i-col span="8">
           <i-form-item
-            label="个人单笔额度" prop="personalSingleCarLimit"
-            :rules="{required: true, message: '个人单笔额度不能为空', trigger: 'blur'}">
-            <i-input placeholder="个人单笔额度" v-model="ProductPackageForm.personalSingleCarLimit">
+            :rules="{required: true, message: '个人单笔额度', trigger: 'blur', type: 'number'}" label="个人单笔额度"
+            prop="personalSingleCarLimit">
+            <i-input type="text" placeholder="个人单笔额度" v-model="ProductPackageForm.personalSingleCarLimit">
               <span slot="append">元</span>
             </i-input>
           </i-form-item>
@@ -15,9 +15,9 @@
         <!--个人单户额度-->
         <i-col span="8">
           <i-form-item
-            :rules="{required: true, message: '个人单户额度不能为空', trigger: 'blur'}"
-            label="个人单户额度" prop="personalSingleDoorLimit">
-            <i-input placeholder="个人单户额度" v-model="ProductPackageForm.personalSingleDoorLimit">
+            :rules="{required: true, message: '个人单户额度不能为空', trigger: 'blur', type: 'number'}" label="个人单户额度"
+            prop="personalSingleDoorLimit">
+            <i-input type="text" placeholder="个人单户额度" v-model="ProductPackageForm.personalSingleDoorLimit">
               <span slot="append">元</span>
             </i-input>
           </i-form-item>
@@ -25,10 +25,10 @@
         <!--企业单笔额度-->
         <i-col span="8">
           <i-form-item
-            :rules="{required: true, message: '企业单笔额度不能为空', trigger: 'blur'}"
+            :rules="{required: true, message: '企业单笔额度不能为空', trigger: 'blur', type: 'number'}"
             label="企业单笔额度"
             prop="companySingleCarLimit">
-            <i-input placeholder="企业单笔额度" v-model="ProductPackageForm.companySingleCarLimit">
+            <i-input  type="text" placeholder="企业单笔额度" v-model="ProductPackageForm.companySingleCarLimit">
               <span slot="append">元</span>
             </i-input>
           </i-form-item>
@@ -36,10 +36,10 @@
         <!--企业单户额度-->
         <i-col span="8">
           <i-form-item
-            :rules="{required: true, message: '企业单户额度不能为空', trigger: 'blur'}"
+            :rules="{required: true, message: '企业单户额度不能为空', trigger: 'blur', type: 'number'}"
             label="企业单户额度"
             prop="companySingleDoorLimit">
-            <i-input placeholder="企业单户额度" v-model="ProductPackageForm.companySingleDoorLimit">
+            <i-input  type="text" placeholder="企业单户额度" v-model="ProductPackageForm.companySingleDoorLimit">
               <span slot="append">元</span>
             </i-input>
           </i-form-item>
@@ -119,7 +119,7 @@
                 </i-select>
               </i-col>
               <i-col span="15" style="padding: 0">
-                <i-input placeholder="还款周期" v-model="ProductPackageForm.loanCycle" :disabled="ProductPackageForm.loanCycleMode!=='6'">
+                <i-input  type="text" placeholder="还款周期" v-model="ProductPackageForm.loanCycle" :disabled="ProductPackageForm.loanCycleMode!=='6'">
                   <span slot="append">天</span>
                 </i-input>
               </i-col>
@@ -213,7 +213,7 @@
                 </i-select>
               </i-col>
               <i-col span="12"  style="padding: 0">
-                <i-input placeholder="还款日" v-model="ProductPackageForm.loanDay" :disabled="ProductPackageForm.loanDayMode!=='2'">
+                <i-input  type="text" placeholder="还款日" v-model="ProductPackageForm.loanDay" :disabled="ProductPackageForm.loanDayMode!=='2'">
                   <span slot="append">日</span>
                 </i-input>
               </i-col>
@@ -250,7 +250,7 @@
           <i-form-item
             label="逾期利率"
             prop="dayOverduePenaltyRatio">
-            <i-input placeholder="逾期利率" v-model="ProductPackageForm.dayOverduePenaltyRatio">
+            <i-input  type="text" placeholder="逾期利率" v-model="ProductPackageForm.dayOverduePenaltyRatio">
               <span slot="append">%/元</span>
             </i-input>
           </i-form-item>
@@ -261,7 +261,7 @@
           <i-form-item
             label="逾期管理费"
             prop="dayOverdueManageFee">
-            <i-input placeholder="逾期管理费" v-model="ProductPackageForm.dayOverdueManageFee">
+            <i-input  type="text" placeholder="逾期管理费" v-model="ProductPackageForm.dayOverdueManageFee">
               <span slot="append">元/天</span>
             </i-input>
           </i-form-item>
@@ -271,7 +271,7 @@
           <i-form-item
             label="逾期宽限天数"
             prop="overdueExtendDays">
-            <i-input placeholder="逾期宽限天数" v-model="ProductPackageForm.overdueExtendDays">
+            <i-input  type="text" placeholder="逾期宽限天数" v-model="ProductPackageForm.overdueExtendDays">
               <span slot="append">天</span>
             </i-input>
           </i-form-item>
@@ -291,7 +291,7 @@
           <i-form-item
             label="罚息利率"
             prop="penaltyDayRatio">
-            <i-input placeholder="罚息利率" v-model="ProductPackageForm.penaltyDayRatio">
+            <i-input  type="text" placeholder="罚息利率" v-model="ProductPackageForm.penaltyDayRatio">
               <span slot="append">%/元</span>
             </i-input>
           </i-form-item>
@@ -318,7 +318,7 @@
                 </i-select>
               </i-col>
               <i-col span="11"  style="padding: 0">
-                <i-input placeholder="提前还款违约金比例" v-model="ProductPackageForm.upRepayPenaltyRatio">
+                <i-input  type="text" placeholder="提前还款违约金比例" v-model="ProductPackageForm.upRepayPenaltyRatio">
                   <span slot="append">%</span>
                 </i-input>
               </i-col>
@@ -328,19 +328,19 @@
         <!--提前还款利息-->
         <i-col span="16" class-name="col-inline">
           <i-form-item
-            :rules="{required: true, message: '提前还款利息天数不能为空', trigger: 'blur'}"
+            :rules="{required: true, message: '提前还款利息天数不能为空', trigger: 'blur', type: 'number'}"
             label="提前还款利息"
             prop="upRepayCountDays">
             <span>不足</span>
-            <i-input placeholder="" v-model="ProductPackageForm.upRepayCountDays" style="width: 80px"></i-input>
+            <i-input  type="text" placeholder="" v-model="ProductPackageForm.upRepayCountDays" style="width: 80px"></i-input>
             <span>天，按实际发生天数收，否则整月收！最低收</span>
           </i-form-item>
           <i-form-item
-            :rules="{required: true, message: '提前还款利息天数不能为空', trigger: 'blur'}"
+            :rules="{required: true, message: '提前还款利息天数不能为空', trigger: 'blur', type: 'number'}"
             label=""
             style="margin-left: -120px;"
             prop="upRepayMinCountDays">
-            <i-input placeholder="" v-model="ProductPackageForm.upRepayMinCountDays" style="width: 80px"></i-input>
+            <i-input  type="text" placeholder="" v-model="ProductPackageForm.upRepayMinCountDays" style="width: 80px"></i-input>
             <span>天利息。</span>
           </i-form-item>
         </i-col>
@@ -362,7 +362,7 @@
             label="授信释放方式"
             prop="creditLimitReleaseMode">
             <i-select v-model="ProductPackageForm.creditLimitReleaseMode" placeholder="请选择">
-              <i-option v-for="item in enumSelectData.get('CreditFreedTypeEnum')" :key="item.itemCode" :value="item.itemCode"></i-option>
+              <i-option v-for="item in enumSelectData.get('CreditFreedTypeEnum')" :key="item.itemCode" :value="item.itemCode">{{item.itemName}}</i-option>
             </i-select>
           </i-form-item>
         </i-col>
@@ -501,6 +501,7 @@
         let resp = await this.$http.get('/pms/productPackage/list', {
           productNo: productNo
         });
+        console.log(resp.body[0]);
         if (resp.body !== 0) {
           this.$data.ProductPackageForm = resp.body[0];
         } else {
@@ -613,7 +614,7 @@
           if (valid) {
             this.formDataAdd();
           } else {
-            this.$Message.error('<span style="color: red">*</span>项不能为空');
+            this.$Message.error('"<span style="color: red">*</span>"必填项不能为空');
           }
         });
       },

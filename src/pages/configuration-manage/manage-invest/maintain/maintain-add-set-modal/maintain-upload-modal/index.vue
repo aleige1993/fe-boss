@@ -1,5 +1,5 @@
 <template>
-<div id="maintain-modal-two">
+<div id="maintain-modal-upload">
   <i-form ref="formAgreement" :model="formAgreement" label-position="left" :label-width="100">
     <i-form-item
       :rules="{required: true, message: '协议名称不能为空', trigger: 'blur'}"
@@ -16,8 +16,11 @@
     <i-form-item
       :rules="{required: true, message: '协议附件不能为空', trigger: 'blur'}"
       label="协议附件"
-      prop="Enclosure">
+      prop="enclosure">
+      <input type="text" v-model="formAgreement.enclosure">
       <i-upload
+        :on-success="uploadSuccess"
+        :on-error="uploadError"
         multiple
         type="drag"
         :action="uploadUrl">
@@ -28,7 +31,10 @@
       </i-upload>
     </i-form-item>
     <i-form-item class="text-right">
-      <i-button type="primary" @click="formSubmit">提交</i-button>
+      <i-button type="primary" @click="formSubmit" :loading="buttonLoading">
+        <span v-if="!buttonLoading">提交</span>
+        <span v-else>loading...</span>
+      </i-button>
       <i-button type="ghost" style="margin-left: 8px" @click="formCancel">取消</i-button>
     </i-form-item>
   </i-form>
@@ -37,16 +43,36 @@
 
 <script>
   export default {
-    name: '',
+    name: 'maintainModalUpload',
     data() {
       return {
-        formAgreement: {},
-        uploadUrl: ''
+        buttonLoading: false,
+        formAgreement: {
+          name: '',
+          number: '',
+          enclosure: ''
+        },
+        uploadUrl: '//jsonplaceholder.typicode.com/posts/'
       };
     },
     methods: {
       formSubmit() {
+        let formName = 'formAgreement';
+        this.$refs[formName].validate((valid) => {
+          if (valid) {
+            this.$emit('parModel');
+          } else {
+            this.$Message.error('"<span style="color: red">*</span>"必填项不能为空');
+          }
+        });
       },
+      // 上传成功
+      uploadSuccess(res, file, fileList) {
+        console.log(res);
+        this.$data.formAgreement.enclosure = res.body.url;
+      },
+      // 上传失败
+      uploadError() {},
       formCancel() {
         this.$emit('parModel');
       }

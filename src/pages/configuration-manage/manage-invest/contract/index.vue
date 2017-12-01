@@ -26,20 +26,20 @@
     <div class="form-top-actions">
       <i-button @click="addModal" type="info"><i class="iconfont icon-xinzeng"></i> 新增</i-button>
     </div>
-    <i-table highlight-row border :loading="dataLoading" ref="proTable" :columns="columns1" :data="data1"></i-table>
+    <i-table border :loading="dataLoading" ref="proTable" :columns="columns1" :data="data1"></i-table>
     <div class="page-container">
       <i-page :current="currentPage" :total="total" size="small" show-elevator show-total @on-change="jumpPage">
       </i-page>
     </div>
     <bs-modal :title="'新增合同模板'" v-model="ShowModal" :width="600">
       <i-form ref="formContract" :model="formContract" label-position="right" :label-width="150">
-        <i-form-item label="合同类型" prop="type">
+        <!--<i-form-item label="合同类型" prop="type">
           <i-select v-model="formContract.type" :disabled="iSsee">
             <i-option value="贷款合同01">贷款合同01</i-option>
             <i-option value="贷款合同02">贷款合同02</i-option>
             <i-option value="贷款合同03">贷款合同03</i-option>
           </i-select>
-        </i-form-item>
+        </i-form-item>-->
         <i-form-item label="合同名称" prop="name">
           <i-input v-model="formContract.name" :readonly ="iSsee">
           </i-input>
@@ -94,7 +94,7 @@
         },
         uploadFile: '',
         formContract: {
-          type: '', // 合同类型
+          /*type: '', // 合同类型*/
           name: '', // 合同名称
           ContractId: '', // 云贷签约平台模板ID
           Enclosure: '' // 合同附件
@@ -110,7 +110,7 @@
         if (page) {
           this.searchForm.currentPage = page;
         }
-        let resp = await this.$http.get('/contract', this.$data.searchForm);
+        let resp = await this.$http.post('/contract', this.$data.searchForm);
         this.$data.dataLoading = false;
         this.$data.data1 = resp.body.resultList;
         this.$data.currentPage = resp.body.currentPage;
@@ -138,12 +138,12 @@
           } else {}
         });
       },
-      // 查看详情
+      /*// 查看详情
       detailsFun(row) {
         this.$data.iSsee = true;
         this.$data.uploadFile = row.enclosure;
         this.$data.ShowModal = true;
-      },
+      },*/
       // 修改弹窗
       setList() {
         this.$data.iSsee = false;   // 不是查看状态
