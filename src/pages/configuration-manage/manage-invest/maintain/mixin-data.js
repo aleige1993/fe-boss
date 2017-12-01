@@ -4,17 +4,17 @@ export default {
       columns1: [
         {
           title: '资方编号',
-          width: 100,
+          width: 200,
           align: 'center',
-          key: 'id'
+          key: 'capitalNo'
         },
         {
           title: '资方名称',
-          key: 'name'
+          key: 'capitalName'
         },
         {
           title: '状态',
-          key: 'state'
+          key: 'status'
         },
         {
           title: '操作',

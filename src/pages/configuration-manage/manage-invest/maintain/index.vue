@@ -13,10 +13,10 @@
 
     <i-table :loading="dataLoading" border ref="proTable" :columns="columns1" :data="data1"></i-table>
     <div class="page-container">
-      <i-page :current="currentPage" :total="total" size="small" show-elevator show-total @on-change="jumpPage">
+      <i-page :page-size="pageSize" :current="currentPage" :total="total" size="small" show-elevator show-total @on-change="jumpPage">
       </i-page>
     </div>
-    <bs-modal :title="isAdd ? '新增' : '修改'" v-model="ShowModal" :width="1200">
+    <bs-modal :title="isAdd ? '新增' : '修改'" v-model="ShowModal" :width="1200" @on-close="closeModelAddSet">
       <modal-add-set v-if="ShowModal" @model-addSet="closeModelAddSet" :child-msg="clickRow"></modal-add-set>
     </bs-modal>
     <bs-modal :title="'账户信息'" v-model="showUserMoadl" :width="1200">
@@ -43,12 +43,13 @@
         isAdd: true,
         dataLoading: false,
         showUserMoadl: false,
+        pageSize: 5,
+        total: 0,
+        currentPage: 1,
         ShowModal: false, // 是否是新增修改
         clickRow: {
           isAdd: true
-        },
-        total: 0,
-        currentPage: 1
+        }
       };
     }, // end data
     mounted() {
@@ -61,12 +62,23 @@
         if (page) {
           this.$data.currentPage = page;
         }
-        let resp = await this.$http.post('/maintain', {});
+        let resp = await this.$http.get('/pms/capital/accBaseInfoList', {
+          currentPage: this.$data.currentPage,
+          pageSize: this.$data.pageSize
+        });
         this.$data.dataLoading = false;
-        console.log(resp);
-        this.$data.data1 = resp.body.resultList;
-        this.$data.currentPage = resp.body.currentPage;
-        this.$data.total = resp.body.totalNum;
+        console.log('->获取列表成功');
+        if (resp.body.resultList.length !== 0) {
+          this.$data.data1 = resp.body.resultList;
+          this.$data.currentPage = resp.body.currentPage;
+          this.$data.total = resp.body.totalNum;
+        } else {
+          this.$Notice.warning({
+            title: '没有数据可加载',
+            duration: 2
+          });
+          this.$data.data1 = [];
+        }
       },
       // 分页跳转
       jumpPage(page) {
@@ -81,7 +93,8 @@
       // 通过子组件通知，关闭新增修改弹窗
       closeModelAddSet() {
         this.$data.ShowModal = false;
-        this.getPrivateCustomerList(this.$data.currentPage);
+        let pages = this.$data.currentPage;
+        this.getPrivateCustomerList(pages);
       },
       // 资方维护列表的删除
       removeZf(index) {
