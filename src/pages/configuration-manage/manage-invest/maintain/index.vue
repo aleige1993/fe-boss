@@ -97,12 +97,20 @@
         this.getPrivateCustomerList(pages);
       },
       // 资方维护列表的删除
-      removeZf(index) {
-        Alertify.confirm('确定要删除吗？', (confirm) => {
-          if (confirm) {
-            this.data1.splice(index, 1);
-            // Alertify.alert('确定');
-          } else {}
+      removeZf(row) {
+        Alertify.confirm('确定要删除吗？', async (ok) => {
+          if (ok) {
+            let capitalNo = row.capitalNo;
+            const loadingMsg = this.$Message.loading('删除中...', 0);
+            let respDel = await this.$http.post('/pms/capital/accBaseInfoRemove', {
+              capitalNo: capitalNo
+            });
+            if (respDel.success) {
+              loadingMsg();
+              this.$Message.success('删除成功');
+              this.getPrivateCustomerList();
+            }
+          }
         });
       },
       // 修改弹窗

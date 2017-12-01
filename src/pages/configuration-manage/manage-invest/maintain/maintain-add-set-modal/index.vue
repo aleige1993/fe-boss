@@ -1,131 +1,130 @@
 <template>
 <div id="maintain-add-set-modal">
-  <bs-form-block :title="'基本信息'" padding="20px 0" borderWidth="0px">
-    <i-form ref="formMaintain" :model="formMaintain" label-position="right" :label-width="120">
-      <i-row :gutter="16">
-        <!--资方名称-->
-        <i-col span="8">
-          <i-form-item
-            :rules="{required: true, message: '资方名称不能为空', trigger: 'blur'}"
-            label="资方名称"
-            prop="capitalName">
-            <i-input v-model="formMaintain.capitalName">
-            </i-input>
-          </i-form-item>
-        </i-col>
-        <!--合作状态-->
-        <i-col span="8">
-          <i-form-item
-            :rules="{required: true, message: '合作状态不能为空', trigger: 'blur'}"
-            label="合作状态"
-            prop="status">
-            <i-input v-model="formMaintain.status">
-            </i-input>
-          </i-form-item>
-        </i-col>
-        <!--法定代表人-->
-        <i-col span="8">
-          <i-form-item label="法定代表人" prop="legalPerson">
-            <i-input v-model="formMaintain.legalPerson">
-            </i-input>
-          </i-form-item>
-        </i-col>
-        <!--法人证件号码-->
-        <i-col span="8">
-          <i-form-item label="法人证件号码" prop="egalCertno">
-            <i-input number v-model="formMaintain.egalCertno" >
-            </i-input>
-          </i-form-item>
-        </i-col>
-        <!--成立时间-->
-        <i-col span="8">
-          <i-form-item label="成立时间" prop="regDate">
-            <bs-datepicker v-model="formMaintain.regDate" :readonly="false"></bs-datepicker>
-          </i-form-item>
-        </i-col>
-        <!--统一社会信用代码-->
-        <i-col span="8">
-          <i-form-item label="统一社会信用代码" prop="creditCode">
-            <i-input v-model="formMaintain.creditCode">
-            </i-input>
-          </i-form-item>
-        </i-col>
-        <!--账户名称-->
-        <i-col span="8">
-          <i-form-item label="账户名称" prop="acctName">
-            <i-input v-model="formMaintain.acctName">
-            </i-input>
-          </i-form-item>
-        </i-col>
-        <!--账号-->
-        <i-col span="8">
-          <i-form-item label="账号" prop="acctNo">
-            <i-input v-model="formMaintain.acctNo">
-            </i-input>
-          </i-form-item>
-        </i-col>
-        <!--开户银行-->
-        <i-col span="8">
-          <i-form-item label="开户银行" prop="openbankname">
-            <i-input v-model="formMaintain.openbankname">
-            </i-input>
-          </i-form-item>
-        </i-col>
-        <!--主要联系人-->
-        <i-col span="8">
-          <i-form-item label="主要联系人" prop="linkmanName">
-            <i-input v-model="formMaintain.linkmanName">
-            </i-input>
-          </i-form-item>
-        </i-col>
-        <!--联系电话-->
-        <i-col span="8">
-          <i-form-item label="联系电话" prop="linkmanMobile">
-            <i-input v-model="formMaintain.linkmanMobile">
-            </i-input>
-          </i-form-item>
-        </i-col>
-        <!--联系邮箱-->
-        <i-col span="8">
-          <i-form-item label="联系邮箱" prop="email">
-            <i-input v-model="formMaintain.email">
-            </i-input>
-          </i-form-item>
-        </i-col>
-        <!--地址-->
-        <i-col span="24" class-name="city-select">
-          <i-form-item label="地址">
-            <bs-dispicker :currProvinceCode="formMaintain.bizProvinceCode"
-                          :currDistrictCode="formMaintain.bizCityCode"
-                          :currCityCode="formMaintain.bizDistrictName"
-                          @on-change="selectCensusDistance">
-            </bs-dispicker>
-            <i-input placeholder="街道信息" v-model="formMaintain.bizRoadAddr" style="width: 539px;"></i-input>
-          </i-form-item>
-        </i-col>
-      </i-row>
-      <div class="text-right">
-        <i-button type="primary" @click="formSubmit" :loading="buttonLoading">
-          <span v-if="!buttonLoading">提交基本信息</span>
-          <span v-else>loading...</span>
-        </i-button>
+  <i-tabs type="card">
+    <i-tab-pane :label="'基本信息'">
+      <i-form ref="formMaintain" :model="formMaintain" label-position="right" :label-width="120">
+        <i-row :gutter="16">
+          <!--资方名称-->
+          <i-col span="8">
+            <i-form-item
+              :rules="{required: true, message: '资方名称不能为空', trigger: 'blur'}"
+              label="资方名称"
+              prop="capitalName">
+              <i-input v-model="formMaintain.capitalName">
+              </i-input>
+            </i-form-item>
+          </i-col>
+          <!--合作状态-->
+          <i-col span="8">
+            <i-form-item
+              :rules="{required: true, message: '合作状态不能为空', trigger: 'blur'}"
+              label="合作状态"
+              prop="status">
+              <i-input v-model="formMaintain.status">
+              </i-input>
+            </i-form-item>
+          </i-col>
+          <!--法定代表人-->
+          <i-col span="8">
+            <i-form-item label="法定代表人" prop="legalPerson">
+              <i-input v-model="formMaintain.legalPerson">
+              </i-input>
+            </i-form-item>
+          </i-col>
+          <!--法人证件号码-->
+          <i-col span="8">
+            <i-form-item label="法人证件号码" prop="egalCertno">
+              <i-input number v-model="formMaintain.egalCertno" >
+              </i-input>
+            </i-form-item>
+          </i-col>
+          <!--成立时间-->
+          <i-col span="8">
+            <i-form-item label="成立时间" prop="regDate">
+              <bs-datepicker v-model="formMaintain.regDate" :readonly="false"></bs-datepicker>
+            </i-form-item>
+          </i-col>
+          <!--统一社会信用代码-->
+          <i-col span="8">
+            <i-form-item label="统一社会信用代码" prop="creditCode">
+              <i-input v-model="formMaintain.creditCode">
+              </i-input>
+            </i-form-item>
+          </i-col>
+          <!--账户名称-->
+          <i-col span="8">
+            <i-form-item label="账户名称" prop="acctName">
+              <i-input v-model="formMaintain.acctName">
+              </i-input>
+            </i-form-item>
+          </i-col>
+          <!--账号-->
+          <i-col span="8">
+            <i-form-item label="账号" prop="acctNo">
+              <i-input v-model="formMaintain.acctNo">
+              </i-input>
+            </i-form-item>
+          </i-col>
+          <!--开户银行-->
+          <i-col span="8">
+            <i-form-item label="开户银行" prop="openbankname">
+              <i-input v-model="formMaintain.openbankname">
+              </i-input>
+            </i-form-item>
+          </i-col>
+          <!--主要联系人-->
+          <i-col span="8">
+            <i-form-item label="主要联系人" prop="linkmanName">
+              <i-input v-model="formMaintain.linkmanName">
+              </i-input>
+            </i-form-item>
+          </i-col>
+          <!--联系电话-->
+          <i-col span="8">
+            <i-form-item label="联系电话" prop="linkmanMobile">
+              <i-input v-model="formMaintain.linkmanMobile">
+              </i-input>
+            </i-form-item>
+          </i-col>
+          <!--联系邮箱-->
+          <i-col span="8">
+            <i-form-item label="联系邮箱" prop="email">
+              <i-input v-model="formMaintain.email">
+              </i-input>
+            </i-form-item>
+          </i-col>
+          <!--地址-->
+          <i-col span="24" class-name="city-select">
+            <i-form-item label="地址">
+              <bs-dispicker :currProvinceCode="formMaintain.bizProvinceCode"
+                            :currDistrictCode="formMaintain.bizCityCode"
+                            :currCityCode="formMaintain.bizDistrictName"
+                            @on-change="selectCensusDistance">
+              </bs-dispicker>
+              <i-input placeholder="街道信息" v-model="formMaintain.bizRoadAddr" style="width: 539px;"></i-input>
+            </i-form-item>
+          </i-col>
+        </i-row>
+        <div class="text-right">
+          <i-button type="primary" @click="formSubmit" :loading="buttonLoading">
+            <span v-if="!buttonLoading">提交基本信息</span>
+            <span v-else>loading...</span>
+          </i-button>
+        </div>
+      </i-form>
+    </i-tab-pane>
+    <i-tab-pane :label="isAddSubMint ? '合作协议' : '合作协议(请先提交基本信息...)'" :disabled="!isAddSubMint">
+      <div class="form-top-actions">
+        <i-button @click="openShowModal" type="info"><i class="iconfont icon-xinzeng"></i> 新增</i-button>
       </div>
-    </i-form>
-  </bs-form-block>
-  <bs-form-block :title="'合作协议'" padding="20px 0" borderWidth="0">
-    <div class="form-top-actions">
-      <i-button :disabled="!isAddSubMint" @click="openShowModal" type="info">
-        <span v-if="isAddSubMint"><i class="iconfont icon-xinzeng"></i> 新增</span>
-        <span v-else>请先提交基本信息...</span>
-      </i-button>
-    </div>
-    <i-table border ref="proTable" :columns="columns1" :data="data1" :loading="dataloading"></i-table>
-    <br>
-    <br>
-    <bs-modal :title="'新增'" v-model="ShowModal" :width="600">
-      <modal-upload v-if="ShowModal" @parModel='closeModel' ></modal-upload>
-    </bs-modal>
-  </bs-form-block>
+      <i-table border ref="proTable" :columns="columns1" :data="data1" :loading="dataloading"></i-table>
+      <br>
+      <br>
+      <bs-modal :title="'新增'" v-model="ShowModal" :width="600">
+        <modal-upload v-if="ShowModal" @parModel='closeModel' ></modal-upload>
+      </bs-modal>
+    </i-tab-pane>
+  </i-tabs>
 </div>
 </template>
 
