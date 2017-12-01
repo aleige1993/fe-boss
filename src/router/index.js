@@ -79,7 +79,8 @@ let MyRouter = new Router({
         {
           path: 'loanbusiness', name: 'loanBusiness', component: resolve => require(['@/pages/loan-business'], resolve),
           children: [
-            { path: '/', name: 'loanBusinessList', component: resolve => require(['@/pages/loan-business/business-list'], resolve)}
+            { path: '/', name: 'loanBusinessList', component: resolve => require(['@/pages/loan-business/business-list'], resolve)},
+            { path: 'accept', name: 'loanBusinessAccept', component: resolve => require(['@/pages/loan-business/business-acceptance'], resolve)}
           ]
         }
         // 贷款业务 end

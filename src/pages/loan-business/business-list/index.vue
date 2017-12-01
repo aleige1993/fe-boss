@@ -17,7 +17,12 @@
           <i-input v-model="searchForm.certNo" type="text" placeholder="主借人"></i-input>
         </i-form-item>
         <i-form-item prop="password">
-          <i-input v-model="searchForm.certNo" type="text" placeholder="身份证号"></i-input>
+          <i-select style="width: 120px;" v-model="searchForm.certType" placeholder="证件类型">
+            <i-option v-for="item in certTypeEnum" :value="item.itemCode" :key="item.itemCode">{{item.itemName}}</i-option>
+          </i-select>
+        </i-form-item>
+        <i-form-item prop="password">
+          <i-input v-model="searchForm.certNo" type="text" placeholder="证件号"></i-input>
         </i-form-item>
         <i-form-item prop="password">
           <bs-datepicker v-model="searchForm.mobile" type="text" placeholder="申请时间"></bs-datepicker>

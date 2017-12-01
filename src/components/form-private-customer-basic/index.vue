@@ -12,9 +12,36 @@
                 </i-form-item>
               </i-col>
               <i-col span="8">
-                <i-form-item label="手机号" prop="mbMemberDTO.mobile"
+                <i-form-item label="注册手机号" prop="mbMemberDTO.mobile"
                   :rules="{required: true, message: '手机号不能为空', trigger: 'blur'}">
                   <i-input :readonly="isFromDetail" v-model="formData.mbMemberDTO.mobile" placeholder="手机号"></i-input>
+                </i-form-item>
+              </i-col>
+            </i-row>
+            <!--新增字段-->
+            <i-row>
+              <i-col span="8">
+                <i-form-item label="社保" prop="mbMemberDTO.isSocialSecurity"
+                             :rules="{required: true, message: '请选择是否购买社保', trigger: 'change'}">
+                  <i-select :disabled="isFromDetail" v-model="formData.mbMemberDTO.isSocialSecurity">
+                    <i-option v-for="item in enumSelectData.get('HaveNoEnum')" :key="item.itemCode" :value="item.itemCode">{{item.itemName}}社保</i-option>
+                  </i-select>
+                </i-form-item>
+              </i-col>
+              <i-col span="8">
+                <i-form-item label="公积金" prop="mbMemberDTO.isPublicReserveFunds"
+                             :rules="{required: true, message: '请选择是否购买公积金', trigger: 'blur'}">
+                  <i-select :disabled="isFromDetail" v-model="formData.mbMemberDTO.isPublicReserveFunds">
+                    <i-option v-for="item in enumSelectData.get('HaveNoEnum')" :key="item.itemCode" :value="item.itemCode">{{item.itemName}}公积金</i-option>
+                  </i-select>
+                </i-form-item>
+              </i-col>
+              <i-col span="8">
+                <i-form-item label="信用记录" prop="mbMemberDTO.creditType"
+                             :rules="{required: true, message: '请选择信用记录', trigger: 'blur'}">
+                  <i-select :disabled="isFromDetail" v-model="formData.mbMemberDTO.creditType">
+                    <i-option v-for="item in enumSelectData.get('CreditTypeEnum')" :key="item.itemCode" :value="item.itemCode">{{item.itemName}}</i-option>
+                  </i-select>
                 </i-form-item>
               </i-col>
             </i-row>
@@ -92,11 +119,11 @@
             </i-row>
             <i-row>
               <i-col span="8">
-                <i-form-item label="年收入" prop="mbMemberDTO.annualRevenue"
-                  :rules="{required: true, message: '年收入不能为空'}">
-                  <i-input :readonly="isFromDetail" v-model="formData.mbMemberDTO.annualRevenue">
-                    <span slot="append">元</span>
-                  </i-input>
+                <i-form-item label="工资收入" prop="mbMemberDTO.monthRevenue"
+                  :rules="{required: true, message: '收入不能为空'}">
+                  <i-select :disabled="isFromDetail" v-model="formData.mbMemberDTO.monthRevenue">
+                    <i-option v-for="item in enumSelectData.get('MonthRevenueEnum')" :key="item.itemCode" :value="item.itemCode">{{item.itemName}}</i-option>
+                  </i-select>
                 </i-form-item>
               </i-col>
               <i-col span="8">
@@ -134,7 +161,7 @@
                 </i-form-item>
               </i-col>
               <i-col span="8">
-                <i-form-item label="居住性质" prop="mbMemberDTO.liveType"
+                <i-form-item label="住房情况" prop="mbMemberDTO.liveType"
                   :rules="{required: true, message: '请选择居住性质', trigger: 'change'}">
                   <i-select :disabled="isFromDetail" v-model="formData.mbMemberDTO.liveType">
                     <i-option v-for="item in enumSelectData.get('LiveTypeEnum')" :key="item.itemCode" :value="item.itemCode">{{item.itemName}}</i-option>
@@ -144,10 +171,12 @@
             </i-row>
             <i-row>
               <i-col span="18">
-                <i-form-item v-if="!isFromDetail" label="户籍地址">
-                  <bs-dispicker :currProvinceCode="formData.mbMemberDTO.censusProvinceCode"
-                                :currDistrictCode="formData.mbMemberDTO.censusDistrictCode"
-                                :currCityCode="formData.mbMemberDTO.censusCityCode"
+                <i-form-item v-if="!isFromDetail" label="户籍地址" prop="mbMemberDTO.censusCityCode"
+                             :rules="{required: true, message: '请输入户籍地址', trigger: 'blur'}">
+                  <input type="hidden" v-model="formData.mbMemberDTO.censusCityCode">
+                  <bs-dispicker :currProvince="formData.mbMemberDTO.censusProvinceName"
+                                :currDistrict="formData.mbMemberDTO.censusDistrictName"
+                                :currCity="formData.mbMemberDTO.censusCityName"
                                 @on-change="selectCensusDistance">
                   </bs-dispicker>
                   <i-input placeholder="街道信息" v-model="formData.mbMemberDTO.censusRoadAddr" style="width: 320px;"></i-input>
@@ -162,10 +191,12 @@
             </i-row>
             <i-row>
               <i-col span="18">
-                <i-form-item v-if="!isFromDetail" label="居住地址">
-                  <bs-dispicker :currProvinceCode="formData.mbMemberDTO.nowProvinceCode"
-                                :currDistrictCode="formData.mbMemberDTO.nowDistrictCode"
-                                :currCityCode="formData.mbMemberDTO.nowCityCode"
+                <i-form-item v-if="!isFromDetail" label="居住地址" prop="mbMemberDTO.nowCityCode"
+                             :rules="{required: true, message: '请输入居住地址', trigger: 'blur'}">
+                  <input type="hidden" v-model="formData.mbMemberDTO.nowCityCode">
+                  <bs-dispicker ref="censusDispicker" :currProvince="formData.mbMemberDTO.nowProvinceName"
+                                :currDistrict="formData.mbMemberDTO.nowDistrictName"
+                                :currCity="formData.mbMemberDTO.nowCityName"
                                 @on-change="selectNowDistance"></bs-dispicker>
                   <i-input placeholder="街道信息" v-model="formData.mbMemberDTO.nowRoadAddr" style="width: 320px;"></i-input>
                 </i-form-item>
@@ -269,10 +300,13 @@
             </i-row>
             <i-row>
               <i-col span="18">
-                <i-form-item label="公司地址" v-if="!isFromDetail">
-                  <bs-dispicker :currProvinceCode="formData.mbMemberWorkDTO.provinceCode"
-                                :currDistrictCode="formData.mbMemberWorkDTO.districtCode"
-                                :currCityCode="formData.mbMemberWorkDTO.cityCode"
+                <i-form-item label="公司地址" v-if="!isFromDetail"
+                             prop="mbMemberWorkDTO.cityCode"
+                             :rules="{required: true, message: '请输入公司地址', trigger: 'blur'}">
+                  <input type="hidden" v-model="formData.mbMemberWorkDTO.cityCode">
+                  <bs-dispicker :currProvince="formData.mbMemberWorkDTO.provinceName"
+                                :currDistrict="formData.mbMemberWorkDTO.districtName"
+                                :currCity="formData.mbMemberWorkDTO.cityName"
                                 @on-change="selectCompanyDistance"></bs-dispicker>
                   <i-input v-model="formData.mbMemberWorkDTO.roadAddr" placeholder="街道信息" style="width: 220px;"></i-input>
                 </i-form-item>
@@ -367,6 +401,11 @@ export default {
       default: 'page',
       required: false,
       type: String
+    },
+    customer: {
+      default: null,
+      required: false,
+      type: Object
     }
   },
   computed: {
@@ -388,19 +427,21 @@ export default {
   },
   watch: {
     'formData.mbMemberDTO.certNo'(newVal, oldVal) {
-      if (this.$data.checkoutCertNoTimer) {
-        this.$data.checkoutCertNoTimer = null;
-      }
-      this.$data.checkoutCertNoTimer = setTimeout(async () => {
-        this.$data.checkingCertNo = true;
-        let resp = await this.$http.post('/member/isExists', { certNo: newVal });
-        this.$data.checkingCertNo = false;
-        if (resp.success) {
-          if (resp.body.exists) {
-            Alertify.alert('您输入的证件号已经存在，请换一个证件再试');
-          }
+      if (!this.$route.query.id) {
+        if (this.$data.checkoutCertNoTimer) {
+          this.$data.checkoutCertNoTimer = null;
         }
-      }, 500);
+        this.$data.checkoutCertNoTimer = setTimeout(async () => {
+          this.$data.checkingCertNo = true;
+          let resp = await this.$http.post('/member/isExists', { certNo: newVal });
+          this.$data.checkingCertNo = false;
+          if (resp.success) {
+            if (resp.body.exists) {
+              Alertify.alert('您输入的证件号已经存在，请换一个证件再试');
+            }
+          }
+        }, 500);
+      }
     }
   },
   methods: {
@@ -431,6 +472,7 @@ export default {
         });
         this.$data.initFormLoading = false;
         this.$data.formData = resp.body;
+        // this.$refs['censusDispicker'].initData();
         this.$emit('on-submit-success', resp.body);
       } catch (e) {
         this.$data.initFormLoading = false;

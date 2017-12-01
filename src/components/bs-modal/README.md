@@ -7,9 +7,12 @@
 - width : 模态框的宽度 类型 Number 是否必须：否 默认值：520
 - zIndex : 如果一页组件（页面）中含有多个模态框，通过此属性设置各个模态框的层级关系 类型 Number 是否必须：否 默认值：100
 - slot ： 模态框主体内容
+
+#### 事件
+- on-close : 关闭当前窗口的回掉 
 #### 范例
 ~~~
-<pt-modal title="添加产品" v-model="showAddModal" :width="600" :zIndex="200">
+<pt-modal title="添加产品" @on-close="modalClose" v-model="showAddModal" :width="600" :zIndex="200">
   <!--下面是slot内容-->
   <Form ref="formValidate" label-position="left" :label-width="80">
     <FormItem label="姓名" prop="name">

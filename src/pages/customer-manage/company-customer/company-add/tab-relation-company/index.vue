@@ -45,7 +45,7 @@
           <i-input v-model="formData.bizAddress" placeholder=""></i-input>
         </i-form-item>
         <i-form-item label="备注" prop="mail">
-          <i-input v-model="formData.remark" placeholder=""></i-input>
+          <i-input v-model="formData.remark" type="textarea" :rows="4" placeholder=""></i-input>
         </i-form-item>
         <i-form-item label="">
           <i-button @click="submitForm" :loading="submitLoading" type="primary" size="large" style="width: 120px;">
@@ -119,7 +119,7 @@
         this.$data.addRelationCorpModal = true;
       },
       selectRelationCompany(row, index) {
-        console.log(row);
+        // console.log(row);
         this.$data.formData.relatedCorpNo = row.corpNo;
         this.$data.formData.relatedCorpName = row.corpName;
         this.$data.formData.relatedCorpCreditCode = row.creditCode;
@@ -131,7 +131,6 @@
         this.$data.slectRelationCompanyModal = false;
       },
       addCompanySuccess() {
-        alert('添加成功');
         this.$data.addCompanyCustomerModal = false;
         this.$refs['tableCompanyCustomer'].getCompanyCustomerList();
       },

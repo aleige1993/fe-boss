@@ -8,6 +8,8 @@ export default {
     },
     // 选择注册地址
     selectRegDistance(distance) {
+      console.log('===distance change==');
+      console.log(distance);
       this.$data.formData.baseDTO.regProvinceCode = distance.provinceCode;
       this.$data.formData.baseDTO.regProvinceName = distance.provinceName;
       this.$data.formData.baseDTO.regDistrictCode = distance.districtCode;
@@ -17,12 +19,12 @@ export default {
     },
     // 选择营业地址
     selectBizDistance(distance) {
-      this.$data.formData.baseDTO.regProvinceCode = distance.provinceCode;
-      this.$data.formData.baseDTO.regProvinceName = distance.provinceName;
-      this.$data.formData.baseDTO.regDistrictCode = distance.districtCode;
-      this.$data.formData.baseDTO.regDistrictName = distance.districtName;
-      this.$data.formData.baseDTO.regCityCode = distance.cityCode;
-      this.$data.formData.baseDTO.regCityName = distance.cityName;
+      this.$data.formData.baseDTO.bizProvinceCode = distance.provinceCode;
+      this.$data.formData.baseDTO.bizProvinceName = distance.provinceName;
+      this.$data.formData.baseDTO.bizDistrictCode = distance.districtCode;
+      this.$data.formData.baseDTO.bizDistrictName = distance.districtName;
+      this.$data.formData.baseDTO.bizCityCode = distance.cityCode;
+      this.$data.formData.baseDTO.bizCityName = distance.cityName;
     },
     // 选择业务拓展部门
     selectDep(id, row, data) {
@@ -79,6 +81,9 @@ export default {
       this.$data.loadingAttachFile = false;
       if (resp.success) {
         this.$data.formData.baseDTO = resp.body.baseDTO;
+        await bsWait(500);
+        /*this.$refs['regDisSelect'].initData();
+        this.$refs['bizDisSelect'].initData();*/
         this.$emit('on-submit-success', {
           corpNo: resp.body.baseDTO.corpNo,
           corpName: resp.body.baseDTO.corpName

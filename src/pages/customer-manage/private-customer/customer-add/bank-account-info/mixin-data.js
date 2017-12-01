@@ -12,7 +12,7 @@ export default {
         },
         {
           title: '银行名称',
-          key: 'bankName'
+          key: 'openBankName'
         },
         {
           title: '开户行号',

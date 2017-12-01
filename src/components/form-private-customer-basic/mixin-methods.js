@@ -28,6 +28,7 @@ export default {
     },
     // 户籍地址联动
     selectCensusDistance(distance) {
+      console.log(distance);
       this.$data.formData.mbMemberDTO.censusProvinceCode = distance.provinceCode;
       this.$data.formData.mbMemberDTO.censusProvinceName = distance.provinceName;
       this.$data.formData.mbMemberDTO.censusDistrictCode = distance.districtCode;
