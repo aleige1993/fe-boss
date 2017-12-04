@@ -86,17 +86,17 @@
           if (resp.success) {
             this.$data.districtDropList = resp.body;
           }
-          this.$data.distanceData = Object.assign(this.$data.distanceData, { provinceCode: this.currProvinceCode });
+          // this.$data.distanceData = Object.assign(this.$data.distanceData, { provinceCode: this.currProvinceCode });
         }
         if (this.currDistrictCode !== '') {
           let resp = await this.getAddressDropList(this.currDistrictCode);
           if (resp.success) {
             this.$data.cityDropList = resp.body;
           }
-          this.$data.distanceData = Object.assign(this.$data.distanceData, { districtCode: this.currDistrictCode });
+          // this.$data.distanceData = Object.assign(this.$data.distanceData, { districtCode: this.currDistrictCode });
         }
         if (this.currCityCode !== '') {
-          this.$data.distanceData = Object.assign(this.$data.distanceData, { cityCode: this.currCityCode });
+          // this.$data.distanceData = Object.assign(this.$data.distanceData, { cityCode: this.currCityCode });
         }
       }
     },

@@ -8,8 +8,6 @@ export default {
     },
     // 选择注册地址
     selectRegDistance(distance) {
-      console.log('===distance change==');
-      console.log(distance);
       this.$data.formData.baseDTO.regProvinceCode = distance.provinceCode;
       this.$data.formData.baseDTO.regProvinceName = distance.provinceName;
       this.$data.formData.baseDTO.regDistrictCode = distance.districtCode;
@@ -82,8 +80,6 @@ export default {
       if (resp.success) {
         this.$data.formData.baseDTO = resp.body.baseDTO;
         await bsWait(500);
-        /*this.$refs['regDisSelect'].initData();
-        this.$refs['bizDisSelect'].initData();*/
         this.$emit('on-submit-success', {
           corpNo: resp.body.baseDTO.corpNo,
           corpName: resp.body.baseDTO.corpName
