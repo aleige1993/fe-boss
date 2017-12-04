@@ -1,23 +1,50 @@
 import Mock from 'mockjs';
+
 export default [
   // 资方管理
   {
-    url: '/maintain',
-    on: true,
+    url: '/pms/capital/accBaseInfoList',
+    type: 'get',
+    on: false,
     resp: Mock.mock({
       'body': {
         'currentPage': 1,
-        'totalNum': 100,
-        'resultList|10': [
+        'isMore': 0,
+        'pageSize': 5,
+        'resultList|15': [
           {
-            'id|+1': 1,
-            'name|1': ['海尔云贷', '马云', '王健林'],
-            'state|1': ['正常', '不正常']
+            'acctName': '@name',
+            'acctNo': '55555',
+            'bizCityCode': '111',
+            'bizCityName': '@city',
+            'bizDistrictCode': 'bizDistrictCode',
+            'bizDistrictName': '@county',
+            'bizProvinceCode': 'bizProvinceCode',
+            'bizProvinceName': '@province',
+            'bizRoadAddr': 'bizRoadAddr',
+            'capitalName': '@name',
+            'capitalNo|+1': 38615,
+            'creditCode': '44444',
+            'email': '@email',
+            'gmtCreate': '2017-12-01 14:12:20',
+            'gmtModified': '2017-12-01 14:12:20',
+            'id': 2,
+            'legalCertno': 'legalCertno',
+            'legalPerson': 'legalPerson',
+            'linkmanMobile': '22222',
+            'linkmanName': 'linkmanName',
+            'openbankname': 'openbankname',
+            'regDate': '2017-11-11',
+            'status|1': ['1', '2']
           }
-        ]
+        ],
+        'startIndex': 0,
+        'totalNum': 15,
+        'totalPage': 1
       },
-      reCode: '0000',
-      reMsg: '成功'
+      'reCode': '0000',
+      'reMsg': '成功',
+      'success': true
     })
   },
   // 资方管理 - 新增弹窗 - 合同协议

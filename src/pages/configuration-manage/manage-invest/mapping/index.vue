@@ -34,8 +34,8 @@
         <i-form-item
           :rules="{required: true, message: '产品不能为空', trigger: 'change'}"
           label="产品"
-          prop="proName">
-          <i-select v-model="formMapping.proName">
+          prop="productName">
+          <i-select v-model="formMapping.productName">
             <i-option value="">空值（测试用）</i-option>
             <i-option value="欢乐颂">欢乐颂</i-option>
             <i-option value="任分期">任分期</i-option>
@@ -44,8 +44,8 @@
         <i-form-item
           :rules="{required: true, message: '资方不能为空', trigger: 'change'}"
           label="资方"
-          prop="investName">
-          <i-select v-model="formMapping.investName">
+          prop="capitalName">
+          <i-select v-model="formMapping.capitalName">
             <i-option value="">空值（测试用）</i-option>
             <i-option value="海尔云贷">海尔云贷</i-option>
             <i-option value="海乐行融资租赁">海乐行融资租赁</i-option>
@@ -53,25 +53,25 @@
         </i-form-item>
         <i-form-item
           label="资方产品编号"
-          prop="investProNumber">
-          <i-input v-model="formMapping.investProNumber"></i-input>
+          prop="capitalProductNo">
+          <i-input v-model="formMapping.capitalProductNo"></i-input>
         </i-form-item>
-        <i-form-item label="渠道编号" prop="channelNumber">
-          <i-input v-model="formMapping.channelNumber"></i-input>
+        <i-form-item label="渠道编号" prop="channelNo">
+          <i-input v-model="formMapping.channelNo"></i-input>
         </i-form-item>
         <i-form-item
           label="客户经理编号"
-          prop="managerName">
-          <input type="hidden" v-model="formMapping.managerNo"/>
-          <i-input v-model="formMapping.managerNo" :readonly="true" placeholder="选择客户经理编号">
+          prop="custMgrName">
+          <input type="hidden" v-model="formMapping.custMgrNo"/>
+          <i-input v-model="formMapping.custMgrNo" :readonly="true" placeholder="选择客户经理编号">
             <i-button @click="showSelectEmployer=!showSelectEmployer" slot="append">客户经理编号 <Icon type="ios-more"></Icon></i-button>
           </i-input>
         </i-form-item>
         <i-form-item
           :rules="{required: true, message: '贴息方式不能为空', trigger: 'change'}"
           label="贴息方式"
-          prop="subsidy ">
-          <i-select v-model="formMapping.subsidy ">
+          prop="subsidytype">
+          <i-select v-model="formMapping.subsidytype ">
             <i-option value="">空值（测试用）</i-option>
             <i-option value="全贴">全贴</i-option>
             <i-option value="不贴">不贴</i-option>
@@ -80,8 +80,8 @@
         <i-form-item
           :rules="{required: true, message: '是否查询人行征信不能为空', trigger: 'change'}"
           label="是否查询人行征信"
-          prop="isCredit">
-          <i-select v-model="formMapping.isCredit">
+          prop="ynCreditQuery">
+          <i-select v-model="formMapping.ynCreditQuery">
             <i-option v-for="item in enumSelectData.get('YesNoEnum')" :key="item.itemCode" :value="item.itemCode">{{item.itemName}}</i-option>
           </i-select>
         </i-form-item>
@@ -129,14 +129,16 @@
           currentPage: 1
         },
         formMapping: {
-          proName: '',
-          investName: '',
-          investProNumber: '',
-          channelNumber: '',
-          managerNo: '',
-          managerName: '',
-          isCredit: '',
-          subsidy: ''
+          productNo: '', // 产品编号
+          productName: '', // 产品名称
+          capitalNo: '', // 资方编号
+          capitalName: '', // 资方名称
+          capitalProductNo: '', // 资方产品编号
+          channelNo: '', // 渠道编号
+          custMgrNo: '', // 客户经理编号
+          custMgrName: '', // 客户经理名称
+          subsidytype: '',  // 贴息方式(1-全贴,2-全不贴)
+          ynCreditQuery: ''  // 是否查询人行征信
         },
         ContractformData: {}     // 资方合同模板配置已选的数据
       };
@@ -192,8 +194,8 @@
       },
       // 选择客户经理
       selectEmployer(row, index) {
-        this.$data.formMapping.managerNo = row.userCode;
-        this.$data.formMapping.managerName = row.userName;
+        this.$data.formMapping.custMgrNo = row.userCode;
+        this.$data.formMapping.custMgrName = row.userName;
         this.$data.showSelectEmployer = false;
       }
     }
