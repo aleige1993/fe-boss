@@ -6,15 +6,30 @@ export default {
           title: '协议编号',
           width: 200,
           align: 'center',
-          key: 'id'
+          key: 'cooperationNo'
         },
         {
           title: '协议名称',
-          key: 'name'
+          key: 'cooperationName'
         },
         {
           title: '协议附件',
-          key: 'enclosure'
+          key: 'enclosure',
+          render: (h, params) => {
+            return h('div', [
+              h('Button', {
+                props: {
+                  type: 'text',
+                  icon: 'android-download'
+                },
+                on: {
+                  click: () => {
+                    window.open(params.row.attachUrl);
+                  }
+                }
+              }, '点击浏览/下载')
+            ]);
+          }
         },
         {
           title: '操作',
@@ -22,9 +37,6 @@ export default {
           width: 200,
           align: 'center',
           render: (h, params) => {
-            if (this.$data.iSsee) {
-              return;
-            }
             return h('div', [
               h('Button', {
                 props: {
