@@ -80,7 +80,16 @@ let MyRouter = new Router({
           path: 'loanbusiness', name: 'loanBusiness', component: resolve => require(['@/pages/loan-business'], resolve),
           children: [
             { path: '/', name: 'loanBusinessList', component: resolve => require(['@/pages/loan-business/business-list'], resolve)},
-            { path: 'accept', name: 'loanBusinessAccept', component: resolve => require(['@/pages/loan-business/business-acceptance'], resolve)}
+            { path: 'accept', name: 'loanBusinessAccept', component: resolve => require(['@/pages/loan-business/business-acceptance'], resolve)},
+            { path: 'credit', name: 'loanBusinessCredit', component: resolve => require(['@/pages/loan-business/credit-manage'], resolve),
+              children: [
+                { path: '/', name: 'loanBusinessCreditList', component: resolve => require(['@/pages/loan-business/credit-manage/credit-list'], resolve)},
+                { path: 'apply', name: 'loanBusinessCreditApply', component: resolve => require(['@/pages/loan-business/credit-manage/credit-apply'], resolve)},
+                { path: 'firstapprove', name: 'loanBusinessCreditFirstApprove', component: resolve => require(['@/pages/loan-business/credit-manage/credit-firstapprove'], resolve)},
+                { path: 'outapprove', name: 'loanBusinessCreditOutApprove', component: resolve => require(['@/pages/loan-business/credit-manage/credit-outapprove'], resolve)},
+                { path: 'approve', name: 'loanBusinessCreditApprove', component: resolve => require(['@/pages/loan-business/credit-manage/credit-approve'], resolve)}
+              ]
+            }
           ]
         }
         // 贷款业务 end
