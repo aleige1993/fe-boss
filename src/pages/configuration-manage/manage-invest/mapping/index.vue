@@ -10,8 +10,8 @@
     <div class="form-block-title">查询条件</div>
     <div class="search-form-container">
       <i-form inline label-position="left" ref="searchForm" :model="searchForm">
-        <i-form-item prop="name" label="资方名称" :label-width="80">
-          <i-input type="text" placeholder="资方名称" v-model="searchForm.name"></i-input>
+        <i-form-item prop="capitalName" label="资方名称" :label-width="80">
+          <i-input type="text" placeholder="资方名称" v-model="searchForm.capitalName"></i-input>
         </i-form-item>
         <i-form-item>
           <i-button type="primary" @click="search">
@@ -125,7 +125,7 @@
         currentPage: 1,
         total: 0,
         searchForm: {
-          name: '',
+          capitalName: '',
           currentPage: 1
         },
         formMapping: {

@@ -1,8 +1,8 @@
 <template>
 <div id="maintain-add-set-modal">
-  <i-tabs type="card">
+  <i-tabs v-model="tabIndex" type="card">
     <i-tab-pane :label="'基本信息'">
-      <i-form ref="formMaintain" :model="formMaintain" label-position="right" :label-width="120">
+      <i-form v-if="tabIndex===0" ref="formMaintain" :model="formMaintain" label-position="right" :label-width="120">
         <i-row :gutter="16">
           <!--资方名称-->
           <i-col span="8">
@@ -33,8 +33,8 @@
           </i-col>
           <!--法人证件号码-->
           <i-col span="8">
-            <i-form-item label="法人证件号码" prop="egalCertno">
-              <i-input number v-model="formMaintain.egalCertno" >
+            <i-form-item label="法人证件号码" prop="legalCertno">
+              <i-input number v-model="formMaintain.legalCertno" >
               </i-input>
             </i-form-item>
           </i-col>
@@ -95,16 +95,18 @@
           </i-col>
           <!--地址-->
           <i-col span="24" class-name="city-select">
-            <i-form-item label="地址">
-              <bs-dispicker :currProvinceCode="formMaintain.bizProvinceCode"
-                            :currDistrictCode="formMaintain.bizCityCode"
-                            :currCityCode="formMaintain.bizDistrictName"
+            <i-form-item label="地址" prop="bizDistrictCode">
+              <input type="hidden" v-model="formMaintain.bizDistrictCode">
+              <bs-dispicker :currProvince="formMaintain.bizProvinceName"
+                            :currDistrict="formMaintain.bizCityName"
+                            :currCity="formMaintain.bizDistrictName"
                             @on-change="selectCensusDistance">
               </bs-dispicker>
               <i-input placeholder="街道信息" v-model="formMaintain.bizRoadAddr" style="width: 539px;"></i-input>
             </i-form-item>
           </i-col>
         </i-row>
+        <div style="height: 150px; width: 100%;"></div>
         <div class="text-right">
           <i-button type="primary" @click="formSubmit" :loading="buttonLoading">
             <span v-if="!buttonLoading">提交基本信息</span>
@@ -114,17 +116,19 @@
       </i-form>
     </i-tab-pane>
     <i-tab-pane :label="isAddSubMint ? '合作协议' : '合作协议(请先提交基本信息...)'" :disabled="!isAddSubMint">
-      <div class="form-top-actions">
-        <i-button @click="openShowModal" type="info"><i class="iconfont icon-xinzeng"></i> 新增</i-button>
+      <div v-if="tabIndex===1">
+        <div class="form-top-actions">
+          <i-button @click="openShowModal" type="info"><i class="iconfont icon-xinzeng"></i> 新增</i-button>
+        </div>
+        <i-table border ref="proTable" :columns="columns1" :data="data1" :loading="dataloading"></i-table>
+        <br>
+        <br>
       </div>
-      <i-table border ref="proTable" :columns="columns1" :data="data1" :loading="dataloading"></i-table>
-      <br>
-      <br>
-      <bs-modal :title="'新增'" v-model="ShowModal" :width="600">
-        <modal-upload v-if="ShowModal" @parModel='closeModel' ></modal-upload>
-      </bs-modal>
     </i-tab-pane>
   </i-tabs>
+  <bs-modal :title="'新增'" v-model="ShowInModal" :width="600">
+    <modal-upload v-if="ShowInModal" @getAgreementList="getTabsAjax" @parModel='closeModel' :agreementData="capitalData"></modal-upload>
+  </bs-modal>
 </div>
 </template>
 
@@ -147,15 +151,17 @@
     },
     data() {
       return {
-        ShowModal: false,
+        tabIndex: 0,
+        ShowInModal: false,
         dataloading: false,
         buttonLoading: false,
         isAddSubMint: false, // 是否是新增里的提交基本信息之后的状态
+        capitalData: {},  // 传给协议弹窗的依赖数据
         formMaintain: {
           capitalName: '', // 资方名称
           status: '', // 合作状态
           legalPerson: '', // 法定代表人
-          egalCertno: '', // 法人证件号码
+          legalCertno: '', // 法人证件号码
           regDate: '', // 成立时间
           creditCode: '', // 统一社会信用代码
           acctName: '', // 账户名称
@@ -164,47 +170,97 @@
           linkmanName: '', // 主要联系人
           linkmanMobile: '', // 联系电话
           email: '', // 联系邮箱
-          bizProvinceCode: '1', // 地址省份编码
+          bizProvinceCode: '', // 地址省份编码
           bizProvinceName: '', // 地址省份名称
-          bizCityCode: '1', // 地址城市编码
+          bizCityCode: '', // 地址城市编码
           bizCityName: '', // 地址城市名称
-          bizDistrictCode: '1', // 地址地区编码
+          bizDistrictCode: '', // 地址地区编码
           bizDistrictName: '', // 地址地区名称
           bizRoadAddr: '' // 地址地区名称
         }
       };
     },
+    watch: {
+      tabIndex: function(val, oldVal) {
+        if (val === 1) {
+          this.getTabsAjax();
+        }
+      }
+    },
     mounted() {
       // 修改状态下，给弹窗的表单赋值
+      this.$data.capitalData = this.childMsg;
+      this.$data.formMaintain = this.childMsg;
       if (!this.childMsg.isAdd) {
-        this.$data.formMaintain = this.childMsg;
+        this.$data.isAddSubMint = true;
+      } else {
+        this.$data.isAddSubMint = false;
       }
     },
     methods: {
       // 打开合同协议模态框
       openShowModal() {
-        this.$data.ShowModal = true;
+        this.$data.ShowInModal = true;
       },
-      // 删除
-      removeUpload() {
+      // 获取tabs的列表信息
+      async getTabsAjax() {
+        let capitalNo = this.$data.formMaintain.capitalNo;
+        console.log('获取合同协议的求情资方编号：' + capitalNo);
+        let resGetList = await this.$http.get('/pms/capital/cooperationList', {
+          capitalNo: capitalNo
+        });
+        if (resGetList.success) {
+          if (resGetList.body.length === 0) {
+            this.$Notice.warning({
+              title: '列表没有数据可加载',
+              duration: 2
+            });
+            this.$data.data1 = [];
+          } else {
+            this.$data.data1 = resGetList.body;
+          }
+        }
+      },
+      // 删除(合作协议列表)
+      async removeUpload(row) {
+        Alertify.confirm('确定要删除吗？', async (ok) => {
+          if (ok) {
+            let cooperationNo = row.cooperationNo;
+            const loadingMsg = this.$Message.loading('删除中...', 0);
+            let respDel = await this.$http.post('/pms/capital/cooperationRemove', {
+              cooperationNo: cooperationNo
+            });
+            if (respDel.success) {
+              loadingMsg();
+              this.$Message.success('删除成功');
+              this.getTabsAjax();
+            }
+          }
+        });
       },
       // 修改情况的弹窗
-      async setList() {
-        let resAdd = await this.$http.post('/pms/capital/accBaseInfoSave', this.$data.formMaintain);
-        if (resAdd.success) {
-          console.log(resAdd);
+      async setSubmit() {
+        let resSet = await this.$http.post('/pms/capital/accBaseInfoSave', this.$data.formMaintain);
+        if (resSet.success) {
           this.$data.buttonLoading = false; // 关闭按钮的loading状态
           this.$Message.success('修改成功', 2000);
+          this.$data.formMaintain.capitalNo = resSet.body.capitalNo;
         }
+        await bsWait(200);
+        this.$data.isAddSubMint = true;
       },
       // 新增情况下的提交
       async addSuBmit() {
         let resAdd = await this.$http.post('/pms/capital/accBaseInfoSave', this.$data.formMaintain);
         if (resAdd.success) {
-          console.log(resAdd);
           this.$data.buttonLoading = false; // 关闭按钮的loading状态
           this.$Message.success('新增成功', 2000);
+          this.$data.formMaintain.capitalNo = resAdd.body.capitalNo;
+          this.childMsg.capitalNo = resAdd.body.capitalNo;
+          console.log('新增之后系统生成的资方编号：' + resAdd.body.capitalNo);
         }
+        await bsWait(200);
+        this.$data.isAddSubMint = true;
       },
       // 提交
       formSubmit() {
@@ -215,11 +271,12 @@
             this.$data.buttonLoading = true;
             // 如果是新增
             if (this.childMsg.isAdd) {
+              // 新增情况下的提交
               this.addSuBmit();
             } else {
+              // 修改情况的弹窗
               this.setSubmit();
             }
-            this.$data.isAddSubMint = true;
             // this.$emit('model-addSet');// 通知其父组件执行自定义事件“model-addSet”
           } else {
             this.$Message.error('"<span style="color: red">*</span>"必填项不能为空');
@@ -228,7 +285,7 @@
       },
       // 关闭合同协议的模态框
       closeModel() {
-        this.$data.ShowModal = false;
+        this.$data.ShowInModal = false;
       }
     }
   };

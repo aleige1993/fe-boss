@@ -76,7 +76,41 @@
             </i-select>
           </i-form-item>
         </i-col>
-        <!--还款周期-->
+        <!--运营模式-->
+        <i-col span="8">
+          <i-form-item
+            :rules="{required: true, message: '运营模式不能为空', trigger: 'change'}"
+            label="还款方式"
+            prop="loanMode">
+            <i-select v-model="ProductPackageForm.loanMode" placeholder="请选择">
+              <!--{
+                'groupKey': 'RepaymentTypeEnum',
+                'items': [
+                  {
+                    'itemCode': '1',
+                    'itemName': '等额本金'
+                  },
+                  {
+                    'itemCode': '2',
+                    'itemName': '等额本息'
+                  },
+                  {
+                    'itemCode': '3',
+                    'itemName': '等本等息'
+                  },
+                  {
+                    'itemCode': '4',
+                    'itemName': '按期收息，期末收本'
+                  }
+                ]
+              }-->
+              <!--<i-option v-for="item in enumSelectData.get('RepaymentTypeEnum')" :key="item.itemCode" :value="item.itemCode">{{item.itemName}}</i-option>-->
+              <i-option value="1">海乐行模式</i-option>
+              <i-option value="2">直接资方模式</i-option>
+            </i-select>
+          </i-form-item>
+        </i-col>
+        <!--&lt;!&ndash;还款周期&ndash;&gt;
         <i-col span="8">
           <i-form-item
             label="还款周期"
@@ -84,7 +118,7 @@
             <i-row>
               <i-col span="9" style="padding: 0 5px 0 0">
                 <i-select v-model="ProductPackageForm.loanCycleMode" placeholder="请选择">
-                  <!--
+                  &lt;!&ndash;
                   {
                     'groupKey': 'RepaymentPeriodEnum',
                     'items': [
@@ -114,7 +148,7 @@
                       }
                     ]
                   }
-                  -->
+                  &ndash;&gt;
                   <i-option v-for="item in enumSelectData.get('RepaymentPeriodEnum')" :key="item.itemCode" :value="item.itemCode">{{item.itemName}}</i-option>
                 </i-select>
               </i-col>
@@ -125,7 +159,7 @@
               </i-col>
             </i-row>
           </i-form-item>
-        </i-col>
+        </i-col>-->
         <!--模型设定-->
         <i-col span="8">
           <i-form-item
@@ -366,7 +400,7 @@
             </i-select>
           </i-form-item>
         </i-col>
-        <!--是否海乐行垫付-->
+        <!--&lt;!&ndash;是否海乐行垫付&ndash;&gt;
         <i-col span="8">
           <i-form-item
             :rules="{required: true, message: '是否海乐行垫付不能为空', trigger: 'change'}"
@@ -376,7 +410,7 @@
               <i-option v-for="item in enumSelectData.get('YesNoEnum')" :key="item.itemCode" :value="item.itemCode">{{item.itemName}}</i-option>
             </i-select>
           </i-form-item>
-        </i-col>
+        </i-col>-->
       </i-row>
       <div class="form-top-actions">
         <i-button @click="addModal" type="info"><i class="iconfont icon-xinzeng"></i> 新增</i-button>
@@ -459,8 +493,8 @@
           companySingleCarLimit: '',  // 企业单笔额度
           companySingleDoorLimit: '', // 企业单户额度
           loanMode: '', // 还款方式
-          loanCycleMode: '',  // 还款周期
-          loanCycle: '',  // 还款周期天数
+          // loanCycleMode: '',  // 还款周期
+          // loanCycle: '',  // 还款周期天数
           modelSet: '', // 模型设定
           monthAccrualMode: '', // 月息方式
           yearModel: '',  // 年模型
@@ -478,8 +512,8 @@
           upRepayCountDays: '', // 提前还款利息不足天数
           upRepayMinCountDays: '',  // 提前还款利息最低天数
           depositReleaseMode: '', // 保证金释放方式
-          creditLimitReleaseMode: '', // 授信释放方式
-          isAdvance: '' // 是否海乐行垫付
+          creditLimitReleaseMode: '' // 授信释放方式
+          // isAdvance: '' // 是否海乐行垫付
         },
         formInModel: {  // 增删的模态框的数据表单
           bizType: '',  // 车类

@@ -3,7 +3,7 @@
   <div class="form-top-actions">
     <i-button @click="openShowModal" type="info"><i class="iconfont icon-xinzeng"></i> 新增</i-button>
   </div>
-  <i-table border ref="userTable" :columns="columns1" :data="data1" :loading="dataloading"></i-table>
+  <i-table border ref="userTable" :columns="columns1" :data="data1" :loading="dataLoading"></i-table>
   <br>
   <br>
   <!--//////////////////////////////////////////////////////////////////////////////////////////////-->
@@ -15,17 +15,17 @@
           <i-form-item
             :rules="{required: true, message: '账户名不能为空', trigger: 'blur'}"
             label="账户名"
-            prop="userName">
-            <i-input v-model="formUser.userName"></i-input>
+            prop="acctname">
+            <i-input v-model="formUser.acctname"></i-input>
           </i-form-item>
         </i-col>
         <!--账号-->
         <i-col span="12">
           <i-form-item
-            :rules="{required: true, message: '账号不能为空', trigger: 'blur', type: 'number'}"
+            :rules="{required: true, message: '账号不能为空', trigger: 'blur'}"
             label="账号"
-            prop="userId">
-            <i-input v-model="formUser.userId"></i-input>
+            prop="acctno">
+            <i-input v-model="formUser.acctno"></i-input>
           </i-form-item>
         </i-col>
         <!--银行名称-->
@@ -33,12 +33,15 @@
           <i-form-item
             :rules="{required: true, message: '银行名称不能为空', trigger: 'change'}"
             label="银行名称"
-            prop="bankName">
-            <i-select placeholder="请选择" v-model="formUser.bankName">
-              <i-option value="1">中国建设银行</i-option>
-              <i-option value="2">中国工商银行</i-option>
-              <i-option value="3">中国交通银行</i-option>
-              <!--<i-option v-for="item in enumSelectData.get('ProductTypeEnum')" :key="item.itemCode" :value="item.itemCode">{{item.itemName}}</i-option>-->
+            prop="bankname">
+            <i-select placeholder="请选择" v-model="formUser.bankname">
+              <Option
+                v-for="item in bankSelect"
+                :value="item.bankCode"
+                :selected="item.bankName === formUser.bankname && formUser.bankname !== ''"
+                :key="item.value">
+                {{ item.bankName }}
+              </Option>
             </i-select>
           </i-form-item>
         </i-col>
@@ -47,33 +50,33 @@
           <i-form-item
             :rules="{required: true, message: '开户行不能为空', trigger: 'blur'}"
             label="开户行"
-            prop="bankOpen">
-            <i-input v-model="formUser.bankOpen"></i-input>
+            prop="openbankname">
+            <i-input v-model="formUser.openbankname"></i-input>
           </i-form-item>
         </i-col>
         <!--开户行号-->
         <i-col span="12">
           <i-form-item
-            :rules="{required: true, message: '开户行号不能为空', trigger: 'blur', type: 'number'}"
+            :rules="{required: true, message: '开户行号不能为空', trigger: 'blur'}"
             label="开户行号"
-            prop="bankId">
-            <i-input v-model="formUser.bankId"></i-input>
+            prop="openbankno">
+            <i-input v-model="formUser.openbankno"></i-input>
           </i-form-item>
         </i-col>
-        <!--预留手机号-->
+        <!--清算行号-->
         <i-col span="12">
           <i-form-item
-            label="预留手机号"
-            prop="phone">
-            <i-input v-model="formUser.phone"></i-input>
+            label="清算行号"
+            prop="openbankclearingno">
+            <i-input v-model="formUser.openbankclearingno"></i-input>
           </i-form-item>
         </i-col>
         <!--备注-->
         <i-col span="24">
           <i-form-item
             label="备注"
-            prop="remarks">
-            <i-input type="textarea" v-model="formUser.remarks"></i-input>
+            prop="remark">
+            <i-input type="textarea" v-model="formUser.remark"></i-input>
           </i-form-item>
         </i-col>
       </i-row>
@@ -96,42 +99,56 @@
     components: {
       'bs-modal': BSModal
     },
+    props: {
+      userData: Object
+    },
     data() {
       return {
         isAdd: true,
         ShowModal: false,
         buttonLoading: false,
-        dataloading: false,
+        dataLoading: false,
+        bankSelect: [],
         formUser: {
-          userName: '', // 账户名
-          userId: '', // 账号
-          bankName: '', // 银行名称
-          bankOpen: '', //开户行
-          bankId: '', // 开户行号
-          phone: '', //预留手机号
-          remarks: '' //备注
+          capitalNo: '', // 资方编号
+          capitalName: '', // 资方名称
+          acctname: '', // 账户名
+          acctno: '', // 账号
+          bankCode: '', // 银行编号
+          bankname: '', // 银行名称
+          openbankname: '', //开户行
+          openbankno: '', // 开户行号
+          openbankclearingno: '', //清算行号
+          remark: '' //备注
         },
         columns1: [
           {
             title: '账户名',
             align: 'center',
-            key: 'userName'
+            key: 'acctname'
           },
           {
             title: '账号',
-            key: 'userId'
+            key: 'acctno'
           },
           {
             title: '银行名称',
-            key: 'bankName'
+            key: 'bankname'/*,
+            render: (h, params) => {
+              return h('span', {}, function() {
+                for (let item in this.$data.bankSelect) {
+                  // console.log(item);
+                }
+              });
+            }*/
           },
           {
             title: '开户行号',
-            key: 'bankId'
+            key: 'openbankno'
           },
           {
             title: '开户行',
-            key: 'bankOpen'
+            key: 'openbankname'
           },
           {
             title: '操作',
@@ -172,42 +189,105 @@
             }
           }
         ],
-        data1: [
-          {
-            userName: 'zhanghao01',
-            userId: '123456789',
-            bankName: '中国建设银行',
-            bankId: '6220 5308 0000 8888 123',
-            bankOpen: '石桥铺支行'
-          }
-        ]
+        data1: []
       };
     },
+    mounted() {
+      this.getPrivateCustomerList();
+      this.getBankSelect(); // 获取银行名称枚举
+    },
     methods: {
+      // 获取银行名称枚举
+      async getBankSelect() {
+        // /common/support/bank/list
+        let resp = await this.$http.get('/common/support/bank/list');
+        console.log(resp);
+        if (resp.success) {
+          this.$data.bankSelect = resp.body;
+          console.log(this.$data.bankSelect);
+        } else {
+          this.$Notice.error({
+            title: '拉取银行名称失败',
+            duration: 2
+          });
+        }
+      },
+      // 查询列表数据
+      async getPrivateCustomerList() {
+        this.$data.dataLoading = true;
+        console.log(this.userData.capitalNo);
+        let resp = await this.$http.get('/pms/capital/accList', {
+          capitalNo: this.userData.capitalNo
+        });
+        this.$data.dataLoading = false;
+        console.log(resp);
+        if (resp.body.length !== 0) {
+          this.$data.data1 = resp.body;
+        } else {
+          this.$Notice.warning({
+            title: '列表没有数据可加载',
+            duration: 2
+          });
+          this.$data.data1 = [];
+        }
+      },
       // 打开新增模态框
       openShowModal() {
         this.$data.isAdd = true;
         this.$data.ShowModal = true;
+        this.$data.formUser = {};
+      },
+      // 新增的保存请求方法
+      async addSuBmit() {
+        let dataObject = {};
+        dataObject = {
+          capitalNo: this.userData.capitalNo,
+          capitalName: this.userData.capitalName,
+          ...this.$data.formUser
+        };
+        let resAdd = await this.$http.post('/pms/capital/accSave', dataObject);
+        this.$data.ShowModal = false;
+        if (resAdd.success) {
+          this.$data.buttonLoading = false; // 关闭按钮的loading状态
+          this.$Message.success('新增成功');
+          this.getPrivateCustomerList();
+        }
+      },
+      // 修改情况下的提交数据
+      async setSubmit() {
+        let dataObject = {};
+        dataObject = {
+          capitalNo: this.userData.capitalNo,
+          capitalName: this.userData.capitalName,
+          ...this.$data.formUser
+        };
+        let resAdd = await this.$http.post('/pms/capital/accSave', dataObject);
+        this.$data.ShowModal = false;
+        if (resAdd.success) {
+          this.$data.buttonLoading = false; // 关闭按钮的loading状态
+          this.$Message.success('修改成功');
+          this.getPrivateCustomerList();
+        }
       },
       // 点击修改按钮
       setList(row) {
         this.$data.isAdd = false;
         this.$data.ShowModal = true;
+        this.$data.formUser = row;
       },
       // 删除按钮
       async remove(row) {
         Alertify.confirm('确定要删除吗？', async (ok) => {
           if (ok) {
-            let productNo = row.productNo;
-            /*const loadingMsg = this.$Message.loading('删除中...', 0);
-            let respDel = await this.$http.get('/pms/product/remove', {
-              productNo: productNo
+            const loadingMsg = this.$Message.loading('删除中...', 0);
+            let respDel = await this.$http.get('/pms/capital/accRemove', {
+              capitalNo: this.userData.capitalNo
             });
             if (respDel.success) {
               loadingMsg();
-              this.$Message.success('删除产品成功');
-              this.getPrivateCustomerList(1);
-            }*/
+              this.$Message.success('删除成功');
+              this.getPrivateCustomerList();
+            }
           }
         });
       },
@@ -229,7 +309,9 @@
         });
       },
       // 取消按钮
-      formCancel() {}
+      formCancel() {
+        this.$data.ShowModal = false;
+      }
     }
   };
 </script>

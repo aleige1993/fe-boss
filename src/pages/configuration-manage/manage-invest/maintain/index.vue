@@ -20,7 +20,7 @@
       <modal-add-set v-if="ShowModal" @model-addSet="closeModelAddSet" :child-msg="clickRow"></modal-add-set>
     </bs-modal>
     <bs-modal :title="'账户信息'" v-model="showUserMoadl" :width="1200">
-      <modal-user v-if="showUserMoadl"></modal-user>
+      <modal-user v-if="showUserMoadl" :userData="userClickRow"></modal-user>
     </bs-modal>
   </div>
 </template>
@@ -49,7 +49,8 @@
         ShowModal: false, // 是否是新增修改
         clickRow: {
           isAdd: true
-        }
+        },
+        userClickRow: {}
       };
     }, // end data
     mounted() {
@@ -67,7 +68,6 @@
           pageSize: this.$data.pageSize
         });
         this.$data.dataLoading = false;
-        console.log('->获取列表成功');
         if (resp.body.resultList.length !== 0) {
           this.$data.data1 = resp.body.resultList;
           this.$data.currentPage = resp.body.currentPage;
@@ -92,6 +92,8 @@
       },
       // 通过子组件通知，关闭新增修改弹窗
       closeModelAddSet() {
+        this.$data.clickRow = {};
+        this.$data.clickRow.isAdd = true;
         this.$data.ShowModal = false;
         let pages = this.$data.currentPage;
         this.getPrivateCustomerList(pages);
@@ -108,7 +110,15 @@
             if (respDel.success) {
               loadingMsg();
               this.$Message.success('删除成功');
-              this.getPrivateCustomerList();
+              let goCurrentPage = this.$data.currentPage;
+              if (
+                this.$data.total % this.$data.pageSize === 1 &&
+                this.$data.currentPage !== 1 &&
+                (this.$data.total - 1) / this.$data.pageSize !== this.$data.currentPage
+              ) {
+                goCurrentPage = this.$data.currentPage - 1;
+              }
+              this.getPrivateCustomerList(goCurrentPage);
             }
           }
         });
@@ -127,6 +137,7 @@
       // 显示用户信息
       showUser(row) {
         this.$data.showUserMoadl = true;
+        this.$data.userClickRow = row;
       }
     }
   };
