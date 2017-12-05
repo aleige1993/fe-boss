@@ -28,7 +28,8 @@
           <p>单击或拖动文件上传</p>
         </div>
       </i-upload>
-      <p class="show-upload-text" v-text="uploadFileName"></p>
+      <p v-if="isAdd" class="show-upload-text" v-text="uploadFileName"></p>
+      <p v-else class="show-upload-text" v-text="formAgreement.attachUrl"></p>
       <input type="hidden" v-model="formAgreement.attachUrl" style="width: 100%;border: 0;">
     </i-form-item>
     <i-form-item class="text-right">

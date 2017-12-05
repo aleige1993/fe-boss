@@ -80,9 +80,9 @@
         <i-col span="8">
           <i-form-item
             :rules="{required: true, message: '运营模式不能为空', trigger: 'change'}"
-            label="还款方式"
-            prop="loanMode">
-            <i-select v-model="ProductPackageForm.loanMode" placeholder="请选择">
+            label="运营模式"
+            prop="operatingMode">
+            <i-select v-model="ProductPackageForm.operatingMode" placeholder="请选择">
               <!--{
                 'groupKey': 'RepaymentTypeEnum',
                 'items': [
@@ -105,61 +105,11 @@
                 ]
               }-->
               <!--<i-option v-for="item in enumSelectData.get('RepaymentTypeEnum')" :key="item.itemCode" :value="item.itemCode">{{item.itemName}}</i-option>-->
-              <i-option value="1">海乐行模式</i-option>
-              <i-option value="2">直接资方模式</i-option>
+              <i-option value="1">直接资方模式</i-option>
+              <i-option value="2">海乐行模式</i-option>
             </i-select>
           </i-form-item>
         </i-col>
-        <!--&lt;!&ndash;还款周期&ndash;&gt;
-        <i-col span="8">
-          <i-form-item
-            label="还款周期"
-            prop="loanCycleMode">
-            <i-row>
-              <i-col span="9" style="padding: 0 5px 0 0">
-                <i-select v-model="ProductPackageForm.loanCycleMode" placeholder="请选择">
-                  &lt;!&ndash;
-                  {
-                    'groupKey': 'RepaymentPeriodEnum',
-                    'items': [
-                      {
-                        'itemCode': '1',
-                        'itemName': '按日'
-                      },
-                      {
-                        'itemCode': '2',
-                        'itemName': '按月'
-                      },
-                      {
-                        'itemCode': '3',
-                        'itemName': '按季'
-                      },
-                      {
-                        'itemCode': '4',
-                        'itemName': '按半年'
-                      },
-                      {
-                        'itemCode': '5',
-                        'itemName': '按年'
-                      },
-                      {
-                        'itemCode': '6',
-                        'itemName': '自定义'
-                      }
-                    ]
-                  }
-                  &ndash;&gt;
-                  <i-option v-for="item in enumSelectData.get('RepaymentPeriodEnum')" :key="item.itemCode" :value="item.itemCode">{{item.itemName}}</i-option>
-                </i-select>
-              </i-col>
-              <i-col span="15" style="padding: 0">
-                <i-input  type="text" placeholder="还款周期" v-model="ProductPackageForm.loanCycle" :disabled="ProductPackageForm.loanCycleMode!=='6'">
-                  <span slot="append">天</span>
-                </i-input>
-              </i-col>
-            </i-row>
-          </i-form-item>
-        </i-col>-->
         <!--模型设定-->
         <i-col span="8">
           <i-form-item
@@ -400,17 +350,105 @@
             </i-select>
           </i-form-item>
         </i-col>
-        <!--&lt;!&ndash;是否海乐行垫付&ndash;&gt;
+        <!--租赁服务费收取方式-->
         <i-col span="8">
           <i-form-item
-            :rules="{required: true, message: '是否海乐行垫付不能为空', trigger: 'change'}"
-            label="是否海乐行垫付"
-            prop="isAdvance">
-            <i-select v-model="ProductPackageForm.isAdvance" placeholder="请选择">
-              <i-option v-for="item in enumSelectData.get('YesNoEnum')" :key="item.itemCode" :value="item.itemCode">{{item.itemName}}</i-option>
+            label="租赁服务费收取方式"
+            prop="serviceFeeType">
+            <i-select v-model="ProductPackageForm.serviceFeeType" placeholder="请选择">
+              <!--{
+                'groupKey': 'RepaymentTypeEnum',
+                'items': [
+                  {
+                    'itemCode': '1',
+                    'itemName': '等额本金'
+                  },
+                  {
+                    'itemCode': '2',
+                    'itemName': '等额本息'
+                  },
+                  {
+                    'itemCode': '3',
+                    'itemName': '等本等息'
+                  },
+                  {
+                    'itemCode': '4',
+                    'itemName': '按期收息，期末收本'
+                  }
+                ]
+              }-->
+              <!--<i-option v-for="item in enumSelectData.get('RepaymentTypeEnum')" :key="item.itemCode" :value="item.itemCode">{{item.itemName}}</i-option>-->
+              <i-option value="1">一次性收取</i-option>
+              <i-option value="2">分期收取</i-option>
             </i-select>
           </i-form-item>
-        </i-col>-->
+        </i-col>
+        <!--车辆保险费-->
+        <i-col span="8">
+          <i-form-item
+            label="车辆保险费"
+            prop="carInsurance">
+            <i-select v-model="ProductPackageForm.carInsurance" placeholder="请选择">
+              <!--{
+                'groupKey': 'RepaymentTypeEnum',
+                'items': [
+                  {
+                    'itemCode': '1',
+                    'itemName': '等额本金'
+                  },
+                  {
+                    'itemCode': '2',
+                    'itemName': '等额本息'
+                  },
+                  {
+                    'itemCode': '3',
+                    'itemName': '等本等息'
+                  },
+                  {
+                    'itemCode': '4',
+                    'itemName': '按期收息，期末收本'
+                  }
+                ]
+              }-->
+              <!--<i-option v-for="item in enumSelectData.get('RepaymentTypeEnum')" :key="item.itemCode" :value="item.itemCode">{{item.itemName}}</i-option>-->
+              <i-option value="1">乙方自行支付保险费</i-option>
+              <i-option value="2">保险费计入每月租金</i-option>
+            </i-select>
+          </i-form-item>
+        </i-col>
+        <!--盗抢险-->
+        <i-col span="8">
+          <i-form-item
+            label="盗抢险"
+            prop="dqxInsurance">
+            <i-select v-model="ProductPackageForm.dqxInsurance" placeholder="请选择">
+              <!--{
+                'groupKey': 'RepaymentTypeEnum',
+                'items': [
+                  {
+                    'itemCode': '1',
+                    'itemName': '等额本金'
+                  },
+                  {
+                    'itemCode': '2',
+                    'itemName': '等额本息'
+                  },
+                  {
+                    'itemCode': '3',
+                    'itemName': '等本等息'
+                  },
+                  {
+                    'itemCode': '4',
+                    'itemName': '按期收息，期末收本'
+                  }
+                ]
+              }-->
+              <!--<i-option v-for="item in enumSelectData.get('RepaymentTypeEnum')" :key="item.itemCode" :value="item.itemCode">{{item.itemName}}</i-option>-->
+              <i-option value="1">乙方应购买盗抢险</i-option>
+              <i-option value="2">乙方不需购买盗抢险</i-option>
+            </i-select>
+          </i-form-item>
+        </i-col>
       </i-row>
       <div class="form-top-actions">
         <i-button @click="addModal" type="info"><i class="iconfont icon-xinzeng"></i> 新增</i-button>
@@ -493,8 +531,7 @@
           companySingleCarLimit: '',  // 企业单笔额度
           companySingleDoorLimit: '', // 企业单户额度
           loanMode: '', // 还款方式
-          // loanCycleMode: '',  // 还款周期
-          // loanCycle: '',  // 还款周期天数
+          operatingMode: '', // 运营模式
           modelSet: '', // 模型设定
           monthAccrualMode: '', // 月息方式
           yearModel: '',  // 年模型
@@ -512,8 +549,10 @@
           upRepayCountDays: '', // 提前还款利息不足天数
           upRepayMinCountDays: '',  // 提前还款利息最低天数
           depositReleaseMode: '', // 保证金释放方式
-          creditLimitReleaseMode: '' // 授信释放方式
-          // isAdvance: '' // 是否海乐行垫付
+          creditLimitReleaseMode: '', // 授信释放方式
+          serviceFeeType: '', // 租赁服务费收取方式
+          carInsurance: '', // 车辆保险费
+          dqxInsurance: '' // 盗抢险
         },
         formInModel: {  // 增删的模态框的数据表单
           bizType: '',  // 车类

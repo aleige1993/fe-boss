@@ -4,19 +4,22 @@ export default {
       columns1: [
         {
           title: '模板ID',
-          key: 'templateId'
+          key: 'contractTemplateNo'
         },
         {
           title: '合同名称',
-          key: 'templateName'
+          key: 'contractTemplateName'
         },
         {
           title: '资方名称',
-          key: 'zfName'
+          key: 'capitalName'
         },
         {
           title: '签订方式',
-          key: 'signMode'
+          key: 'signType',
+          render: (h, params) => {
+            return h('span', {}, this.enumCode2Name(params.row.signType, 'SinTypeEnum'));
+          }
         },
         {
           title: '操作',
@@ -40,14 +43,7 @@ export default {
           }
         }
       ],
-      data1: [
-        {
-          templateId: '01',
-          templateName: '合同名称01',
-          zfName: '资方名称01',
-          signMode: 1
-        }
-      ]
+      data1: []
     };
   }
 };

@@ -231,10 +231,10 @@
           productName: this.$data.formCustom.productName,
           status: this.$data.formCustom.status
         });
+        this.$data.buttonLoading = false; // 关闭按钮的loading状态
+        this.$data.showAddModal = false;
         if (resAdd.success) {
-          this.$data.buttonLoading = false; // 关闭按钮的loading状态
           this.$Message.success('新增产品成功');
-          this.$data.showAddModal = false;
           this.getPrivateCustomerList();
         }
       },
@@ -278,7 +278,8 @@
           if (ok) {
             let productNo = row.productNo;
             const loadingMsg = this.$Message.loading('删除中...', 0);
-            let respDel = await this.$http.get('/pms/product/remove', {
+            let respDel = await this.$http.post('/pms/product/remove', {
+              status: row.status,
               productNo: productNo
             });
             if (respDel.success) {

@@ -8,7 +8,7 @@
   <br>
   <!--//////////////////////////////////////////////////////////////////////////////////////////////-->
   <bs-modal :title="isAdd ? '新增' : '修改'" v-model="ShowModal" :width="1200">
-    <i-form ref="formUser" :model="formUser" label-position="right" :label-width="120">
+    <i-form v-if="ShowModal" ref="formUser" :model="formUser" label-position="right" :label-width="120">
       <i-row :gutter="16">
         <!--账户名-->
         <i-col span="12">
@@ -33,12 +33,12 @@
           <i-form-item
             :rules="{required: true, message: '银行名称不能为空', trigger: 'change'}"
             label="银行名称"
-            prop="bankname">
-            <i-select placeholder="请选择" v-model="formUser.bankname">
+            prop="bankcode">
+            <i-select label-in-value placeholder="请选择" v-model="formUser.bankcode" @on-change="selectChaengeFun">
               <Option
                 v-for="item in bankSelect"
                 :value="item.bankCode"
-                :selected="item.bankName === formUser.bankname && formUser.bankname !== ''"
+                :selected="item.bankCode === formUser.bankcode"
                 :key="item.value">
                 {{ item.bankName }}
               </Option>
@@ -114,12 +114,12 @@
           capitalName: '', // 资方名称
           acctname: '', // 账户名
           acctno: '', // 账号
-          bankCode: '', // 银行编号
           bankname: '', // 银行名称
-          openbankname: '', //开户行
+          bankcode: '', // 银行编号
+          openbankname: '', // 开户行
           openbankno: '', // 开户行号
-          openbankclearingno: '', //清算行号
-          remark: '' //备注
+          openbankclearingno: '', // 清算行号
+          remark: '' // 备注
         },
         columns1: [
           {
@@ -133,14 +133,10 @@
           },
           {
             title: '银行名称',
-            key: 'bankname'/*,
+            key: 'bankcode',
             render: (h, params) => {
-              return h('span', {}, function() {
-                for (let item in this.$data.bankSelect) {
-                  // console.log(item);
-                }
-              });
-            }*/
+              return h('span', {}, params.row.bankname);
+            }
           },
           {
             title: '开户行号',
@@ -197,14 +193,15 @@
       this.getBankSelect(); // 获取银行名称枚举
     },
     methods: {
+      selectChaengeFun(vals) {
+        this.$data.formUser.bankcode = vals.value;
+        this.$data.formUser.bankname = vals.label;
+      },
       // 获取银行名称枚举
       async getBankSelect() {
-        // /common/support/bank/list
         let resp = await this.$http.get('/common/support/bank/list');
-        console.log(resp);
         if (resp.success) {
           this.$data.bankSelect = resp.body;
-          console.log(this.$data.bankSelect);
         } else {
           this.$Notice.error({
             title: '拉取银行名称失败',
@@ -215,12 +212,10 @@
       // 查询列表数据
       async getPrivateCustomerList() {
         this.$data.dataLoading = true;
-        console.log(this.userData.capitalNo);
         let resp = await this.$http.get('/pms/capital/accList', {
           capitalNo: this.userData.capitalNo
         });
         this.$data.dataLoading = false;
-        console.log(resp);
         if (resp.body.length !== 0) {
           this.$data.data1 = resp.body;
         } else {
@@ -280,8 +275,8 @@
         Alertify.confirm('确定要删除吗？', async (ok) => {
           if (ok) {
             const loadingMsg = this.$Message.loading('删除中...', 0);
-            let respDel = await this.$http.get('/pms/capital/accRemove', {
-              capitalNo: this.userData.capitalNo
+            let respDel = await this.$http.post('/pms/capital/accRemove', {
+              id: row.id
             });
             if (respDel.success) {
               loadingMsg();
