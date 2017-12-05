@@ -85,8 +85,6 @@ let MyRouter = new Router({
               children: [
                 { path: '/', name: 'loanBusinessCreditList', component: resolve => require(['@/pages/loan-business/credit-manage/credit-list'], resolve)},
                 { path: 'apply', name: 'loanBusinessCreditApply', component: resolve => require(['@/pages/loan-business/credit-manage/credit-apply'], resolve)},
-                { path: 'firstapprove', name: 'loanBusinessCreditFirstApprove', component: resolve => require(['@/pages/loan-business/credit-manage/credit-firstapprove'], resolve)},
-                { path: 'outapprove', name: 'loanBusinessCreditOutApprove', component: resolve => require(['@/pages/loan-business/credit-manage/credit-outapprove'], resolve)},
                 { path: 'approve', name: 'loanBusinessCreditApprove', component: resolve => require(['@/pages/loan-business/credit-manage/credit-approve'], resolve)}
               ]
             }
