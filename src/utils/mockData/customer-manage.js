@@ -221,7 +221,7 @@ export default [
       success: true,
       reCode: '0000',
       body: $.extend(companyCustomerBasicData.data().formDataInit, {
-        baseDTO: { corpNo: '1', 'corpName': '海尔云贷编辑测试' }
+        baseDTO: { corpNo: '386118080880705536', 'corpName': '海尔云贷编辑测试' }
       })
     }
   },
