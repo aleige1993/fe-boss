@@ -38,7 +38,7 @@
               <Option
                 v-for="item in bankSelect"
                 :value="item.bankCode"
-                :selected="item.bankName === formUser.bankname"
+                :selected="item.bankName === formUser.bankname && formUser.bankname !== ''"
                 :key="item.value">
                 {{ item.bankName }}
               </Option>
@@ -204,6 +204,7 @@
         console.log(resp);
         if (resp.success) {
           this.$data.bankSelect = resp.body;
+          console.log(this.$data.bankSelect);
         } else {
           this.$Notice.error({
             title: '拉取银行名称失败',
@@ -308,7 +309,9 @@
         });
       },
       // 取消按钮
-      formCancel() {}
+      formCancel() {
+        this.$data.ShowModal = false;
+      }
     }
   };
 </script>

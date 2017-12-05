@@ -85,7 +85,8 @@
               'groupKey': 'ProductStatusEnum',
               'items': [
                 {'itemCode': '1','itemName': '启用'},
-                {'itemCode': '2','itemName': '停用'}
+                {'itemCode': '2','itemName': '停用'},
+                {'itemCode': '3','itemName': '初始化'}
               ]
             }-->
             <i-option v-for="item in enumSelectData.get('ProductStatusEnum')" :key="item.itemCode" :value="item.itemCode">{{item.itemName}}</i-option>
