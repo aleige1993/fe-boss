@@ -20,30 +20,26 @@
                 </i-form-item>
               </i-col>
               <i-col span="8">
-                <i-form-item prop="baseDTO.creditCode" label="统一社会信用代码"
-                             :rules="{required: true, message: '请输入公司名称'}">
+                <i-form-item prop="baseDTO.creditCode" label="统一社会信用代码">
                   <i-input :readonly="isFromDetail" v-model="formData.baseDTO.creditCode" placeholder="失去焦点自动查重"></i-input>
                 </i-form-item>
               </i-col>
             </i-row>
             <i-row>
               <i-col span="8">
-                <i-form-item label="注册资金" prop="baseDTO.regCapital"
-                             :rules="{required: true, message: '请输入注册资金'}">
+                <i-form-item label="注册资金" prop="baseDTO.regCapital">
                   <i-input :readonly="isFromDetail" v-model="formData.baseDTO.regCapital" placeholder="输入字符串（如100万）">
                     <span slot="append">万元</span>
                   </i-input>
                 </i-form-item>
               </i-col>
               <i-col span="8">
-                <i-form-item label="成立日期" prop="baseDTO.regDate"
-                             :rules="{required: true, message: '请输入成立日期'}">
+                <i-form-item label="成立日期" prop="baseDTO.regDate">
                   <bs-datepicker :readonly="isFromDetail" v-model="formData.baseDTO.regDate" type="date" placeholder="Select date" style="width: 100%"></bs-datepicker>
                 </i-form-item>
               </i-col>
               <i-col span="8">
-                <i-form-item label="营业期限" prop="baseDTO.bizExpDate"
-                             :rules="{required: true, message: '请输入营业期限'}">
+                <i-form-item label="营业期限" prop="baseDTO.bizExpDate">
                   <bs-datepicker :readonly="isFromDetail" v-model="formData.baseDTO.bizExpDate" type="date" placeholder="Select date" style="width: 100%"></bs-datepicker>
                 </i-form-item>
               </i-col>
@@ -58,28 +54,24 @@
                 </i-form-item>
               </i-col>
               <i-col span="8">
-                <i-form-item label="实际控制人" prop="baseDTO.actualControllers"
-                             :rules="{required: true, message: '请输入实际控制人'}">
+                <i-form-item label="实际控制人" prop="baseDTO.actualControllers">
                   <i-input :readonly="isFromDetail" v-model="formData.baseDTO.actualControllers" placeholder=""></i-input>
                 </i-form-item>
               </i-col>
               <i-col span="8">
-                <i-form-item label="实际控制人联系电话" prop="baseDTO.actualControllersTel"
-                             :rules="{required: true, message: '请输入实际控制人联系电话'}">
+                <i-form-item label="实际控制人联系电话" prop="baseDTO.actualControllersTel">
                   <i-input :readonly="isFromDetail" v-model="formData.baseDTO.actualControllersTel" placeholder=""></i-input>
                 </i-form-item>
               </i-col>
             </i-row>
             <i-row>
               <i-col span="8">
-                <i-form-item label="公司电话" prop="baseDTO.telephone"
-                             :rules="{required: true, message: '请输入公司电话'}">
+                <i-form-item label="公司电话" prop="baseDTO.telephone">
                   <i-input :readonly="isFromDetail" v-model="formData.baseDTO.telephone" placeholder=""></i-input>
                 </i-form-item>
               </i-col>
               <i-col span="8">
-                <i-form-item label="公司传真" prop="baseDTO.fax"
-                             :rules="{required: true, message: '请输入公司传真'}">
+                <i-form-item label="公司传真" prop="baseDTO.fax">
                   <i-input :readonly="isFromDetail" v-model="formData.baseDTO.fax" placeholder=""></i-input>
                 </i-form-item>
               </i-col>
@@ -91,8 +83,7 @@
             </i-row>
             <i-row>
               <i-col span="8">
-                <i-form-item label="是否合作渠道商" prop="baseDTO.isMerchant"
-                             :rules="{required: true, message: '请选择是否合作渠道商'}">
+                <i-form-item label="是否合作渠道商" prop="baseDTO.isMerchant">
                   <i-select :disabled="isFromDetail" v-model="formData.baseDTO.isMerchant">
                     <i-option v-for="item in enumSelectData.get('YesNoEnum')" :key="item.itemCode" :value="item.itemCode">{{item.itemName}}</i-option>
                   </i-select>
@@ -106,8 +97,7 @@
                   {{formData.baseDTO.regDistrictName}}
                   {{formData.baseDTO.regCityName}}
                 </i-form-item>
-                <i-form-item v-else label="注册地址" prop="baseDTO.regCityCode"
-                             :rules="{required: true, message: '请输入公司注册地址', trigger: 'blur'}">
+                <i-form-item v-else label="注册地址" prop="baseDTO.regCityCode">
                   <input type="hidden" v-model="formData.baseDTO.regCityCode"/>
                   <bs-dispicker :currProvince="''+formData.baseDTO.regProvinceName"
                                 :currDistrict="''+formData.baseDTO.regDistrictName"
@@ -125,8 +115,7 @@
                   {{formData.baseDTO.bizDistrictName}}
                   {{formData.baseDTO.bizCityName}}
                 </i-form-item>
-                <i-form-item v-else label="营业地址" prop="baseDTO.bizCityCode"
-                             :rules="{required: true, message: '请输入营业地址'}">
+                <i-form-item v-else label="营业地址" prop="baseDTO.bizCityCode">
                   <input type="hidden" v-model="formData.baseDTO.bizCityCode"/>
                   <bs-dispicker :currProvince="formData.baseDTO.bizProvinceName"
                                 :currDistrict="formData.baseDTO.bizDistrictName"
@@ -149,44 +138,38 @@
           <bs-form-block v-if="type==='page'" :title="'法定代表人信息'">
             <i-row>
               <i-col span="8">
-                <i-form-item label="法定代表人姓名" prop="baseDTO.legalPerson"
-                             :rules="{required: true, message: '请输入姓名'}">
+                <i-form-item label="法定代表人姓名" prop="baseDTO.legalPerson">
                   <i-input v-model="formData.baseDTO.legalPerson" :readonly="true">
                     <i-button v-if="!isFromDetail" type="primary" @click="selectRulerModal=!selectRulerModal" slot="append">选择代表人 <Icon type="ios-more"></Icon></i-button>
                   </i-input>
                 </i-form-item>
               </i-col>
               <i-col span="8">
-                <i-form-item label="性别"  prop="baseDTO.legalPersonSex"
-                             :rules="{required: true, message: '请选择性别'}">
+                <i-form-item label="性别"  prop="baseDTO.legalPersonSex">
                   <i-input v-model="formData.baseDTO.legalPersonSex" :readonly="true">男</i-input>
                 </i-form-item>
               </i-col>
               <i-col span="8">
-                <i-form-item label="手机号码" prop="baseDTO.legalPersonMobile"
-                             :rules="{required: true, message: '请输入手机号码'}">
+                <i-form-item label="手机号码" prop="baseDTO.legalPersonMobile">
                   <i-input v-model="formData.baseDTO.legalPersonMobile" :readonly="true" placeholder="自动带入"></i-input>
                 </i-form-item>
               </i-col>
             </i-row>
             <i-row>
               <i-col span="8">
-                <i-form-item label="证件类型" prop="baseDTO.legalPersonCerttype"
-                             :rules="{required: true, message: '请选择证件类型'}">
+                <i-form-item label="证件类型" prop="baseDTO.legalPersonCerttype">
                   <i-select :disabled="isFromDetail" v-model="formData.baseDTO.legalPersonCerttype">
                     <i-option v-for="item in enumSelectData.get('CertTypeEnum')" :key="item.itemCode" :value="item.itemCode">{{item.itemName}}</i-option>
                   </i-select>
                 </i-form-item>
               </i-col>
               <i-col span="8">
-                <i-form-item label="证件号码" prop="baseDTO.legalPersonCertno"
-                             :rules="{required: true, message: '请输入证件号码'}">
+                <i-form-item label="证件号码" prop="baseDTO.legalPersonCertno">
                   <i-input :readonly="isFromDetail" v-model="formData.baseDTO.legalPersonCertno"></i-input>
                 </i-form-item>
               </i-col>
               <i-col span="8">
-                <i-form-item label="持股比例" prop="baseDTO.legalPersonStock"
-                             :rules="{required: true, message: '请输入持股比例'}">
+                <i-form-item label="持股比例" prop="baseDTO.legalPersonStock">
                   <i-input :readonly="isFromDetail" v-model="formData.baseDTO.legalPersonStock">
                     <span slot="append">%</span>
                   </i-input>
@@ -198,42 +181,36 @@
           <bs-form-block v-if="type==='page'" :title="'主联系人信息'">
             <i-row>
               <i-col span="8">
-                <i-form-item label="联系人人姓名" prop="baseDTO.mainLinkmanName"
-                             :rules="{required: true, message: '请输入姓名'}">
+                <i-form-item label="联系人人姓名" prop="baseDTO.mainLinkmanName">
                   <i-input :readonly="isFromDetail" v-model="formData.baseDTO.mainLinkmanName"></i-input>
                 </i-form-item>
               </i-col>
               <i-col span="8">
-                <i-form-item label="性别" prop="baseDTO.mainLinkmanSex"
-                             :rules="{required: true, message: '请选择性别'}">
+                <i-form-item label="性别" prop="baseDTO.mainLinkmanSex">
                   <i-select :disabled="isFromDetail" v-model="formData.baseDTO.mainLinkmanSex">
                     <i-option v-for="item in enumSelectData.get('SexEnum')" :key="item.itemCode" :value="item.itemCode">{{item.itemName}}</i-option>
                   </i-select>
                 </i-form-item>
               </i-col>
               <i-col span="8">
-                <i-form-item label="联系电话" prop="baseDTO.mainLinkmanPhone"
-                             :rules="{required: true, message: '请输入联系电话'}">
+                <i-form-item label="联系电话" prop="baseDTO.mainLinkmanPhone">
                   <i-input :readonly="isFromDetail" v-model="formData.baseDTO.mainLinkmanPhone" placeholder="自动带入"></i-input>
                 </i-form-item>
               </i-col>
             </i-row>
             <i-row>
               <i-col span="8">
-                <i-form-item label="职务" prop="baseDTO.mainLinkmanDuty"
-                             :rules="{required: true, message: '请输入职务'}">
+                <i-form-item label="职务" prop="baseDTO.mainLinkmanDuty">
                   <i-input :readonly="isFromDetail" v-model="formData.baseDTO.mainLinkmanDuty"></i-input>
                 </i-form-item>
               </i-col>
               <i-col span="8">
-                <i-form-item label="身份证号" prop="baseDTO.mainLinkmanCertno"
-                             :rules="{required: true, message: '请输入身份证号码'}">
+                <i-form-item label="身份证号" prop="baseDTO.mainLinkmanCertno">
                   <i-input :readonly="isFromDetail" v-model="formData.baseDTO.mainLinkmanCertno"></i-input>
                 </i-form-item>
               </i-col>
               <i-col span="8">
-                <i-form-item label="邮箱" prop="baseDTO.mainLinkmanEmail"
-                             :rules="{required: true, message: '请输入邮箱'}">
+                <i-form-item label="邮箱" prop="baseDTO.mainLinkmanEmail">
                   <i-input :readonly="isFromDetail" v-model="formData.baseDTO.mainLinkmanEmail"></i-input>
                 </i-form-item>
               </i-col>
@@ -243,8 +220,7 @@
           <bs-form-block v-if="type==='page'" :title="'来源信息'" >
             <i-row>
               <i-col span="8">
-                <i-form-item label="业务拓展部门" prop="baseDTO.bizDepartmentName"
-                             :rules="{required: true, message: '请选择业务拓展部门'}">
+                <i-form-item label="业务拓展部门" prop="baseDTO.bizDepartmentName">
                   <input type="hidden" v-model="formData.baseDTO.bizDepartmentCode"/>
                   <i-input v-model="formData.baseDTO.bizDepartmentName" :readonly="true" placeholder="选择拓展部门">
                     <i-button v-if="!isFromDetail" @click="selectDepartmentModal=!selectDepartmentModal" slot="append">选择拓展部门 <Icon type="ios-more"></Icon></i-button>
@@ -252,14 +228,12 @@
                 </i-form-item>
               </i-col>
               <i-col span="8">
-                <i-form-item :readonly="!isFromDetail" label="开始合作时间" prop="baseDTO.joinStartDate"
-                             :rules="{required: true, message: '请选择开始合作时间'}">
+                <i-form-item :readonly="!isFromDetail" label="开始合作时间" prop="baseDTO.joinStartDate">
                   <bs-datepicker :readonly="isFromDetail" placement="top-start" v-model="formData.baseDTO.joinStartDate"></bs-datepicker>
                 </i-form-item>
               </i-col>
               <i-col span="8">
-                <i-form-item label="客户经理" prop="baseDTO.custMgrName"
-                             :rules="{required: true, message: '请输入客户经理'}">
+                <i-form-item label="客户经理" prop="baseDTO.custMgrName">
                   <input type="hidden" v-model="formData.baseDTO.custMgrNo"/>
                   <i-input v-model="formData.baseDTO.custMgrName" :readonly="true" placeholder="选择客户经理">
                     <i-button v-if="!isFromDetail" @click="showSelectEmployer=!showSelectEmployer" slot="append">选择客户经理 <Icon type="ios-more"></Icon></i-button>

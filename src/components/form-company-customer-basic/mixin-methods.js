@@ -91,7 +91,6 @@ export default {
     },
     // 保存草稿 status 1激活  2冻结  3草稿
     async postCompanyBasic() {
-      this.$data.formData.baseDTO.status = '1';
       this.$data.initFormLoading = true;
       let resp = await this.$http.post('/corp/saveCorp', this.$data.formData);
       this.$data.initFormLoading = false;
@@ -109,6 +108,7 @@ export default {
     submitCompanyCustomerBasic() {
       this.$refs['formCompanyCustomerBasicInfo'].validate((valid) => {
         if (valid) {
+          this.$data.formData.baseDTO.status = '1';
           this.postCompanyBasic();
         }
       });

@@ -3,63 +3,63 @@ export default {
     return {
       customerColumns: [
         {
-          title: '项目编号',
-          key: 'memberNo',
+          title: '客户编号',
+          key: 'companyNo',
           width: 200
         },
         {
           title: '客户名称',
-          key: 'name',
+          key: 'companyName',
           width: 200
         },
         {
           title: '统一社会信用代码',
-          width: 140,
-          key: 'certType'
+          width: 200,
+          key: 'creditCode'
         },
         {
           title: '授信总额度（元）',
-          key: 'certNo',
+          key: 'countLimit',
           width: 200
         },
         {
           title: '当前可用额度（元）',
-          key: 'mobile',
+          key: 'surplusCountLimit',
           width: 200
         },
         {
           title: '单笔最大额度（元）',
-          key: 'mobile',
+          key: 'singleLimit',
           width: 200
         },
         {
           title: '授信起始日期',
-          key: 'mobile',
+          key: 'startDate',
           width: 200
         },
         {
           title: '授信结束日期',
-          key: 'mobile',
+          key: 'endDate',
           width: 200
         },
         {
           title: '额度释放方式',
-          key: 'mobile',
+          key: 'creditLimitReleaseMode',
           width: 120
         },
         {
           title: '当前处理人',
-          key: 'mobile',
+          key: 'handleUserCode',
           width: 200
         },
         {
           title: '当前环节',
-          key: 'mobile',
+          key: 'tacheName',
           width: 200
         },
         {
           title: '授信状态',
-          key: 'status',
+          key: 'creditStatus',
           width: 120,
           render: (h, params) => {
             return h('span', {}, this.enumCode2Name(params.row.status, 'MemberStatusEnum'));
@@ -95,7 +95,7 @@ export default {
                         msg();
                         if (resp.success) {
                           this.$Message.success('删除成功');
-                          this.getPrivateCustomerList();
+                          this.getCompanyCreditList();
                         }
                       }
                     });
@@ -112,10 +112,9 @@ export default {
                   click: () => {
                     // console.log(params.row);
                     this.$router.push({
-                      path: '/index/customer/detail',
+                      path: '/index/loanbusiness/credit/detail',
                       query: {
-                        id: params.row.memberNo,
-                        from: 'detail'
+                        id: params.row.creditApplyNo
                       }
                     });
                   }
@@ -148,13 +147,13 @@ export default {
                 style: { marginRight: '5px' },
                 on: {
                   click: () => {
-                    Alertify.confirm('确定删除当前客户吗？', async (ok) => {
+                    Alertify.confirm('确定删除当前授信申请吗？', async (ok) => {
                       if (ok) {
                         let resp = await this.$http.post('/member/delete', {
                           memberNo: params.row.memberNo
                         });
                         if (resp.success) {
-                          this.getPrivateCustomerList();
+                          this.getCompanyCreditList();
                         }
                       }
                     });

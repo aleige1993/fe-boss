@@ -109,8 +109,7 @@
                 </i-form-item>
               </i-col>
               <i-col span="8">
-                <i-form-item label="职业类型" prop="mbMemberDTO.workType"
-                  :rules="{required: true, message: '请选择职业类型', trigger: 'change'}">
+                <i-form-item label="职业类型" prop="mbMemberDTO.workType">
                   <i-select :disabled="isFromDetail" v-model="formData.mbMemberDTO.workType">
                     <i-option v-for="item in enumSelectData.get('WorkTypeEnum')" :key="item.itemCode" :value="item.itemCode">{{item.itemName}}</i-option>
                   </i-select>
@@ -127,8 +126,7 @@
                 </i-form-item>
               </i-col>
               <i-col span="8">
-                <i-form-item label="参加工作年限" prop="mbMemberDTO.workYears"
-                  :rules="{required: true, message: '请选择工作年限'}">
+                <i-form-item label="参加工作年限" prop="mbMemberDTO.workYears">
                   <i-select :disabled="isFromDetail" v-model="formData.mbMemberDTO.workYears">
                     <i-option v-for="item in enumSelectData.get('YearsEnum')" :key="item.itemCode" :value="item.itemCode">{{item.itemName}}</i-option>
                   </i-select>
@@ -153,8 +151,7 @@
                 </i-form-item>
               </i-col>
               <i-col span="8">
-                <i-form-item label="本地居住年限" prop="mbMemberDTO.liveYears"
-                  :rules="{required: true, message: '请选择居住年限'}">
+                <i-form-item label="本地居住年限" prop="mbMemberDTO.liveYears">
                   <i-select :disabled="isFromDetail" v-model="formData.mbMemberDTO.liveYears">
                     <i-option v-for="item in enumSelectData.get('YearsEnum')" :key="item.itemCode" :value="item.itemCode">{{item.itemName}}</i-option>
                   </i-select>
@@ -210,7 +207,9 @@
             </i-row>
             <i-row>
               <i-col span="8">
-                <i-form-item label="身份证正面">
+                <i-form-item label="身份证正面"
+                             prop="mbMemberDTO.certFrontUrl"
+                             :rules="{required: true, message: '请上传身份证正面照', trigger: 'blur'}">
                   <input type="hidden" v-model="formData.mbMemberDTO.certFrontUrl"/>
                   <img v-if="formData.mbMemberDTO.certFrontUrl!==''&&isFromDetail"  width="149" height="95" :src="formData.mbMemberDTO.certFrontUrl" alt="">
                   <i-upload v-else :on-success="uploadFaceSuccess" :on-error="uploadError" :action="$config.HTTPBASEURL+'/common/upload'" :show-upload-list="false">
@@ -220,7 +219,9 @@
                 </i-form-item>
               </i-col>
               <i-col span="8">
-                <i-form-item label="身份证反面">
+                <i-form-item label="身份证反面"
+                             prop="mbMemberDTO.certBackUrl"
+                             :rules="{required: true, message: '请上传身份证反面照', trigger: 'blur'}">
                   <input type="hidden" v-model="formData.mbMemberDTO.certBackUrl"/>
                   <img v-if="formData.mbMemberDTO.certBackUrl!==''&&isFromDetail" width="149" height="95" :src="formData.mbMemberDTO.certBackUrl" alt="">
                   <i-upload v-else :on-success="uploadBackSuccess" :action="$config.HTTPBASEURL+'/common/upload'" :show-upload-list="false">
@@ -230,7 +231,9 @@
                 </i-form-item>
               </i-col>
               <i-col span="8">
-                <i-form-item label="手持身份证">
+                <i-form-item label="手持身份证"
+                             prop="mbMemberDTO.certHandUrl"
+                             :rules="{required: true, message: '请上传手持身份证照', trigger: 'blur'}">
                   <input type="hidden" v-model="formData.mbMemberDTO.certHandUrl"></input>
                   <img v-if="formData.mbMemberDTO.certHandUrl!==''&&isFromDetail" width="149" height="95" :src="formData.mbMemberDTO.certHandUrl" alt="">
                   <i-upload v-else :on-success="uploadHandSuccess" :action="$config.HTTPBASEURL+'/common/upload'" :show-upload-list="false">
@@ -245,20 +248,26 @@
           <bs-form-block v-if="type==='page'" :title="'工作信息'">
             <i-row>
               <i-col span="8">
-                <i-form-item label="单位名称">
+                <i-form-item label="单位名称"
+                             prop="mbMemberWorkDTO.companyName"
+                             :rules="{required: true, message: '请选择单位', trigger: 'blur'}">
                   <i-input :readonly="true" v-model="formData.mbMemberWorkDTO.companyName">
                     <i-button v-if="!isFromDetail" type="primary" @click="showSelectCompany=!showSelectCompany" slot="append">选择公司 <Icon type="ios-more"></Icon></i-button>
                   </i-input>
                 </i-form-item>
               </i-col>
               <i-col span="8">
-                <i-form-item label="单位性质">
+                <i-form-item label="单位性质"
+                             prop="mbMemberWorkDTO.unitType"
+                             :rules="{required: true, message: '请选择单位性质', trigger: 'blur'}">
                   <input v-model="formData.mbMemberWorkDTO.unitType" type="hidden"/>
                   <i-input :readonly="true" :value="enumCode2Name(formData.mbMemberWorkDTO.unitType, 'UnitTypeEnum')" placeholder="自动带入"></i-input>
                 </i-form-item>
               </i-col>
               <i-col span="8">
-                <i-form-item label="行业类别">
+                <i-form-item label="行业类别"
+                             prop="mbMemberWorkDTO.industryType"
+                             :rules="{required: true, message: ' ', trigger: 'blur'}">
                   <input  v-model="formData.mbMemberWorkDTO.industryType" type="hidden" />
                   <i-input :readonly="true" :value="enumCode2Name(formData.mbMemberWorkDTO.industryType, 'UnitTypeEnum')" placeholder="自动带入"></i-input>
                 </i-form-item>
@@ -292,7 +301,9 @@
                 </i-form-item>
               </i-col>
               <i-col span="8">
-                <i-form-item label="单位电话">
+                <i-form-item label="单位电话"
+                             prop="mbMemberWorkDTO.companyTel"
+                             :rules="{required: true, message: '请输入公司电话', trigger: 'blur'}">
                   <i-input :readonly="isFromDetail" v-model="formData.mbMemberWorkDTO.companyTel" placeholder=""></i-input>
                 </i-form-item>
               </i-col>
