@@ -276,7 +276,8 @@
         <i-form-item label="文件">
           <Upload
             multiple
-            type="drag" :on-success="uploadAttachSuccess"
+            type="drag"
+            :on-success="uploadAttachSuccess"
             :action="$config.HTTPBASEURL+'/common/upload'">
             <div style="padding: 20px 0" v-if="attachFormData.attachUrl===''">
               <Icon type="ios-cloud-upload" size="52" style="color: #3399ff"></Icon>

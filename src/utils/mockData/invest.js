@@ -65,8 +65,8 @@ export default [
   },
   // 资方管理 - 资方映射配置
   {
-    url: '/mapping',
-    on: true,
+    url: '/pms/capital/listCapitalMapcfg',
+    on: false,
     resp: Mock.mock({
       'body': {
         'currentPage': 1,
@@ -88,8 +88,8 @@ export default [
   },
   // 资方管理 - 合同模板维护
   {
-    url: '/contract',
-    on: true,
+    url: '/contract/listContractTemplate',
+    on: false,
     resp: Mock.mock({
       'body': {
         'currentPage': 1,

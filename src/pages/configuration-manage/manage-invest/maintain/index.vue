@@ -43,7 +43,7 @@
         isAdd: true,
         dataLoading: false,
         showUserMoadl: false,
-        pageSize: 5,
+        pageSize: 15,
         total: 0,
         currentPage: 1,
         ShowModal: false, // 是否是新增修改

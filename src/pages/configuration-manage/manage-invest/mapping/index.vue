@@ -9,9 +9,9 @@
     </i-breadcrumb>
     <div class="form-block-title">查询条件</div>
     <div class="search-form-container">
-      <i-form inline label-position="left" ref="searchForm" :model="searchForm">
+      <i-form inline label-position="left" ref="formSearch" :model="formSearch">
         <i-form-item prop="capitalName" label="资方名称" :label-width="80">
-          <i-input type="text" placeholder="资方名称" v-model="searchForm.capitalName"></i-input>
+          <i-input type="text" placeholder="资方名称" v-model="formSearch.capitalName"></i-input>
         </i-form-item>
         <i-form-item>
           <i-button type="primary" @click="search">
@@ -24,32 +24,30 @@
     <div class="form-top-actions">
       <i-button @click="addModal" type="info"><i class="iconfont icon-xinzeng"></i> 新增</i-button>
     </div>
-    <i-table :loading="dataLoading" border ref="proTable" :columns="columns1" :data="data1"></i-table>
+    <i-table :loading="dataLoading" border ref="zfycTable" :columns="columns1" :data="data1"></i-table>
     <div class="page-container">
-      <i-page :current="currentPage" :total="total" size="small" show-elevator show-total @on-change="junmpPage">
+      <i-page :page-size="pageSize" :current="currentPage" :total="total" size="small" show-elevator show-total @on-change="junmpPage">
       </i-page>
     </div>
     <bs-modal :title="'资方映射配置'" v-model="ShowModel" :width="600">
-      <i-form ref="formMapping" :model="formMapping" label-position="right" :label-width="150">
+      <i-form v-if="ShowModel" ref="formMapping" :model="formMapping" label-position="right" :label-width="150">
         <i-form-item
-          :rules="{required: true, message: '产品不能为空', trigger: 'change'}"
           label="产品"
-          prop="productName">
-          <i-select v-model="formMapping.productName">
-            <i-option value="">空值（测试用）</i-option>
-            <i-option value="欢乐颂">欢乐颂</i-option>
-            <i-option value="任分期">任分期</i-option>
-          </i-select>
+          :rules="{required: true, message: '产品不能为空', trigger: 'blur'}"
+          prop="capitalName">
+          <input type="hidden" v-model="formMapping.productName"/>
+          <i-input v-model="formMapping.productName" :disabled="true" placeholder="选择产品">
+            <i-button @click="showSelectProduct=!showSelectProduct" slot="append">选择产品 <Icon type="ios-more"></Icon></i-button>
+          </i-input>
         </i-form-item>
         <i-form-item
-          :rules="{required: true, message: '资方不能为空', trigger: 'change'}"
           label="资方"
+          :rules="{required: true, message: '资方不能为空', trigger: 'blur'}"
           prop="capitalName">
-          <i-select v-model="formMapping.capitalName">
-            <i-option value="">空值（测试用）</i-option>
-            <i-option value="海尔云贷">海尔云贷</i-option>
-            <i-option value="海乐行融资租赁">海乐行融资租赁</i-option>
-          </i-select>
+          <input type="hidden" v-model="formMapping.capitalName"/>
+          <i-input v-model="formMapping.capitalName" :disabled="true" placeholder="选择资方">
+            <i-button @click="showSelectCapital=!showSelectCapital" slot="append">选择资方 <Icon type="ios-more"></Icon></i-button>
+          </i-input>
         </i-form-item>
         <i-form-item
           label="资方产品编号"
@@ -70,11 +68,9 @@
         <i-form-item
           :rules="{required: true, message: '贴息方式不能为空', trigger: 'change'}"
           label="贴息方式"
-          prop="subsidytype">
-          <i-select v-model="formMapping.subsidytype ">
-            <i-option value="">空值（测试用）</i-option>
-            <i-option value="全贴">全贴</i-option>
-            <i-option value="不贴">不贴</i-option>
+          prop="subsidyType">
+          <i-select v-model="formMapping.subsidyType">
+            <i-option v-for="item in enumSelectData.get('SubsidyTypeEnum')" :key="item.itemCode" :value="item.itemCode">{{item.itemName}}</i-option>
           </i-select>
         </i-form-item>
         <i-form-item
@@ -86,17 +82,28 @@
           </i-select>
         </i-form-item>
         <i-form-item class="text-right">
-          <i-button type="primary" @click="addformSubmit">提交</i-button>
+          <i-button type="primary" @click="formSubmit" :loading="buttonLoading">
+            <span v-if="!buttonLoading">提交</span>
+            <span v-else>Loading...</span>
+          </i-button>
           <i-button type="ghost" style="margin-left: 8px" @click="addformCancel">取消</i-button>
         </i-form-item>
       </i-form>
     </bs-modal>
     <bs-modal :title="'资方合同模板配置'" v-model="ContractModel" :width="1200">
-      <modal-contract v-if="ContractModel"></modal-contract>
+      <modal-contract v-if="ContractModel" :getRowData="clickRow"></modal-contract>
     </bs-modal>
     <!-- 选择客户经理的弹窗 -->
     <bs-modal title="选择客户经理" :width="1200" v-model="showSelectEmployer">
       <table-employer-list @on-row-dbclick="selectEmployer"></table-employer-list>
+    </bs-modal>
+    <!--选择产品的弹窗-->
+    <bs-modal title="选择产品" :width="1200" v-model="showSelectProduct">
+      <table-product-list @on-row-dbclick="selectProduct"></table-product-list>
+    </bs-modal>
+    <!--选择资方的弹窗-->
+    <bs-modal title="选择资方" :width="1200" v-model="showSelectCapital">
+      <table-capital-list @on-row-dbclick="selectCapital"></table-capital-list>
     </bs-modal>
   </div>
 </template>
@@ -105,14 +112,18 @@
   import MixinData from './mixin-data';
   import BSModal from '@/components/bs-modal';
   import ContractConf from './contract-configuration';
-  import TableEmployerList from '@/components/table-employer-list';
+  import TableEmployerList from '@/components/table-employer-list'; // 选择客户经理
+  import GetProductModal from '@/components/table-product-list'; // 选择产品
+  import GetCapitalModal from '@/components/table-capital-list'; // 选择资方
   export default {
     name: 'investMapping',
     mixins: [MixinData],
     components: {
       'bs-modal': BSModal,
       'modal-contract': ContractConf,
-      'table-employer-list': TableEmployerList
+      'table-employer-list': TableEmployerList,
+      'table-product-list': GetProductModal,
+      'table-capital-list': GetCapitalModal
     },
     data() {
       return {
@@ -122,11 +133,15 @@
         ShowModel: false,         // 新增和修改弹窗
         ContractModel: false,      // 资方合同模板配置弹窗
         showSelectEmployer: false,      // 选择客户经理的弹窗
+        showSelectProduct: false,      // 选择产品的弹窗
+        showSelectCapital: false,      // 选择资方的弹窗
         currentPage: 1,
         total: 0,
-        searchForm: {
+        pageSize: 10,
+        formSearch: {
           capitalName: '',
-          currentPage: 1
+          currentPage: 1,
+          pageSize: 15
         },
         formMapping: {
           productNo: '', // 产品编号
@@ -137,59 +152,118 @@
           channelNo: '', // 渠道编号
           custMgrNo: '', // 客户经理编号
           custMgrName: '', // 客户经理名称
-          subsidytype: '',  // 贴息方式(1-全贴,2-全不贴)
+          subsidyType: '',  // 贴息方式(1-全贴,2-全不贴)
           ynCreditQuery: ''  // 是否查询人行征信
         },
-        ContractformData: {}     // 资方合同模板配置已选的数据
+        clickRow: {}     // 资方合同模板配置已选的数据
       };
     },
     mounted() {
-      this.getList();
+      this.getPrivateCustomerList();
     },
     methods: {
       search() {
-        this.getList();
+        this.getPrivateCustomerList();
       },
       junmpPage(page) {
-        this.getList(page);
+        this.getPrivateCustomerList(page);
       },
-      async getList(page) {
+      // 查询列表数据
+      async getPrivateCustomerList(page) {
         this.$data.dataLoading = true;
         if (page) {
-          this.$data.searchForm.currentPage = page;
+          this.$data.formSearch.currentPage = page;
+          this.$data.currentPage = page;
         }
-        let resp = await this.$http.post('/mapping', this.$data.searchForm);
+        let resp = await this.$http.post('/pms/capital/listCapitalMapcfg', {
+          currentPage: this.$data.currentPage,
+          pageSize: this.$data.pageSize,
+          capitalName: this.$data.formSearch.capitalName
+        });
         this.$data.dataLoading = false;
-        this.$data.data1 = resp.body.resultList;
-        this.$data.currentPage = resp.body.currentPage;
-        this.$data.total = resp.body.totalNum;
+        if (resp.body.resultList.length !== 0) {
+          this.$data.data1 = resp.body.resultList;
+          this.$data.currentPage = resp.body.currentPage;
+          this.$data.total = resp.body.totalNum;
+        } else {
+          this.$Notice.warning({
+            title: '没有数据可加载',
+            duration: 2
+          });
+          this.$data.data1 = [];
+        }
       },
       // 新增按钮的弹窗
       addModal() {
+        this.isAdd = true;
         this.$data.ShowModel = true;
-        const formName01 = 'formMapping';
-        this.$refs[formName01].resetFields(); // 重置表单
+        this.$data.formMapping = {};
+        this.$data.formMapping.productName = '';
+        this.$data.formMapping.capitalName = '';
+        this.$data.formMapping.custMgrNo = '';
       },
-      // 新增里的 修改按钮
+      // 修改
       setList(row) {
         this.isAdd = false;
         this.$data.ShowModel = true;
-        this.formMapping.proName = row.proName;
-        this.formMapping.investName = row.investName;
-        this.formMapping.investProNumber = row.investProNumber;
-        this.formMapping.channelNumber = row.channelNumber;
-        this.formMapping.managerNumber = row.managerNumber;
+        this.formMapping = row;
       },
-      // 新增里的 提交按钮
-      addformSubmit() {
+      // 新增的保存请求方法
+      async addSetSuBmit(tit) {
+        this.$data.buttonLoading = true;
+        let resAdd = await this.$http.post('/pms/capital/saveCapitalMapcfg', this.$data.formMapping);
         this.$data.ShowModel = false;
+        this.$data.buttonLoading = false; // 关闭按钮的loading状态
+        if (resAdd.success) {
+          this.$Message.success(tit);
+          this.getPrivateCustomerList();
+        }
+      },
+      // 新增模态框的保存按钮点击事件
+      formSubmit() {
+        let formName = 'formMapping';
+        this.$refs[formName].validate((valid) => {
+          if (valid) {
+            // 如果是新增
+            let tit = this.isAdd ? '新增成功' : '修改成功';
+            this.addSetSuBmit(tit);
+          } else {
+            this.$Message.error('<span style="color: red">*</span>项不能为空');
+          }
+        });
+      },
+      // 删除数据的请求
+      async remove(row) {
+        Alertify.confirm('确定要删除吗？', async (ok) => {
+          if (ok) {
+            const loadingMsg = this.$Message.loading('删除中...', 0);
+            let respDel = await this.$http.get('/pms/capital/deleteCapitalMapcfg', {
+              productNo: row.productNo,
+              capitalNo: row.capitalNo
+            });
+            if (respDel.success) {
+              loadingMsg();
+              this.$Message.success('删除成功');
+              let goCurrentPage = this.$data.currentPage;
+              if (
+                this.$data.total % this.$data.pageSize === 1 &&
+                this.$data.currentPage !== 1 &&
+                (this.$data.total - 1) / this.$data.pageSize !== this.$data.currentPage
+              ) {
+                goCurrentPage = this.$data.currentPage - 1;
+              }
+              this.getPrivateCustomerList(goCurrentPage);
+            }
+          }
+        });
       },
       // 新增里的 取消按钮
       addformCancel() {
         this.$data.ShowModel = false;
       },
       // 打开合同模板配置弹窗
-      contractModelOpen() {
+      contractModelOpen(row) {
+        this.$data.clickRow = row;
         this.$data.ContractModel = true;
       },
       // 选择客户经理
@@ -197,6 +271,18 @@
         this.$data.formMapping.custMgrNo = row.userCode;
         this.$data.formMapping.custMgrName = row.userName;
         this.$data.showSelectEmployer = false;
+      },
+      // 选择产品
+      selectProduct(row, index) {
+        this.$data.formMapping.productNo = row.productNo;
+        this.$data.formMapping.productName = row.productName;
+        this.$data.showSelectProduct = false;
+      },
+      // 选择资方
+      selectCapital(row, index) {
+        this.$data.formMapping.capitalNo = row.capitalNo;
+        this.$data.formMapping.capitalName = row.capitalName;
+        this.$data.showSelectCapital = false;
       }
     }
   };

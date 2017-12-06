@@ -6,27 +6,27 @@ export default {
           title: '产品编号',
           width: 100,
           align: 'center',
-          key: 'proNumber'
+          key: 'productNo'
         },
         {
           title: '产品名称',
-          key: 'proName'
+          key: 'productName'
         },
         {
           title: '资方名称',
-          key: 'investName'
+          key: 'capitalName'
         },
         {
           title: '资方产品编号',
-          key: 'investProNumber'
+          key: 'capitalProductNo'
         },
         {
           title: '渠道编号',
-          key: 'channelNumber'
+          key: 'channelNo'
         },
         {
           title: '客户经理编号',
-          key: 'managerNumber'
+          key: 'custMgrNo'
         },
         {
           title: '操作',

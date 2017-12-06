@@ -24,11 +24,11 @@ export default [
           'items': [
             {
               'itemCode': '1',
-              'itemName': '是'
+              'itemName': '有'
             },
             {
               'itemCode': '0',
-              'itemName': '否'
+              'itemName': '无'
             }
           ]
         },
@@ -488,6 +488,20 @@ export default [
             }
           ]
         },
+        // 利率模式
+        {
+          'groupKey': 'InterestType',
+          'items': [
+            {
+              'itemCode': '1',
+              'itemName': '固定利率'
+            },
+            {
+              'itemCode': '2',
+              'itemName': '浮动利率'
+            }
+          ]
+        }, // 利率模式end
         {
           'groupKey': 'ModelTypeEnum',
           'items': [
@@ -632,15 +646,27 @@ export default [
           'items': [
             {
               'itemCode': '1',
-              'itemName': '1-2'
+              'itemName': '3000元以下'
             },
             {
               'itemCode': '2',
-              'itemName': '3-4'
+              'itemName': '3000-5000元'
             },
             {
               'itemCode': '3',
-              'itemName': '5-6'
+              'itemName': '5000-8000元'
+            },
+            {
+              'itemCode': '4',
+              'itemName': '8000-12000元'
+            },
+            {
+              'itemCode': '5',
+              'itemName': '12000-20000元'
+            },
+            {
+              'itemCode': '5',
+              'itemName': '20000元以上'
             }
           ]
         }, // 授信释放方式 end
@@ -650,18 +676,161 @@ export default [
           'items': [
             {
               'itemCode': '1',
-              'itemName': '1-2'
+              'itemName': '信用良好'
             },
             {
               'itemCode': '2',
-              'itemName': '3-4'
+              'itemName': '少数逾期'
             },
             {
               'itemCode': '3',
-              'itemName': '5-6'
+              'itemName': '多次逾期'
+            },
+            {
+              'itemCode': '4',
+              'itemName': '无信用记录'
             }
           ]
-        } // 信用情况 end
+        }, // 信用情况 end
+        {
+          'groupKey': 'CreditAuditStatusEnum',
+          'items': [
+            {
+              'itemCode': '1',
+              'itemName': '授信有效中'
+            },
+            {
+              'itemCode': '2',
+              'itemName': '授信额度申请中'
+            },
+            {
+              'itemCode': '3',
+              'itemName': '授信过期'
+            },
+            {
+              'itemCode': '4',
+              'itemName': '授信申请已撤销'
+            },
+            {
+              'itemCode': '4',
+              'itemName': '审核不通过'
+            }
+          ]
+        },
+        {
+          'groupKey': 'ApproveStatusEnum',
+          'items': [
+            {
+              'itemCode': 'A',
+              'itemName': '同意'
+            },
+            {
+              'itemCode': 'R',
+              'itemName': '拒绝'
+            },
+            {
+              'itemCode': 'B',
+              'itemName': '退回'
+            }
+          ]
+        },
+        // 车辆保险费
+        {
+          'groupKey': 'CarInsuranceEnum',
+          'items': [
+            {
+              'itemCode': '1',
+              'itemName': '乙方自行支付保险费'
+            },
+            {
+              'itemCode': '2',
+              'itemName': '保险费计入每月租金'
+            }
+          ]
+        }, // 车辆保险费end
+        // 盗抢险
+        {
+          'groupKey': 'DqxInsuranceEnum',
+          'items': [
+            {
+              'itemCode': '1',
+              'itemName': '乙方自行支付保险费'
+            },
+            {
+              'itemCode': '2',
+              'itemName': '保险费计入每月租金'
+            }
+          ]
+        }, // 盗抢险end
+        // 利率模式
+        {
+          'groupKey': 'InterestType',
+          'items': [
+            {
+              'itemCode': '1',
+              'itemName': '固定利率'
+            },
+            {
+              'itemCode': '2',
+              'itemName': '浮动利率'
+            }
+          ]
+        }, // 利率模式end
+        // 运营模式
+        {
+          'groupKey': 'OperatingModeEnum',
+          'items': [
+            {
+              'itemCode': '1',
+              'itemName': '直接运营模式'
+            },
+            {
+              'itemCode': '2',
+              'itemName': '海乐行模式'
+            }
+          ]
+        }, // 运营模式end
+        // 租赁服务费收取方式
+        {
+          'groupKey': 'ServiceFeeTypeEnum',
+          'items': [
+            {
+              'itemCode': '1',
+              'itemName': '一次性收取'
+            },
+            {
+              'itemCode': '2',
+              'itemName': '分期收取'
+            }
+          ]
+        }, //租赁服务费收取方式end
+        {
+          'groupKey': 'SubsidyTypeEnum',
+          'items': [
+            {
+              'itemCode': '1',
+              'itemName': '全贴'
+            },
+            {
+              'itemCode': '2',
+              'itemName': '全不贴'
+            }
+          ]
+        },
+        // 签订方式
+        {
+          'groupKey': 'SinTypeEnum',
+          'items': [
+            {
+              'itemCode': '1',
+              'itemName': '线上'
+            },
+            {
+              'itemCode': '2',
+              'itemName': '线下'
+            }
+          ]
+        } // 签订方式end
       ],
       'success': true
     }

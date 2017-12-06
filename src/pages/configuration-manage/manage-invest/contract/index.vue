@@ -11,9 +11,9 @@
       查询条件
     </div>
     <div class="search-form-container">
-      <i-form inline label-position="left" ref="searchForm" :model="searchForm">
-        <i-form-item prop="name" label="合同名称" :label-width="100">
-          <i-input type="text" placeholder="合同名称"  v-model="searchForm.name"></i-input>
+      <i-form inline label-position="left" ref="formSearch" :model="formSearch">
+        <i-form-item prop="contractTemplateName" label="合同名称" :label-width="100">
+          <i-input type="text" placeholder="合同名称"  v-model="formSearch.contractTemplateName"></i-input>
         </i-form-item>
         <i-form-item>
           <i-button type="primary" @click="search">
@@ -26,44 +26,49 @@
     <div class="form-top-actions">
       <i-button @click="addModal" type="info"><i class="iconfont icon-xinzeng"></i> 新增</i-button>
     </div>
-    <i-table border :loading="dataLoading" ref="proTable" :columns="columns1" :data="data1"></i-table>
+    <i-table border  :page-size="pageSize" :loading="dataLoading" ref="contractTemplateTable" :columns="columns1" :data="data1"></i-table>
     <div class="page-container">
       <i-page :current="currentPage" :total="total" size="small" show-elevator show-total @on-change="jumpPage">
       </i-page>
     </div>
-    <bs-modal :title="'新增合同模板'" v-model="ShowModal" :width="600">
-      <i-form ref="formContract" :model="formContract" label-position="right" :label-width="150">
-        <!--<i-form-item label="合同类型" prop="type">
-          <i-select v-model="formContract.type" :disabled="iSsee">
-            <i-option value="贷款合同01">贷款合同01</i-option>
-            <i-option value="贷款合同02">贷款合同02</i-option>
-            <i-option value="贷款合同03">贷款合同03</i-option>
-          </i-select>
-        </i-form-item>-->
-        <i-form-item label="合同名称" prop="name">
-          <i-input v-model="formContract.name" :readonly ="iSsee">
+    <bs-modal :title="isAdd ? '新增' : '修改'" v-model="ShowModal" :width="600">
+      <i-form v-if="ShowModal" ref="formContract" :model="formContract" label-position="right" :label-width="150">
+        <i-form-item
+          label="合同名称"
+          :rules="{required: true, message: '合同名称不能为空', trigger: 'blur'}"
+          prop="contractTemplateName">
+          <i-input v-model="formContract.contractTemplateName">
           </i-input>
         </i-form-item>
-        <i-form-item label="云贷签约平台模板ID" prop="ContractId">
-          <i-input v-model="formContract.ContractId" placeholder="非必填项" :readonly ="iSsee">
+        <i-form-item label="云贷签约平台模板ID" prop="yundaiContractId">
+          <i-input v-model="formContract.yundaiContractId" placeholder="非必填项">
           </i-input>
         </i-form-item>
-        <i-form-item label="合同模板附件" prop="enclosure">
-          <div v-if="iSsee" v-text="uploadFile"></div>
+        <i-form-item
+          :rules="{required: true, message: '协议附件不能为空', trigger: 'blur'}"
+          label="合同模板附件"
+          prop="contractTemplateAttach">
           <i-upload
-            v-else
-            multiple
+            :show-upload-list="false"
+            :on-success="uploadSuccess"
+            :on-error="uploadError"
             type="drag"
-            :action="uploadurl">
+            :action="$config.HTTPBASEURL + '/common/upload'">
             <div style="padding: 20px 0">
               <i-icon type="ios-cloud-upload" size="52" style="color: #3399ff"></i-icon>
               <p>单击或拖动文件上传</p>
             </div>
           </i-upload>
+          <p v-if="isAdd" class="show-upload-text" v-text="uploadFileName"></p>
+          <p v-else class="show-upload-text" v-text="formContract.contractTemplateAttach"></p>
+          <input type="hidden" v-model="formContract.contractTemplateAttach" style="width: 100%;border: 0;">
         </i-form-item>
         <i-form-item class="text-right">
-          <i-button type="primary" @click="formSubmit" v-if="!iSsee">提交</i-button>
-          <i-button type="ghost" style="margin-left: 8px" @click="formCancel">{{ iSsee ? '返回' : '取消'  }}</i-button>
+          <i-button type="primary" @click="formSubmit" :loading="buttonLoading">
+            <span v-if="!buttonLoading">提交</span>
+            <span v-else>Loading...</span>
+          </i-button>
+          <i-button type="ghost" style="margin-left: 8px" @click="formCancel">取消</i-button>
         </i-form-item>
       </i-form>
     </bs-modal>
@@ -81,78 +86,136 @@
     },
     data() {
       return {
+        isAdd: true,
         ShowModal: false,
-        formMaintain: {},
-        iSsee: false,           // 是否是查看页面
+        buttonLoading: false,
         dataLoading: false,
-        uploadurl: '',
         currentPage: 1,
         total: 0,
-        searchForm: {
-          name: '',
-          currentPage: 1
+        pageSize: 15,
+        uploadFileName: '',
+        formSearch: {
+          contractTemplateName: '',
+          currentPage: 1,
+          pageSize: 15
         },
-        uploadFile: '',
         formContract: {
-          /*type: '', // 合同类型*/
-          name: '', // 合同名称
-          ContractId: '', // 云贷签约平台模板ID
-          Enclosure: '' // 合同附件
+          contractTemplateNo: '', // 合同编号
+          contractTemplateName: '', // 合同名称
+          yundaiContractId: '', // 云贷签约平台模板ID
+          contractTemplateAttach: '' // 合同附件
         }
       };
     }, // end data
     mounted() {
-      this.getList();
+      this.getPrivateCustomerList();
     },
     methods: {
-      async getList(page) {
+      async getPrivateCustomerList(page) {
         this.$data.dataLoading = true;
         if (page) {
-          this.searchForm.currentPage = page;
+          this.formSearch.currentPage = page;
         }
-        let resp = await this.$http.post('/contract', this.$data.searchForm);
+        let resp = await this.$http.post('/contract/listContractTemplate', {
+          currentPage: this.$data.currentPage,
+          pageSize: this.$data.pageSize,
+          contractTemplateName: this.$data.formSearch.contractTemplateName
+        });
         this.$data.dataLoading = false;
-        this.$data.data1 = resp.body.resultList;
-        this.$data.currentPage = resp.body.currentPage;
-        this.$data.total = resp.body.totalNum;
+        if (resp.body.resultList.length !== 0) {
+          this.$data.data1 = resp.body.resultList;
+          this.$data.currentPage = resp.body.currentPage;
+          this.$data.total = resp.body.totalNum;
+        } else {
+          this.$Notice.warning({
+            title: '没有数据可加载',
+            duration: 2
+          });
+          this.$data.data1 = [];
+        }
       },
       search() {
-        this.getList();
+        this.getPrivateCustomerList();
       },
       jumpPage(page) {
-        this.getList(page);
+        this.getPrivateCustomerList(page);
       },
       // 新增弹窗
       addModal() {
-        const FormName = 'formContract';
-        this.$refs[FormName].resetFields(); // 重置表单
-        this.$data.iSsee = false;   // 不是查看状态
+        this.$data.isAdd = true;
         this.$data.ShowModal = true;
+        this.$data.formContract = {};
+        this.$data.uploadFileName = '';
       },
-      // 合同模板维护列表的删除
-      remove1(index) {
-        Alertify.confirm('确定要删除吗？', (confirm) => {
-          if (confirm) {
-            this.data1.splice(index, 1);
-            // Alertify.alert('确定');
-          } else {}
+      setList(row) {
+        this.isAdd = false;
+        this.$data.ShowModal = true;
+        this.formContract = row;
+      },
+      // 新增的保存请求方法
+      async addSetSuBmit(tit) {
+        this.$data.buttonLoading = true;
+        let id = this.$data.formContract.id;
+        console.log(id);
+        let resAdd = await this.$http.post('/contract/saveContractTemplate', {
+          id: id,
+          contractTemplateName: this.$data.formContract.contractTemplateName,
+          contractTemplateAttach: this.$data.formContract.contractTemplateAttach,
+          contractTemplateNo: this.$data.formContract.contractTemplateNo,
+          yundaiContractId: this.$data.formContract.yundaiContractId
         });
-      },
-      /*// 查看详情
-      detailsFun(row) {
-        this.$data.iSsee = true;
-        this.$data.uploadFile = row.enclosure;
-        this.$data.ShowModal = true;
-      },*/
-      // 修改弹窗
-      setList() {
-        this.$data.iSsee = false;   // 不是查看状态
+        this.$data.buttonLoading = false; // 关闭按钮的loading状态
+        this.$data.ShowModal = false;
+        if (resAdd.success) {
+          this.$Message.success(tit);
+          this.getPrivateCustomerList();
+        }
       },
       // 提交 按钮
-      formSubmit() {},
+      formSubmit() {
+        let formName = 'formContract';
+        this.$refs[formName].validate((valid) => {
+          if (valid) {
+            // 如果是新增
+            let tit = this.isAdd ? '新增成功' : '修改成功';
+            this.addSetSuBmit(tit);
+          } else {
+            this.$Message.error('<span style="color: red">*</span>项不能为空');
+          }
+        });
+      },
+      // 删除数据的请求
+      async remove(row) {
+        Alertify.confirm('确定要删除吗？', async (ok) => {
+          if (ok) {
+            const loadingMsg = this.$Message.loading('删除中...', 0);
+            let respDel = await this.$http.post('/contract/deleteContractTemplate', {
+              contractTemplateNo: row.contractTemplateNo
+            });
+            if (respDel.success) {
+              loadingMsg();
+              this.$Message.success('删除成功');
+              this.getPrivateCustomerList();
+            }
+          }
+        });
+      },
       // 取消 按钮
       formCancel() {
         this.$data.ShowModal = false;
+        this.$data.formContract = {};
+      },
+      // 上传成功
+      uploadSuccess(res, file, fileList) {
+        this.$data.uploadFileName = file.name;
+        this.$data.formContract.contractTemplateAttach = res.body.url;
+      },
+      // 上传失败
+      uploadError(err, file, fileList) {
+        this.$data.uploadFileName = '';
+        this.$Notice.error({
+          desc: err
+        });
       }
     }
   };
@@ -160,4 +223,13 @@
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style lang="scss" scoped>
+  #invest-maintain {
+    & .show-upload-text {
+      position: relative;
+      padding-right: 36px;
+      line-height: 20px;
+      min-height: 20px;
+      color: #666;
+    }
+  }
 </style>
