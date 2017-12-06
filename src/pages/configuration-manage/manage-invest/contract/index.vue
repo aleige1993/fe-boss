@@ -156,7 +156,6 @@
       async addSetSuBmit(tit) {
         this.$data.buttonLoading = true;
         let id = this.$data.formContract.id;
-        console.log(id);
         let resAdd = await this.$http.post('/contract/saveContractTemplate', {
           id: id,
           contractTemplateName: this.$data.formContract.contractTemplateName,

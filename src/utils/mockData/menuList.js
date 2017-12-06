@@ -53,7 +53,7 @@ export default [
                 name: '业务受理',
                 url: '/index/loanbusiness/accept',
                 childMenus: [
-                  { name: '业务申请', url: '/index/loanbusiness/accept' },
+                  { name: '个人业务登记', url: '/index/loanbusiness/accept' },
                   { name: '我的草稿', url: '/index/customer/companycustomer/modify' }
                 ]
               },
