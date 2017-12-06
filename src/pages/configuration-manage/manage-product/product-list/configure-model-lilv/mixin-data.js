@@ -15,6 +15,13 @@ export default {
           key: 'loanPeriods'
         },
         {
+          title: '利率模式',
+          key: 'interestType',
+          render: (h, params) => {
+            return h('span', {}, this.enumCode2Name(params.row.interestType, 'InterestType'));
+          }
+        },
+        {
           title: '名义利率(%/年)',
           key: 'loanNominalRate'
         },

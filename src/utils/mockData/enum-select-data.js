@@ -734,6 +734,7 @@ export default [
             }
           ]
         },
+        // 车辆保险费
         {
           'groupKey': 'CarInsuranceEnum',
           'items': [
@@ -746,7 +747,8 @@ export default [
               'itemName': '保险费计入每月租金'
             }
           ]
-        },
+        }, // 车辆保险费end
+        // 盗抢险
         {
           'groupKey': 'DqxInsuranceEnum',
           'items': [
@@ -759,7 +761,8 @@ export default [
               'itemName': '保险费计入每月租金'
             }
           ]
-        },
+        }, // 盗抢险end
+        // 利率模式
         {
           'groupKey': 'InterestType',
           'items': [
@@ -772,7 +775,8 @@ export default [
               'itemName': '浮动利率'
             }
           ]
-        },
+        }, // 利率模式end
+        // 运营模式
         {
           'groupKey': 'OperatingModeEnum',
           'items': [
@@ -785,7 +789,8 @@ export default [
               'itemName': '海乐行模式'
             }
           ]
-        },
+        }, // 运营模式end
+        // 租赁服务费收取方式
         {
           'groupKey': 'ServiceFeeTypeEnum',
           'items': [
@@ -798,7 +803,7 @@ export default [
               'itemName': '分期收取'
             }
           ]
-        },
+        }, //租赁服务费收取方式end
         {
           'groupKey': 'SubsidyTypeEnum',
           'items': [

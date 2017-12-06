@@ -96,7 +96,7 @@
         });
         this.$data.dataLoading = false;
         console.log(resp);
-        if (resp.body.resultList !== 0) {
+        if (resp.body.resultList.length !== 0) {
           this.$data.data1 = resp.body.resultList;
         } else {
           this.$Notice.warning({
