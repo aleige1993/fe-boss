@@ -21,52 +21,17 @@ export default {
           'companyNo': '',
           'companyName': '',
           'creditApplyNo': ''
-        },
+        }
         // 初审核查列表
-        'credityFirstTrialParamList': [
+        /* 'credityFirstTrialParamList': [
           {
             'itemName': '',
             'fileName': '',
             'description': '',
             'fileUrl': ''
           }
-        ]
+        ]*/
       },
-      approveHistoryColumns: [
-        {
-          title: '处理人',
-          key: 'name'
-        },
-        {
-          title: '任务节点',
-          key: 'name'
-        },
-        {
-          title: '开始时间',
-          key: 'name'
-        },
-        {
-          title: '结束时间',
-          key: 'name'
-        },
-        {
-          title: '耗时',
-          key: 'name'
-        },
-        {
-          title: '结论',
-          key: 'name'
-        },
-        {
-          title: '意见信息',
-          key: 'name'
-        }
-      ],
-      approveHistoryData: [
-        {
-          name: '张三'
-        }
-      ],
       companyAttachFileColumns: [
         {
           title: '附件名称',
@@ -113,10 +78,10 @@ export default {
         }
       ],
       companyAttachFiles: [
-        {
+        /*{
           attachName: '仓井空.av',
           attachUrl: 'http://www.baidu.com'
-        }
+        }*/
       ],
       // 初审信息
       firstApproveColumns: [
@@ -169,10 +134,10 @@ export default {
         }
       ],
       firstApproveData: [
-        {
+        /*{
           attachName: '仓井空.av',
           attachUrl: 'http://www.baidu.com'
-        }
+        }*/
       ],
       // 外审信息
       outApproveColumns: [
@@ -225,10 +190,10 @@ export default {
         }
       ],
       outApproveData: [
-        {
+        /*{
           attachName: '仓井空.av',
           attachUrl: 'http://www.baidu.com'
-        }
+        }*/
       ]
     };
   }

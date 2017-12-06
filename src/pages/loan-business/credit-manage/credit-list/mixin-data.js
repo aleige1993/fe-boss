@@ -88,7 +88,7 @@ export default {
                     Alertify.confirm(`确定要${text}当前用户吗？`, async (ok) => {
                       if (ok) {
                         const msg = this.$Message.loading(`正在${text}`, 0);
-                        let resp = await this.$http.post('/member/change/status', {
+                        let resp = await this.$http.post('/credit/delete', {
                           memberNo: params.row.memberNo,
                           status
                         });
@@ -149,8 +149,8 @@ export default {
                   click: () => {
                     Alertify.confirm('确定删除当前授信申请吗？', async (ok) => {
                       if (ok) {
-                        let resp = await this.$http.post('/member/delete', {
-                          memberNo: params.row.memberNo
+                        let resp = await this.$http.post('/credit/delete', {
+                          creditApplyNo: params.row.creditApplyNo
                         });
                         if (resp.success) {
                           this.getCompanyCreditList();
