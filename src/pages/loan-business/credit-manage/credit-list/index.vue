@@ -23,16 +23,16 @@
           </i-select>
         </i-form-item>-->
         <i-form-item prop="password">
-          <i-input v-model="searchForm.certNo" type="text" placeholder="客户名称"></i-input>
+          <i-input v-model="searchForm.companyName" type="text" placeholder="客户名称"></i-input>
         </i-form-item>
         <i-form-item prop="password">
-          <bs-datepicker v-model="searchForm.mobile" type="text" placeholder="申请时间"></bs-datepicker>
+          <bs-datepicker v-model="searchForm.startDate" type="text" placeholder="申请时间"></bs-datepicker>
         </i-form-item>
         <i-form-item prop="password">
           -
         </i-form-item>
         <i-form-item prop="password">
-          <bs-datepicker v-model="searchForm.mobile" type="text" placeholder="申请时间"></bs-datepicker>
+          <bs-datepicker v-model="searchForm.endDate" type="text" placeholder="申请时间"></bs-datepicker>
         </i-form-item>
         <i-form-item>
           <i-button @click="search" type="primary"><i-icon type="ios-search-strong"></i-icon> 搜索</i-button>
@@ -40,7 +40,7 @@
       </i-form>
     </div>
     <slot name="topAction"></slot>
-    <i-table :loading="dataLoading" @on-row-dblclick="selectRow" border ref="selection" :columns="resultCustomerColumns" :data="privateCustomerList"></i-table>
+    <i-table height="600" :loading="dataLoading" @on-row-dblclick="selectRow" border ref="selection" :columns="resultCustomerColumns" :data="privateCustomerList"></i-table>
     <div class="page-container">
       <i-page :total="total" :page-size="15" :current="currentPage" @on-change="jumpPage" size="small" show-elevator show-total></i-page>
     </div>
@@ -59,10 +59,9 @@
         currentPage: 1,
         certTypeEnum: [],
         searchForm: {
-          name: '',
-          certType: '',
-          certNo: '',
-          mobile: '',
+          companyName: '',
+          startDate: '',
+          endDate: '',
           currentPage: 1,
           pageSize: 15
         }
@@ -86,12 +85,12 @@
       goToAdd() {
         this.$router.push('/index/customer/modify');
       },
-      async getPrivateCustomerList(page) {
+      async getCompanyCreditList(page) {
         this.$data.dataLoading = true;
         if (page) {
           this.$data.searchForm.currentPage = page;
         }
-        let resp = await this.$http.post('/member/page', this.$data.searchForm);
+        let resp = await this.$http.post('/credit/page', this.$data.searchForm);
         this.$data.dataLoading = false;
         this.$data.privateCustomerList = resp.body.resultList;
         console.log(resp.body.resultList);
@@ -99,17 +98,17 @@
         this.$data.total = resp.body.totalNum;
       },
       jumpPage(page) {
-        this.getPrivateCustomerList(page);
+        this.getCompanyCreditList(page);
       },
       search() {
-        this.getPrivateCustomerList();
+        this.getCompanyCreditList();
       },
       selectRow(row, index) {
         this.$emit('on-row-dbclick', row, index);
       }
     },
     mounted() {
-      this.getPrivateCustomerList();
+      this.getCompanyCreditList();
       let enumSelectData = this.$store.getters.enumSelectData;
       this.$data.certTypeEnum = enumSelectData.get('CertTypeEnum');
       // console.log(.get('YesNoEnum'));

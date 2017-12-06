@@ -1,6 +1,37 @@
 export default {
   data() {
     return {
+      applyData: {
+        // 授信申请公司附件集合
+        'creditApplyAttachParamList': [
+          {
+            'attachUrl': '',
+            'attachName': '',
+            'attachSuffixType': ''
+          }
+        ],
+        // 申请意见入参
+        'creditAuditParam': {
+          'auditStatus': '',
+          'opinion': ''
+        },
+        // 授信申请信息
+        'creditApplyParam': {
+          'creditCode': '',
+          'companyNo': '',
+          'companyName': '',
+          'creditApplyNo': ''
+        },
+        // 初审核查列表
+        'credityFirstTrialParamList': [
+          {
+            'itemName': '',
+            'fileName': '',
+            'description': '',
+            'fileUrl': ''
+          }
+        ]
+      },
       approveHistoryColumns: [
         {
           title: '处理人',

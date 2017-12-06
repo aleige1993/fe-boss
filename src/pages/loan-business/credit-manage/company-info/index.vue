@@ -7,9 +7,8 @@
             <i-row>
               <i-col span="8">
                 <i-form-item label="公司名称">
-                  <i-input :readonly="true" :value="formData.baseDTO.corpName">
-                    <i-button @click="selectCompanyModal=!selectCompanyModal" slot="append">选择公司 <i-icon type="ios-more"></i-icon></i-button>
-                  </i-input>
+                  <i-button type="text" @click="gotoCompany" v-text="formData.baseDTO.corpName"></i-button>
+                  <i-button v-if="!corpNo||corpNo==''" type="primary" @click="selectCompanyModal=!selectCompanyModal">选择公司 <i-icon type="ios-more"></i-icon></i-button>
                 </i-form-item>
               </i-col>
               <i-col span="8">
@@ -232,7 +231,7 @@ export default {
       initFormLoading: false
     };
   },
-  props: {},
+  props: ['corpNo'],
   components: {
     'bs-modal': BsModal,
     TableCompanyCustomerList
@@ -241,6 +240,11 @@ export default {
     selectCompany(row, index) {
       this.initFormData(row.corpNo);
       this.$data.selectCompanyModal = false;
+    }
+  },
+  mounted() {
+    if (this.corpNo && this.corpNo !== '') {
+      this.initFormData(this.corpNo);
     }
   }
 };

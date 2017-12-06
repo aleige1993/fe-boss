@@ -20,12 +20,20 @@ export default {
       });
       this.$data.loadingAttachFile = false;
       if (resp.success) {
-        this.$data.formData.baseDTO = resp.body.baseDTO;
+        let baseDto = resp.body.baseDTO;
+        this.$data.formData.baseDTO = baseDto;
         if (resp2.success) {
           this.$data.formData.attachDTOs = resp2.body.resultList;
-          this.$emit('on-select-company', corpNo, resp2.body.resultList);
+          this.$emit('on-select-company', {
+            companyNo: baseDto.corpNo,
+            companyName: baseDto.corpName,
+            creditCode: baseDto.creditCode
+          }, resp2.body.resultList);
         }
       }
+    },
+    gotoCompany() {
+      window.open(`#/index/customer/companycustomer/modify?id=${this.$data.formData.baseDTO.corpNo}&name=${this.$data.formData.baseDTO.corpName}&from=detail`);
     }
   }
 };
