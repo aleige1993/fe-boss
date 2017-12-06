@@ -1,6 +1,7 @@
 <template>
   <div id="personal-basic">
-    <i-form label-position="right" :label-width="120" style="padding-bottom: 200px">
+    <i-form ref="formData" :model="formData" label-position="right" :label-width="120" style="padding-bottom: 200px">
+      <!--申请信息-->
       <bs-form-block :title="'申请信息'">
         <i-row>
           <!--产品类别-->
@@ -82,7 +83,18 @@
 
         </i-row>
       </bs-form-block>
-
+      <!--客户信息-->
+      <bs-form-block :title="'客户信息'">
+        <!--姓名-->
+        <i-form-item
+          label="姓名"
+          prop="CustomerName">
+          <input type="hidden" v-model="formData.CustomerName"/>
+          <i-input v-model="formData.CustomerName" :disabled="true" placeholder="选择合同模板">
+            <i-button @click="showSelectContractTemplate=!showSelectContractTemplate" slot="append">选择合同模板 <Icon type="ios-more"></Icon></i-button>
+          </i-input>
+        </i-form-item>
+      </bs-form-block>
     </i-form>
 
     <!-- 选择企业的弹窗 -->
@@ -118,6 +130,7 @@
         tabIndex: 0,
         initFormLoading: false,
         isFromDetail: false,
+        showSelectContractTemplate: false,
         formData: {
           select: '',
           carMoney: ''
