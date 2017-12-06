@@ -1,0 +1,6 @@
+export default {
+  PENDING_CODE: '1',
+  FIRST_APPROVED_CODE: '2',
+  OUT_APPROVED_CODE: '3',
+  APPROVED_CODE: '4'
+};

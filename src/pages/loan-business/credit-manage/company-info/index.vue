@@ -242,9 +242,11 @@ export default {
       this.$data.selectCompanyModal = false;
     }
   },
-  mounted() {
-    if (this.corpNo && this.corpNo !== '') {
-      this.initFormData(this.corpNo);
+  watch: {
+    'corpNo'(newVal) {
+      if (newVal && newVal !== '') {
+        this.initFormData(newVal);
+      }
     }
   }
 };

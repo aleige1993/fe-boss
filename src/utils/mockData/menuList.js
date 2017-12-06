@@ -69,7 +69,7 @@ export default [
                 childMenus: [
                   { name: '公司授信查询', url: '/index/loanbusiness/credit' },
                   { name: '公司授信申请', url: '/index/loanbusiness/credit/apply' },
-                  { name: '公司授信审批', url: '/index/loanbusiness/credit' }
+                  { name: '公司授信审批', url: '/index/loanbusiness/credit/pending' }
                 ]
               }
             ]

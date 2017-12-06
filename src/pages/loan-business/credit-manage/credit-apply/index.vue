@@ -8,7 +8,7 @@
     </i-breadcrumb>
     <div class="form-top-actions"></div>
 
-    <i-tabs type="card" :animated="false">
+    <i-tabs v-model="tabIndex" type="card" :animated="false">
       <i-tab-pane label="申请信息">
         <company-customer-basic-info @on-select-company="selectCompany"></company-customer-basic-info>
         <i-form label-position="right" :label-width="140">
@@ -39,7 +39,7 @@
             </i-row>
           </bs-form-block>
           <!--初审信息-->
-          <bs-form-block title="1初审信息" >
+          <!--<bs-form-block title="1初审信息" >
             <i-row>
               <i-col span="8">
                 <i-form-item label="网审情况">
@@ -60,9 +60,9 @@
                 <i-table :columns="firstApproveColumns" :data="firstApproveData"></i-table>
               </i-col>
             </i-row>
-          </bs-form-block>
+          </bs-form-block>-->
           <!--外审信息-->
-          <bs-form-block title="2外审信息" >
+          <!--<bs-form-block title="2外审信息" >
             <i-row>
               <i-col span="24">
                 <div class="form-top-actions">
@@ -71,9 +71,9 @@
                 <i-table :columns="outApproveColumns" :data="outApproveData"></i-table>
               </i-col>
             </i-row>
-          </bs-form-block>
+          </bs-form-block>-->
           <!--最终审核信息-->
-          <bs-form-block title="3授信信息" >
+          <!--<bs-form-block title="3授信信息" >
             <i-row>
               <i-col span="8">
                 <i-form-item label="授信总额度">
@@ -116,7 +116,7 @@
                 </i-form-item>
               </i-col>
             </i-row>
-          </bs-form-block>
+          </bs-form-block>-->
           <div class="form-footer-actions">
             <i-button :loading="initFormLoading" type="success">
               <span v-if="!initFormLoading"><i class="iconfont icon-tijiao"></i> 提交</span>
@@ -127,9 +127,9 @@
       </i-tab-pane>
       <i-tab-pane label="审核历史信息">
         <!--审核历史意见-->
-        <bs-form-block title="审核历史意见" >
-          <i-table :columns="approveHistoryColumns" :data="approveHistoryData"></i-table>
-        </bs-form-block>
+        <div v-if="tabIndex==1">
+          <approve-history :id="applyData.creditApplyParam.creditApplyNo"></approve-history>
+        </div>
       </i-tab-pane>
     </i-tabs>
 
@@ -211,11 +211,13 @@
   import MixinData from './mixin-data';
   import BsModal from '@/components/bs-modal';
   import CompanyCustomerBasicInfo from '../company-info/index.vue';
+  import ApproveHistory from '../credit-approve-history/index.vue';
   export default {
     name: 'creditApply',
     mixins: [MixinData],
     data() {
       return {
+        tabIndex: 0,
         loadingAttachFile: false,
         initFormLoading: false,
         addAttachModal: false,
@@ -227,10 +229,15 @@
         }
       };
     },
+    computed: {
+      id() {
+        return this.$route.query.id || null;
+      }
+    },
     methods: {
       selectCompany(corpNo, attachFiles) {
         this.$Message.success('' + corpNo);
-        console.log(attachFiles);
+        this.$data.companyAttachFiles = attachFiles;
       },
       // 上传附件
       openAddAttachModal() {
@@ -250,7 +257,8 @@
     },
     components: {
       CompanyCustomerBasicInfo,
-      'bs-modal': BsModal
+      'bs-modal': BsModal,
+      ApproveHistory
     }
   };
 </script>

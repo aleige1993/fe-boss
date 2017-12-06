@@ -47,7 +47,7 @@ export default [
           {
             'itemName': '@name',
             'fileName': '@name',
-            'description': '',
+            'description': '@string(50)',
             'fileUrl': '@url("http")'
           }
         ],
@@ -71,14 +71,23 @@ export default [
         'creditCode': '@integer(10)',
         'companyNo': '1234567890',
         'monthCountLimit': '50000',
-        'firstTrialDTOList|10': [
-          {
-            'itemName': '@name',
-            'fileName': '@name',
-            'description': '',
-            'fileUrl': '@url("http")'
-          }
-        ],
+        firstTrialDTO: {
+          'netApprove': '@string(50)',
+          'telephoneApprove': '@string(50)',
+          'creditCheckItemsList|4': [
+            {
+              'itemName': '@name',
+              'fileName': '@name',
+              'description': '@string(50)',
+              'fileUrl': '@url("http")'
+            }
+          ]
+        },
+        'creditApplyAttachList|5': [{
+          attachName: '@name',
+          attachUrl: '@url("http")',
+          attachSuffixType: '@pick("jpg", "png", "zip")'
+        }],
         'monthSurplusCountLimit': '10000',
         'startDate': '@date("yyyy-mm-dd")',
         'quarterCountLimit': '123123'
@@ -87,5 +96,43 @@ export default [
       'reMsg': '成功',
       'success': true
     })
+  },
+  {
+    url: '/credit/listAuditLog',
+    on: true,
+    resp: Mock.mock({
+      'body|10': [
+        {
+          'timeConsuming': '@integer(4)',
+          'handleTime': '@date("yyyy-mm-dd")',
+          'tacheCode': '@integer(5)',
+          'handleUserName': '@name',
+          'companyName': '阿里巴巴',
+          'creditApplyNo': '@integer(5)',
+          'opinion': '@integer(5)',
+          'creditCode': '@integer(5)',
+          'companyNo': '@integer(5)',
+          'handleUserCode': '@integer(5)',
+          'tacheName': '@string(20)', // 环节名称
+          'auditStatus': '@pick(["1", "2", "3", "4"])',
+          'startTime': '@date("yyyy-mm-dd")',
+          'id': '@integer(5)',
+          'endTime': '@date("yyyy-mm-dd")'
+        }
+      ],
+      'reCode': '0000',
+      'reMsg': '成功',
+      'success': true
+    })
+  },
+  {
+    url: '/credit/delete',
+    on: true,
+    resp: {
+      'body': {},
+      'reCode': '0000',
+      'reMsg': '成功',
+      'success': true
+    }
   }
 ];
