@@ -5,9 +5,10 @@
         <!--个人单笔额度-->
         <i-col span="8">
           <i-form-item
-            :rules="{required: true, message: '个人单笔额度', trigger: 'blur'}" label="个人单笔额度"
+            :rules="{required: true, message: '个人单笔额度', trigger: 'blur'}"
+            label="个人单笔额度"
             prop="personalSingleCarLimit">
-            <i-input type="text" placeholder="个人单笔额度" v-model="ProductPackageForm.personalSingleCarLimit">
+            <i-input placeholder="个人单笔额度" v-model="ProductPackageForm.personalSingleCarLimit">
               <span slot="append">元</span>
             </i-input>
           </i-form-item>
@@ -15,7 +16,8 @@
         <!--个人单户额度-->
         <i-col span="8">
           <i-form-item
-            :rules="{required: true, message: '个人单户额度不能为空', trigger: 'blur'}" label="个人单户额度"
+            :rules="{required: true, message: '个人单户额度不能为空', trigger: 'blur'}"
+            label="个人单户额度"
             prop="personalSingleDoorLimit">
             <i-input type="text" placeholder="个人单户额度" v-model="ProductPackageForm.personalSingleDoorLimit">
               <span slot="append">元</span>
@@ -439,7 +441,7 @@
         zfClickRow: {}, // 点击模态框里tabel的一行时
         ProductPackageForm: { // 当前的模态框的数据表单
           packageNo: '', // 套餐编号
-          personalSingleCarLimit: '', // 个人单笔额度
+          personalSingleCarLimit: null, // 个人单笔额度
           personalSingleDoorLimit: '',  // 个人单户额度
           companySingleCarLimit: '',  // 企业单笔额度
           companySingleDoorLimit: '', // 企业单户额度
@@ -488,12 +490,13 @@
         let resp = await this.$http.get('/pms/productPackage/list', {
           productNo: productNo
         });
-        console.log(resp);
         if (resp.body.length !== 0) {
-          console.log(resp.body[0]);
-          this.$data.ProductPackageForm = resp.body[0];
+          let dataObject = resp.body[0];
+          for (let item in dataObject) {
+            dataObject[item] = dataObject[item].toString();
+          }
+          this.$data.ProductPackageForm = dataObject;
         } else {
-          console.log(this.$data.ProductPackageForm);
         }
       },
       // 获取模态框列表数据

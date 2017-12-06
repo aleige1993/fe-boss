@@ -51,7 +51,6 @@
         });
         this.$data.dataLoading = false;
         if (resp.body.length !== 0) {
-          console.log(resp.body);
           let _data = resp.body.map(item => {
             if (item.isSelected === 1) {
               item._checked = true;

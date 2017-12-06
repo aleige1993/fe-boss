@@ -21,13 +21,13 @@
         <!--合同模板-->
         <i-form-item
           label="合同模板"
-          prop="capitalName">
+          prop="contractTemplateName">
           <input type="hidden" v-model="dataForm.contractTemplateName"/>
           <i-input v-model="dataForm.contractTemplateName" :disabled="true" placeholder="选择合同模板">
             <i-button @click="showSelectContractTemplate=!showSelectContractTemplate" slot="append">选择合同模板 <Icon type="ios-more"></Icon></i-button>
           </i-input>
         </i-form-item>
-        <!--合同模板-->
+        <!--签订方式-->
         <i-form-item prop="signType" label="签订方式">
           <Select v-model="dataForm.signType">
             <i-option v-for="item in enumSelectData.get('SinTypeEnum')" :key="item.itemCode" :value="item.itemCode">{{item.itemName}}</i-option>
@@ -83,7 +83,6 @@
     mounted() {
       this.$data.dataForm.productName = this.getRowData.productName;
       this.$data.dataForm.capitalName = this.getRowData.capitalName;
-      console.log(this.getRowData);
       this.getPrivateCustomerList();
     },
     methods: {

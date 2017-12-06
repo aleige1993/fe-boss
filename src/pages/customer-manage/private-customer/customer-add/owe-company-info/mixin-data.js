@@ -50,7 +50,6 @@ export default {
                 },
                 on: {
                   click: () => {
-                    // console.log(params.row);
                     this.$data.formData = params.row;
                     this.$data.addBankModal = true;
                   }

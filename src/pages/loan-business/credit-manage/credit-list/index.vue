@@ -93,7 +93,6 @@
         let resp = await this.$http.post('/credit/page', this.$data.searchForm);
         this.$data.dataLoading = false;
         this.$data.privateCustomerList = resp.body.resultList;
-        console.log(resp.body.resultList);
         this.$data.currentPage = resp.body.currentPage;
         this.$data.total = resp.body.totalNum;
       },
