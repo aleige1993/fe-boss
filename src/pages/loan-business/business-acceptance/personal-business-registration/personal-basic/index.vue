@@ -346,24 +346,35 @@
     <!--车辆信息-->
     <bs-form-block :title="'车辆信息'">
       <div class="form-top-actions">
-        <i-button @click="addModalCar" type="info"><i class="iconfont icon-xinzeng"></i>&nbsp;新增</i-button>
+        <i-button @click="openModalCar" type="info"><i class="iconfont icon-xinzeng"></i>&nbsp;新增</i-button>
       </div>
       <i-table :loading="carDataLoading" border ref="selection" :columns="carColumns" :data="carData"></i-table>
     </bs-form-block>
     <!--担保信息-->
     <bs-form-block :title="'担保信息'">
       <div class="form-top-actions">
-        <i-button @click="addModalAssure" type="info"><i class="iconfont icon-xinzeng"></i>&nbsp;新增</i-button>
+        <i-button @click="openModalAssure" type="info"><i class="iconfont icon-xinzeng"></i>&nbsp;新增</i-button>
       </div>
       <i-table :loading="assureDataLoading" border ref="selection" :columns="assureColumns" :data="assureData"></i-table>
     </bs-form-block>
     <!--贷款材料清单-->
     <bs-form-block :title="'贷款材料清单'">
       <div class="form-top-actions">
-        <i-button @click="addModalLoan" type="info"><i class="iconfont icon-xinzeng"></i>&nbsp;新增</i-button>
+        <i-button @click="openModalLoan" type="info"><i class="iconfont icon-xinzeng"></i>&nbsp;新增</i-button>
       </div>
       <i-table :loading="loanDataLoading" border ref="selection" :columns="loanColumns" :data="loanData"></i-table>
     </bs-form-block>
+    <div class="form-footer-actions">
+      <i-button @click="saveDraft" :loading="initFormLoading" type="primary">
+        <span v-if="!initFormLoading"><i class="iconfont icon-tijiao"></i> 保存草稿</span>
+        <span v-else> loading...</span>
+      </i-button>
+      <i-button @click="saveSubimt" :loading="initFormLoading" type="success">
+        <span v-if="!initFormLoading"><i class="iconfont icon-tijiao"></i> 提交</span>
+        <span v-else> loading...</span>
+      </i-button>
+    </div>
+
     <!--点击图片放大模态框-->
     <i-modal v-model="visibleImg" cancel-text="" ok-text="关闭">
       <img :src="showImgUpUrl" style="width: 100%">
@@ -372,10 +383,16 @@
     <bs-modal title="选择客户信息" :width="1200" v-model="showSelectCustomer">
       <table-customer-list v-if="showSelectCustomer" type="modal" @on-row-dbclick="selectshowSelectCustomer"></table-customer-list>
     </bs-modal>
+
+    <!--车辆信息的新增修改模态框-->
+    <bs-modal :title="isAddCar ? '新增' : '编辑'" v-model="showModalCar">
+      <modal-car v-if="showModalCar"></modal-car>
+    </bs-modal>
   </div>
 </template>
 
 <script>
+  import ModalCar from './modal-car'; // 车辆的弹窗
   import TableCustomerList from '@/components/table-customer-list'; // 选择客户信息
   import BsModal from '@/components/bs-modal';
   import carMixinData from './car-mixin-data';
@@ -387,17 +404,28 @@
   export default {
     name: 'personalBasic',
     mixins: [carMixinData, carMixinMethods, assureMixinData, assureMixinMethods, loanMixinData, loanMixinMethods],
+    components: {
+      ModalCar,
+      TableCustomerList,
+      'bs-modal': BsModal
+    },
     data() {
       return {
         tabIndex: 0,
-        addModalCar: false,
+        initFormLoading: false,
+        // 车辆
+        isAddCar: true,
+        showModalCar: false,
         carDataLoading: false,
-        addModalAssure: false,
+        // 担保信息
+        isAddAssure: true,
         assureDataLoading: false,
-        addModalLoan: false,
+        showModalAssure: false,
+        // 贷款材料
+        isAddLoan: true,
+        showModalLoan: false,
         loanDataLoading: false,
         showBasicList: true, // 当选择客户姓名之后就显示以下的相关信息
-        initFormLoading: false,
         isFromDetail: false,
         showSelectCustomer: false,
         visibleImg: false,
@@ -452,17 +480,26 @@
       };
     },
     watch: {
-      'formData.user.isWed': (val) => {
-        // alert(val);
-      }
-    },
-    components: {
-      TableCustomerList,
-      'bs-modal': BsModal
     },
     mounted() {
     },
     methods: {
+      // 打开车辆新增修改模态框
+      openModalCar() {
+        this.$data.showModalCar = true;
+      },
+      // 打开担保信息新增修改模态框
+      openModalAssure() {
+        this.$data.showModalAssure = true;
+      },
+      // 打开贷款材料清单新增修改模态框
+      openModalLoan() {
+        this.$data.showModalLoan = true;
+      },
+      // 保存草稿
+      saveDraft() {},
+      // 提交
+      saveSubimt() {},
       // 点击放大图片
       showImg(imgURL) {
         this.$data.showImgUpUrl = imgURL;
@@ -518,7 +555,6 @@
           height: 160px;
           &.click-img {
             cursor: zoom-in;
-            text-align: right;
           }
         }
       }

@@ -17,9 +17,9 @@ export default {
           key: 'fileName',
           render: (h, params) => {
             return h('div', [
-              h('P', {
+              h('p', {
                 style: {
-                  width: '80%',
+                  width: '100%',
                   height: '20px',
                   lineHeight: '18px',
                   overflow: 'hidden',
@@ -31,32 +31,45 @@ export default {
                 },
                 on: {
                   click: () => {
-                    window.open(params.row.fileName);
+                    params.row.fileName !== '' && window.open(params.row.fileName);
                   }
                 }
-              }, params.row.fileName),
-              h('Upload', {
+              }, params.row.fileName)
+            ]);
+          }
+        },
+        {
+          title: '操作',
+          key: 'action',
+          width: 150,
+          align: 'center',
+          render: (h, params) => {
+            return h('div', [
+              h('Button', {
                 props: {
-                  action: '//jsonplaceholder.typicode.com/posts/'
+                  type: 'primary',
+                  size: 'small'
                 },
                 style: {
-                  display: 'inline-block',
-                  width: '20%',
-                  height: '20px',
-                  lineHeight: '18px',
-                  overflow: 'hidden',
-                  textOverflow: 'ellipsis',
-                  whiteSpace: 'nowrap',
-                  textAlign: 'right',
-                  color: 'red',
-                  cursor: 'pointer'
+                  marginRight: '5px'
                 },
                 on: {
                   click: () => {
-                    this.removeAssure($.extend({}, params.row));
+                    this.setListCar($.extend({}, params.row));
                   }
                 }
-              }, '上传')
+              }, '编辑'),
+              h('Button', {
+                props: {
+                  type: 'error',
+                  size: 'small'
+                },
+                on: {
+                  click: () => {
+                    this.removeCar($.extend({}, params.row));
+                  }
+                }
+              }, '删除')
             ]);
           }
         }
