@@ -6,7 +6,8 @@
       <i-breadcrumb-item>个人业务登记</i-breadcrumb-item>
     </i-breadcrumb>
     <div class="form-top-actions"></div>
-    <i-tabs v-model="tabIndex" type="card">
+
+    <i-tabs v-model="tabIndex" type="card" :animated="false">
       <i-tab-pane :label="'基本信息'">
         <modal-personal-basic></modal-personal-basic>
       </i-tab-pane>
