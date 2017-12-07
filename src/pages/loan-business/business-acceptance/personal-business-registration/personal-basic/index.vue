@@ -386,13 +386,53 @@
 
     <!--车辆信息的新增修改模态框-->
     <bs-modal :title="isAddCar ? '新增' : '编辑'" v-model="showModalCar">
-      <modal-car v-if="showModalCar"></modal-car>
+      <i-form  ref="formCar" :model="formCar" label-position="right" :label-width="100">
+        <i-form-item label="权利人类型" prop="obligeeType">
+          <i-select v-model="formCar.obligeeType">
+            <i-option value="beijing">个人</i-option>
+            <i-option value="shanghai">企业</i-option>
+          </i-select>
+        </i-form-item>
+        <i-form-item label="权利人编号" prop="obligeeNo">
+          <i-input v-model="formCar.obligeeNo" placeholder="">
+          </i-input>
+        </i-form-item>
+        <i-form-item label="权利人名称" prop="obligeeName">
+          <i-input v-model="formCar.obligeeName" placeholder="">
+          </i-input>
+        </i-form-item>
+        <i-form-item label="车辆型号" prop="carModel">
+          <i-input v-model="formCar.carModel" placeholder="">
+          </i-input>
+        </i-form-item>
+        <i-form-item label="车牌号" prop="carNo">
+          <i-input v-model="formCar.carNo" placeholder="">
+          </i-input>
+        </i-form-item>
+        <i-form-item label="发动机号" prop="engineNo">
+          <i-input v-model="formCar.engineNo" placeholder="">
+          </i-input>
+        </i-form-item>
+        <i-form-item label="车架号" prop="carFrameNo">
+          <i-input v-model="formCar.carFrameNo" placeholder="">
+          </i-input>
+        </i-form-item>
+        <i-form-item label="车辆价值" prop="carMoney">
+          <i-input v-model="formCar.carMoney" placeholder="">
+          </i-input>
+        </i-form-item>
+        <i-form-item class="text-right">
+          <i-button type="primary" @click="carSuBmit" :loading="carbuttonLoading">
+            <span v-if="!carbuttonLoading">提交</span>
+            <span v-else>loading...</span>
+          </i-button>
+        </i-form-item>
+      </i-form>
     </bs-modal>
   </div>
 </template>
 
 <script>
-  import ModalCar from './modal-car'; // 车辆的弹窗
   import TableCustomerList from '@/components/table-customer-list'; // 选择客户信息
   import BsModal from '@/components/bs-modal';
   import carMixinData from './car-mixin-data';
@@ -405,7 +445,6 @@
     name: 'personalBasic',
     mixins: [carMixinData, carMixinMethods, assureMixinData, assureMixinMethods, loanMixinData, loanMixinMethods],
     components: {
-      ModalCar,
       TableCustomerList,
       'bs-modal': BsModal
     },
@@ -417,6 +456,17 @@
         isAddCar: true,
         showModalCar: false,
         carDataLoading: false,
+        carbuttonLoading: false,
+        formCar: {
+          obligeeType: '',
+          obligeeNo: '',
+          obligeeName: '',
+          carModel: '',
+          carNo: '',
+          engineNo: '',
+          carFrameNo: '',
+          carMoney: ''
+        },
         // 担保信息
         isAddAssure: true,
         assureDataLoading: false,
@@ -480,13 +530,25 @@
       };
     },
     watch: {
+      carData: function(val, oldVal) {
+        this.localStorageFun('carData', val);
+      },
+      loanData: function(val, oldVal) {
+        this.localStorageFun('loanData', val);
+      },
+      assureData: function(val, oldVal) {
+        this.localStorageFun('assureData', val);
+      }
     },
     mounted() {
+      this.localStorageFun('carData', this.carData);
+      this.localStorageFun('loanData', this.loanData);
+      this.localStorageFun('assureData', this.assureData);
     },
     methods: {
-      // 打开车辆新增修改模态框
-      openModalCar() {
-        this.$data.showModalCar = true;
+      // 将数据与本地存储的数据双向绑定
+      localStorageFun(key, data) {
+        window.localStorage.setItem(key, JSON.stringify(data));
       },
       // 打开担保信息新增修改模态框
       openModalAssure() {

@@ -803,7 +803,7 @@ export default [
               'itemName': '分期收取'
             }
           ]
-        }, //租赁服务费收取方式end
+        }, // 租赁服务费收取方式end
         {
           'groupKey': 'SubsidyTypeEnum',
           'items': [
