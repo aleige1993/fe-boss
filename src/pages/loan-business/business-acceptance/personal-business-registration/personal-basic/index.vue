@@ -1,6 +1,6 @@
 <template>
   <div id="personal-basic">
-    <i-form ref="formData" :model="formData" label-position="right" :label-width="160" style="padding-bottom: 200px">
+    <i-form ref="formData" :model="formData" label-position="right" :label-width="160">
       <!--申请信息-->
       <bs-form-block :title="'申请信息'">
         <i-row>
@@ -343,14 +343,31 @@
         </i-row>
       </bs-form-block>
     </i-form>
+    <!--车辆信息-->
+    <bs-form-block :title="'车辆信息'">
+      <div class="form-top-actions">
+        <i-button @click="addModalCar" type="info"><i class="iconfont icon-xinzeng"></i>&nbsp;新增</i-button>
+      </div>
+      <i-table :loading="carDataLoading" border ref="selection" :columns="carColumns" :data="carData"></i-table>
+    </bs-form-block>
+    <!--担保信息-->
+    <bs-form-block :title="'担保信息'">
+      <div class="form-top-actions">
+        <i-button @click="addModalAssure" type="info"><i class="iconfont icon-xinzeng"></i>&nbsp;新增</i-button>
+      </div>
+      <i-table :loading="assureDataLoading" border ref="selection" :columns="assureColumns" :data="assureData"></i-table>
+    </bs-form-block>
+    <!--贷款材料清单-->
+    <bs-form-block :title="'贷款材料清单'">
+      <div class="form-top-actions">
+        <i-button @click="addModalLoan" type="info"><i class="iconfont icon-xinzeng"></i>&nbsp;新增</i-button>
+      </div>
+      <i-table :loading="loanDataLoading" border ref="selection" :columns="loanColumns" :data="loanData"></i-table>
+    </bs-form-block>
     <!--点击图片放大模态框-->
     <i-modal v-model="visibleImg" cancel-text="" ok-text="关闭">
       <img :src="showImgUpUrl" style="width: 100%">
     </i-modal>
-    <!-- 选择企业的弹窗 -->
-    <!--<bs-modal title="选择企业" :width="1200" v-model="showSelectCompany">
-      <table-company-customer-list type="modal" @on-row-dbclick="selectCompanyCustomer"></table-company-customer-list>
-    </bs-modal>-->
     <!-- 选择客户信息的弹窗 -->
     <bs-modal title="选择客户信息" :width="1200" v-model="showSelectCustomer">
       <table-customer-list v-if="showSelectCustomer" type="modal" @on-row-dbclick="selectshowSelectCustomer"></table-customer-list>
@@ -361,11 +378,24 @@
 <script>
   import TableCustomerList from '@/components/table-customer-list'; // 选择客户信息
   import BsModal from '@/components/bs-modal';
+  import carMixinData from './car-mixin-data';
+  import carMixinMethods from './car-mixin-methods';
+  import assureMixinData from './assure-mixin-data';
+  import assureMixinMethods from './assure-mixin-methods';
+  import loanMixinData from './loan-mixin-data';
+  import loanMixinMethods from './loan-mixin-methods';
   export default {
     name: 'personalBasic',
+    mixins: [carMixinData, carMixinMethods, assureMixinData, assureMixinMethods, loanMixinData, loanMixinMethods],
     data() {
       return {
         tabIndex: 0,
+        addModalCar: false,
+        carDataLoading: false,
+        addModalAssure: false,
+        assureDataLoading: false,
+        addModalLoan: false,
+        loanDataLoading: false,
         showBasicList: true, // 当选择客户姓名之后就显示以下的相关信息
         initFormLoading: false,
         isFromDetail: false,
@@ -488,6 +518,7 @@
           height: 160px;
           &.click-img {
             cursor: zoom-in;
+            text-align: right;
           }
         }
       }
