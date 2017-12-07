@@ -210,7 +210,7 @@
 <script>
   import MixinData from './mixin-data';
   import BsModal from '@/components/bs-modal';
-  import CompanyCustomerBasicInfo from '../company-info/index.vue';
+  import CompanyCustomerBasicInfo from '@/components/detail-company-customer-basic/index.vue';
   import ApproveHistory from '../credit-approve-history/index.vue';
   export default {
     name: 'creditApply',

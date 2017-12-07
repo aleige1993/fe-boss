@@ -88,6 +88,13 @@ let MyRouter = new Router({
                 { path: '/', name: 'PersonalRegistration', component: resolve => require(['@/pages/loan-business/business-acceptance/personal-business-registration'], resolve)}
               ]
             },
+            // 贷款业务-业务受理-企业客户
+            { path: 'companyaccept', name: 'loanBusinessAccept', component: resolve => require(['@/pages/loan-business/business-acceptance'], resolve),
+              children: [
+                // 贷款业务-业务受理-个人业务登记-基本信息
+                { path: '/', name: 'CompanyRegistration', component: resolve => require(['@/pages/loan-business/business-acceptance/company-business-registration'], resolve)}
+              ]
+            },
             // 贷款业务-授信管理
             { path: 'credit', name: 'loanBusinessCredit', component: resolve => require(['@/pages/loan-business/credit-manage'], resolve),
               children: [
