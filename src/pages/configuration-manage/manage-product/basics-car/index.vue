@@ -15,7 +15,7 @@
       <i-page :loading="dataLoading" :current="currentPage" :total="total" size="small" show-elevator show-total @on-change="jumpPage" :page-size="pageSize"></i-page>
     </div>
     <pt-modal title="新增" v-model="showAddModal">
-      <i-form  ref="formCustom" :model="formCustom" label-position="left" :label-width="100">
+      <i-form  ref="formCustom" :model="formCustom" label-position="left" :label-width="130">
         <i-form-item label="车辆材料名称" prop="vehicleDocName">
           <i-input v-model="formCustom.vehicleDocName" type="textarea" :autosize="{minRows: 2,maxRows: 5}" placeholder="请输入车辆材料名称..."></i-input>
         </i-form-item>
@@ -24,7 +24,7 @@
             <span v-if="!buttonLoading">提交</span>
             <span v-else>Loading...</span>
           </i-button>
-          <i-button type="ghost" @click="handleCancel()" style="margin-left: 8px">取消</i-button>
+          <i-button type="ghost" @click="handleCancel" style="margin-left: 8px">取消</i-button>
         </i-form-item>
       </i-form>
     </pt-modal>
@@ -35,7 +35,7 @@
   import PTModal from '@/components/bs-modal';
   import MixinData from './mixin-data';
   export default {
-    name: 'basics-car',
+    name: 'basicsCar',
     components: {
       'pt-modal': PTModal
     },
@@ -99,7 +99,6 @@
       addModal() {
         this.isAdd = true;
         this.$data.formCustom = {};
-        this.$data.formCustom.vehicleDocName = '';
         this.$data.showAddModal = true;
       },
       setList(row) {
@@ -148,8 +147,8 @@
         }
       },
       handleCancel() {
+        this.$data.formCustom = {};
         this.$data.showAddModal = false;
-        this.$data.formCustom.vehicleDocName = '';
       }
     }
   };
