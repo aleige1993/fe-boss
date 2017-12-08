@@ -364,16 +364,6 @@
       </div>
       <i-table :loading="loanDataLoading" border ref="selection" :columns="loanColumns" :data="loanData"></i-table>
     </bs-form-block>
-    <div class="form-footer-actions">
-      <i-button @click="saveDraft" :loading="initFormLoading" type="primary">
-        <span v-if="!initFormLoading"><i class="iconfont icon-tijiao"></i> 保存草稿</span>
-        <span v-else> loading...</span>
-      </i-button>
-      <i-button @click="saveSubimt" :loading="initFormLoading" type="success">
-        <span v-if="!initFormLoading"><i class="iconfont icon-tijiao"></i> 提交</span>
-        <span v-else> loading...</span>
-      </i-button>
-    </div>
 
     <!--点击图片放大模态框-->
     <i-modal v-model="visibleImg" cancel-text="" ok-text="关闭">
@@ -450,8 +440,6 @@
     },
     data() {
       return {
-        tabIndex: 0,
-        initFormLoading: false,
         // 车辆
         isAddCar: true,
         showModalCar: false,
@@ -529,23 +517,15 @@
         }
       };
     },
-    watch: {
-      carData: function(val, oldVal) {
-        this.localStorageFun('carData', val);
-      },
-      loanData: function(val, oldVal) {
-        this.localStorageFun('loanData', val);
-      },
-      assureData: function(val, oldVal) {
-        this.localStorageFun('assureData', val);
-      }
-    },
     mounted() {
-      this.localStorageFun('carData', this.carData);
-      this.localStorageFun('loanData', this.loanData);
-      this.localStorageFun('assureData', this.assureData);
+      this.goLocalStorage();
     },
     methods: {
+      // 进页面的时候将数据存进本地存储
+      async goLocalStorage() {
+        await this.getCarList();
+        this.localStorageFun('carData', this.carData);
+      },
       // 将数据与本地存储的数据双向绑定
       localStorageFun(key, data) {
         window.localStorage.setItem(key, JSON.stringify(data));
@@ -558,10 +538,6 @@
       openModalLoan() {
         this.$data.showModalLoan = true;
       },
-      // 保存草稿
-      saveDraft() {},
-      // 提交
-      saveSubimt() {},
       // 点击放大图片
       showImg(imgURL) {
         this.$data.showImgUpUrl = imgURL;

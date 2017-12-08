@@ -1,12 +1,9 @@
 export default {
-  mounted() {
-    this.getCarList();
-  },
   methods: {
     // 获取车辆列表
     async getCarList() {
       this.$data.carDataLoading = true;
-      /*let resp = await this.$http.get('/pms/cfgFinishedDoc/list', {
+      /*let resp = await this.$http.get('/loanCarList', {
         currentPage: this.$data.currentPage,
         pageSize: this.$data.pageSize
       });
@@ -29,20 +26,24 @@ export default {
       this.$data.carbuttonLoading = true;
       await this.carData.push(this.$data.formCar);
       this.$Message.success('新增成功');
+      this.this.localStorageFun('carData', this.carData);
       this.$data.showModalCar = false;
     },
     // 修改情况下的提交数据
-    /*async setSuBmitCar() {
-      await this.carData.push(this.$data.formCar);
+    async setSuBmitCar() {
+      let index = await this.$data.formCar._index;
+      console.log(index);
+      this.$data.carData[index] = this.$data.formCar;
+      console.log(this.$data.carData[index]);
       this.$Message.success('修改成功');
       this.$data.showModalCar = false;
-    },*/
+    },
     carSuBmit() {
       this.$data.carbuttonLoading = true;
       if (this.$data.isAddCar) {
         this.addSuBmitCar();
       } else {
-        // this.setSuBmitCar();
+        this.setSuBmitCar();
       }
       this.$data.carbuttonLoading = false;
     },

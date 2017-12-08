@@ -57,13 +57,16 @@
         <i-form-item label="渠道编号" prop="channelNo">
           <i-input v-model="formMapping.channelNo"></i-input>
         </i-form-item>
-        <i-form-item
+        <!--<i-form-item
           label="客户经理编号"
           prop="custMgrName">
           <input type="hidden" v-model="formMapping.custMgrNo"/>
           <i-input v-model="formMapping.custMgrNo" :readonly="true" placeholder="选择客户经理编号">
             <i-button @click="showSelectEmployer=!showSelectEmployer" slot="append">客户经理编号 <Icon type="ios-more"></Icon></i-button>
           </i-input>
+        </i-form-item>-->
+        <i-form-item label="客户经理编号" prop="custMgrNo">
+          <i-input v-model="formMapping.custMgrNo"></i-input>
         </i-form-item>
         <i-form-item
           :rules="{required: true, message: '贴息方式不能为空', trigger: 'change'}"
@@ -94,9 +97,9 @@
       <modal-contract v-if="ContractModel" :getRowData="clickRow"></modal-contract>
     </bs-modal>
     <!-- 选择客户经理的弹窗 -->
-    <bs-modal title="选择客户经理" :width="1200" v-model="showSelectEmployer">
+    <!--<bs-modal title="选择客户经理" :width="1200" v-model="showSelectEmployer">
       <table-employer-list @on-row-dbclick="selectEmployer"></table-employer-list>
-    </bs-modal>
+    </bs-modal>-->
     <!--选择产品的弹窗-->
     <bs-modal title="选择产品" :width="1200" v-model="showSelectProduct">
       <table-product-list @on-row-dbclick="selectProduct"></table-product-list>
@@ -112,7 +115,7 @@
   import MixinData from './mixin-data';
   import BSModal from '@/components/bs-modal';
   import ContractConf from './contract-configuration';
-  import TableEmployerList from '@/components/table-employer-list'; // 选择客户经理
+  // import TableEmployerList from '@/components/table-employer-list'; // 选择客户经理
   import GetProductModal from '@/components/table-product-list'; // 选择产品
   import GetCapitalModal from '@/components/table-capital-list'; // 选择资方
   export default {
@@ -121,7 +124,7 @@
     components: {
       'bs-modal': BSModal,
       'modal-contract': ContractConf,
-      'table-employer-list': TableEmployerList,
+      // 'table-employer-list': TableEmployerList,
       'table-product-list': GetProductModal,
       'table-capital-list': GetCapitalModal
     },
@@ -267,11 +270,11 @@
         this.$data.ContractModel = true;
       },
       // 选择客户经理
-      selectEmployer(row, index) {
+      /*selectEmployer(row, index) {
         this.$data.formMapping.custMgrNo = row.userCode;
         this.$data.formMapping.custMgrName = row.userName;
         this.$data.showSelectEmployer = false;
-      },
+      },*/
       // 选择产品
       selectProduct(row, index) {
         this.$data.formMapping.productNo = row.productNo;
