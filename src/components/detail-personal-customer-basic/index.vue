@@ -5,15 +5,10 @@
         <i-form label-position="right" :model="formData" ref="formAddCustomer" :label-width="120">
           <bs-form-block :title="'基本信息'">
             <i-row>
-              <!--<i-col span="8">
-                <i-form-item :prop="'mbMemberDTO.name'" label="姓名">
-                  <span v-text="formData.mbMemberDTO.name"></span>
-                </i-form-item>
-              </i-col>-->
               <i-col span="8">
                 <i-form-item label="姓名">
                   <i-button type="text" @click="gotoPersonal" v-text="formData.mbMemberDTO.name"></i-button>
-                  <i-button v-if="!certNo||certNo==''" type="primary" @click="selectPersonalModal=!selectPersonalModal">选择姓名 <i-icon type="ios-more"></i-icon></i-button>
+                  <i-button type="primary" @click="selectPersonalModal=!selectPersonalModal">选择姓名 <i-icon type="ios-more"></i-icon></i-button>
                 </i-form-item>
               </i-col>
               <i-col span="8">
@@ -159,19 +154,19 @@
               <i-col span="8">
                 <i-form-item label="身份证正面"
                              prop="mbMemberDTO.certFrontUrl">
-                  <img style="cursor:zoom-in" width="149" height="95" :src="formData.mbMemberDTO.certFrontUrl" @click="showImg(formData.mbMemberDTO.certFrontUrl)">
+                  <img style="cursor:zoom-in; margin-top: 8px;" width="149" height="95" :src="formData.mbMemberDTO.certFrontUrl" @click="showImg(formData.mbMemberDTO.certFrontUrl)">
                 </i-form-item>
               </i-col>
               <i-col span="8">
                 <i-form-item label="身份证反面"
                              prop="mbMemberDTO.certBackUrl">
-                  <img style="cursor:zoom-in" width="149" height="95" :src="formData.mbMemberDTO.certBackUrl" @click="showImg(formData.mbMemberDTO.certBackUrl)">
+                  <img style="cursor:zoom-in; margin-top: 8px;" width="149" height="95" :src="formData.mbMemberDTO.certBackUrl" @click="showImg(formData.mbMemberDTO.certBackUrl)">
                 </i-form-item>
               </i-col>
               <i-col span="8">
                 <i-form-item label="手持身份证"
                              prop="mbMemberDTO.certHandUrl">
-                  <img style="cursor:zoom-in" width="149" height="95" :src="formData.mbMemberDTO.certHandUrl" @click="showImg(formData.mbMemberDTO.certHandUrl)">
+                  <img style="cursor:zoom-in; margin-top: 8px;" width="149" height="95" :src="formData.mbMemberDTO.certHandUrl" @click="showImg(formData.mbMemberDTO.certHandUrl)">
                 </i-form-item>
               </i-col>
             </i-row>
@@ -239,6 +234,7 @@
               </i-col>
             </i-row>
           </bs-form-block>
+          <!--来源信息-->
           <bs-form-block :title="'来源信息'">
             <i-row>
               <i-col span="8">
@@ -305,8 +301,10 @@ export default {
   },
   methods: {// 点击放大图片
     showImg(imgURL) {
-      this.$data.showImgUpUrl = imgURL;
-      this.$data.visibleImg = true;
+      if (imgURL !== '') {
+        this.$data.showImgUpUrl = imgURL;
+        this.$data.visibleImg = true;
+      }
     },
     selectPersonal(row, index) {
       this.initFormData(row.certNo);
@@ -315,8 +313,8 @@ export default {
   },
   async mounted() {
     // 如果有id，初始化页面数据
-    if (this.id) {
-      this.initPageData();
+    if (typeof this.$data.certNo !== 'undefined' && this.$data.certNo !== '') {
+      this.initFormData(this.$data.certNo);
     } else {
       // 如果不是编辑，清空表单
     }
@@ -324,4 +322,7 @@ export default {
 };
 </script>
 <style lang="scss" scoped>
+  .ivu-form-item{
+    margin-bottom: 0 !important;
+  }
 </style>

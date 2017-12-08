@@ -8,7 +8,6 @@ export default {
         });
         this.$data.initFormLoading = false;
         this.$data.formData = resp.body;
-        // this.$refs['censusDispicker'].initData();
         this.$emit('on-submit-success', resp.body);
       } catch (e) {
         this.$data.initFormLoading = false;

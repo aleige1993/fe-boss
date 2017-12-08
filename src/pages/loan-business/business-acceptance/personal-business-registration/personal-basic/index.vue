@@ -105,7 +105,7 @@
         </i-row>
       </bs-form-block>
     </i-form>
-    <personal-info></personal-info>
+    <personal-info :certNo="certNo"></personal-info>
     <!--车辆信息-->
     <bs-form-block :title="'车辆信息'">
       <div class="form-top-actions">
@@ -138,8 +138,8 @@
       <i-form  ref="formCar" :model="formCar" label-position="right" :label-width="100">
         <i-form-item label="权利人类型" prop="obligeeType">
           <i-select v-model="formCar.obligeeType">
-            <i-option value="beijing">个人</i-option>
-            <i-option value="shanghai">企业</i-option>
+            <i-option value="1">个人</i-option>
+            <i-option value="2">企业</i-option>
           </i-select>
         </i-form-item>
         <i-form-item label="权利人编号" prop="obligeeNo">
@@ -171,10 +171,74 @@
           </i-input>
         </i-form-item>
         <i-form-item class="text-right">
-          <i-button type="primary" @click="carSuBmit" :loading="carbuttonLoading">
-            <span v-if="!carbuttonLoading">提交</span>
-            <span v-else>loading...</span>
-          </i-button>
+          <i-button type="primary" @click="carSuBmit">提交</i-button>
+        </i-form-item>
+      </i-form>
+    </bs-modal>
+    <!--担保信息的新增修改模态框-->
+    <bs-modal :title="isAddAssure ? '新增' : '编辑'" v-model="showModalAssure">
+      <i-form ref="formCar" :model="formAssure" label-position="right" :label-width="100">
+        <i-form-item label="担保人类型" prop="assureType">
+          <i-select v-model="formAssure.assureType">
+            <i-option value="1">个人</i-option>
+            <i-option value="2">企业</i-option>
+          </i-select>
+        </i-form-item>
+        <i-form-item label="担保人编号" prop="assureNo">
+          <i-input v-model="formAssure.assureNo" placeholder="">
+          </i-input>
+        </i-form-item>
+        <i-form-item label="保证人" prop="assureName">
+          <i-input v-model="formAssure.assureName" placeholder="">
+          </i-input>
+        </i-form-item>
+        <i-form-item label="担保方式" prop="assureMode">
+          <i-select v-model="formAssure.assureMode">
+            <i-option value="1">一般保证</i-option>
+            <i-option value="2">连带责任保证</i-option>
+          </i-select>
+        </i-form-item>
+        <i-form-item label="与债务人关系" prop="obligorNexus">
+          <i-select v-model="formAssure.obligorNexus">
+            <i-option value="1">夫妻关系</i-option>
+            <i-option value="2">小三关系</i-option>
+          </i-select>
+        </i-form-item>
+        <i-form-item class="text-right">
+          <i-button type="primary" @click="assureSuBmit">提交</i-button>
+        </i-form-item>
+      </i-form>
+    </bs-modal>
+    <!--贷款材料的新增修改模态框-->
+    <bs-modal :title="isAddLoan ? '新增' : '编辑'" v-model="showModalLoan">
+      <i-form ref="formCar" :model="formLoan" label-position="right" :label-width="100">
+        <i-form-item label="贷款材料名称" prop="loanName">
+          <i-input v-model="formLoan.loanName" placeholder="">
+          </i-input>
+        </i-form-item>
+        <i-form-item label="备注" prop="loanRemark">
+          <i-input type="textarea" :rows="4" v-model="formLoan.loanRemark"></i-input>
+        </i-form-item>
+        <i-form-item
+          label="文件名"
+          prop="fileName">
+          <i-upload
+            :show-upload-list="false"
+            :on-success="uploadSuccess"
+            :on-error="uploadError"
+            type="drag"
+            :action="$config.HTTPBASEURL + '/common/upload'">
+            <div style="padding: 20px 0">
+              <i-icon type="ios-cloud-upload" size="52" style="color: #3399ff"></i-icon>
+              <p>单击或拖动文件上传</p>
+            </div>
+          </i-upload>
+          <p v-if="isAddLoan" class="show-upload-text" v-text="uploadFileName"></p>
+          <p v-else class="show-upload-text" v-text="formLoan.fileName"></p>
+          <input type="hidden" v-model="formLoan.fileName" style="width: 100%;border: 0;">
+        </i-form-item>
+        <i-form-item class="text-right">
+          <i-button type="primary" @click="LoanSuBmit">提交</i-button>
         </i-form-item>
       </i-form>
     </bs-modal>
@@ -199,12 +263,14 @@
     },
     data() {
       return {
+        certNo: '',
+        uploadFileName: '',
         // 车辆
         isAddCar: true,
         showModalCar: false,
         carDataLoading: false,
-        carbuttonLoading: false,
         formCar: {
+          _index: '',
           obligeeType: '',
           obligeeNo: '',
           obligeeName: '',
@@ -218,10 +284,22 @@
         isAddAssure: true,
         assureDataLoading: false,
         showModalAssure: false,
+        formAssure: {
+          assureType: '',
+          assureNo: '',
+          assureName: '',
+          assureMode: '',
+          obligorNexus: ''
+        },
         // 贷款材料
         isAddLoan: true,
         showModalLoan: false,
         loanDataLoading: false,
+        formLoan: {
+          loanName: '',
+          loanRemark: '',
+          fileName: ''
+        },
         showBasicList: true, // 当选择客户姓名之后就显示以下的相关信息
         isFromDetail: false,
         showSelectCustomer: false,
@@ -238,70 +316,22 @@
         }
       };
     },
+    wath: {
+      certNo: function(val, oldVal) {
+        console.log(val);
+      }
+    },
     mounted() {
-      this.goLocalStorage();
+      this.getCarList();
+      this.getAssureList();
     },
     methods: {
-      // 进页面的时候将数据存进本地存储
-      async goLocalStorage() {
-        await this.getCarList();
-        this.localStorageFun('carData', this.carData);
-      },
-      // 将数据与本地存储的数据双向绑定
-      localStorageFun(key, data) {
-        window.localStorage.setItem(key, JSON.stringify(data));
-      },
-      // 打开担保信息新增修改模态框
-      openModalAssure() {
-        this.$data.showModalAssure = true;
-      },
       // 打开贷款材料清单新增修改模态框
       openModalLoan() {
         this.$data.showModalLoan = true;
-      },
-      // 点击放大图片
-      showImg(imgURL) {
-        this.$data.showImgUpUrl = imgURL;
-        this.$data.visibleImg = true;
       }
     }
   };
 </script>
 <style lang="scss" scoped>
-  #personal-basic {
-    & .customer-item {
-      margin-bottom: 0px;
-      & .customer-label {
-        width: 160px;
-        text-align: right;
-        vertical-align: middle;
-        float: left;
-        font-size: 12px;
-        color: #999;
-        line-height: 1;
-        padding: 10px 12px 10px 0;
-        box-sizing: border-box;
-      }
-      & .customer-content {
-        position: relative;
-        line-height: 32px;
-        font-size: 12px;
-        margin-left: 160px;
-        padding: 2px 0;
-        & span {
-          display: inline-block;
-          margin-right: 5px;
-        }
-        &>img {
-          margin-top: 6px;
-          display: inline-block;
-          width: 240px;
-          height: 160px;
-          &.click-img {
-            cursor: zoom-in;
-          }
-        }
-      }
-    }
-  }
 </style>
