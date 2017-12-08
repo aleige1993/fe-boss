@@ -15,8 +15,7 @@
             <i-row>
               <!--产品类别-->
               <i-col span="8">
-                <i-form-item label="产品类别"
-                             prop="select"
+                <i-form-item label="产品类别" prop="select"
                              :rules="{required: true, message: '请选择'}">
                   <i-select v-model="formData.select">
                     <i-option v-for="item in enumSelectData.get('ProductTypeEnum')" :key="item.itemCode" :value="item.itemCode">{{item.itemName}}</i-option>
@@ -25,8 +24,7 @@
               </i-col>
               <!--产品名称-->
               <i-col span="8">
-                <i-form-item label="产品名称"
-                             prop="select"
+                <i-form-item label="产品名称" prop="select"
                              :rules="{required: true, message: '请选择'}">
                   <i-select v-model="formData.select">
                     <i-option v-for="item in enumSelectData.get('ProductTypeEnum')" :key="item.itemCode" :value="item.itemCode">{{item.itemName}}</i-option>
@@ -35,8 +33,7 @@
               </i-col>
               <!--车类-->
               <i-col span="8">
-                <i-form-item label="车类"
-                             prop="select"
+                <i-form-item label="车类" prop="select"
                              :rules="{required: true, message: '请选择'}">
                   <i-select v-model="formData.select">
                     <i-option v-for="item in enumSelectData.get('BizTypeEnum')" :key="item.itemCode" :value="item.itemCode">{{item.itemName}}</i-option>
@@ -117,7 +114,7 @@
           <!--车辆信息-->
           <bs-form-block :title="'车辆信息'">
             <div class="form-top-actions">
-              <i-button @click="openModalCar" type="info"><i class="iconfont icon-xinzeng"></i>&nbsp;新增</i-button>
+              <i-button @click="showModalCar=!showModalCar" type="info"><i class="iconfont icon-xinzeng"></i>&nbsp;新增</i-button>
             </div>
             <i-table :loading="carDataLoading" border ref="selection" :columns="carColumns" :data="carData"></i-table>
           </bs-form-block>
@@ -151,6 +148,52 @@
         <div>12321321</div>
       </i-tab-pane>
     </i-tabs>
+
+    <!--车辆信息的新增修改模态框-->
+    <bs-modal :title="isAddCar ? '新增' : '编辑'" v-model="showModalCar">
+      <i-form  ref="formCar" :model="formCar" label-position="right" :label-width="100">
+        <i-form-item label="权利人类型" prop="obligeeType">
+          <i-select v-model="formCar.obligeeType">
+            <i-option value="beijing">个人</i-option>
+            <i-option value="shanghai">企业</i-option>
+          </i-select>
+        </i-form-item>
+        <i-form-item label="权利人编号" prop="obligeeNo">
+          <i-input v-model="formCar.obligeeNo" placeholder="">
+          </i-input>
+        </i-form-item>
+        <i-form-item label="权利人名称" prop="obligeeName">
+          <i-input v-model="formCar.obligeeName" placeholder="">
+          </i-input>
+        </i-form-item>
+        <i-form-item label="车辆型号" prop="carModel">
+          <i-input v-model="formCar.carModel" placeholder="">
+          </i-input>
+        </i-form-item>
+        <i-form-item label="车牌号" prop="carNo">
+          <i-input v-model="formCar.carNo" placeholder="">
+          </i-input>
+        </i-form-item>
+        <i-form-item label="发动机号" prop="engineNo">
+          <i-input v-model="formCar.engineNo" placeholder="">
+          </i-input>
+        </i-form-item>
+        <i-form-item label="车架号" prop="carFrameNo">
+          <i-input v-model="formCar.carFrameNo" placeholder="">
+          </i-input>
+        </i-form-item>
+        <i-form-item label="车辆价值" prop="carMoney">
+          <i-input v-model="formCar.carMoney" placeholder="">
+          </i-input>
+        </i-form-item>
+        <i-form-item class="text-right">
+          <i-button type="primary" @click="carSuBmit" :loading="carbuttonLoading">
+            <span v-if="!carbuttonLoading">提交</span>
+            <span v-else>loading...</span>
+          </i-button>
+        </i-form-item>
+      </i-form>
+    </bs-modal>
   </div>
 </template>
 
@@ -169,6 +212,9 @@
     data() {
       return {
         tabIndex: 0,
+        isAddCar: true,
+        showModalCar: false,
+        carbuttonLoading: false,
         formData: {
           name: '',
           memberNo: '',
@@ -176,6 +222,16 @@
           lon: '',
           lat: '',
           applicationPlace: '',
+          carMoney: ''
+        },
+        formCar: {
+          obligeeType: '',
+          obligeeNo: '',
+          obligeeName: '',
+          carModel: '',
+          carNo: '',
+          engineNo: '',
+          carFrameNo: '',
           carMoney: ''
         }
       };

@@ -3,6 +3,7 @@ export default {
     // 编辑
     setListCar() {},
     // 删除
-    removeCar() {}
+    removeCar() {},
+    carSuBmit() {}
   }
 };
