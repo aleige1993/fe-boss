@@ -6,7 +6,10 @@ export default {
           title: '权利人类型',
           align: 'center',
           width: 100,
-          key: 'obligeeType'
+          key: 'obligeeType',
+          render: (h, params) => {
+            return h('span', {}, params.row.obligeeType === '1' ? '个人' : '企业');
+          }
         },
         {
           title: '权利人编号',
@@ -55,7 +58,7 @@ export default {
                 },
                 on: {
                   click: () => {
-                    this.setListCar($.extend({}, params.row));
+                    this.setListCar(Object.assign({}, params.row));
                   }
                 }
               }, '编辑'),
@@ -74,18 +77,7 @@ export default {
           }
         }
       ],
-      carData: [
-        {
-          obligeeType: '个人',
-          obligeeNo: '65761568',
-          obligeeName: '权利人名称',
-          carModel: 'CS75',
-          carNo: '渝B88888',
-          engineNo: 'JAS4WER6ASDW41200152',
-          carFrameNo: 'WE5151X89AS1DW684',
-          carMoney: '168000'
-        }
-      ]
+      carData: []
     };
   }
 };

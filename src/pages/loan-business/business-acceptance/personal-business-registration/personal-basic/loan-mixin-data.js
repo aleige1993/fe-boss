@@ -10,7 +10,7 @@ export default {
         },
         {
           title: '备注',
-          key: 'Remark'
+          key: 'loanRemark'
         },
         {
           title: '文件名',
@@ -77,12 +77,12 @@ export default {
       loanData: [
         {
           loanName: '车辆登记证',
-          Remark: 'asdawdasd',
+          loanRemark: 'asdawdasd',
           fileName: ''
         },
         {
           loanName: '车辆登记证',
-          Remark: 'ASDA98754aSDASD61568',
+          loanRemark: 'ASDA98754aSDASD61568',
           fileName: 'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1512640505404&di=7eaacd3a7c04c6969d5e52a5bce557b7&imgtype=0&src=http%3A%2F%2Fimg5.duitang.com%2Fuploads%2Fitem%2F201302%2F16%2F20130216185910_x5S3T.jpeg'
         }
       ]

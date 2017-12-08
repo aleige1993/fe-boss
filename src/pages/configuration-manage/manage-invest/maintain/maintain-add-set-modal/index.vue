@@ -1,6 +1,6 @@
 <template>
 <div id="maintain-add-set-modal">
-  <i-tabs v-model="tabIndex" type="card">
+  <i-tabs v-model="tabIndex" type="card" :animated="false">
     <i-tab-pane :label="'基本信息'">
       <i-form v-if="tabIndex===0" ref="formMaintain" :model="formMaintain" label-position="right" :label-width="120">
         <i-row :gutter="16">
@@ -17,11 +17,13 @@
           <!--合作状态-->
           <i-col span="8">
             <i-form-item
-              :rules="{required: true, message: '合作状态不能为空', trigger: 'blur'}"
+              :rules="{required: true, message: '合作状态不能为空', trigger: 'change'}"
               label="合作状态"
               prop="status">
-              <i-input v-model="formMaintain.status">
-              </i-input>
+              <i-select v-model="formMaintain.status">
+                <i-option value="1">正常</i-option>
+                <i-option value="2">停用</i-option>
+              </i-select>
             </i-form-item>
           </i-col>
           <!--法定代表人-->
@@ -106,7 +108,6 @@
             </i-form-item>
           </i-col>
         </i-row>
-        <div style="height: 150px; width: 100%;"></div>
         <div class="text-right">
           <i-button type="primary" @click="formSubmit" :loading="buttonLoading">
             <span v-if="!buttonLoading">提交基本信息</span>

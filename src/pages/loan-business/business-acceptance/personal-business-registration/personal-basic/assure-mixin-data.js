@@ -6,7 +6,10 @@ export default {
           title: '保证人类型',
           align: 'center',
           width: 100,
-          key: 'assureType'
+          key: 'assureType',
+          render: (h, params) => {
+            return h('span', {}, params.row.assureType === '1' ? '个人' : '企业');
+          }
         },
         {
           title: '保证人编号',
@@ -18,11 +21,17 @@ export default {
         },
         {
           title: '担保方式',
-          key: 'assureMode'
+          key: 'assureMode',
+          render: (h, params) => {
+            return h('span', {}, params.row.assureMode === '1' ? '一般保证' : '连带责任保证');
+          }
         },
         {
           title: '与债务人关系',
-          key: 'obligorNexus'
+          key: 'obligorNexus',
+          render: (h, params) => {
+            return h('span', {}, params.row.assureMode === '1' ? '夫妻关系' : '小三关系');
+          }
         },
         {
           title: '操作',
@@ -41,7 +50,7 @@ export default {
                 },
                 on: {
                   click: () => {
-                    this.setListAssure($.extend({}, params.row));
+                    this.setListAssure(Object.assign({}, params.row));
                   }
                 }
               }, '编辑'),

@@ -104,245 +104,8 @@
           </i-col>
         </i-row>
       </bs-form-block>
-      <!--客户信息-->
-      <bs-form-block :title="'客户信息'">
-        <i-row>
-          <i-col span="8">
-            <!--姓名-->
-            <i-form-item
-              label="姓名"
-              prop="name">
-              <input type="hidden" v-model="formData.name"/>
-              <i-input v-model="formData.name" :disabled="true" placeholder="选择姓名">
-                <i-button @click="showSelectCustomer=!showSelectCustomer" slot="append" style="height: 30px;">选择姓名 <Icon type="ios-more"></Icon></i-button>
-              </i-input>
-            </i-form-item>
-          </i-col>
-        </i-row>
-        <i-row v-show="showBasicList">
-          <i-col span="8" class-name="customer-item">
-            <div class="customer-label">证件号码</div>
-            <div class="customer-content">
-              <span v-text="formCustomer.idName"></span><span v-text="formCustomer.idCode"></span>
-            </div>
-          </i-col>
-          <i-col span="8" class-name="customer-item">
-            <div class="customer-label">证件有效期至</div>
-            <div class="customer-content">
-              <span v-text="formCustomer.idDateEnd"></span>
-            </div>
-          </i-col>
-          <i-col span="8" class-name="customer-item">
-            <div class="customer-label">注册手机号</div>
-            <div class="customer-content">
-              <span v-text="formCustomer.registeredMpbile"></span>
-            </div>
-          </i-col>
-          <i-col span="8" class-name="customer-item">
-            <div class="customer-label">社保</div>
-            <div class="customer-content">
-              <span v-text="formCustomer.isSocialSecurity"></span>
-            </div>
-          </i-col>
-          <i-col span="8" class-name="customer-item">
-            <div class="customer-label">公积金</div>
-            <div class="customer-content">
-              <span v-text="formCustomer.isAccumulationFund"></span>
-            </div>
-          </i-col>
-          <i-col span="8" class-name="customer-item">
-            <div class="customer-label">信用记录</div>
-            <div class="customer-content">
-              <span v-text="formCustomer.creditRecord"></span>
-            </div>
-          </i-col>
-          <i-col span="8" class-name="customer-item">
-            <div class="customer-label">性别</div>
-            <div class="customer-content">
-              <span v-text="formCustomer.sex"></span>
-            </div>
-          </i-col>
-          <i-col span="8" class-name="customer-item">
-            <div class="customer-label">出生日期</div>
-            <div class="customer-content">
-              <span v-text="formCustomer.birthday"></span>
-            </div>
-          </i-col>
-          <i-col span="8" class-name="customer-item">
-            <div class="customer-label">年龄</div>
-            <div class="customer-content">
-              <span v-text="formCustomer.age"></span>
-            </div>
-          </i-col>
-          <i-col span="8" class-name="customer-item">
-            <div class="customer-label">婚姻状况</div>
-            <div class="customer-content">
-              <span v-text="formCustomer.maritalStatuse"></span>
-            </div>
-          </i-col>
-          <i-col span="8" class-name="customer-item">
-            <div class="customer-label">教育程度</div>
-            <div class="customer-content">
-              <span v-text="formCustomer.educate"></span>
-            </div>
-          </i-col>
-          <i-col span="8" class-name="customer-item">
-            <div class="customer-label">职业类型</div>
-            <div class="customer-content">
-              <span v-text="formCustomer.careerType"></span>
-            </div>
-          </i-col>
-          <i-col span="8" class-name="customer-item">
-            <div class="customer-label">工资收入</div>
-            <div class="customer-content">
-              <span v-text="formCustomer.income"></span>
-            </div>
-          </i-col>
-          <i-col span="8" class-name="customer-item">
-            <div class="customer-label">参加工作年限</div>
-            <div class="customer-content">
-              <span v-text="formCustomer.workLife"></span>
-            </div>
-          </i-col>
-          <i-col span="8" class-name="customer-item">
-            <div class="customer-label">是否本地人</div>
-            <div class="customer-content">
-              <span v-text="formCustomer.isNative"></span>
-            </div>
-          </i-col>
-          <i-col span="8" class-name="customer-item">
-            <div class="customer-label">是否有房产</div>
-            <div class="customer-content">
-              <span v-text="formCustomer.isHouseProperty"></span>
-            </div>
-          </i-col>
-          <i-col span="8" class-name="customer-item">
-            <div class="customer-label">本地居住年限</div>
-            <div class="customer-content">
-              <span v-text="formCustomer.localLiveLife"></span>
-            </div>
-          </i-col>
-          <i-col span="8" class-name="customer-item">
-            <div class="customer-label">住房情况</div>
-            <div class="customer-content">
-              <span v-text="formCustomer.housingStatus"></span>
-            </div>
-          </i-col>
-          <i-col span="24" class-name="customer-item">
-            <div class="customer-label">户籍地址</div>
-            <div class="customer-content">
-              <span v-text="formCustomer.permanentAddress"></span>
-            </div>
-          </i-col>
-          <i-col span="24" class-name="customer-item">
-            <div class="customer-label">居住地址</div>
-            <div class="customer-content">
-              <span v-text="formCustomer.residentialAddress"></span>
-            </div>
-          </i-col>
-          <i-col span="8" class-name="customer-item">
-            <div class="customer-label">身份证正面</div>
-            <div class="customer-content">
-              <img :src="formCustomer.idUpUrl" @click="showImg(formCustomer.idUpUrl)" class="click-img">
-            </div>
-          </i-col>
-          <i-col span="8" class-name="customer-item">
-            <div class="customer-label">身份证反面</div>
-            <div class="customer-content">
-              <img :src="formCustomer.idBackUrl" @click="showImg(formCustomer.idBackUrl)" class="click-img">
-            </div>
-          </i-col>
-          <i-col span="8" class-name="customer-item">
-            <div class="customer-label">手持身份证</div>
-            <div class="customer-content">
-              <img :src="formCustomer.holdIdUrl" @click="showImg(formCustomer.holdIdUrl)" class="click-img">
-            </div>
-          </i-col>
-        </i-row>
-      </bs-form-block>
-      <!--工作信息-->
-      <bs-form-block :title="'工作信息'">
-        <i-row v-show="showBasicList">
-          <i-col span="8" class-name="customer-item">
-            <div class="customer-label">单位名称</div>
-            <div class="customer-content">
-              <span v-text="formCustomer.unitName"></span>
-            </div>
-          </i-col>
-          <i-col span="8" class-name="customer-item">
-            <div class="customer-label">单位性质</div>
-            <div class="customer-content">
-              <span v-text="formCustomer.unitProperties"></span>
-            </div>
-          </i-col>
-          <i-col span="8" class-name="customer-item">
-            <div class="customer-label">行业类别</div>
-            <div class="customer-content">
-              <span v-text="formCustomer.industryCategory"></span>
-            </div>
-          </i-col>
-          <i-col span="8" class-name="customer-item">
-            <div class="customer-label">职务</div>
-            <div class="customer-content">
-              <span v-text="formCustomer.post"></span>
-            </div>
-          </i-col>
-          <i-col span="8" class-name="customer-item">
-            <div class="customer-label">入职时间</div>
-            <div class="customer-content">
-              <span v-text="formCustomer.entryTime"></span>
-            </div>
-          </i-col>
-          <i-col span="8" class-name="customer-item">
-            <div class="customer-label">所属部门</div>
-            <div class="customer-content">
-              <span v-text="formCustomer.theDepartment"></span>
-            </div>
-          </i-col>
-          <i-col span="8" class-name="customer-item">
-            <div class="customer-label">月收入</div>
-            <div class="customer-content">
-              <span v-text="formCustomer.monthlyIncome"></span>
-            </div>
-          </i-col>
-          <i-col span="8" class-name="customer-item">
-            <div class="customer-label">单位电话</div>
-            <div class="customer-content">
-              <span v-text="formCustomer.unitTell"></span>
-            </div>
-          </i-col>
-          <i-col span="24" class-name="customer-item">
-            <div class="customer-label">公司地址</div>
-            <div class="customer-content">
-              <span v-text="formCustomer.companyAddress"></span>
-            </div>
-          </i-col>
-        </i-row>
-      </bs-form-block>
-      <!--来源信息-->
-      <bs-form-block :title="'来源信息'">
-        <i-row v-show="showBasicList">
-          <i-col span="8" class-name="customer-item">
-            <div class="customer-label">业务拓展部门</div>
-            <div class="customer-content">
-              <span v-text="formCustomer.businessDepartment"></span>
-            </div>
-          </i-col>
-          <i-col span="8" class-name="customer-item">
-            <div class="customer-label">合作开始日期</div>
-            <div class="customer-content">
-              <span v-text="formCustomer.cooperationBeginningStart"></span>
-            </div>
-          </i-col>
-          <i-col span="8" class-name="customer-item">
-            <div class="customer-label">客户经理</div>
-            <div class="customer-content">
-              <span v-text="formCustomer.customerManager"></span>
-            </div>
-          </i-col>
-        </i-row>
-      </bs-form-block>
     </i-form>
+    <personal-info :certNo="certNo"></personal-info>
     <!--车辆信息-->
     <bs-form-block :title="'车辆信息'">
       <div class="form-top-actions">
@@ -364,33 +127,19 @@
       </div>
       <i-table :loading="loanDataLoading" border ref="selection" :columns="loanColumns" :data="loanData"></i-table>
     </bs-form-block>
-    <div class="form-footer-actions">
-      <i-button @click="saveDraft" :loading="initFormLoading" type="primary">
-        <span v-if="!initFormLoading"><i class="iconfont icon-tijiao"></i> 保存草稿</span>
-        <span v-else> loading...</span>
-      </i-button>
-      <i-button @click="saveSubimt" :loading="initFormLoading" type="success">
-        <span v-if="!initFormLoading"><i class="iconfont icon-tijiao"></i> 提交</span>
-        <span v-else> loading...</span>
-      </i-button>
-    </div>
 
     <!--点击图片放大模态框-->
     <i-modal v-model="visibleImg" cancel-text="" ok-text="关闭">
       <img :src="showImgUpUrl" style="width: 100%">
     </i-modal>
-    <!-- 选择客户信息的弹窗 -->
-    <bs-modal title="选择客户信息" :width="1200" v-model="showSelectCustomer">
-      <table-customer-list v-if="showSelectCustomer" type="modal" @on-row-dbclick="selectshowSelectCustomer"></table-customer-list>
-    </bs-modal>
 
     <!--车辆信息的新增修改模态框-->
     <bs-modal :title="isAddCar ? '新增' : '编辑'" v-model="showModalCar">
       <i-form  ref="formCar" :model="formCar" label-position="right" :label-width="100">
         <i-form-item label="权利人类型" prop="obligeeType">
           <i-select v-model="formCar.obligeeType">
-            <i-option value="beijing">个人</i-option>
-            <i-option value="shanghai">企业</i-option>
+            <i-option value="1">个人</i-option>
+            <i-option value="2">企业</i-option>
           </i-select>
         </i-form-item>
         <i-form-item label="权利人编号" prop="obligeeNo">
@@ -422,10 +171,74 @@
           </i-input>
         </i-form-item>
         <i-form-item class="text-right">
-          <i-button type="primary" @click="carSuBmit" :loading="carbuttonLoading">
-            <span v-if="!carbuttonLoading">提交</span>
-            <span v-else>loading...</span>
-          </i-button>
+          <i-button type="primary" @click="carSuBmit">提交</i-button>
+        </i-form-item>
+      </i-form>
+    </bs-modal>
+    <!--担保信息的新增修改模态框-->
+    <bs-modal :title="isAddAssure ? '新增' : '编辑'" v-model="showModalAssure">
+      <i-form ref="formCar" :model="formAssure" label-position="right" :label-width="100">
+        <i-form-item label="担保人类型" prop="assureType">
+          <i-select v-model="formAssure.assureType">
+            <i-option value="1">个人</i-option>
+            <i-option value="2">企业</i-option>
+          </i-select>
+        </i-form-item>
+        <i-form-item label="担保人编号" prop="assureNo">
+          <i-input v-model="formAssure.assureNo" placeholder="">
+          </i-input>
+        </i-form-item>
+        <i-form-item label="保证人" prop="assureName">
+          <i-input v-model="formAssure.assureName" placeholder="">
+          </i-input>
+        </i-form-item>
+        <i-form-item label="担保方式" prop="assureMode">
+          <i-select v-model="formAssure.assureMode">
+            <i-option value="1">一般保证</i-option>
+            <i-option value="2">连带责任保证</i-option>
+          </i-select>
+        </i-form-item>
+        <i-form-item label="与债务人关系" prop="obligorNexus">
+          <i-select v-model="formAssure.obligorNexus">
+            <i-option value="1">夫妻关系</i-option>
+            <i-option value="2">小三关系</i-option>
+          </i-select>
+        </i-form-item>
+        <i-form-item class="text-right">
+          <i-button type="primary" @click="assureSuBmit">提交</i-button>
+        </i-form-item>
+      </i-form>
+    </bs-modal>
+    <!--贷款材料的新增修改模态框-->
+    <bs-modal :title="isAddLoan ? '新增' : '编辑'" v-model="showModalLoan">
+      <i-form ref="formCar" :model="formLoan" label-position="right" :label-width="100">
+        <i-form-item label="贷款材料名称" prop="loanName">
+          <i-input v-model="formLoan.loanName" placeholder="">
+          </i-input>
+        </i-form-item>
+        <i-form-item label="备注" prop="loanRemark">
+          <i-input type="textarea" :rows="4" v-model="formLoan.loanRemark"></i-input>
+        </i-form-item>
+        <i-form-item
+          label="文件名"
+          prop="fileName">
+          <i-upload
+            :show-upload-list="false"
+            :on-success="uploadSuccess"
+            :on-error="uploadError"
+            type="drag"
+            :action="$config.HTTPBASEURL + '/common/upload'">
+            <div style="padding: 20px 0">
+              <i-icon type="ios-cloud-upload" size="52" style="color: #3399ff"></i-icon>
+              <p>单击或拖动文件上传</p>
+            </div>
+          </i-upload>
+          <p v-if="isAddLoan" class="show-upload-text" v-text="uploadFileName"></p>
+          <p v-else class="show-upload-text" v-text="formLoan.fileName"></p>
+          <input type="hidden" v-model="formLoan.fileName" style="width: 100%;border: 0;">
+        </i-form-item>
+        <i-form-item class="text-right">
+          <i-button type="primary" @click="LoanSuBmit">提交</i-button>
         </i-form-item>
       </i-form>
     </bs-modal>
@@ -433,7 +246,7 @@
 </template>
 
 <script>
-  import TableCustomerList from '@/components/table-customer-list'; // 选择客户信息
+  import personalInfo from '@/components/detail-personal-customer-basic/index.vue';
   import BsModal from '@/components/bs-modal';
   import carMixinData from './car-mixin-data';
   import carMixinMethods from './car-mixin-methods';
@@ -445,19 +258,19 @@
     name: 'personalBasic',
     mixins: [carMixinData, carMixinMethods, assureMixinData, assureMixinMethods, loanMixinData, loanMixinMethods],
     components: {
-      TableCustomerList,
+      personalInfo,
       'bs-modal': BsModal
     },
     data() {
       return {
-        tabIndex: 0,
-        initFormLoading: false,
+        certNo: '',
+        uploadFileName: '',
         // 车辆
         isAddCar: true,
         showModalCar: false,
         carDataLoading: false,
-        carbuttonLoading: false,
         formCar: {
+          _index: '',
           obligeeType: '',
           obligeeNo: '',
           obligeeName: '',
@@ -471,10 +284,22 @@
         isAddAssure: true,
         assureDataLoading: false,
         showModalAssure: false,
+        formAssure: {
+          assureType: '',
+          assureNo: '',
+          assureName: '',
+          assureMode: '',
+          obligorNexus: ''
+        },
         // 贷款材料
         isAddLoan: true,
         showModalLoan: false,
         loanDataLoading: false,
+        formLoan: {
+          loanName: '',
+          loanRemark: '',
+          fileName: ''
+        },
         showBasicList: true, // 当选择客户姓名之后就显示以下的相关信息
         isFromDetail: false,
         showSelectCustomer: false,
@@ -488,138 +313,25 @@
           lat: '',
           applicationPlace: '',
           carMoney: ''
-        },
-        formCustomer: {
-          idName: '身份证', // 是证件类型
-          idCode: '500381123456781234', // 证件号码
-          idDateEnd: '2022年10月1日',  // 证件有效期至
-          registeredMpbile: '18612345678', // 注册手机号
-          isSocialSecurity: '有社保', // 社保
-          isAccumulationFund: '有公积金', // 公积金
-          creditRecord: '信用良好', // 信用记录
-          sex: '性别', // 性别
-          birthday: '19910101', // 出身日期
-          age: '26', // 年龄
-          maritalStatuse: '已婚', // 婚姻状况
-          educate: '博士及以上', // 教育程度
-          careerType: '个体户或企业主', // 职业类型
-          income: '12000', // 工资收入
-          workLife: '5年', // 参加工作年限
-          isNative: '是', // 是否本地人
-          isHouseProperty: '是', // 是否有房产
-          localLiveLife: '4年', // 本地居住年限
-          housingStatus: '自有全款', // 住房情况
-          permanentAddress: '重庆市江津区德感街道', // 户籍地址
-          residentialAddress: '重庆市重庆城区九龙坡区石桥铺街道', // 居住地址
-          idUpUrl: 'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1512626182662&di=691d800f676d19feea6518cc7648884c&imgtype=0&src=http%3A%2F%2Fphotocdn.sohu.com%2F20130530%2FImg377522814.jpg', // 身份证正面
-          idBackUrl: 'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1512627570416&di=b9fa08d08ca757afadf82d89ab4f90bd&imgtype=0&src=http%3A%2F%2Fyingkou.yongyindai.com%2FUF%2FUploads%2FProduct%2F20151120092243558.jpg', // 身份证反面
-          holdIdUrl: 'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1512627914860&di=9592adcee36361ca4ba88b297bae75bc&imgtype=0&src=http%3A%2F%2Fwww.mbajyz.com%2F_uploads%2Fimage%2F2015-09-23%2F2.jpg', // 手持身份证
-          unitName: '海尔云贷', // 单位名称
-          unitProperties: '国有企业', // 单位性质
-          industryCategory: 'IT/电子商务', // 行业类别
-          post: '高层领导', // 职务
-          entryTime: '2017-11-01', // 入职时间
-          theDepartment: 'IT部', // 所属部门
-          monthlyIncome: '12000', // 月收入
-          unitTell: '02312345678', // 单位电话
-          companyAddress: '重庆市渝中区化龙桥企业天地2号楼8楼', // 公司地址
-          businessDepartment: '重庆万州分公司', // 拓展业务部门
-          cooperationBeginningStart: '2017-12-04', // 合作开始日期
-          customerManager: '李总' // 客户经理
         }
       };
     },
-    watch: {
-      carData: function(val, oldVal) {
-        this.localStorageFun('carData', val);
-      },
-      loanData: function(val, oldVal) {
-        this.localStorageFun('loanData', val);
-      },
-      assureData: function(val, oldVal) {
-        this.localStorageFun('assureData', val);
+    wath: {
+      certNo: function(val, oldVal) {
+        console.log(val);
       }
     },
     mounted() {
-      this.localStorageFun('carData', this.carData);
-      this.localStorageFun('loanData', this.loanData);
-      this.localStorageFun('assureData', this.assureData);
+      this.getCarList();
+      this.getAssureList();
     },
     methods: {
-      // 将数据与本地存储的数据双向绑定
-      localStorageFun(key, data) {
-        window.localStorage.setItem(key, JSON.stringify(data));
-      },
-      // 打开担保信息新增修改模态框
-      openModalAssure() {
-        this.$data.showModalAssure = true;
-      },
       // 打开贷款材料清单新增修改模态框
       openModalLoan() {
         this.$data.showModalLoan = true;
-      },
-      // 保存草稿
-      saveDraft() {},
-      // 提交
-      saveSubimt() {},
-      // 点击放大图片
-      showImg(imgURL) {
-        this.$data.showImgUpUrl = imgURL;
-        this.$data.visibleImg = true;
-      },
-      // 选择客户信息
-      selectshowSelectCustomer(row, index) {
-        /*{
-          certNo: 7482753808099513 // 证件号码
-          certType: "1" // 身份证
-          memberNo: 383609955686547400 // 客户编号
-          mobile: 6697802081543511 // 手机号码
-          name: "Daniel Smith" // 姓名
-          sex: "2" // 性别
-          status: "1" // 状态
-        }*/
-        this.$data.formData.memberNo = row.memberNo;
-        this.$data.formData.name = row.name;
-        this.$data.showSelectCustomer = false;
       }
     }
   };
 </script>
 <style lang="scss" scoped>
-  #personal-basic {
-    & .customer-item {
-      margin-bottom: 0px;
-      & .customer-label {
-        width: 160px;
-        text-align: right;
-        vertical-align: middle;
-        float: left;
-        font-size: 12px;
-        color: #999;
-        line-height: 1;
-        padding: 10px 12px 10px 0;
-        box-sizing: border-box;
-      }
-      & .customer-content {
-        position: relative;
-        line-height: 32px;
-        font-size: 12px;
-        margin-left: 160px;
-        padding: 2px 0;
-        & span {
-          display: inline-block;
-          margin-right: 5px;
-        }
-        &>img {
-          margin-top: 6px;
-          display: inline-block;
-          width: 240px;
-          height: 160px;
-          &.click-img {
-            cursor: zoom-in;
-          }
-        }
-      }
-    }
-  }
 </style>
