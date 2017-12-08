@@ -4,36 +4,38 @@
       <i-breadcrumb-item href="/">首页</i-breadcrumb-item>
       <i-breadcrumb-item href="/components/breadcrumb">贷款业务</i-breadcrumb-item>
       <i-breadcrumb-item href="/components/breadcrumb">公司授信管理</i-breadcrumb-item>
-      <i-breadcrumb-item>授信申请</i-breadcrumb-item>
+      <i-breadcrumb-item>{{id ? '授信信息修改' : '授信申请'}}</i-breadcrumb-item>
     </i-breadcrumb>
     <div class="form-top-actions"></div>
 
     <i-tabs v-model="tabIndex" type="card" :animated="false">
       <i-tab-pane label="申请信息">
-        <company-customer-basic-info @on-select-company="selectCompany"></company-customer-basic-info>
+        <company-customer-basic-info :corpNo="applyData.creditApplyParam.corpNo" @on-select-company="selectCompany"></company-customer-basic-info>
         <i-form label-position="right" :label-width="140">
           <!--附件信息-->
           <bs-form-block :title="'附件信息'">
             <div class="form-top-actions">
               <i-button type="primary" @click="openAddAttachModal">添加附件</i-button>
             </div>
-            <i-table :loading="loadingAttachFile" :columns="companyAttachFileColumns" :data="companyAttachFiles"></i-table>
+            <i-table :loading="loadingAttachFile" :columns="companyAttachFileColumns" :data="applyData.creditApplyAttachParamList"></i-table>
           </bs-form-block>
           <!--审核意见-->
           <bs-form-block title="审核意见" >
             <i-row>
               <i-col span="8">
                 <i-form-item label="结论">
-                  <i-select>
-                    <i-option value="1">通过</i-option>
-                  </i-select>
+                  <i-radio-group v-model="applyData.creditAuditParam.approveStatus">
+                    <i-radio label="A">通过</i-radio>
+                    <i-radio label="R">拒绝</i-radio>
+                    <i-radio label="B">退回</i-radio>
+                  </i-radio-group>
                 </i-form-item>
               </i-col>
             </i-row>
             <i-row>
               <i-col span="24">
                 <i-form-item label="意见信息">
-                  <i-input type="textarea" :rows="4"></i-input>
+                  <i-input v-model="applyData.creditAuditParam.opinion" type="textarea" :rows="4"></i-input>
                 </i-form-item>
               </i-col>
             </i-row>
@@ -118,8 +120,8 @@
             </i-row>
           </bs-form-block>-->
           <div class="form-footer-actions">
-            <i-button :loading="initFormLoading" type="success">
-              <span v-if="!initFormLoading"><i class="iconfont icon-tijiao"></i> 提交</span>
+            <i-button :loading="submitApplyLoading" @click="submitCreditApply" type="success">
+              <span v-if="!submitApplyLoading"><i class="iconfont icon-tijiao"></i> 提交</span>
               <span v-else> 处理中</span>
             </i-button>
           </div>
@@ -201,24 +203,28 @@
           </i-upload>
         </i-form-item>
         <i-form-item label="">
-          <i-button @click="submitAttach" style="width: 120px;" type="primary" size="large">保存</i-button>
+          <i-button @click="submitAttach" style="width: 120px;" type="primary" size="large">提交</i-button>
         </i-form-item>
       </i-form>
     </bs-modal>
+
   </div>
 </template>
 <script>
   import MixinData from './mixin-data';
+  import MixinMethods from './mixin-methods';
   import BsModal from '@/components/bs-modal';
   import CompanyCustomerBasicInfo from '@/components/detail-company-customer-basic/index.vue';
   import ApproveHistory from '../credit-approve-history/index.vue';
   export default {
     name: 'creditApply',
-    mixins: [MixinData],
+    mixins: [MixinData, MixinMethods],
     data() {
       return {
         tabIndex: 0,
+        initPageLoading: false,
         loadingAttachFile: false,
+        submitApplyLoading: false,
         initFormLoading: false,
         addAttachModal: false,
         addFirstApproveModal: false,
@@ -235,25 +241,10 @@
       }
     },
     methods: {
-      selectCompany(corpNo, attachFiles) {
-        this.$Message.success('' + corpNo);
-        this.$data.companyAttachFiles = attachFiles;
-      },
-      // 上传附件
-      openAddAttachModal() {
-        this.$data.addAttachModal = true;
-        this.$data.attachFormData = {
-          attachName: '',
-          attachUrl: ''
-        };
-      },
-      uploadAttachSuccess(res) {
-        this.$data.attachFormData.attachUrl = res.body.url;
-      },
-      submitAttach() {
-        this.$data.companyAttachFiles.push(this.$data.attachFormData);
-        this.$data.addAttachModal = false;
-      }
+
+    },
+    mounted() {
+      this.initPage();
     },
     components: {
       CompanyCustomerBasicInfo,

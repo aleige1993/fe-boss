@@ -4,23 +4,23 @@ export default {
       applyData: {
         // 授信申请公司附件集合
         'creditApplyAttachParamList': [
-          {
+          /* {
             'attachUrl': '',
             'attachName': '',
             'attachSuffixType': ''
-          }
+          }*/
         ],
         // 申请意见入参
         'creditAuditParam': {
-          'auditStatus': '',
+          'approveStatus': 'A',
           'opinion': ''
         },
         // 授信申请信息
         'creditApplyParam': {
           'creditCode': '',
-          'companyNo': '',
-          'companyName': '',
-          'creditApplyNo': ''
+          'corpNo': '',
+          'corpName': '',
+          'creditLimitNo': null
         }
         // 初审核查列表
         /* 'credityFirstTrialParamList': [
@@ -68,8 +68,7 @@ export default {
                 },
                 on: {
                   click: () => {
-                    // console.log(params);
-                    this.$data.companyAttachFiles.splice(params.index, 1);
+                    this.$data.applyData.creditApplyAttachParamList.splice(params.index, 1);
                   }
                 }
               }, '删除')

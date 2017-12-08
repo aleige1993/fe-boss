@@ -25,8 +25,8 @@ export default {
         if (resp2.success) {
           this.$data.formData.attachDTOs = resp2.body.resultList;
           this.$emit('on-select-company', {
-            companyNo: baseDto.corpNo,
-            companyName: baseDto.corpName,
+            corpNo: baseDto.corpNo,
+            corpName: baseDto.corpName,
             creditCode: baseDto.creditCode
           }, resp2.body.resultList);
         }

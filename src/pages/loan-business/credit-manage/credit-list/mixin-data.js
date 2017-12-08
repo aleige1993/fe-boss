@@ -4,33 +4,33 @@ export default {
       customerColumns: [
         {
           title: '客户编号',
-          key: 'companyNo',
+          key: 'corpNo',
           width: 200
         },
         {
           title: '客户名称',
-          key: 'companyName',
-          width: 200
+          key: 'corpName',
+          width: 140
         },
         {
           title: '统一社会信用代码',
-          width: 200,
+          width: 140,
           key: 'creditCode'
         },
         {
           title: '授信总额度（元）',
-          key: 'countLimit',
-          width: 200
+          key: 'totalLimitAmt',
+          width: 140
         },
         {
           title: '当前可用额度（元）',
-          key: 'surplusCountLimit',
-          width: 200
+          key: 'currentLimitAmt',
+          width: 140
         },
         {
           title: '单笔最大额度（元）',
-          key: 'singleLimit',
-          width: 200
+          key: 'singleLimitAmt',
+          width: 140
         },
         {
           title: '授信起始日期',
@@ -45,24 +45,29 @@ export default {
         {
           title: '额度释放方式',
           key: 'creditLimitReleaseMode',
-          width: 120
+          width: 140,
+          render: (h, params) => {
+            return h('span', {}, this.enumCode2Name(params.row.creditLimitReleaseMode, 'CreditFreedTypeEnum'));
+          }
         },
         {
           title: '当前处理人',
-          key: 'handleUserCode',
+          key: 'handleUserName',
           width: 200
         },
         {
           title: '当前环节',
-          key: 'tacheName',
+          key: 'taskName',
           width: 200
         },
         {
           title: '授信状态',
           key: 'creditStatus',
-          width: 120,
+          fixed: 'right',
+          align: 'center',
+          width: 100,
           render: (h, params) => {
-            return h('span', {}, this.enumCode2Name(params.row.status, 'MemberStatusEnum'));
+            return h('span', {}, this.enumCode2Name(params.row.creditStatus, 'CreditAuditStatusEnum'));
           }
         }
       ],
@@ -129,10 +134,9 @@ export default {
                 on: {
                   click: () => {
                     this.$router.push({
-                      path: '/index/customer/update',
+                      path: '/index/loanbusiness/credit/apply',
                       query: {
-                        id: params.row.memberNo,
-                        from: 'modify'
+                        id: params.row.creditLimitNo
                       },
                       force: true
                     });

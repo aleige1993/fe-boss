@@ -3,8 +3,6 @@ export default [
     url: '/common/items',
     on: true,
     resp: {
-      'reCode': '0000',
-      'reMsg': '成功',
       'body': [
         {
           'groupKey': 'YesNoEnum',
@@ -16,19 +14,6 @@ export default [
             {
               'itemCode': '0',
               'itemName': '否'
-            }
-          ]
-        },
-        {
-          'groupKey': 'HaveNoEnum',
-          'items': [
-            {
-              'itemCode': '1',
-              'itemName': '有'
-            },
-            {
-              'itemCode': '0',
-              'itemName': '无'
             }
           ]
         },
@@ -78,7 +63,7 @@ export default [
               'itemName': '大专'
             },
             {
-              'itemCode': '5',
+              'itemCode': '9',
               'itemName': '其他'
             }
           ]
@@ -101,6 +86,10 @@ export default [
             {
               'itemCode': '4',
               'itemName': '丧偶'
+            },
+            {
+              'itemCode': '9',
+              'itemName': '未知'
             }
           ]
         },
@@ -113,7 +102,7 @@ export default [
             },
             {
               'itemCode': '2',
-              'itemName': '无业人士'
+              'itemName': '自由职业'
             },
             {
               'itemCode': '3',
@@ -125,7 +114,7 @@ export default [
           'groupKey': 'YearsEnum',
           'items': [
             {
-              'itemCode': '98',
+              'itemCode': '99',
               'itemName': '1年以内'
             },
             {
@@ -146,31 +135,7 @@ export default [
             },
             {
               'itemCode': '5',
-              'itemName': '5年'
-            },
-            {
-              'itemCode': '6',
-              'itemName': '6年'
-            },
-            {
-              'itemCode': '7',
-              'itemName': '7年'
-            },
-            {
-              'itemCode': '8',
-              'itemName': '8年'
-            },
-            {
-              'itemCode': '9',
-              'itemName': '9年'
-            },
-            {
-              'itemCode': '10',
-              'itemName': '10年'
-            },
-            {
-              'itemCode': '99',
-              'itemName': '10年及以上'
+              'itemName': '5年及以上'
             }
           ]
         },
@@ -209,14 +174,18 @@ export default [
           'items': [
             {
               'itemCode': '1',
-              'itemName': '自置'
+              'itemName': '自有全款'
             },
             {
               'itemCode': '2',
-              'itemName': '租房'
+              'itemName': '自有贷款'
             },
             {
               'itemCode': '3',
+              'itemName': '租赁'
+            },
+            {
+              'itemCode': '9',
               'itemName': '其他'
             }
           ]
@@ -369,6 +338,69 @@ export default [
           ]
         },
         {
+          'groupKey': 'CreditTypeEnum',
+          'items': [
+            {
+              'itemCode': '1',
+              'itemName': '信用良好'
+            },
+            {
+              'itemCode': '2',
+              'itemName': '少数逾期'
+            },
+            {
+              'itemCode': '3',
+              'itemName': '多次逾期'
+            },
+            {
+              'itemCode': '4',
+              'itemName': '无信用记录'
+            }
+          ]
+        },
+        {
+          'groupKey': 'MonthRevenueEnum',
+          'items': [
+            {
+              'itemCode': '1',
+              'itemName': '3000元以下'
+            },
+            {
+              'itemCode': '2',
+              'itemName': '3000-5000元'
+            },
+            {
+              'itemCode': '3',
+              'itemName': '5000-8000元'
+            },
+            {
+              'itemCode': '4',
+              'itemName': '8000-12000元'
+            },
+            {
+              'itemCode': '5',
+              'itemName': '12000-20000元'
+            },
+            {
+              'itemCode': '5',
+              'itemName': '20000元以上'
+            }
+          ]
+        },
+        {
+          'groupKey': 'HaveNoEnum',
+          'items': [
+            {
+              'itemCode': '1',
+              'itemName': '有'
+            },
+            {
+              'itemCode': '0',
+              'itemName': '无'
+            }
+          ]
+        },
+        {
           'groupKey': 'HaveCompanyRelativeEnum',
           'items': [
             {
@@ -436,7 +468,6 @@ export default [
             }
           ]
         },
-        // 车类
         {
           'groupKey': 'ProductTypeEnum',
           'items': [
@@ -488,20 +519,6 @@ export default [
             }
           ]
         },
-        // 利率模式
-        {
-          'groupKey': 'InterestType',
-          'items': [
-            {
-              'itemCode': '1',
-              'itemName': '固定利率'
-            },
-            {
-              'itemCode': '2',
-              'itemName': '浮动利率'
-            }
-          ]
-        }, // 利率模式end
         {
           'groupKey': 'ModelTypeEnum',
           'items': [
@@ -607,8 +624,7 @@ export default [
               'itemName': '按365天计算'
             }
           ]
-        }, // 年模型 end
-        // 车类
+        },
         {
           'groupKey': 'BizTypeEnum',
           'items': [
@@ -621,8 +637,7 @@ export default [
               'itemName': '二手车'
             }
           ]
-        }, // 车类 end
-        // 授信释放方式
+        },
         {
           'groupKey': 'CreditFreedTypeEnum',
           'items': [
@@ -639,80 +654,40 @@ export default [
               'itemName': '按权证方式入库'
             }
           ]
-        }, // 授信释放方式 end
-        // 月收入方式
-        {
-          'groupKey': 'MonthRevenueEnum',
-          'items': [
-            {
-              'itemCode': '1',
-              'itemName': '3000元以下'
-            },
-            {
-              'itemCode': '2',
-              'itemName': '3000-5000元'
-            },
-            {
-              'itemCode': '3',
-              'itemName': '5000-8000元'
-            },
-            {
-              'itemCode': '4',
-              'itemName': '8000-12000元'
-            },
-            {
-              'itemCode': '5',
-              'itemName': '12000-20000元'
-            },
-            {
-              'itemCode': '5',
-              'itemName': '20000元以上'
-            }
-          ]
-        }, // 授信释放方式 end
-        // 信用情况
-        {
-          'groupKey': 'CreditTypeEnum',
-          'items': [
-            {
-              'itemCode': '1',
-              'itemName': '信用良好'
-            },
-            {
-              'itemCode': '2',
-              'itemName': '少数逾期'
-            },
-            {
-              'itemCode': '3',
-              'itemName': '多次逾期'
-            },
-            {
-              'itemCode': '4',
-              'itemName': '无信用记录'
-            }
-          ]
-        }, // 信用情况 end
+        },
         {
           'groupKey': 'CreditAuditStatusEnum',
           'items': [
             {
               'itemCode': '1',
-              'itemName': '授信有效中'
+              'itemName': '有效'
             },
             {
               'itemCode': '2',
-              'itemName': '授信额度申请中'
+              'itemName': '授信申请'
             },
             {
               'itemCode': '3',
-              'itemName': '授信过期'
+              'itemName': '初审'
             },
             {
               'itemCode': '4',
-              'itemName': '授信申请已撤销'
+              'itemName': '外审'
             },
             {
-              'itemCode': '4',
+              'itemCode': '5',
+              'itemName': '审批'
+            },
+            {
+              'itemCode': '6',
+              'itemName': '已撤回'
+            },
+            {
+              'itemCode': '7',
+              'itemName': '无效'
+            },
+            {
+              'itemCode': '9',
               'itemName': '审核不通过'
             }
           ]
@@ -734,7 +709,6 @@ export default [
             }
           ]
         },
-        // 车辆保险费
         {
           'groupKey': 'CarInsuranceEnum',
           'items': [
@@ -747,8 +721,7 @@ export default [
               'itemName': '保险费计入每月租金'
             }
           ]
-        }, // 车辆保险费end
-        // 盗抢险
+        },
         {
           'groupKey': 'DqxInsuranceEnum',
           'items': [
@@ -761,8 +734,7 @@ export default [
               'itemName': '保险费计入每月租金'
             }
           ]
-        }, // 盗抢险end
-        // 利率模式
+        },
         {
           'groupKey': 'InterestType',
           'items': [
@@ -775,8 +747,7 @@ export default [
               'itemName': '浮动利率'
             }
           ]
-        }, // 利率模式end
-        // 运营模式
+        },
         {
           'groupKey': 'OperatingModeEnum',
           'items': [
@@ -789,8 +760,7 @@ export default [
               'itemName': '海乐行模式'
             }
           ]
-        }, // 运营模式end
-        // 租赁服务费收取方式
+        },
         {
           'groupKey': 'ServiceFeeTypeEnum',
           'items': [
@@ -803,7 +773,7 @@ export default [
               'itemName': '分期收取'
             }
           ]
-        }, // 租赁服务费收取方式end
+        },
         {
           'groupKey': 'SubsidyTypeEnum',
           'items': [
@@ -817,7 +787,6 @@ export default [
             }
           ]
         },
-        // 签订方式
         {
           'groupKey': 'SinTypeEnum',
           'items': [
@@ -830,8 +799,10 @@ export default [
               'itemName': '线下'
             }
           ]
-        } // 签订方式end
+        }
       ],
+      'reCode': '0000',
+      'reMsg': '成功',
       'success': true
     }
   }

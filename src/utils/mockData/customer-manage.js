@@ -221,7 +221,7 @@ export default [
       success: true,
       reCode: '0000',
       body: $.extend(companyCustomerBasicData.data().formDataInit, {
-        baseDTO: { corpNo: '386118080880705536', 'corpName': '海尔云贷编辑测试' }
+        baseDTO: { corpNo: '386118080880705536', 'corpName': '海尔云贷编辑测试', 'creditCode': '123456' }
       })
     }
   },
@@ -845,6 +845,25 @@ export default [
       'reMsg': '成功',
       'success': true,
       body: {}
+    }
+  },
+  // 附件信息
+  {
+    url: '/corp/listCorpAttach',
+    on: true,
+    resp: {
+      'reCode': '0000',
+      'reMsg': '成功',
+      'success': true,
+      body: {
+        resultList: [
+          {
+            'attachUrl': 'www.baidu.cim',
+            'attachName': '脱衣舞视频',
+            'attachSuffixType': ''
+          }
+        ]
+      }
     }
   }
 ];

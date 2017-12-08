@@ -1,5 +1,6 @@
 import Mock from 'mockjs';
 export default [
+  // 授信列表
   {
     url: '/credit/page',
     on: true,
@@ -10,24 +11,28 @@ export default [
         'resultList|15': [
           {
             'tacheCode': '@integer(10)',
-            'singleLimit': '1212',
+            'singleLimitAmt': '1212',
             'handleUserName': '张三',
             'endDate': '@date("yyyy-MM-dd")',
-            'companyName': '@name',
-            'creditLimitReleaseMode': '21541545',
-            'creditApplyNo': '124515',
-            'creditStatus': '1',
+            'creditLimitReleaseMode': '@pick(["1", "2", "3"])',
+            'creditLimitNo': '124515',
+            'creditStatus': '@pick(["1", "2", "3", "4", "5", "6", "7", "9"])',
             'surplusCountLimit': '1',
             'quarterSurplusCountLimit': '1',
-            'countLimit': '12121',
             'creditCode': '@integer(10)',
-            'companyNo': '@integer(10)',
             'monthCountLimit': '2121',
             'handleUserCode': '1212',
             'tacheName': '@name',
             'monthSurplusCountLimit': '1',
             'startDate': '@date("yyyy-MM-dd")',
-            'quarterCountLimit': '2'
+            'quarterCountLimit': '2',
+            // add
+            'corpName': '@name',
+            'currentLimitAmt': '123456',
+            'totalLimitAmt': '123456',
+            'corpNo': '@integer(10)',
+            'taskName': '@name',
+            'taskArriveTime': '@date("yyyy-MM-dd")' // 任务送达时间
           }
         ],
         'totalNum': 100
@@ -37,66 +42,55 @@ export default [
       'success': true
     })
   },
+  // 授信详情查询
   {
     url: '/credit/find', // creditApplyNo
     on: true,
     resp: Mock.mock({
       'body': {
-        'singleLimit': '200000',
+        'singleLimitAmt': '121212',
         'externalAuditDTOList|5': [
           {
             'itemName': '@name',
             'fileName': '@name',
-            'description': '@string(50)',
+            'description': '大萨达撒大萨达撒大所多撒如法网二号地方不规范性',
             'fileUrl': '@url("http")'
           }
         ],
         'endDate': '@date("yyyy-mm-dd")',
-        'companyName': '海尔云贷',
-        'creditLimitReleaseMode': '@pick(["1", "2", "3", "4"])',
-        'creditAuditDTO|5': [
-          {
-            'operUserName': '@name',
-            'auditStatus': '@pick(["1", "2", "3", "4"])',
-            'operUserCode': '123',
-            'operTime': '@date("yyyy-mm-dd")',
-            'opinion': '@character' // 意见信息
-          }
-        ],
-        'creditApplyNo': '@integer(10)',
-        'creditStatus': '@pick(["1", "2", "3", "4"])',
-        'surplusCountLimit': '2000000',
-        'quarterSurplusCountLimit': '100000',
-        'countLimit': '100000',
-        'creditCode': '@integer(10)',
-        'companyNo': '1234567890',
-        'monthCountLimit': '50000',
-        firstTrialDTO: {
-          'netApprove': '@string(50)',
-          'telephoneApprove': '@string(50)',
-          'creditCheckItemsList|4': [
-            {
-              'itemName': '@name',
-              'fileName': '@name',
-              'description': '@string(50)',
-              'fileUrl': '@url("http")'
-            }
-          ]
+        'corpName': '阿里巴巴',
+        'creditLimitReleaseMode': '@pick(["1", "2", "3"])',
+        'creditLimitNo': '123',
+        'creditStatus': '@pick(["1", "2", "3"])',
+        'currentLimitAmt': '123123',
+        'totalLimitAmt': '123123',
+        'creditCode': '123123',
+        'corpNo': '@integer(12)',
+        'firstTrialDTO': {
+          'creditCheckItemsList': {
+            'itemName': '',
+            'fileName': '',
+            'description': '',
+            'fileUrl': ''
+          },
+          'netApprove': '',
+          'telephoneApprove': ''
         },
-        'creditApplyAttachList|5': [{
-          attachName: '@name',
-          attachUrl: '@url("http")',
-          attachSuffixType: '@pick("jpg", "png", "zip")'
-        }],
-        'monthSurplusCountLimit': '10000',
         'startDate': '@date("yyyy-mm-dd")',
-        'quarterCountLimit': '123123'
+        'creditApplyAttachList': [
+          {
+            'attachName': '@name',
+            'attachUrl': '@url("http")',
+            'attachSuffixType': '@pick(["png", "jpg", "gif"])'
+          }
+        ]
       },
       'reCode': '0000',
       'reMsg': '成功',
       'success': true
     })
   },
+  // 授信历史
   {
     url: '/credit/listAuditLog',
     on: true,
@@ -127,6 +121,28 @@ export default [
   },
   {
     url: '/credit/delete',
+    on: true,
+    resp: {
+      'body': {},
+      'reCode': '0000',
+      'reMsg': '成功',
+      'success': true
+    }
+  },
+  // 授信申请
+  {
+    url: '/credit/apply',
+    on: true,
+    resp: {
+      'body': {},
+      'reCode': '0000',
+      'reMsg': '成功',
+      'success': true
+    }
+  },
+  // 授信修改
+  {
+    url: '/credit/update',
     on: true,
     resp: {
       'body': {},

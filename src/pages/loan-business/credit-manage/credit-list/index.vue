@@ -49,7 +49,7 @@
 <script>
   import MixinData from './mixin-data';
   export default {
-    name: 'privateCustomer',
+    name: 'creditList',
     mixins: [MixinData],
     data() {
       return {
@@ -76,11 +76,7 @@
         }
       }
     },
-    props: {
-      type: String,
-      default: 'page',
-      required: false
-    },
+    props: ['creditStatus'],
     methods: {
       goToAdd() {
         this.$router.push('/index/customer/modify');
@@ -90,6 +86,7 @@
         if (page) {
           this.$data.searchForm.currentPage = page;
         }
+        this.$data.searchForm.creditStatus = this.creditStatus || '';
         let resp = await this.$http.post('/credit/page', this.$data.searchForm);
         this.$data.dataLoading = false;
         this.$data.privateCustomerList = resp.body.resultList;
@@ -104,6 +101,11 @@
       },
       selectRow(row, index) {
         this.$emit('on-row-dbclick', row, index);
+      }
+    },
+    watch: {
+      'creditStatus'(newVal) {
+        this.getCompanyCreditList();
       }
     },
     mounted() {
