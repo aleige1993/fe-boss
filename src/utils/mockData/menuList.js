@@ -54,16 +54,17 @@ export default [
                 url: '/index/loanbusiness/accept',
                 childMenus: [
                   { name: '个人业务登记', url: '/index/loanbusiness/accept' },
-                  { name: '我的草稿', url: '/index/customer/companycustomer/modify' }
+                  { name: '公司业务登记', url: '/index/loanbusiness/companyaccept' }
+                  /* { name: '我的草稿', url: '/index/customer/companycustomer/modify' }*/
                 ]
               },
-              {
+              /* {
                 name: '业务审批',
                 url: '',
                 childMenus: [
                   { name: '黑名单列表', url: '/index/customer/blacklist' }
                 ]
-              },
+              },*/
               { name: '公司授信管理',
                 url: '/index/loanbusiness/credit',
                 childMenus: [
