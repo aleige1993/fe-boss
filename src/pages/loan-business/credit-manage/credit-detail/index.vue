@@ -9,7 +9,7 @@
     <div class="form-top-actions"></div>
     <i-tabs v-model="tabIndex" type="card" :animated="false">
       <i-tab-pane label="申请信息">
-        <company-customer-basic-info :corpNo="creditInfo.companyNo"></company-customer-basic-info>
+        <company-customer-basic-info :corpNo="creditInfo.corpNo"></company-customer-basic-info>
         <i-form label-position="right" :label-width="140">
           <!--附件信息-->
           <bs-form-block :title="'附件信息'">
@@ -103,8 +103,8 @@
       </i-tab-pane>
       <i-tab-pane label="审核历史信息">
         <!--审核历史意见-->
-        <div v-if="tabIndex==1 && creditInfo.creditApplyNo">
-          <approve-history :id="creditInfo.creditApplyNo"></approve-history>
+        <div v-if="tabIndex==1 && creditInfo.creditLimitNo">
+          <approve-history :id="creditInfo.creditLimitNo"></approve-history>
         </div>
       </i-tab-pane>
     </i-tabs>
@@ -127,7 +127,7 @@
     },
     methods: {
       async getCreditInfo() {
-        let resp = await this.$http.post('/credit/find', { creditApplyNo: this.$route.query.id });
+        let resp = await this.$http.post('/credit/find', { creditLimitNo: this.$route.query.id });
         if (resp.success) {
           this.$data.creditInfo = resp.body;
         }
@@ -138,7 +138,8 @@
       'bs-modal': BsModal,
       ApproveHistory
     },
-    mounted() {
+    async mounted() {
+      await bsWait(500);
       this.getCreditInfo();
     }
   };

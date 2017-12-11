@@ -1,5 +1,5 @@
 <template>
-  <div id="page-table-demo">
+  <div id="page-credit-list">
     <i-breadcrumb separator=">">
       <i-breadcrumb-item href="/">首页</i-breadcrumb-item>
       <i-breadcrumb-item href="/components/breadcrumb">贷款业务</i-breadcrumb-item>
@@ -55,6 +55,7 @@
       return {
         showAddModal: false,
         dataLoading: false,
+        applyApproveLoading: false,
         total: 0,
         currentPage: 1,
         certTypeEnum: [],
@@ -63,7 +64,8 @@
           startDate: '',
           endDate: '',
           currentPage: 1,
-          pageSize: 15
+          pageSize: 15,
+          creditStatus: '1;2;6;7;9'
         }
       };
     },
@@ -76,7 +78,13 @@
         }
       }
     },
-    props: ['creditStatus'],
+    props: {
+      creditStatus: {
+        type: String,
+        default: '1;2;6;7;9',
+        required: false
+      }
+    },
     methods: {
       goToAdd() {
         this.$router.push('/index/customer/modify');
@@ -116,5 +124,11 @@
     }
   };
 </script>
-<style lang="scss" scoped>
+<style lang="scss">
+  #page-credit-list {
+    // display: none;
+    .ivu-btn[disabled]{
+      display: none !important;
+    }
+  }
 </style>

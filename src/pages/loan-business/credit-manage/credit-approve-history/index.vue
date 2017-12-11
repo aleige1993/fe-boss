@@ -14,7 +14,7 @@
           },
           {
             title: '任务节点',
-            key: 'tacheName'
+            key: 'taskName'
           },
           {
             title: '开始时间',
@@ -30,7 +30,16 @@
           },
           {
             title: '结论',
-            key: 'auditStatus'
+            key: 'approveStatus',
+            render: (h, params) => {
+              if (params.row.approveStatus === 'A') {
+                return '通过';
+              } else if (params.row.approveStatus === 'R') {
+                return '拒绝';
+              } else {
+                return '退回';
+              }
+            }
           },
           {
             title: '意见信息',
@@ -45,7 +54,7 @@
       async getHistoryInfo() {
         if (this.id && this.id !== '') {
           this.$data.historyLoading = true;
-          let resp = await this.$http.post('/credit/listAuditLog', { creditApplyNo: this.id });
+          let resp = await this.$http.post('/credit/listAuditLog', { creditLimitNo: this.id });
           this.$data.historyLoading = false;
           if (resp.success) {
             this.$data.approveHistoryData = resp.body;

@@ -70,7 +70,7 @@ export default {
         });
       } else {
         this.$data.submitApplyLoading = true;
-        let resp = await this.$http.post('/credit/update', this.$data.applyData);
+        let resp = await this.$http.post('/credit/apply', this.$data.applyData);
         this.$data.submitApplyLoading = false;
         if (resp.success) {
           this.$Message.success('提交成功');

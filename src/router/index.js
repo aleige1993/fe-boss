@@ -111,7 +111,7 @@ let MyRouter = new Router({
                   component: resolve => require(['@/pages/loan-business/credit-manage/credit-list'], resolve)},
                 { path: 'detail', name: 'loanBusinessCreditDetail', component: resolve => require(['@/pages/loan-business/credit-manage/credit-detail'], resolve)},
                 // 贷款业务-授信管理-授信审批
-                { path: 'approve', name: 'loanBusinessCreditApprove', component: resolve => require(['@/pages/loan-business/credit-manage/credit-approve'], resolve)}
+                { path: 'doapprove', name: 'loanBusinessCreditApprove', component: resolve => require(['@/pages/loan-business/credit-manage/credit-approve'], resolve)}
               ]
             }
           ]
