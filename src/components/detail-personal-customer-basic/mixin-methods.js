@@ -1,21 +1,22 @@
 export default {
   methods: {
-    async initFormData(certNo) {
+    async initFormData(memberNo) {
       this.$data.initFormLoading = true;
       try {
         let resp = await this.$http.post('/member/find', {
-          certNo
+          memberNo
         });
+        console.log(resp.body);
         this.$data.initFormLoading = false;
         this.$data.formData = resp.body;
         this.$emit('on-submit-success', resp.body);
+        this.$emit('getMember', resp.body);
       } catch (e) {
         this.$data.initFormLoading = false;
       }
     },
     gotoPersonal() {
-      console.log(this.$data.formData.memberNo);
-      window.open(`#/index/customer/detail?id=${this.$data.formData.memberNo}&from=detail`);
+      window.open(`#/index/customer/detail?id=${this.$data.formData.mbMemberDTO.memberNo}&from=detail`);
     }
   }
 };

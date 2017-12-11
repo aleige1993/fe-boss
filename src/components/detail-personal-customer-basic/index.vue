@@ -1,6 +1,20 @@
 <template>
   <div class="" style="position: relative">
-    <i-row>
+    <i-row v-if="!isHasFromData">
+      <i-col span="8" offset="8">
+        <i-button type="text" @click="isHasFormDataFun" long style="margin-bottom: 30px; border: 0;background-color: #fff;">
+          <div class="ivu-upload">
+            <div class="ivu-upload ivu-upload-drag" style="border: 1px dashed #2baee9;">
+              <div style="padding: 20px 0px;">
+                <Icon type="plus" size="52" style="color: #3399ff"></Icon>
+                <p>选择姓名 <i-icon type="ios-more"></i-icon></p>
+              </div>
+            </div>
+          </div>
+        </i-button>
+      </i-col>
+    </i-row>
+    <i-row v-if="isHasFromData">
       <i-col span="24">
         <i-form label-position="right" :model="formData" ref="formAddCustomer" :label-width="120">
           <bs-form-block :title="'基本信息'">
@@ -54,7 +68,7 @@
               </i-col>
               <i-col span="8">
                 <i-form-item label="证件有效期" prop="mbMemberDTO.certValidDate">
-                  <span v-model="formData.mbMemberDTO.certValidDate"></span>
+                  <span v-text="formData.mbMemberDTO.certValidDate"></span>
                 </i-form-item>
               </i-col>
             </i-row>
@@ -100,7 +114,7 @@
               </i-col>
               <i-col span="8">
                 <i-form-item label="参加工作年限" prop="mbMemberDTO.workYears">
-                  <span v-text="enumCode2Name(formData.mbMemberDTO.workYears, 'YearsEnum')"></span>
+                  <span v-text="enumCode2Name('' + formData.mbMemberDTO.workYears, 'YearsEnum')"></span>
                 </i-form-item>
               </i-col>
               <i-col span="8">
@@ -117,7 +131,7 @@
               </i-col>
               <i-col span="8">
                 <i-form-item label="本地居住年限" prop="mbMemberDTO.liveYears">
-                  <span v-text="enumCode2Name(formData.mbMemberDTO.liveYears, 'YearsEnum')"></span>
+                  <span v-text="enumCode2Name('' + formData.mbMemberDTO.liveYears, 'YearsEnum')"></span>
                 </i-form-item>
               </i-col>
               <i-col span="8">
@@ -195,26 +209,25 @@
             </i-row>
             <i-row>
               <i-col span="8">
-                <i-form-item label="职务">
+                <i-form-item label="职务" prop="mbMemberWorkDTO.duty">
                   <span v-text="enumCode2Name(formData.mbMemberWorkDTO.duty, 'DutyEnum')"></span>
                 </i-form-item>
               </i-col>
               <i-col span="8">
-                <i-form-item label="入职时间">
+                <i-form-item label="入职时间" prop="mbMemberWorkDTO.joinDate">
                   <span v-text="formData.mbMemberWorkDTO.joinDate"></span>
                 </i-form-item>
               </i-col>
               <i-col span="8">
-                <i-form-item label="所属部门">
+                <i-form-item label="所属部门" prop="mbMemberWorkDTO.department">
                   <span v-text="formData.mbMemberWorkDTO.department"></span>
                 </i-form-item>
               </i-col>
             </i-row>
             <i-row>
               <i-col span="8">
-                <i-form-item label="月收入">
-                  <span v-text="formData.mbMemberWorkDTO.monthRevenue"></span>
-                  <span slot="append">元</span>
+                <i-form-item label="月收入" prop="mbMemberWorkDTO.monthRevenue">
+                  <span v-text="enumCode2Name('' + formData.mbMemberWorkDTO.monthRevenue, 'MonthRevenueEnum')"></span>
                 </i-form-item>
               </i-col>
               <i-col span="8">
@@ -281,6 +294,7 @@ export default {
   mixins: [MxinData, MxinMethods],
   data() {
     return {
+      isHasFromData: false,
       visibleImg: false,
       showImgUpUrl: '',
       selectPersonalModal: false
@@ -299,7 +313,12 @@ export default {
     BsModal,
     TablePersonalCustomerList
   },
-  methods: {// 点击放大图片
+  methods: {
+    isHasFormDataFun() {
+      this.$data.selectPersonalModal = !this.$data.selectPersonalModal;
+      this.$data.isHasFromData = true;
+    },
+    // 点击放大图片
     showImg(imgURL) {
       if (imgURL !== '') {
         this.$data.showImgUpUrl = imgURL;
@@ -307,14 +326,15 @@ export default {
       }
     },
     selectPersonal(row, index) {
-      this.initFormData(row.certNo);
+      this.initFormData(row.memberNo);
+      this.$emit('getMember', row);
       this.$data.selectPersonalModal = false;
     }
   },
   async mounted() {
     // 如果有id，初始化页面数据
-    if (typeof this.$data.certNo !== 'undefined' && this.$data.certNo !== '') {
-      this.initFormData(this.$data.certNo);
+    if (typeof this.memberNo !== 'undefined' && this.memberNo !== '') {
+      this.initFormData(this.memberNo);
     } else {
       // 如果不是编辑，清空表单
     }
