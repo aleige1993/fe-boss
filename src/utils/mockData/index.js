@@ -15,6 +15,7 @@ let ary = [
     on: true,
     resp: {
       reCode: '0000',
+      success: true,
       body: {
         token: 'XCSDCSXSDSDS',
         username: 'xiaoming',
@@ -29,6 +30,7 @@ let ary = [
     on: true,
     resp: {
       reCode: '0000',
+      success: true,
       body: {
         url: 'http://www.sinaimg.cn/qc/autoimg/car/30/34/129863430_950.jpg'
       },
@@ -64,6 +66,7 @@ let ary = [
     on: true,
     resp: Mock.mock({
       reCode: '0000',
+      success: true,
       'body|10': [
         {
           bankCode: '1',

@@ -151,48 +151,7 @@
 
     <!--车辆信息的新增修改模态框-->
     <bs-modal :title="isAddCar ? '新增' : '编辑'" v-model="showModalCar">
-      <i-form  ref="formCar" :model="formCar" label-position="right" :label-width="100">
-        <i-form-item label="权利人类型" prop="obligeeType">
-          <i-select v-model="formCar.obligeeType">
-            <i-option value="beijing">个人</i-option>
-            <i-option value="shanghai">企业</i-option>
-          </i-select>
-        </i-form-item>
-        <i-form-item label="权利人编号" prop="obligeeNo">
-          <i-input v-model="formCar.obligeeNo" placeholder="">
-          </i-input>
-        </i-form-item>
-        <i-form-item label="权利人名称" prop="obligeeName">
-          <i-input v-model="formCar.obligeeName" placeholder="">
-          </i-input>
-        </i-form-item>
-        <i-form-item label="车辆型号" prop="carModel">
-          <i-input v-model="formCar.carModel" placeholder="">
-          </i-input>
-        </i-form-item>
-        <i-form-item label="车牌号" prop="carNo">
-          <i-input v-model="formCar.carNo" placeholder="">
-          </i-input>
-        </i-form-item>
-        <i-form-item label="发动机号" prop="engineNo">
-          <i-input v-model="formCar.engineNo" placeholder="">
-          </i-input>
-        </i-form-item>
-        <i-form-item label="车架号" prop="carFrameNo">
-          <i-input v-model="formCar.carFrameNo" placeholder="">
-          </i-input>
-        </i-form-item>
-        <i-form-item label="车辆价值" prop="carMoney">
-          <i-input v-model="formCar.carMoney" placeholder="">
-          </i-input>
-        </i-form-item>
-        <i-form-item class="text-right">
-          <i-button type="primary" @click="carSuBmit" :loading="carbuttonLoading">
-            <span v-if="!carbuttonLoading">提交</span>
-            <span v-else>loading...</span>
-          </i-button>
-        </i-form-item>
-      </i-form>
+      <modal-form-car @on-updated="updatedCarInfo"></modal-form-car>
     </bs-modal>
   </div>
 </template>
@@ -206,6 +165,7 @@
   import assureMixinMethods from './assure-mixin-methods';
   import loanMixinData from './loan-mixin-data';
   import loanMixinMethods from './loan-mixin-methods';
+  import modalFormCar from './modal-form-car/index.vue';
   export default {
     name: 'companyBusinessRegistration',
     mixins: [carMixinData, carMixinMethods, assureMixinData, assureMixinMethods, loanMixinData, loanMixinMethods],
@@ -214,7 +174,7 @@
         tabIndex: 0,
         isAddCar: true,
         showModalCar: false,
-        carbuttonLoading: false,
+
         formData: {
           name: '',
           memberNo: '',
@@ -223,22 +183,19 @@
           lat: '',
           applicationPlace: '',
           carMoney: ''
-        },
-        formCar: {
-          obligeeType: '',
-          obligeeNo: '',
-          obligeeName: '',
-          carModel: '',
-          carNo: '',
-          engineNo: '',
-          carFrameNo: '',
-          carMoney: ''
         }
       };
     },
     components: {
       companyInfo,
-      BsModal
+      BsModal,
+      modalFormCar
+    },
+    methods: {
+      updatedCarInfo(data, actionType) {
+        Alertify.alert(actionType);
+        console.log(data);
+      }
     },
     mounted() {
     }
