@@ -9,10 +9,10 @@
 
     <i-tabs v-model="tabIndex" type="card" :animated="false" style="padding-bottom: 46px;">
       <i-tab-pane :label="'基本信息'">
-        <modal-personal-basic></modal-personal-basic>
+        <modal-personal-basic ref="personalInfo" @personalData="getPersonalData"></modal-personal-basic>
       </i-tab-pane>
       <i-tab-pane :label="'审批信息'">
-        <div>12321321</div>
+        <modal-personal-approval></modal-personal-approval>
       </i-tab-pane>
     </i-tabs>
     <div class="form-footer-actions">
@@ -30,22 +30,42 @@
 
 <script>
   import modalPersonalBasic from './personal-basic';
+  import modalPersonalApproval from './personal-approval';
   export default {
     name: 'personalBbusinessRegistration',
     data() {
       return {
         tabIndex: 0,
-        initFormLoading: false
+        initFormLoading: false,
+        personalData: {}
       };
     },
     components: {
-      'modal-personal-basic': modalPersonalBasic
+      'modal-personal-basic': modalPersonalBasic,
+      'modal-personal-approval': modalPersonalApproval
     },
     mounted() {
     },
     methods: {
+      // 保存的ajax
+      async saveLoanBiz() {
+        let resp = await this.$http.post('/biz/saveLoanBiz', this.$data.personalData);
+        if (resp.success) {
+          this.$Message.success('保存成功');
+        }
+      },
+      // 监听子组件（基本信息）传递数据到父组件
+      getPersonalData(msg) {
+        this.$data.personalData = msg;
+      },
       // 保存草稿
-      saveDraft() {},
+      saveDraft() {
+        if (this.$refs['personalInfo'].verification()) {
+          console.log(this.$data.personalData);
+          this.saveLoanBiz();
+        } else {
+        }
+      },
       // 提交
       saveSubimt() {}
     }
