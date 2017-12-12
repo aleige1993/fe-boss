@@ -1,46 +1,52 @@
 export default {
   data() {
     return {
-      creditInfo: {
-        'singleLimit': '',
-        'externalAuditDTOList': [
-          {
-            'itemName': '',
-            'fileName': '',
-            'description': '',
-            'fileUrl': ''
-          }
-        ],
-        'endDate': '',
-        'companyName': '',
-        'creditLimitReleaseMode': '',
-        'creditAuditDTO': [
-          {
-            'operUserName': '',
-            'auditStatus': '',
-            'operUserCode': '',
-            'operTime': '',
-            'opinion': ''
-          }
-        ],
-        'creditApplyAttachList|5': [],
-        'creditApplyNo': '',
-        'creditStatus': '',
-        'surplusCountLimit': '',
-        'countLimit': '',
-        'creditCode': '',
-        'corpNo': '',
-        'firstTrialDTO': {
-          'creditCheckItemsList': [{
-            'itemName': '',
-            'fileName': '',
-            'description': '',
-            'fileUrl': ''
-          }],
-          'netApprove': '',
-          'telephoneApprove': ''
+      loadingAttachFile: false,
+      submitApplyLoading: false,
+      approveData: {
+        // 初审信息
+        firstTrialParam: {
+          'netApprove': 'aaaaaa',
+          'telephoneApprove': '',
+          'creditCheckItemsList': [
+            /*{
+              'itemName': '',
+              'fileName': '',
+              'description': '',
+              'fileUrl': ''
+            }*/
+          ]
         },
-        'startDate': ''
+        // 外审信息
+        'creditCheckItemsList': [
+          /*{
+            'itemName': '',
+            'fileName': '',
+            'description': '',
+            'fileUrl': ''
+          }*/
+        ],
+        // 申请意见入参 -- 每个阶段的审核都有
+        'creditAuditParam': {
+          'approveStatus': 'A',
+          'opinion': ''
+        },
+        // 授信申请信息
+        'creditApplyParam': {
+          'creditCode': '',
+          'corpNo': '',
+          'corpName': '',
+          'creditLimitNo': null
+        },
+        // 最终审批
+        'creditPlanParam': {
+          'currentLimitAmt': '',
+          'totalLimitAmt': '',
+          'startDate': 'yyyy-MM-dd',
+          'singleLimitAmt': '',
+          'creditLimitReleaseMode': '',
+          'endDate': 'yyyy-MM-dd'
+        }
       },
       companyAttachFileColumns: [
         {
@@ -75,10 +81,10 @@ export default {
         }
       ],
       companyAttachFiles: [
-        {
+        /*{
           attachName: '仓井空.av',
           attachUrl: 'http://www.baidu.com'
-        }
+        }*/
       ],
       // 初审信息
       firstApproveColumns: [
@@ -92,19 +98,7 @@ export default {
         },
         {
           title: '查询结果',
-          key: 'fileUrl',
-          render: (h, parmas) => {
-            return h('i-button', {
-              props: {
-                type: 'text'
-              },
-              on: {
-                click: () => {
-                  window.open(parmas.row.fileUrl);
-                }
-              }
-            }, parmas.row.fileUrl);
-          }
+          key: 'fileUrl'
         },
         {
           title: '操作',
@@ -113,8 +107,7 @@ export default {
               h('Button', {
                 props: {
                   type: 'primary',
-                  size: 'small',
-                  disabled: this.isFromDetail
+                  size: 'small'
                 },
                 style: {
                   marginRight: '5px'
@@ -124,16 +117,29 @@ export default {
                     window.open(params.row.fileUrl, '_blank');
                   }
                 }
-              }, '下载')
+              }, '下载'),
+              h('Button', {
+                props: {
+                  type: 'error',
+                  size: 'small',
+                  disabled: this.creditStatus !== '3'
+                },
+                on: {
+                  click: () => {
+                    // console.log(params);
+                    this.$data.approveData.firstTrialParam.creditCheckItemsList.splice(params.index, 1);
+                  }
+                }
+              }, '删除')
             ]);
           }
         }
       ],
       firstApproveData: [
-        {
+        /*{
           attachName: '仓井空.av',
           attachUrl: 'http://www.baidu.com'
-        }
+        }*/
       ],
       // 外审信息
       outApproveColumns: [
@@ -147,19 +153,7 @@ export default {
         },
         {
           title: '查询结果',
-          key: 'fileUrl',
-          render: (h, parmas) => {
-            return h('i-button', {
-              props: {
-                type: 'text'
-              },
-              on: {
-                click: () => {
-                  window.open(parmas.row.fileUrl);
-                }
-              }
-            }, parmas.row.fileUrl);
-          }
+          key: 'fileUrl'
         },
         {
           title: '操作',
@@ -169,7 +163,7 @@ export default {
                 props: {
                   type: 'primary',
                   size: 'small',
-                  disabled: this.isFromDetail
+                  disabled: this.creditStatus !== '4'
                 },
                 style: {
                   marginRight: '5px'
@@ -179,16 +173,29 @@ export default {
                     window.open(params.row.fileUrl, '_blank');
                   }
                 }
-              }, '下载')
+              }, '下载'),
+              h('Button', {
+                props: {
+                  type: 'error',
+                  size: 'small',
+                  disabled: this.isFromDetail
+                },
+                on: {
+                  click: () => {
+                    // console.log(params);
+                    this.$data.approveData.creditCheckItemsList.splice(params.index, 1);
+                  }
+                }
+              }, '删除')
             ]);
           }
         }
       ],
       outApproveData: [
-        {
+        /*{
           attachName: '仓井空.av',
           attachUrl: 'http://www.baidu.com'
-        }
+        }*/
       ]
     };
   }

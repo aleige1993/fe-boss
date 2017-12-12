@@ -79,27 +79,28 @@ export default {
           fixed: 'right',
           align: 'center',
           render: (h, params) => {
+            let statusText = this.enumCode2Name(params.row.creditStatus, 'CreditAuditStatusEnum');
             return h('div', [
+              // 撤回申请
               h('Button', {
                 props: {
                   type: 'primary',
-                  size: 'small'
+                  size: 'small',
+                  disabled: params.row.creditStatus !== '2',
+                  class: { 'hide': params.row.creditStatus !== '2' }
                 },
                 style: { marginRight: '5px' },
                 on: {
                   click: async () => {
-                    let status = params.row.status === '1' ? '2' : '1';
-                    let text = params.row.status === '1' ? '冻结' : '激活';
-                    Alertify.confirm(`确定要${text}当前用户吗？`, async (ok) => {
+                    Alertify.confirm('确定要撤销当前申请吗？', async (ok) => {
                       if (ok) {
-                        const msg = this.$Message.loading(`正在${text}`, 0);
-                        let resp = await this.$http.post('/credit/delete', {
-                          memberNo: params.row.memberNo,
-                          status
+                        const msg = this.$Message.loading('正在撤销授信申请', 0);
+                        let resp = await this.$http.post('/credit/cancel', {
+                          creditLimitNo: params.row.creditLimitNo
                         });
                         msg();
                         if (resp.success) {
-                          this.$Message.success('删除成功');
+                          this.$Message.success('撤销成功');
                           this.getCompanyCreditList();
                         }
                       }
@@ -107,6 +108,7 @@ export default {
                   }
                 }
               }, '撤回'),
+              // 查看详情,
               h('Button', {
                 props: {
                   type: 'success',
@@ -119,16 +121,18 @@ export default {
                     this.$router.push({
                       path: '/index/loanbusiness/credit/detail',
                       query: {
-                        id: params.row.creditApplyNo
+                        id: params.row.creditLimitNo
                       }
                     });
                   }
                 }
               }, '详情'),
+              // 修改审批信息
               h('Button', {
                 props: {
                   type: 'warning',
-                  size: 'small'
+                  size: 'small',
+                  disabled: params.row.creditStatus !== '2'
                 },
                 style: { marginRight: '5px' },
                 on: {
@@ -143,10 +147,46 @@ export default {
                   }
                 }
               }, '修改'),
+              // 审批
+              h('Button', {
+                props: {
+                  type: 'primary',
+                  size: 'small',
+                  loading: this.$data.applyApproveLoading,
+                  disabled: params.row.creditStatus !== '3' && params.row.creditStatus !== '4' && params.row.creditStatus !== '5'
+                },
+                style: { marginRight: '5px' },
+                on: {
+                  click: async () => {
+                    this.$data.applyApproveLoading = true;
+                    let resp = await this.$http.post('/credit/settingHandleUser', { creditLimitNo: params.row.creditLimitNo });
+                    this.$data.applyApproveLoading = false;
+                    if (resp.success) {
+                      this.$router.push({
+                        path: '/index/loanbusiness/credit/doapprove',
+                        query: {
+                          id: params.row.creditLimitNo,
+                          status: params.row.creditStatus
+                        },
+                        force: true
+                      });
+                    } else {
+                      this.$Notice.error({
+                        desc: '设置处理人失败请稍后重试'
+                      });
+                    }
+                  }
+                }
+              }, statusText),
+              // 删除授信申请
               h('Button', {
                 props: {
                   type: 'error',
-                  size: 'small'
+                  size: 'small',
+                  disabled: params.row.creditStatus !== '2' &&
+                  params.row.creditStatus !== '6' &&
+                  params.row.creditStatus !== '7' &&
+                  params.row.creditStatus !== '9'
                 },
                 style: { marginRight: '5px' },
                 on: {
@@ -154,7 +194,7 @@ export default {
                     Alertify.confirm('确定删除当前授信申请吗？', async (ok) => {
                       if (ok) {
                         let resp = await this.$http.post('/credit/delete', {
-                          creditApplyNo: params.row.creditApplyNo
+                          creditLimitNo: params.row.creditLimitNo
                         });
                         if (resp.success) {
                           this.getCompanyCreditList();

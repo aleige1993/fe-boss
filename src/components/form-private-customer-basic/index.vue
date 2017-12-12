@@ -211,7 +211,10 @@
                              prop="mbMemberDTO.certFrontUrl"
                              :rules="{required: true, message: '请上传身份证正面照', trigger: 'blur'}">
                   <input type="hidden" v-model="formData.mbMemberDTO.certFrontUrl"/>
-                  <img v-if="formData.mbMemberDTO.certFrontUrl!==''&&isFromDetail"  width="149" height="95" :src="formData.mbMemberDTO.certFrontUrl" alt="">
+                  <!--<img v-if="formData.mbMemberDTO.certFrontUrl!==''&&isFromDetail"  width="149" height="95" :src="formData.mbMemberDTO.certFrontUrl" alt="">-->
+                  <bs-big-img v-if="formData.mbMemberDTO.certFrontUrl!==''&&isFromDetail" :thumb="formData.mbMemberDTO.certFrontUrl"
+                              :showWidth="149" :showHeight="95"
+                              :full="formData.mbMemberDTO.certFrontUrl" :full-width="945"></bs-big-img>
                   <i-upload v-else :on-success="uploadFaceSuccess" :on-error="uploadError" :action="$config.HTTPBASEURL+'/common/upload'" :show-upload-list="false">
                     <img v-if="formData.mbMemberDTO.certFrontUrl!==''"  width="149" height="95" :src="formData.mbMemberDTO.certFrontUrl" alt="">
                     <idcard-placeholder v-else type="face"></idcard-placeholder>
@@ -223,7 +226,10 @@
                              prop="mbMemberDTO.certBackUrl"
                              :rules="{required: true, message: '请上传身份证反面照', trigger: 'blur'}">
                   <input type="hidden" v-model="formData.mbMemberDTO.certBackUrl"/>
-                  <img v-if="formData.mbMemberDTO.certBackUrl!==''&&isFromDetail" width="149" height="95" :src="formData.mbMemberDTO.certBackUrl" alt="">
+                  <!--<img v-if="formData.mbMemberDTO.certBackUrl!==''&&isFromDetail" width="149" height="95" :src="formData.mbMemberDTO.certBackUrl" alt="">-->
+                  <bs-big-img v-if="formData.mbMemberDTO.certBackUrl!==''&&isFromDetail" :thumb="formData.mbMemberDTO.certBackUrl"
+                              :showWidth="149" :showHeight="95"
+                              :full="formData.mbMemberDTO.certBackUrl" :full-width="945"></bs-big-img>
                   <i-upload v-else :on-success="uploadBackSuccess" :action="$config.HTTPBASEURL+'/common/upload'" :show-upload-list="false">
                     <img v-if="formData.mbMemberDTO.certBackUrl!==''" width="149" height="95" :src="formData.mbMemberDTO.certBackUrl" alt="">
                     <idcard-placeholder v-else type="back"></idcard-placeholder>
@@ -235,7 +241,11 @@
                              prop="mbMemberDTO.certHandUrl"
                              :rules="{required: true, message: '请上传手持身份证照', trigger: 'blur'}">
                   <input type="hidden" v-model="formData.mbMemberDTO.certHandUrl"></input>
-                  <img v-if="formData.mbMemberDTO.certHandUrl!==''&&isFromDetail" width="149" height="95" :src="formData.mbMemberDTO.certHandUrl" alt="">
+                  <!--<img v-if="formData.mbMemberDTO.certHandUrl!==''&&isFromDetail" width="149" height="95" :src="formData.mbMemberDTO.certHandUrl" alt="">-->
+                  <bs-big-img v-if="formData.mbMemberDTO.certHandUrl!==''&&isFromDetail" :thumb="formData.mbMemberDTO.certHandUrl"
+                              :showWidth="149" :showHeight="95"
+                              :full="formData.mbMemberDTO.certHandUrl" :full-width="945">
+                  </bs-big-img>
                   <i-upload v-else :on-success="uploadHandSuccess" :action="$config.HTTPBASEURL+'/common/upload'" :show-upload-list="false">
                     <img v-if="formData.mbMemberDTO.certHandUrl!==''" width="149" height="95" :src="formData.mbMemberDTO.certHandUrl" alt="">
                     <idcard-placeholder v-else type="hand"></idcard-placeholder>
@@ -392,6 +402,7 @@ import BsModal from '@/components/bs-modal';
 import Tools from '@/utils/Tools';
 import TreeGrid from '@/components/bs-tree-grid';
 import BsDispicker from '@/components/bs-dispicker';
+import BsBigImg from '@/components/bs-big-img';
 export default {
   name: 'formCustomerBsicInfo',
   mixins: [MxinData, MxinMethods],
@@ -434,7 +445,8 @@ export default {
     TableCompanyCustomerList,
     BsModal,
     TreeGrid,
-    BsDispicker
+    BsDispicker,
+    BsBigImg
   },
   watch: {
     'formData.mbMemberDTO.certNo'(newVal, oldVal) {
