@@ -44,5 +44,12 @@ export default {
       }
     }
     return returnAge; // 返回周岁年龄
+  },
+  getFileSuffix(fileUrl) {
+    return fileUrl.substring(fileUrl.lastIndexOf('.') + 1);
+  },
+  isImg(fileUrl) {
+    let suffix = this.getFileSuffix(fileUrl);
+    return suffix === 'png' || suffix === 'jpg' || suffix === 'gif' || suffix === 'jpeg' || suffix === 'bmp' || suffix === 'pic';
   }
 };

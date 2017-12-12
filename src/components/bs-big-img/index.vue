@@ -1,7 +1,7 @@
 <template>
   <div class="image-dialog">
     <button class="image-dialog-trigger" type="button" @click="showDialog">
-      <img class="image-dialog-thumb" ref="thumb" :src="thumb"  :width="showWidth" :height="showHeight"/>
+      <img class="image-dialog-thumb" ref="thumb" :src="thumb"  :width="thumbWidth" :height="thumbHeight"/>
     </button>
     <transition name="dialog" @enter="enter" @leave="leave">
       <div class="image-dialog-background" v-show="appearedDialog" ref="dialog">
@@ -22,8 +22,8 @@
     props: {
       thumb: String,
       full: String,
-      showWidth: Number,
-      showHeight: Number,
+      thumbWidth: Number,
+      thumbHeight: Number,
       fullWidth: Number
     },
 

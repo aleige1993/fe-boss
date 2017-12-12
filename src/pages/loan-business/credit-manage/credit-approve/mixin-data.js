@@ -1,3 +1,5 @@
+import Tools from '../../../../utils/Tools';
+
 export default {
   data() {
     return {
@@ -55,7 +57,22 @@ export default {
         },
         {
           title: '附件文件',
-          key: 'attachUrl'
+          key: 'attachUrl',
+          render: (h, params) => {
+            if (Tools.isImg(params.row.attachUrl)) {
+              return h('bs-big-img', {
+                props: {
+                  thumbWidth: 80,
+                  thumbHeight: 80,
+                  //fullWidth: 500,
+                  thumb: params.row.attachUrl,
+                  full: params.row.attachUrl
+                }
+              });
+            } else {
+              return params.row.attachUrl;
+            }
+          }
         },
         {
           title: '操作',
@@ -98,7 +115,22 @@ export default {
         },
         {
           title: '查询结果',
-          key: 'fileUrl'
+          key: 'fileUrl',
+          render: (h, params) => {
+            if (Tools.isImg(params.row.fileUrl)) {
+              return h('bs-big-img', {
+                props: {
+                  thumbWidth: 80,
+                  thumbHeight: 80,
+                  //fullWidth: 500,
+                  thumb: params.row.fileUrl,
+                  full: params.row.fileUrl
+                }
+              });
+            } else {
+              return params.row.fileUrl;
+            }
+          }
         },
         {
           title: '操作',
@@ -153,7 +185,22 @@ export default {
         },
         {
           title: '查询结果',
-          key: 'fileUrl'
+          key: 'fileUrl',
+          render: (h, params) => {
+            if (Tools.isImg(params.row.fileUrl)) {
+              return h('bs-big-img', {
+                props: {
+                  thumbWidth: 100,
+                  thumbHeight: 100,
+                  //fullWidth: 500,
+                  thumb: params.row.fileUrl,
+                  full: params.row.fileUrl
+                }
+              });
+            } else {
+              return params.row.fileUrl;
+            }
+          }
         },
         {
           title: '操作',

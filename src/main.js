@@ -27,6 +27,8 @@ import FormSecondTitle from '@/components/bs-form-child-title';
 Vue.component('bs-form-child-title', FormSecondTitle);
 import bsDatePicker from '@/components/bs-datepicker';
 Vue.component('bs-datepicker', bsDatePicker);
+import BsBigImg from '@/components/bs-big-img';
+Vue.component('bs-big-img', BsBigImg);
 
 // 页面title修改
 Vue.directive('title', {

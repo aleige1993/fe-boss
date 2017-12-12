@@ -1,3 +1,5 @@
+import Tools from '../../utils/Tools';
+
 export default {
   data() {
     return {
@@ -116,7 +118,22 @@ export default {
         },
         {
           title: '附件文件',
-          key: 'attachUrl'
+          key: 'attachUrl',
+          render: (h, params) => {
+            if (Tools.isImg(params.row.attachUrl)) {
+              return h('bs-big-img', {
+                props: {
+                  thumbWidth: 80,
+                  thumbHeight: 80,
+                  fullWidth: 1000,
+                  thumb: params.row.attachUrl,
+                  full: params.row.attachUrl
+                }
+              });
+            } else {
+              return params.row.attachUrl;
+            }
+          }
         },
         {
           title: '操作',
