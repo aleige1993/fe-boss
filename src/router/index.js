@@ -40,7 +40,9 @@ let MyRouter = new Router({
             // 客户管理 == 渠道商管理
             { path: 'distributor', name: 'distributor', component: resolve => require(['@/pages/customer-manage/distributor-manage'], resolve),
               children: [
-                { path:'/', name: 'distributorList', component: resolve => require(['@/pages/customer-manage/distributor-manage/distributor-list'], resolve) }
+                { path:'/', name: 'distributorList', component: resolve => require(['@/pages/customer-manage/distributor-manage/distributor-list'], resolve)},
+                { path: 'add', name: 'addDistributor', component: resolve => require(['@/pages/customer-manage/distributor-manage/distributor-list/page-distributor-add'], resolve)},
+                { path: 'quota', name: 'addDistributor', component: resolve => require(['@/pages/customer-manage/distributor-manage/distributor-list/page-distributor-quota'], resolve)}
                 // { path: 'modify', name: 'addCompanyCustomer', component: resolve => require(['@/pages/customer-manage/company-customer/company-add'], resolve) }
               ]
             },

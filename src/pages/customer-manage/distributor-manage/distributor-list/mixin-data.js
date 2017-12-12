@@ -4,7 +4,7 @@ export default {
       distributorColumns: [
         {
           title: '渠道商编号',
-          key: 'distributorNo'
+          key: 'merchantNo'
         },
         {
           title: '客户编号',
@@ -15,7 +15,7 @@ export default {
           key: 'distributorNo'
         },
         {
-          title: '统一社会信用代码\n',
+          title: '统一社会信用代码',
           key: 'distributorNo'
         },
         {
@@ -35,12 +35,12 @@ export default {
           key: 'distributorNo'
         },
         {
-          title: '状态',
+          title: '授信状态', //0:未授信1-授信审核中2-授信通过3-授信拒绝4-授信驳回5-授信过期6-冻结
           key: 'distributorNo'
         },
         {
           title: '操作',
-          width: 340,
+          width: 260,
           align: 'center',
           key: 'action',
           render: (h, params) => {
@@ -84,8 +84,8 @@ export default {
                     alert(params.row.distributorNo);
                   }
                 }
-              }, '激活/冻结'),
-              h('i-button', {
+              }, '激活/冻结')
+              /*h('i-button', {
                 props: {
                   type: 'primary'
                 },
@@ -94,7 +94,7 @@ export default {
                     alert(params.row.distributorNo);
                   }
                 }
-              }, '操作员管理')
+              }, '操作员管理')*/
             ]);
           }
         }
