@@ -1,9 +1,17 @@
 <template>
   <div class="image-dialog">
-    <button class="image-dialog-trigger" type="button" @click="showDialog"><img class="image-dialog-thumb" ref="thumb" :src="thumb"/></button>
+    <button class="image-dialog-trigger" type="button" @click="showDialog">
+      <img class="image-dialog-thumb" ref="thumb" :src="thumb"  :width="showWidth" :height="showHeight"/>
+    </button>
     <transition name="dialog" @enter="enter" @leave="leave">
       <div class="image-dialog-background" v-show="appearedDialog" ref="dialog">
-        <button class="image-dialog-close" type="button" @click="hideDialog" aria-label="Close"></button><img class="image-dialog-animate" ref="animate" :class="{ loading: !loaded }" :src="loaded ? full : thumb"/><img class="image-dialog-full" ref="full" :src="appearedDialog && full" :width="fullWidth" :height="fullHeight" @load="onLoadFull"/>
+        <button class="image-dialog-close" type="button" @click="hideDialog"
+                aria-label="Close">
+        </button>
+        <img class="image-dialog-animate" ref="animate"
+             :class="{ loading: !loaded }" :src="loaded ? full : thumb"/>
+        <img class="image-dialog-full" ref="full" :src="appearedDialog && full"
+             :width="fullWidth" @load="onLoadFull"/>
       </div>
     </transition>
   </div>
@@ -14,8 +22,9 @@
     props: {
       thumb: String,
       full: String,
-      fullWidth: Number,
-      fullHeight: Number
+      showWidth: Number,
+      showHeight: Number,
+      fullWidth: Number
     },
 
     data() {
