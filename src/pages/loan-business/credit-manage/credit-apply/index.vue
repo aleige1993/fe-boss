@@ -11,7 +11,7 @@
     <i-tabs v-model="tabIndex" type="card" :animated="false">
       <i-tab-pane label="申请信息">
         <company-customer-basic-info :corpNo="applyData.creditApplyParam.corpNo" @on-select-company="selectCompany"></company-customer-basic-info>
-        <i-form label-position="right" :label-width="140">
+        <i-form v-if="applyData.creditApplyParam.corpNo !==''" label-position="right" :label-width="140">
           <!--附件信息-->
           <bs-form-block :title="'附件信息'">
             <div class="form-top-actions">
@@ -40,85 +40,6 @@
               </i-col>
             </i-row>
           </bs-form-block>
-          <!--初审信息-->
-          <!--<bs-form-block title="1初审信息" >
-            <i-row>
-              <i-col span="8">
-                <i-form-item label="网审情况">
-                  <i-input type="textarea"></i-input>
-                </i-form-item>
-              </i-col>
-              <i-col span="8">
-                <i-form-item label="电核情况">
-                  <i-input type="textarea"></i-input>
-                </i-form-item>
-              </i-col>
-            </i-row>
-            <i-row>
-              <i-col span="24">
-                <div class="form-top-actions">
-                  <i-button type="primary" @click="addFirstApproveModal = !addFirstApproveModal">添加初审信息</i-button>
-                </div>
-                <i-table :columns="firstApproveColumns" :data="firstApproveData"></i-table>
-              </i-col>
-            </i-row>
-          </bs-form-block>-->
-          <!--外审信息-->
-          <!--<bs-form-block title="2外审信息" >
-            <i-row>
-              <i-col span="24">
-                <div class="form-top-actions">
-                  <i-button type="primary" @click="addOutApproveModal = !addOutApproveModal">添加现场尽调信息</i-button>
-                </div>
-                <i-table :columns="outApproveColumns" :data="outApproveData"></i-table>
-              </i-col>
-            </i-row>
-          </bs-form-block>-->
-          <!--最终审核信息-->
-          <!--<bs-form-block title="3授信信息" >
-            <i-row>
-              <i-col span="8">
-                <i-form-item label="授信总额度">
-                  <i-input type="text">
-                    <span slot="append">元</span>
-                  </i-input>
-                </i-form-item>
-              </i-col>
-              <i-col span="8">
-                <i-form-item label="可用额度">
-                  <i-input type="text">
-                    <span slot="append">元</span>
-                  </i-input>
-                </i-form-item>
-              </i-col>
-              <i-col span="8">
-                <i-form-item label="单笔最大额度">
-                  <i-input type="text">
-                    <span slot="append">元</span>
-                  </i-input>
-                </i-form-item>
-              </i-col>
-            </i-row>
-            <i-row>
-              <i-col span="8">
-                <i-form-item label="授信起始日期">
-                  <bs-datepicker></bs-datepicker>
-                </i-form-item>
-              </i-col>
-              <i-col span="8">
-                <i-form-item label="授信到期日期">
-                  <bs-datepicker></bs-datepicker>
-                </i-form-item>
-              </i-col>
-              <i-col span="8">
-                <i-form-item label="额度释放方式">
-                  <i-select>
-                    <i-option v-for="item in enumSelectData.get('CreditFreedTypeEnum')" :key="item.itemCode" :value="item.itemCode">{{item.itemName}}</i-option>
-                  </i-select>
-                </i-form-item>
-              </i-col>
-            </i-row>
-          </bs-form-block>-->
           <div class="form-footer-actions">
             <i-button :loading="submitApplyLoading" @click="submitCreditApply" type="success">
               <span v-if="!submitApplyLoading"><i class="iconfont icon-tijiao"></i> 提交</span>

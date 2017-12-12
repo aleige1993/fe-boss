@@ -92,3 +92,9 @@ h1,h2,h3,h4,h5,h6 {
   width: 320px;
   margin: 0 auto;
 }
+// 表格内的按钮
+.ivu-table-cell {
+  button{
+    margin-right: 5px;
+  }
+}

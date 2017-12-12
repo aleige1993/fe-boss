@@ -34,6 +34,13 @@ export default [
                 childMenus: [
                   { name: '黑名单列表', url: '/index/customer/blacklist' }
                 ]
+              },
+              {
+                name: '渠道商管理',
+                url: '',
+                childMenus: [
+                  { name: '渠道商列表', url: '/index/customer/distributor' }
+                ]
               }
             ]
           },

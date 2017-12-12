@@ -1,6 +1,20 @@
 <template>
   <div id="">
-    <i-row>
+    <i-row v-if="formData.baseDTO.corpNo === ''">
+      <i-col span="8" offset="8">
+        <i-button type="text" @click="selectCompanyModal=!selectCompanyModal" long style="margin-bottom: 30px; border: 0;background-color: #fff;">
+          <div class="ivu-upload">
+            <div class="ivu-upload ivu-upload-drag" style="border: 1px dashed #2baee9;">
+              <div style="padding: 20px 0px;">
+                <Icon type="plus" size="52" style="color: #3399ff"></Icon>
+                <p>选择客户 <i-icon type="ios-more"></i-icon></p>
+              </div>
+            </div>
+          </div>
+        </i-button>
+      </i-col>
+    </i-row>
+    <i-row v-else>
       <i-col span="24">
         <i-form label-position="right" :label-width="140">
           <bs-form-block :title="'基本信息'">

@@ -45,8 +45,9 @@ class Http {
       headers: _headers,
       method: 'POST'
     }).then(res => {
-      if (res.data.reCode === '0004') {
+      if (res.data.reCode === '0004' || res.data.reCode === 'BS0004') {
         toastr.error('登录超时');
+        console.log(MyRouter);
         MyRouter.push(
           {
             path: '/login',
