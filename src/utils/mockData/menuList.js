@@ -50,19 +50,19 @@ export default [
             url: '/index/loanbusiness',
             childMenus: [
               {
-                name: '业务查询',
-                url: '/index/loanbusiness',
-                childMenus: [
-                  { name: '业务查询', url: '/index/loanbusiness' }
-                ]
-              },
-              {
                 name: '业务受理',
                 url: '/index/loanbusiness/accept',
                 childMenus: [
                   { name: '个人业务登记', url: '/index/loanbusiness/accept' },
                   { name: '公司业务登记', url: '/index/loanbusiness/companyaccept' }
                   /* { name: '我的草稿', url: '/index/customer/companycustomer/modify' }*/
+                ]
+              },
+              {
+                name: '业务审批',
+                url: '/index/loanbusiness',
+                childMenus: [
+                  { name: '业务初审', url: '/index/loanbusiness' }
                 ]
               },
               /* {

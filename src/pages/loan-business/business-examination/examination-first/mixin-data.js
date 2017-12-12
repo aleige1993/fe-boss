@@ -8,7 +8,7 @@ export default {
           width: 200
         },
         {
-          title: '主借人',
+          title: '客户名称',
           key: 'name',
           width: 200
         },
@@ -21,7 +21,7 @@ export default {
           }
         },
         {
-          title: '证件号',
+          title: '证件号码',
           key: 'certNo',
           width: 200
         },
@@ -46,7 +46,17 @@ export default {
           width: 200
         },
         {
-          title: '当前欢姐',
+          title: '任务送达时间',
+          key: 'deliveryTime',
+          width: 120
+        },
+        {
+          title: '已耗时',
+          key: 'consuming',
+          width: 120
+        },
+        {
+          title: '当前环节',
           key: 'mobile',
           width: 120
         },
