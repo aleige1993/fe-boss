@@ -137,42 +137,312 @@
       <img :src="showImgUpUrl" style="width: 100%">
     </i-modal>
     <!--车辆信息的新增修改模态框-->
-    <bs-modal :title="isAddCar ? '新增' : '编辑'" v-model="showModalCar">
-      <i-form  ref="formCar" :model="formCar" label-position="right" :label-width="100">
-        <i-form-item label="权利人类型" prop="custType">
-          <i-select v-model="formCar.custType">
-            <i-option value="1">个人</i-option>
-            <i-option value="2">企业</i-option>
-          </i-select>
-        </i-form-item>
-        <i-form-item label="权利人编号" prop="carOwnerNo">
-          <i-input v-model="formCar.carOwnerNo" placeholder="">
-          </i-input>
-        </i-form-item>
-        <i-form-item label="权利人名称" prop="carOwnerName">
-          <i-input v-model="formCar.carOwnerName" placeholder="">
-          </i-input>
-        </i-form-item>
-        <i-form-item label="车辆型号" prop="carModel">
-          <i-input v-model="formCar.carModel" placeholder="">
-          </i-input>
-        </i-form-item>
-        <i-form-item label="车牌号" prop="carPlateNo">
-          <i-input v-model="formCar.carPlateNo" placeholder="">
-          </i-input>
-        </i-form-item>
-        <i-form-item label="发动机号" prop="carEngineNo">
-          <i-input v-model="formCar.carEngineNo" placeholder="">
-          </i-input>
-        </i-form-item>
-        <i-form-item label="车架号" prop="carFrameNo">
-          <i-input v-model="formCar.carFrameNo" placeholder="">
-          </i-input>
-        </i-form-item>
-        <i-form-item label="车辆价值" prop="carEvaluatePrice">
-          <i-input v-model="formCar.carEvaluatePrice" placeholder="">
-          </i-input>
-        </i-form-item>
+    <bs-modal :title="isAddCar ? '新增' : '编辑'" v-model="showModalCar" :width="1200">
+      <i-form  ref="formCar" :model="formCar" label-position="right" :label-width="120">
+        <i-row>
+          <i-col span="8">
+            <i-form-item
+              label="担保类型"
+              :rules="{required: true, message: '担保类型不能为空', trigger: 'change'}"
+              prop="guaranteeType">
+              <i-select v-model="formCar.guaranteeType">
+                <i-option value="1">抵押</i-option>
+                <i-option value="2">质押</i-option>
+              </i-select>
+            </i-form-item>
+          </i-col>
+          <i-col span="8">
+            <i-form-item
+              label="权利人类型"
+              :rules="{required: true, message: '权利人类型不能为空', trigger: 'change'}"
+              prop="custType">
+              <i-select v-model="formCar.custType">
+                <i-option value="1">个人</i-option>
+                <i-option value="2">企业</i-option>
+              </i-select>
+            </i-form-item>
+          </i-col>
+          <!--权利人-->
+          <i-col span="8">
+            <i-form-item
+              label="权利人"
+              :rules="{required: true, message: '权利人不能为空', trigger: 'blur'}"
+              prop="carOwnerName">
+              <input type="hidden" v-model="formCar.carOwnerNo"/>
+              <i-input v-model="formCar.carOwnerName" :readonly="true" placeholder="选择权利人">
+                <i-button @click="showSelectObligee=!showSelectObligee" slot="append">选择权利人 <Icon type="ios-more"></Icon></i-button>
+              </i-input>
+            </i-form-item>
+          </i-col>
+        </i-row>
+        <i-row>
+          <i-col span="8" offset="8">
+            <i-form-item label="车牌号" prop="carPlateNo">
+              <i-input v-model="formCar.carPlateNo" placeholder="">
+              </i-input>
+            </i-form-item>
+          </i-col>
+          <i-col span="8">
+            <i-form-item label="是否临时车牌" prop="isTmpPlate">
+              <i-select v-model="formCar.isTmpPlate">
+                <i-option v-for="item in enumSelectData.get('YesNoEnum')" :key="item.itemCode" :value="item.itemCode">{{item.itemName}}</i-option>
+              </i-select>
+            </i-form-item>
+          </i-col>
+        </i-row>
+        <i-row>
+          <!--车辆品牌-->
+          <i-col span="8">
+            <i-form-item
+              label="车辆品牌"
+              :rules="{required: true, message: '权利人类型不能为空', trigger: 'change'}"
+              prop="carBrandCode">
+              <i-select v-model="formCar.carBrandCode">
+                <i-option value="1">奥迪</i-option>
+                <i-option value="2">长安</i-option>
+              </i-select>
+            </i-form-item>
+          </i-col>
+          <!--车系-->
+          <i-col span="8">
+            <i-form-item
+              label="车系"
+              :rules="{required: true, message: '权利人类型不能为空', trigger: 'change'}"
+              prop="carTypeCode">
+              <i-select v-model="formCar.carTypeCode">
+                <i-option value="1">CS75</i-option>
+                <i-option value="2">CS35</i-option>
+              </i-select>
+            </i-form-item>
+          </i-col>
+          <!--型号-->
+          <i-col span="8">
+            <i-form-item
+              label="型号"
+              :rules="{required: true, message: '权利人类型不能为空', trigger: 'change'}"
+              prop="carModel">
+              <i-select v-model="formCar.carModel">
+                <i-option value="1">2017 1.8T 精英型</i-option>
+                <i-option value="2">2017 1.8T 豪华型</i-option>
+              </i-select>
+            </i-form-item>
+          </i-col>
+        </i-row>
+        <i-row>
+          <!--车辆颜色-->
+          <i-col span="8">
+            <i-form-item
+              label="车辆品牌"
+              :rules="{required: true, message: '权利人类型不能为空', trigger: 'change'}"
+              prop="carColor">
+              <i-select v-model="formCar.carColor">
+                <i-option value="1">米色</i-option>
+                <i-option value="2">金色</i-option>
+                <i-option value="3">棕色</i-option>
+                <i-option value="4">紫色</i-option>
+                <i-option value="5">巧克力色</i-option>
+                <i-option value="6">黑色</i-option>
+                <i-option value="7">蓝色</i-option>
+                <i-option value="8">灰色</i-option>
+                <i-option value="9">绿色</i-option>
+                <i-option value="10">红色</i-option>
+                <i-option value="11">橙色</i-option>
+                <i-option value="12">白色</i-option>
+                <i-option value="13">香槟色</i-option>
+                <i-option value="14">银色</i-option>
+                <i-option value="15">黄色</i-option>
+              </i-select>
+            </i-form-item>
+          </i-col>
+          <!--排量-->
+          <i-col span="8">
+            <i-form-item label="排量" prop="carOutputVolume">
+              <i-input v-model="formCar.carOutputVolume" placeholder="">
+              </i-input>
+            </i-form-item>
+          </i-col>
+          <!--排放标准-->
+          <i-col span="8">
+            <i-form-item label="排放标准" prop="carOutputStand">
+              <i-input v-model="formCar.carOutputStand" placeholder="">
+              </i-input>
+            </i-form-item>
+          </i-col>
+        </i-row>
+        <i-row>
+          <!--生产厂商-->
+          <i-col span="8">
+            <i-form-item label="生产厂商" prop="carVendor">
+              <i-input v-model="formCar.carVendor" placeholder="">
+              </i-input>
+            </i-form-item>
+          </i-col>
+          <!--发动机号-->
+          <i-col span="8">
+            <i-form-item label="发动机号" prop="carEngineNo">
+              <i-input v-model="formCar.carEngineNo" placeholder="">
+              </i-input>
+            </i-form-item>
+          </i-col>
+          <!--车架号-->
+          <i-col span="8">
+            <i-form-item label="车架号" prop="carFrameNo">
+              <i-input v-model="formCar.carFrameNo" placeholder="">
+              </i-input>
+            </i-form-item>
+          </i-col>
+        </i-row>
+        <i-row>
+          <!--出厂日期-->
+          <i-col span="8">
+            <i-form-item label="出厂日期" prop="carBirthday">
+              <i-input v-model="formCar.carBirthday" placeholder="">
+              </i-input>
+            </i-form-item>
+          </i-col>
+          <!--上牌城市-->
+          <i-col span="8">
+            <i-form-item label="上牌城市" prop="carOnCity">
+              <i-input v-model="formCar.carOnCity" placeholder="">
+              </i-input>
+            </i-form-item>
+          </i-col>
+          <!--上牌时间-->
+          <i-col span="8">
+            <i-form-item label="上牌时间" prop="carOnDate">
+              <bs-datepicker v-model="formCar.carOnDate" type="text" placeholder="申请时间"></bs-datepicker>
+            </i-form-item>
+          </i-col>
+        </i-row>
+        <i-row>
+          <!--过户次数-->
+          <i-col span="8">
+            <i-form-item label="过户次数" prop="carTransferCount">
+              <i-input type="number" v-model="formCar.carTransferCount" placeholder="">
+              </i-input>
+            </i-form-item>
+          </i-col>
+          <!--抵押次数-->
+          <i-col span="8">
+            <i-form-item label="抵押次数" prop="carGuaCount">
+              <i-input type="number" v-model="formCar.carGuaCount" placeholder="">
+              </i-input>
+            </i-form-item>
+          </i-col>
+          <!--行驶里程-->
+          <i-col span="8">
+            <i-form-item label="行驶里程" prop="carMileage">
+              <i-input v-model="formCar.carMileage" placeholder="">
+                <span slot="append">KM</span>
+              </i-input>
+            </i-form-item>
+          </i-col>
+        </i-row>
+        <i-row>
+          <!--合格证号-->
+          <i-col span="8">
+            <i-form-item label="合格证号" prop="carMileage">
+              <i-input v-model="formCar.carMileage" placeholder="">
+              </i-input>
+            </i-form-item>
+          </i-col>
+          <!--车辆状况-->
+          <i-col span="8">
+            <i-form-item
+              label="车辆状况"
+              :rules="{required: true, message: '权利人类型不能为空', trigger: 'change'}"
+              prop="carStatus">
+              <i-select v-model="formCar.carStatus">
+                <i-option value="1">优</i-option>
+                <i-option value="2">良</i-option>
+                <i-option value="3">中</i-option>
+                <i-option value="4">差</i-option>
+              </i-select>
+            </i-form-item>
+          </i-col>
+          <!--有无事故-->
+          <i-col span="8">
+            <i-form-item label="有无事故" prop="formCar.carIsFault">
+              <i-select v-model="formCar.carIsFault">
+                <i-option v-for="item in enumSelectData.get('YesNoEnum')" :key="item.itemCode" :value="item.itemCode">{{item.itemName}}</i-option>
+              </i-select>
+            </i-form-item>
+          </i-col>
+        </i-row>
+        <i-row>
+          <!--机动车登记证书号-->
+          <i-col span="8">
+            <i-form-item label="机动车登记证书号" prop="carRegNo">
+              <i-input v-model="formCar.carRegNo" placeholder="">
+              </i-input>
+            </i-form-item>
+          </i-col>
+          <!--是否挂靠-->
+          <i-col span="8">
+            <i-form-item label="是否挂靠" prop="formCar.carIsAnchored"><!--枚举：HaveNoEnum-->
+              <i-select v-model="formCar.carIsAnchored">
+                <i-option v-for="item in enumSelectData.get('YesNoEnum')" :key="item.itemCode" :value="item.itemCode">{{item.itemName}}</i-option>
+              </i-select>
+            </i-form-item>
+          </i-col>
+          <!--是否公牌-->
+          <i-col span="8">
+            <i-form-item label="是否挂靠" prop="formCar.carIsPubPlate"><!--枚举：HaveNoEnum-->
+              <i-select v-model="formCar.carIsPubPlate">
+                <i-option v-for="item in enumSelectData.get('YesNoEnum')" :key="item.itemCode" :value="item.itemCode">{{item.itemName}}</i-option>
+              </i-select>
+            </i-form-item>
+          </i-col>
+        </i-row>
+        <i-row>
+          <!--发票开具单位-->
+          <i-col span="8">
+            <i-form-item label="发票开具单位" prop="billCorpName">
+              <i-input v-model="formCar.billCorpName" placeholder="">
+              </i-input>
+            </i-form-item>
+          </i-col>
+          <!--发票号-->
+          <i-col span="8">
+            <i-form-item label="发票开具单位" prop="billNo">
+              <i-input v-model="formCar.billNo" placeholder="">
+              </i-input>
+            </i-form-item>
+          </i-col>
+          <!--发票价格-->
+          <i-col span="8">
+            <i-form-item label="发票价格" prop="billAmt">
+              <i-input v-model="formCar.billAmt" placeholder="">
+              </i-input>
+            </i-form-item>
+          </i-col>
+        </i-row>
+        <i-row>
+          <!--厂商指导价-->
+          <i-col span="8">
+            <i-form-item label="厂商指导价" prop="carGuidePrice">
+              <i-input v-model="formCar.carGuidePrice" placeholder="">
+                <span slot="append">元</span>
+              </i-input>
+            </i-form-item>
+          </i-col>
+          <!--车辆购买价格-->
+          <i-col span="8">
+            <i-form-item label="车辆购买价格" prop="carBuyPrice">
+              <i-input v-model="formCar.carBuyPrice" placeholder="">
+                <span slot="append">元</span>
+              </i-input>
+            </i-form-item>
+          </i-col>
+          <!--车辆价值-->
+          <i-col span="8">
+            <i-form-item label="车辆价值" prop="carEvaluatePrice">
+              <i-input v-model="formCar.carEvaluatePrice" placeholder="">
+                <span slot="append">元</span>
+              </i-input>
+            </i-form-item>
+          </i-col>
+        </i-row>
         <i-form-item class="text-right">
           <i-button type="primary" @click="carSuBmit">提交</i-button>
         </i-form-item>
@@ -249,10 +519,15 @@
         </i-form-item>
       </i-form>
     </bs-modal>
+    <!--选择权利人的模态框-->
+    <bs-modal :title="'选择权利人'" v-model="showSelectObligee" :width="1200">
+      <table-customer-list ref="obligeeTable" type="modal" @on-row-dbclick="selectObligeeRow"></table-customer-list>
+    </bs-modal>
   </div>
 </template>
 
 <script>
+  import TableCustomerList from '@/components/table-customer-list'; // 选择客户列表
   import GetProductModal from '@/components/table-product-list'; // 选择产品
   import personalInfo from '@/components/detail-personal-customer-basic/index.vue';
   import BsModal from '@/components/bs-modal';
@@ -266,6 +541,7 @@
     name: 'personalBasic',
     mixins: [carMixinData, carMixinMethods, assureMixinData, assureMixinMethods, loanMixinData, loanMixinMethods],
     components: {
+      TableCustomerList,
       personalInfo,
       'table-product-list': GetProductModal,
       'bs-modal': BsModal
@@ -276,20 +552,51 @@
         member: {},
         uploadFileName: '',
         showSelectProduct: false,
+        showSelectObligee: false, // 显示选择权利人的模态框
         personalBasicInfo: {},
         // 车辆
         isAddCar: true,
         showModalCar: false,
         carDataLoading: false,
         formCar: {
-          custType: '', // 权利人类型
+          loanNo: '',
+          carOutputStand: '',
+          carGuaCount: '',
+          remark: '',
+          carBuyPrice: '',
+          carEngineNo: '',
+          carRegNo: '',
+          carCertNo: '',
+          carColor: '',
+          carOnCity: '',
           carOwnerNo: '',
+          carGuidePrice: '',
+          id: '',
+          billNo: '',
+          carTypeName: '',
           carOwnerName: '',
-          carModel: '',
+          carIsFault: '',
+          carStatus: '',
           carPlateNo: '',
-          carEngineNo: '', // 发动机号
+          carBirthday: '',
+          carTransferCount: '',
+          carIsAnchored: '',
+          carBrandCode: '',
+          carOnDate: '',
+          carVendor: '',
+          carBrandName: '',
+          billAmt: '',
+          carEvaluatePrice: '',
+          guaranteeType: '',
+          isTmpPlate: '',
+          carOutputVolume: '',
+          custType: '',
+          carTypeCode: '',
+          carIsPubPlate: '',
           carFrameNo: '',
-          carEvaluatePrice: ''
+          carMileage: '',
+          carModel: '',
+          billCorpName: ''
         },
         // 担保信息
         isAddAssure: true,
@@ -337,11 +644,18 @@
       };
     },
     mounted() {
-      /*this.getCarList();
+      this.getCarList();
       this.getAssureList();
-      this.getLoanList();*/
+      this.getLoanList();
     },
     methods: {
+      // 选择权利人
+      selectObligeeRow(row, index) {
+        console.log(row);
+        this.$data.formCar.carOwnerName = row.memberNo;
+        this.$data.formCar.carOwnerNo = row.name;
+        this.$data.showSelectObligee = false;
+      },
       // 接收姓名组件的客户信息
       getMember(CertData) {
         console.log(CertData);

@@ -316,7 +316,6 @@ export default {
   methods: {
     isHasFormDataFun() {
       this.$data.selectPersonalModal = !this.$data.selectPersonalModal;
-      this.$data.isHasFromData = true;
     },
     // 点击放大图片
     showImg(imgURL) {
@@ -329,6 +328,7 @@ export default {
       this.initFormData(row.memberNo);
       this.$emit('getMember', row);
       this.$data.selectPersonalModal = false;
+      this.$data.isHasFromData = true;
     }
   },
   async mounted() {
