@@ -33,11 +33,18 @@ export default {
       this.$data.showModalAssure = false;
     },
     assureSuBmit() {
-      if (this.$data.isAddAssure) {
-        this.addSuBmitAssure();
-      } else {
-        this.setSuBmitAssure();
-      }
+      let name = 'formAssure';
+      this.$refs[name].validate((valid) => {
+        if (valid) {
+          if (this.$data.isAddAssure) {
+            this.addSuBmitAssure();
+          } else {
+            this.setSuBmitAssure();
+          }
+        } else {
+          this.$Message.error('<span style="color: red">*</span>项不能为空');
+        }
+      });
     },
     // 编辑
     setListAssure(row) {

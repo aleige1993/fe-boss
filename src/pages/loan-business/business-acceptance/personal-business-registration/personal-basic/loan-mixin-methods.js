@@ -33,11 +33,18 @@ export default {
       this.$data.showModalLoan = false;
     },
     LoanSuBmit() {
-      if (this.$data.isAddLoan) {
-        this.addSuBmitLoan();
-      } else {
-        this.setSuBmitLoan();
-      }
+      let name = 'formLoan';
+      this.$refs[name].validate((valid) => {
+        if (valid) {
+          if (this.$data.isAddLoan) {
+            this.addSuBmitLoan();
+          } else {
+            this.setSuBmitLoan();
+          }
+        } else {
+          this.$Message.error('<span style="color: red">*</span>项不能为空');
+        }
+      });
     },
     // 编辑
     setListLoan(row) {

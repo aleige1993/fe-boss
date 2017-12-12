@@ -32,11 +32,18 @@ export default {
       this.$data.showModalCar = false;
     },
     carSuBmit() {
-      if (this.$data.isAddCar) {
-        this.addSuBmitCar();
-      } else {
-        this.setSuBmitCar();
-      }
+      let name = 'formCar';
+      this.$refs[name].validate((valid) => {
+        if (valid) {
+          if (this.$data.isAddCar) {
+            this.addSuBmitCar();
+          } else {
+            this.setSuBmitCar();
+          }
+        } else {
+          this.$Message.error('<span style="color: red">*</span>项不能为空');
+        }
+      });
     },
     // 编辑
     setListCar(row) {

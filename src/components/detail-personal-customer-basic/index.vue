@@ -168,19 +168,37 @@
               <i-col span="8">
                 <i-form-item label="身份证正面"
                              prop="mbMemberDTO.certFrontUrl">
-                  <img style="cursor:zoom-in; margin-top: 8px;" width="149" height="95" :src="formData.mbMemberDTO.certFrontUrl" @click="showImg(formData.mbMemberDTO.certFrontUrl)">
+                  <bs-big-img v-if="formData.mbMemberDTO.certFrontUrl"
+                              :thumb="formData.mbMemberDTO.certFrontUrl"
+                              :thumb-width="149"
+                              :thumb-height="95"
+                              :full="formData.mbMemberDTO.certFrontUrl"
+                              :full-width="945">
+                  </bs-big-img>
                 </i-form-item>
               </i-col>
               <i-col span="8">
                 <i-form-item label="身份证反面"
                              prop="mbMemberDTO.certBackUrl">
-                  <img style="cursor:zoom-in; margin-top: 8px;" width="149" height="95" :src="formData.mbMemberDTO.certBackUrl" @click="showImg(formData.mbMemberDTO.certBackUrl)">
+                  <bs-big-img v-if="formData.mbMemberDTO.certBackUrl"
+                              :thumb="formData.mbMemberDTO.certBackUrl"
+                              :thumb-width="149"
+                              :thumb-height="95"
+                              :full="formData.mbMemberDTO.certBackUrl"
+                              :full-width="945">
+                  </bs-big-img>
                 </i-form-item>
               </i-col>
               <i-col span="8">
                 <i-form-item label="手持身份证"
                              prop="mbMemberDTO.certHandUrl">
-                  <img style="cursor:zoom-in; margin-top: 8px;" width="149" height="95" :src="formData.mbMemberDTO.certHandUrl" @click="showImg(formData.mbMemberDTO.certHandUrl)">
+                  <bs-big-img v-if="formData.mbMemberDTO.certHandUrl"
+                              :thumb="formData.mbMemberDTO.certHandUrl"
+                              :thumb-width="149"
+                              :thumb-height="95"
+                              :full="formData.mbMemberDTO.certHandUrl"
+                              :full-width="945">
+                  </bs-big-img>
                 </i-form-item>
               </i-col>
             </i-row>
@@ -277,10 +295,6 @@
       <table-personal-customer-list ref="tablePersonalCustomer" type="modal" @on-row-dbclick="selectPersonal">
       </table-personal-customer-list>
     </bs-modal>
-    <!--点击图片放大模态框-->
-    <i-modal v-model="visibleImg" cancel-text="" ok-text="关闭">
-      <img :src="showImgUpUrl" style="width: 100%">
-    </i-modal>
   </div>
 </template>
 <script>
@@ -295,8 +309,6 @@ export default {
   data() {
     return {
       isHasFromData: false,
-      visibleImg: false,
-      showImgUpUrl: '',
       selectPersonalModal: false
     };
   },
@@ -316,13 +328,6 @@ export default {
   methods: {
     isHasFormDataFun() {
       this.$data.selectPersonalModal = !this.$data.selectPersonalModal;
-    },
-    // 点击放大图片
-    showImg(imgURL) {
-      if (imgURL !== '') {
-        this.$data.showImgUpUrl = imgURL;
-        this.$data.visibleImg = true;
-      }
     },
     selectPersonal(row, index) {
       this.initFormData(row.memberNo);

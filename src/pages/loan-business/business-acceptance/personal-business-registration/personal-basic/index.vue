@@ -132,13 +132,9 @@
       <table-product-list @on-row-dbclick="selectProduct"></table-product-list>
     </bs-modal>
 
-    <!--点击图片放大模态框-->
-    <i-modal v-model="visibleImg" cancel-text="" ok-text="关闭">
-      <img :src="showImgUpUrl" style="width: 100%">
-    </i-modal>
     <!--车辆信息的新增修改模态框-->
     <bs-modal :title="isAddCar ? '新增' : '编辑'" v-model="showModalCar" :width="1200">
-      <i-form  ref="formCar" :model="formCar" label-position="right" :label-width="120">
+      <i-form v-if="showModalCar" ref="formCar" :model="formCar" label-position="right" :label-width="120">
         <i-row>
           <i-col span="8">
             <i-form-item
@@ -167,9 +163,9 @@
             <i-form-item
               label="权利人"
               :rules="{required: true, message: '权利人不能为空', trigger: 'blur'}"
-              prop="carOwnerName">
+              prop="carOwnerNo">
               <input type="hidden" v-model="formCar.carOwnerNo"/>
-              <i-input v-model="formCar.carOwnerName" :readonly="true" placeholder="选择权利人">
+              <i-input v-model="formCar.carOwnerName" :disabled="true" placeholder="选择权利人">
                 <i-button @click="showSelectObligee=!showSelectObligee" slot="append">选择权利人 <Icon type="ios-more"></Icon></i-button>
               </i-input>
             </i-form-item>
@@ -318,14 +314,14 @@
           <!--过户次数-->
           <i-col span="8">
             <i-form-item label="过户次数" prop="carTransferCount">
-              <i-input type="number" v-model="formCar.carTransferCount" placeholder="">
+              <i-input v-model="formCar.carTransferCount" placeholder="">
               </i-input>
             </i-form-item>
           </i-col>
           <!--抵押次数-->
           <i-col span="8">
             <i-form-item label="抵押次数" prop="carGuaCount">
-              <i-input type="number" v-model="formCar.carGuaCount" placeholder="">
+              <i-input v-model="formCar.carGuaCount" placeholder="">
               </i-input>
             </i-form-item>
           </i-col>
@@ -341,8 +337,8 @@
         <i-row>
           <!--合格证号-->
           <i-col span="8">
-            <i-form-item label="合格证号" prop="carMileage">
-              <i-input v-model="formCar.carMileage" placeholder="">
+            <i-form-item label="合格证号" prop="carCertNo">
+              <i-input v-model="formCar.carCertNo" placeholder="">
               </i-input>
             </i-form-item>
           </i-col>
@@ -350,7 +346,6 @@
           <i-col span="8">
             <i-form-item
               label="车辆状况"
-              :rules="{required: true, message: '权利人类型不能为空', trigger: 'change'}"
               prop="carStatus">
               <i-select v-model="formCar.carStatus">
                 <i-option value="1">优</i-option>
@@ -362,7 +357,7 @@
           </i-col>
           <!--有无事故-->
           <i-col span="8">
-            <i-form-item label="有无事故" prop="formCar.carIsFault">
+            <i-form-item label="有无事故" prop="carIsFault">
               <i-select v-model="formCar.carIsFault">
                 <i-option v-for="item in enumSelectData.get('YesNoEnum')" :key="item.itemCode" :value="item.itemCode">{{item.itemName}}</i-option>
               </i-select>
@@ -379,7 +374,7 @@
           </i-col>
           <!--是否挂靠-->
           <i-col span="8">
-            <i-form-item label="是否挂靠" prop="formCar.carIsAnchored"><!--枚举：HaveNoEnum-->
+            <i-form-item label="是否挂靠" prop="carIsAnchored">
               <i-select v-model="formCar.carIsAnchored">
                 <i-option v-for="item in enumSelectData.get('YesNoEnum')" :key="item.itemCode" :value="item.itemCode">{{item.itemName}}</i-option>
               </i-select>
@@ -387,7 +382,7 @@
           </i-col>
           <!--是否公牌-->
           <i-col span="8">
-            <i-form-item label="是否挂靠" prop="formCar.carIsPubPlate"><!--枚举：HaveNoEnum-->
+            <i-form-item label="是否挂靠" prop="carIsPubPlate">
               <i-select v-model="formCar.carIsPubPlate">
                 <i-option v-for="item in enumSelectData.get('YesNoEnum')" :key="item.itemCode" :value="item.itemCode">{{item.itemName}}</i-option>
               </i-select>
@@ -449,38 +444,50 @@
       </i-form>
     </bs-modal>
     <!--担保信息的新增修改模态框-->
-    <bs-modal :title="isAddAssure ? '新增' : '编辑'" v-model="showModalAssure">
+    <bs-modal :title="isAddAssure ? '新增' : '编辑'" v-model="showModalAssure" :width="800">
       <i-form ref="formCar" :model="formAssure" label-position="right" :label-width="100">
-        <i-form-item label="担保人类型" prop="guaPersonType">
-          <i-select v-model="formAssure.guaPersonType">
-            <i-option value="1">个人</i-option>
-            <i-option value="2">企业</i-option>
-          </i-select>
+        <i-row>
+          <i-col span="12">
+            <i-form-item label="担保人类型" prop="guaPersonType">
+              <i-select v-model="formAssure.guaPersonType">
+                <i-option value="1">个人</i-option>
+                <i-option value="2">企业</i-option>
+              </i-select>
+            </i-form-item>
+          </i-col>
+          <i-col span="12">
+            <i-form-item label="保证人" prop="guaPersonName">
+              <i-input v-model="formAssure.guaPersonName" placeholder="">
+              </i-input>
+            </i-form-item>
+          </i-col>
+        </i-row>
+        <i-row>
+          <i-col span="12">
+            <i-form-item label="担保方式" prop="guaType">
+              <i-select v-model="formAssure.guaType">
+                <i-option value="1">连带责任保证</i-option>
+                <i-option value="2">一般保证</i-option>
+              </i-select>
+            </i-form-item>
+          </i-col>
+          <i-col span="12">
+            <i-form-item label="与债务人关系" prop="relation">
+              <i-select v-model="formAssure.relation">
+                <i-option value="1">亲属</i-option>
+                <i-option value="2">父母</i-option>
+                <i-option value="3">子女</i-option>
+                <i-option value="4">朋友</i-option>
+                <i-option value="5">同事</i-option>
+                <i-option value="6">同学</i-option>
+              </i-select>
+            </i-form-item>
+          </i-col>
+        </i-row>
+        <i-form-item label="备注" prop="remark">
+          <i-input type="textarea" :rows="2" v-model="formAssure.remark"></i-input>
         </i-form-item>
-        <i-form-item label="担保人编号" prop="guaPersonNo">
-          <i-input v-model="formAssure.guaPersonNo" placeholder="">
-          </i-input>
-        </i-form-item>
-        <i-form-item label="保证人" prop="guaPersonName">
-          <i-input v-model="formAssure.guaPersonName" placeholder="">
-          </i-input>
-        </i-form-item>
-        <i-form-item label="担保方式" prop="guaType">
-          <i-select v-model="formAssure.guaType">
-            <i-option value="1">连带责任保证</i-option>
-            <i-option value="2">一般保证</i-option>
-          </i-select>
-        </i-form-item>
-        <i-form-item label="与债务人关系" prop="relation">
-          <i-select v-model="formAssure.relation">
-            <i-option value="1">亲属</i-option>
-            <i-option value="2">父母</i-option>
-            <i-option value="3">子女</i-option>
-            <i-option value="4">朋友</i-option>
-            <i-option value="5">同事</i-option>
-            <i-option value="6">同学</i-option>
-          </i-select>
-        </i-form-item>
+
         <i-form-item class="text-right">
           <i-button type="primary" @click="assureSuBmit">提交</i-button>
         </i-form-item>
@@ -559,8 +566,8 @@
         showModalCar: false,
         carDataLoading: false,
         formCar: {
-          loanNo: '',
           carOutputStand: '',
+          loanNo: '',
           carGuaCount: '',
           remark: '',
           carBuyPrice: '',
@@ -571,7 +578,6 @@
           carOnCity: '',
           carOwnerNo: '',
           carGuidePrice: '',
-          id: '',
           billNo: '',
           carTypeName: '',
           carOwnerName: '',
@@ -603,43 +609,67 @@
         assureDataLoading: false,
         showModalAssure: false,
         formAssure: {
-          guaPersonType: '', // 担保人类型
-          guaPersonNo: '', // 担保人编号
-          guaPersonName: '', // 保证人
-          guaType: '', // 担保方式
-          relation: '' // 与债务人关系
+          guaPersonMobile: '',
+          guaPersonName: '',
+          guaPersonCertType: '',
+          loanNo: '',
+          guaPersonType: '',
+          guaPersonCertNo: '',
+          guaType: '',
+          remark: '',
+          guaPersonNo: '',
+          relation: ''
         },
         // 贷款材料
         isAddLoan: true,
         showModalLoan: false,
         loanDataLoading: false,
         formLoan: {
-          loanDocName: '', // 贷款材料名称
-          remark: '', // 备注
-          attachPath: '' // 附件地址
+          attachPath: '',
+          loanDocCode: '',
+          loanNo: '',
+          remark: '',
+          loanDocName: '',
+          status: ''
         },
         showBasicList: true, // 当选择客户姓名之后就显示以下的相关信息
         isFromDetail: false,
         showSelectCustomer: false,
-        visibleImg: false,
-        showImgUpUrl: '',
         formData: {
-          name: '',
-          memberNo: '',
-          productType: '', // 产品类别
-          productName: '', // 产品名称
-          productNo: '', // 产品编号
-          carType: '', // 车类
           carBuyAmt: '', // 车辆购车价格
-          applyAmt: '', // 申请金额
+          deptName: '', // 业务归属部门名称
+          certType: '', // 证件类型
+          loanNo: '', // 项目编号
+          taskAssigneeName: '', // 任务签收人姓名
+          taskArriveTime: '', // 任务送达时间
+          memberName: '', // 客户名称
+          corpNo: '', // 公司编号
+          productName: '', // 产品名称
+          deptNo: '', // 业务归属部门ID
+          deptCooperationStartDate: '', // 业务部门合作开始时间
+          carType: '', // 车类型，1-一手车；2-二手车
+          creditCode: '', // 公司社会统一信用代码
           applyPeriods: '', // 申请期数
-          depositOrDownPayment: '', // 首付或保证金意向
-          carUse: '', // 贷款用途
-          applyTime: '', // 申请时间
-          lon: '',
-          lat: '',
-          applicationPlace: '',
-          carEvaluatePrice: ''
+          depositOrDownPayment: '', // 首付或保证金
+          custManagerName: '', // 客户经理名称
+          custKind: '', // 客户性质1-新增客户2-结清再贷
+          applyTime: '', // 贷款申请时间
+          productType: '', // 产品类别，1-乘用车，2-商用车，3-轻卡，4微卡
+          productNo: '', // 产品编号
+          loanUse: '', // 贷款用途
+          carUse: '', // 车辆用途1-自用2-指定第三方自用3-商用
+          corpName: '', // 公司名称
+          mobileNo: '', // 手机号码
+          taskNode: '', // 任务节点
+          guaMethod: '', // 担保方式1-个人担保2-夫妻担保3-直系亲属担保
+          applyAmt: '', // 申请金额
+          custManagerNo: '', // 客户经理ID
+          memberNo: '', // 客户编号
+          certNo: '', // 证件号码
+          loanChannel: '', // 项目来源;1-Android,2-IOS,3-Web(后台手工录入),4-TX(泰象)
+          custType: '', // 客户类型1-个人客户2-公司客户
+          taskAssignee: '', // 任务签收人
+          status: '' // 状态0-未处理1-处理中2-已处理,3-草稿,9-废弃
         }
       };
     },
