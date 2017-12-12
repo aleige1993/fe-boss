@@ -51,7 +51,12 @@ export default {
                 },
                 on: {
                   click: () => {
-                    alert(params.row.distributorNo);
+                    this.$router.push({
+                      path: '/index/customer/distributor/details',
+                      query: {
+                        distributorNo: params.row.distributorNo
+                      }
+                    });
                   }
                 }
               }, '详情'),

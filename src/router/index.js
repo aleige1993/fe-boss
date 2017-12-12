@@ -42,8 +42,8 @@ let MyRouter = new Router({
               children: [
                 { path:'/', name: 'distributorList', component: resolve => require(['@/pages/customer-manage/distributor-manage/distributor-list'], resolve)},
                 { path: 'add', name: 'addDistributor', component: resolve => require(['@/pages/customer-manage/distributor-manage/distributor-list/page-distributor-add'], resolve)},
-                { path: 'quota', name: 'addDistributor', component: resolve => require(['@/pages/customer-manage/distributor-manage/distributor-list/page-distributor-quota'], resolve)}
-                // { path: 'modify', name: 'addCompanyCustomer', component: resolve => require(['@/pages/customer-manage/company-customer/company-add'], resolve) }
+                { path: 'quota', name: 'quotaDistributor', component: resolve => require(['@/pages/customer-manage/distributor-manage/distributor-list/page-distributor-quota'], resolve)},
+                { path: 'details', name: 'detailsDistributor', component: resolve => require(['@/pages/customer-manage/distributor-manage/distributor-list/page-distributor-details'], resolve)}
               ]
             },
             // 黑名单管理
