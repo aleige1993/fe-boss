@@ -6,8 +6,9 @@
           <bs-form-block :title="'基本信息'">
             <i-row>
               <i-col span="8">
-                <i-form-item prop="baseDTO.corpName" label="公司名称">
-                  <span v-text="formData.baseDTO.corpName"></span>
+                <i-form-item label="公司名称">
+                  <span v-text="formData.baseDTO.corpName" @click="gotoPersonal" style="color: #2b90f8;cursor: pointer">
+                  </span>
                 </i-form-item>
               </i-col>
               <i-col span="8">
@@ -150,7 +151,8 @@
               </i-col>
               <i-col span="8">
                 <i-form-item label="持股比例" prop="baseDTO.legalPersonStock">
-                  <span v-text="formData.baseDTO.legalPersonStock !== ''&&formData.baseDTO.legalPersonStock + '%'">
+                  <span v-text="formData.baseDTO.legalPersonStock">
+                    <span v-if="formData.baseDTO.legalPersonStock !== ''">%</span>
                   </span>
                 </i-form-item>
               </i-col>
@@ -223,22 +225,6 @@
         </i-form>
       </i-col>
     </i-row>
-    <!-- 选择客户经理的弹窗 -->
-    <bs-modal title="选择客户经理" :width="1200" v-model="showSelectEmployer">
-      <table-employer-list @on-row-dbclick="selectEmployer"></table-employer-list>
-    </bs-modal>
-    <!-- 选择业务拓展部门的弹窗 -->
-    <bs-modal :width="880" v-model="selectDepartmentModal" title="选择业务拓展部门">
-      <tree-grid v-if="selectDepartmentModal" @on-row-dblclick="selectDep" :columns="depColumns" :data="depData"></tree-grid>
-    </bs-modal>
-    <!--选择法人模态框-->
-    <bs-modal title="选择法人代表" v-model="selectRulerModal" :width="1200">
-      <table-customer-list ref="addCustomerSpouseModalTable" type="modal" @on-row-dbclick="selectRulerRow">
-        <div class="form-top-actions" slot="topAction">
-          <i-button type="info" @click="addCustomerModal=!addCustomerModal"><i class="iconfont icon-xinzeng"></i> 新增</i-button>
-        </div>
-      </table-customer-list>
-    </bs-modal>
     <i-spin size="large" fix v-if="initFormLoading"></i-spin>
   </div>
 </template>
@@ -246,80 +232,35 @@
 import MixinData from './mixin-data';
 import MixinMethods from './mixin-methods';
 import BSModal from '@/components/bs-modal';
-import BsDispicker from '@/components/bs-dispicker';
-import TableEmployerList from '@/components/table-employer-list';
-import TreeGrid from '@/components/bs-tree-grid';
-import TableCustomerList from '@/components/table-customer-list';
 export default {
   name: 'detailCompanyCustomerBasic',
   mixins: [MixinData, MixinMethods],
   data() {
     return {
-      addAttachModal: false,
-      showSelectEmployer: false,
-      selectDepartmentModal: false,
       initFormLoading: false,
       loadingAttachFile: false,
-      selectRulerModal: false,
       attachFormData: {
         attachName: '',
         attachUrl: ''
       }
     };
   },
+  props: ['corpNo'],
   computed: {
-    corpNo() {
-      if (this.$route.query.id) {
-        return this.$route.query.id;
-      } else {
-        return null;
-      }
-    },
-    isFromDetail() {
-      return this.$route.query.from === 'detail';
-    }
-  },
-  props: {
-    type: {
-      default: 'page',
-      required: false,
-      type: String
-    }
   },
   components: {
-    'bs-modal': BSModal,
-    BsDispicker,
-    TableEmployerList,
-    TreeGrid,
-    TableCustomerList
+    'bs-modal': BSModal
   },
   methods: {
-    resetFormByStatus() {
-      let _id = this.$route.query.id;
-      if (_id) {
-        // 如果是编辑或者详情初始化表单
-        this.initFormData(_id);
-      } else {
-        // 如果是添加，重置所有数据
-        this.$data.formData = $.extend({}, this.$data.formDataInit);
-      }
+    gotoPersonal() {
+      //window.open(`#/index/customer/detail?id=${this.$data.formData.mbMemberDTO.memberNo}&from=detail`);
+      window.open(`#/index/customer/companycustomer/modify?id=${this.corpNo}&name=${this.$data.formData.baseDTO.corpName}&from=detail`);
     }
   },
   watch: {
-    '$route': {
-      handler(newVal, oldVal) {
-        this.resetFormByStatus();
-      },
-      deep: true
-    }
   },
   mounted() {
-    this.getDepList();
-    if (this.type !== 'page') {
-      this.$data.formData = $.extend({}, this.$data.formDataInit);
-    } else {
-      this.resetFormByStatus();
-    }
+    this.initFormData(this.corpNo);
   }
 };
 </script>

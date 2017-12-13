@@ -71,6 +71,17 @@
             <i-input v-model="formUser.openbankclearingno"></i-input>
           </i-form-item>
         </i-col>
+        <!--是否主账号-->
+        <i-col span="12">
+          <i-form-item
+            label="是否主账号"
+            :rules="{required: true, message: '是否主账号不能为空', trigger: 'change'}"
+            prop="isMainAcctNo">
+            <i-select v-model="formUser.isMainAcctNo" placeholder="请选择">
+              <i-option v-for="item in enumSelectData.get('YesNoEnum')" :key="item.itemCode" :value="item.itemCode">{{item.itemName}}</i-option>
+            </i-select>
+          </i-form-item>
+        </i-col>
         <!--备注-->
         <i-col span="24">
           <i-form-item
@@ -119,6 +130,7 @@
           openbankname: '', // 开户行
           openbankno: '', // 开户行号
           openbankclearingno: '', // 清算行号
+          isMainAcctNo: '', // 是否主账号
           remark: '' // 备注
         },
         columns1: [
@@ -145,6 +157,13 @@
           {
             title: '开户行',
             key: 'openbankname'
+          },
+          {
+            title: '是否主账号',
+            key: 'isMainAcctNo',
+            render: (h, params) => {
+              return h('span', {}, this.enumCode2Name(params.row.isMainAcctNo, 'YesNoEnum'));
+            }
           },
           {
             title: '操作',

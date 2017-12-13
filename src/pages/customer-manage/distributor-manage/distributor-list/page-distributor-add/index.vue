@@ -5,7 +5,7 @@
       <i-breadcrumb-item href="/">首页</i-breadcrumb-item>
       <i-breadcrumb-item href="/index/customer/distributor">渠道商管理</i-breadcrumb-item>
       <i-breadcrumb-item href="/index/customer/distributor">渠道商列表</i-breadcrumb-item>
-      <i-breadcrumb-item href="/index/customer/distributor/add">新增渠道商</i-breadcrumb-item>
+      <i-breadcrumb-item>新增渠道商</i-breadcrumb-item>
     </i-breadcrumb>
     <i-form ref="formAdd" :model="formAdd" label-position="right" :label-width="120" style="padding: 30px 0;">
       <i-row>

@@ -8,6 +8,7 @@ import enumSelectData from './enum-select-data';
 import department from './department';
 import companyCredit from './company-credit';
 import loanbusiness from './loanbusiness';
+import distributor from './distributor';
 
 let ary = [
   {
@@ -76,5 +77,5 @@ let ary = [
     })
   }
 ];
-let result = [...ary, ...menuList, ...product, ...invest, ...customerManage, ...enumSelectData, ...employerManage, ...department, ...companyCredit, ...loanbusiness];
+let result = [...ary, ...menuList, ...product, ...invest, ...distributor, ...customerManage, ...enumSelectData, ...employerManage, ...department, ...companyCredit, ...loanbusiness];
 export default result;

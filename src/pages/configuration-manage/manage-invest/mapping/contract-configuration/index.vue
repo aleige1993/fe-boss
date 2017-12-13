@@ -27,6 +27,12 @@
             <i-button @click="showSelectContractTemplate=!showSelectContractTemplate" slot="append">选择合同模板 <Icon type="ios-more"></Icon></i-button>
           </i-input>
         </i-form-item>
+        <!--合同类型-->
+        <i-form-item prop="contractType" label="合同类型">
+          <Select v-model="dataForm.contractType">
+            <i-option v-for="item in enumSelectData.get('ContractTypeEnum')" :key="item.itemCode" :value="item.itemCode">{{item.itemName}}</i-option>
+          </Select>
+        </i-form-item>
         <!--签订方式-->
         <i-form-item prop="signType" label="签订方式">
           <Select v-model="dataForm.signType">
@@ -74,6 +80,7 @@
         dataForm: {
           productName: '',
           capitalName: '',
+          contractType: '', // 合同类型
           contractTemplateNo: '',
           contractTemplateName: '',
           signType: ''
@@ -117,6 +124,7 @@
         let resAdd = await this.$http.post('/pms/capital/saveContractTemplateCfg', {
           contractTemplateName: this.$data.dataForm.contractTemplateName,
           contractTemplateNo: this.$data.dataForm.contractTemplateNo,
+          contractType: this.$data.dataForm.contractType,
           signType: this.$data.dataForm.signType,
           capitalNo: this.getRowData.capitalNo,
           capitalName: this.getRowData.capitalName,
@@ -137,7 +145,7 @@
             let productNo = row.productNo;
             const loadingMsg = this.$Message.loading('删除中...', 0);
             let respDel = await this.$http.post('/pms/capital/deleteContractTemplateCfg', {
-              contractTemplateNo: this.$data.dataForm.contractTemplateNo,
+              contractTemplateNo: row.contractTemplateNo,
               capitalNo: this.getRowData.capitalNo,
               productNo: this.getRowData.productNo
             });

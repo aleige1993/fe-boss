@@ -34,7 +34,7 @@ export default {
           'corpType': '',
           'custMgrName': '',
           'regDate': '',
-          // 'corpNo': '',
+          'corpNo': '',
           'bizCityCode': '',
           'custMgrNo': '',
           'creditCode': '',

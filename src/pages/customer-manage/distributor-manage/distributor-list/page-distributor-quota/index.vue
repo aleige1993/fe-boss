@@ -5,7 +5,7 @@
       <i-breadcrumb-item href="/">首页</i-breadcrumb-item>
       <i-breadcrumb-item href="/index/customer/distributor">渠道商管理</i-breadcrumb-item>
       <i-breadcrumb-item href="/index/customer/distributor">渠道商列表</i-breadcrumb-item>
-      <i-breadcrumb-item href="/index/customer/distributor/quota">新增授信额度信息</i-breadcrumb-item>
+      <i-breadcrumb-item>新增授信额度信息</i-breadcrumb-item>
     </i-breadcrumb>
     <i-form ref="formQuota" :model="formQuota" label-position="right" :label-width="120" style="padding: 30px 0;">
       <i-row>

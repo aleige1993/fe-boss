@@ -8,35 +8,35 @@ export default {
         },
         {
           title: '客户编号',
-          key: 'distributorNo'
+          key: 'memberNo'
         },
         {
           title: '公司名称',
-          key: 'distributorNo'
+          key: 'merchantNo'
         },
         {
           title: '统一社会信用代码',
-          key: 'distributorNo'
+          key: 'merchantNo'
         },
         {
           title: '法定代表人',
-          key: 'distributorNo'
+          key: 'merchantNo'
         },
         {
           title: '注册时间',
-          key: 'distributorNo'
+          key: 'merchantNo'
         },
         {
           title: '注册资金',
-          key: 'distributorNo'
+          key: 'merchantNo'
         },
         {
           title: '公司电话',
-          key: 'distributorNo'
+          key: 'merchantNo'
         },
         {
           title: '授信状态', //0:未授信1-授信审核中2-授信通过3-授信拒绝4-授信驳回5-授信过期6-冻结
-          key: 'distributorNo'
+          key: 'merchantNo'
         },
         {
           title: '操作',
@@ -54,7 +54,9 @@ export default {
                     this.$router.push({
                       path: '/index/customer/distributor/details',
                       query: {
-                        distributorNo: params.row.distributorNo
+                        memberNo: params.row.memberNo,
+                        merchantNo: params.row.merchantNo,
+                        from: 'detail'
                       }
                     });
                   }
@@ -66,7 +68,7 @@ export default {
                 },
                 on: {
                   click: () => {
-                    alert(params.row.distributorNo);
+                    alert(params.row.merchantNo);
                   }
                 }
               }, '修改'),
@@ -76,7 +78,7 @@ export default {
                 },
                 on: {
                   click: () => {
-                    alert(params.row.distributorNo);
+                    alert(params.row.merchantNo);
                   }
                 }
               }, '删除'),
@@ -86,7 +88,7 @@ export default {
                 },
                 on: {
                   click: () => {
-                    alert(params.row.distributorNo);
+                    alert(params.row.merchantNo);
                   }
                 }
               }, '激活/冻结')
@@ -96,7 +98,7 @@ export default {
                 },
                 on: {
                   click: () => {
-                    alert(params.row.distributorNo);
+                    alert(params.row.merchantNo);
                   }
                 }
               }, '操作员管理')*/
@@ -106,7 +108,8 @@ export default {
       ],
       distributorList: [
         {
-          distributorNo: '1243',
+          memberNo: '1111',
+          merchantNo: '1243',
           action: '111'
         }
       ]

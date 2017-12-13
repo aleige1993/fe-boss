@@ -4,7 +4,7 @@ export default {
       columns1: [
         {
           title: '产品编号',
-          width: 100,
+          width: 180,
           align: 'center',
           key: 'productNo'
         },
@@ -31,7 +31,7 @@ export default {
         {
           title: '操作',
           key: 'action',
-          width: 200,
+          width: 240,
           align: 'center',
           render: (h, params) => {
             return h('div', [

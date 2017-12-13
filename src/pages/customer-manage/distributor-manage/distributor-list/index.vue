@@ -90,6 +90,15 @@
       },
       // 打开车型管理
       openCarModal() {
+        if (this.clickRowedFun()) {
+          this.$router.push({
+            path: '/index/customer/distributor/car',
+            query: {
+              currentPage: this.$data.currentPage,
+              ...this.$data.clickRow
+            }
+          });
+        }
       },
       // 打开额度管理
       openQuotaModal() {
