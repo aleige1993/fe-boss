@@ -86,26 +86,24 @@
             </i-row>
             <i-row>
               <i-col span="18">
-                <i-form-item label="注册地址" prop="baseDTO.regCityCode">
-                  <input type="hidden" v-model="formData.baseDTO.regCityCode"/>
-                  <bs-dispicker :currProvince="''+formData.baseDTO.regProvinceName"
-                                :currDistrict="''+formData.baseDTO.regDistrictName"
-                                :currCity="''+formData.baseDTO.regCityName"
-
-                                @on-change="selectRegDistance"></bs-dispicker>
+                <i-form-item label="注册地址" prop="baseDTO.regRoadAddr">
+                  <span>
+                    {{formData.baseDTO.regProvinceName}}
+                    {{formData.baseDTO.regDistrictName}}
+                    {{formData.baseDTO.regCityName}}
+                  </span>
                   <span v-text="formData.baseDTO.regRoadAddr" style="width: 220px;"></span>
                 </i-form-item>
               </i-col>
             </i-row>
             <i-row>
               <i-col span="18">
-                <i-form-item label="营业地址" prop="baseDTO.bizCityCode">
-                  <input type="hidden" v-model="formData.baseDTO.bizCityCode"/>
-                  <bs-dispicker :currProvince="formData.baseDTO.bizProvinceName"
-                                :currDistrict="formData.baseDTO.bizDistrictName"
-                                :currCity="formData.baseDTO.bizCityName"
-
-                                @on-change="selectBizDistance"></bs-dispicker>
+                <i-form-item label="营业地址" prop="baseDTO.bizRoadAddr">
+                  <span>
+                    {{formData.baseDTO.bizProvinceName}}
+                    {{formData.baseDTO.bizDistrictName}}
+                    {{formData.baseDTO.bizCityName}}
+                  </span>
                   <span v-text="formData.baseDTO.bizRoadAddr" style="width: 220px;"></span>
                 </i-form-item>
               </i-col>

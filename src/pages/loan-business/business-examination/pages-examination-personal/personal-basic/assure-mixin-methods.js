@@ -21,16 +21,15 @@ export default {
     // 担保信息提交
     async addSuBmitAssure() {
       await this.assureData.unshift(this.$data.formAssure);
-      this.$Message.success('新增成功');
-      console.log(45645);
       this.$data.showModalAssure = false;
+      this.$Message.success('新增成功');
     },
     // 修改情况下的提交数据
     async setSuBmitAssure() {
       let index = await this.$data.formAssure._index;
       this.$set(this.$data.assureData, index, this.$data.formAssure);
-      this.$Message.success('修改成功');
       this.$data.showModalAssure = false;
+      this.$Message.success('修改成功');
     },
     assureSuBmit() {
       let name = 'formAssure';

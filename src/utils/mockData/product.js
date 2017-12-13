@@ -151,6 +151,32 @@ export default [
       'success': true
     })
   },
+  // 产品配置-产品匹配配置
+  {
+    url: '/pms/productMatch/list',
+    type: 'get',
+    on: true,
+    resp: Mock.mock({
+      'body': {
+        'currentPage': 1,
+        'isMore': 0,
+        'pageSize': 15,
+        'resultList|10': [
+          {
+            'productNo|+1': 1,
+            'productName': /[测试字体]{4,30}/,
+            'carType|1': ['1', '2']
+          }
+        ],
+        'startIndex': 0,
+        'totalNum': 100,
+        'totalPage': 1
+      },
+      'reCode': '0000',
+      'reMsg': '成功',
+      'success': true
+    })
+  },
   // 产品配置-利率方案配置-表单数据
   {
     url: '/pms/productPackage/list',

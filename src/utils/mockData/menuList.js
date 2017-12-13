@@ -98,7 +98,8 @@ export default [
                   { name: '费用类型配置', url: '/index/conf/product/cost' },
                   { name: '准入规则配置', url: '/index/conf/product/rule' },
                   { name: '车辆材料配置', url: '/index/conf/product/car' },
-                  { name: '归档材料配置', url: '/index/conf/product/file' }
+                  { name: '归档材料配置', url: '/index/conf/product/file' },
+                  { name: '产品匹配配置', url: '/index/conf/product/match' }
                 ]
               },
               {

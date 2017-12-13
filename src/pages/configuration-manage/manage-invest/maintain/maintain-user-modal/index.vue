@@ -242,8 +242,8 @@
         };
         let resAdd = await this.$http.post('/pms/capital/accSave', dataObject);
         this.$data.ShowModal = false;
+        this.$data.buttonLoading = false; // 关闭按钮的loading状态
         if (resAdd.success) {
-          this.$data.buttonLoading = false; // 关闭按钮的loading状态
           this.$Message.success('新增成功');
           this.getPrivateCustomerList();
         }
