@@ -99,17 +99,17 @@ let MyRouter = new Router({
               ]
             },
             // 贷款业务-业务受理
-            { path: 'accept', name: 'loanBusinessAccept', component: resolve => require(['@/pages/loan-business/business-acceptance'], resolve),
+            { path: 'accept', name: 'privateLoanBusinessAccept', component: resolve => require(['@/pages/loan-business/business-acceptance'], resolve),
               children: [
                 // 贷款业务-业务受理-个人业务登记-基本信息
-                { path: '/', name: 'PersonalRegistration', component: resolve => require(['@/pages/loan-business/business-acceptance/personal-business-registration'], resolve)}
+                { path: '/', name: 'PersonalRegistration', props: { customerType: '1' }, component: resolve => require(['@/pages/loan-business/business-acceptance/personal-business-registration'], resolve)}
               ]
             },
             // 贷款业务-业务受理-企业客户
-            { path: 'companyaccept', name: 'loanBusinessAccept', component: resolve => require(['@/pages/loan-business/business-acceptance'], resolve),
+            { path: 'companyaccept', name: 'companyLoanBusinessAccept', component: resolve => require(['@/pages/loan-business/business-acceptance'], resolve),
               children: [
                 // 贷款业务-业务受理-个人业务登记-基本信息
-                { path: '/', name: 'CompanyRegistration', component: resolve => require(['@/pages/loan-business/business-acceptance/company-business-registration'], resolve)}
+                { path: '/', name: 'CompanyRegistration', props: { customerType: '2' }, component: resolve => require(['@/pages/loan-business/business-acceptance/personal-business-registration'], resolve)}
               ]
             },
             // 贷款业务-授信管理

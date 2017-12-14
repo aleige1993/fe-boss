@@ -34,7 +34,7 @@ export default {
   -moz-osx-font-smoothing: grayscale;
   color: #333;
   .wraper{
-    padding: 110px 50px 20px;
+    padding: 110px 15px 20px;
   }
 }
 </style>

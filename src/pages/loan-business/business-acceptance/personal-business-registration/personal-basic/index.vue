@@ -9,9 +9,9 @@
             <i-form-item
               label="产品名称"
               :rules="{required: true, message: '产品不能为空', trigger: 'blur'}"
-              prop="productName">
-              <input type="hidden" v-model="formData.productName"/>
-              <i-input v-model="formData.productNo" :readonly="true" placeholder="选择产品">
+              prop="productNo">
+              <input type="hidden" v-model="formData.productNo"/>
+              <i-input v-model="formData.productName" :readonly="true" placeholder="选择产品">
                 <i-button @click="showSelectProduct=!showSelectProduct" slot="append">选择产品 <Icon type="ios-more"></Icon></i-button>
               </i-input>
             </i-form-item>
@@ -19,7 +19,7 @@
           <!--产品类别-->
           <i-col span="8">
             <i-form-item label="产品类别">
-              <span v-text="enumCode2Name(formData.productType, 'ProductTypeEnum')"></span>
+              <i-input :readonly="true" :value="enumCode2Name(formData.productType, 'ProductTypeEnum')"></i-input>
             </i-form-item>
           </i-col>
           <!--车类-->
@@ -29,6 +29,16 @@
                          :rules="{required: true, message: '请选择',trigger: 'change'}">
               <i-select v-model="formData.carType">
                 <i-option v-for="item in enumSelectData.get('BizTypeEnum')" :key="item.itemCode" :value="item.itemCode">{{item.itemName}}</i-option>
+              </i-select>
+            </i-form-item>
+          </i-col>
+          <i-col span="8">
+            <i-form-item label="客户性质"
+                         prop="carType"
+                         :rules="{required: true, message: '请选择'}">
+              <i-select v-model="formData.custKind">
+                <i-option :value="'1'">新增客户</i-option>
+                <i-option :value="'2'">结清再贷</i-option>
               </i-select>
             </i-form-item>
           </i-col>
@@ -42,7 +52,8 @@
           </i-col>
           <!--申请金额-->
           <i-col span="8">
-            <i-form-item label="申请金额" prop="applyAmt">
+            <i-form-item label="申请金额" prop="applyAmt"
+                         :rules="{required: true, message: '请输入申请金额'}">
               <i-input v-model="formData.applyAmt" placeholder="">
                 <span slot="元"></span>
               </i-input>
@@ -76,27 +87,27 @@
           <!--申请时间-->
           <i-col span="8">
             <i-form-item label="申请时间" prop="applyTime">
-              <i-date-picker format="yyyy-MM-dd" type="date" placeholder="申请时间" style="width: 100%"></i-date-picker>
+              <bs-datepicker v-model="formData.applyTime" format="yyyy-MM-dd" type="date" placeholder="申请时间" style="width: 100%"></bs-datepicker>
             </i-form-item>
           </i-col>
           <!--经度-->
           <i-col span="8">
             <i-form-item label="经度" prop="lon">
-              <i-input v-model="formData.lon" placeholder="" :readonly="formData.lon === ''">
+              <i-input v-model="formData.longitude" placeholder="" :readonly="true">
               </i-input>
             </i-form-item>
           </i-col>
           <!--纬度-->
           <i-col span="8">
             <i-form-item label="纬度" prop="lat">
-              <i-input v-model="formData.lat" placeholder="" :readonly="formData.lat === ''">
+              <i-input v-model="formData.latitude" placeholder="" :readonly="true">
               </i-input>
             </i-form-item>
           </i-col>
           <!--提交申请地点-->
           <i-col span="8">
             <i-form-item label="提交申请地点" prop="applicationPlace">
-              <i-input v-model="formData.applicationPlace" placeholder="" :readonly="formData.applicationPlace === ''">
+              <i-input v-model="formData.apply_address" placeholder="" :readonly="true">
               </i-input>
             </i-form-item>
           </i-col>
@@ -104,7 +115,8 @@
       </bs-form-block>
     </i-form>
     <!--客户信息组件-->
-    <personal-info :memberNo="memberNo" @getMember="getMember"></personal-info>
+    <personal-info v-if="customerType == '1'" :memberNo="memberNo" @getMember="getMember"></personal-info>
+    <company-customer-info v-if="customerType == '2'" :corpNo="corpNo" @on-select-company="selectCompany"></company-customer-info>
     <!--车辆信息-->
     <bs-form-block :title="'车辆信息'">
       <div class="form-top-actions">
@@ -165,14 +177,14 @@
               :rules="{required: true, message: '权利人不能为空', trigger: 'blur'}"
               prop="carOwnerNo">
               <input type="hidden" v-model="formCar.carOwnerNo"/>
-              <i-input v-model="formCar.carOwnerName" :disabled="true" placeholder="选择权利人">
+              <i-input v-model="formCar.carOwnerName" :readonly="true" placeholder="选择权利人">
                 <i-button @click="showSelectObligee=!showSelectObligee" slot="append">选择权利人 <Icon type="ios-more"></Icon></i-button>
               </i-input>
             </i-form-item>
           </i-col>
         </i-row>
         <i-row>
-          <i-col span="8" offset="8">
+          <i-col span="8">
             <i-form-item label="车牌号" prop="carPlateNo">
               <i-input v-model="formCar.carPlateNo" placeholder="">
               </i-input>
@@ -188,65 +200,23 @@
         </i-row>
         <i-row>
           <!--车辆品牌-->
-          <i-col span="8">
+          <i-col span="24">
             <i-form-item
               label="车辆品牌"
-              :rules="{required: true, message: '权利人类型不能为空', trigger: 'change'}"
+              :rules="{required: true, message: '车辆品牌不能为空'}"
               prop="carBrandCode">
-              <i-select v-model="formCar.carBrandCode">
-                <i-option value="1">奥迪</i-option>
-                <i-option value="2">长安</i-option>
-              </i-select>
-            </i-form-item>
-          </i-col>
-          <!--车系-->
-          <i-col span="8">
-            <i-form-item
-              label="车系"
-              :rules="{required: true, message: '权利人类型不能为空', trigger: 'change'}"
-              prop="carTypeCode">
-              <i-select v-model="formCar.carTypeCode">
-                <i-option value="1">CS75</i-option>
-                <i-option value="2">CS35</i-option>
-              </i-select>
-            </i-form-item>
-          </i-col>
-          <!--型号-->
-          <i-col span="8">
-            <i-form-item
-              label="型号"
-              :rules="{required: true, message: '权利人类型不能为空', trigger: 'change'}"
-              prop="carModel">
-              <i-select v-model="formCar.carModel">
-                <i-option value="1">2017 1.8T 精英型</i-option>
-                <i-option value="2">2017 1.8T 豪华型</i-option>
-              </i-select>
+              <input type="hidden" v-model="formCar.carModel">
+              <bs-carpicker @on-change="selectLoanCar"></bs-carpicker>
             </i-form-item>
           </i-col>
         </i-row>
         <i-row>
           <!--车辆颜色-->
           <i-col span="8">
-            <i-form-item
-              label="车辆品牌"
-              :rules="{required: true, message: '权利人类型不能为空', trigger: 'change'}"
-              prop="carColor">
+            <i-form-item label="车辆颜色">
               <i-select v-model="formCar.carColor">
                 <i-option value="1">米色</i-option>
                 <i-option value="2">金色</i-option>
-                <i-option value="3">棕色</i-option>
-                <i-option value="4">紫色</i-option>
-                <i-option value="5">巧克力色</i-option>
-                <i-option value="6">黑色</i-option>
-                <i-option value="7">蓝色</i-option>
-                <i-option value="8">灰色</i-option>
-                <i-option value="9">绿色</i-option>
-                <i-option value="10">红色</i-option>
-                <i-option value="11">橙色</i-option>
-                <i-option value="12">白色</i-option>
-                <i-option value="13">香槟色</i-option>
-                <i-option value="14">银色</i-option>
-                <i-option value="15">黄色</i-option>
               </i-select>
             </i-form-item>
           </i-col>
@@ -445,7 +415,7 @@
     </bs-modal>
     <!--担保信息的新增修改模态框-->
     <bs-modal :title="isAddAssure ? '新增' : '编辑'" v-model="showModalAssure" :width="800">
-      <i-form ref="formCar" :model="formAssure" label-position="right" :label-width="100">
+      <i-form ref="formAssure" :model="formAssure" label-position="right" :label-width="100">
         <i-row>
           <i-col span="12">
             <i-form-item label="担保人类型" prop="guaPersonType">
@@ -474,12 +444,7 @@
           <i-col span="12">
             <i-form-item label="与债务人关系" prop="relation">
               <i-select v-model="formAssure.relation">
-                <i-option value="1">亲属</i-option>
-                <i-option value="2">父母</i-option>
-                <i-option value="3">子女</i-option>
-                <i-option value="4">朋友</i-option>
-                <i-option value="5">同事</i-option>
-                <i-option value="6">同学</i-option>
+                <i-option v-for="item in enumSelectData.get('RelativeEnum')" :key="item.itemCode" :value="item.itemCode">{{item.itemName}}</i-option>
               </i-select>
             </i-form-item>
           </i-col>
@@ -495,30 +460,31 @@
     </bs-modal>
     <!--贷款材料的新增修改模态框-->
     <bs-modal :title="isAddLoan ? '新增' : '编辑'" v-model="showModalLoan">
-      <i-form ref="formCar" :model="formLoan" label-position="right" :label-width="100">
+      <i-form ref="formLoan" :model="formLoan" label-position="right" :label-width="100">
         <i-form-item label="贷款材料名称" prop="loanDocName">
           <i-input v-model="formLoan.loanDocName" placeholder="">
           </i-input>
         </i-form-item>
         <i-form-item label="备注" prop="remark">
-          <i-input type="textarea" :rows="2" v-model="formLoan.remark"></i-input>
+          <i-input type="textarea" :rows="4" v-model="formLoan.remark"></i-input>
         </i-form-item>
         <i-form-item
           label="文件名"
           prop="attachPath">
           <i-upload
             :show-upload-list="false"
-            :on-success="uploadSuccess"
+            :on-success="uploadLoanFileSuccess"
             :on-error="uploadError"
             type="drag"
             :action="$config.HTTPBASEURL + '/common/upload'">
-            <div style="padding: 20px 0">
+            <div style="padding: 20px 0" v-if="!formLoan.attachPath || formLoan.attachPath === ''">
               <i-icon type="ios-cloud-upload" size="52" style="color: #3399ff"></i-icon>
               <p>单击或拖动文件上传</p>
             </div>
+            <p v-else class="show-upload-text" v-text="formLoan.attachPath"></p>
           </i-upload>
-          <p v-if="isAddLoan" class="show-upload-text" v-text="uploadFileName"></p>
-          <p v-else class="show-upload-text" v-text="formLoan.attachPath"></p>
+          <!--<p v-if="isAddLoan" class="show-upload-text" v-text="uploadFileName"></p>
+          <p v-else class="show-upload-text" v-text="formLoan.attachPath"></p>-->
           <input type="hidden" v-model="formLoan.attachPath" style="width: 100%;border: 0;">
         </i-form-item>
         <i-form-item class="text-right">
@@ -537,6 +503,7 @@
   import TableCustomerList from '@/components/table-customer-list'; // 选择客户列表
   import GetProductModal from '@/components/table-product-list'; // 选择产品
   import personalInfo from '@/components/detail-personal-customer-basic/index.vue';
+  import companyCustomerInfo from '@/components/detail-company-customer-basic/index.vue';
   import BsModal from '@/components/bs-modal';
   import carMixinData from './car-mixin-data';
   import carMixinMethods from './car-mixin-methods';
@@ -544,18 +511,25 @@
   import assureMixinMethods from './assure-mixin-methods';
   import loanMixinData from './loan-mixin-data';
   import loanMixinMethods from './loan-mixin-methods';
+  import BsCarpicker from '@/components/bs-carpicker';
   export default {
     name: 'personalBasic',
     mixins: [carMixinData, carMixinMethods, assureMixinData, assureMixinMethods, loanMixinData, loanMixinMethods],
     components: {
       TableCustomerList,
       personalInfo,
+      companyCustomerInfo,
       'table-product-list': GetProductModal,
-      'bs-modal': BsModal
+      'bs-modal': BsModal,
+      'bs-carpicker': BsCarpicker
+    },
+    props: {
+      customerType: String
     },
     data() {
       return {
         memberNo: '',
+        corpNo: '',
         member: {},
         uploadFileName: '',
         showSelectProduct: false,
@@ -636,10 +610,11 @@
         isFromDetail: false,
         showSelectCustomer: false,
         formData: {
+          // id: 29, // 如果是编辑
           carBuyAmt: '', // 车辆购车价格
           deptName: '', // 业务归属部门名称
           certType: '', // 证件类型
-          loanNo: '', // 项目编号
+          loanNo: '', // 项目编号 如果是编辑
           taskAssigneeName: '', // 任务签收人姓名
           taskArriveTime: '', // 任务送达时间
           memberName: '', // 客户名称
@@ -667,29 +642,55 @@
           memberNo: '', // 客户编号
           certNo: '', // 证件号码
           loanChannel: '', // 项目来源;1-Android,2-IOS,3-Web(后台手工录入),4-TX(泰象)
-          custType: '', // 客户类型1-个人客户2-公司客户
+          custType: '1', // 客户类型1-个人客户2-公司客户
           taskAssignee: '', // 任务签收人
-          status: '' // 状态0-未处理1-处理中2-已处理,3-草稿,9-废弃
+          status: '', // 状态0-未处理1-处理中2-已处理,3-草稿,9-废弃
+          apply_address: '',
+          longitude: '',
+          latitude: ''
         }
       };
     },
     mounted() {
-      this.getCarList();
+      /*this.getCarList();
       this.getAssureList();
-      this.getLoanList();
+      this.getLoanList();*/
     },
     methods: {
       // 选择权利人
       selectObligeeRow(row, index) {
-        console.log(row);
-        this.$data.formCar.carOwnerName = row.memberNo;
-        this.$data.formCar.carOwnerNo = row.name;
+        // console.log(row);
+        this.$data.formCar.carOwnerName = row.name;
+        this.$data.formCar.carOwnerNo = row.memberNo;
         this.$data.showSelectObligee = false;
+      },
+      selectCompany(company) {
+        // console.log(company);
+        this.$data.formData.corpNo = company.corpNo;
+        this.$data.formData.corpName = company.corpName;
+        this.$data.formData.certType = '';
+        this.$data.formData.certNo = '';
+        this.$data.formData.custManagerNo = company.custMgrNo;
+        this.$data.formData.custManagerName = company.custMgrName;
+        this.$data.formData.deptNo = company.bizDepartmentCode;
+        this.$data.formData.deptName = company.bizDepartmentName;
+        this.$data.formData.deptCooperationStartDate = company.joinStartDate;
       },
       // 接收姓名组件的客户信息
       getMember(CertData) {
-        console.log(CertData);
-        this.$data.member = CertData;
+        debugger;
+        // this.$data.member = CertData;
+        if (CertData.mbMemberDTO) {
+          this.$data.formData.memberNo = CertData.mbMemberDTO['memberNo'];
+          this.$data.formData.memberName = CertData.mbMemberDTO.name;
+          this.$data.formData.certType = CertData.mbMemberDTO.certType;
+          this.$data.formData.certNo = CertData.mbMemberDTO.certNo;
+          this.$data.formData.custManagerNo = CertData.mbMemberDTO.custMgrNo;
+          this.$data.formData.custManagerName = CertData.mbMemberDTO.custMgrName;
+          this.$data.formData.deptNo = CertData.mbMemberDTO.bizDepartmentCode;
+          this.$data.formData.deptName = CertData.mbMemberDTO.bizDepartmentName;
+          this.$data.formData.deptCooperationStartDate = CertData.mbMemberDTO.joinStartDate;
+        }
       },
       // 选择产品
       selectProduct(row, index) {
@@ -703,14 +704,16 @@
         let resReturn = false;
         this.$refs[formName].validate((valid) => {
           if (valid) {
-            console.log(this.$data.member);
-            if (typeof this.$data.member.mbMemberDTO === 'undefined' || this.$data.member.mbMemberDTO.memberNo === '') {
-              this.$Message.error('“基本信息”的“姓名”不能为空', 2);
+            // console.log(this.$data.member);
+            if ((typeof this.$data.member.mbMemberDTO === 'undefined' || this.$data.member.mbMemberDTO.memberNo === '') && (typeof this.$data.formData.corpNo === 'undefined' || this.$data.formData.corpNo === '')) {
+              this.$Message.error('请先选择一个客户', 2);
               return;
             }
+            this.$data.formData.custType = this.customerType;
+
             this.$data.personalBasicInfo = {
               ...this.$data.member, // 客户信息（选择姓名得出）
-              ...this.$data.formData, // 申请信息
+              ...{ loanVO: this.$data.formData }, // 申请信息
               ...{ 'loanCarVOS': this.$data.carData }, // 车辆信息列表
               ...{ 'loanGuaranteeVOS': this.$data.assureData }, // 担保人信息列表
               ...{ 'loanDocDetailVOS': this.$data.loanData } // 贷款材料列表

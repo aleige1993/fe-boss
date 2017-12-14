@@ -1,7 +1,7 @@
 export default {
   methods: {
     submitAttach() {
-      console.log(this.$data.attachFormData);
+      // console.log(this.$data.attachFormData);
       this.$data.formData.attachDTOs.push(this.$data.attachFormData);
       this.$data.addAttachModal = false;
     },
@@ -24,11 +24,7 @@ export default {
         this.$data.formData.baseDTO = baseDto;
         if (resp2.success) {
           this.$data.formData.attachDTOs = resp2.body.resultList;
-          this.$emit('on-select-company', {
-            corpNo: baseDto.corpNo,
-            corpName: baseDto.corpName,
-            creditCode: baseDto.creditCode
-          }, resp2.body.resultList);
+          this.$emit('on-select-company', baseDto, resp2.body.resultList);
         }
       }
     },

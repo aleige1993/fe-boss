@@ -4,60 +4,90 @@ export default {
       customerColumns: [
         {
           title: '项目编号',
-          key: 'memberNo',
+          key: 'loanNo',
           width: 200
         },
         {
+          title: '客户类型',
+          key: 'custType',
+          width: 90,
+          render: (h, params) => {
+            if (params.row.custType === '1') {
+              return '个人客户';
+            } else {
+              return '公司客户';
+            }
+          }
+        },
+        {
           title: '客户名称',
-          key: 'name',
-          width: 200
+          key: 'memberName',
+          width: 200,
+          render: (h, params) => {
+            if (params.row.custType === '1') {
+              return params.row.memberName;
+            } else {
+              return params.row.corpName;
+            }
+          }
         },
         {
           title: '证件类型',
           width: 120,
           key: 'certType',
           render: (h, params) => {
-            return h('span', {}, this.enumCode2Name(params.row.certType, 'CertTypeEnum'));
+            if (params.row.custType === '1') {
+              return h('span', {}, this.enumCode2Name(params.row.certType, 'CertTypeEnum'));
+            } else {
+              return '统一社会信用代码';
+            }
           }
         },
         {
           title: '证件号码',
           key: 'certNo',
-          width: 200
+          width: 200,
+          render: (h, params) => {
+            if (params.row.custType === '1') {
+              return params.row.certNo;
+            } else {
+              return params.row.creditCode;
+            }
+          }
         },
         {
           title: '产品',
-          key: 'mobile',
+          key: 'productName',
           width: 200
         },
         {
           title: '期数',
-          key: 'mobile',
+          key: 'applyPeriods',
           width: 200
         },
         {
           title: '申请金额（元）',
-          key: 'mobile',
+          key: 'applyAmt',
           width: 200
         },
         {
           title: '申请时间',
-          key: 'mobile',
+          key: 'applyTime',
           width: 200
         },
         {
           title: '任务送达时间',
-          key: 'deliveryTime',
+          key: 'taskArriveTime',
           width: 120
         },
         {
           title: '已耗时',
-          key: 'consuming',
+          key: 'taskArriveTime',
           width: 120
-        },
+        }/*,
         {
           title: '当前环节',
-          key: 'mobile',
+          key: 'taskNode',
           width: 120
         },
         {
@@ -72,7 +102,7 @@ export default {
           render: (h, params) => {
             return h('span', {}, this.enumCode2Name(params.row.status, 'MemberStatusEnum'));
           }
-        }
+        }*/
       ],
       customerActionColumns: [
         {
@@ -173,7 +203,7 @@ export default {
           }
         }
       ],
-      privateCustomerList: []
+      privateCustomerLoanList: []
     };
   }
 };

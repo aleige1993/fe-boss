@@ -1,5 +1,13 @@
 export default {
   methods: {
+    selectLoanCar(car) {
+      this.$data.formCar.carBrandCode = car.brandCode;
+      this.$data.formCar.carBrandName = car.brandName;
+      this.$data.formCar.carTypeCode = car.seriesCode;
+      this.$data.formCar.carTypeName = car.seriesName;
+      // this.$data.formCar.carTypeCode = car.seriesCode;
+      this.$data.formCar.carModel = car.modelName;
+    },
     // 获取车辆列表
     async getCarList() {
       this.$data.carDataLoading = true;

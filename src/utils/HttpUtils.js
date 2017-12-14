@@ -56,7 +56,7 @@ class Http {
             }
           }
         );
-      } else if (res.data.reCode === '0000') {
+      } else if (res.data.reCode === '0000' || res.data.reCode === 'BS0000') {
         return res.data;
       } else {
         toastr.error(res.data.reCode + ' = ' + res.data.reMsg);
@@ -90,7 +90,7 @@ class Http {
       params: _params
     }).then(res => {
       // console.log(res);
-      if (res.data.reCode === '0004') {
+      if (res.data.reCode === '0004' || res.data.reCode === 'BS0004') {
         toastr.error('登录超时');
         MyRouter.push(
           {
@@ -100,7 +100,7 @@ class Http {
             }
           }
         );
-      } else if (res.data.reCode === '0000') {
+      } else if (res.data.reCode === '0000' || res.data.reCode === 'BS0000') {
         return res.data;
       } else {
         toastr.error(res.data.reMsg);
