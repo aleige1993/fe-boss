@@ -18,7 +18,7 @@
         <i-form-item label="案件金额" prop="makeAmt"
                      :rules="{required: true, message: '请输入案件金额'}">
           <i-input v-model="formData.makeAmt" placeholder="">
-            <span slot="元"></span>
+            <span slot="append">元</span>
           </i-input>
         </i-form-item>
         <i-form-item label="案件角色" prop="caseRole"

@@ -8,11 +8,11 @@ export default {
         },
         {
           title: '客户编号',
-          key: 'memberNo'
+          key: 'corpNo'
         },
         {
           title: '公司名称',
-          key: 'merchantNo'
+          key: 'corpName'
         },
         {
           title: '统一社会信用代码',
@@ -35,7 +35,7 @@ export default {
           key: 'merchantNo'
         },
         {
-          title: '授信状态', //0:未授信1-授信审核中2-授信通过3-授信拒绝4-授信驳回5-授信过期6-冻结
+          title: '授信状态', // 0:未授信1-授信审核中2-授信通过3-授信拒绝4-授信驳回5-授信过期6-冻结
           key: 'merchantNo'
         },
         {
@@ -54,8 +54,9 @@ export default {
                     this.$router.push({
                       path: '/index/customer/distributor/details',
                       query: {
+                        corpNo: params.row.corpNo, // 公司编号
                         memberNo: params.row.memberNo,
-                        merchantNo: params.row.merchantNo,
+                        merchantNo: params.row.merchantNo, // 渠道商编号
                         from: 'detail'
                       }
                     });
@@ -108,6 +109,10 @@ export default {
       ],
       distributorList: [
         {
+          corpNo: '111111', // 公司编号
+          corpName: '111111', // 公司名称
+          custMgrNo: '111111', // 客户经理编号
+          custMgrName: '111111', // 客户经理名称
           memberNo: '1111',
           merchantNo: '1243',
           action: '111'

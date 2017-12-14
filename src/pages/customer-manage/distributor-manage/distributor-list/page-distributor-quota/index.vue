@@ -7,91 +7,116 @@
       <i-breadcrumb-item href="/index/customer/distributor">渠道商列表</i-breadcrumb-item>
       <i-breadcrumb-item>新增授信额度信息</i-breadcrumb-item>
     </i-breadcrumb>
-    <i-form ref="formQuota" :model="formQuota" label-position="right" :label-width="120" style="padding: 30px 0;">
-      <i-row>
-        <!--客户名称-->
-        <i-col span="12" offset="6">
-          <i-form-item
-            label="客户名称"
-            :rules="{required: true, message: '客户名称不能为空', trigger: 'blur'}"
-            prop="corpName">
-            <input type="hidden" v-model="formQuota.corpNo"/>
-            <i-input v-model="formQuota.corpName" :readonly="true" placeholder="选择客户">
-              <i-button @click="showSelectCompany=!showSelectCompany" slot="append">选择客户 <Icon type="ios-more"></Icon></i-button>
-            </i-input>
-          </i-form-item>
-        </i-col>
-        <!--客户经理-->
-        <i-col span="12" offset="6">
-          <i-form-item
-            label="客户经理"
-            :rules="{required: true, message: '客户经理不能为空', trigger: 'blur'}"
-            prop="custMgrName">
-            <input type="hidden" v-model="formQuota.custMgrName"/>
-            <i-input v-model="formQuota.custMgrName" :readonly="true" placeholder="选择客户经理">
-              <i-button @click="showSelectEmployer=!showSelectEmployer" slot="append">客户经理 <Icon type="ios-more"></Icon></i-button>
-            </i-input>
-          </i-form-item>
-        </i-col>
-        <!--授信总额度-->
-        <i-col span="12" offset="6">
+    <i-row>
+      <i-col span="24">
+        <i-form ref="formQuota" :model="formQuota" label-position="right" :label-width="120" style="padding: 30px 0;">
+          <!--客户名称-->
+          <i-row>
+            <i-col span="8">
+              <!--<i-form-item
+                label="客户名称"
+                :rules="{required: true, message: '客户名称不能为空', trigger: 'blur'}"
+                prop="corpName">
+                <input type="hidden" v-model="formQuota.corpNo"/>
+                <i-input v-model="formQuota.corpName" :readonly="true" placeholder="选择客户">
+                  <i-button @click="showSelectCompany=!showSelectCompany" slot="append">选择客户 <Icon type="ios-more"></Icon></i-button>
+                </i-input>
+              </i-form-item>-->
+              <i-form-item label="客户名称" prop="corpName">
+                <span v-text="formQuota.corpName"></span>
+              </i-form-item>
+            </i-col>
+          </i-row>
+          <i-row>
+            <!--客户经理-->
+            <i-col span="8">
+              <!--<i-form-item
+                label="客户经理"
+                :rules="{required: true, message: '客户经理不能为空', trigger: 'blur'}"
+                prop="custMgrName">
+                <input type="hidden" v-model="formQuota.custMgrName"/>
+                <i-input v-model="formQuota.custMgrName" :readonly="true" placeholder="选择客户经理">
+                  <i-button @click="showSelectEmployer=!showSelectEmployer" slot="append">客户经理 <Icon type="ios-more"></Icon></i-button>
+                </i-input>
+              </i-form-item>-->
+              <i-form-item label="客户经理" prop="custMgrName">
+                <span v-text="formQuota.custMgrName"></span>
+              </i-form-item>
+            </i-col>
+          </i-row>
           <br>
           <br>
-          <i-form-item label="授信总额度" prop="aminId">
-            <i-input v-model="formQuota.CreditMoney" placeholder="">
-              <span slot="append">元</span>
-            </i-input>
-          </i-form-item>
-        </i-col>
-        <!--可用额度-->
-        <i-col span="12" offset="6">
-          <i-form-item label="可用额度" prop="currentUsableLimit">
-            <i-input v-model="formQuota.currentUsableLimit" placeholder="">
-              <span slot="append">元</span>
-            </i-input>
-          </i-form-item>
-        </i-col>
-        <!--单笔最大额度-->
-        <i-col span="12" offset="6">
-          <i-form-item label="单笔最大额度" prop="currentUsableLimit">
-            <i-input v-model="formQuota.currentUsableLimit" placeholder="">
-              <!--<span slot="append">元</span>-->
-            </i-input>
-          </i-form-item>
-        </i-col>
-        <!--授信起始日期-->
-        <i-col span="12" offset="6">
-          <i-form-item label="授信起始日期" prop="startDate">
-            <bs-datepicker v-model="formQuota.startDate"></bs-datepicker>
-          </i-form-item>
-        </i-col>
-        <!--授信到期日期-->
-        <i-col span="12" offset="6">
-          <i-form-item label="授信到期日期" prop="startDate">
-            <bs-datepicker v-model="formQuota.endDate"></bs-datepicker>
-          </i-form-item>
-        </i-col>
-        <!--额度释放方式-->
-        <i-col span="12" offset="6">
-          <i-form-item label="额度释放方式" prop="CreditOpenModel">
-            <i-select v-model="formQuota.CreditOpenModel">
-              <i-option value="1">额度释放方式01</i-option>
-              <i-option value="2">额度释放方式02</i-option>
-              <i-option value="3">额度释放方式03</i-option>
-            </i-select>
-          </i-form-item>
-        </i-col>
-        <i-col span="12" offset="6">
-          <br>
-          <br>
-          <i-form-item class="text-right">
-            <i-button type="primary" @click="submitFun">提交审核</i-button>
-            <i-button type="ghost" @click="cancelFun" style="margin-left: 8px">取消</i-button>
-          </i-form-item>
-        </i-col>
-      </i-row>
-
-    </i-form>
+          <i-row>
+            <i-col span="8">
+            <!--授信总额度-->
+              <i-form-item label="授信总额度" prop="CreditMoney">
+                <i-input v-model="formQuota.CreditMoney" placeholder="">
+                  <span slot="append">元</span>
+                </i-input>
+              </i-form-item>
+            </i-col>
+          </i-row>
+          <i-row>
+            <!--可用额度-->
+            <i-col span="8">
+              <i-form-item label="可用额度" prop="CreditMoney"><!--currentUsableLimit-->
+                <i-input v-model="formQuota.CreditMoney" :readonly="true" placeholder="">
+                  <span slot="append">元</span>
+                </i-input>
+              </i-form-item>
+            </i-col>
+          </i-row>
+          <i-row>
+            <!--单笔最大额度-->
+            <i-col span="8">
+              <i-form-item label="单笔最大额度" prop="currentUsableLimit">
+                <i-input v-model="formQuota.currentUsableLimit" placeholder="">
+                  <!--<span slot="append">元</span>-->
+                </i-input>
+              </i-form-item>
+            </i-col>
+          </i-row>
+          <i-row>
+            <!--授信起始日期-->
+            <i-col span="8">
+              <i-form-item label="授信起始日期" prop="startDate">
+                <bs-datepicker v-model="formQuota.startDate"></bs-datepicker>
+              </i-form-item>
+            </i-col>
+          </i-row>
+          <i-row>
+            <!--授信到期日期-->
+            <i-col span="8">
+              <i-form-item label="授信到期日期" prop="startDate">
+                <bs-datepicker v-model="formQuota.endDate"></bs-datepicker>
+              </i-form-item>
+            </i-col>
+          </i-row>
+          <i-row>
+            <!--额度释放方式-->
+            <i-col span="8">
+              <i-form-item label="额度释放方式" prop="CreditOpenModel">
+                <i-select v-model="formQuota.CreditOpenModel">
+                  <i-option value="1">额度释放方式01</i-option>
+                  <i-option value="2">额度释放方式02</i-option>
+                  <i-option value="3">额度释放方式03</i-option>
+                </i-select>
+              </i-form-item>
+            </i-col>
+          </i-row>
+          <i-row>
+            <i-col span="8">
+              <br>
+              <br>
+              <i-form-item class="text-right">
+                <i-button type="primary" @click="submitFun">提交审核</i-button>
+                <i-button type="ghost" @click="cancelFun" style="margin-left: 8px">取消</i-button>
+              </i-form-item>
+            </i-col>
+          </i-row>
+        </i-form>
+      </i-col>
+    </i-row>
     <!--选择客户的模态框-->
     <bs-modal :title="'选择客户'" v-model="showSelectCompany" :width="1200">
       <table-company-list ref="companyTable" type="modal" @on-row-dbclick="selectCompanyRow"></table-company-list>
@@ -131,8 +156,12 @@
         }
       };
     },
+    computed: {
+    },
     mounted() {
       this.$data.currentPage = this.$route.query.currentPage;
+      this.$data.formQuota.corpName = this.$route.query.corpName;
+      this.$data.formQuota.custMgrName = this.$route.query.custMgrName;
     },
     methods: {
       // 选择客户（公司）

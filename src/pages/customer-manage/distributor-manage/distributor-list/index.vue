@@ -9,12 +9,12 @@
       客户信息
     </div>
     <div class="search-form-container">
-      <i-form inline>
-        <i-form-item prop="user">
-          <i-input style="width: 240px;" type="text" placeholder="公司名称"></i-input>
+      <i-form inline ref="formSearch" :model="formSearch">
+        <i-form-item prop="corpName">
+          <i-input style="width: 240px;" type="text" placeholder="公司名称" v-model="formSearch.corpName"></i-input>
         </i-form-item>
         <i-form-item>
-          <i-button type="primary"><i-icon type="ios-search-strong"></i-icon> 搜索</i-button>
+          <i-button @click="searchSubmit" type="primary"><i-icon type="ios-search-strong"></i-icon> 搜索</i-button>
         </i-form-item>
       </i-form>
     </div>
@@ -25,9 +25,9 @@
       <i-button type="info" @click="openOperatorModal"><i class="iconfont icon-xinzeng"></i> 操作员管理</i-button>
       <i-button v-if="isClickRow" @click="handleClearCurrentRow" type="text"><i-icon type="android-cancel" class="button-cancel"></i-icon> 取消当前选中状态</i-button>
     </div>
-    <i-table highlight-row :loading="distributorListLoading" border ref="selection" :columns="distributorColumns" :data="distributorList" @on-current-change="radioFun"></i-table>
+    <i-table :loading="dataLoading" highlight-row border ref="selection" :columns="distributorColumns" :data="distributorList" @on-current-change="radioFun"></i-table>
     <div class="page-container">
-      <i-page :total="total" :page-size="pageSize" size="small" show-elevator show-total></i-page>
+      <i-page @on-change="jumpPage" :total="total" :page-size="pageSize" size="small" show-elevator show-total></i-page>
     </div>
   </div>
 </template>
@@ -39,17 +39,22 @@
     mixins: [MixinData],
     data() {
       return {
+        formSearch: {
+          corpName: ''
+        },
+        dataLoading: false,
         clickRow: {},
         isClickRow: false,        // 是否已经选择了某一行
         total: 0,
         currentPage: 1,
-        pageSize: 15,
-        distributorListLoading: false
+        pageSize: 15
       };
     },
     mounted() {
       // 从新增页面跳转回来，加载之前的指定页码
-      this.$data.currentPage = this.$route.query.currentPage;
+      if (this.$route.query.currentPage) {
+        this.$data.currentPage = this.$route.query.currentPage;
+      }
     },
     components: {
       BsModal
@@ -88,6 +93,37 @@
         }
         return true;
       },
+      // 查询列表数据
+      async getPrivateCustomerList(page) {
+        this.$data.dataLoading = true;
+        if (page) {
+          this.$data.currentPage = page;
+        }
+       /* let resp = await this.$http.get('/pms/product/list', {
+          currentPage: this.$data.currentPage,
+          pageSize: this.$data.pageSize,
+          productName: this.$data.formSearch.productName
+        });
+        this.$data.dataLoading = false;
+        if (resp.body.resultList.length !== 0) {
+          this.$data.data1 = resp.body.resultList;
+          this.$data.currentPage = resp.body.currentPage;
+          this.$data.total = resp.body.totalNum;
+        } else {
+          this.$Notice.warning({
+            title: '没有数据可加载',
+            duration: 2
+          });
+          this.$data.data1 = [];
+        }*/
+      },
+      // 模糊查询
+      searchSubmit() {
+        this.getPrivateCustomerList(1);
+      },
+      jumpPage(page) {
+        this.getPrivateCustomerList(page);
+      },
       // 打开车型管理
       openCarModal() {
         if (this.clickRowedFun()) {
@@ -107,7 +143,9 @@
             path: '/index/customer/distributor/quota',
             query: {
               currentPage: this.$data.currentPage,
-              ...this.$data.clickRow
+              merchantNo: this.$data.clickRow.merchantNo,
+              corpName: this.$data.clickRow.corpName,
+              custMgrName: this.$data.clickRow.custMgrName
             }
           });
         }

@@ -254,7 +254,6 @@ export default [
           'corpType': '1',
           'custMgrName': '刚发的',
           'regDate': '2017-1-1',
-          // 'corpNo': '',
           'bizCityCode': '1111111',
           'custMgrNo': '11111111',
           'mainLinkmanDuty': '1',

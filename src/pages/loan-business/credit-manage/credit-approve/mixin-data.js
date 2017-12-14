@@ -64,7 +64,7 @@ export default {
                 props: {
                   thumbWidth: 80,
                   thumbHeight: 80,
-                  //fullWidth: 500,
+                  // fullWidth: 500,
                   thumb: params.row.attachUrl,
                   full: params.row.attachUrl
                 }

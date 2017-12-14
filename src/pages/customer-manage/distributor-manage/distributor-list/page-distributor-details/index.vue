@@ -11,15 +11,16 @@
     <br>
     <i-tabs v-model="tabIndex" type="card" :animated="false">
       <i-tab-pane :label="'基本信息'">
-        <modal-company-merchant-basic :corpNo="corpNo" ref="personalInfo"></modal-company-merchant-basic>
+        <modal-company-merchant-basic :corpNo="$route.query.corpNo" ref="personalInfo"></modal-company-merchant-basic>
       </i-tab-pane>
       <i-tab-pane :label="'车型管理'">
-        <tab-modal-car v-if="tabIndex === 1" :merchantNo="merchantNo"></tab-modal-car>
+        <tab-modal-car v-if="tabIndex === 1" :merchantNo="$route.query.merchantNo"></tab-modal-car>
       </i-tab-pane>
       <i-tab-pane :label="'银行账户信息'">
-        <tab-bank-account-info :customer="addCustomer" v-if="tabIndex===2"></tab-bank-account-info>
+        <tab-bank-account-info v-if="tabIndex===2" :customer="$route.query.merchantNo"></tab-bank-account-info>
       </i-tab-pane>
-      <i-tab-pane :label="'授信管理'">
+      <i-tab-pane :label="'授信额度'">
+        <tab-credit-list v-if="tabIndex === 3" :isDetail="$route.query.from"></tab-credit-list>
       </i-tab-pane>
     </i-tabs>
   </div>
@@ -28,26 +29,24 @@
 <script>
   import TabBankAccountInfo from '@/pages/customer-manage/company-customer/company-add/tab-bank-account-info';
   import TableCompanyMerchantBasic from '@/components/detail-company-merchant-basic'; // 选择公司详情信息
-  import tabModalCar from './tab-details-car'; // 车型管理
+  import tabModalCar from '../page-distributor-car'; // 车型管理
+  import tabCreditList from '../../distributor-credit-list'; // 授信管理列表
   export default {
     name: 'distributorDetails',
     components: {
       tabModalCar,
+      tabCreditList,
       TabBankAccountInfo,
       'modal-company-merchant-basic': TableCompanyMerchantBasic
     },
-    mounted() {
-      this.$data.merchantNo = this.$route.query.merchantNo;
-      this.$data.corpNo = this.$route.query.corpNo;
-      this.$data.addCustomer = this.$route.query.memberNo;
-    },
     data() {
       return {
-        tabIndex: 0,
-        merchantNo: '',
-        corpNo: '',
-        addCustomer: null
+        tabIndex: 0
       };
+    },
+    computed: {
+    },
+    mounted() {
     }
   };
 </script>
