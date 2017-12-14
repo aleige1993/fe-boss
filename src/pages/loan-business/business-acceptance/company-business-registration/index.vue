@@ -44,7 +44,7 @@
               <i-col span="8">
                 <i-form-item label="车辆价格" prop="carMoney">
                   <i-input v-model="formData.carMoney" placeholder="">
-                    <span slot="元"></span>
+                    <span slot="append">元</span>
                   </i-input>
                 </i-form-item>
               </i-col>
@@ -52,7 +52,7 @@
               <i-col span="8">
                 <i-form-item label="申请金额" prop="carMoney">
                   <i-input v-model="formData.carMoney" placeholder="">
-                    <span slot="元"></span>
+                    <span slot="append">元</span>
                   </i-input>
                 </i-form-item>
               </i-col>
@@ -60,7 +60,7 @@
               <i-col span="8">
                 <i-form-item label="申请期限" prop="carMoney">
                   <i-input v-model="formData.carMoney" placeholder="">
-                    <span slot="月"></span>
+                    <span slot="append">月</span>
                   </i-input>
                 </i-form-item>
               </i-col>
@@ -68,7 +68,7 @@
               <i-col span="8">
                 <i-form-item label="首付或保证金意向" prop="carMoney">
                   <i-input v-model="formData.carMoney" placeholder="">
-                    <span slot="元"></span>
+                    <span slot="append">元</span>
                   </i-input>
                 </i-form-item>
               </i-col>

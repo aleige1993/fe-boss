@@ -39,7 +39,8 @@ export default [
                 name: '渠道商管理',
                 url: '',
                 childMenus: [
-                  { name: '渠道商列表', url: '/index/customer/distributor' }
+                  { name: '渠道商列表', url: '/index/customer/distributor' },
+                  { name: '渠道商授信审核', url: '/index/customer/distributor/credit' }
                 ]
               }
             ]

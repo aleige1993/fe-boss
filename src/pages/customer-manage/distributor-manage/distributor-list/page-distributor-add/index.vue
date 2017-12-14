@@ -44,16 +44,11 @@
     <bs-modal :title="'选择权利人'" v-model="showSelectCompany" :width="1200">
       <table-company-list ref="companyTable" type="modal" @on-row-dbclick="selectCompanyRow"></table-company-list>
     </bs-modal>
-    <!-- 选择客户经理的弹窗 -->
-    <bs-modal title="选择客户经理" :width="1200" v-model="showSelectEmployer">
-      <table-employer-list @on-row-dbclick="selectEmployer"></table-employer-list>
-    </bs-modal>
   </div>
 </template>
 
 <script>
   import BsDispicker from '@/components/bs-dispicker'; // 地址联动
-  import TableEmployerList from '@/components/table-employer-list'; // 选择客户经理
   import TableCompanyList from '@/components/table-company-customer-list'; // 选择客户列表
   import BsModal from '@/components/bs-modal';
   export default {
@@ -61,14 +56,12 @@
     components: {
       BsModal,
       BsDispicker,
-      TableEmployerList,
       TableCompanyList
     },
     data() {
       return {
         currentPage: '',
         showSelectCompany: false,
-        showSelectEmployer: false,
         formAdd: {
           isOpenMerchant: '',
           corpName: '',
@@ -86,21 +79,6 @@
         this.$data.formAdd.corpName = row.corpName;
         this.$data.showSelectCompany = false;
       },
-      // 选择客户经理
-      selectEmployer(row, index) {
-        this.$data.formAdd.custMgrNo = row.userCode;
-        this.$data.formAdd.custMgrName = row.userName;
-        this.$data.showSelectEmployer = false;
-      },
-      // 地址联动
-      selectCensusDistance(distance) {
-        this.$data.formAdd.bizProvinceCode = distance.provinceCode;
-        this.$data.formAdd.bizProvinceName = distance.provinceName;
-        this.$data.formAdd.bizCityCode = distance.districtCode;
-        this.$data.formAdd.bizCityName = distance.districtName;
-        this.$data.formAdd.bizDistrictCode = distance.cityCode;
-        this.$data.formAdd.bizDistrictName = distance.cityName;
-      },
       // 新增
       async addSuccess() {
         this.$Message.success('新增成功');
@@ -108,7 +86,7 @@
         this.$router.push({
           path: '/index/customer/distributor',
           query: {
-            currentPage: 1
+            currentPage: this.$route.query.currentPage
           }
         });
       },

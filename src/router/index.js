@@ -41,10 +41,18 @@ let MyRouter = new Router({
             { path: 'distributor', name: 'distributor', component: resolve => require(['@/pages/customer-manage/distributor-manage'], resolve),
               children: [
                 { path:'/', name: 'distributorList', component: resolve => require(['@/pages/customer-manage/distributor-manage/distributor-list'], resolve)},
+                // 首页 > 渠道商管理 > 渠道商列表 > 新增渠道商
                 { path: 'add', name: 'addDistributor', component: resolve => require(['@/pages/customer-manage/distributor-manage/distributor-list/page-distributor-add'], resolve)},
+                // 首页 > 渠道商管理 > 渠道商列表 > 新增授信额度信息
                 { path: 'quota', name: 'quotaDistributor', component: resolve => require(['@/pages/customer-manage/distributor-manage/distributor-list/page-distributor-quota'], resolve)},
+                // 首页 > 渠道商管理 > 渠道商列表 > 渠道商详情
                 { path: 'details', name: 'detailsDistributor', component: resolve => require(['@/pages/customer-manage/distributor-manage/distributor-list/page-distributor-details'], resolve)},
-                { path: 'car', name: 'carDistributor', component: resolve => require(['@/pages/customer-manage/distributor-manage/distributor-list/page-distributor-car'], resolve)}
+                // 首页 > 渠道商管理 > 渠道商列表 > 车型管理
+                { path: 'car', name: 'carDistributor', component: resolve => require(['@/pages/customer-manage/distributor-manage/distributor-list/page-distributor-car'], resolve)},
+                // 首页 > 渠道商管理 > 渠道商授信审核
+                { path: 'credit', name: 'creditListDistributor', component: resolve => require(['@/pages/customer-manage/distributor-manage/distributor-credit-list'], resolve)},
+                // 首页 > 渠道商管理 > 渠道商授信审核 > 审核
+                { path: 'credit/examine', name: 'examineDistributor', component: resolve => require(['@/pages/customer-manage/distributor-manage/distributor-credit-list/distributor-credit-examine'], resolve)}
               ]
             },
             // 黑名单管理

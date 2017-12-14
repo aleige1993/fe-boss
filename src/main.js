@@ -7,7 +7,7 @@ import store from './store';
 import Config from './utils/Config';
 import Page from './utils/page';
 Vue.prototype.$config = Config;
-Vue.prototype.$Page = Page;
+Vue.prototype.$JumpPage = Page;
 Vue.config.productionTip = false;
 import iView from 'iview';
 Vue.use(iView);
