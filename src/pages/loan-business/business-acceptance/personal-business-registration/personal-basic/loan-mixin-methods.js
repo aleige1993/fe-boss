@@ -61,7 +61,7 @@ export default {
       });
     },
     // 上传成功
-    uploadSuccess(res, file, fileList) {
+    uploadLoanFileSuccess(res, file, fileList) {
       this.$data.uploadFileName = file.name;
       this.$data.formLoan.attachPath = res.body.url;
     },

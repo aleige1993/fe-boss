@@ -7,7 +7,7 @@
             <div class="ivu-upload ivu-upload-drag" style="border: 1px dashed #2baee9;">
               <div style="padding: 20px 0px;">
                 <Icon type="plus" size="52" style="color: #3399ff"></Icon>
-                <p>选择客户 <i-icon type="ios-more"></i-icon></p>
+                <p>选择企业客户 <i-icon type="ios-more"></i-icon></p>
               </div>
             </div>
           </div>
@@ -22,7 +22,7 @@
               <i-col span="8">
                 <i-form-item label="公司名称">
                   <i-button type="text" @click="gotoCompany" v-text="formData.baseDTO.corpName"></i-button>
-                  <i-button v-if="!corpNo||corpNo==''" type="primary" @click="selectCompanyModal=!selectCompanyModal">选择公司 <i-icon type="ios-more"></i-icon></i-button>
+                  <i-button type="primary" @click="selectCompanyModal=!selectCompanyModal">选择公司 <i-icon type="ios-more"></i-icon></i-button>
                 </i-form-item>
               </i-col>
               <i-col span="8">

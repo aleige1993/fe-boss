@@ -11,10 +11,10 @@
     <div class="search-form-container">
       <i-form inline>
         <i-form-item prop="user">
-          <i-input type="text" v-model="searchForm.name" placeholder="项目编号"></i-input>
+          <i-input type="text" v-model="searchForm.loanNo" placeholder="项目编号"></i-input>
         </i-form-item>
         <i-form-item prop="password">
-          <i-input v-model="searchForm.certNo" type="text" placeholder="客户名称"></i-input>
+          <i-input v-model="searchForm.custName" type="text" placeholder="客户名称"></i-input>
         </i-form-item>
         <i-form-item prop="password">
           <i-select style="width: 120px;" v-model="searchForm.certType" placeholder="证件类型">
@@ -25,13 +25,13 @@
           <i-input v-model="searchForm.certNo" type="text" placeholder="证件号码"></i-input>
         </i-form-item>
         <i-form-item prop="password">
-          <bs-datepicker v-model="searchForm.mobile" type="text" placeholder="申请时间"></bs-datepicker>
+          <bs-datepicker v-model="searchForm.applyStartTime" type="text" placeholder="申请时间"></bs-datepicker>
         </i-form-item>
         <i-form-item prop="password">
           -
         </i-form-item>
         <i-form-item prop="password">
-          <bs-datepicker v-model="searchForm.mobile" type="text" placeholder="申请时间"></bs-datepicker>
+          <bs-datepicker v-model="searchForm.applyEndTime" type="text" placeholder="申请时间"></bs-datepicker>
         </i-form-item>
         <i-form-item>
           <i-button @click="search" type="primary"><i-icon type="ios-search-strong"></i-icon> 搜索</i-button>
@@ -39,7 +39,7 @@
       </i-form>
     </div>
     <slot name="topAction"></slot>
-    <i-table :loading="dataLoading" @on-row-dblclick="selectRow" border ref="selection" :columns="resultCustomerColumns" :data="privateCustomerList"></i-table>
+    <i-table :loading="dataLoading" @on-row-dblclick="selectRow" border ref="selection" :columns="resultCustomerColumns" :data="privateCustomerLoanList"></i-table>
     <div class="page-container">
       <i-page :total="total" :page-size="15" :current="currentPage" @on-change="jumpPage" size="small" show-elevator show-total></i-page>
     </div>
@@ -58,12 +58,21 @@
         currentPage: 1,
         certTypeEnum: [],
         searchForm: {
-          name: '',
-          certType: '',
-          certNo: '',
-          mobile: '',
           currentPage: 1,
-          pageSize: 15
+          pageSize: 15,
+          'loanNo': '',
+          'custNo': '',
+          'custName': '',
+          'corpName': '',
+          'corpNo': '',
+          'certType': '',
+          'certNo': '',
+          'productNo': '',
+          'productName': '',
+          'applyStartTime': '',
+          'applyEndTime': '',
+          'taskNode': '',
+          'status': ''
         }
       };
     },
@@ -85,29 +94,29 @@
       goToAdd() {
         this.$router.push('/index/customer/modify');
       },
-      async getPrivateCustomerList(page) {
+      async getPrivateCustomerLoanList(page) {
         this.$data.dataLoading = true;
         if (page) {
           this.$data.searchForm.currentPage = page;
         }
-        let resp = await this.$http.post('/member/page', this.$data.searchForm);
+        let resp = await this.$http.post('/biz/listLoanBizByCon', this.$data.searchForm);
         this.$data.dataLoading = false;
-        this.$data.privateCustomerList = resp.body.resultList;
+        this.$data.privateCustomerLoanList = resp.body.resultList;
         this.$data.currentPage = resp.body.currentPage;
         this.$data.total = resp.body.totalNum;
       },
       jumpPage(page) {
-        this.getPrivateCustomerList(page);
+        this.getPrivateCustomerLoanList(page);
       },
       search() {
-        this.getPrivateCustomerList();
+        this.getPrivateCustomerLoanList();
       },
       selectRow(row, index) {
-        this.$emit('on-row-dbclick', row, index);
+        // this.$emit('on-row-dbclick', row, index);
       }
     },
     mounted() {
-      this.getPrivateCustomerList();
+      this.getPrivateCustomerLoanList();
       let enumSelectData = this.$store.getters.enumSelectData;
       this.$data.certTypeEnum = enumSelectData.get('CertTypeEnum');
       // console.log(.get('YesNoEnum'));

@@ -43,7 +43,7 @@ export default {
           title: '附件文件',
           key: 'attachUrl',
           render: (h, params) => {
-            alert(params.row.attachUrl);
+            // alert(params.row.attachUrl);
             if (Tools.isImg(params.row.attachUrl)) {
               return h('bs-big-img', {
                 props: {

@@ -30,10 +30,10 @@ export default {
                 },
                 on: {
                   click: () => {
-                    params.row.fileName !== '' && window.open(params.row.fileName);
+                    params.row.attachPath !== '' && window.open(params.row.attachPath);
                   }
                 }
-              }, params.row.fileName)
+              }, params.row.attachPath)
             ]);
           }
         },

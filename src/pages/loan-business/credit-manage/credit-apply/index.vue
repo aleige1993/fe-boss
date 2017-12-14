@@ -21,7 +21,7 @@
           </bs-form-block>
           <!--审核意见-->
           <bs-form-block title="审核意见" >
-            <i-row>
+            <!--<i-row>
               <i-col span="8">
                 <i-form-item label="结论">
                   <i-radio-group v-model="applyData.creditAuditParam.approveStatus">
@@ -31,10 +31,11 @@
                   </i-radio-group>
                 </i-form-item>
               </i-col>
-            </i-row>
+            </i-row>-->
             <i-row>
               <i-col span="24">
                 <i-form-item label="意见信息">
+                  <input type="hidden" v-model="applyData.creditAuditParam.approveStatus">
                   <i-input v-model="applyData.creditAuditParam.opinion" type="textarea" :rows="4"></i-input>
                 </i-form-item>
               </i-col>
