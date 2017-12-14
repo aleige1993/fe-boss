@@ -6,15 +6,15 @@ export default {
           title: '贷款材料名称',
           align: 'center',
           width: 150,
-          key: 'loanName'
+          key: 'loanDocName'
         },
         {
           title: '备注',
-          key: 'Remark'
+          key: 'remark'
         },
         {
           title: '文件名',
-          key: 'fileName',
+          key: 'attachPath',
           render: (h, params) => {
             return h('div', [
               h('p', {
@@ -25,16 +25,15 @@ export default {
                   overflow: 'hidden',
                   textOverflow: 'ellipsis',
                   whiteSpace: 'nowrap',
-                  textAlign: 'right',
                   color: '#2b90f8',
                   cursor: 'pointer'
                 },
                 on: {
                   click: () => {
-                    params.row.fileName !== '' && window.open(params.row.fileName);
+                    params.row.attachPath !== '' && window.open(params.row.attachPath);
                   }
                 }
-              }, params.row.fileName)
+              }, params.row.attachPath)
             ]);
           }
         },
@@ -55,7 +54,7 @@ export default {
                 },
                 on: {
                   click: () => {
-                    this.setListCar($.extend({}, params.row));
+                    this.setListLoan($.extend({}, params.row));
                   }
                 }
               }, '编辑'),
@@ -66,7 +65,7 @@ export default {
                 },
                 on: {
                   click: () => {
-                    this.removeCar($.extend({}, params.row));
+                    this.removeLoan($.extend({}, params.row));
                   }
                 }
               }, '删除')
@@ -74,18 +73,7 @@ export default {
           }
         }
       ],
-      loanData: [
-        {
-          loanName: '车辆登记证',
-          Remark: 'asdawdasd',
-          fileName: ''
-        },
-        {
-          loanName: '车辆登记证',
-          Remark: 'ASDA98754aSDASD61568',
-          fileName: 'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1512640505404&di=7eaacd3a7c04c6969d5e52a5bce557b7&imgtype=0&src=http%3A%2F%2Fimg5.duitang.com%2Fuploads%2Fitem%2F201302%2F16%2F20130216185910_x5S3T.jpeg'
-        }
-      ]
+      loanData: []
     };
   }
 };

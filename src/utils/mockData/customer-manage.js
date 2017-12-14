@@ -274,60 +274,6 @@ export default [
           'bizDepartmentName': '似懂非懂是'
         }
       })
-    }
-      body: $.extend(companyCustomerBasicData.data().formDataInit, {
-        baseDTO: {
-          'mainLinkmanName': '@name',
-          'actualControllersTel': '@integer',
-          'joinStartDate': '@datetime("yyyy-MM-dd A HH:mm:ss")',
-          'bizRoadAddr': '街道地址',
-          'about': '@county(true)',
-          'isMerchant': '1',
-          'legalPersonMobile': '电话',
-          'isPermanentlyValid': '',
-          'regRoadAddr': '',
-          'regProvinceName': '',
-          'legalPersonNo': '',
-          'legalPersonStock': '',
-          'mainLinkmanNo': '',
-          'fax': '',
-          'bizProvinceName': '',
-          'mainLinkmanSex': '',
-          'mainLinkmanPhone': '',
-          'telephone': '',
-          'bizCityName': '',
-          'mainLinkmanEmail': '',
-          'legalPersonSex': '',
-          'actualControllers': '',
-          'regCityName': '',
-          'regCapital': '',
-          'bizExpDate': '',
-          'bizDistrictCode': '',
-          'corpType': '',
-          'custMgrName': '',
-          'regDate': '',
-          'corpNo': '386118080880705536',
-          'bizCityCode': '',
-          'custMgrNo': '',
-          'creditCode': '123456',
-          'mainLinkmanDuty': '',
-          'industryType': '',
-          'legalPersonCertno': '',
-          'legalPerson': '',
-          'bizDepartmentCode': '',
-          'regCityCode': '',
-          'regDistrictCode': '',
-          'website': '',
-          'regProvinceCode': '',
-          'corpName': '海尔云贷编辑测试',
-          'mainLinkmanCertno': '',
-          'legalPersonCerttype': '',
-          'regDistrictName': '',
-          'bizDistrictName': '',
-          'bizProvinceCode': '',
-          'bizDepartmentName': ''
-        }
-      })
     })
   },
   // 企业客户银行账户信息

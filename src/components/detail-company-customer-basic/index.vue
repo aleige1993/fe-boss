@@ -22,7 +22,7 @@
               <i-col span="8">
                 <i-form-item label="公司名称">
                   <i-button type="text" @click="gotoCompany" v-text="formData.baseDTO.corpName"></i-button>
-                  <i-button type="primary" @click="selectCompanyModal=!selectCompanyModal">选择公司 <i-icon type="ios-more"></i-icon></i-button>
+                  <i-button v-if="!readonly" type="primary" @click="selectCompanyModal=!selectCompanyModal">选择公司 <i-icon type="ios-more"></i-icon></i-button>
                 </i-form-item>
               </i-col>
               <i-col span="8">
@@ -245,7 +245,13 @@ export default {
       initFormLoading: false
     };
   },
-  props: ['corpNo'],
+  props: {
+    corpNo: String,
+    readonly: {
+      type: Boolean,
+      default: false
+    }
+  },
   components: {
     'bs-modal': BsModal,
     TableCompanyCustomerList

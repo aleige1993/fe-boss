@@ -1,6 +1,6 @@
 <template>
   <div class="" style="position: relative">
-    <i-row v-if="!isHasFromData">
+    <i-row v-if="!memberNo">
       <i-col span="8" offset="8">
         <i-button type="text" @click="isHasFormDataFun" long style="margin-bottom: 30px; border: 0;background-color: #fff;">
           <div class="ivu-upload">
@@ -14,7 +14,7 @@
         </i-button>
       </i-col>
     </i-row>
-    <i-row v-if="isHasFromData">
+    <i-row v-else>
       <i-col span="24">
         <i-form label-position="right" :model="formData" ref="formAddCustomer" :label-width="120">
           <bs-form-block :title="'基本信息'">
@@ -22,7 +22,7 @@
               <i-col span="8">
                 <i-form-item label="姓名">
                   <i-button type="text" @click="gotoPersonal" v-text="formData.mbMemberDTO.name"></i-button>
-                  <i-button type="primary" @click="selectPersonalModal=!selectPersonalModal">选择姓名 <i-icon type="ios-more"></i-icon></i-button>
+                  <i-button v-if="!readonly" type="primary" @click="selectPersonalModal=!selectPersonalModal">选择姓名 <i-icon type="ios-more"></i-icon></i-button>
                 </i-form-item>
               </i-col>
               <i-col span="8">
@@ -312,13 +312,22 @@ export default {
       selectPersonalModal: false
     };
   },
-  props: ['certNo'],
+  props: {
+    memberNo: String,
+    readonly: {
+      type: Boolean,
+      default: false
+    }
+  },
   computed: {
     age() {
       if (this.$data.formData.mbMemberDTO.birthday !== '') {
         let birthday = this.$data.formData.mbMemberDTO.birthday;
         return Tools.getAgeFromBirthday(birthday);
       }
+    },
+    isHasFormDataFun() {
+      return this.memberNo;
     }
   },
   components: {
@@ -326,9 +335,6 @@ export default {
     TablePersonalCustomerList
   },
   methods: {
-    isHasFormDataFun() {
-      this.$data.selectPersonalModal = !this.$data.selectPersonalModal;
-    },
     selectPersonal(row, index) {
       this.initFormData(row.memberNo);
       this.$emit('getMember', row);
