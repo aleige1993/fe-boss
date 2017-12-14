@@ -253,7 +253,7 @@ export default {
   },
   methods: {
     gotoPersonal() {
-      //window.open(`#/index/customer/detail?id=${this.$data.formData.mbMemberDTO.memberNo}&from=detail`);
+      // window.open(`#/index/customer/detail?id=${this.$data.formData.mbMemberDTO.memberNo}&from=detail`);
       window.open(`#/index/customer/companycustomer/modify?id=${this.corpNo}&name=${this.$data.formData.baseDTO.corpName}&from=detail`);
     }
   },

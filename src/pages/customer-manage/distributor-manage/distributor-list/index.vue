@@ -95,7 +95,8 @@
             path: '/index/customer/distributor/car',
             query: {
               currentPage: this.$data.currentPage,
-              ...this.$data.clickRow
+              ...this.$data.clickRow,
+              from: 'detail'
             }
           });
         }

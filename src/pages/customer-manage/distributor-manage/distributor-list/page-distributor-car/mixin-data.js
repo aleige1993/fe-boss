@@ -30,6 +30,9 @@ export default {
           width: 200,
           align: 'center',
           render: (h, params) => {
+            if (this.$data.isDetail) {
+              return;
+            };
             return h('div', [
               h('Button', {
                 props: {

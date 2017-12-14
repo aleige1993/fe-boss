@@ -95,10 +95,6 @@ export default {
         }
       ],
       companyAttachFiles: [
-        /*{
-          attachName: '仓井空.av',
-          attachUrl: 'http://www.baidu.com'
-        }*/
       ],
       // 初审信息
       firstApproveColumns: [
@@ -207,10 +203,6 @@ export default {
         }
       ],
       outApproveData: [
-        /*{
-          attachName: '仓井空.av',
-          attachUrl: 'http://www.baidu.com'
-        }*/
       ]
     };
   }
