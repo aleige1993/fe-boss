@@ -21,15 +21,15 @@ export default {
     // 车辆提交
     async addSuBmitCar() {
       await this.carData.unshift(this.$data.formCar);
-      this.$Message.success('新增成功');
       this.$data.showModalCar = false;
+      this.$Message.success('新增成功');
     },
     // 修改情况下的提交数据
     async setSuBmitCar() {
       let index = await this.$data.formCar._index;
       this.$set(this.$data.carData, index, this.$data.formCar);
-      this.$Message.success('修改成功');
       this.$data.showModalCar = false;
+      this.$Message.success('修改成功');
     },
     carSuBmit() {
       let name = 'formCar';

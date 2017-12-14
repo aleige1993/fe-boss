@@ -11,6 +11,13 @@ export default {
           key: 'contractTemplateName'
         },
         {
+          title: '合同类型',
+          key: 'contractType',
+          render: (h, params) => {
+            return h('span', {}, this.enumCode2Name(params.row.contractType, 'ContractTypeEnum'));
+          }
+        },
+        {
           title: '资方名称',
           key: 'capitalName'
         },

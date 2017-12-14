@@ -2,8 +2,8 @@
   <div id="">
     <i-breadcrumb separator=">">
       <i-breadcrumb-item href="/">首页</i-breadcrumb-item>
-      <i-breadcrumb-item href="/components/breadcrumb">进件管理</i-breadcrumb-item>
-      <i-breadcrumb-item>进件申请</i-breadcrumb-item>
+      <i-breadcrumb-item href="/index/customer/distributor">渠道商管理</i-breadcrumb-item>
+      <i-breadcrumb-item>渠道商列表</i-breadcrumb-item>
     </i-breadcrumb>
     <div class="form-block-title">
       客户信息
@@ -20,25 +20,15 @@
     </div>
     <div class="form-top-actions">
       <i-button type="info" @click="openAddDistributorModal"><i class="iconfont icon-xinzeng"></i> 新增</i-button>
+      <i-button type="info" @click="openCarModal"><i class="iconfont icon-xinzeng"></i> 车型管理</i-button>
+      <i-button type="info" @click="openQuotaModal"><i class="iconfont icon-xinzeng"></i> 额度管理</i-button>
+      <i-button type="info" @click="openOperatorModal"><i class="iconfont icon-xinzeng"></i> 操作员管理</i-button>
+      <i-button v-if="isClickRow" @click="handleClearCurrentRow" type="text"><i-icon type="android-cancel" class="button-cancel"></i-icon> 取消当前选中状态</i-button>
     </div>
-    <i-table :loading="distributorListLoading" border ref="selection" :columns="distributorColumns" :data="distributorList"></i-table>
+    <i-table highlight-row :loading="distributorListLoading" border ref="selection" :columns="distributorColumns" :data="distributorList" @on-current-change="radioFun"></i-table>
     <div class="page-container">
-      <i-page :total="40" size="small" show-elevator show-sizer show-total></i-page>
+      <i-page :total="total" :page-size="pageSize" size="small" show-elevator show-total></i-page>
     </div>
-    <bs-modal title="添加产品" v-model="addDistributorModal" :width="600">
-      <Form ref="formValidate" label-position="left" :label-width="80">
-        <i-form-item label="姓名" prop="name">
-          <i-input placeholder="请输入姓名"></i-input>
-        </i-form-item>
-        <i-form-item label="邮箱" prop="mail">
-          <i-input placeholder="请输入邮箱"></i-input>
-        </i-form-item>
-        <i-form-item class="text-right">
-          <i-button type="primary">提交</i-button>
-          <i-button type="ghost" style="margin-left: 8px">重置</i-button>
-        </i-form-item>
-      </Form>
-    </bs-modal>
   </div>
 </template>
 <script>
@@ -49,16 +39,81 @@
     mixins: [MixinData],
     data() {
       return {
-        addDistributorModal: false,
+        clickRow: {},
+        isClickRow: false,        // 是否已经选择了某一行
+        total: 0,
+        currentPage: 1,
+        pageSize: 15,
         distributorListLoading: false
       };
+    },
+    mounted() {
+      // 从新增页面跳转回来，加载之前的指定页码
+      this.$data.currentPage = this.$route.query.currentPage;
     },
     components: {
       BsModal
     },
     methods: {
+      // 单选每一行时出触发
+      radioFun(currentRow, oldCurrentRow) {
+        this.$data.clickRow = currentRow;
+        if (JSON.stringify(this.$data.clickRow) === '{}') {
+          this.$data.isClickRow = false;
+        }
+        this.$data.isClickRow = true;
+      },
+      // 取消选中行的选中状态
+      handleClearCurrentRow() {
+        this.$refs.proTable.clearCurrentRow();
+        this.$data.isClickRow = false;
+        this.$data.clickRow = {};
+      },
       openAddDistributorModal() {
-        this.$data.addDistributorModal = true;
+        this.$router.push({
+          path: '/index/customer/distributor/add',
+          query: {
+            currentPage: this.$data.currentPage
+          }
+        });
+      },
+      // 判断是否选中的其中一行
+      clickRowedFun() {
+        if (JSON.stringify(this.$data.clickRow) === '{}') {
+          this.$Notice.error({
+            title: '请先选择渠道商',
+            duration: 2
+          });
+          return false;
+        }
+        return true;
+      },
+      // 打开车型管理
+      openCarModal() {
+        if (this.clickRowedFun()) {
+          this.$router.push({
+            path: '/index/customer/distributor/car',
+            query: {
+              currentPage: this.$data.currentPage,
+              ...this.$data.clickRow
+            }
+          });
+        }
+      },
+      // 打开额度管理
+      openQuotaModal() {
+        if (this.clickRowedFun()) {
+          this.$router.push({
+            path: '/index/customer/distributor/quota',
+            query: {
+              currentPage: this.$data.currentPage,
+              ...this.$data.clickRow
+            }
+          });
+        }
+      },
+      // 打开操作员管理
+      openOperatorModal() {
       }
     }
   };

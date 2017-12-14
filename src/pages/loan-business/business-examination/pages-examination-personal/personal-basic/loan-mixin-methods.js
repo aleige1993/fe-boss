@@ -22,15 +22,15 @@ export default {
     // 车辆提交
     async addSuBmitLoan() {
       await this.loanData.unshift(this.$data.formLoan);
-      this.$Message.success('新增成功');
       this.$data.showModalLoan = false;
+      this.$Message.success('新增成功');
     },
     // 修改情况下的提交数据
     async setSuBmitLoan() {
       let index = await this.$data.formLoan._index;
       this.$set(this.$data.loanData, index, this.$data.formLoan);
-      this.$Message.success('修改成功');
       this.$data.showModalLoan = false;
+      this.$Message.success('修改成功');
     },
     LoanSuBmit() {
       let name = 'formLoan';

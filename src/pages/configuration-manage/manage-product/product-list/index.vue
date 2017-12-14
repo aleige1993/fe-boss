@@ -36,77 +36,78 @@
       <i-page :total="total" :page-size="pageSize" :current="currentPage" @on-change="jumpPage" size="small" show-elevator show-total></i-page>
     </div>
     <!--新增产品弹窗-->
-    <pt-modal :title="isAdd ? '新增' : '修改'" v-model="showAddModal" :width="600">
-      <i-form v-if="showAddModal" ref="formCustom" :model="formCustom" label-position="left" :label-width="100">
-        <i-form-item
-          :rules="{required: true, message: '产品类别不能为空', trigger: 'change'}"
-          label="产品类别"
-          prop="productType">
-          <i-select placeholder="请选择" v-model="formCustom.productType">
-            <!--
-          {
-          'groupKey': 'ProductTypeEnum',
-          'items': [
-            {
-              'itemCode': '1',
-              'itemName': '乘用车'
-            },
-            {
-              'itemCode': '2',
-              'itemName': '商用车'
-            },
-            {
-              'itemCode': '3',
-              'itemName': '轻卡'
-            },
-            {
-              'itemCode': '4',
-              'itemName': '微卡'
-            },
-            {
-              'itemCode': '5',
-              'itemName': '新能源'
-            }
-          ]
-        }
-          -->
-            <i-option v-for="item in enumSelectData.get('ProductTypeEnum')" :key="item.itemCode" :value="item.itemCode">{{item.itemName}}</i-option>
-          </i-select>
-        </i-form-item>
-        <i-form-item
-          :rules="{required: true, message: '产品名称不能为空', trigger: 'blur'}"
-          label="产品名称"
-          prop="productName">
-          <i-input placeholder="请输入产品名称" v-model="formCustom.productName"></i-input>
-        </i-form-item>
-        <i-form-item label="状态" prop="status">
-          <i-select v-model="formCustom.status">
-            <!--{
-              'groupKey': 'ProductStatusEnum',
-              'items': [
-                {'itemCode': '1','itemName': '启用'},
-                {'itemCode': '2','itemName': '停用'},
-                {'itemCode': '3','itemName': '初始化'}
-              ]
-            }-->
-            <i-option v-for="item in enumSelectData.get('ProductStatusEnum')" :key="item.itemCode" :value="item.itemCode">{{item.itemName}}</i-option>
-          </i-select>
-        </i-form-item>
-        <i-form-item label="适用流程" prop="flowName">
-          <i-select v-model="formCustom.flowName">
-            <i-option value="1">流程一</i-option>
-            <i-option value="2">流程二</i-option>
-          </i-select>
-        </i-form-item>
-        <i-form-item
-          :rules="{required: true, message: '产品说明不能为空', trigger: 'blur'}"
-          label="产品说明"
-          prop="remark">
-          <i-input v-model="formCustom.remark" type="textarea" :autosize="{minRows: 2,maxRows: 5}" placeholder="请输入产品说明..."></i-input>
-        </i-form-item>
+    <pt-modal :title="isAdd ? '新增' : '修改'" v-model="showAddModal" :width="1000">
+      <i-form v-if="showAddModal" ref="formCustom" :model="formCustom" label-position="right" :label-width="100">
+        <i-row>
+          <i-col span="12">
+            <i-form-item
+              :rules="{required: true, message: '产品类别不能为空', trigger: 'change'}"
+              label="产品类别"
+              prop="productType">
+              <i-select placeholder="请选择" v-model="formCustom.productType">
+                <i-option v-for="item in enumSelectData.get('ProductTypeEnum')" :key="item.itemCode" :value="item.itemCode">{{item.itemName}}</i-option>
+              </i-select>
+            </i-form-item>
+          </i-col>
+          <i-col span="12">
+            <i-form-item
+              :rules="{required: true, message: '产品名称不能为空', trigger: 'blur'}"
+              label="产品名称"
+              prop="productName">
+              <i-input placeholder="请输入产品名称" v-model="formCustom.productName"></i-input>
+            </i-form-item>
+          </i-col>
+          <i-col span="12">
+            <i-form-item label="状态" prop="status">
+              <i-select v-model="formCustom.status">
+                <i-option v-for="item in enumSelectData.get('ProductStatusEnum')" :key="item.itemCode" :value="item.itemCode">{{item.itemName}}</i-option>
+              </i-select>
+            </i-form-item>
+          </i-col>
+          <i-col span="12">
+            <i-form-item label="适用流程" prop="flowName">
+              <i-select v-model="formCustom.flowName">
+                <i-option value="1">流程一</i-option>
+                <i-option value="2">流程二</i-option>
+              </i-select>
+            </i-form-item>
+          </i-col>
+          <i-col span="12">
+            <i-form-item
+              :rules="{required: true, message: '产品说明不能为空', trigger: 'blur'}"
+              label="产品说明"
+              prop="remark">
+              <i-input v-model="formCustom.remark" type="textarea" :autosize="{minRows: 2,maxRows: 5}" placeholder="请输入产品说明..."></i-input>
+            </i-form-item>
+          </i-col>
+        </i-row>
+        <bs-form-block :title="'产品特性'" v-if="!isAdd">
+          <div class="form-top-actions">
+            <i-button @click="openModalFeature" type="info"><i class="iconfont icon-xinzeng"></i>&nbsp;新增</i-button>
+          </div>
+          <i-table :loading="tabelFeatureLoading" border ref="tableFeature" :columns="columnsFeature" :data="dataFeature"></i-table>
+        </bs-form-block>
         <i-form-item class="text-right">
           <i-button type="primary" @click="formSubmit" :loading="buttonLoading">
             <span v-if="!buttonLoading">提交</span>
+            <span v-else>Loading...</span>
+          </i-button>
+          <i-button type="ghost" style="margin-left: 8px" @click="formCancel">取消</i-button>
+        </i-form-item>
+      </i-form>
+    </pt-modal>
+    <!--新增产品弹窗里的产品配置弹窗-->
+    <pt-modal :title="'新增产品特性'" v-model="showFeatureModal" :width="600">
+      <i-form ref="formFeature" :model="formFeature" label-position="right" :label-width="100">
+        <i-form-item
+          :rules="{required: true, message: '标签不能为空', trigger: 'blur'}"
+          label="标签"
+          prop="productTag">
+          <i-input v-model="formFeature.productTag" placeholder="请输入标签"></i-input>
+        </i-form-item>
+        <i-form-item class="text-right">
+          <i-button type="primary" @click="formFeatureSubmit" :loading="buttonFeatureLoading">
+            <span v-if="!buttonFeatureLoading">提交</span>
             <span v-else>Loading...</span>
           </i-button>
           <i-button type="ghost" style="margin-left: 8px" @click="formCancel">取消</i-button>
@@ -143,6 +144,7 @@
 <script>
   import PTModal from '@/components/bs-modal';
   import MixinData from './mixin-data';
+  import MixinDataFeature from './mixin-data-feature';
   import ConfModelLilv from './configure-model-lilv'; //  利率方案配置
   import ConfModelFy from './configure-model-cost'; //  费用收取配置
   import ConfModelLoan from './configure-model-loan'; //  贷款材料配置
@@ -151,7 +153,7 @@
   import ConfModelContract from './configure-model-contract'; //  合同模板配置
   export default {
     name: 'prolist',
-    mixins: [MixinData],
+    mixins: [MixinData, MixinDataFeature],
     components: {
       'pt-modal': PTModal,
       'conf-model-lilv': ConfModelLilv,
@@ -164,6 +166,12 @@
     data() {
       return {
         isAdd: true,
+        tabelFeatureLoading: false,
+        showFeatureModal: false,
+        buttonFeatureLoading: false,
+        formFeature: {
+          productTag: ''
+        },
         dataLoading: false,
         buttonLoading: false,
         showAddModal: false,
@@ -196,6 +204,60 @@
       };
     },
     methods: {
+      // 打开产品特性的弹层
+      openModalFeature() {
+        this.$data.showFeatureModal = true;
+        this.$data.formFeature = {};
+      },
+      // 保存新增产品特性标签
+      async formFeatureSubmit() {
+        this.$data.buttonFeatureLoading = true;
+        let resAdd = await this.$http.post('/pms/product/bindProductTag', {
+          productTag: this.$data.formFeature.productTag,
+          productNo: this.$data.clickRow.productNo
+        });
+        this.$data.buttonFeatureLoading = false; // 关闭按钮的loading状态
+        this.$data.showFeatureModal = false;
+        if (resAdd.success) {
+          this.$Message.success('新增成功');
+          this.getProductTagList();
+        }
+      },
+      // 删除产品标签的请求
+      async removeFeature(row) {
+        Alertify.confirm('确定要删除吗？', async (ok) => {
+          if (ok) {
+            let productTagNo = row.productTagNo;
+            const loadingMsg = this.$Message.loading('删除中...', 0);
+            let respDel = await this.$http.post('/pms/product/removeProductTag', {
+              productTagNo: productTagNo
+            });
+            if (respDel.success) {
+              loadingMsg();
+              this.$Message.success('删除成功');
+              this.getProductTagList();
+            }
+          }
+        });
+      },
+      // 查询产品标签列表
+      async getProductTagList() {
+        this.$data.tabelFeatureLoading = true;
+        let resp = await this.$http.get('/pms/product/listProductTag', {
+          currentPage: 1,
+          pageSize: 999999
+        });
+        this.$data.tabelFeatureLoading = false;
+        if (resp.body.resultList.length !== 0) {
+          this.$data.dataFeature = resp.body.resultList;
+        } else {
+          this.$Notice.warning({
+            title: '产品特性列表没有数据可加载',
+            duration: 2
+          });
+          this.$data.dataFeature = [];
+        }
+      },
       // 查询列表数据
       async getPrivateCustomerList(page) {
         this.$data.dataLoading = true;
@@ -253,6 +315,7 @@
         this.isAdd = false;
         this.$data.showAddModal = true;
         this.formCustom = row;
+        this.getProductTagList(); // 修改时加载产品特性列表
       },
       // 修改情况下的提交数据
       async setSubmit() {

@@ -534,8 +534,8 @@
         this.$data.showAdd = false;
         this.getPrivateCustomerList();  // 获取模态框列表数据
         if (resAdd.success) {
-          this.$Message.success('新增成功');
           this.$data.showAdd = false;
+          this.$Message.success('新增成功');
           this.getPrivateCustomerList();
         }
       },

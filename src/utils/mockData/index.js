@@ -9,6 +9,7 @@ import department from './department';
 import companyCredit from './company-credit';
 import loanbusiness from './loanbusiness';
 import carDropList from './car-droplist';
+import distributor from './distributor';
 
 let ary = [
   {
@@ -81,6 +82,6 @@ let result = [
   ...ary, ...menuList, ...product,
   ...invest, ...customerManage, ...enumSelectData,
   ...employerManage, ...department, ...companyCredit,
-  ...loanbusiness, ...carDropList
+  ...loanbusiness, ...carDropList, ...distributor
 ];
 export default result;

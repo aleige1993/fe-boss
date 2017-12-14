@@ -3,8 +3,7 @@ export default {
     return {
       columns1: [
         {
-          title: '产品编号',
-          width: 180,
+          title: '产品编码',
           align: 'center',
           key: 'productNo'
         },
@@ -13,42 +12,19 @@ export default {
           key: 'productName'
         },
         {
-          title: '资方名称',
-          key: 'capitalName'
-        },
-        {
-          title: '资方产品编号',
-          key: 'capitalProductNo'
-        },
-        {
-          title: '渠道编号',
-          key: 'channelNo'
-        },
-        {
-          title: '客户经理编号',
-          key: 'custMgrNo'
+          title: '适用车类',
+          key: 'carType',
+          render: (h, params) => {
+            return h('span', {}, this.enumCode2Name(params.row.carType, 'BizTypeEnum'));
+          }
         },
         {
           title: '操作',
           key: 'action',
-          width: 240,
+          width: 200,
           align: 'center',
           render: (h, params) => {
             return h('div', [
-              h('Button', {
-                props: {
-                  type: 'primary',
-                  size: 'small'
-                },
-                style: {
-                  marginRight: '5px'
-                },
-                on: {
-                  click: () => {
-                    this.contractModelOpen($.extend({}, params.row));
-                  }
-                }
-              }, '合同模板'),
               h('Button', {
                 props: {
                   type: 'primary',

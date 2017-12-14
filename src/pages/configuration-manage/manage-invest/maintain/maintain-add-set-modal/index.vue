@@ -253,12 +253,11 @@
       // 新增情况下的提交
       async addSuBmit() {
         let resAdd = await this.$http.post('/pms/capital/accBaseInfoSave', this.$data.formMaintain);
+        this.$data.buttonLoading = false; // 关闭按钮的loading状态
         if (resAdd.success) {
-          this.$data.buttonLoading = false; // 关闭按钮的loading状态
           this.$Message.success('新增成功', 2000);
           this.$data.formMaintain.capitalNo = resAdd.body.capitalNo;
           this.childMsg.capitalNo = resAdd.body.capitalNo;
-          console.log('新增之后系统生成的资方编号：' + resAdd.body.capitalNo);
         }
         await bsWait(200);
         this.$data.isAddSubMint = true;

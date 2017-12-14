@@ -799,6 +799,60 @@ export default [
               'itemName': '线下'
             }
           ]
+        },
+        // 合同类型
+        {
+          'groupKey': 'ContractTypeEnum',
+          'items': [
+            {
+              'itemCode': '1',
+              'itemName': '抵押合同'
+            },
+            {
+              'itemCode': '2',
+              'itemName': '反欺诈风险提示'
+            },
+            {
+              'itemCode': '3',
+              'itemName': '付款提示表'
+            },
+            {
+              'itemCode': '4',
+              'itemName': '租赁合同(回租)'
+            },
+            {
+              'itemCode': '5',
+              'itemName': '协议书（回租模式）'
+            },
+            {
+              'itemCode': '6',
+              'itemName': '客户须知与免责声明1'
+            },
+            {
+              'itemCode': '7',
+              'itemName': '《重庆海乐行融资租赁有限公司汽车租赁合同》附件一《车辆交接单》'
+            },
+            {
+              'itemCode': '8',
+              'itemName': '委托扣款协议'
+            },
+            {
+              'itemCode': '9',
+              'itemName': '(直租)接收证明书'
+            },
+            {
+              'itemCode': '10',
+              'itemName': '(直租)融资租赁合同'
+            },
+            {
+              'itemCode': '11',
+              'itemName': '(直租)租车确认函'
+            },
+            {
+              'itemCode': '12',
+              'itemName': '(直租)租金调整通知书'
+            }
+          ]
         }
       ],
       'reCode': '0000',
