@@ -120,7 +120,7 @@
       },
       // 模糊查询
       searchSubmit() {
-        this.getPrivateCustomerList(1);
+        this.getPrivateCustomerList();
       },
       jumpPage(page) {
         this.getPrivateCustomerList(page);
