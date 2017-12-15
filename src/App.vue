@@ -35,6 +35,12 @@ export default {
   color: #333;
   .wraper{
     padding: 110px 15px 20px;
+    &.no-action{
+      padding-top: 10px;
+      .ivu-breadcrumb{
+        display: none;
+      }
+    }
   }
 }
 </style>

@@ -10,12 +10,12 @@
             <i-row>
               <i-col span="8">
                 <i-form-item label="网审情况">
-                  <i-input :readonly="creditStatus!=='3'" v-model="approveData.firstTrialParam.netApprove"></i-input>
+                  <i-input v-model="approveData.firstTrialParam.netApprove"></i-input>
                 </i-form-item>
               </i-col>
               <i-col span="8">
                 <i-form-item label="电核情况">
-                  <i-input :readonly="creditStatus!=='3'" v-model="approveData.firstTrialParam.telephoneApprove"></i-input>
+                  <i-input v-model="approveData.firstTrialParam.telephoneApprove"></i-input>
                 </i-form-item>
               </i-col>
             </i-row>
@@ -245,7 +245,7 @@
     },
     methods: {
       uploadFirstApproveFileSuccess(res) {
-        // this.$set(this.$data.firstApproveForm, 'fileUrl', res.body.url);
+        this.$set(this.$data.firstApproveForm, 'fileUrl', res.body.url);
         // this.$data.firstApproveForm.fileUrl = res.body.url;
       },
       submitFirstApprove() {

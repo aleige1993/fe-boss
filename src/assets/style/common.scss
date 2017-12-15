@@ -42,6 +42,9 @@
 }
 .right-main{
   padding-left: 200px;
+  &.no-action{
+    padding-left: 0;
+  }
 }
 .form-top-actions{
   padding: 10px 0;

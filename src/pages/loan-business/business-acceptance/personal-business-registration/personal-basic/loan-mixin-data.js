@@ -1,3 +1,5 @@
+import Tools from '../../../../../utils/Tools';
+
 export default {
   data() {
     return {
@@ -16,25 +18,19 @@ export default {
           title: '文件名',
           key: 'attachPath',
           render: (h, params) => {
-            return h('div', [
-              h('p', {
-                style: {
-                  width: '100%',
-                  height: '20px',
-                  lineHeight: '18px',
-                  overflow: 'hidden',
-                  textOverflow: 'ellipsis',
-                  whiteSpace: 'nowrap',
-                  color: '#2b90f8',
-                  cursor: 'pointer'
-                },
-                on: {
-                  click: () => {
-                    params.row.attachPath !== '' && window.open(params.row.attachPath);
-                  }
+            if (Tools.isImg(params.row.attachPath)) {
+              return h('bs-big-img', {
+                props: {
+                  thumbWidth: 80,
+                  thumbHeight: 80,
+                  fullWidth: 1000,
+                  thumb: params.row.attachPath,
+                  full: params.row.attachPath
                 }
-              }, params.row.attachPath)
-            ]);
+              });
+            } else {
+              return params.row.attachPath;
+            }
           }
         },
         {

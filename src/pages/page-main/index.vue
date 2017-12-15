@@ -1,11 +1,11 @@
 <template>
   <div id="page-index">
-    <top-bar></top-bar>
-    <top-nav></top-nav>
-    <div class="wraper">
+    <top-bar v-if="!noaction"></top-bar>
+    <top-nav v-if="!noaction"></top-nav>
+    <div class="wraper" v-bind:class="{'no-action': noaction}">
       <div id="" class="clearfix">
-        <left-nav></left-nav>
-        <div class="right-main">
+        <left-nav v-if="!noaction"></left-nav>
+        <div class="right-main" v-bind:class="{'no-action': noaction}">
           <router-view></router-view>
         </div>
       </div>
@@ -23,6 +23,11 @@ export default {
     'top-bar': Topbar,
     'top-nav': Topnav,
     LeftNav
+  },
+  computed: {
+    noaction() {
+      return this.$route.query.noaction;
+    }
   },
   methods: {
     async initMenuTree() {

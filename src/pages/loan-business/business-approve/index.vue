@@ -515,7 +515,7 @@
               <i-icon type="ios-cloud-upload" size="52" style="color: #3399ff"></i-icon>
               <p>单击或拖动文件上传</p>
             </div>
-            <p v-else class="show-upload-text" v-text="formLoan.attachPath"></p>
+            <div style="padding: 20px 0" v-else class="show-upload-text" v-text="formLoan.attachPath"></div>
           </i-upload>
           <!--<p v-if="isAddLoan" class="show-upload-text" v-text="uploadFileName"></p>
           <p v-else class="show-upload-text" v-text="formLoan.attachPath"></p>-->
