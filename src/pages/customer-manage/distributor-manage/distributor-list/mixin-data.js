@@ -7,6 +7,10 @@ export default {
           key: 'merchantNo'
         },
         {
+          title: '渠道商类型',
+          key: 'merchantType'
+        },
+        {
           title: '客户编号',
           key: 'corpNo'
         },
@@ -16,27 +20,27 @@ export default {
         },
         {
           title: '统一社会信用代码',
-          key: 'merchantNo'
+          key: 'suCreditCode'
         },
         {
           title: '法定代表人',
-          key: 'merchantNo'
+          key: 'legalPerson'
         },
         {
           title: '注册时间',
-          key: 'merchantNo'
+          key: 'regDate'
         },
         {
           title: '注册资金',
-          key: 'merchantNo'
+          key: 'regCapital'
         },
         {
           title: '公司电话',
-          key: 'merchantNo'
+          key: 'telephone'
         },
         {
           title: '授信状态', // 0:未授信1-授信审核中2-授信通过3-授信拒绝4-授信驳回5-授信过期6-冻结
-          key: 'merchantNo'
+          key: 'merchantStatus'
         },
         {
           title: '操作',
@@ -109,13 +113,17 @@ export default {
       ],
       distributorList: [
         {
-          corpNo: '111111', // 公司编号
-          corpName: '111111', // 公司名称
-          custMgrNo: '111111', // 客户经理编号
-          custMgrName: '111111', // 客户经理名称
-          memberNo: '1111',
-          merchantNo: '1243',
-          action: '111'
+          'merchantNo': '11111111', // 渠道商编号
+          'merchantType': '1', // 渠道商类型 1.4S店2.一网商3.二网商
+          'corpNo': '111111', // 公司编号
+          'corpName': '111111', // 公司名称
+          'suCreditCode': '111111', // 统一社会信用代码
+          'legalPerson': '111111', // 法定代表人
+          'regDate': '2017-12-16', // 注册时间
+          'regCapital': '900000', // 注册资金
+          'telephone': '02388888888', // 公司电话
+          'merchantStatus': '0', // 授信状态
+          'custMgrName': '11111111' // 客户经理编号
         }
       ]
     };

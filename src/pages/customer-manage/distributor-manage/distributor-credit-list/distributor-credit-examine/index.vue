@@ -147,7 +147,7 @@
         </i-form>
       </i-tab-pane>
       <i-tab-pane label="审核历史信息">
-
+        <table-examine-history if="tabIndex===1"></table-examine-history>
       </i-tab-pane>
     </i-tabs>
   </div>
@@ -155,8 +155,12 @@
 </template>
 
 <script>
+  import tableExamineHistory from '../table-examine-history';
   export default {
     name: 'distributorCreditExamine',
+    components: {
+      tableExamineHistory
+    },
     data() {
       return {
         tabIndex: 0,
