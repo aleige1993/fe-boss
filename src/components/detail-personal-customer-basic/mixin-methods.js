@@ -1,3 +1,5 @@
+import Tools from '../../utils/Tools';
+
 export default {
   methods: {
     async initFormData(memberNo) {
@@ -16,7 +18,7 @@ export default {
       }
     },
     gotoPersonal() {
-      window.open(`#/index/customer/detail?id=${this.$data.formData.mbMemberDTO.memberNo}&from=detail`);
+      Tools.openWin(`#/index/customer/detail?no-action=true&id=${this.$data.formData.mbMemberDTO.memberNo}&from=detail`);
     }
   }
 };

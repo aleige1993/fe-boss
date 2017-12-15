@@ -1,3 +1,5 @@
+import Tools from '../../utils/Tools';
+
 export default {
   methods: {
     submitAttach() {
@@ -29,7 +31,7 @@ export default {
       }
     },
     gotoCompany() {
-      window.open(`#/index/customer/companycustomer/modify?id=${this.$data.formData.baseDTO.corpNo}&name=${this.$data.formData.baseDTO.corpName}&from=detail`);
+      Tools.openWin(`#/index/customer/companycustomer/modify?noaction=true&id=${this.$data.formData.baseDTO.corpNo}&name=${this.$data.formData.baseDTO.corpName}&from=detail`);
     }
   }
 };
