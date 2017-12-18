@@ -18,8 +18,6 @@ module.exports = {
   // add your custom rules here
   'rules': {
     // allow paren-less arrow functions
-    'semi': [2, 'always'],
-    'quotes': [2, 'single'], // js必须使用单引号
     'indent': [2, 2], // 两个空格的缩进
     'quotes': [2, 'single'], // js必须使用单引号
     'linebreak-style': [2, 'windows'], // 换行风格 unix/windows

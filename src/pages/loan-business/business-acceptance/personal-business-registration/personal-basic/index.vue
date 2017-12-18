@@ -688,9 +688,9 @@
       };
     },
     mounted() {
-      /*this.getCarList();
+      /* this.getCarList();
       this.getAssureList();
-      this.getLoanList();*/
+      this.getLoanList(); */
     },
     methods: {
       // 选择权利人
@@ -733,7 +733,6 @@
       },
       // 接收姓名组件的客户信息
       getMember(CertData) {
-        debugger;
         // this.$data.member = CertData;
         if (CertData.mbMemberDTO) {
           this.$data.formData.memberNo = CertData.mbMemberDTO['memberNo'];

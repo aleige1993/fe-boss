@@ -17,7 +17,7 @@
     <i-row v-else>
       <i-col span="24">
         <i-form label-position="right" :label-width="140">
-          <bs-form-block :title="'基本信息'">
+          <bs-form-block :title="'基本信息'" v-if="showDetail">
             <i-row>
               <i-col span="8">
                 <i-form-item label="公司名称">
@@ -122,7 +122,7 @@
             </i-row>
           </bs-form-block>
           <!--法定代表人姓名-->
-          <bs-form-block :title="'法定代表人信息'">
+          <bs-form-block :title="'法定代表人信息'" v-if="showDetail">
             <i-row>
               <i-col span="8">
                 <i-form-item label="法定代表人姓名">
@@ -159,7 +159,7 @@
             </i-row>
           </bs-form-block>
           <!--主联系人-->
-          <bs-form-block :title="'主联系人信息'">
+          <bs-form-block :title="'主联系人信息'" v-if="showDetail">
             <i-row>
               <i-col span="8">
                 <i-form-item label="联系人人姓名">
@@ -196,7 +196,7 @@
             </i-row>
           </bs-form-block>
           <!--来源信息-->
-          <bs-form-block :title="'来源信息'" >
+          <bs-form-block :title="'来源信息'" v-if="showDetail">
             <i-row>
               <i-col span="8">
                 <i-form-item label="业务拓展部门">
@@ -215,7 +215,39 @@
               </i-col>
             </i-row>
           </bs-form-block>
-
+          <bs-form-block v-else title="公司信息">
+            <i-row>
+              <i-col span="8">
+                <i-form-item label="公司名称">
+                  <i-button type="text" @click="gotoCompany" v-text="formData.baseDTO.corpName"></i-button>
+                  <i-button type="success" @click="gotoCompany">查看企业详情</i-button>
+                  <i-button v-if="!readonly" type="primary" @click="selectCompanyModal=!selectCompanyModal">选择公司 <i-icon type="ios-more"></i-icon></i-button>
+                </i-form-item>
+              </i-col>
+              <i-col span="8">
+                <i-form-item label="统一社会信用代码">
+                  <span v-text="formData.baseDTO.creditCode"></span>
+                </i-form-item>
+              </i-col>
+            </i-row>
+            <i-row>
+              <i-col span="8">
+                <i-form-item label="业务拓展部门">
+                  <span v-text="formData.baseDTO.bizDepartmentName"></span>
+                </i-form-item>
+              </i-col>
+              <i-col span="8">
+                <i-form-item label="开始合作时间">
+                  <span  v-text="formData.baseDTO.joinStartDate"></span>
+                </i-form-item>
+              </i-col>
+              <i-col span="8">
+                <i-form-item label="客户经理">
+                  <span v-text="formData.baseDTO.custMgrName"></span>
+                </i-form-item>
+              </i-col>
+            </i-row>
+          </bs-form-block>
         </i-form>
       </i-col>
     </i-row>
@@ -248,6 +280,10 @@ export default {
   props: {
     corpNo: String,
     readonly: {
+      type: Boolean,
+      default: false
+    },
+    showDetail: {
       type: Boolean,
       default: false
     }

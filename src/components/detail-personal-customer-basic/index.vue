@@ -1,8 +1,8 @@
 <template>
   <div class="" style="position: relative">
-    <i-row v-if="!memberNo">
+    <i-row v-if="!formData.mbMemberDTO.memberNo">
       <i-col span="8" offset="8">
-        <i-button type="text" @click="isHasFormDataFun" long style="margin-bottom: 30px; border: 0;background-color: #fff;">
+        <i-button type="text" @click="selectPersonalModal=!selectPersonalModal" long style="margin-bottom: 30px; border: 0;background-color: #fff;">
           <div class="ivu-upload">
             <div class="ivu-upload ivu-upload-drag" style="border: 1px dashed #2baee9;">
               <div style="padding: 20px 0px;">
@@ -17,7 +17,7 @@
     <i-row v-else>
       <i-col span="24">
         <i-form label-position="right" :model="formData" ref="formAddCustomer" :label-width="120">
-          <bs-form-block :title="'基本信息'">
+          <bs-form-block :title="'基本信息'" v-if="showDetail">
             <i-row>
               <i-col span="8">
                 <i-form-item label="姓名">
@@ -204,7 +204,7 @@
             </i-row>
           </bs-form-block>
           <!--工作信息-->
-          <bs-form-block :title="'工作信息'">
+          <bs-form-block :title="'工作信息'" v-if="showDetail">
             <i-row>
               <i-col span="8">
                 <i-form-item label="单位名称"
@@ -266,7 +266,42 @@
             </i-row>
           </bs-form-block>
           <!--来源信息-->
-          <bs-form-block :title="'来源信息'">
+          <bs-form-block :title="'来源信息'" v-if="showDetail">
+            <i-row>
+              <i-col span="8">
+                <i-form-item label="业务拓展部门">
+                  <span v-text="formData.mbMemberDTO.bizDepartmentName">
+                  </span>
+                </i-form-item>
+              </i-col>
+              <i-col span="8">
+                <i-form-item label="开始合作时间">
+                  <span v-text="formData.mbMemberDTO.joinStartDate"></span>
+                </i-form-item>
+              </i-col>
+              <i-col span="8">
+                <i-form-item label="客户经理">
+                  <span v-text="formData.mbMemberDTO.custMgrName" >
+                  </span>
+                </i-form-item>
+              </i-col>
+            </i-row>
+          </bs-form-block>
+          <bs-form-block title="客户信息" v-else>
+            <i-row>
+              <i-col span="8">
+                <i-form-item label="姓名">
+                  <i-button type="text" @click="gotoPersonal" v-text="formData.mbMemberDTO.name"></i-button>
+                  <i-button type="success" @click="gotoPersonal">查看客户详情</i-button>
+                  <i-button v-if="!readonly" type="primary" @click="selectPersonalModal=!selectPersonalModal">选择姓名 <i-icon type="ios-more"></i-icon></i-button>
+                </i-form-item>
+              </i-col>
+              <i-col span="8">
+                <i-form-item label="注册手机号" prop="mbMemberDTO.mobile">
+                  <span v-text="formData.mbMemberDTO.mobile" ></span>
+                </i-form-item>
+              </i-col>
+            </i-row>
             <i-row>
               <i-col span="8">
                 <i-form-item label="业务拓展部门">
@@ -304,17 +339,21 @@ import MxinMethods from './mixin-methods';
 import BsModal from '@/components/bs-modal';
 import TablePersonalCustomerList from '@/components/table-customer-list';
 export default {
-  name: 'formCustomerBsicInfo',
+  name: 'detailCustomerBsicInfo',
   mixins: [MxinData, MxinMethods],
   data() {
     return {
-      isHasFromData: false,
+      // isHasFromData: false,
       selectPersonalModal: false
     };
   },
   props: {
     memberNo: String,
     readonly: {
+      type: Boolean,
+      default: false
+    },
+    showDetail: {
       type: Boolean,
       default: false
     }
@@ -336,6 +375,7 @@ export default {
   },
   methods: {
     selectPersonal(row, index) {
+      // debugger;
       this.initFormData(row.memberNo);
       this.$emit('getMember', row);
       this.$data.selectPersonalModal = false;
