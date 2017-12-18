@@ -9,7 +9,7 @@
     <div class="form-top-actions"></div>
     <i-tabs v-model="tabIndex" type="card" :animated="false">
       <i-tab-pane label="申请信息">
-        <company-customer-basic-info :corpNo="approveData.creditApplyParam.corpNo"></company-customer-basic-info>
+        <company-customer-basic-info :readonly="true" :corpNo="approveData.creditApplyParam.corpNo"></company-customer-basic-info>
         <i-form label-position="right" :label-width="140">
           <!--附件信息-->
           <bs-form-block :title="'附件信息'">
