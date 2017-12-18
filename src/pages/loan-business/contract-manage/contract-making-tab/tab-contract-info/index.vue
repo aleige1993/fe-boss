@@ -1,4 +1,5 @@
 <template>
+  <!--个人业务合同制作-合同信息-->
 <div id="tab-contract-info">
   <bs-form-block :title="'签约申请信息'">
     <i-form inline>
@@ -195,11 +196,10 @@
       capitalGenerating() {},
       // 生成合同
       contractGenerating() {
-        console.log(5465465465);
         const formName = 'contractInfoForm';
         this.$refs[formName].validate((valid) => {
           if (valid) {
-            console.log(111111111);
+            alert('生成合同');
           } else {
             this.$Message.error('"<span style="color: red">*</span>"必填项不能为空');
           }
