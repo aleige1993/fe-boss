@@ -99,13 +99,14 @@
         if (page) {
           this.$data.currentPage = page;
         }
-       /* let resp = await this.$http.get('/pms/product/list', {
+        let resp = await this.$http.post('merchant/listMerchant', {
+          corpName: this.$data.formSearch.corpName, // 公司名称，模糊查询
           currentPage: this.$data.currentPage,
-          pageSize: this.$data.pageSize,
-          productName: this.$data.formSearch.productName
+          pageSize: this.$data.pageSize
         });
         this.$data.dataLoading = false;
-        if (resp.body.resultList.length !== 0) {
+        console.log(resp);
+        /*if (resp.body.resultList.length !== 0) {
           this.$data.data1 = resp.body.resultList;
           this.$data.currentPage = resp.body.currentPage;
           this.$data.total = resp.body.totalNum;
@@ -119,7 +120,7 @@
       },
       // 模糊查询
       searchSubmit() {
-        this.getPrivateCustomerList(1);
+        this.getPrivateCustomerList();
       },
       jumpPage(page) {
         this.getPrivateCustomerList(page);
@@ -152,6 +153,17 @@
       },
       // 打开操作员管理
       openOperatorModal() {
+        if (this.clickRowedFun()) {
+          this.$router.push({
+            path: '/index/customer/distributor/admin',
+            query: {
+              currentPage: this.$data.currentPage,
+              merchantNo: this.$data.clickRow.merchantNo,
+              corpName: this.$data.clickRow.corpName,
+              custMgrName: this.$data.clickRow.custMgrName
+            }
+          });
+        }
       }
     }
   };

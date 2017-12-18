@@ -62,7 +62,15 @@ export default {
                 },
                 on: {
                   click: () => {
-                    alert('这里要打开审核历史组件');
+                    this.$router.push({
+                      path: '/index/customer/distributor/credit/examine/history',
+                      query: {
+                        corpNo: params.row.corpNo,
+                        memberNo: params.row.memberNo,
+                        merchantNo: params.row.merchantNo,
+                        from: 'detail'
+                      }
+                    });
                   }
                 }
               }, '审核历史')
@@ -139,8 +147,7 @@ export default {
                       path: '/index/customer/distributor/credit/examine',
                       query: {
                         memberNo: params.row.memberNo,
-                        merchantNo: params.row.merchantNo,
-                        from: 'detail'
+                        merchantNo: params.row.merchantNo
                       }
                     });
                   }
