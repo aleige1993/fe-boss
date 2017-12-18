@@ -143,7 +143,15 @@ let MyRouter = new Router({
                 // 贷款业务-授信管理-授信审批
                 { path: 'doapprove', name: 'loanBusinessCreditApprove', component: resolve => require(['@/pages/loan-business/credit-manage/credit-approve'], resolve)}
               ]
-            }
+            },
+            // 贷款业务-签约管理
+            { path: 'contract', name: 'loanContractManage', component: resolve => require(['@/pages/loan-business/contract-manage'], resolve),
+              children: [
+                // 贷款业务-签约管理->合同制作列表
+                { path: '/', name: 'loanContractMakingList', component: resolve => require(['@/pages/loan-business/contract-manage/contract-list'], resolve)},
+                // 贷款业务-签约管理->个人业务合同制作
+                { path: 'making', name: 'loanContractMakingTab', component: resolve => require(['@/pages/loan-business/contract-manage/contract-making-tab'], resolve)}
+              ]}
           ]
         }
         // 贷款业务 end

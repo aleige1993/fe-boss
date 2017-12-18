@@ -96,5 +96,35 @@ export default [
       'reMsg': '成功',
       'success': true
     })
+  },
+  // 签约管理-合同制作
+  {
+    url: '/makingList',
+    on: true,
+    resp: Mock.mock({
+      'body': {
+        'currentPage': 1,
+        'pageSize': 15,
+        'resultList|10': [
+          {
+            'contractNo|1': '111111111111111',
+            'loanNo': '111111111111111',
+            'corpName': 'mockjs数据',
+            'legalPersonCerttype|1': ['1', '2'],
+            'legalPersonCertno': /^[1-9]\d{5}(18|19|([23]\d))\d{2}((0[1-9])|(10|11|12))(([0-2][1-9])|10|20|30|31)\d{3}[0-9Xx]$/,
+            'productName|1': ['产品名称01', '产品名称02'],
+            'periods|1': ['3', '6', '12', '18', '24'],
+            'applicationMoney|500-10000': 500,
+            'examinationMoney|500-10000': 500,
+            'applicationDate': '@datetime()',
+            'contractDate': '@datetime()',
+            'dateLong': '@time("H:m:s")'
+          }
+        ]
+      },
+      'reCode': '0000',
+      'reMsg': '成功',
+      'success': true
+    })
   }
 ];

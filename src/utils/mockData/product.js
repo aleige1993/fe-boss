@@ -33,7 +33,7 @@ export default [
   // 产品配置-贷款材料配置
   {
     url: '/pms/cfgLoanDoc/list',
-    on: false,
+    on: true,
     resp: Mock.mock({
       'body': {
         'currentPage': 1,
@@ -57,7 +57,7 @@ export default [
   // 产品配置-费用类型配置
   {
     url: '/pms/cfgFeeType/list',
-    on: false,
+    on: true,
     resp: Mock.mock({
       'body': {
         'currentPage': 1,
@@ -82,7 +82,7 @@ export default [
   // 产品配置-准入规则配置
   {
     url: '/pms/cfgApproveRule/list',
-    on: false,
+    on: true,
     resp: Mock.mock({
       'body': {
         'currentPage': 1,
@@ -106,7 +106,7 @@ export default [
   // 产品配置-车辆材料配置
   {
     url: '/pms/cfgVehicleDoc/list',
-    on: false,
+    on: true,
     resp: Mock.mock({
       'body': {
         'currentPage': 1,
@@ -130,7 +130,8 @@ export default [
   // 产品配置-归档材料配置
   {
     url: '/pms/cfgFinishedDoc/list',
-    on: false,
+    type: 'get',
+    on: true,
     resp: Mock.mock({
       'body': {
         'currentPage': 1,
