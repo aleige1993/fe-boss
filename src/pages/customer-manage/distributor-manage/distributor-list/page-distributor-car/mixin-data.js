@@ -20,9 +20,12 @@ export default {
           key: 'sellingPrice'
         },
         {
-          title: '销售状态',
+          title: '销售状态', // 0停售，1在售
           align: 'center',
-          key: 'salesStatus'
+          key: 'salesStatus',
+          render: (h, params) => {
+            return h('span', {}, this.enumCode2Name(params.row.salesStatus, 'SalesStatusEnum'));
+          }
         },
         {
           title: '操作',

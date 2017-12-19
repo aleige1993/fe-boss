@@ -9,26 +9,20 @@ export default {
         },
         {
           title: '登录账号', // 公司编号
-          key: 'corpNo'
+          key: 'operatorCode'
         },
         {
           title: '操作员类型',
-          key: 'adminType',
+          key: 'operatorType',
           render: (h, params) => {
-            let test = '超级管理员';
-            if (params.row.adminType === '1') {
-              test = '超级管理员';
-            } else if (params.row.adminType === '2') {
-              test = '普通用户';
-            }
-            return h('span', {}, test);
+            return h('span', {}, this.enumCode2Name(params.row.operatorType, 'OperatorTypeEnum'));
           }
         },
         {
           title: '状态', // 0:冻结,1:激活
-          key: 'status',
+          key: 'operatorStatus',
           render: (h, params) => {
-            return h('span', {}, params.row.status === '0' ? '冻结' : '激活');
+            return h('span', {}, params.row.operatorStatus === '0' ? '冻结' : '激活');
           }
         },
         {

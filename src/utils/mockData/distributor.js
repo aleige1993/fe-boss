@@ -67,7 +67,7 @@ export default [
             'modelName': 'CS75',
             'guidancePrice|+100': 156800,
             'sellingPrice|+100': 136800,
-            'salesStatus|1': ['在售', '停售']
+            'salesStatus|1': ['0', '1']
           }
         ],
         'startIndex': 0,
@@ -81,8 +81,7 @@ export default [
   },
   // 渠道商渠道商操作员管理列表
   {
-    url: '/merchant/pageDistributorAdmin',
-    type: 'get',
+    url: '/merchant/operator/list',
     on: true,
     resp: Mock.mock({
       'body': {
@@ -92,9 +91,9 @@ export default [
         'resultList|10': [
           {
             'merchantNo|+1': 11111,
-            'corpNo|+1': 1111111,
-            'adminType|1': ['1', '2'],
-            'status|1': ['0', '1']
+            'operatorCode|+1': 1111111,
+            'operatorType|1': ['1', '2'],
+            'operatorStatus|1': ['0', '1']
           }
         ],
         'startIndex': 0,

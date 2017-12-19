@@ -14,7 +14,7 @@
         基本信息0001
       </i-tab-pane>
       <i-tab-pane label="合同信息">
-        <tab-contract-info></tab-contract-info>
+        <tab-contract-info v-if="tabIndex===1"></tab-contract-info>
       </i-tab-pane>
       <i-tab-pane label="审批信息">
         <i-form v-if="tabIndex===2" ref="formApproval" :model="formApproval" label-position="right" :label-width="100">

@@ -83,7 +83,7 @@
         if (page) {
           this.$data.currentPage = page;
         }
-        let resp = await this.$http.get('/merchant/pageDistributorAdmin', {
+        let resp = await this.$http.post('/merchant/operator/list', {
           currentPage: this.$data.currentPage,
           pageSize: this.$data.pageSize,
           merchantNo: this.$route.query.merchantNo
@@ -105,7 +105,8 @@
       // 新增
       async addSuccess() {
         this.$data.buttonLoading = true;
-        let resp = await this.$http.post('/merchant/addOperator', {
+        let resp = await this.$http.post('/merchant/operator/add', {
+          operatorStatus: '1', // 0冻结，1激活
           ...this.$data.formAdmin
         });
         this.$data.buttonLoading = false;

@@ -4,21 +4,19 @@
   <bs-form-block :title="'签约申请信息'">
     <i-form inline>
       <i-row>
-        <i-col span="12">
+        <i-col span="8">
           <i-form-item label="签约申请编号">
             <span v-text="loanNo"></span>
           </i-form-item>
         </i-col>
-      </i-row>
-      <i-row>
-        <i-col span="12">
+        <i-col span="8">
           <i-form-item label="签约申请时间">
             <span v-text="contractInfo.startDate"></span>
             <span v-if="(contractInfo.startDate!=='')&&contractInfo.endDate!==''">-</span>
             <span v-text="contractInfo.endDate"></span>
           </i-form-item>
         </i-col>
-        <i-col span="12">
+        <i-col span="8">
           <i-form-item label="签约申请地点">
             <span v-text="loanNo"></span>
           </i-form-item>
@@ -42,19 +40,17 @@
   <bs-form-block :title="'放款账户信息'">
     <i-form inline>
       <i-row>
-        <i-col span="12">
+        <i-col span="8">
           <i-form-item label="放款账户名">
             <span v-text="loanNo"></span>
           </i-form-item>
         </i-col>
-        <i-col span="12">
+        <i-col span="8">
           <i-form-item label="放款开户行">
             <span v-text="loanNo"></span>
           </i-form-item>
         </i-col>
-      </i-row>
-      <i-row>
-        <i-col span="12">
+        <i-col span="8">
           <i-form-item label="放款账号">
             <span v-text="loanNo"></span>
           </i-form-item>
@@ -66,19 +62,17 @@
   <bs-form-block :title="'还款账户信息'">
     <i-form inline>
       <i-row>
-        <i-col span="12">
+        <i-col span="8">
           <i-form-item label="还款账户名">
             <span v-text="loanNo"></span>
           </i-form-item>
         </i-col>
-        <i-col span="12">
+        <i-col span="8">
           <i-form-item label="还款开户行">
             <span v-text="loanNo"></span>
           </i-form-item>
         </i-col>
-      </i-row>
-      <i-row>
-        <i-col span="12">
+        <i-col span="8">
           <i-form-item label="还款账号">
             <span v-text="loanNo"></span>
           </i-form-item>
@@ -87,22 +81,20 @@
     </i-form>
   </bs-form-block>
   <!--海乐行账户信息-->
-  <bs-form-block :title="'账户名'">
+  <bs-form-block :title="'海乐行账户信息'">
     <i-form inline>
       <i-row>
-        <i-col span="12">
+        <i-col span="8">
           <i-form-item label="账户名">
             <span v-text="loanNo"></span>
           </i-form-item>
         </i-col>
-        <i-col span="12">
+        <i-col span="8">
           <i-form-item label="开户行">
             <span v-text="loanNo"></span>
           </i-form-item>
         </i-col>
-      </i-row>
-      <i-row>
-        <i-col span="12">
+        <i-col span="8">
           <i-form-item label="账号">
             <span v-text="loanNo"></span>
           </i-form-item>
