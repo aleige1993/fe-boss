@@ -41,8 +41,6 @@ let MyRouter = new Router({
             { path: 'distributor', name: 'distributor', component: resolve => require(['@/pages/customer-manage/distributor-manage'], resolve),
               children: [
                 { path:'/', name: 'distributorList', component: resolve => require(['@/pages/customer-manage/distributor-manage/distributor-list'], resolve)},
-                // 首页 > 渠道商管理 > 渠道商列表 > 新增渠道商
-                { path: 'add', name: 'addDistributor', component: resolve => require(['@/pages/customer-manage/distributor-manage/distributor-list/page-distributor-add'], resolve)},
                 // 首页 > 渠道商管理 > 渠道商列表 > 新增授信额度信息
                 { path: 'quota', name: 'quotaDistributor', component: resolve => require(['@/pages/customer-manage/distributor-manage/distributor-list/page-distributor-quota'], resolve)},
                 // 首页 > 渠道商管理 > 渠道商列表 > 渠道操作员管理

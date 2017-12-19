@@ -20,17 +20,16 @@
         <i-form-item
           label="登录账号"
           :rules="{required: true, message: '登录账号不能为空', trigger: 'blur'}"
-          prop="signId">
-          <i-input v-model="formAdmin.signId">
+          prop="operatorCode">
+          <i-input v-model="formAdmin.operatorCode">
           </i-input>
         </i-form-item>
         <i-form-item
           label="操作员类型"
           :rules="{required: true, message: '请选择操作员类型', trigger: 'change'}"
-          prop="adminType">
-          <i-select v-model="formAdmin.adminType">
-            <i-option value="1">超级管理员</i-option>
-            <i-option value="2">普通用户</i-option>
+          prop="operatorType">
+          <i-select v-model="formAdmin.operatorType">
+            <i-option v-for="item in enumSelectData.get('OperatorTypeEnum')" :key="item.itemCode" :value="item.itemCode">{{item.itemName}}</i-option>
           </i-select>
         </i-form-item>
         <i-form-item class="text-right">
@@ -63,8 +62,11 @@
         total: 0,
         pageSize: 15,
         formAdmin: {
-          signId: '',
-          adminType: ''
+          operatorCode: '',
+          operatorPassword: '',
+          operatorType: '',
+          merchantNo: '',
+          operatorStatus: ''
         }
       };
     },
@@ -103,13 +105,15 @@
       // 新增
       async addSuccess() {
         this.$data.buttonLoading = true;
-        let resp = await this.$http.post('/commonTestAjax', {});
+        let resp = await this.$http.post('/merchant/addOperator', {
+          ...this.$data.formAdmin
+        });
         this.$data.buttonLoading = false;
         this.$data.showAddModal = false;
         if (resp.success) {
           this.$Message.success('新增成功');
+          this.getList();
         }
-        this.getList();
       },
       formSubmit() {
         const formName = 'formAdmin';

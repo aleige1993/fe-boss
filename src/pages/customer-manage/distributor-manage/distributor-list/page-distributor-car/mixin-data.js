@@ -89,22 +89,7 @@ export default {
           }
         }
       ],
-      data1: [
-        {
-          'modelId': '1111111',
-          'modelName': 'CS75',
-          'guidancePrice': '156800',
-          'sellingPrice': '136800',
-          'salesStatus': '在售'
-        },
-        {
-          'modelId': '999999',
-          'modelName': 'CS35',
-          'guidancePrice': '98600',
-          'sellingPrice': '88600',
-          'salesStatus': '停售'
-        }
-      ]
+      data1: []
     };
   }
 };

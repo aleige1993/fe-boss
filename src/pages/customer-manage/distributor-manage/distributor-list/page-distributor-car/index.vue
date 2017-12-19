@@ -64,14 +64,14 @@
         buttonLoading: false,
         currentPage: 1,
         total: 0,
-        pageSize: 4,
+        pageSize: 15,
         formCustom: {
-          brandCode: '',
-          brandName: '',
-          seriesCode: '',
-          seriesName: '',
-          modelCode: '',
-          modelName: '',
+          brandCode: '', // 车品牌code
+          brandName: '', // 车品牌name
+          seriesCode: '', // 车系code
+          seriesName: '', // 车系code
+          modelCode: '', // 车型code
+          modelName: '', // 车型code
           modelId: '',
           guidancePrice: '',
           sellingPrice: ''
@@ -102,7 +102,7 @@
         if (page) {
           this.$data.currentPage = page;
         }
-        let resp = await this.$http.post('merchant/listVhc', {
+        let resp = await this.$http.post('merchant/listCar', {
           merchantNo: this.$route.query.merchantNo,
           currentPage: this.$data.currentPage,
           pageSize: this.$data.pageSize
@@ -130,16 +130,23 @@
       },
       // 新增的保存请求方法
       async addSuBmit() {
-        /*let resAdd = await this.$http.post('/pms/cfgFeeType/save', {
-          feeTypeName: this.$data.formCustom.feeTypeName,
-          feeType: this.$data.formCustom.feeType
+        let resAdd = await this.$http.post('merchant/saveCar', {
+          merchantNo: this.$route.query.merchantNo,
+          brandId: this.$data.formCustom.brandCode, // 车品牌code
+          brandName: this.$data.formCustom.brandName, // 车品牌name
+          seriesId: this.$data.formCustom.seriesCode, // 车系code
+          seriesName: this.$data.formCustom.seriesName, // 车系code
+          modelId: this.$data.formCustom.brandCode, // 车型code
+          modelName: this.$data.formCustom.modelName, // 车型code
+          guidancePrice: this.$data.formCustom.guidancePrice, // 指导价
+          sellingPrice: this.$data.formCustom.sellingPrice // 售价
         });
+        this.$data.showAddModal = false;
+        this.$data.buttonLoading = false; // 关闭按钮的loading状态
         if (resAdd.success) {
-          this.$data.buttonLoading = false; // 关闭按钮的loading状态
           this.$Message.success('新增成功');
-          this.$data.showAddModal = false;
           this.getPrivateCustomerList();
-        }*/
+        }
       },
       setList(row) {
         this.isAdd = false;
@@ -148,32 +155,41 @@
       },
       // 修改情况下的提交数据
       async setSubmit() {
-        /*let resModify = await this.$http.post('/pms/cfgFeeType/modify', {
-          feeTypeName: this.$data.formCustom.feeTypeName,
-          feeType: this.$data.formCustom.feeType,
-          feeTypeNo: this.$data.formCustom.feeTypeNo
+        let resModify = await this.$http.post('merchant/saveCar', {
+          merchantNo: this.$route.query.merchantNo,
+          brandId: this.$data.formCustom.brandCode, // 车品牌code
+          brandName: this.$data.formCustom.brandName, // 车品牌name
+          seriesId: this.$data.formCustom.seriesCode, // 车系code
+          seriesName: this.$data.formCustom.seriesName, // 车系code
+          modelId: this.$data.formCustom.brandCode, // 车型code
+          modelName: this.$data.formCustom.modelName, // 车型code
+          guidancePrice: this.$data.formCustom.guidancePrice, // 指导价
+          sellingPrice: this.$data.formCustom.sellingPrice // 售价
         });
+        this.$data.showAddModal = false;
+        this.$data.buttonLoading = false;
         if (resModify.success) {
-          this.$data.showAddModal = false;
-          this.$data.buttonLoading = false;
           this.$Message.success('修改成功');
           this.getPrivateCustomerList();
-        }*/
+        }
       },
       // 删除数据的请求
       async remove(row) {
         Alertify.confirm('确定要删除吗？', async (ok) => {
           if (ok) {
-            /*let feeTypeNo = row.feeTypeNo;
+            let merchantNo = row.merchantNo;
+            let modelId = row.modelId;
             const loadingMsg = this.$Message.loading('删除中...', 0);
-            let respDel = await this.$http.get('/pms/cfgFeeType/remove', {
-              feeTypeNo: feeTypeNo
+            let respDel = await this.$http.get('merchant/deleteCar', {
+              merchantNo,
+              modelId
             });
+            loadingMsg();
             if (respDel.success) {
-              loadingMsg();
-              this.$Message.success('删除费用类型成功');
-              this.getPrivateCustomerList(1);
-            }*/
+              this.$Message.success('删除成功');
+              let jumpPage = this.$JumpPage.getPageRemove(this.$data.currentPage, this.$data.pageSize, this.$data.total);
+              this.getPrivateCustomerList(jumpPage);
+            }
           }
         });
       },

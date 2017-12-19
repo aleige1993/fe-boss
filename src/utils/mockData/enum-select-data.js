@@ -853,6 +853,91 @@ export default [
               'itemName': '(直租)租金调整通知书'
             }
           ]
+        },
+        {
+          'groupKey': 'CreditReleaseTypeEnum',
+          'items': [
+            {
+              'itemCode': '1',
+              'itemName': '按权证归档释放'
+            }
+          ]
+        },
+        {
+          'groupKey': 'MerchantStatusEnum',
+          'items': [
+            {
+              'itemCode': '0',
+              'itemName': '未授信'
+            },
+            {
+              'itemCode': '1',
+              'itemName': '授信审核中'
+            },
+            {
+              'itemCode': '2',
+              'itemName': '授信通过'
+            },
+            {
+              'itemCode': '3',
+              'itemName': '授信拒绝'
+            },
+            {
+              'itemCode': '4',
+              'itemName': '授信驳回'
+            },
+            {
+              'itemCode': '5',
+              'itemName': '授信过期'
+            },
+            {
+              'itemCode': '6',
+              'itemName': '冻结'
+            }
+          ]
+        },
+        {
+          'groupKey': 'SalesStatusEnum',
+          'items': [
+            {
+              'itemCode': '0',
+              'itemName': '停售'
+            },
+            {
+              'itemCode': '1',
+              'itemName': '在售'
+            }
+          ]
+        },
+        {
+          'groupKey': 'OperatorTypeEnum',
+          'items': [
+            {
+              'itemCode': '1',
+              'itemName': '超级管理员'
+            },
+            {
+              'itemCode': '2',
+              'itemName': '普通用户'
+            }
+          ]
+        },
+        {
+          'groupKey': 'MerchantTypeEnum',
+          'items': [
+            {
+              'itemCode': '1',
+              'itemName': '4S店'
+            },
+            {
+              'itemCode': '2',
+              'itemName': '一网商'
+            },
+            {
+              'itemCode': '3',
+              'itemName': '二网商'
+            }
+          ]
         }
       ],
       'reCode': '0000',

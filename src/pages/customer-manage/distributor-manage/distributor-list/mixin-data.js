@@ -8,7 +8,10 @@ export default {
         },
         {
           title: '渠道商类型',
-          key: 'merchantType'
+          key: 'merchantType',
+          render: (h, params) => {
+            return h('span', {}, this.enumCode2Name(params.row.merchantType, 'MerchantTypeEnum'));
+          }
         },
         {
           title: '客户编号',
@@ -40,7 +43,10 @@ export default {
         },
         {
           title: '授信状态', // 0:未授信1-授信审核中2-授信通过3-授信拒绝4-授信驳回5-授信过期6-冻结
-          key: 'merchantStatus'
+          key: 'merchantStatus',
+          render: (h, params) => {
+            return h('span', {}, this.enumCode2Name(params.row.merchantStatus, 'MerchantStatusEnum'));
+          }
         },
         {
           title: '操作',
@@ -73,7 +79,9 @@ export default {
                 },
                 on: {
                   click: () => {
-                    alert(params.row.merchantNo);
+                    this.$data.isAdd = false;
+                    this.$data.showAddModal = true;
+                    this.$data.formAdd = params.row;
                   }
                 }
               }, '修改'),
@@ -83,20 +91,25 @@ export default {
                 },
                 on: {
                   click: () => {
-                    alert(params.row.merchantNo);
+                    this.remove($.extend({}, params.row));
                   }
                 }
               }, '删除'),
               h('i-button', {
                 props: {
-                  type: 'warning'
+                  type: 'warning',
+                  disabled: params.row.merchantStatus === '6'
                 },
                 on: {
                   click: () => {
-                    alert(params.row.merchantNo);
+                    Alertify.confirm('确定要冻结当前用户吗？', async (ok) => {
+                      if (ok) {
+                        this.congeal($.extend({}, params.row));
+                      }
+                    });
                   }
                 }
-              }, '激活/冻结')
+              }, '冻结')
               /*h('i-button', {
                 props: {
                   type: 'primary'
@@ -111,21 +124,7 @@ export default {
           }
         }
       ],
-      distributorList: [
-        {
-          'merchantNo': '11111111', // 渠道商编号
-          'merchantType': '1', // 渠道商类型 1.4S店2.一网商3.二网商
-          'corpNo': '111111', // 公司编号
-          'corpName': '111111', // 公司名称
-          'suCreditCode': '111111', // 统一社会信用代码
-          'legalPerson': '111111', // 法定代表人
-          'regDate': '2017-12-16', // 注册时间
-          'regCapital': '900000', // 注册资金
-          'telephone': '02388888888', // 公司电话
-          'merchantStatus': '0', // 授信状态
-          'custMgrName': '11111111' // 客户经理编号
-        }
-      ]
+      distributorList: []
     };
   }
 };

@@ -29,7 +29,7 @@
       <i-button @click="RuleClick" type="ghost"><i class="iconfont icon-shenhe"></i> 准入规则配置</i-button>
       <i-button @click="FileClick" type="ghost"><i class="iconfont icon-shenhe"></i> 归档材料配置</i-button>
       <i-button @click="ContractClick" type="ghost"><i class="iconfont icon-shenhe"></i> 合同模板配置</i-button>
-      <i-button v-if="isClickRow" @click="handleClearCurrentRow" type="text"><i-icon type="android-cancel" class="button-cancel"></i-icon> 取消当前选中状态</i-button>
+      <i-button v-show="isClickRow" @click="handleClearCurrentRow" type="text"><i-icon type="android-cancel" class="button-cancel"></i-icon> 取消当前选中状态</i-button>
     </div>
     <i-table highlight-row border :loading="dataLoading" ref="proTable" :columns="columns1" :data="data1" @on-current-change="radioFun"></i-table>
     <div class="page-container">
@@ -271,6 +271,8 @@
           productName: this.$data.formSearch.productName
         });
         this.$data.dataLoading = false;
+        this.$data.clickRow = {};
+        this.$data.isClickRow = false;
         if (resp.body.resultList.length !== 0) {
           this.$data.data1 = resp.body.resultList;
           this.$data.currentPage = resp.body.currentPage;
@@ -348,7 +350,8 @@
             if (respDel.success) {
               loadingMsg();
               this.$Message.success('删除产品成功');
-              this.getPrivateCustomerList(1);
+              let jumpPage = this.$JumpPage.getPageRemove(this.$data.currentPage, this.$data.pageSize, this.$data.total);
+              this.getPrivateCustomerList(jumpPage);
             }
           }
         });
