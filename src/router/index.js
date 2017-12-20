@@ -41,8 +41,6 @@ let MyRouter = new Router({
             { path: 'distributor', name: 'distributor', component: resolve => require(['@/pages/customer-manage/distributor-manage'], resolve),
               children: [
                 { path:'/', name: 'distributorList', component: resolve => require(['@/pages/customer-manage/distributor-manage/distributor-list'], resolve)},
-                // 首页 > 渠道商管理 > 渠道商列表 > 新增渠道商
-                { path: 'add', name: 'addDistributor', component: resolve => require(['@/pages/customer-manage/distributor-manage/distributor-list/page-distributor-add'], resolve)},
                 // 首页 > 渠道商管理 > 渠道商列表 > 新增授信额度信息
                 { path: 'quota', name: 'quotaDistributor', component: resolve => require(['@/pages/customer-manage/distributor-manage/distributor-list/page-distributor-quota'], resolve)},
                 // 首页 > 渠道商管理 > 渠道商列表 > 渠道操作员管理
@@ -143,7 +141,15 @@ let MyRouter = new Router({
                 // 贷款业务-授信管理-授信审批
                 { path: 'doapprove', name: 'loanBusinessCreditApprove', component: resolve => require(['@/pages/loan-business/credit-manage/credit-approve'], resolve)}
               ]
-            }
+            },
+            // 贷款业务-签约管理
+            { path: 'contract', name: 'loanContractManage', component: resolve => require(['@/pages/loan-business/contract-manage'], resolve),
+              children: [
+                // 贷款业务-签约管理->合同制作列表
+                { path: '/', name: 'loanContractMakingList', component: resolve => require(['@/pages/loan-business/contract-manage/contract-list'], resolve)},
+                // 贷款业务-签约管理->个人业务合同制作
+                { path: 'making', name: 'loanContractMakingTab', component: resolve => require(['@/pages/loan-business/contract-manage/contract-making-tab'], resolve)}
+              ]}
           ]
         }
         // 贷款业务 end

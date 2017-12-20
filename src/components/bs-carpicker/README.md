@@ -11,13 +11,13 @@
 - on-change : 选择了地址后的回掉，
 
     接受参数：car -- 选择后的地址信息 类型--Object，包含的属性如下
-    
+
     ~~~
-      car.brandCode; // 车品牌code
+      car.brandNo; // 车品牌no
       car.brandName; // 品牌 名称
-      car.seriesCode; // 车系code
+      car.seriesNo; // 车系no
       car.seriesName; // 车系名称
-      car.modelCode; // 型号code
+      car.modelNo; // 型号no
       car.modelName; // 型号名称
     ~~~
 
@@ -35,11 +35,11 @@ export default {
     },
     methods: {
         selectCar(car) {
-          this.$data.formData.car.brandCode = distance.brandCode;
+          this.$data.formData.car.brandNo = distance.brandNo;
           this.$data.formData.car.brandName = distance.brandName;
-          this.$data.formData.car.seriesCode = distance.seriesCode;
+          this.$data.formData.car.seriesNo = distance.seriesNo;
           this.$data.formData.car.seriesName = distance.seriesName;
-          this.$data.formData.car.modelCode = distance.modelCode;
+          this.$data.formData.car.modelNo = distance.modelNo;
           this.$data.formData.car.modelName = distance.modelName;
         }
     },

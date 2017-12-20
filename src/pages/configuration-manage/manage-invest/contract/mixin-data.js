@@ -34,7 +34,9 @@ export default {
         {
           title: '签约平台模板ID',
           key: 'yundaiContractId'
-        },
+        }
+      ],
+      columnsFeatureActionColumns: [
         {
           title: '操作',
           key: 'action',

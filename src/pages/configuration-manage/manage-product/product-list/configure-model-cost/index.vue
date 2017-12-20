@@ -13,41 +13,52 @@
   </div>
   <pt-modal title="新增" v-model="showAdd" :width="520">
     <i-form ref="formInModel" :model="formInModel" label-position="left" :label-width="100">
-      <i-form-item class="required" label="费用类型" prop="feeTypeNo">
+      <i-form-item
+        :rules="{required: true, message: '费用类型不能为空', trigger: 'change'}"
+        label="费用类型"
+        prop="feeTypeNo">
         <i-select v-model="formInModel.feeTypeNo" placeholder="请选择">
           <i-option v-for="item in costTypeSelect" :key="item.feeTypeNo" :value="item.feeTypeNo">{{item.feeTypeName}}</i-option>
         </i-select>
       </i-form-item>
-      <i-form-item class="required" label="收取方式" prop="incomeType">
+      <i-form-item
+        :rules="{required: true, message: '费用类型代码不能为空', trigger: 'blur'}"
+        label="费用类型代码"
+        prop="feeTypeCode">
+        <i-input placeholder="费用类型代码" v-model="formInModel.feeTypeCode">
+        </i-input>
+      </i-form-item>
+      <i-form-item
+        :rules="{required: true, message: '收取方式不能为空', trigger: 'change'}"
+        label="收取方式"
+        prop="incomeType">
         <i-select transfer v-model="formInModel.incomeType" placeholder="请选择" @on-change="selpro">
-          <!--
-          [
-            {itemCode:1,itemName:比例},
-            {itemCode:1,itemName:金额}
-          ]
-          -->
           <i-option v-for="item in enumSelectData.get('ReceiveTypeEnum')" :key="item.itemCode" :value="item.itemCode">{{item.itemName}}</i-option>
         </i-select>
       </i-form-item>
-      <i-form-item class="required" label="收支方向" prop="feeType">
+      <i-form-item
+        :rules="{required: true, message: '收支方向不能为空', trigger: 'change'}"
+        label="收支方向"
+        prop="feeType">
         <i-select v-model="formInModel.feeType" placeholder="请选择">
-          <!--{
-            'groupKey': 'FeeTypeEnum',
-            'items': [
-              {'itemCode': 'C','itemName': '收入'},
-              {'itemCode': 'D','itemName': '支出'}
-            ]
-          }-->
           <i-option v-for="item in enumSelectData.get('FeeTypeEnum')" :key="item.itemCode" :value="item.itemCode">{{item.itemName}}</i-option>
         </i-select>
       </i-form-item>
-      <i-form-item class="required" label="利率标准" prop="ratio" v-if="formInModel.incomeType === '1'">
+      <i-form-item
+        :rules="{required: true, message: '利率标准不能为空', trigger: 'blur'}"
+        label="利率标准"
+        prop="ratio"
+        v-if="formInModel.incomeType === '1'">
         <i-input placeholder="利率标准" v-model="formInModel.ratio">
           <span slot="append">%</span>
         </i-input>
       </i-form-item>
-      <i-form-item class="required" label="固定金额" prop="fixedAmount" v-if="formInModel.incomeType === '2'">
-        <i-input placeholder="利率标准" v-model="formInModel.fixedAmount">
+      <i-form-item
+        :rules="{required: true, message: '固定金额不能为空', trigger: 'blur'}"
+        label="固定金额"
+        prop="fixedAmount"
+        v-if="formInModel.incomeType === '2'">
+        <i-input placeholder="固定金额" v-model="formInModel.fixedAmount">
           <span slot="append">元</span>
         </i-input>
       </i-form-item>
@@ -84,6 +95,7 @@
         costTypeSelect: [], // 费用类型的下拉数据
         formInModel: {
           feeTypeNo: '',  // 费用类型编号
+          feeTypeCode: '',  // 费用类型代码
           incomeType: '',  // 收取类型
           feeTypeName: '',  // 费用类型名称
           feeType: '',  // 收支方向
@@ -157,10 +169,10 @@
           ratio: this.$data.formInModel.ratio,  // 标准比例
           productId: this.childMsg.id // 产品ID
         });
+        this.$data.buttonLoading = false; // 关闭按钮的loading状态
+        this.$data.showAdd = false;
         if (resAdd.success) {
-          this.$data.buttonLoading = false; // 关闭按钮的loading状态
           this.$Message.success('添加费用类型成功');
-          this.$data.showAdd = false;
           this.getPrivateCustomerList();
         }
       },
@@ -187,9 +199,9 @@
           productNo: this.childMsg.productNo,  // 产品编号
           ratio: this.$data.formInModel.ratio  // 标准比例
         });
+        this.$data.showAdd = false;
+        this.$data.buttonLoading = false;
         if (resModify.success) {
-          this.$data.showAdd = false;
-          this.$data.buttonLoading = false;
           this.$Message.success('修改费用类型成功');
           this.getPrivateCustomerList();
         }
@@ -215,19 +227,25 @@
       // 新增模态框的保存按钮点击事件
       formInSubmit() {
         this.$data.buttonLoading = true;
-        // 如果是新增
-        if (this.isAdd) {
-          this.addSuBmit();
-        } else {
-          this.setSubmit();
-        }
+        let formName = 'formInModel';
+        this.$refs[formName].validate((valid) => {
+          if (valid) {
+            // 如果是新增
+            if (this.isAdd) {
+              this.addSuBmit();
+            } else {
+              this.setSubmit();
+            }
+          } else {
+            this.$Message.error('"<span style="color: red">*</span>"必填项不能为空');
+          }
+        });
       },
       formCancel() {
         this.$emit('notice-cost');// 通知其父组件执行自定义事件“notice-cost”
       },
       formInCancel() {
         this.$data.showAdd = false;
-        this.$refs['formInModel'].resetFields(); // 重置表单
       },
       // 在新增状态下 下拉菜单清空相应显示的输入框
       selpro() {

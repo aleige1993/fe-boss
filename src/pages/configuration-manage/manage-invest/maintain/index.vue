@@ -11,7 +11,7 @@
       <i-button @click="addModal" type="info"><i class="iconfont icon-xinzeng"></i> 新增</i-button>
     </div>
 
-    <i-table :loading="dataLoading" border ref="proTable" :columns="columns1" :data="data1"></i-table>
+    <i-table :loading="dataLoading" border ref="proTable" :columns="resultColumns" :data="data1" @on-row-dblclick="selectRow"></i-table>
     <div class="page-container">
       <i-page :page-size="pageSize" :current="currentPage" :total="total" size="small" show-elevator show-total @on-change="jumpPage">
       </i-page>
@@ -53,10 +53,27 @@
         userClickRow: {}
       };
     }, // end data
+    computed: {
+      resultColumns() {
+        if (this.type === 'modal') {
+          return this.$data.columns1;
+        } else {
+          return [...this.$data.columns1, ...this.$data.columnsFeatureActionColumns];
+        }
+      }
+    },
+    props: {
+      type: String,
+      default: 'page',
+      required: false
+    },
     mounted() {
       this.getPrivateCustomerList();
     },
     methods: {
+      selectRow(row, index) {
+        this.$emit('on-row-dbclick', row, index);
+      },
       // 获取资方维护列表数据
       async getPrivateCustomerList(page) {
         this.$data.dataLoading = true;
@@ -110,15 +127,8 @@
             if (respDel.success) {
               loadingMsg();
               this.$Message.success('删除成功');
-              let goCurrentPage = this.$data.currentPage;
-              if (
-                this.$data.total % this.$data.pageSize === 1 &&
-                this.$data.currentPage !== 1 &&
-                (this.$data.total - 1) / this.$data.pageSize !== this.$data.currentPage
-              ) {
-                goCurrentPage = this.$data.currentPage - 1;
-              }
-              this.getPrivateCustomerList(goCurrentPage);
+              let jumpPage = this.$JumpPage.getPageRemove(this.$data.currentPage, this.$data.pageSize, this.$data.total);
+              this.getPrivateCustomerList(jumpPage);
             }
           }
         });

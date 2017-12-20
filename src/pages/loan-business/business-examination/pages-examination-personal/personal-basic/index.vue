@@ -129,7 +129,7 @@
 
     <!--选择产品的弹窗-->
     <bs-modal title="选择产品" :width="1200" v-model="showSelectProduct">
-      <table-product-list @on-row-dbclick="selectProduct"></table-product-list>
+      <table-product-list v-if="showSelectProduct" :type="'modal'" @on-row-dbclick="selectProduct"></table-product-list>
     </bs-modal>
 
     <!--车辆信息的新增修改模态框-->
@@ -535,7 +535,7 @@
 
 <script>
   import TableCustomerList from '@/components/table-customer-list'; // 选择客户列表
-  import GetProductModal from '@/components/table-product-list'; // 选择产品
+  import GetProductModal from '@/pages/configuration-manage/manage-product/product-list'; // 选择产品
   import personalInfo from '@/components/detail-personal-customer-basic/index.vue';
   import BsModal from '@/components/bs-modal';
   import carMixinData from './car-mixin-data';

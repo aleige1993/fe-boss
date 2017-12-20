@@ -42,13 +42,13 @@
     </bs-modal>
     <!--选择产品的弹窗-->
     <bs-modal title="选择产品" :width="1200" v-model="showSelectProduct">
-      <table-product-list @on-row-dbclick="selectProduct"></table-product-list>
+      <table-product-list :type="'modal'" @on-row-dbclick="selectProduct"></table-product-list>
     </bs-modal>
   </div>
 </template>
 
 <script>
-  import GetProductModal from '@/components/table-product-list'; // 选择产品
+  import GetProductModal from '@/pages/configuration-manage/manage-product/product-list'; // 选择产品
   import BsModal from '@/components/bs-modal';
   import MixinData from './mixin-data';
   export default {

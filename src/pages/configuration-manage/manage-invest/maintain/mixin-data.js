@@ -15,7 +15,9 @@ export default {
         {
           title: '状态',
           key: 'status'
-        },
+        }
+      ],
+      columnsFeatureActionColumns: [
         {
           title: '操作',
           key: 'action',

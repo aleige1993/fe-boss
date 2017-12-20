@@ -53,27 +53,6 @@
             label="还款方式"
             prop="loanMode">
             <i-select v-model="ProductPackageForm.loanMode" placeholder="请选择">
-              <!--{
-                'groupKey': 'RepaymentTypeEnum',
-                'items': [
-                  {
-                    'itemCode': '1',
-                    'itemName': '等额本金'
-                  },
-                  {
-                    'itemCode': '2',
-                    'itemName': '等额本息'
-                  },
-                  {
-                    'itemCode': '3',
-                    'itemName': '等本等息'
-                  },
-                  {
-                    'itemCode': '4',
-                    'itemName': '按期收息，期末收本'
-                  }
-                ]
-              }-->
               <i-option v-for="item in enumSelectData.get('RepaymentTypeEnum')" :key="item.itemCode" :value="item.itemCode">{{item.itemName}}</i-option>
             </i-select>
           </i-form-item>
@@ -95,25 +74,6 @@
             label="模型设定"
             prop="modelSet">
             <i-select v-model="ProductPackageForm.modelSet" placeholder="请选择">
-              <!--
-              {
-                'groupKey': 'ModelTypeEnum',
-                'items': [
-                  {
-                    'itemCode': '1',
-                    'itemName': '算头不算尾'
-                  },
-                  {
-                    'itemCode': '2',
-                    'itemName': '算头又算尾'
-                  },
-                  {
-                    'itemCode': '3',
-                    'itemName': '不算头不算尾'
-                  }
-                ]
-              }
-              -->
               <i-option v-for="item in enumSelectData.get('ModelTypeEnum')":key="item.itemCode" :value="item.itemCode">{{item.itemName}}</i-option>
             </i-select>
           </i-form-item>

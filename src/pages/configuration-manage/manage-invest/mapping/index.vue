@@ -102,11 +102,11 @@
     </bs-modal>-->
     <!--选择产品的弹窗-->
     <bs-modal title="选择产品" :width="1200" v-model="showSelectProduct">
-      <table-product-list @on-row-dbclick="selectProduct"></table-product-list>
+      <table-product-list :type="'modal'" @on-row-dbclick="selectProduct"></table-product-list>
     </bs-modal>
     <!--选择资方的弹窗-->
     <bs-modal title="选择资方" :width="1200" v-model="showSelectCapital">
-      <table-capital-list @on-row-dbclick="selectCapital"></table-capital-list>
+      <table-capital-list type="modal" v-if="showSelectCapital" @on-row-dbclick="selectCapital"></table-capital-list>
     </bs-modal>
   </div>
 </template>
@@ -116,8 +116,8 @@
   import BSModal from '@/components/bs-modal';
   import ContractConf from './contract-configuration';
   // import TableEmployerList from '@/components/table-employer-list'; // 选择客户经理
-  import GetProductModal from '@/components/table-product-list'; // 选择产品
-  import GetCapitalModal from '@/components/table-capital-list'; // 选择资方
+  import GetProductModal from '@/pages/configuration-manage/manage-product/product-list'; // 选择产品
+  import GetCapitalModal from '@/pages/configuration-manage/manage-invest/maintain'; // 选择资方
   export default {
     name: 'investMapping',
     mixins: [MixinData],
