@@ -1,12 +1,12 @@
 export default {
   methods: {
-    async getCreditDetail(creditLimitNo) {
+    async getCreditDetail(creditLimitApplyNo) {
       const loading = this.$Message.loading('正在初始化页面', 0);
-      let resp = await this.$http.post('/credit/find', { creditLimitNo });
+      let resp = await this.$http.post('/credit/find', { creditLimitApplyNo });
       loading();
       if (resp.success) {
         this.$data.applyData = {
-          'creditApplyAttachParamList': resp.body.creditApplyAttachList,
+          // 'creditApplyAttachParamList': resp.body.creditApplyAttachList,
           // 申请意见入参
           'creditAuditParam': {
             'approveStatus': 'A',
@@ -25,10 +25,10 @@ export default {
     initPage() {
       let _creditLimitNo = this.$route.query.id;
       if (_creditLimitNo) {
-        this.getCreditDetail();
+        this.getCreditDetail(_creditLimitNo);
       } else {
         this.$data.applyData = {
-          'creditApplyAttachParamList': [],
+          // 'creditApplyAttachParamList': [],
           // 申请意见入参
           'creditAuditParam': {
             'approveStatus': 'A',
@@ -45,23 +45,10 @@ export default {
       }
     },
     selectCompany(company, attachFiles) {
-      this.$data.applyData.creditApplyParam = company;
-      this.$data.applyData.creditApplyAttachParamList = attachFiles;
-    },
-    // 上传附件
-    openAddAttachModal() {
-      this.$data.addAttachModal = true;
-      this.$data.attachFormData = {
-        attachName: '',
-        attachUrl: ''
-      };
-    },
-    uploadAttachSuccess(res) {
-      this.$data.attachFormData.attachUrl = res.body.url;
-    },
-    submitAttach() {
-      this.$data.applyData.creditApplyAttachParamList.push(this.$data.attachFormData);
-      this.$data.addAttachModal = false;
+      this.$data.applyData.creditApplyParam.creditCode = company.creditCode;
+      this.$data.applyData.creditApplyParam.corpNo = company.corpNo;
+      this.$data.applyData.creditApplyParam.corpName = company.corpName;
+      // this.$data.applyData.creditApplyAttachParamList = attachFiles;
     },
     async submitCreditApply() {
       if (this.$data.applyData.creditApplyParam.corpNo === '') {

@@ -22,12 +22,21 @@
               <i-col span="8">
                 <i-form-item label="姓名">
                   <i-button type="text" @click="gotoPersonal" v-text="formData.mbMemberDTO.name"></i-button>
+                  <i-button type="success" @click="gotoPersonal">查看客户详情</i-button>
                   <i-button v-if="!readonly" type="primary" @click="selectPersonalModal=!selectPersonalModal">选择姓名 <i-icon type="ios-more"></i-icon></i-button>
                 </i-form-item>
               </i-col>
               <i-col span="8">
                 <i-form-item label="注册手机号" prop="mbMemberDTO.mobile">
                   <span v-text="formData.mbMemberDTO.mobile" ></span>
+                </i-form-item>
+              </i-col>
+              <i-col span="8">
+                <i-form-item label="银行卡验身手机号">
+                  <span v-if="formData.mbMemberDTO.bankVertifyMobile"
+                        :class="{'text-danger': formData.mbMemberDTO.bankVertifyMobile!=formData.mbMemberDTO.mobile}"
+                        v-text="formData.mbMemberDTO.bankVertifyMobile"></span>
+                  <span v-else class="text-danger">暂未验身</span>
                 </i-form-item>
               </i-col>
             </i-row>
@@ -287,41 +296,6 @@
               </i-col>
             </i-row>
           </bs-form-block>
-          <bs-form-block title="客户信息" v-else>
-            <i-row>
-              <i-col span="8">
-                <i-form-item label="姓名">
-                  <i-button type="text" @click="gotoPersonal" v-text="formData.mbMemberDTO.name"></i-button>
-                  <i-button type="success" @click="gotoPersonal">查看客户详情</i-button>
-                  <i-button v-if="!readonly" type="primary" @click="selectPersonalModal=!selectPersonalModal">选择姓名 <i-icon type="ios-more"></i-icon></i-button>
-                </i-form-item>
-              </i-col>
-              <i-col span="8">
-                <i-form-item label="注册手机号" prop="mbMemberDTO.mobile">
-                  <span v-text="formData.mbMemberDTO.mobile" ></span>
-                </i-form-item>
-              </i-col>
-            </i-row>
-            <i-row>
-              <i-col span="8">
-                <i-form-item label="业务拓展部门">
-                  <span v-text="formData.mbMemberDTO.bizDepartmentName">
-                  </span>
-                </i-form-item>
-              </i-col>
-              <i-col span="8">
-                <i-form-item label="开始合作时间">
-                  <span v-text="formData.mbMemberDTO.joinStartDate"></span>
-                </i-form-item>
-              </i-col>
-              <i-col span="8">
-                <i-form-item label="客户经理">
-                  <span v-text="formData.mbMemberDTO.custMgrName" >
-                  </span>
-                </i-form-item>
-              </i-col>
-            </i-row>
-          </bs-form-block>
         </i-form>
       </i-col>
     </i-row>
@@ -355,7 +329,7 @@ export default {
     },
     showDetail: {
       type: Boolean,
-      default: false
+      default: true
     }
   },
   computed: {

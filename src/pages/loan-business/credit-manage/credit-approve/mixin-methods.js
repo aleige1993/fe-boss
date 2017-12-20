@@ -2,7 +2,7 @@ export default {
   methods: {
     async getCreditDetail(creditLimitNo) {
       const loading = this.$Message.loading('正在初始化页面', 0);
-      let resp = await this.$http.post('/credit/find', { creditLimitNo });
+      let resp = await this.$http.post('/credit/find', { creditLimitApplyNo: creditLimitNo });
       loading();
       if (resp.success) {
         this.$data.companyAttachFiles = resp.body.creditApplyAttachList;
@@ -18,7 +18,7 @@ export default {
             'creditCode': resp.body.creditCode,
             'corpNo': resp.body.corpNo,
             'corpName': resp.body.corpName,
-            'creditLimitNo': resp.body.creditLimitNo
+            'creditLimitApplyNo': resp.body.creditLimitApplyNo
           },
           firstTrialParam: {
             'netApprove': resp.body.firstTrialDTO.netApprove || '',
@@ -26,14 +26,15 @@ export default {
             'creditCheckItemsList': resp.body.firstTrialDTO.creditCheckItemsList || []
           },
           creditCheckItemsList: resp.body.externalAuditDTOList,
-          creditPlanParam: {
-            'currentLimitAmt': '',
+          creditLimitParam: resp.body.creditLimit || {
+            // 'currentLimitAmt': '',
             'totalLimitAmt': '',
             'startDate': '',
-            'singleLimitAmt': '',
+            // 'singleLimitAmt': '',
             'creditLimitReleaseMode': '',
             'endDate': ''
-          }
+          },
+          creditPlanList: resp.body.creditPlanList || this.$data.approveData.creditPlanList
         };
       }
     },
@@ -54,7 +55,7 @@ export default {
             'creditCode': '',
             'corpNo': '',
             'corpName': '',
-            'creditLimitNo': null
+            'creditLimitApplyNo': null
           }
         };
       }
@@ -66,6 +67,7 @@ export default {
     // 初审添加
     uploadFirstApproveFileSuccess(res) {
       this.$set(this.$data.firstApproveForm, 'fileUrl', res.body.url);
+      this.$set(this.$data.firstApproveForm, 'fileName', res.body.fileName);
       // this.$data.firstApproveForm.fileUrl = res.body.url;
     },
     submitFirstApprove() {
@@ -79,6 +81,7 @@ export default {
     // 外审添加
     uploadOutApproveFileSuccess(res) {
       this.$set(this.$data.outApproveForm, 'fileUrl', res.body.url);
+      this.$set(this.$data.outApproveForm, 'fileName', res.body.fileName);
     },
     submitOutApprove() {
       this.$refs['addOutApproveForm'].validate(valid => {
@@ -97,10 +100,20 @@ export default {
     },
     uploadAttachSuccess(res) {
       this.$data.attachFormData.attachUrl = res.body.url;
+      this.$data.attachFormData.attachName = res.body.fileName;
     },
     submitAttach() {
       this.$data.applyData.creditApplyAttachParamList.push(this.$data.attachFormData);
       this.$data.addAttachModal = false;
+    },
+    // 添加用信方案
+    saveCreditPlan(creditPlan) {
+      this.$data.addCreditPlamModal = false;
+      if (this.$data.creditPlanFormEdit) {
+        this.$set(this.$data.approveData.creditPlanList, this.$data.creditPlanEditIndex / 1, creditPlan);
+      } else {
+        this.$data.approveData.creditPlanList.push(creditPlan);
+      }
     },
     async submitCreditApply() {
       this.$data.submitApplyLoading = true;

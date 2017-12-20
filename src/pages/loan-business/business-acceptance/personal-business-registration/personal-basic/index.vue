@@ -145,7 +145,13 @@
       <div class="form-top-actions">
         <i-button @click="openModalLoan" type="info"><i class="iconfont icon-xinzeng"></i>&nbsp;新增</i-button>
       </div>
-      <i-table :loading="loanDataLoading" border ref="selection" :columns="loanColumns" :data="loanData"></i-table>
+      <!--<i-table :loading="loanDataLoading" border ref="selection" :columns="loanColumns" :data="loanData"></i-table>-->
+      <loan-file-list :data="[{fileName: '文件q', fileUrl: 'http://www.baidu.com'}, {fileName: '龚明华',fileUrl: 'http://blog.gongminghua.site/wp-content/themes/JieStyle-Two/images/avatar.jpg'}]"
+        @on-add="null" @on-remove="null">
+      </loan-file-list>
+      <loan-file-list title="结婚证信息" :data="[{fileName: '文件q', fileUrl: 'http://www.baidu.com'}, {fileName: '龚明华',fileUrl: 'http://blog.gongminghua.site/wp-content/themes/JieStyle-Two/images/avatar.jpg'}]"
+                      @on-add="null" @on-remove="null">
+      </loan-file-list>
     </bs-form-block>
 
     <!--选择产品的弹窗-->
@@ -531,6 +537,7 @@
 </template>
 
 <script>
+  import LoanFileList from '../../../loan-file-list/index.vue';
   import TableCustomerList from '@/components/table-customer-list'; // 选择客户列表
   import TableCompanyCustomerList from '@/components/table-company-customer-list'; // 选择客户列表
   import GetProductModal from '@/components/table-product-list'; // 选择产品
@@ -554,7 +561,8 @@
       companyCustomerInfo,
       'table-product-list': GetProductModal,
       'bs-modal': BsModal,
-      'bs-carpicker': BsCarpicker
+      'bs-carpicker': BsCarpicker,
+      LoanFileList
     },
     props: {
       customerType: String
@@ -690,7 +698,7 @@
     mounted() {
       /* this.getCarList();
       this.getAssureList();
-      this.getLoanList(); */
+      this.getLoanList();*/
     },
     methods: {
       // 选择权利人
@@ -785,4 +793,5 @@
   };
 </script>
 <style lang="scss" scoped>
+
 </style>

@@ -54,7 +54,7 @@
       async getHistoryInfo() {
         if (this.id && this.id !== '') {
           this.$data.historyLoading = true;
-          let resp = await this.$http.post('/credit/listAuditLog', { creditLimitNo: this.id });
+          let resp = await this.$http.post('/credit/listAuditLog', { creditLimitApplyNo: this.id });
           this.$data.historyLoading = false;
           if (resp.success) {
             this.$data.approveHistoryData = resp.body;

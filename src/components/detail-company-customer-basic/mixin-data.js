@@ -1,6 +1,68 @@
+import Tools from '../../utils/Tools';
+
 export default {
   data() {
     return {
+      companyAttachFileColumns: [
+        {
+          title: '附件名称',
+          key: 'attachName'
+        },
+        {
+          title: '附件文件',
+          key: 'attachUrl',
+          render: (h, params) => {
+            // alert(params.row.attachUrl);
+            if (Tools.isImg(params.row.attachUrl)) {
+              return h('bs-big-img', {
+                props: {
+                  thumbWidth: 80,
+                  thumbHeight: 80,
+                  fullWidth: 600,
+                  thumb: params.row.attachUrl,
+                  full: params.row.attachUrl
+                }
+              });
+            } else {
+              return params.row.attachUrl;
+            }
+          }
+        },
+        {
+          title: '操作',
+          render: (h, params) => {
+            return h('div', [
+              h('Button', {
+                props: {
+                  type: 'primary',
+                  size: 'small',
+                  disabled: this.isFromDetail
+                },
+                style: {
+                  marginRight: '5px'
+                },
+                on: {
+                  click: () => {
+                    window.open(params.row.attachUrl, '_blank');
+                  }
+                }
+              }, '下载')
+              /*h('Button', {
+                props: {
+                  type: 'error',
+                  size: 'small',
+                  disabled: this.isFromDetail
+                },
+                on: {
+                  click: () => {
+                    this.$data.applyData.creditApplyAttachParamList.splice(params.index, 1);
+                  }
+                }
+              }, '删除')*/
+            ]);
+          }
+        }
+      ],
       formData: {
         'baseDTO': {
           'mainLinkmanName': '',
@@ -54,13 +116,13 @@ export default {
           'bizDepartmentName': ''
         },
         'attachDTOs': [
-          {
+          /* {
             'corpNo': '',
             'corpName': '',
             'attachName': '仓井空.av',
             'attachUrl': '',
             'attachSuffixType': ''
-          }
+          }*/
         ]
       },
       formDataInit: {
@@ -116,13 +178,13 @@ export default {
           'bizDepartmentName': '1'
         },
         'attachDTOs': [
-          {
+          /* {
             'corpNo': '',
             'corpName': '',
             'attachName': '仓井空.av',
             'attachUrl': '',
             'attachSuffixType': ''
-          }
+          }*/
         ]
       }
     };

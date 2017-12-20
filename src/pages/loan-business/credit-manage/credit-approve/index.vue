@@ -11,28 +11,11 @@
       <i-tab-pane label="申请信息">
         <company-customer-basic-info :readonly="true" :corpNo="approveData.creditApplyParam.corpNo"></company-customer-basic-info>
         <i-form label-position="right" :label-width="140">
-          <!--附件信息-->
-          <bs-form-block :title="'附件信息'">
-            <i-table :loading="loadingAttachFile" :columns="companyAttachFileColumns" :data="companyAttachFiles"></i-table>
-          </bs-form-block>
-
           <!--初审信息-->
-          <bs-form-block title="1初审信息" >
-            <i-row>
-              <i-col span="8">
-                <i-form-item label="网审情况">
-                  <i-input :readonly="creditStatus!=='3'" v-model="approveData.firstTrialParam.netApprove"></i-input>
-                </i-form-item>
-              </i-col>
-              <i-col span="8">
-                <i-form-item label="电核情况">
-                  <i-input :readonly="creditStatus!=='3'" v-model="approveData.firstTrialParam.telephoneApprove"></i-input>
-                </i-form-item>
-              </i-col>
-            </i-row>
+          <bs-form-block title="初审信息">
             <i-row>
               <i-col span="24">
-                <div v-if="creditStatus==='3'" class="form-top-actions">
+                <div v-if="creditStatus==='3'||creditStatus==='4'" class="form-top-actions">
                   <i-button type="primary" @click="firstApproveForm = {} ; addFirstApproveModal = !addFirstApproveModal">添加初审信息</i-button>
                 </div>
                 <i-table :columns="firstApproveColumns" :data="approveData.firstTrialParam.creditCheckItemsList"></i-table>
@@ -40,10 +23,10 @@
             </i-row>
           </bs-form-block>
           <!--外审信息-->
-          <bs-form-block title="2外审信息" v-if="creditStatus==='4' || creditStatus==='5'">
+          <bs-form-block title="现场尽调信息" v-if="creditStatus==='5' || creditStatus==='6'||creditStatus==='7' || creditStatus==='8'">
             <i-row>
               <i-col span="24">
-                <div v-if="creditStatus==='4'" class="form-top-actions">
+                <div v-if="creditStatus==='5'||creditStatus==='6'" class="form-top-actions">
                   <i-button type="primary" @click="addOutApproveModal = !addOutApproveModal">添加现场尽调信息</i-button>
                 </div>
                 <i-table :columns="outApproveColumns" :data="approveData.creditCheckItemsList"></i-table>
@@ -51,50 +34,58 @@
             </i-row>
           </bs-form-block>
           <!--最终审核信息-->
-          <bs-form-block title="3授信信息" v-if="creditStatus==='5'">
+          <bs-form-block title="授信方案" v-if="creditStatus==='5'||creditStatus==='6'">
             <i-row>
               <i-col span="8">
                 <i-form-item label="授信总额度">
-                  <i-input :readonly="creditStatus!=='5'" v-model="approveData.creditPlanParam.totalLimitAmt">
+                  <i-input :readonly="creditStatus!=='5'&&creditStatus!=='6'" v-model="approveData.creditLimitParam.totalLimitAmt">
                     <span slot="append">元</span>
                   </i-input>
                 </i-form-item>
               </i-col>
               <i-col span="8">
+                <i-form-item label="额度释放方式">
+                  <i-select :disabled="creditStatus!=='5'&&creditStatus!=='6'" v-model="approveData.creditLimitParam.creditLimitReleaseMode">
+                    <i-option v-for="item in enumSelectData.get('CreditFreedTypeEnum')" :key="item.itemCode" :value="item.itemCode">{{item.itemName}}</i-option>
+                  </i-select>
+                  <!--{{enumCode2Name(creditInfo.creditLimitReleaseMode, 'CreditFreedTypeEnum')}}-->
+                </i-form-item>
+              </i-col>
+              <!--<i-col span="8">
                 <i-form-item label="可用额度">
-                  <i-input :readonly="creditStatus!=='5'" v-model="approveData.creditPlanParam.currentLimitAmt">
+                  <i-input :readonly="creditStatus!=='5'" v-model="approveData.creditLimitParam.currentLimitAmt">
                     <span slot="append">元</span>
                   </i-input>
                 </i-form-item>
               </i-col>
               <i-col span="8">
                 <i-form-item label="单笔最大额度">
-                  <i-input :readonly="creditStatus!=='5'" v-model="approveData.creditPlanParam.singleLimitAmt">
+                  <i-input :readonly="creditStatus!=='5'" v-model="approveData.creditLimitParam.singleLimitAmt">
                     <span slot="append">元</span>
                   </i-input>
                 </i-form-item>
-              </i-col>
+              </i-col>-->
             </i-row>
             <i-row>
               <i-col span="8">
                 <i-form-item label="授信起始日期">
-                  <bs-datepicker :readonly="creditStatus!=='5'" v-model="approveData.creditPlanParam.startDate"></bs-datepicker>
+                  <bs-datepicker :readonly="creditStatus!=='5'&&creditStatus!=='6'" v-model="approveData.creditLimitParam.startDate"></bs-datepicker>
                 </i-form-item>
               </i-col>
               <i-col span="8">
                 <i-form-item label="授信到期日期">
-                  <bs-datepicker :readonly="creditStatus!=='5'" v-model="approveData.creditPlanParam.endDate"></bs-datepicker>
+                  <bs-datepicker :readonly="creditStatus!=='5'&&creditStatus!=='6'" v-model="approveData.creditLimitParam.endDate"></bs-datepicker>
                 </i-form-item>
               </i-col>
-              <i-col span="8">
-                <i-form-item label="额度释放方式">
-                  <i-select :disabled="creditStatus!=='5'" v-model="approveData.creditPlanParam.creditLimitReleaseMode">
-                    <i-option v-for="item in enumSelectData.get('CreditFreedTypeEnum')" :key="item.itemCode" :value="item.itemCode">{{item.itemName}}</i-option>
-                  </i-select>
-                  <!--{{enumCode2Name(creditInfo.creditLimitReleaseMode, 'CreditFreedTypeEnum')}}-->
-                </i-form-item>
-              </i-col>
+
             </i-row>
+          </bs-form-block>
+          <!--用信方案-->
+          <bs-form-block title="用信方案" v-if="creditStatus==='5'||creditStatus==='6'">
+            <div v-if="creditStatus==='5'||creditStatus==='6'" class="form-top-actions">
+              <i-button type="primary" @click="openAddCreditPlanModal">添加用信方案</i-button>
+            </div>
+            <i-table :columns="creditPlanColumns" :data="approveData.creditPlanList"></i-table>
           </bs-form-block>
           <!--审核意见-->
           <bs-form-block title="审核意见" >
@@ -125,10 +116,13 @@
           </div>
         </i-form>
       </i-tab-pane>
+      <i-tab-pane label="授信与用信方案">
+        <credit-plan-list v-if="tabIndex==1" :creditLimitParam="approveData.creditLimitParam"></credit-plan-list>
+      </i-tab-pane>
       <i-tab-pane label="审核历史信息">
         <!--审核历史意见-->
-        <div v-if="tabIndex==1 && approveData.creditApplyParam.creditLimitNo">
-          <approve-history :id="approveData.creditApplyParam.creditLimitNo"></approve-history>
+        <div v-if="tabIndex==2 && approveData.creditApplyParam.creditLimitApplyNo">
+          <approve-history :id="approveData.creditApplyParam.creditLimitApplyNo"></approve-history>
         </div>
         <div v-else></div>
       </i-tab-pane>
@@ -136,11 +130,11 @@
     <!--添加初审信息的弹窗-->
     <bs-modal v-model="addFirstApproveModal" :width="520" title="添加初审信息">
       <i-form :label-width="80" ref="addFirstApproveForm" :model="firstApproveForm">
-        <i-form-item label="第三方网站名称" prop="itemName"
-          :rules="{required: true, message: '请输入第三方网站名称'}">
+        <i-form-item label="审查渠道" prop="itemName"
+          :rules="{required: true, message: '请输入审查渠道'}">
           <i-input v-model="firstApproveForm.itemName"></i-input>
         </i-form-item>
-        <i-form-item label="查询描述" prop="description"
+        <i-form-item label="意见描述" prop="description"
                      :rules="{required: true, message: '请输入描述信息'}">
           <i-input type="textarea" :rows="4" v-model="firstApproveForm.description"></i-input>
         </i-form-item>
@@ -154,7 +148,7 @@
               <Icon type="ios-cloud-upload" size="52" style="color: #3399ff"></Icon>
               <p>点击选择文件或者拖放文件到这里</p>
             </div>
-            <p v-else>{{firstApproveForm.fileUrl}}</p>
+            <p v-else>{{firstApproveForm.fileName}}</p>
           </i-upload>
         </i-form-item>
         <i-form-item label="">
@@ -183,13 +177,22 @@
               <Icon type="ios-cloud-upload" size="52" style="color: #3399ff"></Icon>
               <p>点击选择文件或者拖放文件到这里</p>
             </div>
-            <p v-else>{{outApproveForm.fileUrl}}</p>
+            <p v-else>{{outApproveForm.fileName}}</p>
           </i-upload>
         </i-form-item>
         <i-form-item label="">
           <i-button @click="submitOutApprove" style="width: 120px;" type="primary" size="large">提交</i-button>
         </i-form-item>
       </i-form>
+    </bs-modal>
+    <!--添加用信方案-->
+    <bs-modal v-model="addCreditPlamModal" :width="1200" title="添加用信方案">
+      <credit-plan-form v-if="addCreditPlamModal"
+                        :detail="creditPlanFormDetail"
+                        :edit="creditPlanFormEdit"
+                        :init-data="creditPlanFormInitData"
+                        @on-submit="saveCreditPlan">
+      </credit-plan-form>
     </bs-modal>
   </div>
 
@@ -198,6 +201,9 @@
   import MixinData from './mixin-data';
   import MixinMethods from './mixin-methods';
   import BsModal from '@/components/bs-modal';
+  import ApproveHistory from '../credit-approve-history/index.vue';
+  import CreditPlanForm from './credit-plan-form/index.vue';
+  import CreditPlanList from './credit-plan-list/index.vue';
   import CompanyCustomerBasicInfo from '@/components/detail-company-customer-basic/index.vue';
   export default {
     name: 'creditApprove',
@@ -208,6 +214,11 @@
         creditStatus: null,
         addFirstApproveModal: false,
         addOutApproveModal: false,
+        addCreditPlamModal: false,
+        // 用信方案弹窗是否是详情模式
+        creditPlanFormDetail: false,
+        creditPlanFormEdit: false,
+        creditPlanFormInitData: {},
         firstApproveForm: {
           'itemName': '',
           'fileName': '',
@@ -222,6 +233,13 @@
         }
       };
     },
+    methods: {
+      openAddCreditPlanModal() {
+        this.$data.creditPlanFormDetail = false;
+        this.$data.creditPlanFormEdit = false;
+        this.$data.addCreditPlamModal = true;
+      }
+    },
     computed: {
       // 根据审核状态判断提交的url地址
       submitUrl() {
@@ -229,18 +247,27 @@
         case '3':
           return '/credit/firstTrial';
         case '4':
-          return '/credit/externalAudit';
+          return '/credit/firstTrial';
         case '5':
+          return '/credit/externalAudit';
+        case '6':
+          return '/credit/externalAudit';
+        case '7':
+          return '/credit/approve';
+        case '8':
           return '/credit/approve';
         }
       }
     },
     components: {
       CompanyCustomerBasicInfo,
-      BsModal
+      ApproveHistory,
+      BsModal,
+      CreditPlanForm,
+      CreditPlanList
     },
     mounted() {
-      this.$data.creditStatus = this.$route.query.status;
+      this.$data.creditStatus = this.$route.query.status || '3';
       this.initPage();
     }
   };

@@ -34,6 +34,9 @@ let ary = [
       reCode: '0000',
       success: true,
       body: {
+        'fileName': '照片',
+        'fileSize': 100,
+        'suffix': 'jpg',
         url: 'http://www.sinaimg.cn/qc/autoimg/car/30/34/129863430_950.jpg'
       },
       reMsg: 'success'

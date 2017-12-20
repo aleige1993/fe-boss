@@ -31,7 +31,8 @@ import bsDatePicker from '@/components/bs-datepicker';
 Vue.component('bs-datepicker', bsDatePicker);
 import BsBigImg from '@/components/bs-big-img';
 Vue.component('bs-big-img', BsBigImg);
-
+import BsFileItem from '@/components/bs-file-item';
+Vue.component('bs-file-item', BsFileItem);
 // 页面title修改
 Vue.directive('title', {
   inserted(el, binding) {

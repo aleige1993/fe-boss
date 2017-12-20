@@ -2,7 +2,19 @@ export default {
   data() {
     return {
       creditInfo: {
-        'singleLimit': '',
+        'firstTrialDTO': {
+          'creditCheckItemsList': [
+            {
+              'itemName': '',
+              'fileName': '',
+              'description': '',
+              'fileUrl': ''
+            }
+          ],
+          'netApprove': '',
+          'telephoneApprove': ''
+        },
+        'creditCode': '',
         'externalAuditDTOList': [
           {
             'itemName': '',
@@ -11,36 +23,47 @@ export default {
             'fileUrl': ''
           }
         ],
-        'endDate': '',
-        'companyName': '',
-        'creditLimitReleaseMode': '',
-        'creditAuditDTO': [
+        'creditLimit': {
+          'endDate': '',
+          'creditLimitReleaseMode': '',
+          'startDate': '',
+          'totalLimitAmt': ''
+        },
+        'creditPlanList': [
           {
-            'operUserName': '',
-            'auditStatus': '',
-            'operUserCode': '',
-            'operTime': '',
-            'opinion': ''
+            'creditLoanReadyList': [
+              {
+                'readyContent': ''
+              }
+            ],
+            'repayMode': '',
+            'isPrepayment': '',
+            'prepaymentAccrualMode': '',
+            'creditPlanRateList': [
+              {
+                'payMode': '',
+                'periods': '',
+                'capitalYearRate': '',
+                'scPoundageRate': ''
+              }
+            ],
+            'bailRatio': '',
+            'riskControl': '',
+            'singleLimitAmt': '',
+            'productNo': '',
+            'productName': ''
           }
         ],
-        'creditApplyAttachList|5': [],
-        'creditApplyNo': '',
-        'creditStatus': '',
-        'surplusCountLimit': '',
-        'countLimit': '',
-        'creditCode': '',
         'corpNo': '',
-        'firstTrialDTO': {
-          'creditCheckItemsList': [{
-            'itemName': '',
-            'fileName': '',
-            'description': '',
-            'fileUrl': ''
-          }],
-          'netApprove': '',
-          'telephoneApprove': ''
-        },
-        'startDate': ''
+        'corpName': '',
+        'creditLimitApplyNo': '',
+        'creditApplyAttachList': [
+          {
+            'attachUrl': '',
+            'attachName': '',
+            'attachSuffixType': ''
+          }
+        ]
       },
       companyAttachFileColumns: [
         {
@@ -92,7 +115,7 @@ export default {
         },
         {
           title: '查询结果',
-          key: 'fileUrl',
+          key: 'fileName',
           render: (h, parmas) => {
             return h('i-button', {
               props: {
@@ -147,7 +170,7 @@ export default {
         },
         {
           title: '查询结果',
-          key: 'fileUrl',
+          key: 'fileName',
           render: (h, parmas) => {
             return h('i-button', {
               props: {

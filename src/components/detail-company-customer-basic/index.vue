@@ -22,6 +22,7 @@
               <i-col span="8">
                 <i-form-item label="公司名称">
                   <i-button type="text" @click="gotoCompany" v-text="formData.baseDTO.corpName"></i-button>
+                  <i-button type="success" @click="gotoCompany">查看客户详情</i-button>
                   <i-button v-if="!readonly" type="primary" @click="selectCompanyModal=!selectCompanyModal">选择公司 <i-icon type="ios-more"></i-icon></i-button>
                 </i-form-item>
               </i-col>
@@ -215,38 +216,9 @@
               </i-col>
             </i-row>
           </bs-form-block>
-          <bs-form-block v-else title="公司信息">
-            <i-row>
-              <i-col span="8">
-                <i-form-item label="公司名称">
-                  <i-button type="text" @click="gotoCompany" v-text="formData.baseDTO.corpName"></i-button>
-                  <i-button type="success" @click="gotoCompany">查看企业详情</i-button>
-                  <i-button v-if="!readonly" type="primary" @click="selectCompanyModal=!selectCompanyModal">选择公司 <i-icon type="ios-more"></i-icon></i-button>
-                </i-form-item>
-              </i-col>
-              <i-col span="8">
-                <i-form-item label="统一社会信用代码">
-                  <span v-text="formData.baseDTO.creditCode"></span>
-                </i-form-item>
-              </i-col>
-            </i-row>
-            <i-row>
-              <i-col span="8">
-                <i-form-item label="业务拓展部门">
-                  <span v-text="formData.baseDTO.bizDepartmentName"></span>
-                </i-form-item>
-              </i-col>
-              <i-col span="8">
-                <i-form-item label="开始合作时间">
-                  <span  v-text="formData.baseDTO.joinStartDate"></span>
-                </i-form-item>
-              </i-col>
-              <i-col span="8">
-                <i-form-item label="客户经理">
-                  <span v-text="formData.baseDTO.custMgrName"></span>
-                </i-form-item>
-              </i-col>
-            </i-row>
+          <!--附件信息-->
+          <bs-form-block :title="'附件信息'">
+            <i-table :loading="loadingAttachFile" :columns="companyAttachFileColumns" :data="formData.attachDTOs"></i-table>
           </bs-form-block>
         </i-form>
       </i-col>
@@ -274,7 +246,8 @@ export default {
   data() {
     return {
       selectCompanyModal: false,
-      initFormLoading: false
+      initFormLoading: false,
+      loadingAttachFile: false
     };
   },
   props: {
@@ -285,7 +258,7 @@ export default {
     },
     showDetail: {
       type: Boolean,
-      default: false
+      default: true
     }
   },
   components: {

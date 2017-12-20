@@ -1,5 +1,5 @@
 <template>
-  <div class="image-dialog">
+  <div class="image-dialog" style="display: inline-block; position: relative">
     <button class="image-dialog-trigger" type="button" @click="showDialog">
       <img class="image-dialog-thumb" ref="thumb" :src="thumb"  :width="thumbWidth" :height="thumbHeight"/>
     </button>
@@ -14,6 +14,7 @@
              :width="fullWidth" @load="onLoadFull"/>
       </div>
     </transition>
+    <slot name="icon-remove"></slot>
   </div>
 </template>
 <script>

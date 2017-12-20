@@ -65,7 +65,7 @@
           endDate: '',
           currentPage: 1,
           pageSize: 15,
-          creditStatus: '1;2;6;7;9'
+          creditStatus: ''
         }
       };
     },
@@ -81,7 +81,7 @@
     props: {
       creditStatus: {
         type: String,
-        default: '1;2;6;7;9',
+        default: '',
         required: false
       }
     },
@@ -95,7 +95,7 @@
           this.$data.searchForm.currentPage = page;
         }
         this.$data.searchForm.creditStatus = this.creditStatus || '';
-        let resp = await this.$http.post('/credit/page', this.$data.searchForm);
+        let resp = await this.$http.post('/credit/apply/page', this.$data.searchForm);
         this.$data.dataLoading = false;
         this.$data.privateCustomerList = resp.body.resultList;
         this.$data.currentPage = resp.body.currentPage;
