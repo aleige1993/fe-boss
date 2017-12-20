@@ -16,18 +16,38 @@
     </div>
     <bs-modal :title="isAdd ? '新增' : '修改'" v-model="showAddModal" :width="670">
       <i-form  ref="formCustom" :model="formCustom" label-position="right" :label-width="100">
-        <i-form-item label="选择车型" prop="modelName">
+        <i-form-item
+          v-if="isAdd"
+          :rules="{required: true, message: '车型不能为空', trigger: 'blur'}"
+          label="选择车型"
+          prop="modelName">
+          <input type="hidden" v-model="formCustom.modelName">
           <bs-carpicker :currBrand="formCustom.brandName"
                         :currSeries="formCustom.seriesName"
-                        :currMode="formCustom.modelName"
+                        :currModel="formCustom.modelName"
                         @on-change="selectCar"></bs-carpicker>
         </i-form-item>
-        <i-form-item label="厂商指导价" prop="guidancePrice">
+        <i-form-item v-else label="选择车型">
+          <span v-text="formCustom.brandName"></span>&nbsp;&nbsp;&nbsp;
+          <span v-text="formCustom.seriesName"></span>&nbsp;&nbsp;&nbsp;
+          <span v-text="formCustom.modelName"></span>
+        </i-form-item>
+        <i-form-item
+          v-if="isAdd"
+          :rules="{required: true, message: '厂商指导价不能为空', trigger: 'blur'}"
+          label="厂商指导价"
+          prop="guidancePrice">
           <i-input placeholder="" v-model="formCustom.guidancePrice">
             <span slot="append">万元</span>
           </i-input>
         </i-form-item>
-        <i-form-item label="售价" prop="sellingPrice">
+        <i-form-item v-else label="厂商指导价">
+          <span v-text="formCustom.guidancePrice + '万元'"></span>
+        </i-form-item>
+        <i-form-item
+          :rules="{required: true, message: '售价不能为空', trigger: 'blur'}"
+          label="售价"
+          prop="sellingPrice">
           <i-input placeholder="" v-model="formCustom.sellingPrice">
             <span slot="append">万元</span>
           </i-input>
@@ -66,13 +86,13 @@
         total: 0,
         pageSize: 15,
         formCustom: {
-          brandCode: '', // 车品牌code
+          brandNo: '', // 车品牌No
           brandName: '', // 车品牌name
-          seriesCode: '', // 车系code
+          seriesNo: '', // 车系No
           seriesName: '', // 车系code
-          modelCode: '', // 车型code
+          modelNo: '', // 车型No
           modelName: '', // 车型code
-          modelId: '',
+          salesStatus: '',
           guidancePrice: '',
           sellingPrice: ''
         }
@@ -85,15 +105,14 @@
         this.$data.isDetail = false;
       }
       this.getPrivateCustomerList();
-      // console.log(this.$JumpPage.getPageRemove(this.$data.currentPage, this.$data.pageSize, this.$data.total));
     },
     methods: {
       selectCar(distance) {
-        this.$data.formCustom.brandCode = distance.brandCode;
+        this.$data.formCustom.brandNo = distance.brandNo;
         this.$data.formCustom.brandName = distance.brandName;
-        this.$data.formCustom.seriesCode = distance.seriesCode;
+        this.$data.formCustom.seriesNo = distance.seriesNo;
         this.$data.formCustom.seriesName = distance.seriesName;
-        this.$data.formCustom.modelCode = distance.modelCode;
+        this.$data.formCustom.modelNo = distance.modelNo;
         this.$data.formCustom.modelName = distance.modelName;
       },
       // 查询列表数据
@@ -102,7 +121,7 @@
         if (page) {
           this.$data.currentPage = page;
         }
-        let resp = await this.$http.post('merchant/listCar', {
+        let resp = await this.$http.post('merchant/car/list', {
           merchantNo: this.$route.query.merchantNo,
           currentPage: this.$data.currentPage,
           pageSize: this.$data.pageSize
@@ -130,16 +149,11 @@
       },
       // 新增的保存请求方法
       async addSuBmit() {
-        let resAdd = await this.$http.post('merchant/saveCar', {
+        this.$data.buttonLoading = true;
+        let resAdd = await this.$http.post('merchant/car/add', {
           merchantNo: this.$route.query.merchantNo,
-          brandId: this.$data.formCustom.brandCode, // 车品牌code
-          brandName: this.$data.formCustom.brandName, // 车品牌name
-          seriesId: this.$data.formCustom.seriesCode, // 车系code
-          seriesName: this.$data.formCustom.seriesName, // 车系code
-          modelId: this.$data.formCustom.brandCode, // 车型code
-          modelName: this.$data.formCustom.modelName, // 车型code
-          guidancePrice: this.$data.formCustom.guidancePrice, // 指导价
-          sellingPrice: this.$data.formCustom.sellingPrice // 售价
+          salesStatus: '1',
+          ...this.$data.formCustom
         });
         this.$data.showAddModal = false;
         this.$data.buttonLoading = false; // 关闭按钮的loading状态
@@ -149,22 +163,18 @@
         }
       },
       setList(row) {
+        row.guidancePrice = row.guidancePrice.toString();
+        row.sellingPrice = row.guidancePrice.toString();
         this.isAdd = false;
         this.$data.showAddModal = true;
         this.formCustom = row;
       },
       // 修改情况下的提交数据
       async setSubmit() {
-        let resModify = await this.$http.post('merchant/saveCar', {
+        this.$data.buttonLoading = true;
+        let resModify = await this.$http.post('merchant/car/update', {
           merchantNo: this.$route.query.merchantNo,
-          brandId: this.$data.formCustom.brandCode, // 车品牌code
-          brandName: this.$data.formCustom.brandName, // 车品牌name
-          seriesId: this.$data.formCustom.seriesCode, // 车系code
-          seriesName: this.$data.formCustom.seriesName, // 车系code
-          modelId: this.$data.formCustom.brandCode, // 车型code
-          modelName: this.$data.formCustom.modelName, // 车型code
-          guidancePrice: this.$data.formCustom.guidancePrice, // 指导价
-          sellingPrice: this.$data.formCustom.sellingPrice // 售价
+          ...this.$data.formCustom
         });
         this.$data.showAddModal = false;
         this.$data.buttonLoading = false;
@@ -178,11 +188,11 @@
         Alertify.confirm('确定要删除吗？', async (ok) => {
           if (ok) {
             let merchantNo = row.merchantNo;
-            let modelId = row.modelId;
+            let modelNo = row.modelNo;
             const loadingMsg = this.$Message.loading('删除中...', 0);
-            let respDel = await this.$http.get('merchant/deleteCar', {
+            let respDel = await this.$http.get('merchant/car/delete', {
               merchantNo,
-              modelId
+              modelNo
             });
             loadingMsg();
             if (respDel.success) {
@@ -194,13 +204,19 @@
         });
       },
       formSubmit() {
-        this.$data.buttonLoading = true;
-        // 如果是新增
-        if (this.isAdd) {
-          this.addSuBmit();
-        } else {
-          this.setSubmit();
-        }
+        let formName = 'formCustom';
+        this.$refs[formName].validate((valid) => {
+          if (valid) {
+            // 如果是新增
+            if (this.isAdd) {
+              this.addSuBmit();
+            } else {
+              this.setSubmit();
+            }
+          } else {
+            this.$Message.error('"<span style="color: red">*</span>"必填项不能为空');
+          }
+        });
       },
       handleCancel() {
         this.$data.showAddModal = false;

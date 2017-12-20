@@ -4,10 +4,12 @@ export default {
       distributorColumns: [
         {
           title: '渠道商编号',
+          width: '100',
           key: 'merchantNo'
         },
         {
           title: '渠道商类型',
+          width: '100',
           key: 'merchantType',
           render: (h, params) => {
             return h('span', {}, this.enumCode2Name(params.row.merchantType, 'MerchantTypeEnum'));
@@ -15,6 +17,7 @@ export default {
         },
         {
           title: '客户编号',
+          width: '110',
           key: 'corpNo'
         },
         {
@@ -31,6 +34,7 @@ export default {
         },
         {
           title: '注册时间',
+          width: '110',
           key: 'regDate'
         },
         {
@@ -43,6 +47,7 @@ export default {
         },
         {
           title: '授信状态', // 0:未授信1-授信审核中2-授信通过3-授信拒绝4-授信驳回5-授信过期6-冻结
+          width: '90',
           key: 'merchantStatus',
           render: (h, params) => {
             return h('span', {}, this.enumCode2Name(params.row.merchantStatus, 'MerchantStatusEnum'));

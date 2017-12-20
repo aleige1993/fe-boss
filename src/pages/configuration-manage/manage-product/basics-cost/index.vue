@@ -19,6 +19,9 @@
         <i-form-item label="费用类型名称" prop="feeTypeName">
           <i-input placeholder="请输入费用类型名称" v-model="formCustom.feeTypeName"></i-input>
         </i-form-item>
+        <i-form-item label="费用类型代码" prop="feeTypeCode">
+          <i-input placeholder="请输入费用类型代码" v-model="formCustom.feeTypeCode"></i-input>
+        </i-form-item>
         <!--<i-form-item label="收支方向" prop="feeType">
           <i-select v-model="formCustom.feeType">
             <i-option v-for="item in enumSelectData.get('FeeTypeEnum')" :key="item.itemCode" :value="item.itemCode">{{item.itemName}}</i-option>
@@ -56,6 +59,7 @@
         pageSize: 15,
         formCustom: {
           feeTypeName: '',
+          feeTypeCode: '',
           feeType: ''
         }
       };
@@ -120,7 +124,9 @@
             if (respDel.success) {
               loadingMsg();
               this.$Message.success('删除费用类型成功');
-              this.getPrivateCustomerList(1);
+              this.getPrivateCustomerList(
+                this.$JumpPage.getPageRemove(this.$data.currentPage, this.$data.pageSize, this.$data.total)
+              );
             }
           }
         });
@@ -137,11 +143,12 @@
           feeType: this.$data.formCustom.feeType,
           feeTypeNo: this.$data.formCustom.feeTypeNo
         });
+        this.$data.showAddModal = false;
+        this.$data.buttonLoading = false;
         if (resModify.success) {
-          this.$data.showAddModal = false;
-          this.$data.buttonLoading = false;
           this.$Message.success('修改费用类型成功');
-          this.getPrivateCustomerList();
+          let jumpPage = this.$JumpPage.getPageRemove(this.$data.currentPage, this.$data.pageSize, this.$data.total);
+          this.getPrivateCustomerList(jumpPage);
         }
       },
       // 新增模态框的保存按钮点击事件

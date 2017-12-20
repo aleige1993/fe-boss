@@ -753,11 +753,11 @@ export default [
           'items': [
             {
               'itemCode': '1',
-              'itemName': '直接运营模式'
+              'itemName': '融资租赁模式'
             },
             {
               'itemCode': '2',
-              'itemName': '海乐行模式'
+              'itemName': '直接资方模式'
             }
           ]
         },

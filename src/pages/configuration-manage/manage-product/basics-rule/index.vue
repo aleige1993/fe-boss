@@ -138,7 +138,7 @@
             if (respDel.success) {
               loadingMsg();
               this.$Message.success('删除准入规则成功');
-              this.getPrivateCustomerList(1);
+              this.getPrivateCustomerList(this.$JumpPage.getPageRemove(this.$data.currentPage, this.$data.pageSize, this.$data.total));
             }
           }
         });

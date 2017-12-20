@@ -106,6 +106,7 @@
       async addSuccess() {
         this.$data.buttonLoading = true;
         let resp = await this.$http.post('/merchant/operator/add', {
+          merchantNo: this.$route.query.merchantNo,
           operatorStatus: '1', // 0冻结，1激活
           ...this.$data.formAdmin
         });

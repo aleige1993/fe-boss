@@ -4,8 +4,13 @@ export default {
       columns1: [
         {
           title: '费用类型ID',
-          width: 200,
+          width: 120,
           key: 'feeTypeNo'
+        },
+        {
+          title: '费用类型代码',
+          width: 120,
+          key: 'feeTypeCode'
         },
         {
           title: '费用类型名称',

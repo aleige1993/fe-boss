@@ -38,7 +38,9 @@ export default {
         {
           title: '创建人',
           key: 'createUserCode'
-        },
+        }
+      ],
+      columnsFeatureActionColumns: [
         {
           title: '操作',
           key: 'action',

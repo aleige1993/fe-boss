@@ -54,7 +54,7 @@ export default [
   },
   // 渠道商车型信息列表分页查询
   {
-    url: '/merchant/listCar',
+    url: '/merchant/car/list',
     on: true,
     resp: Mock.mock({
       'body': {
@@ -63,7 +63,7 @@ export default [
         'pageSize': 4,
         'resultList|10': [
           {
-            'modelId|+1': 678,
+            'modelNo|+1': 678,
             'modelName': 'CS75',
             'guidancePrice|+100': 156800,
             'sellingPrice|+100': 136800,

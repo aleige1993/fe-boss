@@ -8,6 +8,10 @@ export default {
           key: 'feeTypeNo'
         },
         {
+          title: '费用类型代码',
+          key: 'feeTypeCode'
+        },
+        {
           title: '费用类型名称',
           key: 'feeTypeName'
         },

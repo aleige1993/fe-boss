@@ -5,7 +5,7 @@ export default {
         {
           title: '车型ID',
           align: 'center',
-          key: 'modelId'
+          key: 'modelNo'
         },
         {
           title: '车型名称',
@@ -21,6 +21,7 @@ export default {
         },
         {
           title: '销售状态', // 0停售，1在售
+          width: '120',
           align: 'center',
           key: 'salesStatus',
           render: (h, params) => {
@@ -39,30 +40,31 @@ export default {
             return h('div', [
               h('Button', {
                 props: {
-                  type: 'primary',
+                  type: params.row.salesStatus === '0' ? 'primary' : 'warning',
                   size: 'small'
                 },
                 on: {
                   click: () => {
-                    let status = params.row.status === '1' ? '2' : '1';
-                    let text = params.row.status === '1' ? '冻结' : '激活';
-                    Alertify.confirm(`确定要${text}当前用户吗？`, async (ok) => {
+                    let status = params.row.salesStatus === '0' ? '1' : '0'; // 0停售，1在售
+                    let text = params.row.salesStatus === '0' ? '在售' : '停售';
+                    Alertify.confirm(`确定要${text}当前车型吗？`, async (ok) => {
                       if (ok) {
-                        const msg = this.$Message.loading(`正在${text}`, 0);
-                        let resp = await this.$http.post('/updateCorpStatus', {
-                          corpNo: params.row.corpNo,
-                          status
+                        const msg = this.$Message.loading(`正在${text}请求...`, 0);
+                        let resp = await this.$http.get('merchant/car/status', {
+                          merchantNo: params.row.merchantNo,
+                          salesStatus: status,
+                          modelNo: params.row.modelNo
                         });
                         msg();
                         if (resp.success) {
-                          this.$Message.success(`${text}成功`);
-                          this.getCompanyCustomerList();
+                          this.$Message.success(`当前车型${text}成功`);
+                          this.getPrivateCustomerList();
                         }
                       }
                     });
                   }
                 }
-              }, this.status === '1' ? '冻结' : '激活'), // status 1激活  2冻结  3草稿
+              }, params.row.salesStatus === '0' ? '在售' : '停售'), // status 1激活  2冻结  3草稿
               h('Button', {
                 props: {
                   type: 'primary',

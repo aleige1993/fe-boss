@@ -26,7 +26,7 @@
     <div class="form-top-actions">
       <i-button @click="addModal" type="info"><i class="iconfont icon-xinzeng"></i> 新增</i-button>
     </div>
-    <i-table border  :page-size="pageSize" :loading="dataLoading" ref="contractTemplateTable" :columns="columns1" :data="data1"></i-table>
+    <i-table border :page-size="pageSize" :loading="dataLoading" ref="contractTemplateTable" :columns="resultColumns" :data="data1" @on-row-dblclick="selectRow"></i-table>
     <div class="page-container">
       <i-page :current="currentPage" :total="total" size="small" show-elevator show-total @on-change="jumpPage">
       </i-page>
@@ -107,10 +107,27 @@
         }
       };
     }, // end data
+    computed: {
+      resultColumns() {
+        if (this.type === 'modal') {
+          return this.$data.columns1;
+        } else {
+          return [...this.$data.columns1, ...this.$data.columnsFeatureActionColumns];
+        }
+      }
+    },
+    props: {
+      type: String,
+      default: 'page',
+      required: false
+    },
     mounted() {
       this.getPrivateCustomerList();
     },
     methods: {
+      selectRow(row, index) {
+        this.$emit('on-row-dbclick', row, index);
+      },
       async getPrivateCustomerList(page) {
         this.$data.dataLoading = true;
         if (page) {
@@ -194,7 +211,8 @@
             if (respDel.success) {
               loadingMsg();
               this.$Message.success('删除成功');
-              this.getPrivateCustomerList();
+              let jumpPage = this.$JumpPage.getPageRemove(this.$data.currentPage, this.$data.pageSize, this.$data.total);
+              this.getPrivateCustomerList(jumpPage);
             }
           }
         });

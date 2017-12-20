@@ -31,7 +31,7 @@
       <i-button @click="ContractClick" type="ghost"><i class="iconfont icon-shenhe"></i> 合同模板配置</i-button>
       <i-button v-show="isClickRow" @click="handleClearCurrentRow" type="text"><i-icon type="android-cancel" class="button-cancel"></i-icon> 取消当前选中状态</i-button>
     </div>
-    <i-table highlight-row border :loading="dataLoading" ref="proTable" :columns="columns1" :data="data1" @on-current-change="radioFun"></i-table>
+    <i-table highlight-row border :loading="dataLoading" ref="proTable" :columns="resultColumns" :data="data1" @on-current-change="radioFun" @on-row-dblclick="selectRow"></i-table>
     <div class="page-container">
       <i-page :total="total" :page-size="pageSize" :current="currentPage" @on-change="jumpPage" size="small" show-elevator show-total></i-page>
     </div>
@@ -203,7 +203,27 @@
         }
       };
     },
+    computed: {
+      resultColumns() {
+        if (this.type === 'modal') {
+          return this.$data.columns1;
+        } else {
+          return [...this.$data.columns1, ...this.$data.columnsFeatureActionColumns];
+        }
+      }
+    },
+    props: {
+      type: String,
+      default: 'page',
+      required: false
+    },
+    mounted() {
+      this.getPrivateCustomerList();
+    },
     methods: {
+      selectRow(row, index) {
+        this.$emit('on-row-dbclick', row, index);
+      },
       // 打开产品特性的弹层
       openModalFeature() {
         this.$data.showFeatureModal = true;
@@ -462,9 +482,6 @@
       noticeContractFun() {
         this.$data.ContractShowModal = false;
       }
-    },
-    mounted() {
-      this.getPrivateCustomerList();
     }
   };
 </script>

@@ -131,7 +131,8 @@
             if (respDel.success) {
               loadingMsg();
               this.$Message.success('删除车辆材料成功');
-              this.getPrivateCustomerList(1);
+              let jumpPage = this.$JumpPage.getPageRemove(this.$data.currentPage, this.$data.pageSize, this.$data.total);
+              this.getPrivateCustomerList(jumpPage);
             }
           }
         });

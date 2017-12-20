@@ -4,6 +4,7 @@ export default {
       columns1: [
         {
           title: '渠道商编号',
+          width: '180',
           align: 'center',
           key: 'merchantNo'
         },
@@ -20,6 +21,7 @@ export default {
         },
         {
           title: '状态', // 0:冻结,1:激活
+          width: '80',
           key: 'operatorStatus',
           render: (h, params) => {
             return h('span', {}, params.row.operatorStatus === '0' ? '冻结' : '激活');
@@ -34,7 +36,7 @@ export default {
             return h('div', [
               h('Button', {
                 props: {
-                  type: 'primary',
+                  type: 'error',
                   size: 'small'
                 },
                 style: {
@@ -42,13 +44,12 @@ export default {
                 },
                 on: {
                   click: () => {
-                    // this.resetPas($.extend({}, params.row));
                     Alertify.confirm('确定要重置密码吗？', async (ok) => {
                       if (ok) {
                         const msg = this.$Message.loading('正在重置密码', 0);
-                        let resp = await this.$http.post('/updateCorpStatus', {
-                          corpNo: params.row.corpNo,
-                          status
+                        let resp = await this.$http.get('/merchant/operator/resetPsw', {
+                          merchantNo: params.row.merchantNo,
+                          operatorCode: params.row.operatorCode
                         });
                         msg();
                         if (resp.success) {
@@ -62,30 +63,31 @@ export default {
               }, '重置密码'),
               h('Button', {
                 props: {
-                  type: 'primary',
+                  type: params.row.operatorStatus === '0' ? 'primary' : 'warning',
                   size: 'small'
                 },
                 on: {
                   click: () => {
-                    let status = params.row.status === '1' ? '2' : '1';
-                    let text = params.row.status === '1' ? '冻结' : '激活';
+                    let operatorStatus = params.row.operatorStatus === '0' ? '1' : '0'; // 0:冻结,1:激活
+                    let text = params.row.operatorStatus === '0' ? '激活' : '冻结';
                     Alertify.confirm(`确定要${text}当前用户吗？`, async (ok) => {
                       if (ok) {
                         const msg = this.$Message.loading(`正在${text}`, 0);
-                        let resp = await this.$http.post('/updateCorpStatus', {
-                          corpNo: params.row.corpNo,
-                          status
+                        let resp = await this.$http.get('/merchant/operator/status', {
+                          merchantNo: params.row.merchantNo,
+                          operatorCode: params.row.operatorCode,
+                          operatorStatus
                         });
                         msg();
                         if (resp.success) {
                           this.$Message.success(`${text}成功`);
-                          this.getCompanyCustomerList();
+                          this.getList();
                         }
                       }
                     });
                   }
                 }
-              }, params.row.status === '1' ? '冻结' : '激活') // status 1激活  2冻结  3草稿
+              }, params.row.operatorStatus === '0' ? '激活' : '冻结') // status 1激活  2冻结  3草稿
             ]);
           }
         }

@@ -13,8 +13,7 @@
               </i-col>
               <i-col span="8">
                 <i-form-item label="公司性质" prop="baseDTO.corpType">
-                  <span v-text="formData.baseDTO.corpType">
-                  </span>
+                  <span v-text="enumCode2Name('' + formData.baseDTO.corpType, 'UnitTypeEnum')"></span>
                 </i-form-item>
               </i-col>
               <i-col span="8">
@@ -45,8 +44,7 @@
             <i-row>
               <i-col span="8">
                 <i-form-item label="行业类型" prop="baseDTO.industryType">
-                  <span v-text="formData.baseDTO.industryType">
-                  </span>
+                  <span v-text="enumCode2Name(formData.baseDTO.industryType, 'UnitTypeEnum')"></span>
                 </i-form-item>
               </i-col>
               <i-col span="8">
@@ -80,8 +78,7 @@
             <i-row>
               <i-col span="8">
                 <i-form-item label="是否合作渠道商" prop="baseDTO.isMerchant">
-                  <span v-text="formData.baseDTO.isMerchant">
-                  </span>
+                  <span v-text="enumCode2Name(formData.baseDTO.isMerchant, 'YesNoEnum')"></span>
                 </i-form-item>
               </i-col>
             </i-row>
@@ -128,7 +125,7 @@
               </i-col>
               <i-col span="8">
                 <i-form-item label="性别"  prop="baseDTO.legalPersonSex">
-                  <span v-text="formData.baseDTO.legalPersonSex" ></span>
+                  <span v-text="enumCode2Name(formData.baseDTO.legalPersonSex, 'SexEnum')"></span>
                 </i-form-item>
               </i-col>
               <i-col span="8">
@@ -140,8 +137,7 @@
             <i-row>
               <i-col span="8">
                 <i-form-item label="证件类型" prop="baseDTO.legalPersonCerttype">
-                  <span v-text="formData.baseDTO.legalPersonCerttype">
-                  </span>
+                  <span v-text="enumCode2Name(formData.baseDTO.legalPersonCerttype, 'CertTypeEnum')"></span>
                 </i-form-item>
               </i-col>
               <i-col span="8">
@@ -168,8 +164,7 @@
               </i-col>
               <i-col span="8">
                 <i-form-item label="性别" prop="baseDTO.mainLinkmanSex">
-                  <span v-text="formData.baseDTO.mainLinkmanSex">
-                  </span>
+                  <span v-text="enumCode2Name(formData.baseDTO.mainLinkmanSex, 'SexEnum')"></span>
                 </i-form-item>
               </i-col>
               <i-col span="8">
@@ -181,7 +176,7 @@
             <i-row>
               <i-col span="8">
                 <i-form-item label="职务" prop="baseDTO.mainLinkmanDuty">
-                  <span v-text="formData.baseDTO.mainLinkmanDuty"></span>
+                  <span v-text="enumCode2Name(formData.baseDTO.mainLinkmanDuty, 'DutyEnum')"></span>
                 </i-form-item>
               </i-col>
               <i-col span="8">
@@ -207,7 +202,7 @@
               </i-col>
               <i-col span="8">
                 <i-form-item label="开始合作时间" prop="baseDTO.joinStartDate">
-                  <span placement="top-start" v-model="formData.baseDTO.joinStartDate"></span>
+                  <span placement="top-start" v-text="formData.baseDTO.joinStartDate"></span>
                 </i-form-item>
               </i-col>
               <i-col span="8">

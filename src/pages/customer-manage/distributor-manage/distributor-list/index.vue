@@ -216,6 +216,7 @@
           currentPage: this.$data.currentPage,
           pageSize: this.$data.pageSize
         });
+        console.log(resp.body.resultList);
         this.$data.clickRow = {};
         this.$data.isClickRow = false;
         this.$data.dataLoading = false;
@@ -331,7 +332,8 @@
             path: '/index/customer/distributor/car',
             query: {
               currentPage: this.$data.currentPage,
-              ...this.$data.clickRow
+              from: this.$data.clickRow.from,
+              merchantNo: this.$data.clickRow.merchantNo
             }
           });
         }
@@ -357,9 +359,7 @@
             path: '/index/customer/distributor/admin',
             query: {
               currentPage: this.$data.currentPage,
-              merchantNo: this.$data.clickRow.merchantNo,
-              corpName: this.$data.clickRow.corpName,
-              custMgrName: this.$data.clickRow.custMgrName
+              merchantNo: this.$data.clickRow.merchantNo
             }
           });
         }
