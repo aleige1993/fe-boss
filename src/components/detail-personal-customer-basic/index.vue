@@ -351,7 +351,7 @@ export default {
     selectPersonal(row, index) {
       // debugger;
       this.initFormData(row.memberNo);
-      this.$emit('getMember', row);
+      // this.$emit('getMember', row);
       this.$data.selectPersonalModal = false;
       this.$data.isHasFromData = true;
     }

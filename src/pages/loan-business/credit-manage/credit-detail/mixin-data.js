@@ -65,44 +65,6 @@ export default {
           }
         ]
       },
-      companyAttachFileColumns: [
-        {
-          title: '附件名称',
-          key: 'attachName'
-        },
-        {
-          title: '附件文件',
-          key: 'attachUrl'
-        },
-        {
-          title: '操作',
-          render: (h, params) => {
-            return h('div', [
-              h('Button', {
-                props: {
-                  type: 'primary',
-                  size: 'small',
-                  disabled: this.isFromDetail
-                },
-                style: {
-                  marginRight: '5px'
-                },
-                on: {
-                  click: () => {
-                    window.open(params.row.attachUrl, '_blank');
-                  }
-                }
-              }, '下载')
-            ]);
-          }
-        }
-      ],
-      companyAttachFiles: [
-        {
-          attachName: '仓井空.av',
-          attachUrl: 'http://www.baidu.com'
-        }
-      ],
       // 初审信息
       firstApproveColumns: [
         {

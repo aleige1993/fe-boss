@@ -7,7 +7,7 @@
 </template>
 <script>
   export default {
-    name: '',
+    name: 'bsFileItem',
     props: {
       type: {
         type: String,
@@ -28,9 +28,15 @@
           return 'png';
         case 'doc':
           return 'docx_win';
-        case 'excel':
+        case 'docx':
+          return 'docx_win';
+        case 'xls':
+          return 'xlsx_win';
+        case 'xlsx':
           return 'xlsx_win';
         case 'ppt':
+          return 'pptx_mac';
+        case 'pptx':
           return 'pptx_mac';
         case 'zip':
           return 'zip';
@@ -42,7 +48,7 @@
           return 'bmp';
         case 'jpeg':
           return 'jpeg';
-        case 'text':
+        case 'txt':
           return 'text';
         case 'pdf':
           return 'pdf';

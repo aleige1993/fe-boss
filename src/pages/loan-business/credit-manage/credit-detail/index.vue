@@ -11,10 +11,6 @@
       <i-tab-pane label="申请信息">
         <company-customer-basic-info :readonly="true" :corpNo="creditInfo.corpNo"></company-customer-basic-info>
         <i-form label-position="right" :label-width="140">
-          <!--附件信息-->
-          <bs-form-block :title="'附件信息'">
-            <i-table :loading="loadingAttachFile" :columns="companyAttachFileColumns" :data="creditInfo.creditApplyAttachList"></i-table>
-          </bs-form-block>
           <!--初审信息-->
           <bs-form-block title="初审信息">
             <i-row>
