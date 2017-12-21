@@ -128,7 +128,7 @@
 <script>
   import MixinData from './mixin-data';
   import BsModal from '@/components/bs-modal';
-  import TableProductList from '@/components/table-product-list/index.vue';
+  import TableProductList from '@/pages/configuration-manage/manage-product/product-list'; // 选择产品
   export default {
     name: 'creditPlanForm',
     mixins: [MixinData],
