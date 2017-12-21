@@ -938,6 +938,88 @@ export default [
               'itemName': '二网商'
             }
           ]
+        },
+        {
+          'groupKey': 'SignTaskStatusEnum',
+          'items': [
+            {
+              'itemCode': '0',
+              'itemName': '回退处理中'
+            },
+            {
+              'itemCode': '1',
+              'itemName': '合同制作待处理'
+            },
+            {
+              'itemCode': '2',
+              'itemName': '合同制作处理中'
+            },
+            {
+              'itemCode': '3',
+              'itemName': '合同复核待处理'
+            },
+            {
+              'itemCode': '4',
+              'itemName': '合同复核处理中'
+            },
+            {
+              'itemCode': '5',
+              'itemName': '合同签署待确认'
+            },
+            {
+              'itemCode': '6',
+              'itemName': '合同签署确认中'
+            },
+            {
+              'itemCode': '7',
+              'itemName': '合同签署确认完成'
+            }
+          ]
+        },
+        {
+          'groupKey': 'LoanBizNodeEnum',
+          'items': [
+            {
+              'itemCode': '1',
+              'itemName': '录单'
+            },
+            {
+              'itemCode': '2',
+              'itemName': '征信查询'
+            },
+            {
+              'itemCode': '3',
+              'itemName': '初审'
+            },
+            {
+              'itemCode': '4',
+              'itemName': '一级审批'
+            },
+            {
+              'itemCode': '5',
+              'itemName': '二级审批'
+            },
+            {
+              'itemCode': '6',
+              'itemName': '合同制作'
+            },
+            {
+              'itemCode': '7',
+              'itemName': '合同复核'
+            },
+            {
+              'itemCode': '8',
+              'itemName': '合同签署确认'
+            },
+            {
+              'itemCode': '9',
+              'itemName': '放款申请'
+            },
+            {
+              'itemCode': '99',
+              'itemName': '归档完成'
+            }
+          ]
         }
       ],
       'reCode': '0000',

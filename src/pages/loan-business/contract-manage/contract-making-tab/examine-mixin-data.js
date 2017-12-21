@@ -5,11 +5,12 @@ export default {
         {
           title: '处理人',
           align: 'center',
-          width: 150,
+          width: 170,
           key: 'name'
         },
         {
           title: '任务节点',
+          width: 120,
           key: 'taskNode'
         },
         {
@@ -29,12 +30,10 @@ export default {
         },
         {
           title: '结论',
-          width: 200,
           key: 'conclusion'
         },
         {
           title: '意见信息',
-          width: 300,
           key: 'opinion'
         }
       ],

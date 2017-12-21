@@ -4,23 +4,23 @@ export default {
       columns1: [
         {
           title: '签约编号',
-          width: 150,
+          width: 170,
           align: 'center',
-          key: 'contractNo'
+          key: 'signNo'
         },
         {
           title: '项目编号',
-          width: 150,
+          width: 170,
           key: 'loanNo'
         },
         {
           title: '客户名称',
-          key: 'corpName'
+          key: 'custName'
         },
         {
           title: '证件类型',
           width: 90,
-          key: 'legalPersonCerttype',
+          key: 'certType',
           render: (h, params) => {
             return h('span', {}, this.enumCode2Name(params.row.legalPersonCerttype, 'CertTypeEnum'));
           }
@@ -28,7 +28,7 @@ export default {
         {
           title: '证件号码',
           width: 180,
-          key: 'legalPersonCertno'
+          key: 'certNo'
         },
         {
           title: '产品',
@@ -40,38 +40,35 @@ export default {
           key: 'periods'
         },
         {
-          title: '申请金额（元）',
+          title: '融资金额（元）',
           width: 130,
-          key: 'applicationMoney'
+          key: 'loanAmt'
         },
         {
-          title: '审批金额（元）',
-          width: 130,
-          key: 'examinationMoney'
-        },
-        {
-          title: '申请时间',
+          title: '任务送达时间',
           width: 110,
-          key: 'applicationDate'
-        },
-        {
-          title: '签约申请时间',
-          width: 110,
-          key: 'contractDate'
+          key: 'taskArriveTime'
         },
         {
           title: '已耗时',
-          key: 'dateLong'
+          width: 110,
+          key: 'timeConsuming'
         },
         {
-          title: '任务节点',
-          width: 90,
-          key: 'taskNode'
+          title: '当前环节',
+          width: 120,
+          key: 'taskNode',
+          render: (h, params) => {
+            return h('span', {}, this.enumCode2Name(params.row.taskNode, 'LoanBizNodeEnum'));
+          }
         },
         {
-          title: '状态',
-          width: 80,
-          key: 'status'
+          title: '当前状态',
+          width: 150,
+          key: 'taskStatus',
+          render: (h, params) => {
+            return h('span', {}, this.enumCode2Name(params.row.taskStatus, 'SignTaskStatusEnum'));
+          }
         },
         {
           title: '操作',
