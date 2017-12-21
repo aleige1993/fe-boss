@@ -1,117 +1,105 @@
 export default {
   data() {
     return {
-      // 资金方信息表
-      loanCapitalColumns: [
+      // 车辆信息表
+      carColumns: [
         {
-          title: '资方名称',
+          title: '车辆品牌',
           width: 170,
           align: 'center',
-          key: 'capitalName'
+          key: 'carBrandName'
         },
         {
-          title: '放款比例（%）',
-          key: 'loanRatio'
+          title: '车辆型号',
+          key: 'carModel'
         },
         {
-          title: '账户名',
-          key: 'acctName'
+          title: '生产厂商',
+          key: 'carVendor'
         },
         {
-          title: '开户行',
-          key: 'openBankName'
+          title: '颜色',
+          key: 'carColor'
         },
         {
-          title: '账号',
-          key: 'acctNo'
+          title: '车牌号',
+          key: 'carPlateNo'
+        },
+        {
+          title: '发动机号',
+          key: 'carEngineNo'
+        },
+        {
+          title: '车架号',
+          key: 'carFrameNo'
         }
       ],
-      loanCapitalData: [
+      carData: [],
+      // 担保信息表
+      guaPersonColumns: [
         {
-          'capitalName': '资方名称01',
-          'loanRatio': '50',
-          'acctName': '账户名01',
-          'openBankName': '中国建设银行',
-          'acctNo': '8888888888888'
-        }
-      ],
-      // 租金还款计划表
-      rentPlanCapitalColumns: [
-        {
-          title: '应还款日',
+          title: '保证人类型',
           width: 170,
           align: 'center',
-          key: 'repayDate'
+          key: 'guaPersonType'
         },
         {
-          title: '应还本金',
-          key: 'repayAmt'
+          title: '保证人编号',
+          key: 'guaPersonNo'
         },
         {
-          title: '应付利息',
-          key: 'repayRate'
+          title: '保证人',
+          key: 'guaPersonName'
         },
         {
-          title: '应还（付）总额',
-          key: 'repayTotalAmt'
+          title: '证件类型',
+          width: 120,
+          key: 'guaPersonCertType'
+        },
+        {
+          title: '证件号码',
+          width: 180,
+          key: 'guaPersonCertNo'
+        },
+        {
+          title: '联系电话',
+          key: 'guaPersonMobile'
+        },
+        {
+          title: '联系地址',
+          key: 'guaPersonAddr'
         }
       ],
-      rentPlanCapitalData: [
+      guaPersonData: [],
+      // 担保信息表
+      feeTakeColumns: [
         {
-          'repayDate': '2017-12-25',
-          'repayAmt': '10',
-          'repayRate': '1',
-          'repayTotalAmt': '11'
-        },
-        {
-          'repayDate': '2017-12-25',
-          'repayAmt': '20',
-          'repayRate': '2',
-          'repayTotalAmt': '22'
-        }
-      ],
-      // 租金还款计划表
-      capitalPlanCapitalColumns: [
-        {
-          title: '应还款日',
+          title: '费用项目代码',
           width: 170,
           align: 'center',
-          key: 'repayDate'
+          key: 'feeTypeCode'
         },
         {
-          title: '应还本金',
-          key: 'repayAmt'
+          title: '费用项目',
+          key: 'feeName'
         },
         {
-          title: '应付利息',
-          key: 'repayRate'
+          title: '收取方式',
+          key: 'feeTakeType'
         },
         {
-          title: '应还（付）总额',
-          key: 'repayTotalAmt'
+          title: '应收金额（元）',
+          key: 'feeActualAmt'
         }
       ],
-      capitalPlanCapitalData: [
-        {
-          'repayDate': '2017-12-25',
-          'repayAmt': '10',
-          'repayRate': '1',
-          'repayTotalAmt': '11'
-        },
-        {
-          'repayDate': '2017-12-25',
-          'repayAmt': '20',
-          'repayRate': '2',
-          'repayTotalAmt': '22'
-        }
-      ],
+      feeTakeData: [],
       // 合同信息表
       contractInfoColumns: [
         {
           title: '文档编号',
           width: 170,
           align: 'center',
-          key: 'contractNO'
+          key: 'contractNo'
         },
         {
           title: '合同名称',
@@ -160,14 +148,7 @@ export default {
           }
         }
       ],
-      contractInfoData: [
-        {
-          'contractNO': '001',
-          'contractName': '001',
-          'makeContractUrl': '001',
-          'makeSystem': '001'
-        }
-      ]
+      contractInfoData: []
     };
   }
 };

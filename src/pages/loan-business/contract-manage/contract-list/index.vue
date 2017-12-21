@@ -20,13 +20,13 @@
             <i-form-item prop="corpName" style="margin-right:20px;">
               <i-input type="text" placeholder="客户名称" v-model="formSearch.corpName"></i-input>
             </i-form-item>
-            <i-form-item prop="legalPersonCerttype" style="margin-right:20px;">
-              <i-select v-model="formSearch.legalPersonCerttype" style="width:150px" placeholder="证件类型">
+            <i-form-item prop="certType" style="margin-right:20px;">
+              <i-select v-model="formSearch.certType" style="width:150px" placeholder="证件类型">
                 <i-option v-for="item in enumSelectData.get('CertTypeEnum')" :key="item.itemCode" :value="item.itemCode">{{item.itemName}}</i-option>
               </i-select>
             </i-form-item>
-            <i-form-item prop="legalPersonCertno" style="margin-right:20px;">
-              <i-input  v-model="formSearch.legalPersonCertno" placeholder="证件号码"></i-input>
+            <i-form-item prop="certNo" style="margin-right:20px;">
+              <i-input  v-model="formSearch.certNo" placeholder="证件号码"></i-input>
             </i-form-item>
             <i-form-item prop="startDate" style="width: 120px;margin-right: 0px">
               <bs-datepicker v-model="formSearch.startDate" type="text" placeholder="申请时间"></bs-datepicker>
@@ -64,8 +64,9 @@
         formSearch: {
           loanNo: '',
           corpName: '',
-          legalPersonCerttype: '',
-          startDate: ''
+          certType: '',
+          startDate: '',
+          endDate: ''
         }
       };
     },
@@ -79,7 +80,7 @@
         if (page) {
           this.$data.currentPage = page;
         }
-        let resp = await this.$http.post('/makingList', {
+        let resp = await this.$http.post('/biz/sign/page', {
           currentPage: this.$data.currentPage,
           pageSize: this.$data.pageSize,
           ...this.$data.formSearch
@@ -105,7 +106,7 @@
         this.$router.push({
           path: '/index/loanbusiness/contract/making',
           query: {
-            ...row
+            loanNo: row.loanNo // 项目编号（业务申请编号）
           }
         });
       }

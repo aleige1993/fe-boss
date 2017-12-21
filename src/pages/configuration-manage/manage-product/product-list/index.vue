@@ -21,7 +21,7 @@
         </i-form-item>
       </i-form>
     </div>
-    <div class="form-top-actions">
+    <div class="form-top-actions" slot="topAction">
       <i-button @click="addModal" type="info"><i class="iconfont icon-xinzeng"></i> 新增产品</i-button>
       <i-button @click="lilvClick" type="ghost"><i class="iconfont icon-shenhe"></i> 利率方案配置</i-button>
       <i-button @click="feiyClick" type="ghost"><i class="iconfont icon-shenhe"></i> 费用收取配置</i-button>
