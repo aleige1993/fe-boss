@@ -8,7 +8,6 @@ export default {
         let resp = await this.$http.post('/member/find', {
           memberNo
         });
-        // console.log(resp.body);
         this.$data.initFormLoading = false;
         this.$data.formData = resp.body;
         this.$emit('on-submit-success', resp.body);

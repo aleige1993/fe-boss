@@ -146,7 +146,9 @@
               </i-col>
               <i-col span="8">
                 <i-form-item label="性别"  prop="baseDTO.legalPersonSex">
-                  <i-input v-model="formData.baseDTO.legalPersonSex" :readonly="true">男</i-input>
+                  <i-select :disabled="isFromDetail" v-model="formData.baseDTO.legalPersonSex">
+                    <i-option v-for="item in enumSelectData.get('SexEnum')" :key="item.itemCode" :value="item.itemCode">{{item.itemName}}</i-option>
+                  </i-select>
                 </i-form-item>
               </i-col>
               <i-col span="8">

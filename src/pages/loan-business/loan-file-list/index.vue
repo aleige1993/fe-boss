@@ -1,35 +1,30 @@
 <template>
   <div class="loan-file-list">
-    <h4 class="list-title">{{title}}</h4>
+    <h4 class="list-title">{{title}} <a href="javascript:;" class="text-danger" @click.prevent="deleteGroup" ><i-icon type="close-circled"></i-icon></a></h4>
     <div class="list-files clearfix">
-      <template v-for="item in data">
-        <template v-if="isImg(item.fileUrl)">
+      <template v-for="(item, index) in data">
+        <template v-if="isImg(item.attachUrl)">
           <bs-big-img  style="float: left" :thumbWidth="128" :thumbHeight="128" :fullWidth="1280"
-                       :thumb="'https://gss0.baidu.com/9vo3dSag_xI4khGko9WTAnF6hhy/zhidao/wh%3D600%2C800/sign=f42f163443540923aa3c6b78a268fd31/3b87e950352ac65c69a68e64f1f2b21193138a02.jpg'"
-                       :full="'https://gss0.baidu.com/9vo3dSag_xI4khGko9WTAnF6hhy/zhidao/wh%3D600%2C800/sign=f42f163443540923aa3c6b78a268fd31/3b87e950352ac65c69a68e64f1f2b21193138a02.jpg'">
+                       :thumb="item.attachUrl"
+                       :full="item.attachUrl">
             <span class="icon-remove" slot="icon-remove" @click.stop="deleteFile"><i-icon type="close"></i-icon></span>
           </bs-big-img>
         </template>
         <template v-else>
-          <bs-file-item style="float: left" type="png" :fileUrl="item.fileUrl" :fileName="item.fileName">
-            <span class="icon-remove" slot="icon-remove" @click.stop="deleteFile(item)"><i-icon type="close"></i-icon></span>
+          <bs-file-item style="float: left" :type="getFileSuffix(item.attachUrl)" :fileUrl="item.attachUrl" :fileName="item.attachName">
+            <span class="icon-remove" slot="icon-remove" @click.stop="deleteFile(item, index)"><i-icon type="close"></i-icon></span>
           </bs-file-item>
         </template>
       </template>
-
-      <!--<bs-file-item style="float: left" type="gif" fileName="文件2">
-        <span class="icon-remove" slot="icon-remove" @click.stop="deleteFile"><i-icon type="close"></i-icon></span>
-      </bs-file-item>
-      <bs-file-item style="float: left" type="zip" fileName="文件2">
-        <span class="icon-remove" slot="icon-remove" @click.stop="deleteFile"><i-icon type="close"></i-icon></span>
-      </bs-file-item>-->
-
-      <i-upload style="display: inline-block; float: left; width:128px; margin-left: 5px;"
-                multiple type="drag" :on-success="uploadFileSuccess"
+      <i-upload style="display: inline-block; float: left; width:128px; margin-left: 5px; position: relative" :show-upload-list="false"
+                multiple type="drag"
+                :on-progress="uploading"
+                :on-success="uploadFileSuccess"
                 :action="$config.HTTPBASEURL+'/common/upload'">
-        <div style="width: 128px;height:128px;line-height: 150px; text-align: center; border: 1px dashed #2196f3; color: #2196f3">
+        <div style="width: 126px;height:128px;line-height: 150px; text-align: center; border: 1px dashed #2196f3; color: #2196f3">
           <Icon type="ios-cloud-upload" size="42"></Icon>
         </div>
+        <i-spin v-if="isUploading" fix></i-spin>
       </i-upload>
     </div>
   </div>
@@ -39,7 +34,9 @@
   export default {
     name: '',
     data() {
-      return {};
+      return {
+        isUploading: false
+      };
     },
     props: {
       title: {
@@ -51,15 +48,40 @@
         type: Array,
         required: false,
         default: []
+      },
+      groupIndex: {
+        type: Number,
+        required: false,
+        default: 0
       }
     },
     methods: {
-      deleteFile(file) {
-        alert(file.fileName);
-        this.$emit('on-remove', file);
+      deleteGroup() {
+        Alertify.alert('确定要删除当前组以及下面的所有文件吗？', ok => {
+          if (ok) {
+            this.$emit('on-group-remove', this.groupIndex);
+          }
+        });
+      },
+      deleteFile(file, index) {
+        Alertify.alert('确定要删除当前文件吗？', ok => {
+          if (ok) {
+            this.data.splice(index, 1);
+          }
+        });
+      },
+      uploading() {
+        this.$data.isUploading = true;
       },
       uploadFileSuccess(res) {
-        this.$emit('on-add', res);
+        this.$data.isUploading = false;
+        if (res.success) {
+          let file = res.body;
+          this.data.push({
+            attachName: file.fileName,
+            attachUrl: file.url
+          });
+        }
       },
       getFileSuffix(fileUrl) {
         return fileUrl.substring(fileUrl.lastIndexOf('.') + 1);
@@ -101,6 +123,6 @@
     border-radius: 10px;
     text-align: center;
     line-height: 20px;
-    z-index: 100;
+    z-index: 1;
   }
 </style>

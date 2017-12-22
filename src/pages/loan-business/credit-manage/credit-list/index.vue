@@ -22,17 +22,22 @@
             <i-option v-for="item in certTypeEnum" :value="item.itemCode" :key="item.itemCode">{{item.itemName}}</i-option>
           </i-select>
         </i-form-item>-->
-        <i-form-item prop="password">
+        <i-form-item>
           <i-input v-model="searchForm.companyName" type="text" placeholder="客户名称"></i-input>
         </i-form-item>
-        <i-form-item prop="password">
+        <i-form-item>
           <bs-datepicker v-model="searchForm.startDate" type="text" placeholder="申请时间"></bs-datepicker>
         </i-form-item>
-        <i-form-item prop="password">
+        <i-form-item>
           -
         </i-form-item>
-        <i-form-item prop="password">
+        <i-form-item>
           <bs-datepicker v-model="searchForm.endDate" type="text" placeholder="申请时间"></bs-datepicker>
+        </i-form-item>
+        <i-form-item>
+          <i-select style="width: 120px;" v-model="searchForm.creditStatus" placeholder="授信状态">
+            <i-option v-for="item in enumSelectData.get('CreditAuditStatusEnum')" :value="item.itemCode" :key="item.itemCode">{{item.itemName}}</i-option>
+          </i-select>
         </i-form-item>
         <i-form-item>
           <i-button @click="search" type="primary"><i-icon type="ios-search-strong"></i-icon> 搜索</i-button>
@@ -63,9 +68,9 @@
           companyName: '',
           startDate: '',
           endDate: '',
+          creditStatus: '',
           currentPage: 1,
-          pageSize: 15,
-          creditStatus: ''
+          pageSize: 15
         }
       };
     },

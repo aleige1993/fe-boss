@@ -46,6 +46,22 @@ export default {
         }
       });
     },
+    addLoanFIleGroup() {
+      Alertify.prompt('请输入材料名称', (ok, name) => {
+        if (ok) {
+          if (name && $.trim(name).length !== 0) {
+            this.$data.loanData.push({
+              groupName: name,
+              groupId: '',
+              files: []
+            });
+          }
+        }
+      });
+    },
+    deleteloanFileGroup(index) {
+      this.$data.loanData.splice(index, 1);
+    },
     // 编辑
     setListLoan(row) {
       this.$data.isAddLoan = false;

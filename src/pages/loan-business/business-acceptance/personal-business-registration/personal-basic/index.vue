@@ -8,7 +8,7 @@
           <i-col span="8">
             <i-form-item
               label="产品名称"
-              :rules="{required: true, message: '产品不能为空', trigger: 'blur'}"
+              :rules="{required: true, message: '产品不能为空'}"
               prop="productNo">
               <input type="hidden" v-model="formData.productNo"/>
               <i-input v-model="formData.productName" :readonly="true" placeholder="选择产品">
@@ -71,7 +71,8 @@
           </i-col>
           <!--申请期限-->
           <i-col span="8">
-            <i-form-item label="申请期限" prop="applyPeriods">
+            <i-form-item label="申请期限" prop="applyPeriods"
+                         :rules="{required: true, message: '请输入申请期限'}">
               <i-input v-model="formData.applyPeriods" placeholder="">
                 <span slot="append">月</span>
               </i-input>
@@ -120,6 +121,14 @@
               </i-input>
             </i-form-item>
           </i-col>
+          <i-col span="8">
+            <i-form-item label="渠道商">
+              <input type="hidden" v-model="formData.productNo"/>
+              <i-input v-model="formData.productName" :readonly="true" placeholder="选择渠道商">
+                <i-button @click="showSelectProduct=!showSelectProduct" slot="append">选择渠道商 <Icon type="ios-more"></Icon></i-button>
+              </i-input>
+            </i-form-item>
+          </i-col>
         </i-row>
       </bs-form-block>
     </i-form>
@@ -143,14 +152,10 @@
     <!--贷款材料清单-->
     <bs-form-block :title="'贷款材料清单'">
       <div class="form-top-actions">
-        <i-button @click="openModalLoan" type="info"><i class="iconfont icon-xinzeng"></i>&nbsp;新增</i-button>
+        <i-button @click="addLoanFIleGroup" type="info"><i class="iconfont icon-xinzeng"></i>&nbsp;新增</i-button>
       </div>
       <!--<i-table :loading="loanDataLoading" border ref="selection" :columns="loanColumns" :data="loanData"></i-table>-->
-      <loan-file-list :data="[{fileName: '文件q', fileUrl: 'http://www.baidu.com'}, {fileName: '龚明华',fileUrl: 'http://blog.gongminghua.site/wp-content/themes/JieStyle-Two/images/avatar.jpg'}]"
-        @on-add="null" @on-remove="null">
-      </loan-file-list>
-      <loan-file-list title="结婚证信息" :data="[{fileName: '文件q', fileUrl: 'http://www.baidu.com'}, {fileName: '龚明华',fileUrl: 'http://blog.gongminghua.site/wp-content/themes/JieStyle-Two/images/avatar.jpg'}]"
-                      @on-add="null" @on-remove="null">
+      <loan-file-list v-for="(item, index) in loanData" :group-index="index" :title="item.loanDocName" :data="item.docDetailAttachList" @on-group-remove="deleteloanFileGroup">
       </loan-file-list>
     </bs-form-block>
 
@@ -158,7 +163,6 @@
     <bs-modal title="选择产品" :width="1200" v-model="showSelectProduct">
       <table-product-list v-if="showSelectProduct" :type="'modal'" @on-row-dbclick="selectProduct"></table-product-list>
     </bs-modal>
-
     <!--车辆信息的新增修改模态框-->
     <bs-modal :title="isAddCar ? '新增' : '编辑'" v-model="showModalCar" :width="1200">
       <i-form v-if="showModalCar" ref="formCar" :model="formCar" label-position="right" :label-width="120">
@@ -166,7 +170,7 @@
           <i-col span="8">
             <i-form-item
               label="担保类型"
-              :rules="{required: true, message: '担保类型不能为空', trigger: 'change'}"
+              :rules="{required: true, message: '担保类型不能为空'}"
               prop="guaranteeType">
               <i-select v-model="formCar.guaranteeType">
                 <i-option value="1">抵押</i-option>
@@ -177,7 +181,7 @@
           <i-col span="8">
             <i-form-item
               label="权利人类型"
-              :rules="{required: true, message: '权利人类型不能为空', trigger: 'change'}"
+              :rules="{required: true, message: '权利人类型不能为空'}"
               prop="custType">
               <i-select v-model="formCar.custType">
                 <i-option value="1">个人</i-option>
@@ -189,7 +193,7 @@
           <i-col span="8">
             <i-form-item
               label="权利人"
-              :rules="{required: true, message: '权利人不能为空', trigger: 'blur'}"
+              :rules="{required: true, message: '权利人不能为空'}"
               prop="carOwnerNo">
               <input type="hidden" v-model="formCar.carOwnerNo"/>
               <i-input v-if="formCar.custType=='1'" v-model="formCar.carOwnerName" :readonly="true" placeholder="选择权利人">
@@ -220,9 +224,9 @@
           <!--车辆品牌-->
           <i-col span="24">
             <i-form-item
-              label="车辆品牌"
-              :rules="{required: true, message: '车辆品牌不能为空'}"
-              prop="carBrandCode">
+              label="车辆品牌" >
+              <!--:rules="{required: true, message: '车辆品牌不能为空'}"
+              prop="carBrandCode"-->
               <input type="hidden" v-model="formCar.carModel">
               <bs-carpicker @on-change="selectLoanCar"></bs-carpicker>
             </i-form-item>
@@ -519,19 +523,19 @@
     </bs-modal>
     <!--选择权利人的模态框-->
     <bs-modal :title="'选择权利人'" v-model="showSelectObligee" :width="1200">
-      <table-customer-list ref="obligeeTable" type="modal" @on-row-dbclick="selectObligeeRow"></table-customer-list>
+      <table-customer-list v-if="showSelectObligee" ref="obligeeTable" type="modal" @on-row-dbclick="selectObligeeRow"></table-customer-list>
     </bs-modal>
     <!--选择企业权利人的模态框-->
     <bs-modal :title="'选择企业权利人'" v-model="showSelectCompanyOwner" :width="1200">
-      <table-company-customer-list ref="obligeeTable" type="modal" @on-row-dbclick="selectCompanyOwnerRow"></table-company-customer-list>
+      <table-company-customer-list v-if="showSelectCompanyOwner" ref="obligeeTable" type="modal" @on-row-dbclick="selectCompanyOwnerRow"></table-company-customer-list>
     </bs-modal>
     <!--选择担保人的模态框-->
     <bs-modal :title="'选择权利人'" v-model="showSelectGua" :width="1200">
-      <table-customer-list ref="obligeeTable" type="modal" @on-row-dbclick="selectGuaRow"></table-customer-list>
+      <table-customer-list v-if="showSelectGua" ref="obligeeTable" type="modal" @on-row-dbclick="selectGuaRow"></table-customer-list>
     </bs-modal>
     <!--选择企业担保人的模态框-->
     <bs-modal :title="'选择企业权利人'" v-model="showSelectCompanyGua" :width="1200">
-      <table-company-customer-list ref="obligeeTable" type="modal" @on-row-dbclick="selectCompanyGuaRow"></table-company-customer-list>
+      <table-company-customer-list v-if="showSelectCompanyGua" ref="obligeeTable" type="modal" @on-row-dbclick="selectCompanyGuaRow"></table-company-customer-list>
     </bs-modal>
   </div>
 </template>
@@ -544,6 +548,7 @@
   import personalInfo from '@/components/detail-personal-customer-basic/index.vue';
   import companyCustomerInfo from '@/components/detail-company-customer-basic/index.vue';
   import BsModal from '@/components/bs-modal';
+  import MixinData from './mixin-data';
   import carMixinData from './car-mixin-data';
   import carMixinMethods from './car-mixin-methods';
   import assureMixinData from './assure-mixin-data';
@@ -552,8 +557,8 @@
   import loanMixinMethods from './loan-mixin-methods';
   import BsCarpicker from '@/components/bs-carpicker';
   export default {
-    name: 'personalBasic',
-    mixins: [carMixinData, carMixinMethods, assureMixinData, assureMixinMethods, loanMixinData, loanMixinMethods],
+    name: 'loanAcceptBasicInfo',
+    mixins: [MixinData, carMixinData, carMixinMethods, assureMixinData, assureMixinMethods, loanMixinData, loanMixinMethods],
     components: {
       TableCustomerList,
       TableCompanyCustomerList,
@@ -568,138 +573,9 @@
       customerType: String
     },
     data() {
-      return {
-        memberNo: '',
-        corpNo: '',
-        member: {},
-        uploadFileName: '',
-        showSelectProduct: false,
-        showSelectObligee: false, // 显示选择权利人的模态框
-        showSelectCompanyOwner: false, // 显示选择企业权利人的模态框
-        showSelectGua: false,
-        showSelectCompanyGua: false,
-        personalBasicInfo: {},
-        // 车辆
-        isAddCar: true,
-        showModalCar: false,
-        carDataLoading: false,
-        formCar: {
-          carOutputStand: '',
-          loanNo: '',
-          carGuaCount: '',
-          remark: '',
-          carBuyPrice: '',
-          carEngineNo: '',
-          carRegNo: '',
-          carCertNo: '',
-          carColor: '',
-          carOnCity: '',
-          carOwnerNo: '',
-          carGuidePrice: '',
-          billNo: '',
-          carTypeName: '',
-          carOwnerName: '',
-          carIsFault: '',
-          carStatus: '',
-          carPlateNo: '',
-          carBirthday: '',
-          carTransferCount: '',
-          carIsAnchored: '',
-          carBrandCode: '',
-          carOnDate: '',
-          carVendor: '',
-          carBrandName: '',
-          billAmt: '',
-          carEvaluatePrice: '',
-          guaranteeType: '',
-          isTmpPlate: '',
-          carOutputVolume: '',
-          custType: '',
-          carTypeCode: '',
-          carIsPubPlate: '',
-          carFrameNo: '',
-          carMileage: '',
-          carModel: '',
-          billCorpName: ''
-        },
-        // 担保信息
-        isAddAssure: true,
-        assureDataLoading: false,
-        showModalAssure: false,
-        formAssure: {
-          guaPersonMobile: '',
-          guaPersonName: '',
-          guaPersonCertType: '',
-          loanNo: '',
-          guaPersonType: '',
-          guaPersonCertNo: '',
-          guaType: '',
-          remark: '',
-          guaPersonNo: '',
-          relation: ''
-        },
-        // 贷款材料
-        isAddLoan: true,
-        showModalLoan: false,
-        loanDataLoading: false,
-        formLoan: {
-          attachPath: '',
-          loanDocCode: '',
-          loanNo: '',
-          remark: '',
-          loanDocName: '',
-          status: ''
-        },
-        showBasicList: true, // 当选择客户姓名之后就显示以下的相关信息
-        isFromDetail: false,
-        showSelectCustomer: false,
-        formData: {
-          // id: 29, // 如果是编辑
-          carBuyAmt: '', // 车辆购车价格
-          deptName: '', // 业务归属部门名称
-          certType: '', // 证件类型
-          loanNo: '', // 项目编号 如果是编辑
-          taskAssigneeName: '', // 任务签收人姓名
-          taskArriveTime: '', // 任务送达时间
-          memberName: '', // 客户名称
-          corpNo: '', // 公司编号
-          productName: '', // 产品名称
-          deptNo: '', // 业务归属部门ID
-          deptCooperationStartDate: '', // 业务部门合作开始时间
-          carType: '', // 车类型，1-一手车；2-二手车
-          creditCode: '', // 公司社会统一信用代码
-          applyPeriods: '', // 申请期数
-          depositOrDownPayment: '', // 首付或保证金
-          custManagerName: '', // 客户经理名称
-          custKind: '', // 客户性质1-新增客户2-结清再贷
-          applyTime: '', // 贷款申请时间
-          productType: '', // 产品类别，1-乘用车，2-商用车，3-轻卡，4微卡
-          productNo: '', // 产品编号
-          loanUse: '', // 贷款用途
-          carUse: '', // 车辆用途1-自用2-指定第三方自用3-商用
-          corpName: '', // 公司名称
-          mobileNo: '', // 手机号码
-          taskNode: '', // 任务节点
-          guaMethod: '', // 担保方式1-个人担保2-夫妻担保3-直系亲属担保
-          applyAmt: '', // 申请金额
-          custManagerNo: '', // 客户经理ID
-          memberNo: '', // 客户编号
-          certNo: '', // 证件号码
-          loanChannel: '', // 项目来源;1-Android,2-IOS,3-Web(后台手工录入),4-TX(泰象)
-          custType: '1', // 客户类型1-个人客户2-公司客户
-          taskAssignee: '', // 任务签收人
-          status: '', // 状态0-未处理1-处理中2-已处理,3-草稿,9-废弃
-          apply_address: '',
-          longitude: '',
-          latitude: ''
-        }
-      };
+      return {};
     },
-    mounted() {
-      /* this.getCarList();
-      this.getAssureList();
-      this.getLoanList();*/
-    },
+    mounted() {},
     methods: {
       // 选择权利人
       selectObligeeRow(row, index) {
@@ -741,7 +617,8 @@
       },
       // 接收姓名组件的客户信息
       getMember(CertData) {
-        // this.$data.member = CertData;
+        // console.log(CertData);
+        this.$data.member = CertData;
         if (CertData.mbMemberDTO) {
           this.$data.formData.memberNo = CertData.mbMemberDTO['memberNo'];
           this.$data.formData.memberName = CertData.mbMemberDTO.name;
@@ -755,31 +632,53 @@
         }
       },
       // 选择产品
-      selectProduct(row, index) {
+      async selectProduct(row, index) {
         this.$data.formData.productNo = row.productNo;
         this.$data.formData.productName = row.productName;
         this.$data.formData.productType = row.productType;
         this.$data.showSelectProduct = false;
+        let resp = await this.$http.get('/pms/product/loanDocList', {
+          productNo: row.productNo
+        });
+        if (resp.success) {
+          this.$data.loanData = resp.body.map(item => {
+            return {
+              loanDocCode: item.loanDocCode,
+              loanDocName: item.loanDocName,
+              status: '',
+              docDetailAttachList: []
+            };
+          });
+        }
       },
       verification() {
         let formName = 'formData';
         let resReturn = false;
         this.$refs[formName].validate((valid) => {
           if (valid) {
-            // console.log(this.$data.member);
-            if ((typeof this.$data.member.mbMemberDTO === 'undefined' || this.$data.member.mbMemberDTO.memberNo === '') && (typeof this.$data.formData.corpNo === 'undefined' || this.$data.formData.corpNo === '')) {
+            if (
+              (typeof this.$data.member.mbMemberDTO === 'undefined' || this.$data.member.mbMemberDTO.memberNo === '') &&
+              (typeof this.$data.formData.corpNo === 'undefined' || this.$data.formData.corpNo === '')
+            ) {
               this.$Message.error('请先选择一个客户', 2);
               return;
             }
             this.$data.formData.custType = this.customerType;
 
-            this.$data.personalBasicInfo = {
+            /* this.$data.personalBasicInfo = {
               ...this.$data.member, // 客户信息（选择姓名得出）
               ...{ loanVO: this.$data.formData }, // 申请信息
               ...{ 'loanCarVOS': this.$data.carData }, // 车辆信息列表
               ...{ 'loanGuaranteeVOS': this.$data.assureData }, // 担保人信息列表
               ...{ 'loanDocDetailVOS': this.$data.loanData } // 贷款材料列表
-            };
+            };*/
+            this.$data.personalBasicInfo = $.extend(
+              this.$data.member,
+              { loanVO: this.$data.formData },
+              { 'loanCarVOS': this.$data.carData },
+              { 'loanGuaranteeVOS': this.$data.assureData },
+              { 'loanDocDetailVOS': this.$data.loanData }
+            );
             this.$emit('personalData', this.$data.personalBasicInfo);
             resReturn = true;
           } else {

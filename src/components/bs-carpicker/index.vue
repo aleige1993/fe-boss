@@ -71,7 +71,6 @@
           brandNo: val.value,
           seriesName: ''
         });
-        console.log(resp);
         if (resp.success) {
           this.$data.seriesDropList = resp.body.resultList;
         }
