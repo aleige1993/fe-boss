@@ -75,8 +75,8 @@ let MyRouter = new Router({
                 { path: 'cost', name: 'BasicsCost', component: resolve => { require(['@/pages/configuration-manage/manage-product/basics-cost'], resolve) } },
                 // 配置管理-产品配置-准入规则配置
                 { path: 'rule', name: 'BasicsRule', component: resolve => { require(['@/pages/configuration-manage/manage-product/basics-rule'], resolve) } },
-                // 配置管理-产品配置-车辆材料配置
-                { path: 'car', name: 'BasicsCar', component: resolve => { require(['@/pages/configuration-manage/manage-product/basics-car'], resolve) } },
+                // 配置管理-产品配置-放款条件配置
+                { path: 'lending', name: 'BasicsCar', component: resolve => { require(['@/pages/configuration-manage/manage-product/basics-lending'], resolve) } },
                 // 配置管理-产品配置-归档材料配置
                 { path: 'file', name: 'BasicsFile', component: resolve => { require(['@/pages/configuration-manage/manage-product/basics-file'], resolve) } },
                 // 配置管理-产品配置-产品匹配配置

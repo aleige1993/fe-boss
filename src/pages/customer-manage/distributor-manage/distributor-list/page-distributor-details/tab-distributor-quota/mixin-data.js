@@ -3,14 +3,6 @@ export default {
     return {
       distributorColumns: [
         {
-          title: '渠道商编号',
-          key: 'merchantNo'
-        },
-        {
-          title: '公司名称',
-          key: 'corpName'
-        },
-        {
           title: '授信总额度',
           key: 'creditTotalLimit'
         },
@@ -53,36 +45,15 @@ export default {
                 },
                 on: {
                   click: () => {
-                    console.log('corpNo------' + params.row.corpNo);
                     this.$router.push({
-                      path: '/index/customer/distributor/details',
+                      path: '/index/customer/distributor/credit/examine/history',
                       query: {
-                        corpNo: params.row.corpNo,
-                        memberNo: params.row.memberNo,
-                        merchantNo: params.row.merchantNo,
-                        creditList: true,
-                        from: 'detail'
+                        applyNo: params.row.applyNo
                       }
                     });
                   }
                 }
-              }, '详情'),
-              h('i-button', {
-                props: {
-                  type: 'success'
-                },
-                on: {
-                  click: () => {
-                    this.$router.push({
-                      path: '/index/customer/distributor/credit/examine',
-                      query: {
-                        applyNo: params.row.applyNo,
-                        merchantNo: params.row.merchantNo
-                      }
-                    });
-                  }
-                }
-              }, '审核')
+              }, '审核历史')
             ]);
           }
         }

@@ -166,7 +166,7 @@
     },
     methods: {
       search() {
-        this.getPrivateCustomerList();
+        this.getPrivateCustomerList(1);
       },
       junmpPage(page) {
         this.getPrivateCustomerList(page);

@@ -39,6 +39,9 @@ export default [
             'regDate': '2017-12-16', // 注册时间
             'regCapital': '900000', // 注册资金
             'telephone': '02388888888', // 公司电话
+            'creditTotalLimit': '9999999',
+            'currentUsableLimit': '9999999',
+            'singleUsableLimit': '9999999',
             'merchantStatus|1': ['1', '2', '3', '4', '5', '6'], // 授信状态
             'custMgrName': '11111111' // 客户经理编号
           }
@@ -94,6 +97,43 @@ export default [
             'operatorCode|+1': 1111111,
             'operatorType|1': ['1', '2'],
             'operatorStatus|1': ['0', '1']
+          }
+        ],
+        'startIndex': 0,
+        'totalNum': 10,
+        'totalPage': 2
+      },
+      'reCode': '0000',
+      'reMsg': '成功',
+      'success': true
+    })
+  },
+  // 渠道商渠道商授信审核列表
+  {
+    url: '/merchant/credit/auditList',
+    on: true,
+    resp: Mock.mock({
+      'body': {
+        'currentPage': 1,
+        'isMore': 0,
+        'pageSize': 15,
+        'resultList|10': [
+          {
+            'merchantNo|+1': 11111,
+            'applyNo|+1': 1111111,
+            'creditTotalLimit': '',
+            'singleUsableLimit': '',
+            'creditStartDate': '',
+            'creditEndDate': '',
+            'creditReleaseType': '',
+            'applyUserCode': '',
+            'applyUserName': '',
+            'applyTime': '',
+            'applyStatus': '',
+            'gmtCreate': '',
+            'gmtModified': '',
+            'merchantAbbr': '',
+            'corpName': ''
           }
         ],
         'startIndex': 0,

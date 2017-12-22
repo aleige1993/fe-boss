@@ -191,7 +191,6 @@
           merchantStatus: '6'
         });
         msg();
-        console.log(resp);
         if (resp.success) {
           this.$Message.success('冻结成功');
           this.getPrivateCustomerList();
@@ -216,7 +215,6 @@
           currentPage: this.$data.currentPage,
           pageSize: this.$data.pageSize
         });
-        console.log(resp.body.resultList);
         this.$data.clickRow = {};
         this.$data.isClickRow = false;
         this.$data.dataLoading = false;

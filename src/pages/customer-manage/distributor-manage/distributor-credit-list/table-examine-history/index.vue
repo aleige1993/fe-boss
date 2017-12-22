@@ -15,55 +15,37 @@
 </template>
 
 <script>
+  import MixinData from './mixin-data';
   export default {
     name: 'tableExamineHistory',
+    mixins: [MixinData],
     data() {
       return {
-        dataLoading: false,
-        columns1: [
-          {
-            title: '处理人',
-            align: 'center',
-            width: 200,
-            key: 'processing'
-          },
-          {
-            title: '任务节点',
-            key: 'taskNode'
-          },
-          {
-            title: '开始时间',
-            key: 'timeStart'
-          },
-          {
-            title: '结束时间',
-            key: 'timeEnd'
-          },
-          {
-            title: '耗时',
-            key: 'timeLong'
-          },
-          {
-            title: '结论',
-            key: 'conclusion'
-          },
-          {
-            title: '意见信息',
-            key: 'opinion'
-          }
-        ],
-        data1: [
-          {
-            'processing': '处理人01',
-            'taskNode': '节点01',
-            'timeStart': '2017-12-15 9:51',
-            'timeEnd': '2017-12-15 10:00',
-            'timeLong': '9:00',
-            'conclusion': '结论01',
-            'opinion': '意见01'
-          }
-        ]
+        dataLoading: false
       };
+    },
+    mounted() {
+      this.getList();
+    },
+    methods: {
+      // 渠道商授信额度分页查询
+      async getList() {
+        this.$data.dataLoading = true;
+        let resp = await this.$http.post('merchant/credit/approveHistList', {
+          applyNo: this.$route.query.applyNo
+        });
+        console.log(resp);
+        this.$data.dataLoading = false;
+        if (resp.body.resultList.length !== 0) {
+          this.$data.data1 = resp.body.resultList;
+        } else {
+          this.$Notice.warning({
+            title: '没有数据可加载',
+            duration: 2
+          });
+          this.$data.data1 = [];
+        }
+      }
     }
   };
 </script>

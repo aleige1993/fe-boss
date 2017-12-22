@@ -12,36 +12,16 @@
     <i-tabs v-model="tabIndex" :animated="false" type="card">
       <i-tab-pane label="额度信息">
         <i-form ref="formQuota" :model="formQuota" label-position="right" :label-width="120" style="padding: 30px 0;">
-          <!--客户名称-->
-            <!--<i-form-item
-              label="客户名称"
-              :rules="{required: true, message: '客户名称不能为空', trigger: 'blur'}"
-              prop="corpName">
-              <input type="hidden" v-model="formQuota.corpNo"/>
-              <i-input v-model="formQuota.corpName" :readonly="true" placeholder="选择客户">
-                <i-button @click="showSelectCompany=!showSelectCompany" slot="append">选择客户 <Icon type="ios-more"></Icon></i-button>
-              </i-input>
-            </i-form-item>-->
           <i-row>
             <i-col span="8">
-              <i-form-item label="客户名称" prop="corpName">
+              <i-form-item label="客户名称">
                 <span v-text="formQuota.corpName"></span>
               </i-form-item>
             </i-col>
           </i-row>
           <i-row>
             <i-col span="8">
-              <!--客户经理-->
-              <!--<i-form-item
-                label="客户经理"
-                :rules="{required: true, message: '客户经理不能为空', trigger: 'blur'}"
-                prop="custMgrName">
-                <input type="hidden" v-model="formQuota.custMgrName"/>
-                <i-input v-model="formQuota.custMgrName" :readonly="true" placeholder="选择客户经理">
-                  <i-button @click="showSelectEmployer=!showSelectEmployer" slot="append">客户经理 <Icon type="ios-more"></Icon></i-button>
-                </i-input>
-              </i-form-item>-->
-              <i-form-item label="客户经理" prop="custMgrName">
+              <i-form-item label="客户经理">
                 <span v-text="formQuota.custMgrName"></span>
               </i-form-item>
             </i-col>
@@ -51,8 +31,8 @@
             <br>
           <i-row>
             <i-col span="8">
-            <i-form-item label="授信总额度" prop="CreditMoney">
-              <i-input v-model="formQuota.CreditMoney" placeholder="">
+            <i-form-item label="授信总额度" prop="creditTotalLimit">
+              <i-input v-model="formQuota.creditTotalLimit" placeholder="">
                 <span slot="append">元</span>
               </i-input>
             </i-form-item>
@@ -61,8 +41,8 @@
           <i-row>
             <i-col span="8">
           <!--可用额度-->
-            <i-form-item label="可用额度" prop="CreditMoney"><!--currentUsableLimit-->
-              <i-input v-model="formQuota.CreditMoney" :readonly="true" placeholder="">
+            <i-form-item label="可用额度"><!--currentUsableLimit-->
+              <i-input v-model="formQuota.creditTotalLimit" :readonly="true" placeholder="">
                 <span slot="append">元</span>
               </i-input>
             </i-form-item>
@@ -71,8 +51,8 @@
           <i-row>
             <i-col span="8">
           <!--单笔最大额度-->
-            <i-form-item label="单笔最大额度" prop="currentUsableLimit">
-              <i-input v-model="formQuota.currentUsableLimit" placeholder="">
+            <i-form-item label="单笔最大额度" prop="singleUsableLimit">
+              <i-input v-model="formQuota.singleUsableLimit" placeholder="">
                 <!--<span slot="append">元</span>-->
               </i-input>
             </i-form-item>
@@ -81,70 +61,73 @@
           <i-row>
             <i-col span="8">
           <!--授信起始日期-->
-            <i-form-item label="授信起始日期" prop="startDate">
-              <bs-datepicker v-model="formQuota.startDate"></bs-datepicker>
+            <i-form-item label="授信起始日期" prop="creditStartDate">
+              <bs-datepicker v-model="''+formQuota.creditStartDate"></bs-datepicker>
             </i-form-item>
             </i-col>
           </i-row>
           <i-row>
             <i-col span="8">
           <!--授信到期日期-->
-            <i-form-item label="授信到期日期" prop="startDate">
-              <bs-datepicker v-model="formQuota.endDate"></bs-datepicker>
+            <i-form-item label="授信到期日期" prop="creditEndDate">
+              <bs-datepicker v-model="''+formQuota.creditEndDate"></bs-datepicker>
             </i-form-item>
             </i-col>
           </i-row>
           <i-row>
             <i-col span="8">
           <!--额度释放方式-->
-            <i-form-item label="额度释放方式" prop="CreditOpenModel">
-              <i-select v-model="formQuota.CreditOpenModel">
-                <i-option value="1">额度释放方式01</i-option>
-                <i-option value="2">额度释放方式02</i-option>
-                <i-option value="3">额度释放方式03</i-option>
+            <i-form-item label="额度释放方式" prop="creditReleaseType">
+              <i-select v-model="formQuota.creditReleaseType">
+                <i-option v-for="item in enumSelectData.get('CreditReleaseTypeEnum')" :key="item.itemCode" :value="item.itemCode">{{item.itemName}}</i-option>
               </i-select>
             </i-form-item>
             </i-col>
           </i-row>
-          <bs-form-block :title="'审核意见'">
+        </i-form>
+        <bs-form-block :title="'审核意见'">
+          <i-form ref="approveDto" :model="approveDto" label-position="right" :label-width="120">
             <i-row>
-              <i-col span="8">
-                <i-form-item label="处理人" prop="name">
-                  <i-input v-model="formQuota.name" :readonly="true" placeholder="">
+              <!--<i-col span="8">
+                <i-form-item label="处理人" prop="auditUserName">
+                  <i-input v-model="formQuota.auditUserName" :readonly="true" placeholder="">
                   </i-input>
                 </i-form-item>
               </i-col>
               <i-col span="8">
-                <i-form-item label="处理时间" prop="date">
-                  <!--<i-input v-model="formQuota.date" :readonly="true" placeholder="">
-                  </i-input>-->
-                  <bs-datepicker v-model="formQuota.date" type="text" placeholder="申请时间"></bs-datepicker>
+                <i-form-item label="处理时间" prop="auditEndTime">
+                  <bs-datepicker v-model="formQuota.auditEndTime" type="text" placeholder="申请时间"></bs-datepicker>
                 </i-form-item>
-              </i-col>
+              </i-col>-->
               <i-col span="8">
-                <i-form-item label="结论" prop="conclusion" :rules="{required: true, message: '结论不能为空', trigger: 'change'}">
-                  <i-select v-model="formQuota.conclusion">
-                    <i-option value="1">通过</i-option>
-                    <i-option value="2">拒绝</i-option>
-                    <i-option value="3">退回</i-option>
+                <i-form-item label="结论" prop="auditStatus"
+                             :rules="{required: true, message: '结论不能为空', trigger: 'change'}">
+                  <i-select v-model="approveDto.auditStatus">
+                    <i-option v-for="item in enumSelectData.get('ApproveStatusEnum')" :key="item.itemCode" :value="item.itemCode">{{item.itemName}}</i-option>
                   </i-select>
                 </i-form-item>
               </i-col>
+            </i-row>
+            <i-row>
               <i-col span="8">
-                <i-form-item label="意见信息" prop="opinion" :rules="{required: true, message: '意见信息不能为空', trigger: 'blur'}">
-                  <i-input type="textarea" v-model="formQuota.opinion" :rows="2" placeholder="">
+                <i-form-item label="意见信息" prop="auditOpinion" :rules="{required: true, message: '意见信息不能为空', trigger: 'blur'}">
+                  <i-input type="textarea" v-model="approveDto.auditOpinion" :rows="2" placeholder="">
                   </i-input>
                 </i-form-item>
               </i-col>
             </i-row>
-          </bs-form-block>
-          <br>
-          <br>
-          <i-form-item class="text-center">
-            <i-button type="primary" @click="submitFun">提交审核</i-button>
-            <i-button type="ghost" @click="cancelFun" style="margin-left: 8px">取消</i-button>
-          </i-form-item>
-        </i-form>
+          </i-form>
+        </bs-form-block>
+        <br>
+        <br>
+        <div class="text-center">
+          <i-button type="primary" @click="submitFun" :loading="btnLoading">
+            <span v-if="!btnLoading">提交审核</span>
+            <span v-else>正在提交审核...</span>
+          </i-button>
+          <i-button type="ghost" @click="cancelFun" style="margin-left: 8px">取消</i-button>
+        </div>
+
       </i-tab-pane>
       <i-tab-pane label="审核历史信息">
         <table-examine-history if="tabIndex===1"></table-examine-history>
@@ -164,6 +147,7 @@
     data() {
       return {
         tabIndex: 0,
+        btnLoading: false,
         formQuota: {
           corpName: '',
           custMgrName: '',
@@ -172,16 +156,53 @@
           currentUsableLimit: '', // 可用额度（自动带入授信总额度）
           startDate: '', // 授信起始日期
           endDate: '', // 授信起始日期
-          CreditOpenModel: '', // 额度释放方式
-          name: '',
-          date: '',
-          conclusion: ''
+          CreditOpenModel: '' // 额度释放方式
+        },
+        approveDto: {
+          auditStatus: '',
+          auditOpinion: ''
         }
       };
     },
+    mounted() {
+      this.getCreditData();
+    },
     methods: {
+      // 获取渠道商授信申请信息
+      async getCreditData() {
+        let resp = await this.$http.post('merchant/credit/get', {
+          merchantNo: this.$route.query.merchantNo,
+          applyNo: this.$route.query.applyNo
+        });
+        console.log(resp);
+        if (resp.success) {
+          this.$data.formQuota = resp.body;
+        } else {
+          this.$Message.error('获取渠道商授信申请信息失败！');
+        }
+      },
+      // 审核提交
+      async submiting() {
+        this.$data.btnLoading = true;
+        let resp = await this.$http.post('merchant/credit/approveSubmit', {
+          applyDto: this.$data.formQuota,
+          approveDto: this.$data.approveDto
+        });
+        this.$data.btnLoading = false;
+        console.log(resp);
+        if (resp.success) {
+          this.$Message.success('已提交审核');
+          await bsWait(1000);
+          this.$router.push({
+            path: '/index/customer/distributor/credit',
+            query: {
+              currentPage: 1
+            }
+          });
+        }
+      },
       submitFun() {
-        const formName = 'formQuota';
+        const formName = 'approveDto';
         this.$refs[formName].validate((valid) => {
           if (valid) {
             this.submiting();

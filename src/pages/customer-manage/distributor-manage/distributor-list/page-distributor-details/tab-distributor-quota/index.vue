@@ -1,37 +1,32 @@
 <template>
-  <div id="">
-    <i-breadcrumb separator=">">
-      <i-breadcrumb-item href="/">首页</i-breadcrumb-item>
-      <i-breadcrumb-item href="/index/customer/distributor">渠道商管理</i-breadcrumb-item>
-      <i-breadcrumb-item>渠道商授信审核</i-breadcrumb-item>
-    </i-breadcrumb>
-    <div class="form-block-title">
-      公司名称
-    </div>
-    <div class="search-form-container">
-      <i-form inline ref="formSearch" :model="formSearch">
-        <i-form-item prop="user">
-          <i-input v-model="formSearch.corpName" style="width: 240px;" type="text" placeholder="公司名称"></i-input>
-        </i-form-item>
-        <i-form-item>
-          <i-button type="primary"><i-icon type="ios-search-strong" @cilck="search"></i-icon>
+<div id="">
+  <div class="form-block-title">
+    公司名称
+  </div>
+  <div class="search-form-container">
+    <i-form inline ref="formSearch" :model="formSearch">
+      <i-form-item prop="user">
+        <i-input v-model="formSearch.corpName" style="width: 240px;" type="text" placeholder="公司名称"></i-input>
+      </i-form-item>
+      <i-form-item>
+        <i-button type="primary"><i-icon type="ios-search-strong" @cilck="search"></i-icon>
           <span v-if="!searchLoading"> 搜索</span>
           <span v-else> loading</span>
-          </i-button>
-        </i-form-item>
-      </i-form>
-    </div>
-    <i-table :loading="dataLoading" border ref="tableData" :columns="distributorColumns" :data="distributorList"></i-table>
-    <div class="page-container">
-      <i-page @on-change="jumpPage" :total="total" :page-size="pageSize" size="small" show-elevator show-total></i-page>
-    </div>
+        </i-button>
+      </i-form-item>
+    </i-form>
   </div>
+  <i-table :loading="dataLoading" border ref="tableData" :columns="distributorColumns" :data="distributorList"></i-table>
+  <div class="page-container">
+    <i-page @on-change="jumpPage" :total="total" :page-size="pageSize" size="small" show-elevator show-total></i-page>
+  </div>
+</div>
 </template>
+
 <script>
-  import BsModal from '@/components/bs-modal';
   import MixinData from './mixin-data';
   export default {
-    name: '',
+    name: 'tabDistributorQuota',
     mixins: [MixinData],
     data() {
       return {
@@ -46,12 +41,7 @@
       };
     },
     mounted() {
-      // 从新增页面跳转回来，加载之前的指定页码
-      this.$data.currentPage = this.$route.query.currentPage;
       this.getList();
-    },
-    components: {
-      BsModal
     },
     methods: {
       async getList(page) {
@@ -59,7 +49,8 @@
         if (page) {
           this.$data.currentPage = page;
         }
-        let resp = await this.$http.post('merchant/credit/auditList', {
+        let resp = await this.$http.post('merchant/credit/list', {
+          merchantNo: this.$route.query.merchantNo,
           corpName: this.$data.formSearch.corpName, // 公司名称，模糊查询
           currentPage: this.$data.currentPage,
           pageSize: this.$data.pageSize
@@ -88,5 +79,8 @@
     }
   };
 </script>
-<style lang="scss" scoped="">
+
+<!-- Add "scoped" attribute to limit CSS to this component only -->
+<style lang="scss" scoped>
+
 </style>

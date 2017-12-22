@@ -1,11 +1,11 @@
 <template>
-<!--车辆材料配置-->
-  <div id="page-car">
+<!--放款条件配置-->
+  <div id="page-lending">
     <i-breadcrumb separator="&gt;">
       <i-breadcrumb-item href="/">首页</i-breadcrumb-item>
       <i-breadcrumb-item href="/index/conf">配置管理</i-breadcrumb-item>
       <i-breadcrumb-item href="/index/conf/product">产品配置</i-breadcrumb-item>
-      <i-breadcrumb-item>车辆材料配置</i-breadcrumb-item>
+      <i-breadcrumb-item>放款条件配置</i-breadcrumb-item>
     </i-breadcrumb>
     <div class="form-top-actions">
       <i-button @click="addModal" type="info"><i class="iconfont icon-xinzeng"></i>&nbsp;新增</i-button>
@@ -16,8 +16,8 @@
     </div>
     <pt-modal title="新增" v-model="showAddModal">
       <i-form  ref="formCustom" :model="formCustom" label-position="left" :label-width="130">
-        <i-form-item label="车辆材料名称" prop="vehicleDocName">
-          <i-input v-model="formCustom.vehicleDocName" type="textarea" :autosize="{minRows: 2,maxRows: 5}" placeholder="请输入车辆材料名称..."></i-input>
+        <i-form-item label="放款条件名称" prop="vehicleDocName">
+          <i-input v-model="formCustom.vehicleDocName" type="textarea" :autosize="{minRows: 2,maxRows: 5}" placeholder="请输入放款条件名称..."></i-input>
         </i-form-item>
         <i-form-item class="text-right">
           <i-button type="primary" @click="formSubmit" :loading="buttonLoading">
@@ -35,7 +35,7 @@
   import PTModal from '@/components/bs-modal';
   import MixinData from './mixin-data';
   export default {
-    name: 'basicsCar',
+    name: 'basicsLending',
     components: {
       'pt-modal': PTModal
     },
@@ -88,7 +88,7 @@
         });
         this.$data.buttonLoading = false; // 关闭按钮的loading状态
         if (resAdd.success) {
-          this.$Message.success('添加车辆材料成功');
+          this.$Message.success('添加放款条件成功');
           this.$data.showAddModal = false;
           this.getPrivateCustomerList();
         }
@@ -115,7 +115,7 @@
         if (resModify.success) {
           this.$data.showAddModal = false;
           this.$data.buttonLoading = false;
-          this.$Message.success('修改车辆材料成功');
+          this.$Message.success('修改放款条件成功');
           this.getPrivateCustomerList();
         }
       },
@@ -130,7 +130,7 @@
             });
             if (respDel.success) {
               loadingMsg();
-              this.$Message.success('删除车辆材料成功');
+              this.$Message.success('删除放款条件成功');
               let jumpPage = this.$JumpPage.getPageRemove(this.$data.currentPage, this.$data.pageSize, this.$data.total);
               this.getPrivateCustomerList(jumpPage);
             }
@@ -157,7 +157,7 @@
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style lang="scss" scoped>
-  #page-car {
+  #page-lending {
     & .bs-form-block .block-body {
       border: 0;
     }

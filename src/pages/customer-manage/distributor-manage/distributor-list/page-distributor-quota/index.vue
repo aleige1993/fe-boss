@@ -13,15 +13,6 @@
           <!--客户名称-->
           <i-row>
             <i-col span="8">
-              <!--<i-form-item
-                label="客户名称"
-                :rules="{required: true, message: '客户名称不能为空', trigger: 'blur'}"
-                prop="corpName">
-                <input type="hidden" v-model="formQuota.corpNo"/>
-                <i-input v-model="formQuota.corpName" :readonly="true" placeholder="选择客户">
-                  <i-button @click="showSelectCompany=!showSelectCompany" slot="append">选择客户 <Icon type="ios-more"></Icon></i-button>
-                </i-input>
-              </i-form-item>-->
               <i-form-item label="客户名称" prop="corpName">
                 <span v-text="formQuota.corpName"></span>
               </i-form-item>
@@ -30,15 +21,6 @@
           <i-row>
             <!--客户经理-->
             <i-col span="8">
-              <!--<i-form-item
-                label="客户经理"
-                :rules="{required: true, message: '客户经理不能为空', trigger: 'blur'}"
-                prop="custMgrName">
-                <input type="hidden" v-model="formQuota.custMgrName"/>
-                <i-input v-model="formQuota.custMgrName" :readonly="true" placeholder="选择客户经理">
-                  <i-button @click="showSelectEmployer=!showSelectEmployer" slot="append">客户经理 <Icon type="ios-more"></Icon></i-button>
-                </i-input>
-              </i-form-item>-->
               <i-form-item label="客户经理" prop="custMgrName">
                 <span v-text="formQuota.custMgrName"></span>
               </i-form-item>
@@ -49,8 +31,11 @@
           <i-row>
             <i-col span="8">
             <!--授信总额度-->
-              <i-form-item label="授信总额度" prop="CreditMoney">
-                <i-input v-model="formQuota.CreditMoney" placeholder="">
+              <i-form-item
+                :rules="{required: true, message: '授信总额度不能为空', trigger: 'blur'}"
+                label="授信总额度"
+                prop="creditTotalLimit">
+                <i-input v-model="formQuota.creditTotalLimit" placeholder="">
                   <span slot="append">元</span>
                 </i-input>
               </i-form-item>
@@ -59,8 +44,10 @@
           <i-row>
             <!--可用额度-->
             <i-col span="8">
-              <i-form-item label="可用额度" prop="CreditMoney"><!--currentUsableLimit-->
-                <i-input v-model="formQuota.CreditMoney" :readonly="true" placeholder="">
+              <i-form-item
+                label="可用额度"
+                prop="creditTotalLimit">
+                <i-input v-model="formQuota.creditTotalLimit" :readonly="true" placeholder="">
                   <span slot="append">元</span>
                 </i-input>
               </i-form-item>
@@ -69,8 +56,11 @@
           <i-row>
             <!--单笔最大额度-->
             <i-col span="8">
-              <i-form-item label="单笔最大额度" prop="currentUsableLimit">
-                <i-input v-model="formQuota.currentUsableLimit" placeholder="">
+              <i-form-item
+                :rules="{required: true, message: '单笔最大额度不能为空', trigger: 'blur'}"
+                label="单笔最大额度"
+                prop="singleUsableLimit">
+                <i-input v-model="formQuota.singleUsableLimit" placeholder="">
                   <!--<span slot="append">元</span>-->
                 </i-input>
               </i-form-item>
@@ -79,27 +69,36 @@
           <i-row>
             <!--授信起始日期-->
             <i-col span="8">
-              <i-form-item label="授信起始日期" prop="startDate">
-                <bs-datepicker v-model="formQuota.startDate"></bs-datepicker>
+              <i-form-item
+                :rules="{required: true, message: '授信起始日期不能为空', trigger: 'blur'}"
+                label="授信起始日期"
+                prop="creditStartDate">
+                <input type="hidden" v-model="formQuota.creditStartDate">
+                <bs-datepicker v-model="formQuota.creditStartDate"></bs-datepicker>
               </i-form-item>
             </i-col>
           </i-row>
           <i-row>
             <!--授信到期日期-->
             <i-col span="8">
-              <i-form-item label="授信到期日期" prop="startDate">
-                <bs-datepicker v-model="formQuota.endDate"></bs-datepicker>
+              <i-form-item
+                :rules="{required: true, message: '授信到期日期不能为空', trigger: 'blur'}"
+                label="授信到期日期"
+                prop="creditStartDate">
+                <input type="hidden" v-model="formQuota.creditEndDate">
+                <bs-datepicker v-model="formQuota.creditEndDate"></bs-datepicker>
               </i-form-item>
             </i-col>
           </i-row>
           <i-row>
             <!--额度释放方式-->
             <i-col span="8">
-              <i-form-item label="额度释放方式" prop="CreditOpenModel">
-                <i-select v-model="formQuota.CreditOpenModel">
-                  <i-option value="1">额度释放方式01</i-option>
-                  <i-option value="2">额度释放方式02</i-option>
-                  <i-option value="3">额度释放方式03</i-option>
+              <i-form-item
+                :rules="{required: true, message: '请选择额度释放方式', trigger: 'change'}"
+                label="额度释放方式"
+                prop="creditReleaseType"><!--CreditReleaseTypeEnum-->
+                <i-select v-model="formQuota.creditReleaseType">
+                  <i-option v-for="item in enumSelectData.get('CreditReleaseTypeEnum')" :key="item.itemCode" :value="item.itemCode">{{item.itemName}}</i-option>
                 </i-select>
               </i-form-item>
             </i-col>
@@ -109,7 +108,10 @@
               <br>
               <br>
               <i-form-item class="text-right">
-                <i-button type="primary" @click="submitFun">提交审核</i-button>
+                <i-button type="primary" @click="submitFun" :loading="btnLoading">
+                  <span v-if="!btnLoading">提交审核</span>
+                  <span v-else>正在提交审核...</span>
+                </i-button>
                 <i-button type="ghost" @click="cancelFun" style="margin-left: 8px">取消</i-button>
               </i-form-item>
             </i-col>
@@ -117,42 +119,32 @@
         </i-form>
       </i-col>
     </i-row>
-    <!--选择客户的模态框-->
-    <bs-modal :title="'选择客户'" v-model="showSelectCompany" :width="1200">
-      <table-company-list ref="companyTable" type="modal" @on-row-dbclick="selectCompanyRow"></table-company-list>
-    </bs-modal>
-    <!-- 选择客户经理的弹窗 -->
-    <bs-modal title="选择客户经理" :width="1200" v-model="showSelectEmployer">
-      <table-employer-list @on-row-dbclick="selectEmployer"></table-employer-list>
-    </bs-modal>
   </div>
 </template>
 
 <script>
-  import TableEmployerList from '@/components/table-employer-list'; // 选择客户经理
-  import TableCompanyList from '@/components/table-company-customer-list'; // 选择客户列表
+  // import TableEmployerList from '@/components/table-employer-list'; // 选择客户经理
+  // import TableCompanyList from '@/components/table-company-customer-list'; // 选择客户列表
   import BsModal from '@/components/bs-modal';
   export default {
     name: 'pageDistributorQuota',
     components: {
-      BsModal,
-      TableEmployerList,
-      TableCompanyList
+      BsModal
     },
     data() {
       return {
         currentPage: '',
-        showSelectCompany: false,
-        showSelectEmployer: false,
+        btnLoading: false,
         formQuota: {
+          merchantNo: '',
           corpName: '',
           custMgrName: '',
           custMgrNo: '',
-          CreditMoney: '', // 授信总额度
-          currentUsableLimit: '', // 可用额度（自动带入授信总额度）
-          startDate: '', // 授信起始日期
-          endDate: '', // 授信起始日期
-          CreditOpenModel: '' // 额度释放方式
+          creditTotalLimit: '', // 授信总额度 同 可用额度（自动带入授信总额度）
+          singleUsableLimit: '',
+          creditStartDate: '', // 授信起始日期
+          creditEndDate: '', // 授信起始日期
+          creditReleaseType: '' // 额度释放方式
         }
       };
     },
@@ -162,30 +154,34 @@
       this.$data.currentPage = this.$route.query.currentPage;
       this.$data.formQuota.corpName = this.$route.query.corpName;
       this.$data.formQuota.custMgrName = this.$route.query.custMgrName;
+      this.$data.formQuota.merchantNo = this.$route.query.merchantNo;
     },
     methods: {
-      // 选择客户（公司）
-      selectCompanyRow(row, index) {
-        this.$data.formQuota.corpNo = row.corpNo;
-        this.$data.formQuota.corpName = row.corpName;
-        this.$data.showSelectCompany = false;
-      },
-      // 选择客户经理
-      selectEmployer(row, index) {
-        this.$data.formQuota.custMgrNo = row.userCode;
-        this.$data.formQuota.custMgrName = row.userName;
-        this.$data.showSelectEmployer = false;
-      },
       // 审核提交
       async submiting() {
-        this.$Message.success('已提交审核');
-        await bsWait(1000);
-        this.$router.push({
-          path: '/index/customer/distributor',
-          query: {
-            currentPage: 1
-          }
+        this.$data.btnLoading = true;
+        console.log(this.$data.formQuota);
+        // 渠道商授信申请信息新增
+        let resp = await this.$http.post('merchant/credit/add', {
+          merchantNo: this.$data.formQuota.merchantNo,
+          creditTotalLimit: this.$data.formQuota.creditTotalLimit,
+          singleUsableLimit: this.$data.formQuota.singleUsableLimit,
+          creditStartDate: this.$data.formQuota.creditStartDate,
+          creditEndDate: this.$data.formQuota.creditEndDate,
+          creditReleaseType: this.$data.formQuota.creditReleaseType
         });
+        console.log(resp);
+        this.$data.btnLoading = false;
+        if (resp.success) {
+          this.$Message.success('已提交审核');
+          await bsWait(1000);
+          this.$router.push({
+            path: '/index/customer/distributor',
+            query: {
+              currentPage: 1
+            }
+          });
+        }
       },
       // 提交
       submitFun() {

@@ -1,13 +1,13 @@
 <template>
 <!--资方维护-->
   <div id="invest-maintain">
-    <i-breadcrumb separator="&gt;">
+    <i-breadcrumb separator="&gt;" v-if="!isModal">
       <i-breadcrumb-item href="/">首页</i-breadcrumb-item>
       <i-breadcrumb-item href="/index/conf">配置管理</i-breadcrumb-item>
       <i-breadcrumb-item href="/index/conf/invest">资方管理</i-breadcrumb-item>
       <i-breadcrumb-item>资方维护</i-breadcrumb-item>
     </i-breadcrumb>
-    <div class="form-top-actions">
+    <div class="form-top-actions" v-if="!isModal">
       <i-button @click="addModal" type="info"><i class="iconfont icon-xinzeng"></i> 新增</i-button>
     </div>
 
@@ -41,6 +41,7 @@
     data() {
       return {
         isAdd: true,
+        isModal: false,
         dataLoading: false,
         showUserMoadl: false,
         pageSize: 15,
@@ -56,8 +57,10 @@
     computed: {
       resultColumns() {
         if (this.type === 'modal') {
+          this.$data.isModal = true;
           return this.$data.columns1;
         } else {
+          this.$data.isModal = false;
           return [...this.$data.columns1, ...this.$data.columnsFeatureActionColumns];
         }
       }
