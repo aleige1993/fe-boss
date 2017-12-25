@@ -144,7 +144,7 @@
             <i-row>
               <i-col span="8">
                 <i-form-item label="证件类型">
-                  <span v-text="formData.baseDTO.legalPersonCerttype"></span>
+                  <span v-text="enumCode2Name(formData.baseDTO.legalPersonCerttype, 'CertTypeEnum')"></span>
                 </i-form-item>
               </i-col>
               <i-col span="8">

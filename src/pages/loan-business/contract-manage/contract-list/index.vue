@@ -5,7 +5,8 @@
       <i-breadcrumb-item href="/">首页</i-breadcrumb-item>
       <i-breadcrumb-item href="/index/loanbusiness">贷款业务</i-breadcrumb-item>
       <i-breadcrumb-item href="/index/loanbusiness/contract">签约管理</i-breadcrumb-item>
-      <i-breadcrumb-item>合同制作</i-breadcrumb-item>
+      <i-breadcrumb-item v-if="!isDetails">合同制作</i-breadcrumb-item>
+      <i-breadcrumb-item v-else>合同复核</i-breadcrumb-item>
     </i-breadcrumb>
     <i-row>
       <i-col span="24">
@@ -70,7 +71,16 @@
         }
       };
     },
+    props: {
+      isDetails: {
+        type: Boolean,
+        default: false
+      }
+    },
     mounted() {
+      if (this.$route.query.currentPage) {
+        this.$data.currentPage = this.$route.query.currentPage;
+      }
       this.getList();
     },
     methods: {
@@ -104,8 +114,10 @@
       // 打开合同制作模态框
       openMakingModal(row) {
         this.$router.push({
+          currentPage: this.$data.currentPage,
           path: '/index/loanbusiness/contract/making',
           query: {
+            isDetails: this.isDetails,
             loanNo: row.loanNo // 项目编号（业务申请编号）
           }
         });

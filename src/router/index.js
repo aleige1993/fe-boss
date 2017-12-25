@@ -148,7 +148,9 @@ let MyRouter = new Router({
                 // 贷款业务-签约管理->合同制作列表
                 { path: '/', name: 'loanContractMakingList', component: resolve => require(['@/pages/loan-business/contract-manage/contract-list'], resolve)},
                 // 贷款业务-签约管理->个人业务合同制作
-                { path: 'making', name: 'loanContractMakingTab', component: resolve => require(['@/pages/loan-business/contract-manage/contract-making-tab'], resolve)}
+                { path: 'making', name: 'loanContractMakingTab', component: resolve => require(['@/pages/loan-business/contract-manage/contract-making-tab'], resolve)},
+                // 贷款业务-签约管理->合同复核
+                { path: 'againExamine', name: 'againExamine', component: resolve => require(['@/pages/loan-business/contract-manage/contract-again-examine'], resolve)},
               ]}
           ]
         }

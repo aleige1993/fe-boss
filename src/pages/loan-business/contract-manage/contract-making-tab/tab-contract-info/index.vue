@@ -29,7 +29,7 @@
         </i-col>
         <i-col span="8">
           <i-form-item label="证件类型">
-            <span v-text="contractInfoForm.certType"></span>
+            <span v-text="enumCode2Name(contractInfoForm.certType, 'CertTypeEnum')"></span>
           </i-form-item>
         </i-col>
         <i-col span="8">
@@ -76,7 +76,7 @@
         </i-col>
         <i-col span="8">
           <i-form-item label="车辆用途">
-            <span v-text="approveCredit.carUse"></span>
+            <span v-text="enumCode2Name(approveCredit.carUse, 'CarUseTypeEnum')"></span>
           </i-form-item>
         </i-col>
       </i-row>
@@ -110,7 +110,7 @@
         </i-col>
         <i-col span="8">
           <i-form-item label="还款方式">
-            <span v-text="approveCredit.repaymentMode"></span>
+            <span v-text="enumCode2Name(approveCredit.repaymentMode, 'RepaymentTypeEnum')"></span>
           </i-form-item>
         </i-col>
       </i-row>
@@ -187,24 +187,38 @@
       <i-row>
         <i-col span="4">
           <i-form-item
+            v-if="!$route.query.isDetails"
             :rules="{required: true, message: '请选择合同开始日期', trigger: 'change'}"
             prop="startDate"
             label="合同开始日期">
             <bs-datepicker v-model="contractInfo.startDate"></bs-datepicker>
           </i-form-item>
+          <i-form-item
+            v-else
+            prop="startDate"
+            label="合同开始日期">
+            <span v-text="contractInfo.startDate"></span>
+          </i-form-item>
         </i-col>
         <i-col span="4">
           <i-form-item
+            v-if="!$route.query.isDetails"
             :rules="{required: true, message: '请选择合同结束日期', trigger: 'change'}"
             prop="endDate"
             label="合同结束日期">
             <bs-datepicker v-model="contractInfo.endDate"></bs-datepicker>
           </i-form-item>
+          <i-form-item
+            v-else
+            prop="endDate"
+            label="合同结束日期">
+            <span v-text="contractInfo.endDate"></span>
+          </i-form-item>
         </i-col>
       </i-row>
     </i-form>
     <div class="form-top-actions" style="padding-top:0;">
-      <i-button @click="contractGenerating" type="info"><i class="iconfont icon-xinzeng"></i> 生成合同</i-button>
+      <i-button v-if="!$route.query.isDetails" @click="contractGenerating" type="info"><i class="iconfont icon-xinzeng"></i> 生成合同</i-button>
     </div>
     <i-table border :loading="contractInfoListLoading" ref="contractInfoTable" :columns="contractInfoColumns" :data="contractInfoData">
     </i-table>
@@ -216,9 +230,7 @@
         <i-col span="8">
           <i-form-item label="结论" prop="approveStatus" :rules="{required: true, message: '结论不能为空', trigger: 'change'}">
             <i-select v-model="loanApprove.approveStatus">
-              <i-option value="1">通过</i-option>
-              <i-option value="2">拒绝</i-option>
-              <i-option value="3">退回</i-option>
+              <i-option v-for="item in enumSelectData.get('ApproveStatusEnum')" :key="item.itemCode" :value="item.itemCode">{{item.itemName}}</i-option>
             </i-select>
           </i-form-item>
         </i-col>
@@ -241,7 +253,15 @@
   export default {
     name: 'tabContractInfo',
     mixins: [MixinData],
-    props: ['CreateRepayPlan'],
+    props: {
+      CreateRepayPlan: {
+        type: Object,
+        default: {
+          isCapital: false,
+          isRental: false
+        }
+      }
+    },
     data() {
       return {
         carListLoading: false, // 车辆表loading
@@ -269,7 +289,6 @@
       };
     },
     async mounted() {
-      // console.log(this.CreateRepayPlan); // isCapital(资金方)，isRental(租金方)，
       let loanNo = await this.$route.query.loanNo;
       this.$data.contractInfoForm.loanNo = loanNo;
       await this.getfindContractApproveInfo(); //  获取合同信息详情
@@ -286,7 +305,6 @@
           loanNo: this.$data.contractInfoForm.loanNo
         });
         this.$data.contractInfo = this.$data.contractInfoForm.contractInfo; // 合同详情信息-合同信息
-        // this.$data.loanApprove = this.$data.contractInfoForm.loanApprove; // 审核意见
         if (resp.success) {
           this.$data.contractInfoForm = resp.body;
           if (this.$data.contractInfoForm.contractInfo.loanContractFileList.length !== 0) {
@@ -317,8 +335,8 @@
         });
         this.$data.guaPersonListLoading = false;
         if (resp.success) {
-          if (resp.body.resultList.length !== 0) {
-            this.$data.feeTakeData = resp.body.resultList;
+          if (resp.body.length !== 0) {
+            this.$data.feeTakeData = resp.body;
           } else {
             this.$Notice.warning({
               title: '个人贷款费用收取方案列表没有数据可加载',
@@ -373,10 +391,10 @@
           if (valid) {
             // console.log(this.CreateRepayPlan); // isCapital(资金方)，isRental(租金方)，
             if (!this.CreateRepayPlan.isCapital) {
-              this.$Message.error('请先生成资金方还款计划');
+              this.$Message.error('请生成资金方还款计划');
               return;
             } else if (!this.CreateRepayPlan.isRental) {
-              this.$Message.error('请先生成租金方还款计划');
+              this.$Message.error('请生成租金方还款计划');
               return;
             }
             alert('生成合同');
@@ -384,6 +402,19 @@
             this.$Message.error('"<span style="color: red">*</span>"必填项不能为空');
           }
         });
+      },
+      // 点击提交审核 通过父组件来通知此事件触发
+      loanApproveSumbit() {
+        let returnRef = null;
+        const formName = 'loanApprove';
+        this.$refs[formName].validate((valid) => {
+          if (valid) {
+            returnRef = this.$data.loanApprove;
+          } else {
+            this.$Message.error('合同信息中审核意见的“结论”和“意见信息”项不能为空');
+          }
+        });
+        return returnRef;
       }
     }
   };

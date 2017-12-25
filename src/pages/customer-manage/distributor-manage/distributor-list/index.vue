@@ -5,30 +5,16 @@
       <i-breadcrumb-item href="/index/customer/distributor">渠道商管理</i-breadcrumb-item>
       <i-breadcrumb-item>渠道商列表</i-breadcrumb-item>
     </i-breadcrumb>
-    <div class="form-block-title">
-      客户信息
-    </div>
-    <div class="search-form-container">
-      <i-form inline ref="formSearch" :model="formSearch">
-        <i-form-item prop="corpName">
-          <i-input style="width: 240px;" type="text" placeholder="公司名称" v-model="formSearch.corpName"></i-input>
-        </i-form-item>
-        <i-form-item>
-          <i-button @click="searchSubmit" type="primary"><i-icon type="ios-search-strong"></i-icon> 搜索</i-button>
-        </i-form-item>
-      </i-form>
-    </div>
-    <div class="form-top-actions">
-      <i-button type="info" @click="openAddDistributorModal"><i class="iconfont icon-xinzeng"></i> 新增</i-button>
-      <i-button type="info" @click="openCarModal"><i class="iconfont icon-xinzeng"></i> 车型管理</i-button>
-      <i-button type="info" @click="openQuotaModal"><i class="iconfont icon-xinzeng"></i> 额度管理</i-button>
-      <i-button type="info" @click="openOperatorModal"><i class="iconfont icon-xinzeng"></i> 操作员管理</i-button>
-      <i-button v-show="isClickRow" @click="handleClearCurrentRow" type="text"><i-icon type="android-cancel" class="button-cancel"></i-icon> 取消当前选中状态</i-button>
-    </div>
-    <i-table :loading="dataLoading" highlight-row border ref="distributorTable" :columns="distributorColumns" :data="distributorList" @on-current-change="radioFun"></i-table>
-    <div class="page-container">
-      <i-page @on-change="jumpPage" :total="total" :page-size="pageSize" size="small" show-elevator show-total></i-page>
-    </div>
+    <!--渠道商列表公共组件-->
+    <table-distributor-list :type="'page'" ref="tableDistributorList" @on-radio-fun="radioFun" @on-cancel-clickRow="isClickRow = false" @on-set-row="setRow" @on-row-dbclick="selectRow">
+      <div class="form-top-actions"  slot="topAction">
+        <i-button type="info" @click="openAddDistributorModal"><i class="iconfont icon-xinzeng"></i> 新增</i-button>
+        <i-button type="info" @click="openCarModal"><i class="iconfont icon-xinzeng"></i> 车型管理</i-button>
+        <i-button type="info" @click="openQuotaModal"><i class="iconfont icon-xinzeng"></i> 额度管理</i-button>
+        <i-button type="info" @click="openOperatorModal"><i class="iconfont icon-xinzeng"></i> 操作员管理</i-button>
+        <i-button v-show="isClickRow" @click="handleClearCurrentRow" type="text"><i-icon type="android-cancel" class="button-cancel"></i-icon> 取消当前选中状态</i-button>
+      </div>
+    </table-distributor-list>
     <!--新增修改模态框-->
     <bs-modal :title="isAdd ? '新增' : '修改'" v-model="showAddModal" :width="600">
       <i-form v-if="showAddModal" ref="formAdd" :model="formAdd" label-position="right" :label-width="120" style="padding: 30px 0;">
@@ -73,25 +59,6 @@
           </i-col>
         </i-row>
         <i-row>
-          <!--<i-col>
-            <i-form-item label="渠道商LOGO"
-                         prop="logoUrl">
-              <input type="hidden" v-model="formAdd.logoUrl"/>
-              <i-upload
-                type="drag"
-                :on-success="uploadSuccess"
-                :on-error="uploadError"
-                :action="$config.HTTPBASEURL+'/common/upload'"
-                style="display: inline-block;width:150px;"
-                :show-upload-list="false">
-                <div style="padding: 20px 20px" v-if="!formAdd.logoUrl||formAdd.logoUrl===''">
-                  <Icon type="ios-cloud-upload" size="52" style="color: #3399ff"></Icon>
-                  <p style="line-height: 16px">点击选择文件或者拖放文件到这里</p>
-                </div>
-                <img v-if="formAdd.logoUrl!==''"  width="150" height="150" :src="formAdd.logoUrl" title="点击重新上传">
-              </i-upload>
-            </i-form-item>
-          </i-col>-->
           <i-col>
             <i-form-item
               label="渠道商简称"
@@ -123,11 +90,10 @@
 </template>
 <script>
   import TableCompanyCustomerList from '@/components/table-company-customer-list';
+  import tableDistributorList from '@/components/table-distributor-list';
   import BsModal from '@/components/bs-modal';
-  import MixinData from './mixin-data';
   export default {
     name: '',
-    mixins: [MixinData],
     data() {
       return {
         showAddModal: false,
@@ -175,67 +141,17 @@
         pageSize: 15
       };
     },
-    mounted() {
-      this.getPrivateCustomerList();
-    },
     components: {
       BsModal,
+      tableDistributorList,
       TableCompanyCustomerList
     },
     methods: {
-      // 冻结
-      async congeal(row) {
-        const msg = this.$Message.loading('正在冻结...', 0);
-        let resp = await this.$http.get('merchant/statusMerchant', {
-          merchantNo: row.merchantNo,
-          merchantStatus: '6'
-        });
-        msg();
-        if (resp.success) {
-          this.$Message.success('冻结成功');
-          this.getPrivateCustomerList();
-        } else {
-          this.$Message.error('冻结失败');
-        }
-      },
       // 选择客户
       selectCompanyRow(row, index) {
         this.$data.formAdd.corpNo = row.corpNo;
         this.$data.formAdd.corpName = row.corpName;
         this.$data.showSelectCompany = false;
-      },
-      // 查询列表数据
-      async getPrivateCustomerList(page) {
-        this.$data.dataLoading = true;
-        if (page) {
-          this.$data.currentPage = page;
-        }
-        let resp = await this.$http.post('merchant/listMerchant', {
-          corpName: this.$data.formSearch.corpName, // 公司名称，模糊查询
-          currentPage: this.$data.currentPage,
-          pageSize: this.$data.pageSize
-        });
-        this.$data.clickRow = {};
-        this.$data.isClickRow = false;
-        this.$data.dataLoading = false;
-        if (resp.body.resultList.length !== 0) {
-          this.$data.distributorList = resp.body.resultList;
-          this.$data.currentPage = resp.body.currentPage;
-          this.$data.total = resp.body.totalNum;
-        } else {
-          this.$Notice.warning({
-            title: '没有数据可加载',
-            duration: 2
-          });
-          this.$data.distributorList = [];
-        }
-      },
-      // 模糊查询
-      searchSubmit() {
-        this.getPrivateCustomerList();
-      },
-      jumpPage(page) {
-        this.getPrivateCustomerList(page);
       },
       // 新增
       async submitSuccess() {
@@ -251,22 +167,11 @@
           this.getPrivateCustomerList();
         }
       },
-      // 删除
-      async remove(row) {
-        Alertify.confirm('确定要删除吗？', async (ok) => {
-          if (ok) {
-            const loadingMsg = this.$Message.loading('删除中...', 0);
-            let respDel = await this.$http.get('merchant/deleteMerchant', {
-              merchantNo: row.merchantNo
-            });
-            loadingMsg();
-            if (respDel.success) {
-              this.$Message.success('删除成功');
-              let jumpPage = this.$JumpPage.getPageRemove(this.$data.currentPage, this.$data.pageSize, this.$data.total);
-              this.getPrivateCustomerList(jumpPage);
-            }
-          }
-        });
+      // 修改
+      setRow(row) {
+        this.$data.isAdd = false;
+        this.$data.showAddModal = true;
+        this.$data.formAdd = row;
       },
       // 提交
       submitFun() {
@@ -293,8 +198,8 @@
           desc: err
         });
       },
-      // 单选每一行时出触发
-      radioFun(currentRow, oldCurrentRow) {
+      // 子组件通知 单选了每一行
+      radioFun(currentRow) {
         this.$data.clickRow = currentRow;
         if (JSON.stringify(this.$data.clickRow) === '{}') {
           this.$data.isClickRow = false;
@@ -303,7 +208,7 @@
       },
       // 取消选中行的选中状态
       handleClearCurrentRow() {
-        this.$refs.distributorTable.clearCurrentRow();
+        this.$refs.tableDistributorList.handleClearCurrentRow();
         this.$data.isClickRow = false;
         this.$data.clickRow = {};
       },
@@ -361,7 +266,9 @@
             }
           });
         }
-      }
+      },
+      // 双击时的回调 （此页面用不到此功能）
+      selectRow(row, index) {}
     }
   };
 </script>

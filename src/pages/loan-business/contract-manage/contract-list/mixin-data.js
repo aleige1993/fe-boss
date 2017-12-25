@@ -90,7 +90,7 @@ export default {
                     this.openMakingModal($.extend({}, params.row));
                   }
                 }
-              }, '合同制作')
+              }, this.isDetails ? '合同复核' : '合同制作')
             ]);
           }
         }

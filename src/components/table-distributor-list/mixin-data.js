@@ -64,7 +64,9 @@ export default {
           render: (h, params) => {
             return h('span', {}, this.enumCode2Name(params.row.merchantStatus, 'MerchantStatusEnum'));
           }
-        },
+        }
+      ],
+      columnsFeatureActionColumns: [
         {
           title: '操作',
           width: 260,
@@ -97,9 +99,7 @@ export default {
                 },
                 on: {
                   click: () => {
-                    this.$data.isAdd = false;
-                    this.$data.showAddModal = true;
-                    this.$data.formAdd = params.row;
+                    this.$emit('set-row', params.row);
                   }
                 }
               }, '修改'),
