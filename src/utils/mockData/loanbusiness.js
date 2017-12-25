@@ -97,6 +97,17 @@ export default [
       'success': true
     })
   },
+  // 设置当前处理人
+  {
+    url: '/biz/sign/settingHandleUser',
+    on: true,
+    resp: Mock.mock({
+      'body': {},
+      'reCode': '0000',
+      'reMsg': '成功',
+      'success': true
+    })
+  },
   // 签约管理-合同制作列表
   {
     url: '/biz/sign/page',

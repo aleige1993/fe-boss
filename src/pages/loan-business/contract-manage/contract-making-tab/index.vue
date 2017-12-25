@@ -153,7 +153,6 @@
           loanNo: this.$data.loanNo
         });
         this.$data.rentPlanCapitalListLoading = false;
-        console.log(resp);
         if (resp.success) {
           resp.body.haiLeXingAccount && (this.$data.formApproval = resp.body.haiLeXingAccount);
           if (resp.body.repayPlanRentalList.length !== 0) {

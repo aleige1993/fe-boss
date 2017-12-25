@@ -84,6 +84,17 @@
       this.getList();
     },
     methods: {
+      // 设置当前处理人
+      async settingHandleUser(row) {
+        let resp = await this.$http.post('/biz/sign/settingHandleUser', {
+          signNo: row.signNo
+        });
+        if (resp.success) {
+          return true;
+        } else {
+          return false;
+        }
+      },
       // 查询列表数据
       async getList(page) {
         this.$data.dataLoading = true;
@@ -95,6 +106,7 @@
           pageSize: this.$data.pageSize,
           ...this.$data.formSearch
         });
+        console.log(resp);
         this.$data.dataLoading = false;
         if (resp.body.resultList.length !== 0) {
           this.$data.data1 = resp.body.resultList;

@@ -93,7 +93,7 @@
         </i-col>
         <i-col span="8">
           <i-form-item label="借款用途">
-            <span v-text="approveCredit.loanRealUse"></span>
+            <span v-text="enumCode2Name(approveCredit.loanRealUse, 'LoanApplyUseEnum')"></span>
           </i-form-item>
         </i-col>
       </i-row>
@@ -127,7 +127,7 @@
         </i-col>
         <i-col span="8">
           <i-form-item label="运营模式">
-            <span v-text="approveCredit.operatingMode"></span>
+            <span v-text="enumCode2Name(approveCredit.operatingMode, 'OperatingModeEnum')"></span>
           </i-form-item>
         </i-col>
       </i-row>
@@ -229,9 +229,9 @@
       <i-row>
         <i-col span="8">
           <i-form-item label="结论" prop="approveStatus" :rules="{required: true, message: '结论不能为空', trigger: 'change'}">
-            <i-select v-model="loanApprove.approveStatus">
-              <i-option v-for="item in enumSelectData.get('ApproveStatusEnum')" :key="item.itemCode" :value="item.itemCode">{{item.itemName}}</i-option>
-            </i-select>
+            <i-radio-group v-model="loanApprove.approveStatus">
+              <i-radio v-for="item in enumSelectData.get('ApproveStatusEnum')" :label="item.itemName" :key="item.itemCode" :value="item.itemCode" style="margin-right: 20px; margin-top: -5px"></i-radio>
+            </i-radio-group>
           </i-form-item>
         </i-col>
       </i-row>
