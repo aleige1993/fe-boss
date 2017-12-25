@@ -69,7 +69,20 @@ export default {
           }
         }
       ],
-      loanData: []
+      loanData: [
+        /* {
+          'loanDocCode': '',
+          'loanDocName': '',
+          'status': '',
+          'docDetailAttachList': [
+            {
+              'loanDocCode': '',
+              'attachName': '',
+              'attachUrl': ''
+            }
+          ]
+        }*/
+      ]
     };
   }
 };

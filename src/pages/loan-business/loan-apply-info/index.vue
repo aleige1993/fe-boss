@@ -440,7 +440,8 @@
       <i-form ref="formAssure" :model="formAssure" label-position="right" :label-width="100">
         <i-row>
           <i-col span="12">
-            <i-form-item label="担保人类型" prop="guaPersonType">
+            <i-form-item label="担保人类型" prop="guaPersonType"
+                         :rules="{required: true, message: '请选择担保人类型'}">
               <i-select v-model="formAssure.guaPersonType">
                 <i-option value="1">个人</i-option>
                 <i-option value="2">企业</i-option>
@@ -448,7 +449,8 @@
             </i-form-item>
           </i-col>
           <i-col span="12">
-            <i-form-item label="保证人" prop="guaPersonName">
+            <i-form-item :label="formAssure.guaPersonType==''? '':'保证人'" prop="guaPersonName"
+              :rules="{required: true, message: '请选择担保人'}">
               <input type="hidden" v-model="formAssure.guaPersonCertNo" placeholder=""/>
               <input type="hidden" v-model="formAssure.guaPersonNo" placeholder=""/>
               <input type="hidden" v-model="formAssure.guaPersonName"/>
@@ -458,6 +460,20 @@
               <i-input v-if="formAssure.guaPersonType=='2'" v-model="formAssure.guaPersonName" :readonly="true" placeholder="选择企业保证人">
                 <i-button @click="showSelectCompanyGua=!showSelectCompanyGua" slot="append">选择企业保证人 <Icon type="ios-more"></Icon></i-button>
               </i-input>
+            </i-form-item>
+          </i-col>
+        </i-row>
+        <i-row>
+          <i-col span="12">
+            <i-form-item label="证件类型" prop="guaPersonType">
+              <i-select :disabled="true" v-model="formAssure.guaPersonCertType">
+                <i-option v-for="item in enumSelectData.get('CertTypeEnum')" :key="item.itemCode" :value="item.itemCode">{{item.itemName}}</i-option>
+              </i-select>
+            </i-form-item>
+          </i-col>
+          <i-col span="12">
+            <i-form-item label="证件号码" prop="guaPersonName">
+              <i-input :readonly="true" v-model="formAssure.guaPersonCertNo" placeholder=""></i-input>
             </i-form-item>
           </i-col>
         </i-row>
@@ -475,6 +491,13 @@
               <i-select v-model="formAssure.relation">
                 <i-option v-for="item in enumSelectData.get('RelativeEnum')" :key="item.itemCode" :value="item.itemCode">{{item.itemName}}</i-option>
               </i-select>
+            </i-form-item>
+          </i-col>
+        </i-row>
+        <i-row>
+          <i-col span="12">
+            <i-form-item label="联系电话" prop="guaPersonType">
+              <i-input :readonly="true" v-model="formAssure.guaPersonMobile"></i-input>
             </i-form-item>
           </i-col>
         </i-row>
@@ -541,7 +564,7 @@
 </template>
 
 <script>
-  import LoanFileList from '../../../loan-file-list/index.vue';
+  import LoanFileList from '../loan-file-list/index.vue';
   import TableCustomerList from '@/components/table-customer-list'; // 选择客户列表
   import TableCompanyCustomerList from '@/components/table-company-customer-list'; // 选择客户列表
   import GetProductModal from '@/pages/configuration-manage/manage-product/product-list'; // 选择产品
@@ -570,7 +593,12 @@
       LoanFileList
     },
     props: {
-      customerType: String
+      customerType: String,
+      loanAction: {
+        type: String,
+        required: false,
+        default: 'apply' // 'preApprove'; 'firstStageApprove'; 'secondStageApprove'; 'detail'
+      }
     },
     data() {
       return {};
@@ -593,12 +621,16 @@
       selectGuaRow(row, index) {
         // console.log(row);
         this.$data.formAssure.guaPersonCertNo = row.certNo;
+        this.$data.formAssure.guaPersonCertType = row.certType;
+        this.$data.formAssure.guaPersonMobile = row.mobile;
         this.$data.formAssure.guaPersonNo = row.memberNo;
         this.$data.formAssure.guaPersonName = row.name;
         this.$data.showSelectGua = false;
       },
       selectCompanyGuaRow(row, index) {
         this.$data.formAssure.guaPersonCertNo = row.creditCode;
+        this.$data.formAssure.guaPersonCertType = '3';
+        this.$data.formAssure.guaPersonMobile = row.telephone;
         this.$data.formAssure.guaPersonNo = row.corpNo;
         this.$data.formAssure.guaPersonName = row.corpName;
         this.$data.showSelectCompanyGua = false;

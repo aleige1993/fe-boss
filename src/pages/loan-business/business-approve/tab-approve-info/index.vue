@@ -4,27 +4,15 @@
       <i-col span="24">
         <i-form label-position="right" ref="busApproveForm" :model="approveData" :label-width="140">
           <bs-form-block :title="'贷款准入规则'">
-            <i-table :columns="accessRuleCol" :data="approveData.accessRuleList"></i-table>
+            <i-table :columns="accessRuleCol" :data="approveData.loanApproveRuleDTOS"></i-table>
           </bs-form-block>
           <bs-form-block :title="'初审信息'">
-            <i-row>
-              <i-col span="8">
-                <i-form-item label="网审情况">
-                  <i-input v-model="approveData.firstTrialParam.netApprove"></i-input>
-                </i-form-item>
-              </i-col>
-              <i-col span="8">
-                <i-form-item label="电核情况">
-                  <i-input v-model="approveData.firstTrialParam.telephoneApprove"></i-input>
-                </i-form-item>
-              </i-col>
-            </i-row>
             <i-row>
               <i-col span="24">
                 <div class="form-top-actions">
                   <i-button type="primary" @click="firstApproveForm = {} ; addFirstApproveModal = !addFirstApproveModal">添加初审信息</i-button>
                 </div>
-                <i-table :columns="firstApproveColumns" :data="approveData.firstTrialParam.creditCheckItemsList"></i-table>
+                <i-table :columns="firstApproveColumns" :data="approveData.loanApproveFirstDTOS"></i-table>
               </i-col>
             </i-row>
           </bs-form-block>
@@ -33,23 +21,16 @@
               <i-col span="8">
                 <i-form-item class="required" label="匹配产品" prop="product"
                              :rules="{required: true, message: '请选择匹配产品'}">
-                  <i-select v-model="approveData.product">
+                  <input type="text" :value="approveData.loanApproveCreditDTO.productNo">
+                  <i-select v-model="approveData.loanApproveCreditDTO.productName">
                     <i-option>啊啊啊</i-option>
                   </i-select>
                 </i-form-item>
               </i-col>
               <i-col span="8">
-                <i-form-item class="required" label="匹配期限" prop="product"
-                             :rules="{required: true, message: '请选择匹配期限'}">
-                  <i-select v-model="approveData.product">
-                    <i-option>啊啊啊</i-option>
-                  </i-select>
-                </i-form-item>
-              </i-col>
-              <i-col span="8">
-                <i-form-item class="required" label="匹配额度" prop="product"
-                             :rules="{required: true, message: '请选择匹配额度'}">
-                  <i-select v-model="approveData.product">
+                <i-form-item class="required" label="运营模式" prop="product"
+                             :rules="{required: true, message: '请选择运营模式'}">
+                  <i-select v-model="approveData.loanApproveCreditDTO.operatingMode">
                     <i-option>啊啊啊</i-option>
                   </i-select>
                 </i-form-item>
@@ -57,104 +38,93 @@
             </i-row>
             <i-row>
               <i-col span="8">
-                <i-form-item class="required" label="*单笔最高授信额度" prop="product"
-                             :rules="{required: true, message: '请输入单笔最高授信额度'}">
-                  <i-input v-model="approveData.product">
-                    <span slot="append">元</span>
-                  </i-input>
-                </i-form-item>
-              </i-col>
-              <i-col span="8">
-                <i-form-item class="required" label="单户最高授信额度" prop="product"
-                             :rules="{required: true, message: '请输入单户最高授信额度'}">
-                  <i-input v-model="approveData.product">
-                    <span slot="append">元</span>
-                  </i-input>
-                </i-form-item>
-              </i-col>
-              <i-col span="8">
-                <i-form-item class="required" label="审批额度" prop="product"
+                <i-form-item class="required" label="*审批额度" prop="approveLimitAmt"
                              :rules="{required: true, message: '请输入审批额度'}">
-                  <i-input v-model="approveData.product">
+                  <i-input v-model="approveData.loanApproveCreditDTO.approveLimitAmt">
                     <span slot="append">元</span>
                   </i-input>
                 </i-form-item>
               </i-col>
-            </i-row>
-            <i-row>
+              <i-col span="8">
+                <i-form-item class="required" label="贷款期限" prop="product"
+                             :rules="{required: true, message: '请选择贷款期限'}">
+                  <i-select v-model="approveData.loanApproveCreditDTO.loanPeriods">
+                    <i-option v-for="item in enumSelectData.get('DutyEnum')" :key="item.itemCode" :value="item.itemCode">{{item.itemName}}</i-option>
+                  </i-select>
+                </i-form-item>
+              </i-col>
               <i-col span="8">
                 <i-form-item class="required" label="还款方式" prop="product"
-                             :rules="{required: true, message: '请输入还款方式'}">
-                  <i-input v-model="approveData.product">
-                    <span slot="append">元</span>
-                  </i-input>
-                </i-form-item>
-              </i-col>
-              <i-col span="8">
-                <i-form-item class="required" label="我方名义利率" prop="product"
-                             :rules="{required: true, message: '请输入我方名义利率'}">
-                  <i-input v-model="approveData.product">
-                    <span slot="append">%/年</span>
-                  </i-input>
-                </i-form-item>
-              </i-col>
-              <i-col span="8">
-                <i-form-item class="required" label="我方实际利率" prop="product"
-                             :rules="{required: true, message: '请输入我方实际利率'}">
-                  <i-input v-model="approveData.product">
-                    <span slot="append">%/年</span>
-                  </i-input>
+                             :rules="{required: true, message: '请选择还款方式'}">
+                  <i-select v-model="approveData.loanApproveCreditDTO.repaymentMode">
+                    <i-option v-for="item in enumSelectData.get('RepaymentTypeEnum')" :key="item.itemCode" :value="item.itemCode">{{item.itemName}}</i-option>
+                  </i-select>
                 </i-form-item>
               </i-col>
             </i-row>
             <i-row>
+              <i-col span="8">
+                <i-form-item class="required" label="产品利率" prop="product"
+                             :rules="{required: true, message: '请输入产品利率'}">
+                  <i-input v-model="approveData.loanApproveCreditDTO.loanNominalRate"></i-input>
+                </i-form-item>
+              </i-col>
+              <i-col span="8">
+                <i-form-item class="required" label="定收利率" prop="product"
+                             :rules="{required: true, message: '请输入定收利率'}">
+                  <i-input v-model="approveData.loanApproveCreditDTO.loanRealRate">
+                    <span slot="append">%/年</span>
+                  </i-input>
+                </i-form-item>
+              </i-col>
               <i-col span="8">
                 <i-form-item class="required" label="放款方式" prop="product"
                              :rules="{required: true, message: '请输入放款方式'}">
-                  <i-input v-model="approveData.product">
-                    <span slot="append">元</span>
-                  </i-input>
-                </i-form-item>
-              </i-col>
-              <i-col span="8">
-                <i-form-item class="required" label="客户名义利率" prop="product"
-                             :rules="{required: true, message: '请输入客户名义利率'}">
-                  <i-input v-model="approveData.product">
-                    <span slot="append">%/年</span>
-                  </i-input>
-                </i-form-item>
-              </i-col>
-              <i-col span="8">
-                <i-form-item class="required" label="客户实际利率" prop="product"
-                             :rules="{required: true, message: '请输入客户实际利率'}">
-                  <i-input v-model="approveData.product">
-                    <span slot="append">%/年</span>
-                  </i-input>
+                  <i-select v-model="approveData.loanApproveCreditDTO.loanMode">
+                    <i-option v-for="item in enumSelectData.get('LoanModeEnum')" :key="item.itemCode" :value="item.itemCode">{{item.itemName}}</i-option>
+                  </i-select>
                 </i-form-item>
               </i-col>
             </i-row>
             <i-row>
               <i-col span="8">
-                <i-form-item class="required" label="是否海乐行垫付" prop="product"
-                             :rules="{required: true, message: '请选择是否海乐行垫付'}">
-                  <i-select v-model="approveData.product">
-                    <i-option value="1">是</i-option>
-                    <i-option value="1">否</i-option>
+                <i-form-item class="required" label="贷款实际用途" prop="product"
+                             :rules="{required: true, message: '请输入贷款实际用途'}">
+                  <i-input v-model="approveData.loanApproveCreditDTO.loanRealUse"></i-input>
+                </i-form-item>
+              </i-col>
+              <i-col span="8">
+                <i-form-item class="required" label="贷款申报用途" prop="product"
+                             :rules="{required: true, message: '请输入贷款申报用途'}">
+                  <i-select v-model="approveData.loanApproveCreditDTO.loanApplyUse">
+                    <i-option v-for="item in enumSelectData.get('LoanApplyUseEnum')" :key="item.itemCode" :value="item.itemCode">{{item.itemName}}</i-option>
                   </i-select>
                 </i-form-item>
               </i-col>
               <i-col span="8">
-                <i-form-item class="required" label="贷款用途" prop="product"
-                             :rules="{required: true, message: '请选择贷款用途' }">
-                  <i-select v-model="approveData.product">
-                    <i-option>啊啊啊</i-option>
+                <i-form-item class="required" label="利率模式" prop="product"
+                             :rules="{required: true, message: '请选择利率模式'}">
+                  <i-select v-model="approveData.loanApproveCreditDTO.interestType">
+                    <i-option v-for="item in enumSelectData.get('DutyEnum')" :key="item.itemCode" :value="item.itemCode">{{item.itemName}}</i-option>
+                  </i-select>
+                </i-form-item>
+              </i-col>
+            </i-row>
+            <i-row>
+              <i-col span="8">
+                <i-form-item class="required" label="车辆保险费" prop="product"
+                             :rules="{required: true, message: '请选择车辆保险费'}">
+                  <i-select v-model="approveData.loanApproveCreditDTO.carInsurance">
+                    <i-option v-for="item in enumSelectData.get('DutyEnum')" :key="item.itemCode" :value="item.itemCode">{{item.itemName}}</i-option>
                   </i-select>
                 </i-form-item>
               </i-col>
               <i-col span="8">
-                <i-form-item class="required" label="GPS数量" prop="product"
-                             :rules="{required: true, message: '请输入GPS数量'}">
-                  <i-input v-model="approveData.product"></i-input>
+                <i-form-item class="required" label="盗抢险" prop="product"
+                             :rules="{required: true, message: '请选择盗抢险' }">
+                  <i-select v-model="approveData.loanApproveCreditDTO.dqxInsurance">
+                    <i-option v-for="item in enumSelectData.get('DutyEnum')" :key="item.itemCode" :value="item.itemCode">{{item.itemName}}</i-option>
+                  </i-select>
                 </i-form-item>
               </i-col>
             </i-row>
@@ -162,7 +132,7 @@
               <i-col span="16">
                 <i-form-item class="required" label="风控措施" prop="product"
                              :rules="{required: true, message: '请输入风控措施'}">
-                  <i-input type="textarea" :rows="4" v-model="approveData.product"></i-input>
+                  <i-input type="textarea" :rows="4" v-model="approveData.loanApproveCreditDTO.riskControlContent"></i-input>
                 </i-form-item>
               </i-col>
             </i-row>
@@ -175,7 +145,7 @@
             <i-row>
               <i-col span="8">
                 <i-form-item label="结论">
-                  <i-radio-group v-model="approveData.creditAuditParam.approveStatus">
+                  <i-radio-group v-model="approveData.loanApproveDTO.result">
                     <i-radio label="A">通过</i-radio>
                     <i-radio label="R">拒绝</i-radio>
                     <i-radio label="B">退回</i-radio>
@@ -186,7 +156,7 @@
             <i-row>
               <i-col span="24">
                 <i-form-item label="意见信息">
-                  <i-input type="textarea" v-model="approveData.creditAuditParam.opinion" :rows="4"></i-input>
+                  <i-input type="textarea" v-model="approveData.loanApproveDTO.opinion" :rows="4"></i-input>
                 </i-form-item>
               </i-col>
             </i-row>
@@ -198,8 +168,8 @@
     <!--添加初审信息的弹窗-->
     <bs-modal v-model="addFirstApproveModal" :width="520" title="添加初审信息">
       <i-form :label-width="80" ref="addFirstApproveForm" :model="firstApproveForm">
-        <i-form-item label="第三方网站名称" prop="itemName"
-                     :rules="{required: true, message: '请输入第三方网站名称'}">
+        <i-form-item label="查询渠道" prop="itemName"
+                     :rules="{required: true, message: '请输入查询渠道'}">
           <i-input v-model="firstApproveForm.itemName"></i-input>
         </i-form-item>
         <i-form-item label="查询描述" prop="description"
@@ -246,6 +216,7 @@
     methods: {
       uploadFirstApproveFileSuccess(res) {
         this.$set(this.$data.firstApproveForm, 'fileUrl', res.body.url);
+        this.$set(this.$data.firstApproveForm, 'fileName', res.body.fileName);
         // this.$data.firstApproveForm.fileUrl = res.body.url;
       },
       submitFirstApprove() {

@@ -6,15 +6,15 @@ export default {
       accessRuleCol: [
         {
           title: '准入规则',
-          key: 'rulename'
+          key: 'loanApproveName'
         },
         {
           title: '系统筛查意见',
-          key: 'approveInfo'
+          key: 'sysProcessOpinion'
         },
         {
           title: '初审意见',
-          key: 'approveRsult',
+          key: 'status',
           render: (h, params) => {
             return h('i-select', {
               on: {
@@ -47,7 +47,7 @@ export default {
       ],
       firstApproveColumns: [
         {
-          title: '第三方网站名称',
+          title: '查询渠道',
           key: 'itemName'
         },
         {
@@ -135,28 +135,74 @@ export default {
         }
       ],
       approveData: {
-        product: '',
-        // 准入规则
-        accessRuleList: [
+        // 贷款准入规则
+        'loanApproveRuleDTOS': [
           {
-            rulename: 'aaa',
-            approveInfo: 'Fdsdsf',
-            approveRsult: 'fsdfsdfsd'
+            'loanApproveCode': '1',
+            'loanApproveName': '1',
+            'sysProcessOpinion': '1',
+            'status': '1'
           }
         ],
         // 初审信息
-        firstTrialParam: {
-          netApprove: '',
-          telephoneApprove: '',
-          creditCheckItemsList: []
-        },
-        // 审批信息
-        creditAuditParam: {
-          approveStatus: '',
-          opinion: ''
+        'loanApproveFirstDTOS': [
+          {
+            'approveDesc': '',
+            'approveWebsite': '',
+            'resultPath': '',
+            'resultFileName': ''
+          }
+        ],
+        // 用信方案
+        'loanApproveCreditDTO': {
+          'loanPeriods': '',
+          'loanRealRate': '',
+          'capitalNo': '',
+          'loanNominalRate': '',
+          'productName': '',
+          'capitalName': '',
+          'interestType': '',
+          'carInsurance': '',
+          'approveLimitAmt': '',
+          'dqxInsurance': '',
+          'loanApplyUse': '',
+          'productNo': '',
+          'loanRealUse': '',
+          'operatingMode': '',
+          'riskControlContent': '',
+          'remark': '',
+          'repaymentMode': '',
+          'loanMode': ''
         },
         // 费用收取方案
-        feeMethodList: []
+        'loanApproveFeePlanDTOS': [
+          {
+            'feeId': '',
+            'feeAmt': '',
+            'feeName': '',
+            'feeTakeType': '',
+            'feePercent': '',
+            'feeActualAmt': '',
+            'remark': '',
+            'feeCountType': ''
+          }
+        ],
+        // 审核意见
+        'loanApproveDTO': {
+          'result': '',
+          'opinion': ''
+        },
+        // 放款账户
+        'loanApproveAccountDTOS': [
+          {
+            'acctFlag': '',
+            'acctName': '',
+            'acctNo': '',
+            'bankCode': '',
+            'bankName': '',
+            'openBankName': ''
+          }
+        ]
       }
     };
   }
