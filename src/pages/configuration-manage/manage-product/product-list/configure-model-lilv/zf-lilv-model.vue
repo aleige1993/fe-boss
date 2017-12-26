@@ -37,7 +37,7 @@
     </bs-model>
     <!--选择资方的弹窗-->
     <bs-modal title="选择资方" :width="1200" v-model="showSelectCapital">
-      <table-capital-list type="modal" v-if="showSelectCapital" @on-row-dbclick="selectCapital"></table-capital-list>
+      <table-invest-list type="modal" v-if="showSelectCapital" ref="tableInvestList" @on-row-dbclick="selectCapital"></table-invest-list>
     </bs-modal>
   </div>
 </template>
@@ -45,12 +45,12 @@
 <script>
   import BSModal from '@/components/bs-modal';
   import MixinData from './zf-lilv-model-Mixin-data';
-  import GetCapitalModal from '@/pages/configuration-manage/manage-invest/maintain'; // 选择资方
+  import TableInvestList from '@/components/table-invest-list'; // 选择资方
   export default {
     name: 'zfLilvModel',
     components: {
       'bs-model': BSModal,
-      'table-capital-list': GetCapitalModal
+      TableInvestList
     },
     props: {
       zfMsg: Object

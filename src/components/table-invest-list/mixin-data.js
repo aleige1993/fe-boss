@@ -35,7 +35,7 @@ export default {
                 },
                 on: {
                   click: () => {
-                    this.setListZf($.extend({}, params.row));
+                    this.$emit('on-set-row', $.extend({}, params.row));
                   }
                 }
               }, '修改'),
@@ -49,7 +49,8 @@ export default {
                 },
                 on: {
                   click: () => {
-                    this.removeZf($.extend({}, params.row));
+                    let jumpPage = this.$JumpPage.getPageRemove(this.$data.currentPage, this.$data.pageSize, this.$data.total);
+                    this.$emit('on-remove-row', $.extend({}, params.row), jumpPage);
                   }
                 }
               }, '删除'),
@@ -63,7 +64,7 @@ export default {
                 },
                 on: {
                   click: () => {
-                    this.showUser($.extend({}, params.row));
+                    this.$emit('on-show-userModal', $.extend({}, params.row));
                   }
                 }
               }, '账户信息')

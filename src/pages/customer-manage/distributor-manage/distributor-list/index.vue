@@ -7,7 +7,7 @@
     </i-breadcrumb>
     <!--渠道商列表公共组件-->
     <table-distributor-list :type="'page'" ref="tableDistributorList" @on-radio-fun="radioFun" @on-cancel-clickRow="isClickRow = false" @on-set-row="setRow" @on-row-dbclick="selectRow">
-      <div class="form-top-actions"  slot="topAction">
+      <div class="form-top-actions" slot="topAction">
         <i-button type="info" @click="openAddDistributorModal"><i class="iconfont icon-xinzeng"></i> 新增</i-button>
         <i-button type="info" @click="openCarModal"><i class="iconfont icon-xinzeng"></i> 车型管理</i-button>
         <i-button type="info" @click="openQuotaModal"><i class="iconfont icon-xinzeng"></i> 额度管理</i-button>
