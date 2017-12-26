@@ -18,7 +18,7 @@
         </i-form-item>
         <i-form-item prop="password">
           <i-select style="width: 120px;" v-model="searchForm.certType" placeholder="证件类型">
-            <i-option v-for="item in certTypeEnum" :value="item.itemCode" :key="item.itemCode">{{item.itemName}}</i-option>
+            <i-option v-for="item in enumSelectData.get('CertTypeEnum')" :key="item.itemCode" :value="item.itemCode">{{item.itemName}}</i-option>
           </i-select>
         </i-form-item>
         <i-form-item prop="password">

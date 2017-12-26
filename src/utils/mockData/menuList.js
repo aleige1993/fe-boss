@@ -89,6 +89,12 @@ export default [
                   { name: '合同制作', url: '/index/loanbusiness/contract' },
                   { name: '合同复核', url: '/index/loanbusiness/contract/againExamine' }
                 ]
+              },
+              { name: '放款管理',
+                url: '/index/loanbusiness/loan',
+                childMenus: [
+                  { name: '放款申请', url: '/index/loanbusiness/loan' }
+                ]
               }
             ]
           },
