@@ -356,6 +356,13 @@ export default {
       this.$data.isHasFromData = true;
     }
   },
+  watch: {
+    'memberNo'() {
+      if (typeof this.memberNo !== 'undefined' && this.memberNo !== '') {
+        this.initFormData(this.memberNo);
+      }
+    }
+  },
   async mounted() {
     // 如果有id，初始化页面数据
     if (typeof this.memberNo !== 'undefined' && this.memberNo !== '') {

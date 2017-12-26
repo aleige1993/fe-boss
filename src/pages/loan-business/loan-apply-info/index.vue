@@ -440,7 +440,8 @@
       <i-form ref="formAssure" :model="formAssure" label-position="right" :label-width="100">
         <i-row>
           <i-col span="12">
-            <i-form-item label="担保人类型" prop="guaPersonType">
+            <i-form-item label="担保人类型" prop="guaPersonType"
+                         :rules="{required: true, message: '请选择担保人类型'}">
               <i-select v-model="formAssure.guaPersonType">
                 <i-option value="1">个人</i-option>
                 <i-option value="2">企业</i-option>
@@ -448,7 +449,8 @@
             </i-form-item>
           </i-col>
           <i-col span="12">
-            <i-form-item label="保证人" prop="guaPersonName">
+            <i-form-item :label="formAssure.guaPersonType==''? '':'保证人'" prop="guaPersonName"
+              :rules="{required: true, message: '请选择担保人'}">
               <input type="hidden" v-model="formAssure.guaPersonCertNo" placeholder=""/>
               <input type="hidden" v-model="formAssure.guaPersonNo" placeholder=""/>
               <input type="hidden" v-model="formAssure.guaPersonName"/>
@@ -458,6 +460,20 @@
               <i-input v-if="formAssure.guaPersonType=='2'" v-model="formAssure.guaPersonName" :readonly="true" placeholder="选择企业保证人">
                 <i-button @click="showSelectCompanyGua=!showSelectCompanyGua" slot="append">选择企业保证人 <Icon type="ios-more"></Icon></i-button>
               </i-input>
+            </i-form-item>
+          </i-col>
+        </i-row>
+        <i-row>
+          <i-col span="12">
+            <i-form-item label="证件类型" prop="guaPersonType">
+              <i-select :disabled="true" v-model="formAssure.guaPersonCertType">
+                <i-option v-for="item in enumSelectData.get('CertTypeEnum')" :key="item.itemCode" :value="item.itemCode">{{item.itemName}}</i-option>
+              </i-select>
+            </i-form-item>
+          </i-col>
+          <i-col span="12">
+            <i-form-item label="证件号码" prop="guaPersonName">
+              <i-input :readonly="true" v-model="formAssure.guaPersonCertNo" placeholder=""></i-input>
             </i-form-item>
           </i-col>
         </i-row>
@@ -475,6 +491,13 @@
               <i-select v-model="formAssure.relation">
                 <i-option v-for="item in enumSelectData.get('RelativeEnum')" :key="item.itemCode" :value="item.itemCode">{{item.itemName}}</i-option>
               </i-select>
+            </i-form-item>
+          </i-col>
+        </i-row>
+        <i-row>
+          <i-col span="12">
+            <i-form-item label="联系电话" prop="guaPersonType">
+              <i-input :readonly="true" v-model="formAssure.guaPersonMobile"></i-input>
             </i-form-item>
           </i-col>
         </i-row>
@@ -541,7 +564,7 @@
 </template>
 
 <script>
-  import LoanFileList from '../../../loan-file-list/index.vue';
+  import LoanFileList from '../loan-file-list/index.vue';
   import TableCustomerList from '@/components/table-customer-list'; // 选择客户列表
   import TableCompanyCustomerList from '@/components/table-company-customer-list'; // 选择客户列表
   import GetProductModal from '@/pages/configuration-manage/manage-product/product-list'; // 选择产品
@@ -549,6 +572,7 @@
   import companyCustomerInfo from '@/components/detail-company-customer-basic/index.vue';
   import BsModal from '@/components/bs-modal';
   import MixinData from './mixin-data';
+  import MixinMethods from './mixin-methods';
   import carMixinData from './car-mixin-data';
   import carMixinMethods from './car-mixin-methods';
   import assureMixinData from './assure-mixin-data';
@@ -558,7 +582,7 @@
   import BsCarpicker from '@/components/bs-carpicker';
   export default {
     name: 'loanAcceptBasicInfo',
-    mixins: [MixinData, carMixinData, carMixinMethods, assureMixinData, assureMixinMethods, loanMixinData, loanMixinMethods],
+    mixins: [MixinData, MixinMethods, carMixinData, carMixinMethods, assureMixinData, assureMixinMethods, loanMixinData, loanMixinMethods],
     components: {
       TableCustomerList,
       TableCompanyCustomerList,
@@ -570,124 +594,26 @@
       LoanFileList
     },
     props: {
-      customerType: String
+      customerType: String,
+      applyBasicInfo: {
+        type: Object,
+        required: false,
+        default: null
+      },
+      loanAction: {
+        type: String,
+        required: false,
+        default: 'apply' // 'preApprove'; 'firstStageApprove'; 'secondStageApprove'; 'detail'
+      }
     },
     data() {
       return {};
     },
-    mounted() {},
+    mounted() {
+      this.initPage();
+    },
     methods: {
-      // 选择权利人
-      selectObligeeRow(row, index) {
-        // console.log(row);
-        this.$data.formCar.carOwnerName = row.name;
-        this.$data.formCar.carOwnerNo = row.memberNo;
-        this.$data.showSelectObligee = false;
-      },
-      selectCompanyOwnerRow(row, index) {
-        this.$data.formCar.carOwnerName = row.corpName;
-        this.$data.formCar.carOwnerNo = row.corpNo;
-        this.$data.showSelectCompanyOwner = false;
-      },
-      // 选择担保人
-      selectGuaRow(row, index) {
-        // console.log(row);
-        this.$data.formAssure.guaPersonCertNo = row.certNo;
-        this.$data.formAssure.guaPersonNo = row.memberNo;
-        this.$data.formAssure.guaPersonName = row.name;
-        this.$data.showSelectGua = false;
-      },
-      selectCompanyGuaRow(row, index) {
-        this.$data.formAssure.guaPersonCertNo = row.creditCode;
-        this.$data.formAssure.guaPersonNo = row.corpNo;
-        this.$data.formAssure.guaPersonName = row.corpName;
-        this.$data.showSelectCompanyGua = false;
-      },
-      selectCompany(company) {
-        // console.log(company);
-        this.$data.formData.corpNo = company.corpNo;
-        this.$data.formData.corpName = company.corpName;
-        this.$data.formData.certType = '';
-        this.$data.formData.certNo = '';
-        this.$data.formData.custManagerNo = company.custMgrNo;
-        this.$data.formData.custManagerName = company.custMgrName;
-        this.$data.formData.deptNo = company.bizDepartmentCode;
-        this.$data.formData.deptName = company.bizDepartmentName;
-        this.$data.formData.deptCooperationStartDate = company.joinStartDate;
-      },
-      // 接收姓名组件的客户信息
-      getMember(CertData) {
-        // console.log(CertData);
-        this.$data.member = CertData;
-        if (CertData.mbMemberDTO) {
-          this.$data.formData.memberNo = CertData.mbMemberDTO['memberNo'];
-          this.$data.formData.memberName = CertData.mbMemberDTO.name;
-          this.$data.formData.certType = CertData.mbMemberDTO.certType;
-          this.$data.formData.certNo = CertData.mbMemberDTO.certNo;
-          this.$data.formData.custManagerNo = CertData.mbMemberDTO.custMgrNo;
-          this.$data.formData.custManagerName = CertData.mbMemberDTO.custMgrName;
-          this.$data.formData.deptNo = CertData.mbMemberDTO.bizDepartmentCode;
-          this.$data.formData.deptName = CertData.mbMemberDTO.bizDepartmentName;
-          this.$data.formData.deptCooperationStartDate = CertData.mbMemberDTO.joinStartDate;
-        }
-      },
-      // 选择产品
-      async selectProduct(row, index) {
-        this.$data.formData.productNo = row.productNo;
-        this.$data.formData.productName = row.productName;
-        this.$data.formData.productType = row.productType;
-        this.$data.showSelectProduct = false;
-        let resp = await this.$http.get('/pms/product/loanDocList', {
-          productNo: row.productNo
-        });
-        if (resp.success) {
-          this.$data.loanData = resp.body.map(item => {
-            return {
-              loanDocCode: item.loanDocCode,
-              loanDocName: item.loanDocName,
-              status: '',
-              docDetailAttachList: []
-            };
-          });
-        }
-      },
-      verification() {
-        let formName = 'formData';
-        let resReturn = false;
-        this.$refs[formName].validate((valid) => {
-          if (valid) {
-            if (
-              (typeof this.$data.member.mbMemberDTO === 'undefined' || this.$data.member.mbMemberDTO.memberNo === '') &&
-              (typeof this.$data.formData.corpNo === 'undefined' || this.$data.formData.corpNo === '')
-            ) {
-              this.$Message.error('请先选择一个客户', 2);
-              return;
-            }
-            this.$data.formData.custType = this.customerType;
 
-            /* this.$data.personalBasicInfo = {
-              ...this.$data.member, // 客户信息（选择姓名得出）
-              ...{ loanVO: this.$data.formData }, // 申请信息
-              ...{ 'loanCarVOS': this.$data.carData }, // 车辆信息列表
-              ...{ 'loanGuaranteeVOS': this.$data.assureData }, // 担保人信息列表
-              ...{ 'loanDocDetailVOS': this.$data.loanData } // 贷款材料列表
-            };*/
-            this.$data.personalBasicInfo = $.extend(
-              this.$data.member,
-              { loanVO: this.$data.formData },
-              { 'loanCarVOS': this.$data.carData },
-              { 'loanGuaranteeVOS': this.$data.assureData },
-              { 'loanDocDetailVOS': this.$data.loanData }
-            );
-            this.$emit('personalData', this.$data.personalBasicInfo);
-            resReturn = true;
-          } else {
-            this.$Message.error('<span style="color: red">*</span>项不能为空');
-            resReturn = false;
-          }
-        });
-        return resReturn;
-      }
     }
   };
 </script>

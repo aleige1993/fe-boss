@@ -84,7 +84,11 @@
         }
       },
       getFileSuffix(fileUrl) {
-        return fileUrl.substring(fileUrl.lastIndexOf('.') + 1);
+        if (fileUrl) {
+          return fileUrl.substring(fileUrl.lastIndexOf('.') + 1);
+        } else {
+          return '';
+        }
       },
       isImg(fileUrl) {
         let suffix = this.getFileSuffix(fileUrl);

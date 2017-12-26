@@ -20,6 +20,18 @@ export default {
           key: 'guaPersonName'
         },
         {
+          title: '证件类型',
+          key: 'guaPersonCertType'
+        },
+        {
+          title: '证件号码',
+          key: 'guaPersonCertNo'
+        },
+        {
+          title: '联系电话',
+          key: 'guaPersonMobile'
+        },
+        {
           title: '担保方式',
           key: 'guaType',
           render: (h, params) => {
