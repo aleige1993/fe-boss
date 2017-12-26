@@ -176,7 +176,7 @@ export default [
         'signNo': '',
         'custName': 'mockjs数据 999999',
         'merchantName': '',
-        'certNo': '',
+        'certNo': /^[1-9]\d{5}(18|19|([23]\d))\d{2}((0[1-9])|(10|11|12))(([0-2][1-9])|10|20|30|31)\d{3}[0-9Xx]$/,
         'loanAccount': {
           'loanAcctNo': '',
           'loanAcctName': 'mockjs数据 999999',
@@ -370,6 +370,37 @@ export default [
     on: true,
     resp: Mock.mock({
       'body': {},
+      'reCode': '0000',
+      'reMsg': '成功',
+      'success': true
+    })
+  },
+  // 放款管理-放款申请列表
+  {
+    url: '/loanApplyListMock',
+    on: true,
+    resp: Mock.mock({
+      'body': {
+        'currentPage': 1,
+        'pageSize': 10,
+        'totalNum': 20,
+        'resultList|20': [
+          {
+            'loanNo': '111111',
+            'custName': 'mockjs',
+            'certType|1': ['1', '2'],
+            'certNo': /^[1-9]\d{5}(18|19|([23]\d))\d{2}((0[1-9])|(10|11|12))(([0-2][1-9])|10|20|30|31)\d{3}[0-9Xx]$/,
+            'productName': '@name',
+            'loanPeriods': ['3', '6', '12', '18', '24'],
+            'loanAmt|1000-100000': 1000,
+            'applyTime': '@date()',
+            'endDate': '@date()',
+            'taskArriveTime': '@date()',
+            'timeConsuming': '@time',
+            'taskNode': '1'
+          }
+        ]
+      },
       'reCode': '0000',
       'reMsg': '成功',
       'success': true
