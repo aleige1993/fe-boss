@@ -11,7 +11,7 @@
 #### 事件
 - on-close : 关闭当前窗口的回掉 
 #### 范例
-~~~
+```
 <pt-modal title="添加产品" @on-close="modalClose" v-model="showAddModal" :width="600" :zIndex="200">
   <!--下面是slot内容-->
   <Form ref="formValidate" label-position="left" :label-width="80">
@@ -27,4 +27,4 @@
     </FormItem>
   </Form>
 </pt-modal>
-~~~
+```
