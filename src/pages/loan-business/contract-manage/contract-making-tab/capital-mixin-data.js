@@ -52,7 +52,7 @@ export default {
       ],
       loanCapitalData: [],
       // 资金方还款计划表
-      capitalPlanCapitalColumns: [
+      repayPlanCapitalColumns: [
         {
           title: '应还款日',
           width: 170,
@@ -72,9 +72,9 @@ export default {
           key: 'repayTotalAmt'
         }
       ],
-      capitalPlanCapitalData: [],
-      // 租金还款计划表
-      rentPlanCapitalColumns: [
+      repayPlanCapitalList: [],
+      // 租金方还款计划表
+      repayPlanRentalColumns: [
         {
           title: '应还款日',
           width: 170,
@@ -94,7 +94,7 @@ export default {
           key: 'repayTotalAmt'
         }
       ],
-      rentPlanCapitalData: []
+      repayPlanRentalList: []
     };
   }
 };

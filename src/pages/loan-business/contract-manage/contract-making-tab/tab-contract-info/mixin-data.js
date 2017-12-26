@@ -74,7 +74,7 @@ export default {
         }
       ],
       guaPersonData: [],
-      // 担保信息表
+      // 费用收取表
       feeTakeColumns: [
         {
           title: '费用项目代码',
@@ -87,7 +87,7 @@ export default {
           key: 'feeName'
         },
         {
-          title: '收取方式',
+          title: '计算方式',
           key: 'feeTakeType'
         },
         {
@@ -118,6 +118,8 @@ export default {
         },
         {
           title: '操作',
+          align: 'center',
+          width: '120',
           render: (h, params) => {
             return h('div', [
               h('Button', {
@@ -130,23 +132,10 @@ export default {
                 },
                 on: {
                   click: () => {
-                    alert('点击了预览');
-                    // window.open(params.row.attachUrl, '_blank');
+                    window.open(params.row.makeContractUrl, '_blank');
                   }
                 }
-              }, '预览'),
-              h('Button', {
-                props: {
-                  type: 'primary',
-                  size: 'small'
-                },
-                on: {
-                  click: () => {
-                    alert('点击了下载');
-                    // window.open(params.row.attachUrl, '_blank');
-                  }
-                }
-              }, '下载')
+              }, '预览 / 下载')
             ]);
           }
         }

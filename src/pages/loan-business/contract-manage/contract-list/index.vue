@@ -4,7 +4,7 @@
     <i-breadcrumb separator=">">
       <i-breadcrumb-item href="/">首页</i-breadcrumb-item>
       <i-breadcrumb-item href="/index/loanbusiness">贷款业务</i-breadcrumb-item>
-      <i-breadcrumb-item href="/index/loanbusiness/contract">签约管理</i-breadcrumb-item>
+      <i-breadcrumb-item :href="!isDetails?'/index/loanbusiness/contract':'/index/loanbusiness/contract/againExamine'">签约管理</i-breadcrumb-item>
       <i-breadcrumb-item v-if="!isDetails">合同制作</i-breadcrumb-item>
       <i-breadcrumb-item v-else>合同复核</i-breadcrumb-item>
     </i-breadcrumb>
@@ -106,7 +106,6 @@
           pageSize: this.$data.pageSize,
           ...this.$data.formSearch
         });
-        console.log(resp);
         this.$data.dataLoading = false;
         if (resp.body.resultList.length !== 0) {
           this.$data.data1 = resp.body.resultList;
@@ -130,7 +129,9 @@
           path: '/index/loanbusiness/contract/making',
           query: {
             isDetails: this.isDetails,
-            loanNo: row.loanNo // 项目编号（业务申请编号）
+            loanNo: row.loanNo, // 项目编号（业务申请编号）
+            certNo: row.certNo, // 证件号码
+            custNo: row.custNo // 客户编号
           }
         });
       }

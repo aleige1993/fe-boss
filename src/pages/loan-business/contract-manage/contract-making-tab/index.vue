@@ -4,8 +4,8 @@
     <i-breadcrumb separator=">">
       <i-breadcrumb-item href="/">首页</i-breadcrumb-item>
       <i-breadcrumb-item href="/index/loanbusiness">贷款业务</i-breadcrumb-item>
-      <i-breadcrumb-item href="/index/loanbusiness/contract">签约管理</i-breadcrumb-item>
-      <i-breadcrumb-item v-if="!$route.query.isDetails">个人业务合同制作</i-breadcrumb-item>
+      <i-breadcrumb-item :href="!isDetails?'/index/loanbusiness/contract':'/index/loanbusiness/contract/againExamine'">签约管理</i-breadcrumb-item>
+      <i-breadcrumb-item v-if="!isDetails">个人业务合同制作</i-breadcrumb-item>
       <i-breadcrumb-item v-else>个人业务合同复核</i-breadcrumb-item>
     </i-breadcrumb>
     <br>
@@ -23,9 +23,9 @@
           <!--资金方还款计划表-->
           <bs-form-block :title="'资金方还款计划表'">
             <div class="form-top-actions" style="padding-top:0;">
-              <i-button v-if="!$route.query.isDetails" @click="capitalGenerating" type="info"><i class="iconfont icon-xinzeng"></i> 生成还款计划</i-button>
+              <i-button v-if="!isDetails" @click="capitalGenerating" type="info"><i class="iconfont icon-xinzeng"></i> 生成还款计划</i-button>
             </div>
-            <i-table border :loading="capitalPlanCapitalListLoading" ref="capitalTable" :columns="capitalPlanCapitalColumns" :data="capitalPlanCapitalData">
+            <i-table border :loading="capitalPlanCapitalListLoading" ref="capitalTable" :columns="repayPlanCapitalColumns" :data="repayPlanCapitalList">
             </i-table>
           </bs-form-block>
         </div>
@@ -57,9 +57,9 @@
           <!--租金还款计划表-->
           <bs-form-block :title="'租金还款计划表'">
             <div class="form-top-actions" style="padding-top:0;">
-              <i-button v-if="!$route.query.isDetails" @click="rentGenerating" type="info"><i class="iconfont icon-xinzeng"></i> 生成还款计划</i-button>
+              <i-button v-if="!isDetails" @click="rentGenerating" type="info"><i class="iconfont icon-xinzeng"></i> 生成还款计划</i-button>
             </div>
-            <i-table border :loading="rentPlanCapitalListLoading" ref="rentTable" :columns="rentPlanCapitalColumns" :data="rentPlanCapitalData">
+            <i-table border :loading="rentPlanCapitalListLoading" ref="rentTable" :columns="repayPlanRentalColumns" :data="repayPlanRentalList">
             </i-table>
           </bs-form-block>
         </div>
@@ -71,7 +71,7 @@
     <div class="form-footer-actions">
       <i-button @click="saveSubimt" :loading="initFormLoading" type="success">
         <span v-if="!initFormLoading"><i class="iconfont icon-tijiao"></i>
-        <span v-if="!$route.query.isDetails"> 提交</span>
+        <span v-if="!isDetails"> 提交</span>
         <span v-else> 提交审核</span>
         </span>
         <span v-else> loading...</span>
@@ -93,6 +93,7 @@
     data() {
       return {
         loanNo: '',
+        isDetails: false,
         isCapital: false,
         isRental: false,
         tabIndex: 0,
@@ -109,6 +110,11 @@
       };
     },
     mounted() {
+      if (this.$route.query.isDetails === 'false' || !this.$route.query.isDetails) {
+        this.$data.isDetails = false;
+      } else {
+        this.$data.isDetails = true;
+      }
       this.$data.loanNo = this.$route.query.loanNo;
       this.getRepayPlanCapitalList(); // 获取资方列表data
       this.getRepayPlanRentalList(); // 获取租金还款计划列表data
@@ -136,13 +142,13 @@
           }
           // 资方还款计划列表data
           if (resp.body.repayPlanCapitalList.length !== 0) {
-            this.$data.capitalPlanCapitalData = resp.body.repayPlanCapitalList;
+            this.$data.repayPlanCapitalList = resp.body.repayPlanCapitalList;
           } else {
             this.$Notice.warning({
               title: '资金方还款计划列表没有数据可加载',
               duration: 2
             });
-            this.$data.capitalPlanCapitalData = [];
+            this.$data.repayPlanCapitalList = [];
           }
         }
       },
@@ -156,26 +162,37 @@
         if (resp.success) {
           resp.body.haiLeXingAccount && (this.$data.formApproval = resp.body.haiLeXingAccount);
           if (resp.body.repayPlanRentalList.length !== 0) {
-            resp.body.repayPlanRentalList && (this.$data.rentPlanCapitalData = resp.body.repayPlanRentalList);
+            resp.body.repayPlanRentalList && (this.$data.repayPlanRentalList = resp.body.repayPlanRentalList);
           } else {
             this.$Notice.warning({
               title: '租金还款计划列表没有数据可加载',
               duration: 2
             });
-            this.$data.rentPlanCapitalData = [];
+            this.$data.repayPlanRentalList = [];
           }
         }
       },
+      // 初审/复核的提交
       async saveSubimt() {
         this.$data.initFormLoading = true;
         const msg = this.$Message.loading('正在提交中...', 0);
+        // await bsWait(1000);
         let refData = await this.$refs.contractInfo.loanApproveSumbit();
         msg();
-        await bsWait(1000);
+        this.$data.initFormLoading = false;
+        let requestData = {
+          ...refData,
+          repayPlanCapitalList: this.$data.repayPlanCapitalList, // 资金方还款计划表数据
+          repayPlanRentalList: this.$data.repayPlanRentalList // 租金放还款计划表数据
+        };
+        // 初审的提交
+        if (!this.$route.query.isDetails) {
+          let resp = await this.$http.post('/biz/sign/contract/fristApprove', { requestData });
+        }
         if (refData !== null) {
           this.$Message.success('提交成功！');
           // 回到合同制作列表
-          if (!this.$route.query.isDetails) {
+          /*if (!this.$route.query.isDetails) {
             this.$router.push({
               path: '/index/loanbusiness/contract',
               query: {
@@ -189,9 +206,8 @@
                 currentPage: this.$route.query.currentPage
               }
             });
-          }
+          }*/
         };
-        this.$data.initFormLoading = false;
       },
       // 资金方的 生成还款计划事件
       async capitalGenerating() {
@@ -202,10 +218,11 @@
               loanNo: this.$data.loanNo
             });
             msg();
+            console.log('租金还款生成还款计划---->' + JSON.stringify(resp));
             if (resp.success) {
               if (resp.body.length !== 0) {
                 this.$data.isCapital = true;
-                this.$data.capitalPlanCapitalData = resp.body;
+                this.$data.repayPlanCapitalList = resp.body;
               }
             }
           }
@@ -220,10 +237,11 @@
               loanNo: this.$data.loanNo
             });
             msg();
+            console.log('租金还款生成还款计划---->' + JSON.stringify(resp));
             if (resp.success) {
               if (resp.body.length !== 0) {
                 this.$data.isRental = true;
-                this.$data.rentPlanCapitalData = resp.body;
+                this.$data.repayPlanRentalList = resp.body;
               }
             }
           }

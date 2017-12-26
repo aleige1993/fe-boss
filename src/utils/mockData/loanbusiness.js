@@ -289,18 +289,14 @@ export default [
     url: '/biz/listApproveFeePlan',
     on: true,
     resp: Mock.mock({
-      'body': {
-        'currentPage': 1,
-        'pageSize': 15,
-        'resultList|3': [
-          {
-            'feeTypeCode|1': /[A-Z]{4,8}/,
-            'feeName|1': ['租赁服务费', 'GPS安装费', '租赁保证金'],
-            'feeTakeType|1': ['一次性收取', '分期收取'],
-            'feeActualAmt|500-10000': 500
-          }
-        ]
-      },
+      'body|3': [
+        {
+          'feeTypeCode|1': /[A-Z]{4,8}/,
+          'feeName|1': ['租赁服务费', 'GPS安装费', '租赁保证金'],
+          'feeTakeType|1': ['一次性收取', '分期收取'],
+          'feeActualAmt|500-10000': 500
+        }
+      ],
       'reCode': '0000',
       'reMsg': '成功',
       'success': true
@@ -363,6 +359,17 @@ export default [
           }
         ]
       },
+      'reCode': '0000',
+      'reMsg': '成功',
+      'success': true
+    })
+  },
+  // 初审提交
+  {
+    url: '/biz/sign/contract/fristApprove',
+    on: true,
+    resp: Mock.mock({
+      'body': {},
       'reCode': '0000',
       'reMsg': '成功',
       'success': true

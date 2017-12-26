@@ -114,7 +114,7 @@ export default {
           key: 'feeProduct'
         },
         {
-          title: '收取方式',
+          title: '计算方式',
           key: 'feeProduct'
         },
         {
