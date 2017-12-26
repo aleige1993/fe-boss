@@ -125,7 +125,7 @@
             let capitalNo = row.capitalNo;
             const loadingMsg = this.$Message.loading('删除中...', 0);
             let respDel = await this.$http.post('/pms/capital/accBaseInfoRemove', {
-              capitalNo: capitalNo
+              capitalNo
             });
             if (respDel.success) {
               loadingMsg();

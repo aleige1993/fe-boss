@@ -105,7 +105,7 @@
             let loanDocCode = row.loanDocCode;
             const loadingMsg = this.$Message.loading('删除中...', 0);
             let respDel = await this.$http.get('/pms/cfgLoanDoc/remove', {
-              loanDocCode: loanDocCode
+              loanDocCode
             });
             if (respDel.success) {
               loadingMsg();

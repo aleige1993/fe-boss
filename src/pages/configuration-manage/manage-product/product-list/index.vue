@@ -261,7 +261,7 @@
             let productTagNo = row.productTagNo;
             const loadingMsg = this.$Message.loading('删除中...', 0);
             let respDel = await this.$http.post('/pms/product/removeProductTag', {
-              productTagNo: productTagNo
+              productTagNo
             });
             if (respDel.success) {
               loadingMsg();
@@ -376,7 +376,7 @@
             const loadingMsg = this.$Message.loading('删除中...', 0);
             let respDel = await this.$http.post('/pms/product/remove', {
               status: row.status,
-              productNo: productNo
+              productNo
             });
             if (respDel.success) {
               loadingMsg();

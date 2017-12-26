@@ -174,7 +174,6 @@
           merchantNo: this.$route.query.merchantNo,
           applyNo: this.$route.query.applyNo
         });
-        console.log(resp);
         if (resp.success) {
           this.$data.formQuota = resp.body;
         } else {
@@ -189,7 +188,6 @@
           approveDto: this.$data.approveDto
         });
         this.$data.btnLoading = false;
-        console.log(resp);
         if (resp.success) {
           this.$Message.success('已提交审核');
           await bsWait(1000);

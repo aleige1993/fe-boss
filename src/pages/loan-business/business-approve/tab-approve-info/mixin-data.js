@@ -230,7 +230,7 @@ export default {
         },
         // 费用收取方案
         'loanApproveFeePlanDTOS': [
-          /*{
+          /* {
             'feeId': '',
             'feeAmt': '',
             'feeName': '',

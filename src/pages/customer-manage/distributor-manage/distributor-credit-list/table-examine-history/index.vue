@@ -34,7 +34,6 @@
         let resp = await this.$http.post('merchant/credit/approveHistList', {
           applyNo: this.$route.query.applyNo
         });
-        console.log(resp);
         this.$data.dataLoading = false;
         if (resp.body.resultList.length !== 0) {
           this.$data.data1 = resp.body.resultList;

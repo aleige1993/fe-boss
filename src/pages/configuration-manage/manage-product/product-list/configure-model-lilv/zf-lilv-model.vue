@@ -127,7 +127,7 @@
       async setSubmit() {
         let fundRateNo = this.rateForm.fundRateNo;
         let resModify = await this.$http.post('/pms/productRate/fundRateModify', {
-          fundRateNo: fundRateNo,
+          fundRateNo,
           packageRateNo: this.zfMsg.packageRateNo,
           fund: this.$data.rateForm.fund, // 出资方
           nominalRate: this.$data.rateForm.nominalRate, // 名义利率
@@ -147,7 +147,7 @@
             let fundRateNo = row.fundRateNo;
             const loadingMsg = this.$Message.loading('删除中...', 0);
             let respDel = await this.$http.post('/pms/productRate/fundRateRemove', {
-              fundRateNo: fundRateNo
+              fundRateNo
             });
             if (respDel.success) {
               loadingMsg();

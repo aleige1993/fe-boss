@@ -48,7 +48,7 @@
         this.$data.dataLoading = true;
         let productNo = this.childMsg.productNo;
         let resp = await this.$http.get('/pms/product/approveRuleList', {
-          productNo: productNo
+          productNo
         });
         this.$data.dataLoading = false;
         if (resp.body.length !== 0) {
@@ -71,8 +71,8 @@
         let productNo = this.childMsg.productNo;
         let productName = this.childMsg.productName;
         let resp = await this.$http.post('/pms/product/bindApproveRule', {
-          productNo: productNo,
-          productName: productName,
+          productNo,
+          productName,
           approveRuleCode: this.$data.approveRuleCode
         });
         if (resp.success) {

@@ -119,7 +119,7 @@
             let feeTypeNo = row.feeTypeNo;
             const loadingMsg = this.$Message.loading('删除中...', 0);
             let respDel = await this.$http.get('/pms/cfgFeeType/remove', {
-              feeTypeNo: feeTypeNo
+              feeTypeNo
             });
             if (respDel.success) {
               loadingMsg();

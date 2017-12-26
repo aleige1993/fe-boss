@@ -89,7 +89,7 @@
       // this.getTableList();
     },
     methods: {
-      /*async getTableList() {
+      /* async getTableList() {
         this.$data.examineTableLoading = true;
         let resp = await this.$http.get('/examineData', {
           currentPage: 1

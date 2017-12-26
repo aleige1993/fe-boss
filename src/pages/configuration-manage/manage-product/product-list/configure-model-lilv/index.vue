@@ -448,7 +448,7 @@
       async getFormList() {
         let productNo = this.childMsg.productNo;
         let resp = await this.$http.get('/pms/productPackage/list', {
-          productNo: productNo
+          productNo
         });
         if (resp.body.length !== 0) {
           let dataObject = resp.body[0];
@@ -464,7 +464,7 @@
         this.$data.dataLoading = true;
         let productNo = this.childMsg.productNo;
         let resp = await this.$http.get('/pms/productRate/list', {
-          productNo: productNo
+          productNo
         });
         this.$data.dataLoading = false;
         if (resp.body.resultList.length !== 0) {
@@ -483,7 +483,7 @@
         this.$data.buttonLoading = true;
         let productNo = this.childMsg.productNo;
         let resAdd = await this.$http.post('/pms/productRate/save', {
-          productNo: productNo, // 产品编号
+          productNo, // 产品编号
           packageNo: this.$data.ProductPackageForm.packageNo, // 套餐编号
           bizType: this.formInModel.bizType, // 车类
           loanPeriods: this.formInModel.loanPeriods, // 贷款期限

@@ -48,7 +48,7 @@
     computed: {
     },
     mounted() {
-      console.log(this.$route.query.creditList);
+      // console.log(this.$route.query.creditList);
     }
   };
 </script>

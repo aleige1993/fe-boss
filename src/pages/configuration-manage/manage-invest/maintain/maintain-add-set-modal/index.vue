@@ -206,9 +206,8 @@
       // 获取tabs的列表信息
       async getTabsAjax() {
         let capitalNo = this.$data.formMaintain.capitalNo;
-        console.log('获取合同协议的求情资方编号：' + capitalNo);
         let resGetList = await this.$http.get('/pms/capital/cooperationList', {
-          capitalNo: capitalNo
+          capitalNo
         });
         if (resGetList.success) {
           if (resGetList.body.length === 0) {
@@ -229,7 +228,7 @@
             let cooperationNo = row.cooperationNo;
             const loadingMsg = this.$Message.loading('删除中...', 0);
             let respDel = await this.$http.post('/pms/capital/cooperationRemove', {
-              cooperationNo: cooperationNo
+              cooperationNo
             });
             if (respDel.success) {
               loadingMsg();

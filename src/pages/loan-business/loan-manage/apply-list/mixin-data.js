@@ -90,22 +90,7 @@ export default {
           }
         }
       ],
-      applyListData: [
-        {
-          'loanNo': '111111',
-          'custName': 'mockjs',
-          'certType': '1',
-          'certNo': '800123456789123456',
-          'productName': 'mockjs',
-          'loanPeriods': '24',
-          'loanAmt': '90000.00',
-          'applyTime': '2017-12-24',
-          'endDate': '2017-12-30',
-          'taskArriveTime': '2017-12-30',
-          'timeConsuming': '36:56',
-          'taskNode': '1'
-        }
-      ]
+      applyListData: []
     };
   }
 };

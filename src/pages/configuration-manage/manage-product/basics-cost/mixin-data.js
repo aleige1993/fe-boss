@@ -15,7 +15,7 @@ export default {
           title: '费用类型名称',
           key: 'feeTypeName'
         },
-        /*{
+        /* {
           title: '收支方向',
           key: 'feeType',
           render: (h, params) => {

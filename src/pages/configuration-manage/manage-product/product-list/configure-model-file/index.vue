@@ -47,7 +47,7 @@
         this.$data.dataLoading = true;
         let productNo = this.childMsg.productNo;
         let resp = await this.$http.get('/pms/product/finishedDocList', {
-          productNo: productNo
+          productNo
         });
         this.$data.dataLoading = false;
         if (resp.body.length !== 0) {
@@ -70,11 +70,10 @@
         let productNo = this.childMsg.productNo;
         let productName = this.childMsg.productName;
         let resp = await this.$http.post('/pms/product/bindFinishedDoc', {
-          productNo: productNo,
-          productName: productName,
+          productNo,
+          productName,
           finishedDocCode: this.$data.finishedDocCode
         });
-        console.log(this.$data.finishedDocCode);
         if (resp.success) {
           this.$Message.success('配置成功');
           this.$emit('notice-file');

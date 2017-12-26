@@ -160,7 +160,6 @@
       // 审核提交
       async submiting() {
         this.$data.btnLoading = true;
-        console.log(this.$data.formQuota);
         // 渠道商授信申请信息新增
         let resp = await this.$http.post('merchant/credit/add', {
           merchantNo: this.$data.formQuota.merchantNo,
@@ -170,7 +169,6 @@
           creditEndDate: this.$data.formQuota.creditEndDate,
           creditReleaseType: this.$data.formQuota.creditReleaseType
         });
-        console.log(resp);
         this.$data.btnLoading = false;
         if (resp.success) {
           this.$Message.success('已提交审核');

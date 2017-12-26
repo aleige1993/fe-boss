@@ -1,4 +1,4 @@
-/**
+/*
  * Created by MarvenGong on 2017/4/21.
  */
 import Mock from 'mockjs';
@@ -21,7 +21,7 @@ class HttpMock {
         if (rtype === 'post') {
           url = Config.HTTPBASEURL + item.url;
         } else {
-          /*eslint-disable */
+          /* eslint-disable */
           String.prototype.replaceAll = function(s1,s2){
             return this.replace(new RegExp(s1,"gm"),s2);
           };
@@ -29,7 +29,7 @@ class HttpMock {
           urlTemp = urlTemp.replaceAll('\:', '\\:');
           urlTemp = urlTemp.replaceAll('\[\.]', '\\.');
           url = new RegExp('^' + urlTemp + '\\?');
-          /*eslint-disable */
+          /* eslint-disable */
         }
         //console.log('url========' + url);
         Mock.mock(url, () => {
