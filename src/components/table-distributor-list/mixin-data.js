@@ -17,7 +17,7 @@ export default {
         },
         {
           title: '客户编号',
-          width: '110',
+          width: '170',
           key: 'corpNo'
         },
         {
@@ -46,13 +46,27 @@ export default {
           key: 'telephone'
         },
         {
+          title: '授信总额度',
+          key: 'creditTotalLimit'
+        },
+        {
+          title: '可用额度',
+          key: 'currentUsableLimit'
+        },
+        {
+          title: '单笔最大可用额度',
+          key: 'singleUsableLimit'
+        },
+        {
           title: '授信状态', // 0:未授信1-授信审核中2-授信通过3-授信拒绝4-授信驳回5-授信过期6-冻结
           width: '90',
           key: 'merchantStatus',
           render: (h, params) => {
             return h('span', {}, this.enumCode2Name(params.row.merchantStatus, 'MerchantStatusEnum'));
           }
-        },
+        }
+      ],
+      columnsFeatureActionColumns: [
         {
           title: '操作',
           width: 260,
@@ -72,6 +86,7 @@ export default {
                         corpNo: params.row.corpNo, // 公司编号
                         memberNo: params.row.memberNo,
                         merchantNo: params.row.merchantNo, // 渠道商编号
+                        creditList: false,
                         from: 'detail'
                       }
                     });
@@ -84,9 +99,7 @@ export default {
                 },
                 on: {
                   click: () => {
-                    this.$data.isAdd = false;
-                    this.$data.showAddModal = true;
-                    this.$data.formAdd = params.row;
+                    this.$emit('set-row', params.row);
                   }
                 }
               }, '修改'),
@@ -115,16 +128,6 @@ export default {
                   }
                 }
               }, '冻结')
-              /*h('i-button', {
-                props: {
-                  type: 'primary'
-                },
-                on: {
-                  click: () => {
-                    alert(params.row.merchantNo);
-                  }
-                }
-              }, '操作员管理')*/
             ]);
           }
         }

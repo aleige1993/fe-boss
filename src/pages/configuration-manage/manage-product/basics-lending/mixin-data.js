@@ -3,12 +3,12 @@ export default {
     return {
       columns1: [
         {
-          title: '车辆材料ID',
+          title: '放款条件ID',
           align: 'center',
           key: 'vehicleDocCode'
         },
         {
-          title: '车辆材料名称',
+          title: '放款条件名称',
           key: 'vehicleDocName'
         },
         {

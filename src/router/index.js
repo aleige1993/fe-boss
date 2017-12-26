@@ -75,8 +75,8 @@ let MyRouter = new Router({
                 { path: 'cost', name: 'BasicsCost', component: resolve => { require(['@/pages/configuration-manage/manage-product/basics-cost'], resolve) } },
                 // 配置管理-产品配置-准入规则配置
                 { path: 'rule', name: 'BasicsRule', component: resolve => { require(['@/pages/configuration-manage/manage-product/basics-rule'], resolve) } },
-                // 配置管理-产品配置-车辆材料配置
-                { path: 'car', name: 'BasicsCar', component: resolve => { require(['@/pages/configuration-manage/manage-product/basics-car'], resolve) } },
+                // 配置管理-产品配置-放款条件配置
+                { path: 'lending', name: 'BasicsCar', component: resolve => { require(['@/pages/configuration-manage/manage-product/basics-lending'], resolve) } },
                 // 配置管理-产品配置-归档材料配置
                 { path: 'file', name: 'BasicsFile', component: resolve => { require(['@/pages/configuration-manage/manage-product/basics-file'], resolve) } },
                 // 配置管理-产品配置-产品匹配配置
@@ -138,7 +138,9 @@ let MyRouter = new Router({
                 // 贷款业务-签约管理->合同制作列表
                 { path: '/', name: 'loanContractMakingList', component: resolve => require(['@/pages/loan-business/contract-manage/contract-list'], resolve)},
                 // 贷款业务-签约管理->个人业务合同制作
-                { path: 'making', name: 'loanContractMakingTab', component: resolve => require(['@/pages/loan-business/contract-manage/contract-making-tab'], resolve)}
+                { path: 'making', name: 'loanContractMakingTab', component: resolve => require(['@/pages/loan-business/contract-manage/contract-making-tab'], resolve)},
+                // 贷款业务-签约管理->合同复核
+                { path: 'againExamine', name: 'againExamine', component: resolve => require(['@/pages/loan-business/contract-manage/contract-again-examine'], resolve)},
               ]}
           ]
         }
