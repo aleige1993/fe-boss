@@ -155,7 +155,9 @@
         <i-button @click="addLoanFIleGroup" type="info"><i class="iconfont icon-xinzeng"></i>&nbsp;新增</i-button>
       </div>
       <!--<i-table :loading="loanDataLoading" border ref="selection" :columns="loanColumns" :data="loanData"></i-table>-->
-      <loan-file-list v-for="(item, index) in loanData" :group-index="index" :title="item.loanDocName" :data="item.docDetailAttachList" @on-group-remove="deleteloanFileGroup">
+      <loan-file-list v-for="(item, index) in loanData" :key="index"
+                      :group-index="index" :title="item.loanDocName" :data="item.docDetailAttachList"
+                      @on-group-remove="deleteloanFileGroup">
       </loan-file-list>
     </bs-form-block>
 

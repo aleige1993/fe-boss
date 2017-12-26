@@ -14,7 +14,7 @@
       <i-col span="24">
         <i-form label-position="right" :label-width="120">
           <bs-form-block :title="'客户信息'">
-            <i-row v-for="item in ary1">
+            <i-row v-for="item in ary1" :key="item">
               <i-col span="6">
                 <i-form-item label="姓名" prop="name">
                     <i-input placeholder="请输入姓名" v-model="username"></i-input>
@@ -28,7 +28,7 @@
             </i-row>
           </bs-form-block>
           <bs-form-block :title="'申请信息'">
-            <i-row v-for="item in ary1">
+            <i-row v-for="item in ary1" :key="item">
               <i-col span="6">
                 <i-form-item label="姓名" prop="name">
                     <i-input placeholder="请输入姓名" v-model="username"></i-input>

@@ -1,17 +1,17 @@
 <template>
   <span>
     <i-select filterable :placeholder="currBrand" :disabled="readonly"  :label-in-value="true" v-model="carData.brandNo"  @on-change="brandChange" style="width: 150px">
-      <i-option-group v-for="item in brandDropList" :label="item.groupName">
+      <i-option-group v-for="(item, index) in brandDropList" :key="index" :label="item.groupName">
         <i-option v-for="brand in item.groupList"  :value="brand.brandNo" :key="brand.brandNo">{{brand.brandName}}</i-option>
       </i-option-group>
     </i-select>
     <i-select filterable :placeholder="currSeries" :disabled="readonly" :label-in-value="true" v-model="carData.seriesNo" @on-change="seriesChange" style="width: 150px">
-      <i-option-group v-for="item in seriesDropList" :label="item.groupName">
+      <i-option-group v-for="item in seriesDropList" :key="item.groupName" :label="item.groupName">
         <i-option v-for="s in item.groupList"  :value="s.seriesNo" :key="s.seriesNo">{{s.seriesName}}</i-option>
       </i-option-group>
     </i-select>
      <i-select filterable :placeholder="currModel" :disabled="readonly" :label-in-value="true" @on-change="modelChange" v-model="carData.modelNo" style="width: 180px">
-      <i-option-group v-for="item in modelDropList" :label="item.groupName">
+      <i-option-group v-for="item in modelDropList" :key="item.groupName" :label="item.groupName">
         <i-option v-for="m in item.groupList"  :value="m.modelNo" :key="m.modelNo">{{m.modelName}}</i-option>
       </i-option-group>
     </i-select>
