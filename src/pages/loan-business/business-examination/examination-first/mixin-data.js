@@ -84,7 +84,7 @@ export default {
           title: '已耗时',
           key: 'taskArriveTime',
           width: 120
-        }/*,
+        }/* ,
         {
           title: '当前环节',
           key: 'taskNode',

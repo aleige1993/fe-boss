@@ -11,7 +11,7 @@ export default {
           'netApprove': 'aaaaaa',
           'telephoneApprove': '',
           'creditCheckItemsList': [
-            /*{
+            /* {
               'itemName': '',
               'fileName': '',
               'description': '',
@@ -21,7 +21,7 @@ export default {
         },
         // 外审信息
         'creditCheckItemsList': [
-          /*{
+          /* {
             'itemName': '',
             'fileName': '',
             'description': '',
@@ -95,7 +95,7 @@ export default {
                 props: {
                   thumbWidth: 80,
                   thumbHeight: 80,
-                  //fullWidth: 500,
+                  // fullWidth: 500,
                   thumb: params.row.fileUrl,
                   full: params.row.fileUrl
                 }
@@ -141,7 +141,7 @@ export default {
         }
       ],
       firstApproveData: [
-        /*{
+        /* {
           attachName: '仓井空.av',
           attachUrl: 'http://www.baidu.com'
         }*/
@@ -165,7 +165,7 @@ export default {
                 props: {
                   thumbWidth: 100,
                   thumbHeight: 100,
-                  //fullWidth: 500,
+                  // fullWidth: 500,
                   thumb: params.row.fileUrl,
                   full: params.row.fileUrl
                 }

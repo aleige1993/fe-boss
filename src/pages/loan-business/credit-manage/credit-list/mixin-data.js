@@ -28,7 +28,7 @@ export default {
           key: 'currentLimitAmt',
           width: 140
         },
-        /*{
+        /* {
           title: '单笔最大额度（元）',
           key: 'singleLimitAmt',
           width: 140
@@ -129,7 +129,7 @@ export default {
                 }
               }, '详情'),
               // 修改审批信息
-              /*h('Button', {
+              /* h('Button', {
                 props: {
                   type: 'warning',
                   size: 'small',

@@ -47,7 +47,7 @@ export default {
                   }
                 }
               }, '下载')
-              /*h('Button', {
+              /* h('Button', {
                 props: {
                   type: 'error',
                   size: 'small',
