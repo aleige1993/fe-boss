@@ -17,7 +17,7 @@ export default {
           key: 'feeTypeName'
         },
         {
-          title: '收取方式',
+          title: '计算方式',
           key: 'incomeType',
           render: (h, params) => {
             return h('span', {}, this.enumCode2Name(params.row.incomeType, 'ReceiveTypeEnum'));

@@ -29,8 +29,8 @@
         </i-input>
       </i-form-item>
       <i-form-item
-        :rules="{required: true, message: '收取方式不能为空', trigger: 'change'}"
-        label="收取方式"
+        :rules="{required: true, message: '计算方式不能为空', trigger: 'change'}"
+        label="计算方式"
         prop="incomeType">
         <i-select transfer v-model="formInModel.incomeType" placeholder="请选择" @on-change="selpro">
           <i-option v-for="item in enumSelectData.get('ReceiveTypeEnum')" :key="item.itemCode" :value="item.itemCode">{{item.itemName}}</i-option>

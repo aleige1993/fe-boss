@@ -86,7 +86,8 @@ export default [
               { name: '签约管理',
                 url: '/index/loanbusiness/contract',
                 childMenus: [
-                  { name: '合同制作', url: '/index/loanbusiness/contract' }
+                  { name: '合同制作', url: '/index/loanbusiness/contract' },
+                  { name: '合同复核', url: '/index/loanbusiness/contract/againExamine' }
                 ]
               }
             ]
@@ -104,7 +105,7 @@ export default [
                   { name: '贷款材料配置', url: '/index/conf/product/loan' },
                   { name: '费用类型配置', url: '/index/conf/product/cost' },
                   { name: '准入规则配置', url: '/index/conf/product/rule' },
-                  { name: '车辆材料配置', url: '/index/conf/product/car' },
+                  { name: '放款条件配置', url: '/index/conf/product/lending' },
                   { name: '归档材料配置', url: '/index/conf/product/file' },
                   { name: '产品匹配配置', url: '/index/conf/product/match' }
                 ]

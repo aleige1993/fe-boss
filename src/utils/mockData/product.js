@@ -56,7 +56,8 @@ export default [
   },
   // 产品配置-费用类型配置
   {
-    url: '/pms/cfgFeeType/list',
+    url: '/pms/productFeeDetail/queryByProductNo',
+    type: 'get',
     on: true,
     resp: Mock.mock({
       'body': {
@@ -66,8 +67,12 @@ export default [
         'resultList|10': [
           {
             'feeTypeNo|+1': 1,
+            'feeTypeCode': /[A-Z]{4,8}/,
             'feeTypeName': '@name',
-            'feeType|1': ['收入', '支出']
+            'incomeType|1': ['1', '2'],
+            'feeType|1': ['C', 'D'],
+            'ratio|1': ['0.5', '0.25'],
+            'fixedAmount|1-100': 5
           }
         ],
         'startIndex': 0,

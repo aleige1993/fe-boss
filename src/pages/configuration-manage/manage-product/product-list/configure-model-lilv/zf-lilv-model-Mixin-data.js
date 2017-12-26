@@ -51,7 +51,13 @@ export default {
           }
         }
       ],
-      data1: []
+      data1: [
+        {
+          fund: 'mockjs',
+          nominalRate: '3',
+          realRate: '2.5'
+        }
+      ]
     };
   }
 };

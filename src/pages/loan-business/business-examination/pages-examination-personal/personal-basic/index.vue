@@ -68,8 +68,7 @@
           <i-col span="8">
             <i-form-item label="车辆用途" prop="carUse">
               <i-select v-model="formData.carUse">
-                <i-option value="1">自用</i-option>
-                <i-option value="2">商用</i-option>
+                <i-option v-for="item in enumSelectData.get('CarUseTypeEnum')" :key="item.itemCode" :value="item.itemCode">{{item.itemName}}</i-option>
               </i-select>
             </i-form-item>
           </i-col>

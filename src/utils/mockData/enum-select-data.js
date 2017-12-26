@@ -1020,6 +1020,117 @@ export default [
               'itemName': '归档完成'
             }
           ]
+        },
+        {
+          'groupKey': 'MakeSystemEnum',
+          'items': [
+            {
+              'itemCode': '1',
+              'itemName': '颂车'
+            },
+            {
+              'itemCode': '2',
+              'itemName': '云贷'
+            }
+          ]
+        },
+        {
+          'groupKey': 'CarUseTypeEnum',
+          'items': [
+            {
+              'itemCode': '1',
+              'itemName': '本人自用'
+            },
+            {
+              'itemCode': '2',
+              'itemName': '指定第三方自用'
+            },
+            {
+              'itemCode': '3',
+              'itemName': '商用'
+            }
+          ]
+        },
+        {
+          'groupKey': 'LoanApplyUseEnum',
+          'items': [
+            {
+              'itemCode': '1',
+              'itemName': '流动资金周转'
+            },
+            {
+              'itemCode': '2',
+              'itemName': '固定资产投资贷款'
+            },
+            {
+              'itemCode': '3',
+              'itemName': '项目融资贷款'
+            },
+            {
+              'itemCode': '4',
+              'itemName': '个人消费'
+            },
+            {
+              'itemCode': '5',
+              'itemName': '企业经营'
+            }
+          ]
+        },
+        {
+          'groupKey': 'LoanModeEnum',
+          'items': [
+            {
+              'itemCode': '1',
+              'itemName': '受托支付至第三方'
+            },
+            {
+              'itemCode': '2',
+              'itemName': '直接支付给客户账户'
+            }
+          ]
+        },
+        {
+          'groupKey': 'ContractSignModeEnum',
+          'items': [
+            {
+              'itemCode': '1',
+              'itemName': '线上'
+            },
+            {
+              'itemCode': '2',
+              'itemName': '线下'
+            }
+          ]
+        },
+        {
+          'groupKey': 'ContractSignStatusEnum',
+          'items': [
+            {
+              'itemCode': '1',
+              'itemName': '已签署'
+            },
+            {
+              'itemCode': '0',
+              'itemName': '未签署'
+            }
+          ]
+        },
+        {
+          'groupKey': 'ContractOnlineSignStatusEnum',
+          'items': [
+            {
+              'itemCode': '1',
+              'itemName': '签署成功'
+            },
+            {
+              'itemCode': '2',
+              'itemName': '签署失败'
+            },
+            {
+              'itemCode': '3',
+              'itemName': '待签署'
+            }
+          ]
         }
       ],
       'reCode': '0000',

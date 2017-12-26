@@ -68,7 +68,7 @@
         }
       },
       search() {
-        this.getPrivateCustomerList();
+        this.getPrivateCustomerList(1);
       },
       jumpPage(page) {
         this.getPrivateCustomerList(page);

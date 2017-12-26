@@ -22,7 +22,7 @@ export default {
           width: 90,
           key: 'certType',
           render: (h, params) => {
-            return h('span', {}, this.enumCode2Name(params.row.legalPersonCerttype, 'CertTypeEnum'));
+            return h('span', {}, this.enumCode2Name(params.row.certType, 'CertTypeEnum'));
           }
         },
         {
@@ -76,6 +76,10 @@ export default {
           width: 100,
           align: 'center',
           render: (h, params) => {
+            // 设置当前处理人
+            if (!this.settingHandleUser(params.row)) {
+              return;
+            }
             return h('div', [
               h('Button', {
                 props: {
@@ -90,7 +94,7 @@ export default {
                     this.openMakingModal($.extend({}, params.row));
                   }
                 }
-              }, '合同制作')
+              }, this.isDetails ? '合同复核' : '合同制作')
             ]);
           }
         }

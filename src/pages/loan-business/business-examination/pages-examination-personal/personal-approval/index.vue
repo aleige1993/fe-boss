@@ -18,11 +18,9 @@
           </i-col>
           <i-col span="8">
             <i-form-item label="结论" prop="conclusion" :rules="{required: true, message: '结论不能为空', trigger: 'change'}">
-              <i-select v-model="formApproval.conclusion">
-                <i-option value="1">通过</i-option>
-                <i-option value="2">拒绝</i-option>
-                <i-option value="3">退回</i-option>
-              </i-select>
+              <i-radio-group v-model="formApproval.conclusion">
+                <i-radio v-for="item in enumSelectData.get('ApproveStatusEnum')" :label="item.itemCode" :key="item.itemCode" style="margin-right: 20px; margin-top: -5px">{{item.itemName}}</i-radio>
+              </i-radio-group>
             </i-form-item>
           </i-col>
           <i-col span="24">

@@ -8,11 +8,13 @@
     <br>
     <bs-model :title="isAdd ? '新增' : '修改'" v-model="showAddModal">
       <i-form ref="rateForm" :model="rateForm" label-position="right" :label-width="100" style="padding-bottom:0;">
-        <i-form-item label="资方" prop="fund">
-          <i-select v-model="rateForm.fund" placeholder="请选择">
-            <i-option value="1">海尔云贷</i-option>
-            <i-option value="2">海乐行</i-option>
-          </i-select>
+        <i-form-item
+          label="资方"
+          prop="fund">
+          <input type="hidden" v-model="rateForm.fund"/>
+          <i-input v-model="rateForm.fund" :readonly="true" placeholder="选择资方">
+            <i-button @click="showSelectCapital=!showSelectCapital" slot="append">选择资方 <Icon type="ios-more"></Icon></i-button>
+          </i-input>
         </i-form-item>
         <i-form-item label="名义利率" prop="nominalRate">
           <i-input placeholder="名义利率" v-model="rateForm.nominalRate">
@@ -33,16 +35,22 @@
         </i-form-item>
       </i-form>
     </bs-model>
+    <!--选择资方的弹窗-->
+    <bs-modal title="选择资方" :width="1200" v-model="showSelectCapital">
+      <table-capital-list type="modal" v-if="showSelectCapital" @on-row-dbclick="selectCapital"></table-capital-list>
+    </bs-modal>
   </div>
 </template>
 
 <script>
   import BSModal from '@/components/bs-modal';
   import MixinData from './zf-lilv-model-Mixin-data';
+  import GetCapitalModal from '@/pages/configuration-manage/manage-invest/maintain'; // 选择资方
   export default {
     name: 'zfLilvModel',
     components: {
-      'bs-model': BSModal
+      'bs-model': BSModal,
+      'table-capital-list': GetCapitalModal
     },
     props: {
       zfMsg: Object
@@ -54,8 +62,10 @@
         btnLoading: false,
         dataLoading: false,
         showAddModal: false,
+        showSelectCapital: false,
         rateForm: {
           fund: '', // 出资方
+          capitalNo: '',
           nominalRate: '', // 名义利率
           realRate: '' // 实际利率
         }
@@ -65,6 +75,12 @@
       this.getPrivateCustomerList();
     },
     methods: {
+      // 选择资方
+      selectCapital(row, index) {
+        this.$data.rateForm.capitalNo = row.capitalNo;
+        this.$data.rateForm.fund = row.capitalName;
+        this.$data.showSelectCapital = false;
+      },
       // 查询列表数据
       async getPrivateCustomerList() {
         this.$data.dataLoading = true;
