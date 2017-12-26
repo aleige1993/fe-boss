@@ -9,10 +9,10 @@
 
     <i-tabs v-model="tabIndex" type="card" :animated="false" style="padding-bottom: 46px;">
       <i-tab-pane :label="'基本信息'">
-        <apply-info :customerType="'1'"></apply-info>
+        <apply-info ref="applyInfo" :customerType="'1'" :applyBasicInfo="formData" :loanAction="'firstApprove'"></apply-info>
       </i-tab-pane>
       <i-tab-pane :label="'审批信息'">
-        <approve-info v-if="tabIndex == 1"></approve-info>
+        <approve-info ref="approveInfo" v-if="tabIndex == 1" :applyBasicInfo="formData"></approve-info>
       </i-tab-pane>
       <i-tab-pane label="人行征信报告">
         <iframe v-if="tabIndex == 2" src="http://www.baidu.com" width="100%" :height="iframeHeight" frameborder="0"></iframe>
@@ -28,7 +28,7 @@
       </i-tab-pane>
     </i-tabs>
     <div class="form-footer-actions">
-      <i-button @click="saveSubimt" :loading="initFormLoading" type="success">
+      <i-button @click="submitLoanApprove" :loading="initFormLoading" type="success">
         <span v-if="!initFormLoading"><i class="iconfont icon-tijiao"></i> 提交</span>
         <span v-else> loading...</span>
       </i-button>
@@ -37,6 +37,7 @@
 </template>
 <script>
   import MixinData from './mixin-data';
+  import MixinMethods from './mixin-methods';
   import BsModal from '@/components/bs-modal';
   import PrivateCustomerList from '@/components/table-customer-list';
   import TableCompanyCustomerList from '@/components/table-company-customer-list'; // 选择客户列表
@@ -48,8 +49,8 @@
   import TabApproveHistory from './tab-approve-history/index.vue';
   import TabBigData from './tab-big-data/index.vue';
   export default {
-    name: '',
-    mixins: [MixinData],
+    name: 'loanBusinessApprove',
+    mixins: [MixinData, MixinMethods],
     data() {
       return {
         iframeHeight: 460,
@@ -104,10 +105,14 @@
         this.$data.formAssure.guaPersonNo = row.corpNo;
         this.$data.formAssure.guaPersonName = row.corpName;
         this.$data.showSelectCompanyGua = false;
+      },
+      saveSubimt() {
+        // a
       }
     },
     mounted() {
       this.$data.iframeHeight = $(window).height() - 280;
+      this.initPage();
     }
   };
 </script>

@@ -1,0 +1,145 @@
+export default {
+  methods: {
+    // 选择权利人
+    selectObligeeRow(row, index) {
+      // console.log(row);
+      this.$data.formCar.carOwnerName = row.name;
+      this.$data.formCar.carOwnerNo = row.memberNo;
+      this.$data.showSelectObligee = false;
+    },
+    selectCompanyOwnerRow(row, index) {
+      this.$data.formCar.carOwnerName = row.corpName;
+      this.$data.formCar.carOwnerNo = row.corpNo;
+      this.$data.showSelectCompanyOwner = false;
+    },
+    // 选择担保人
+    selectGuaRow(row, index) {
+      // console.log(row);
+      this.$data.formAssure.guaPersonCertNo = row.certNo;
+      this.$data.formAssure.guaPersonCertType = row.certType;
+      this.$data.formAssure.guaPersonMobile = row.mobile;
+      this.$data.formAssure.guaPersonNo = row.memberNo;
+      this.$data.formAssure.guaPersonName = row.name;
+      this.$data.showSelectGua = false;
+    },
+    selectCompanyGuaRow(row, index) {
+      this.$data.formAssure.guaPersonCertNo = row.creditCode;
+      this.$data.formAssure.guaPersonCertType = '3';
+      this.$data.formAssure.guaPersonMobile = row.telephone;
+      this.$data.formAssure.guaPersonNo = row.corpNo;
+      this.$data.formAssure.guaPersonName = row.corpName;
+      this.$data.showSelectCompanyGua = false;
+    },
+    selectCompany(company) {
+      // console.log(company);
+      this.$data.formData.corpNo = company.corpNo;
+      this.$data.formData.corpName = company.corpName;
+      this.$data.formData.certType = '';
+      this.$data.formData.certNo = '';
+      this.$data.formData.custManagerNo = company.custMgrNo;
+      this.$data.formData.custManagerName = company.custMgrName;
+      this.$data.formData.deptNo = company.bizDepartmentCode;
+      this.$data.formData.deptName = company.bizDepartmentName;
+      this.$data.formData.deptCooperationStartDate = company.joinStartDate;
+    },
+    // 接收姓名组件的客户信息
+    getMember(CertData) {
+      // console.log(CertData);
+      this.$data.member = CertData;
+      if (CertData.mbMemberDTO) {
+        this.$data.formData.memberNo = CertData.mbMemberDTO['memberNo'];
+        this.$data.formData.memberName = CertData.mbMemberDTO.name;
+        this.$data.formData.certType = CertData.mbMemberDTO.certType;
+        this.$data.formData.certNo = CertData.mbMemberDTO.certNo;
+        this.$data.formData.custManagerNo = CertData.mbMemberDTO.custMgrNo;
+        this.$data.formData.custManagerName = CertData.mbMemberDTO.custMgrName;
+        this.$data.formData.deptNo = CertData.mbMemberDTO.bizDepartmentCode;
+        this.$data.formData.deptName = CertData.mbMemberDTO.bizDepartmentName;
+        this.$data.formData.deptCooperationStartDate = CertData.mbMemberDTO.joinStartDate;
+      }
+    },
+    // 选择产品
+    async selectProduct(row, index) {
+      this.$data.formData.productNo = row.productNo;
+      this.$data.formData.productName = row.productName;
+      this.$data.formData.productType = row.productType;
+      this.$data.showSelectProduct = false;
+      let resp = await this.$http.get('/pms/product/loanDocList', {
+        productNo: row.productNo
+      });
+      if (resp.success) {
+        // 筛选出当前产品选中的配置
+        let resultDocList = resp.body.filter(item => {
+          return item.isSelectd;
+        });
+        this.$data.loanData = resultDocList.map(item => {
+          return {
+            loanDocCode: item.loanDocCode,
+            loanDocName: item.loanDocName,
+            status: '',
+            docDetailAttachList: []
+          };
+        });
+      }
+    },
+    // 验证表单信息并向外抛出数据
+    verification() {
+      let formName = 'formData';
+      let resReturn = false;
+      this.$refs[formName].validate((valid) => {
+        if (valid) {
+          if (
+            (typeof this.$data.member.mbMemberDTO === 'undefined' || this.$data.member.mbMemberDTO.memberNo === '') &&
+            (typeof this.$data.formData.corpNo === 'undefined' || this.$data.formData.corpNo === '')
+          ) {
+            this.$Message.error('请先选择一个客户', 2);
+            return;
+          }
+          this.$data.formData.custType = this.customerType;
+          this.$data.personalBasicInfo = $.extend(
+            this.$data.member,
+            { loanVO: this.$data.formData },
+            { 'loanCarVOS': this.$data.carData },
+            { 'loanGuaranteeVOS': this.$data.assureData },
+            { 'loanDocDetailVOS': this.$data.loanData }
+          );
+          this.$emit('personalData', this.$data.personalBasicInfo);
+          resReturn = true;
+        } else {
+          this.$Message.error('<span style="color: red">*</span>项不能为空');
+          resReturn = false;
+        }
+      });
+      return resReturn;
+    },
+    async initPage() {
+      // alert(1);
+      await bsWait(500);
+      if (this.applyBasicInfo) {
+        this.$data.formData = $.extend({}, this.applyBasicInfo);
+        this.$data.memberNo = this.applyBasicInfo.memberNo;
+        let getLoanCarListResp = this.$http.post('/biz/listLoanCarByLoanNo', {
+          loanNo: this.applyBasicInfo.loanNo
+        });
+        let getGuaListResp = this.$http.post('/biz/listGuaranteeByLoanNo', {
+          loanNo: this.applyBasicInfo.loanNo
+        });
+        let getLoanDocListResp = this.$http.post('/biz/listDocDetailByLoanNo', {
+          loanNo: this.applyBasicInfo.loanNo
+        });
+        let carResp = await getLoanCarListResp;
+        let guaResp = await getGuaListResp;
+        let loanDocResp = await getLoanDocListResp;
+        if (carResp.success) {
+          this.$data.carData = carResp.body.resultList;
+        }
+        if (guaResp.success) {
+          this.$data.assureData = carResp.body.resultList;
+        }
+        if (loanDocResp.success) {
+          this.$data.loanData = carResp.body.resultList;
+        }
+      }
+    }
+  }
+};
