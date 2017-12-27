@@ -38,11 +38,6 @@ export default {
           key: 'loanAmt'
         },
         {
-          title: '申请时间',
-          key: 'applyTime',
-          width: 110
-        },
-        {
           title: '签约完成时间',
           key: 'endDate',
           width: 110
@@ -82,10 +77,15 @@ export default {
                 },
                 on: {
                   click: () => {
-                    alert(Object.assign({}, params.row));
+                    this.$router.push({
+                      path: '/index/loanbusiness/loan/handle',
+                      query: {
+                        currentPage: this.$data.currentPage
+                      }
+                    });
                   }
                 }
-              }, '请款')
+              }, '办理')
             ]);
           }
         }

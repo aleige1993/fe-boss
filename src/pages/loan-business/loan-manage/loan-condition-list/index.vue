@@ -1,11 +1,11 @@
 <template>
 <!--放款申请列表-->
-  <div id="page-loan-apply-list">
+  <div id="page-loan-condition-list">
     <i-breadcrumb separator=">">
       <i-breadcrumb-item href="/">首页</i-breadcrumb-item>
       <i-breadcrumb-item href="/components/breadcrumb">贷款业务</i-breadcrumb-item>
       <i-breadcrumb-item href="/index/loanbusiness/loan">放款管理</i-breadcrumb-item>
-      <i-breadcrumb-item>放款申请</i-breadcrumb-item>
+      <i-breadcrumb-item>放款条件落实</i-breadcrumb-item>
     </i-breadcrumb>
     <div class="form-block-title">
       查询条件
@@ -15,6 +15,9 @@
         <i-form-item prop="loanNo">
           <i-input type="text" v-model="searchForm.loanNo" placeholder="项目编号"></i-input>
         </i-form-item>
+        <i-form-item>
+          <i-input v-model="searchForm.companyName" type="text" placeholder="客户名称"></i-input>
+        </i-form-item>
         <i-form-item prop="certType">
           <i-select style="width: 120px;" v-model="searchForm.certType" placeholder="证件类型">
             <i-option v-for="item in enumSelectData.get('CertTypeEnum')" :key="item.itemCode" :value="item.itemCode">{{item.itemName}}</i-option>
@@ -22,9 +25,6 @@
         </i-form-item>
         <i-form-item prop="certNo">
           <i-input v-model="searchForm.certNo" type="text" placeholder="证件号码" style="width: 170px"></i-input>
-        </i-form-item>
-        <i-form-item>
-          <i-input v-model="searchForm.companyName" type="text" placeholder="客户名称"></i-input>
         </i-form-item>
         <i-form-item prop="applyStartTime">
           <bs-datepicker v-model="searchForm.applyStartTime" type="text" placeholder="申请时间"></bs-datepicker>
@@ -50,7 +50,7 @@
 <script>
   import MixinData from './mixin-data';
   export default {
-    name: 'pageLoanApplyList',
+    name: 'pageloanConditionList',
     mixins: [MixinData],
     data() {
       return {
@@ -58,6 +58,7 @@
         pageSize: 15,
         total: 0,
         dataLoading: false,
+        clickRow: {},
         searchForm: {
           'loanNo': '',
           'certType': '',

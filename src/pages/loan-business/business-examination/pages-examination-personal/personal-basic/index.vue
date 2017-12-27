@@ -227,8 +227,8 @@
           <!--车辆颜色-->
           <i-col span="8">
             <i-form-item
-              label="车辆品牌"
-              :rules="{required: true, message: '权利人类型不能为空', trigger: 'change'}"
+              label="车辆颜色"
+              :rules="{required: true, message: '车辆颜色不能为空', trigger: 'change'}"
               prop="carColor">
               <i-select v-model="formCar.carColor">
                 <i-option value="1">米色</i-option>

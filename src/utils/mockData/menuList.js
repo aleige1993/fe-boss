@@ -93,7 +93,7 @@ export default [
               { name: '放款管理',
                 url: '/index/loanbusiness/loan',
                 childMenus: [
-                  { name: '放款申请', url: '/index/loanbusiness/loan' }
+                  { name: '放款条件落实', url: '/index/loanbusiness/loan' }
                 ]
               }
             ]
