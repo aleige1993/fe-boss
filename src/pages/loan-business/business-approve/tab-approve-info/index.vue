@@ -187,6 +187,10 @@
             </div>
             <i-table :columns="loanPaymentConditionCol" :data="approveData.loanPaymentConditionDTOS"></i-table>
           </bs-form-block>
+          <!--资金方信息-->
+          <bs-form-block :title="'资金方信息'">
+            <i-table :columns="loanFundPartyCol" :data="approveData.loanPaymentConditionDTOS"></i-table>
+          </bs-form-block>
           <!--审核意见-->
           <bs-form-block title="审核意见" >
             <i-row>

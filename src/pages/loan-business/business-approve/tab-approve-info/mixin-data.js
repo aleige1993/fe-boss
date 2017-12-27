@@ -188,6 +188,33 @@ export default {
           key: 'repaymentConContent'
         }
       ],
+      // 资金方
+      loanFundPartyCol: [
+        {
+          title: '资方名称',
+          key: 'aa'
+        },
+        {
+          title: '放款比例（%）',
+          key: 'aa'
+        },
+        {
+          title: '资方借款利率',
+          key: 'aa'
+        },
+        {
+          title: '账户名',
+          key: 'aa'
+        },
+        {
+          title: '开户银行',
+          key: 'aa'
+        },
+        {
+          title: '账号',
+          key: 'aa'
+        }
+      ],
       approveData: {
         // 贷款准入规则
         'loanApproveRuleDTOS': [
