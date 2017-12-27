@@ -7,15 +7,12 @@
       <i-breadcrumb-item href="/index/conf/invest">资方管理</i-breadcrumb-item>
       <i-breadcrumb-item>资方维护</i-breadcrumb-item>
     </i-breadcrumb>
-    <div class="form-top-actions" v-if="!isModal">
-      <i-button @click="addModal" type="info"><i class="iconfont icon-xinzeng"></i> 新增</i-button>
-    </div>
-
-    <i-table :loading="dataLoading" border ref="proTable" :columns="resultColumns" :data="data1" @on-row-dblclick="selectRow"></i-table>
-    <div class="page-container">
-      <i-page :page-size="pageSize" :current="currentPage" :total="total" size="small" show-elevator show-total @on-change="jumpPage">
-      </i-page>
-    </div>
+    <!--组件：资方维护列表table-invest-list-->
+    <table-invest-list ref="tableInvestList" type="page" @on-row-dbclick="selectRow" @on-set-row="setListZf" @on-remove-row="removeZf" @on-show-userModal="showUser">
+      <div class="form-top-actions" slot="topAction">
+        <i-button @click="addModal" type="info"><i class="iconfont icon-xinzeng"></i> 新增</i-button>
+      </div>
+    </table-invest-list>
     <bs-modal :title="isAdd ? '新增' : '修改'" v-model="ShowModal" :width="1200" @on-close="closeModelAddSet">
       <modal-add-set v-if="ShowModal" @model-addSet="closeModelAddSet" :child-msg="clickRow"></modal-add-set>
     </bs-modal>
@@ -27,26 +24,22 @@
 
 <script>
   import BSModal from '@/components/bs-modal';
-  import MixinData from './mixin-data';
   import ModelUser from './maintain-user-modal'; // 用户信息模态框
   import ModalAddSet from './maintain-add-set-modal'; // 新增删除的模态框
+  import TableInvestList from '@/components/table-invest-list'; // 资方列表的公共组件
   export default {
     name: 'manageInvestMaintain',
-    mixins: [MixinData],
     components: {
+      'modal-user': ModelUser,
+      TableInvestList,
       'bs-modal': BSModal,
-      'modal-add-set': ModalAddSet,
-      'modal-user': ModelUser
+      'modal-add-set': ModalAddSet
     },
     data() {
       return {
         isAdd: true,
         isModal: false,
-        dataLoading: false,
         showUserMoadl: false,
-        pageSize: 15,
-        total: 0,
-        currentPage: 1,
         ShowModal: false, // 是否是新增修改
         clickRow: {
           isAdd: true
@@ -54,90 +47,31 @@
         userClickRow: {}
       };
     }, // end data
-    computed: {
-      resultColumns() {
-        if (this.type === 'modal') {
-          this.$data.isModal = true;
-          return this.$data.columns1;
-        } else {
-          this.$data.isModal = false;
-          return [...this.$data.columns1, ...this.$data.columnsFeatureActionColumns];
-        }
-      }
-    },
-    props: {
-      type: String,
-      default: 'page',
-      required: false
-    },
     mounted() {
-      this.getPrivateCustomerList();
+      // this.getPrivateCustomerList();
     },
     methods: {
-      selectRow(row, index) {
-        this.$emit('on-row-dbclick', row, index);
-      },
-      // 获取资方维护列表数据
-      async getPrivateCustomerList(page) {
-        this.$data.dataLoading = true;
-        if (page) {
-          this.$data.currentPage = page;
-        }
-        let resp = await this.$http.get('/pms/capital/accBaseInfoList', {
-          currentPage: this.$data.currentPage,
-          pageSize: this.$data.pageSize
-        });
-        this.$data.dataLoading = false;
-        if (resp.body.resultList.length !== 0) {
-          this.$data.data1 = resp.body.resultList;
-          this.$data.currentPage = resp.body.currentPage;
-          this.$data.total = resp.body.totalNum;
-        } else {
-          this.$Notice.warning({
-            title: '没有数据可加载',
-            duration: 2
-          });
-          this.$data.data1 = [];
-        }
-      },
-      // 分页跳转
-      jumpPage(page) {
-        this.getPrivateCustomerList(page);
-      },
-      // 新增弹窗打开
-      addModal() {
-        this.$data.isAdd = true;
-        this.$data.clickRow.isAdd = true;
-        this.$data.ShowModal = true;
-      },
-      // 通过子组件通知，关闭新增修改弹窗
-      closeModelAddSet() {
-        this.$data.clickRow = {};
-        this.$data.clickRow.isAdd = true;
-        this.$data.ShowModal = false;
-        let pages = this.$data.currentPage;
-        this.getPrivateCustomerList(pages);
-      },
+      // 删除
       // 资方维护列表的删除
-      removeZf(row) {
+      removeZf(row, jumpPage) {
         Alertify.confirm('确定要删除吗？', async (ok) => {
           if (ok) {
             let capitalNo = row.capitalNo;
             const loadingMsg = this.$Message.loading('删除中...', 0);
             let respDel = await this.$http.post('/pms/capital/accBaseInfoRemove', {
-              capitalNo: capitalNo
+              capitalNo
             });
+            loadingMsg();
             if (respDel.success) {
-              loadingMsg();
-              this.$Message.success('删除成功');
-              let jumpPage = this.$JumpPage.getPageRemove(this.$data.currentPage, this.$data.pageSize, this.$data.total);
-              this.getPrivateCustomerList(jumpPage);
             }
+            this.$Message.success('删除成功');
+            this.$refs.tableInvestList.getPrivateCustomerList(jumpPage);
           }
         });
       },
       // 修改弹窗
       setListZf(row) {
+        console.log(row);
         this.$data.isAdd = false;
         this.$data.clickRow = {
           isAdd: false,
@@ -151,6 +85,23 @@
       showUser(row) {
         this.$data.showUserMoadl = true;
         this.$data.userClickRow = row;
+      },
+      // 新增弹窗打开
+      addModal() {
+        this.$data.isAdd = true;
+        this.$data.clickRow.isAdd = true;
+        this.$data.ShowModal = true;
+      },
+      // 通过子组件通知，关闭新增修改弹窗
+      closeModelAddSet() {
+        this.$data.clickRow = {};
+        this.$data.clickRow.isAdd = true;
+        this.$data.ShowModal = false;
+        let pages = this.$data.currentPage;
+        this.$refs.tableInvestList.getPrivateCustomerList(pages);
+      },
+      // 双击时的回调 （此页面用不到此功能）
+      selectRow(row, index) {
       }
     }
   };

@@ -25,9 +25,9 @@ export default {
 </script>
 
 <style lang="scss">
-/*@import "./assets/style/reset.scss";*/
-/*@import "./assets/style/var.scss";*/
-/*@import "./assets/style/common.scss";*/
+/* @import "./assets/style/reset.scss";*/
+/* @import "./assets/style/var.scss";*/
+/* @import "./assets/style/common.scss";*/
 #app {
   font-family: '微软雅黑';
   -webkit-font-smoothing: antialiased;

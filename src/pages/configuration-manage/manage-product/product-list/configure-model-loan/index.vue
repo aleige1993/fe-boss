@@ -47,7 +47,7 @@
         this.$data.dataLoading = true;
         let productNo = this.childMsg.productNo;
         let resp = await this.$http.get('/pms/product/loanDocList', {
-          productNo: productNo
+          productNo
         });
         this.$data.dataLoading = false;
         if (resp.body.length !== 0) {
@@ -70,8 +70,8 @@
         let productNo = this.childMsg.productNo;
         let productName = this.childMsg.productName;
         let resp = await this.$http.post('/pms/product/bindLoanDoc', {
-          productNo: productNo,
-          productName: productName,
+          productNo,
+          productName,
           loanDocCode: this.$data.loanDocCode
         });
         if (resp.success) {

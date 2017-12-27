@@ -1,6 +1,15 @@
 import Mock from 'mockjs';
 
 export default [
+  // 资方列表的删除
+  {
+    url: '/pms/capital/accBaseInfoRemove',
+    on: true,
+    resp: Mock.mock({
+      reCode: '0000',
+      reMsg: '成功'
+    })
+  },
   // 资方管理
   {
     url: '/pms/capital/accBaseInfoList',

@@ -101,7 +101,6 @@
           capitalNo: this.getRowData.capitalNo
         });
         this.$data.dataLoading = false;
-        console.log(resp);
         if (resp.body.resultList.length !== 0) {
           this.$data.data1 = resp.body.resultList;
         } else {
@@ -142,7 +141,7 @@
       async remove(row) {
         Alertify.confirm('确定要删除吗？', async (ok) => {
           if (ok) {
-            let productNo = row.productNo;
+            // let productNo = row.productNo;
             const loadingMsg = this.$Message.loading('删除中...', 0);
             let respDel = await this.$http.post('/pms/capital/deleteContractTemplateCfg', {
               contractTemplateNo: row.contractTemplateNo,

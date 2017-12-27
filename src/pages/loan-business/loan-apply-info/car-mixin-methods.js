@@ -1,7 +1,6 @@
 export default {
   methods: {
     selectLoanCar(car) {
-      console.log(car);
       this.$data.formCar.carBrandCode = car.brandCode;
       this.$data.formCar.carBrandName = car.brandName;
       this.$data.formCar.carTypeCode = car.seriesCode;

@@ -117,7 +117,7 @@
         this.$data.dataLoading = true;
         let productNo = this.childMsg.productNo;
         let resp = await this.$http.get('/pms/productFeeDetail/queryByProductNo', {
-          productNo: productNo
+          productNo
         });
         this.$data.dataLoading = false;
         if (resp.body.resultList.length !== 0) {
@@ -161,7 +161,7 @@
         let resAdd = await this.$http.post('/pms/productFeeDetail/save', {
           feeTypeNo: this.$data.formInModel.feeTypeNo,  // 费用类型编号
           incomeType: this.$data.formInModel.incomeType, // 收取类型
-          feeTypeName: feeTypeName,  // 费用类型名称
+          feeTypeName,  // 费用类型名称
           feeType: this.$data.formInModel.feeType,  // 收支方向
           productName: this.childMsg.productName,  // 产品名称
           fixedAmount: this.$data.formInModel.fixedAmount,  // 固定金额
@@ -192,7 +192,7 @@
         let resModify = await this.$http.post('/pms/productFeeDetail/modify', {
           feeTypeNo: this.$data.formInModel.feeTypeNo,  // 费用类型编号
           incomeType: this.$data.formInModel.incomeType, // 收取类型
-          feeTypeName: feeTypeName,  // 费用类型名称
+          feeTypeName,  // 费用类型名称
           feeType: this.$data.formInModel.feeType,  // 收支方向
           productName: this.childMsg.productName,  // 产品名称
           fixedAmount: this.$data.formInModel.fixedAmount,  // 固定金额
@@ -213,7 +213,7 @@
             let feeTypeNo = row.feeTypeNo;
             const loadingMsg = this.$Message.loading('删除中...', 0);
             let respDel = await this.$http.post('/pms/productFeeDetail/remove', {
-              feeTypeNo: feeTypeNo,
+              feeTypeNo,
               productNo: this.childMsg.productNo  // 产品编号
             });
             if (respDel.success) {

@@ -127,7 +127,7 @@
             let finishedDocCode = row.finishedDocCode;
             const loadingMsg = this.$Message.loading('删除中...', 0);
             let respDel = await this.$http.get('/pms/cfgFinishedDoc/remove', {
-              finishedDocCode: finishedDocCode
+              finishedDocCode
             });
             if (respDel.success) {
               loadingMsg();

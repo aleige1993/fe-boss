@@ -174,7 +174,7 @@
         this.$data.buttonLoading = true;
         let id = this.$data.formContract.id;
         let resAdd = await this.$http.post('/contract/saveContractTemplate', {
-          id: id,
+          id,
           contractTemplateName: this.$data.formContract.contractTemplateName,
           contractTemplateAttach: this.$data.formContract.contractTemplateAttach,
           contractTemplateNo: this.$data.formContract.contractTemplateNo,

@@ -1,6 +1,6 @@
 export default {
   methods: {
-    /**
+    /*
      * 获取联系人信息
      * @returns {Promise.<void>}
      */
@@ -12,7 +12,7 @@ export default {
       this.$data.loadingContactBook = false;
       this.$data.contactDatas = resp.body;
     },
-    /**
+    /*
      * 获取电话本联系人
      * @param page
      * @returns {Promise.<void>}
@@ -29,7 +29,7 @@ export default {
       this.$data.contactBookTotal = resp.body.totalNum;
       this.$data.contactBookDatas = resp.body.resultList;
     },
-    /**
+    /*
      * 呼入记录
      * @param page
      * @returns {Promise.<void>}

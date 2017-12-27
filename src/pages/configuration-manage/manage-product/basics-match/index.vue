@@ -97,7 +97,6 @@
           currentPage: this.$data.currentPage,
           pageSize: this.$data.pageSize
         });
-        console.log(resp.body.body);
         this.$data.dataLoading = false;
         if (resp.body.body.resultList.length !== 0) {
           this.$data.data1 = resp.body.resultList;
@@ -141,7 +140,7 @@
             let productMatchNo = row.productMatchNo;
             const loadingMsg = this.$Message.loading('删除中...', 0);
             let respDel = await this.$http.get('/pms/productMatch/save', {
-              productMatchNo: productMatchNo
+              productMatchNo
             });
             if (respDel.success) {
               loadingMsg();

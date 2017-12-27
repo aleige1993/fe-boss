@@ -67,8 +67,8 @@
         let capitalNo = this.agreementData.capitalNo;
         let capitalName = this.agreementData.capitalName;
         let dataObject = {
-          capitalNo: capitalNo,
-          capitalName: capitalName,
+          capitalNo,
+          capitalName,
           ...this.$data.formAgreement
         };
         let res = await this.$http.post('/pms/capital/cooperationSave', dataObject);

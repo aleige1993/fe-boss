@@ -126,7 +126,7 @@
             let vehicleDocCode = row.vehicleDocCode;
             const loadingMsg = this.$Message.loading('删除中...', 0);
             let respDel = await this.$http.get('/pms/cfgVehicleDoc/remove', {
-              vehicleDocCode: vehicleDocCode
+              vehicleDocCode
             });
             if (respDel.success) {
               loadingMsg();

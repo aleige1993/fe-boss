@@ -61,7 +61,7 @@
       // 获取地址下拉联动
       getBrandDropList(brandName = '') {
         let data = {
-          brandName: brandName
+          brandName
         };
         return this.$http.post('/ces/getMasterBrand', data, false);
       },

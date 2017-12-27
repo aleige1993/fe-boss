@@ -45,7 +45,7 @@ export default {
   },
   methods: {
     openSecnodMenus(nav) {
-      let allMenuList = this.$store.getters.menuList;
+      // let allMenuList = this.$store.getters.menuList;
       this.$store.dispatch('setSelectedTopMenuIndex', nav.topMenuIndex);
     }
   },

@@ -133,7 +133,7 @@
             let approveRuleCode = row.approveRuleCode;
             const loadingMsg = this.$Message.loading('删除中...', 0);
             let respDel = await this.$http.get('/pms/cfgApproveRule/remove', {
-              approveRuleCode: approveRuleCode
+              approveRuleCode
             });
             if (respDel.success) {
               loadingMsg();

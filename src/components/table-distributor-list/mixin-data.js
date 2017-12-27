@@ -99,7 +99,7 @@ export default {
                 },
                 on: {
                   click: () => {
-                    this.$emit('set-row', params.row);
+                    this.$emit('on-set-row', params.row);
                   }
                 }
               }, '修改'),

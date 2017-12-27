@@ -33,7 +33,7 @@
 
 <script>
   import modalPersonalBasic from '../loan-apply-info/index.vue';
-  /*import modalPersonalApproval from './personal-approval';*/
+  /* import modalPersonalApproval from './personal-approval';*/
   export default {
     name: 'personalBbusinessRegistration',
     data() {

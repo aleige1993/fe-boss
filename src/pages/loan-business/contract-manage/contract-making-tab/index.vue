@@ -192,7 +192,7 @@
         if (refData !== null) {
           this.$Message.success('提交成功！');
           // 回到合同制作列表
-          /*if (!this.$route.query.isDetails) {
+          /* if (!this.$route.query.isDetails) {
             this.$router.push({
               path: '/index/loanbusiness/contract',
               query: {
