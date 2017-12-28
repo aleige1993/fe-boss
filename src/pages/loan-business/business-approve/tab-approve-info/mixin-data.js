@@ -180,18 +180,18 @@ export default {
       loanPaymentConditionCol: [
         {
           title: '项目',
-          key: 'repaymentConName'
+          key: 'paymentConName'
         },
         {
           title: '内容',
-          key: 'repaymentConContent'
+          key: 'paymentConContent'
         }
       ],
       // 资金方
       loanFundPartyCol: [
         {
           title: '资方名称',
-          key: 'capitalName'
+          key: 'acctName' // capitalName
         },
         {
           title: '放款比例（%）',
@@ -312,9 +312,9 @@ export default {
         // 放款条件
         loanPaymentConditionDTOS: [
           {
-            'repaymentConNo': '', // 放款条件编号
-            'repaymentConName': '', // 放款条件项目名称
-            'repaymentConContent': '', // 放款条件项目内容
+            'paymentConNo': '', // 放款条件编号
+            'paymentConName': '', // 放款条件项目名称
+            'paymentConContent': '', // 放款条件项目内容
             'status': '' // 放款条件是否落实：1是；0-否
           }
         ],

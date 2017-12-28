@@ -262,13 +262,13 @@
     <!--添加放款条件-->
     <bs-modal v-model="addConditionModal" :width="520" title="添加放款条件">
       <i-form :label-width="120" ref="addConditionForm" :model="conditionForm">
-        <i-form-item label="项目" prop="repaymentConName"
+        <i-form-item label="项目" prop="paymentConName"
                      :rules="{required: true, message: '请输入项目'}">
-          <i-input v-model="conditionForm.repaymentConName"></i-input>
+          <i-input v-model="conditionForm.paymentConName"></i-input>
         </i-form-item>
-        <i-form-item label="内容" prop="repaymentConContent"
+        <i-form-item label="内容" prop="paymentConContent"
                      :rules="{required: true, message: '请输入内容'}">
-          <i-input type="textarea" :rows="4" v-model="conditionForm.repaymentConContent"></i-input>
+          <i-input type="textarea" :rows="4" v-model="conditionForm.paymentConContent"></i-input>
         </i-form-item>
         <i-form-item label="">
           <i-button @click="submitCondition" style="width: 120px;" type="primary" size="large">保存</i-button>
@@ -304,8 +304,8 @@
           approveFirstId: ''
         },
         conditionForm: {
-          'repaymentConName': '', // 放款条件项目名称
-          'repaymentConContent': '' // 放款条件项目内容
+          'paymentConName': '', // 放款条件项目名称
+          'paymentConContent': '' // 放款条件项目内容
         }
       };
     },
