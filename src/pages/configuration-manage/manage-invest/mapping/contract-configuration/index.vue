@@ -148,8 +148,8 @@
               capitalNo: this.getRowData.capitalNo,
               productNo: this.getRowData.productNo
             });
+            loadingMsg();
             if (respDel.success) {
-              loadingMsg();
               this.$Message.success('删除成功');
               this.getPrivateCustomerList();
             }

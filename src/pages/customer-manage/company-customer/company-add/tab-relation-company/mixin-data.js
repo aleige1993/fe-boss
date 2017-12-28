@@ -71,8 +71,8 @@ export default {
                           corpNo: this.corpNo,
                           relatedCorpNo: params.row.relatedCorpNo
                         });
+                        loadingMsg();
                         if (resp.success) {
-                          loadingMsg();
                           this.$Message.success('删除关联企业信息成功');
                           this.getRelationList();
                         }

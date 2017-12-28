@@ -30,17 +30,7 @@ export default {
           }
         }
       ],
-      dataFeature: [
-        {
-          productTag: '标签1'
-        },
-        {
-          productTag: '标签2'
-        },
-        {
-          productTag: '标签3'
-        }
-      ]
+      dataFeature: []
     };
   }
 };

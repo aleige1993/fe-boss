@@ -53,9 +53,9 @@ export default {
       ],
       data1: [
         {
-          fund: 'mockjs',
-          nominalRate: '3',
-          realRate: '2.5'
+          'fund': 'mockjs',
+          'nominalRate|1-10': 1,
+          'realRate': '2.5'
         }
       ]
     };

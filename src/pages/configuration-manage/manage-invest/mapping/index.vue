@@ -140,7 +140,7 @@
         showSelectCapital: false,      // 选择资方的弹窗
         currentPage: 1,
         total: 0,
-        pageSize: 10,
+        pageSize: 15,
         formSearch: {
           capitalName: '',
           currentPage: 1,

@@ -193,7 +193,7 @@
         ContractShowModal: false,         // 合同模板配置弹窗
         clickRow: {},
         total: 0,
-        pageSize: 10,
+        pageSize: 15,
         currentPage: 1,
         formSearch: {
           productName: '',
@@ -242,17 +242,23 @@
       },
       // 保存新增产品特性标签
       async formFeatureSubmit() {
-        this.$data.buttonFeatureLoading = true;
-        let resAdd = await this.$http.post('/pms/product/bindProductTag', {
-          productTag: this.$data.formFeature.productTag,
-          productNo: this.$data.clickRow.productNo
+        this.$refs['formFeature'].validate(async (valid) => {
+          if (valid) {
+            this.$data.buttonFeatureLoading = true;
+            let resAdd = await this.$http.post('/pms/product/bindProductTag', {
+              productTag: this.$data.formFeature.productTag,
+              productNo: this.$data.clickRow.productNo
+            });
+            this.$data.buttonFeatureLoading = false; // 关闭按钮的loading状态
+            this.$data.showFeatureModal = false;
+            if (resAdd.success) {
+              this.$Message.success('新增成功');
+              this.getProductTagList();
+            }
+          } else {
+            this.$Message.error('<span style="color: red">*</span>项不能为空');
+          }
         });
-        this.$data.buttonFeatureLoading = false; // 关闭按钮的loading状态
-        this.$data.showFeatureModal = false;
-        if (resAdd.success) {
-          this.$Message.success('新增成功');
-          this.getProductTagList();
-        }
       },
       // 删除产品标签的请求
       async removeFeature(row) {
@@ -263,8 +269,8 @@
             let respDel = await this.$http.post('/pms/product/removeProductTag', {
               productTagNo
             });
+            loadingMsg();
             if (respDel.success) {
-              loadingMsg();
               this.$Message.success('删除成功');
               this.getProductTagList();
             }
@@ -273,8 +279,10 @@
       },
       // 查询产品标签列表
       async getProductTagList() {
+        let productNo = await this.$data.clickRow.productNo;
         this.$data.tabelFeatureLoading = true;
         let resp = await this.$http.get('/pms/product/listProductTag', {
+          productNo,
           currentPage: 1,
           pageSize: 999999
         });
@@ -344,10 +352,11 @@
         this.$data.formCustom = {};
         this.$data.showAddModal = true;
       },
-      setList(row) {
+      async setList(row) {
         this.isAdd = false;
         this.$data.showAddModal = true;
-        this.formCustom = row;
+        this.formCustom = await row;
+        this.$data.clickRow = await row;
         this.getProductTagList(); // 修改时加载产品特性列表
       },
       // 修改情况下的提交数据
@@ -361,6 +370,7 @@
           productType: this.$data.formCustom.productType,  // 产品类型
           status: this.$data.formCustom.status  // 产品状态
         });
+        console.log(resModify);
         if (resModify.success) {
           this.$data.showAddModal = false;
           this.$data.buttonLoading = false;
@@ -378,8 +388,8 @@
               status: row.status,
               productNo
             });
+            loadingMsg();
             if (respDel.success) {
-              loadingMsg();
               this.$Message.success('删除产品成功');
               let jumpPage = this.$JumpPage.getPageRemove(this.$data.currentPage, this.$data.pageSize, this.$data.total);
               this.getPrivateCustomerList(jumpPage);

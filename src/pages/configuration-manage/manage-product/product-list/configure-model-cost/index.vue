@@ -216,8 +216,8 @@
               feeTypeNo,
               productNo: this.childMsg.productNo  // 产品编号
             });
+            loadingMsg();
             if (respDel.success) {
-              loadingMsg();
               this.$Message.success('删除费用类型成功');
               this.getPrivateCustomerList();
             }

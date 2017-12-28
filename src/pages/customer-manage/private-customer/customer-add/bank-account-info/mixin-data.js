@@ -59,8 +59,8 @@ export default {
                         let resp = await this.$http.post('/member/account/delete', {
                           recordId: params.row.id
                         });
+                        loadingMsg();
                         if (resp.success) {
-                          loadingMsg();
                           this.$Message.success('删除银行账户信息成功');
                           this.getCustomerBankList();
                         }

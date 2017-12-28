@@ -230,8 +230,8 @@
             let respDel = await this.$http.post('/pms/capital/cooperationRemove', {
               cooperationNo
             });
+            loadingMsg();
             if (respDel.success) {
-              loadingMsg();
               this.$Message.success('删除成功');
               this.getTabsAjax();
             }

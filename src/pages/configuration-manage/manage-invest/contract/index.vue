@@ -208,8 +208,8 @@
             let respDel = await this.$http.post('/contract/deleteContractTemplate', {
               contractTemplateNo: row.contractTemplateNo
             });
+            loadingMsg();
             if (respDel.success) {
-              loadingMsg();
               this.$Message.success('删除成功');
               let jumpPage = this.$JumpPage.getPageRemove(this.$data.currentPage, this.$data.pageSize, this.$data.total);
               this.getPrivateCustomerList(jumpPage);

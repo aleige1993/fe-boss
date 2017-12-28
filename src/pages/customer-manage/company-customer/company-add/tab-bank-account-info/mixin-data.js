@@ -60,8 +60,8 @@ export default {
                           corpNo: this.corpNo,
                           acctNo: params.row.acctNo
                         });
+                        loadingMsg();
                         if (resp.success) {
-                          loadingMsg();
                           this.$Message.success('删除银行账户信息成功');
                           this.getCustomerBankList();
                         }

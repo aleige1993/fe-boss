@@ -5,11 +5,11 @@ export default {
         {
           title: '放款条件ID',
           align: 'center',
-          key: 'vehicleDocCode'
+          key: 'loanRuleNo'
         },
         {
           title: '放款条件名称',
-          key: 'vehicleDocName'
+          key: 'loanRule'
         },
         {
           title: '操作',

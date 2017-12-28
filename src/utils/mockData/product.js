@@ -108,9 +108,9 @@ export default [
       'success': true
     })
   },
-  // 产品配置-车辆材料配置
+  // 产品配置-放款条件配置
   {
-    url: '/pms/cfgVehicleDoc/list',
+    url: 'loanRuleNo',
     on: true,
     resp: Mock.mock({
       'body': {
@@ -119,8 +119,8 @@ export default [
         'pageSize': 15,
         'resultList|10': [
           {
-            'vehicleDocName|+1': 1,
-            'vehicleDocCode': /[测试字体]{4,30}/
+            'loanRuleNo|+1': 1,
+            'loanRule': /[测试字体]{4,30}/
           }
         ],
         'startIndex': 0,
@@ -223,23 +223,44 @@ export default [
       'reCode': '0000'
     })
   },
-  // 产品配置-利率方案配置
+  // 产品配置-资方利率弹窗列表
   {
-    url: '/pms/productPackage/list',
-    on: true,
+    url: '/pms/productRate/fundRateList',
     type: 'get',
+    on: true,
     resp: Mock.mock({
       'reCode': '0000',
       'reMsg': '成功',
       'success': true,
       'body|5': [
         {
-          'bizType|1': ['1', '2'],
-          'loanPeriods|1': ['3', '6', '12', '18', '24'],
-          'loanNominalRate|1': ['0.15', '0.25', '0.2', '0.3', '0.1'],
-          'loanRealRate|1': ['0.15', '0.25', '0.2', '0.3', '0.1']
+          'fund': 'mockjs',
+          'nominalRate|1-10': 1,
+          'realRate': '2.5'
         }
       ]
+    })
+  },
+  // 产品配置-利率方案配置
+  {
+    url: '/pms/productRate/list',
+    type: 'get',
+    on: true,
+    resp: Mock.mock({
+      'reCode': '0000',
+      'reMsg': '成功',
+      'success': true,
+      'body': {
+        'resultList|5': [
+          {
+            'bizType|1': ['1', '2'],
+            'interestType|1': ['1', '2'],
+            'loanPeriods|1': ['3', '6', '12', '18', '24'],
+            'loanNominalRate|1': ['0.15', '0.25', '0.2', '0.3', '0.1'],
+            'loanRealRate|1': ['0.15', '0.25', '0.2', '0.3', '0.1']
+          }
+        ]
+      }
     })
   },
   // 产品配置-费用收取配置弹窗

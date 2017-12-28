@@ -48,7 +48,7 @@
         buttonLoading: false,
         currentPage: 1,
         total: 0,
-        pageSize: 4,
+        pageSize: 15,
         formCustom: {
           finishedDocName: ''
         }
@@ -86,10 +86,10 @@
         let resAdd = await this.$http.post('/pms/cfgFinishedDoc/save', {
           finishedDocName: this.$data.formCustom.finishedDocName
         });
+        this.$data.showAddModal = false;
+        this.$data.buttonLoading = false; // 关闭按钮的loading状态
         if (resAdd.success) {
-          this.$data.buttonLoading = false; // 关闭按钮的loading状态
           this.$Message.success('新增归档材料成功');
-          this.$data.showAddModal = false;
           this.getPrivateCustomerList();
         }
       },
@@ -113,9 +113,9 @@
           finishedDocCode: this.$data.formCustom.finishedDocCode,
           finishedDocName: this.$data.formCustom.finishedDocName
         });
+        this.$data.showAddModal = false;
+        this.$data.buttonLoading = false;
         if (resModify.success) {
-          this.$data.showAddModal = false;
-          this.$data.buttonLoading = false;
           this.$Message.success('修改归档材料成功');
           this.getPrivateCustomerList();
         }
@@ -129,8 +129,8 @@
             let respDel = await this.$http.get('/pms/cfgFinishedDoc/remove', {
               finishedDocCode
             });
+            loadingMsg();
             if (respDel.success) {
-              loadingMsg();
               this.$Message.success('删除归档材料成功');
               this.getPrivateCustomerList(this.$JumpPage.getPageRemove(this.$data.currentPage, this.$data.pageSize, this.$data.total));
             }

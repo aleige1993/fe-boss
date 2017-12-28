@@ -7,13 +7,13 @@
     <br>
     <br>
     <bs-model :title="isAdd ? '新增' : '修改'" v-model="showAddModal">
-      <i-form ref="rateForm" :model="rateForm" label-position="right" :label-width="100" style="padding-bottom:0;">
+      <i-form v-if="showAddModal" ref="rateForm" :model="rateForm" label-position="right" :label-width="100" style="padding-bottom:0;">
         <i-form-item
           label="资方"
-          prop="fund">
-          <input type="hidden" v-model="rateForm.fund"/>
+          prop="capitalNo">
+          <input type="hidden" v-model="rateForm.capitalNo"/>
           <i-input v-model="rateForm.fund" :readonly="true" placeholder="选择资方">
-            <i-button @click="showSelectCapital=!showSelectCapital" slot="append">选择资方 <Icon type="ios-more"></Icon></i-button>
+            <i-button @click="showSelectCapitalFun" slot="append">选择资方 <Icon type="ios-more"></Icon></i-button>
           </i-input>
         </i-form-item>
         <i-form-item label="名义利率" prop="nominalRate">
@@ -35,22 +35,17 @@
         </i-form-item>
       </i-form>
     </bs-model>
-    <!--选择资方的弹窗-->
-    <bs-modal title="选择资方" :width="1200" v-model="showSelectCapital">
-      <table-invest-list type="modal" v-if="showSelectCapital" ref="tableInvestList" @on-row-dbclick="selectCapital"></table-invest-list>
-    </bs-modal>
   </div>
 </template>
 
 <script>
   import BSModal from '@/components/bs-modal';
   import MixinData from './zf-lilv-model-Mixin-data';
-  import TableInvestList from '@/components/table-invest-list'; // 选择资方
+
   export default {
     name: 'zfLilvModel',
     components: {
-      'bs-model': BSModal,
-      TableInvestList
+      'bs-model': BSModal
     },
     props: {
       zfMsg: Object
@@ -62,7 +57,6 @@
         btnLoading: false,
         dataLoading: false,
         showAddModal: false,
-        showSelectCapital: false,
         rateForm: {
           fund: '', // 出资方
           capitalNo: '',
@@ -75,18 +69,23 @@
       this.getPrivateCustomerList();
     },
     methods: {
-      // 选择资方
-      selectCapital(row, index) {
-        this.$data.rateForm.capitalNo = row.capitalNo;
-        this.$data.rateForm.fund = row.capitalName;
-        this.$data.showSelectCapital = false;
+      // 父组件传过来了
+      zfliCapitalData(capitalData) {
+        this.$data.rateForm.fund = capitalData.capitalName;
+        this.$data.rateForm.capitalNo = capitalData.capitalNo;
+      },
+      // 资方选择弹窗启动
+      showSelectCapitalFun() {
+        this.$emit('show-select-capital');// 通知其父组件执行自定义事件“notice-lilv”
       },
       // 查询列表数据
       async getPrivateCustomerList() {
         this.$data.dataLoading = true;
+        console.log(this.zfMsg);
         let resp = await this.$http.get('/pms/productRate/fundRateList', {
           packageRateNo: this.zfMsg.packageRateNo
         });
+        console.log(resp);
         this.$data.dataLoading = false;
         if (resp.body.length !== 0) {
           this.$data.data1 = resp.body;
@@ -149,8 +148,8 @@
             let respDel = await this.$http.post('/pms/productRate/fundRateRemove', {
               fundRateNo
             });
+            loadingMsg();
             if (respDel.success) {
-              loadingMsg();
               this.$Message.success('删除成功');
               this.getPrivateCustomerList();
             }

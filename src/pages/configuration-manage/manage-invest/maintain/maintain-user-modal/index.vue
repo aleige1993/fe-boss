@@ -297,8 +297,8 @@
             let respDel = await this.$http.post('/pms/capital/accRemove', {
               id: row.id
             });
+            loadingMsg();
             if (respDel.success) {
-              loadingMsg();
               this.$Message.success('删除成功');
               this.getPrivateCustomerList();
             }

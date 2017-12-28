@@ -142,8 +142,8 @@
             let respDel = await this.$http.get('/pms/productMatch/save', {
               productMatchNo
             });
+            loadingMsg();
             if (respDel.success) {
-              loadingMsg();
               this.$Message.success('删除成功');
               this.getPrivateCustomerList(1);
             }
