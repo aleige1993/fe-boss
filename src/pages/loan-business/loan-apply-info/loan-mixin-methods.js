@@ -51,9 +51,9 @@ export default {
         if (ok) {
           if (name && $.trim(name).length !== 0) {
             this.$data.loanData.push({
-              groupName: name,
-              groupId: '',
-              files: []
+              loanDocName: name,
+              loanDocCode: '',
+              docDetailAttachList: []
             });
           }
         }

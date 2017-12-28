@@ -72,6 +72,7 @@
           // console.log(this.$data.personalData);
           let _dataTemp = $.extend({}, this.$data.personalData);
           _dataTemp.loanVO.status = '3';
+          _dataTemp.opeType = '1';
           this.saveLoanBiz(_dataTemp);
         } else {
         }
@@ -82,6 +83,7 @@
           // console.log(this.$data.personalData);
           let _dataTemp = $.extend({}, this.$data.personalData);
           _dataTemp.loanVO.status = '2';
+          _dataTemp.opeType = '2';
           this.saveLoanBiz(_dataTemp);
         } else {
         }

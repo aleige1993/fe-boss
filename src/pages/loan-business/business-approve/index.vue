@@ -12,7 +12,7 @@
         <apply-info ref="applyInfo" :customerType="'1'" :applyBasicInfo="formData" :loanAction="'firstApprove'"></apply-info>
       </i-tab-pane>
       <i-tab-pane :label="'审批信息'">
-        <approve-info ref="approveInfo" v-if="tabIndex == 1" :applyBasicInfo="formData"></approve-info>
+        <approve-info ref="approveInfo" :applyBasicInfo="formData"></approve-info>
       </i-tab-pane>
       <i-tab-pane label="人行征信报告">
         <iframe v-if="tabIndex == 2" src="http://www.baidu.com" width="100%" :height="iframeHeight" frameborder="0"></iframe>
@@ -28,8 +28,8 @@
       </i-tab-pane>
     </i-tabs>
     <div class="form-footer-actions">
-      <i-button @click="submitLoanApprove" :loading="initFormLoading" type="success">
-        <span v-if="!initFormLoading"><i class="iconfont icon-tijiao"></i> 提交</span>
+      <i-button @click="submitLoanApprove" :loading="submitApproveLoading" type="success">
+        <span v-if="!submitApproveLoading"><i class="iconfont icon-tijiao"></i> 提交</span>
         <span v-else> loading...</span>
       </i-button>
     </div>
@@ -56,6 +56,7 @@
         iframeHeight: 460,
         tabIndex: 1,
         initFormLoading: false,
+        submitApproveLoading: false,
         memberNo: '1',
         corpNo: '1'
       };

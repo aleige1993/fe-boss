@@ -1,5 +1,5 @@
 <template>
-  <div id="personal-basic">
+  <div id="personal-basic" style="position: relative">
     <i-form ref="formData" :model="formData" label-position="right" :label-width="160">
       <!--申请信息-->
       <bs-form-block :title="'申请信息'">
@@ -12,7 +12,7 @@
               prop="productNo">
               <input type="hidden" v-model="formData.productNo"/>
               <i-input v-model="formData.productName" :readonly="true" placeholder="选择产品">
-                <i-button @click="showSelectProduct=!showSelectProduct" slot="append">选择产品 <Icon type="ios-more"></Icon></i-button>
+                <i-button v-if="loanAction=='apply'" @click="showSelectProduct=!showSelectProduct" slot="append">选择产品 <Icon type="ios-more"></Icon></i-button>
               </i-input>
             </i-form-item>
           </i-col>
@@ -27,7 +27,7 @@
             <i-form-item label="车类"
                          prop="carType"
                          :rules="{required: true, message: '请选择',trigger: 'change'}">
-              <i-select v-model="formData.carType">
+              <i-select v-model="formData.carType" :disabled="loanAction!='apply'">
                 <i-option v-for="item in enumSelectData.get('BizTypeEnum')" :key="item.itemCode" :value="item.itemCode">{{item.itemName}}</i-option>
               </i-select>
             </i-form-item>
@@ -36,7 +36,7 @@
         <i-row>
           <i-col span="8">
             <i-form-item label="客户性质"
-                         prop="carType"
+                         prop="custKind"
                          :rules="{required: true, message: '请选择'}">
               <i-select v-model="formData.custKind">
                 <i-option :value="'1'">新增客户</i-option>
@@ -123,9 +123,9 @@
           </i-col>
           <i-col span="8">
             <i-form-item label="渠道商">
-              <input type="hidden" v-model="formData.productNo"/>
-              <i-input v-model="formData.productName" :readonly="true" placeholder="选择渠道商">
-                <i-button @click="showSelectProduct=!showSelectProduct" slot="append">选择渠道商 <Icon type="ios-more"></Icon></i-button>
+              <input type="hidden" v-model="formData.merchantAbbr"/>
+              <i-input v-model="formData.merchantAbbr" :readonly="true" placeholder="选择渠道商">
+                <i-button v-if="loanAction=='apply'" @click="showSelectDistributor=!showSelectDistributor" slot="append">选择渠道商 <Icon type="ios-more"></Icon></i-button>
               </i-input>
             </i-form-item>
           </i-col>
@@ -133,8 +133,8 @@
       </bs-form-block>
     </i-form>
     <!--客户信息组件-->
-    <personal-info v-if="customerType == '1'" :memberNo="memberNo" @getMember="getMember"></personal-info>
-    <company-customer-info v-if="customerType == '2'" :corpNo="corpNo" @on-select-company="selectCompany"></company-customer-info>
+    <personal-info :readonly="loanAction!='apply'" v-if="customerType == '1'" :memberNo="memberNo" @getMember="getMember"></personal-info>
+    <company-customer-info :readonly="loanAction!='apply'" v-if="customerType == '2'" :corpNo="corpNo" @on-select-company="selectCompany"></company-customer-info>
     <!--车辆信息-->
     <bs-form-block :title="'车辆信息'">
       <div class="form-top-actions">
@@ -562,6 +562,11 @@
     <bs-modal :title="'选择企业权利人'" v-model="showSelectCompanyGua" :width="1200">
       <table-company-customer-list v-if="showSelectCompanyGua" ref="obligeeTable" type="modal" @on-row-dbclick="selectCompanyGuaRow"></table-company-customer-list>
     </bs-modal>
+    <!--选择渠道商-->
+    <bs-modal :title="'选择渠道商'" v-model="showSelectDistributor" :width="1300">
+      <table-distributor-list v-if="showSelectDistributor" ref="distributorTable" type="modal" @on-row-dbclick="selectDistributor"></table-distributor-list>
+    </bs-modal>
+    <i-spin fix v-if="initApplyInfoLoading"></i-spin>
   </div>
 </template>
 
@@ -572,6 +577,7 @@
   import GetProductModal from '@/pages/configuration-manage/manage-product/product-list'; // 选择产品
   import personalInfo from '@/components/detail-personal-customer-basic/index.vue';
   import companyCustomerInfo from '@/components/detail-company-customer-basic/index.vue';
+  import TableDistributorList from '@/components/table-distributor-list/index.vue';
   import BsModal from '@/components/bs-modal';
   import MixinData from './mixin-data';
   import MixinMethods from './mixin-methods';
@@ -593,7 +599,8 @@
       'table-product-list': GetProductModal,
       'bs-modal': BsModal,
       'bs-carpicker': BsCarpicker,
-      LoanFileList
+      LoanFileList,
+      TableDistributorList
     },
     props: {
       customerType: String,

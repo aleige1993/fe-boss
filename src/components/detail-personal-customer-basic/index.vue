@@ -357,9 +357,9 @@ export default {
     }
   },
   watch: {
-    'memberNo'() {
-      if (typeof this.memberNo !== 'undefined' && this.memberNo !== '') {
-        this.initFormData(this.memberNo);
+    'memberNo'(newVal, oldVal) {
+      if (typeof newVal !== 'undefined' && newVal !== '') {
+        this.initFormData(newVal);
       }
     }
   },
