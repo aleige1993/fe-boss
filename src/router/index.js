@@ -146,8 +146,14 @@ let MyRouter = new Router({
             // 贷款业务-放款管理
             { path: 'loan', name: 'loanManage', component: resolve => require(['@/pages/loan-business/loan-manage'], resolve),
               children: [
-                // 贷款业务-放款管理-放款申请
-                { path: '/', name: 'applyList', component: resolve => require(['@/pages/loan-business/loan-manage/apply-list'], resolve)}
+                // 贷款业务-放款管理-放款条件落实
+                { path: '/', name: 'loanConditionList', component: resolve => require(['@/pages/loan-business/loan-manage/loan-condition-list'], resolve)},
+                // 贷款业务-放款管理-放款条件落实-办理详情
+                { path: 'handle', name: 'conditionHandleDetails', component: resolve => require(['@/pages/loan-business/loan-manage/loan-condition-list/condition-handle-details'], resolve)},
+                // 贷款业务-放款管理-放款费用落实
+                { path: 'fee', name: 'loanFeeList', component: resolve => require(['@/pages/loan-business/loan-manage/loan-fee-list'], resolve)},
+                // 贷款业务-放款管理-放款费用落实-办理详情
+                { path: 'fee/handle', name: 'feeHandleDetails', component: resolve => require(['@/pages/loan-business/loan-manage/loan-fee-list/fee-handle-details'], resolve)}
               ]
             }
           ]

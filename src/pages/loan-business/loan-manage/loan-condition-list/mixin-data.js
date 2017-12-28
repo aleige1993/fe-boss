@@ -1,7 +1,8 @@
 export default {
   data() {
     return {
-      applyListColumns: [
+      // 费用收取落实
+      conditionListColumns: [
         {
           title: '项目编号',
           key: 'loanNo',
@@ -36,11 +37,6 @@ export default {
         {
           title: '贷款金额(元)',
           key: 'loanAmt'
-        },
-        {
-          title: '申请时间',
-          key: 'applyTime',
-          width: 110
         },
         {
           title: '签约完成时间',
@@ -82,15 +78,20 @@ export default {
                 },
                 on: {
                   click: () => {
-                    alert(Object.assign({}, params.row));
+                    this.$router.push({
+                      path: '/index/loanbusiness/loan/handle',
+                      query: {
+                        currentPage: this.$data.currentPage
+                      }
+                    });
                   }
                 }
-              }, '请款')
+              }, '办理')
             ]);
           }
         }
       ],
-      applyListData: []
+      conditionListData: []
     };
   }
 };

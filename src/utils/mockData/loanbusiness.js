@@ -375,9 +375,161 @@ export default [
       'success': true
     })
   },
-  // 放款管理-放款申请列表
+  // 放款管理-放款条件列表
   {
-    url: '/loanApplyListMock',
+    url: '/loanConditionListMock',
+    on: true,
+    resp: Mock.mock({
+      'body': {
+        'currentPage': 1,
+        'pageSize': 10,
+        'totalNum': 20,
+        'resultList|10': [
+          {
+            'loanNo': '111111',
+            'custName': 'mockjs',
+            'certType|1': ['1', '2'],
+            'certNo': /^[1-9]\d{5}(18|19|([23]\d))\d{2}((0[1-9])|(10|11|12))(([0-2][1-9])|10|20|30|31)\d{3}[0-9Xx]$/,
+            'productName': '@name',
+            'loanPeriods|1': ['3', '6', '12', '18', '24'],
+            'loanAmt|1000-100000': 1000,
+            'applyTime': '@date()',
+            'endDate': '@date()',
+            'taskArriveTime': '@date()',
+            'timeConsuming': '@time',
+            'taskNode|1': ['1', '2', '3', '4', '5']
+          }
+        ]
+      },
+      'reCode': '0000',
+      'reMsg': '成功',
+      'success': true
+    })
+  },
+  // 放款管理-办理详情-车辆信息
+  {
+    url: '/handle/car',
+    on: true,
+    resp: Mock.mock({
+      'body': {
+        'currentPage': 1,
+        'pageSize': 15,
+        'resultList|3': [
+          {
+            'carBrandName': '长安',
+            'carModel': 'CS75',
+            'carPlateNo': /渝B [0-9A-Z]{5}/,
+            'carEngineNo': /[0-9A-Z]{18}/,
+            'carFrameNo': /[0-9A-Z]{18}/,
+            'isMortgage|1': ['0', '1'],
+            'isGPS|1': ['0', '1'],
+            'GPSstate|1': ['0', '1']
+          }
+        ]
+      },
+      'reCode': '0000',
+      'reMsg': '成功',
+      'success': true
+    })
+  },
+  // 放款管理-办理详情-担保信息
+  {
+    url: '/handle/assure',
+    on: true,
+    resp: Mock.mock({
+      'body': {
+        'currentPage': 1,
+        'pageSize': 15,
+        'resultList|3': [
+          {
+            'guaPersonType|1': ['1', '2'],
+            'guaPersonNo': '1111111',
+            'guaPersonName': 'mockjs',
+            'guaPersonCertType|1': ['1', '2'],
+            'guaPersonCertNo': /^[1-9]\d{5}(18|19|([23]\d))\d{2}((0[1-9])|(10|11|12))(([0-2][1-9])|10|20|30|31)\d{3}[0-9Xx]$/,
+            'guaPersonMobile': /1[3578]{1}[0-9]{9}/,
+            'implementState|1': ['1', '2']
+          }
+        ]
+      },
+      'reCode': '0000',
+      'reMsg': '成功',
+      'success': true
+    })
+  },
+  // 放款管理-办理详情-放款条件列表
+  {
+    url: '/handle/condition',
+    on: true,
+    resp: Mock.mock({
+      'body': {
+        'currentPage': 1,
+        'pageSize': 15,
+        'resultList|3': [
+          {
+            'project': 'GPS安装完成',
+            'remarks': /备注:[0-9A-Z]{18}/,
+            'implementState|1': ['1', '2']
+          }
+        ]
+      },
+      'reCode': '0000',
+      'reMsg': '成功',
+      'success': true
+    })
+  },
+  // 放款管理-办理详情-审批信息
+  {
+    url: '/handle/examine',
+    on: true,
+    resp: Mock.mock({
+      'body': {
+        'currentPage': 1,
+        'pageSize': 15,
+        'resultList|3': [
+          {
+            'name': 'mockjs',
+            'taskNode|1': ['1', '2', '3', '4'],
+            'timenStart': '@date',
+            'timeEnd': '@date',
+            'longTime': '@time',
+            'conclusion': /结论 [0-9a-z]{18}/,
+            'opinion': /意见信息 [0-9a-z]{18}/
+          }
+        ]
+      },
+      'reCode': '0000',
+      'reMsg': '成功',
+      'success': true
+    })
+  },
+  // 放款管理-办理详情-GPS安装信息列表
+  {
+    url: '/handle/GPSinstall',
+    on: true,
+    resp: Mock.mock({
+      'body': {
+        'currentPage': 1,
+        'pageSize': 15,
+        'resultList|3': [
+          {
+            'GPSModel': /型号 [0-9]{4}/,
+            'IMEI': /[A-Z0-9]{18}/,
+            'GPScooperative': /GPS合作商 [0-9]{4}/,
+            'installState': '1',
+            'handleName': 'mockjs',
+            'handleTime': '@date'
+          }
+        ]
+      },
+      'reCode': '0000',
+      'reMsg': '成功',
+      'success': true
+    })
+  },
+  // 放款管理-放款条件列表
+  {
+    url: '/loanFeeListMock',
     on: true,
     resp: Mock.mock({
       'body': {
