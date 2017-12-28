@@ -29,8 +29,10 @@ class Http {
    */
   post(_url, _data, isNeedLogin = true) {
     if (Config.XHRLOG) {
+      /* eslint-disable */
       console.info(`----来自${_url}的POST请求----`);
       console.info(JSON.stringify(_data));
+      /* eslint-disable */
     }
     let _headers = {};
     if (isNeedLogin) {
@@ -47,7 +49,6 @@ class Http {
     }).then(res => {
       if (res.data.reCode === '0004' || res.data.reCode === 'BS0004') {
         toastr.error('登录超时');
-        console.log(MyRouter);
         MyRouter.push(
           {
             path: '/login',
@@ -59,7 +60,7 @@ class Http {
       } else if (res.data.reCode === '0000' || res.data.reCode === 'BS0000') {
         return res.data;
       } else {
-        toastr.error(res.data.reCode + ' = ' + res.data.reMsg);
+        toastr.error(_url + '<br/>' + res.data.reCode + ' <br/> ' + res.data.reMsg);
         return res.data;
       }
     }).catch(err => {
@@ -74,7 +75,9 @@ class Http {
    */
   get(_url, _params = {}, isNeedLogin = true) {
     if (Config.XHRLOG) {
+      /* eslint-disable */
       console.info(`----来自${_url}的GET请求----`);
+      /* eslint-disable */
     }
     let _headers = {};
     if (isNeedLogin) {
@@ -103,7 +106,7 @@ class Http {
       } else if (res.data.reCode === '0000' || res.data.reCode === 'BS0000') {
         return res.data;
       } else {
-        toastr.error(res.data.reMsg);
+        toastr.error(_url + '<br/>' + res.data.reCode + ' <br/> ' + res.data.reMsg);
         return res.data;
       }
     }).catch(err => {

@@ -32,7 +32,7 @@
 <script>
   import Tools from '../../../utils/Tools';
   export default {
-    name: '',
+    name: 'loanFileList',
     data() {
       return {
         isUploading: false

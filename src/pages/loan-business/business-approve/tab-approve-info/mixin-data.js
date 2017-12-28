@@ -19,7 +19,6 @@ export default {
             return h('i-select', {
               on: {
                 'on-change': (value) => {
-                  debugger;
                   let rowData = { ...params.row };
                   rowData.status = value;
                   this.$set(this.$data.approveData.loanApproveRuleDTOS, params.index, rowData);
@@ -51,28 +50,28 @@ export default {
       firstApproveColumns: [
         {
           title: '查询渠道',
-          key: 'itemName'
+          key: 'approveWebsite'
         },
         {
           title: '查询描述',
-          key: 'description'
+          key: 'approveDesc'
         },
         {
           title: '查询结果',
-          key: 'fileUrl',
+          key: 'resultPath',
           render: (h, params) => {
-            if (Tools.isImg(params.row.fileUrl)) {
+            if (Tools.isImg(params.row.resultPath)) {
               return h('bs-big-img', {
                 props: {
                   thumbWidth: 80,
                   thumbHeight: 80,
                   // fullWidth: 500,
-                  thumb: params.row.fileUrl,
-                  full: params.row.fileUrl
+                  thumb: params.row.resultPath,
+                  full: params.row.resultPath
                 }
               });
             } else {
-              return params.row.fileUrl;
+              return params.row.resultFileName;
             }
           }
         },
@@ -90,7 +89,7 @@ export default {
                 },
                 on: {
                   click: () => {
-                    window.open(params.row.fileUrl, '_blank');
+                    window.open(params.row.resultPath, '_blank');
                   }
                 }
               }, '下载'),
@@ -103,7 +102,7 @@ export default {
                 on: {
                   click: () => {
                     // console.log(params);
-                    this.$data.approveData.firstTrialParam.creditCheckItemsList.splice(params.index, 1);
+                    this.$data.approveData.loanApproveFirstDTOS.splice(params.index, 1);
                   }
                 }
               }, '删除')
@@ -149,10 +148,10 @@ export default {
                 'v-model': params.row.feeActualAmt
               },
               on: {
-                'input': (value) => {
+                'on-change': (value) => {
                   let rowData = Object.assign({}, params.row);
                   rowData.feeActualAmt = value;
-                  this.$set(this.$data.approveData.loanApproveFeePlanDTOS, params.index, rowData);
+                  // this.$set(this.$data.approveData.loanApproveFeePlanDTOS, params.index, rowData);
                 }
               }
             });
@@ -192,29 +191,46 @@ export default {
       loanFundPartyCol: [
         {
           title: '资方名称',
-          key: 'aa'
+          key: 'capitalName'
         },
         {
           title: '放款比例（%）',
-          key: 'aa'
+          key: 'paymentPercent'
         },
         {
           title: '资方借款利率',
-          key: 'aa'
+          key: 'loanRate'
         },
         {
           title: '账户名',
-          key: 'aa'
+          key: 'acctName'
         },
         {
           title: '开户银行',
-          key: 'aa'
+          key: 'openBank'
         },
         {
           title: '账号',
-          key: 'aa'
+          key: 'acctNo',
+          render: (h, params) => {
+            return h('i-input', {
+              props: {
+                'value': params.row.acctNo
+              },
+              on: {
+                'on-blur': (event) => {
+                  let rowData = Object.assign({}, params.row);
+                  rowData.acctNo = event.target.value;
+                  this.$set(this.$data.approveData.loanCapitalDTOS, params.index, rowData);
+                }
+              }
+            });
+          }
         }
       ],
+      paymentAccountList: [], // 贷款账户下拉
+      repaymentAccountList: [], // 还款账户下拉
+      loanPeriodsList: [], // 贷款期限下拉菜单
       approveData: {
         // 贷款准入规则
         'loanApproveRuleDTOS': [
@@ -228,15 +244,16 @@ export default {
         // 初审信息
         'loanApproveFirstDTOS': [
           /* {
-            'approveDesc': '',
-            'approveWebsite': '',
-            'resultPath': '',
-            'resultFileName': ''
+            approveDesc: '',
+            approveWebsite: '',
+            resultPath: '',
+            resultFileName: '',
+            approveFirstId: ''
           }*/
         ],
         // 用信方案
         'loanApproveCreditDTO': {
-          'loanPeriods': '',
+          'loanPeriods': '12',
           'loanRealRate': '',
           'capitalNo': '',
           'loanNominalRate': '',
@@ -253,7 +270,8 @@ export default {
           'riskControlContent': '',
           'remark': '',
           'repaymentMode': '',
-          'loanMode': ''
+          'loanMode': '',
+          carSaleAmt: '' // 车辆销售价格
         },
         // 费用收取方案
         'loanApproveFeePlanDTOS': [
@@ -274,16 +292,23 @@ export default {
           'opinion': ''
         },
         // 放款账户
-        'loanApproveAccountDTOS': [
-          {
-            'acctFlag': '', // 账号类型标识:1-还款账号;2-放款账号;3-收款账
-            'acctName': '', // 账户名
-            'acctNo': '', // 账号
-            'bankCode': '', // 银行编码
-            'bankName': '', // 银行名称
-            'openBankName': '' // 开户行
-          }
-        ],
+        'loanPaymentAccountDTOS': {
+          'acctFlag': '', // 账号类型标识:1-还款账号;2-放款账号;3-收款账
+          'acctName': '', // 账户名
+          'acctNo': '', // 账号
+          'bankCode': '', // 银行编码
+          'bankName': '', // 银行名称
+          'openBankName': '' // 开户行
+        },
+        // 还款账户
+        'loanRePaymentAccountDTOS': {
+          'acctFlag': '', // 账号类型标识:1-还款账号;2-放款账号;3-收款账
+          'acctName': '', // 账户名
+          'acctNo': '', // 账号
+          'bankCode': '', // 银行编码
+          'bankName': '', // 银行名称
+          'openBankName': '' // 开户行
+        },
         // 放款条件
         loanPaymentConditionDTOS: [
           {
@@ -292,6 +317,21 @@ export default {
             'repaymentConContent': '', // 放款条件项目内容
             'status': '' // 放款条件是否落实：1是；0-否
           }
+        ],
+        loanCapitalDTOS: [
+          /* {
+            'capitalNo': '',
+            'capitalName': '',
+            'loanRate': '',
+            'loanRatio': '',
+            'acctName': '',
+            'acctNo': '',
+            'bankCode': '',
+            'bankName': '',
+            'openBankName': '',
+            'openBankNo': '',
+            'clearingBankNo': ''
+          }*/
         ]
       }
     };

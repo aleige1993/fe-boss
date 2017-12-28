@@ -1,6 +1,7 @@
 export default {
   data() {
     return {
+      initApplyInfoLoading: false,
       memberNo: '',
       corpNo: '',
       member: {},
@@ -11,6 +12,7 @@ export default {
       showSelectGua: false,
       showSelectCompanyGua: false,
       showAddLoanFilesModal: false, // 新增贷款材料清单
+      showSelectDistributor: false,
       personalBasicInfo: {},
       // 车辆
       isAddCar: true,
@@ -124,7 +126,9 @@ export default {
         status: '', // 状态0-未处理1-处理中2-已处理,3-草稿,9-废弃
         apply_address: '',
         longitude: '',
-        latitude: ''
+        latitude: '',
+        merchantNo: '',
+        merchantAbbr: ''
       }
     };
   }

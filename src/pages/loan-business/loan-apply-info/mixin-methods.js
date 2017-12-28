@@ -82,6 +82,16 @@ export default {
         });
       }
     },
+    /**
+     * 选择渠道商
+     * @param row
+     * @param index
+     */
+    selectDistributor(row, index) {
+      this.$data.formData.merchantNo = row.corpNo;
+      this.$data.formData.merchantAbbr = row.corpName;
+      this.$data.showSelectDistributor = false;
+    },
     // 验证表单信息并向外抛出数据
     verification() {
       let formName = 'formData';
@@ -112,12 +122,40 @@ export default {
       });
       return resReturn;
     },
+    /**
+     * 表单验证
+     */
+    validate() {
+      let _valid = false;
+      this.$refs['formData'].validate((valid) => {
+        if (!valid) {
+          this.$Notice.error({
+            desc: '请先完善申请信息'
+          });
+        }
+        _valid = valid;
+      });
+      return _valid;
+    },
+    /**
+     * 获取申请数据
+     * @returns {void|*|Function}
+     */
+    getApplyData() {
+      return $.extend(
+        this.$data.member,
+        { loanVO: this.$data.formData },
+        { 'loanCarVOS': this.$data.carData },
+        { 'loanGuaranteeVOS': this.$data.assureData },
+        { 'loanDocDetailVOS': this.$data.loanData }
+      );
+    },
     async initPage() {
-      // alert(1);
-      await bsWait(500);
+      await bsWait(800);
       if (this.applyBasicInfo) {
         this.$data.formData = $.extend({}, this.applyBasicInfo);
         this.$data.memberNo = this.applyBasicInfo.memberNo;
+        this.$data.initApplyInfoLoading = true;
         let getLoanCarListResp = this.$http.post('/biz/listLoanCarByLoanNo', {
           loanNo: this.applyBasicInfo.loanNo
         });
@@ -127,6 +165,7 @@ export default {
         let getLoanDocListResp = this.$http.post('/biz/listDocDetailByLoanNo', {
           loanNo: this.applyBasicInfo.loanNo
         });
+        this.$data.initApplyInfoLoading = false;
         let carResp = await getLoanCarListResp;
         let guaResp = await getGuaListResp;
         let loanDocResp = await getLoanDocListResp;
