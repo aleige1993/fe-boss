@@ -75,9 +75,10 @@ export default {
                   size: 'small'
                 },
                 on: {
-                  click: () => {
+                  click: async () => {
                     this.$data.GPSinstallShowModal = true;
-                    this.$data.clickRow = params.row;
+                    this.$data.clickRow = await params.row;
+                    this.GPSinstallGetlist();
                   }
                 }
               }, 'GPS安装落实')
@@ -85,18 +86,7 @@ export default {
           }
         }
       ],
-      carData: [
-        {
-          'carBrandName': '长安',
-          'carModel': 'CS75',
-          'carPlateNo': '渝B 88888',
-          'carEngineNo': 'AS6D54W84XASD',
-          'carFrameNo': 'AS6D54W8D1A6SD',
-          'isMortgage': '1',
-          'isGPS': '1',
-          'GPSstate': '1'
-        }
-      ],
+      carData: [],
       // 担保信息
       assureColumns: [
         {
@@ -149,7 +139,9 @@ export default {
                 },
                 on: {
                   click: () => {
-                    alert('担保落实');
+                    this.$data.guaranteeShowModal = true;
+                    this.$data.formagGuarantee = {};
+                    this.$data.formagGuarantee = params.row;
                   }
                 }
               }, '担保落实')
@@ -157,27 +149,14 @@ export default {
           }
         }
       ],
-      assureData: [
-        {
-          'guaPersonType': '1',
-          'guaPersonNo': '1111111',
-          'guaPersonName': 'mockjs',
-          'guaPersonCertType': '2',
-          'guaPersonCertNo': '02388888888',
-          'guaPersonMobile': '18688888888',
-          'implementState': '1'
-        }
-      ],
+      assureData: [],
       // 放款条件
       conditionColumns: [
         {
           title: '项目',
           align: 'center',
           width: 200,
-          key: 'project',
-          render: (h, params) => {
-            return h('span', {}, params.row.guaPersonType === '1' ? '个人' : '企业');
-          }
+          key: 'project'
         },
         {
           title: '备注',
@@ -212,13 +191,13 @@ export default {
             }, [
               h('i-option', {
                 props: {
-                  label: '已落实',
+                  label: '未落实',
                   value: '1'
                 }
               }),
               h('i-option', {
                 props: {
-                  label: '未落实',
+                  label: '已落实',
                   value: '2'
                 }
               })
@@ -226,48 +205,43 @@ export default {
           }
         }
       ],
-      conditionData: [
-        {
-          'project': 'GPS安装完成',
-          'remarks': '备注0001',
-          'implementState': '1'
-        }
-      ],
+      conditionData: [],
       // 审批信息
       examineColumns: [
         {
           title: '处理人',
           align: 'center',
-          width: 150,
+          width: 180,
           key: 'name'
         },
         {
           title: '任务节点',
-          key: 'taskNode'
+          key: 'taskNode',
+          render: (h, params) => {
+            return h('span', {}, this.enumCode2Name(params.row.taskNode, 'LoanBizNodeEnum'));
+          }
         },
         {
           title: '开始时间',
-          width: 180,
+          width: 120,
           key: 'timenStart'
         },
         {
           title: '结束时间',
-          width: 180,
+          width: 120,
           key: 'timeEnd'
         },
         {
           title: '耗时',
           width: 100,
-          key: 'long'
+          key: 'longTime'
         },
         {
           title: '结论',
-          width: 200,
           key: 'conclusion'
         },
         {
           title: '意见信息',
-          width: 300,
           key: 'opinion'
         }
       ],
@@ -322,6 +296,7 @@ export default {
                   click: () => {
                     this.$data.isAddGPS = false;
                     this.$data.GPSShowModal = true;
+                    this.$data.formAddGPS = {};
                     this.$data.formAddGPS = params.row;
                   }
                 }
@@ -341,16 +316,7 @@ export default {
           }
         }
       ],
-      GPSinstallData: [
-        {
-          'GPSModel': '型号1',
-          'IMEI': 'IMEI1',
-          'GPScooperative': 'GPS合作商1',
-          'installState': '1',
-          'handleName': '马云',
-          'handleTime': '2017-12-27'
-        }
-      ]
+      GPSinstallData: []
     };
   }
 };

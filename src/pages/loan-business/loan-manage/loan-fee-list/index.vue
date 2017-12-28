@@ -1,11 +1,11 @@
 <template>
 <!--放款申请列表-->
-  <div id="page-loan-condition-list">
+  <div id="page-loan-fee-list">
     <i-breadcrumb separator=">">
       <i-breadcrumb-item href="/">首页</i-breadcrumb-item>
       <i-breadcrumb-item href="/components/breadcrumb">贷款业务</i-breadcrumb-item>
       <i-breadcrumb-item href="/index/loanbusiness/loan">放款管理</i-breadcrumb-item>
-      <i-breadcrumb-item>放款条件落实</i-breadcrumb-item>
+      <i-breadcrumb-item>放款费用落实</i-breadcrumb-item>
     </i-breadcrumb>
     <div class="form-block-title">
       查询条件
@@ -40,7 +40,7 @@
         </i-form-item>
       </i-form>
     </div>
-    <i-table :loading="dataLoading" border ref="tableData" :columns="conditionListColumns" :data="conditionListData"></i-table>
+    <i-table :loading="dataLoading" border ref="tableData" :columns="feeListColumns" :data="feeListData"></i-table>
     <div class="page-container">
       <i-page @on-change="jumpPage" :total="total" :page-size="pageSize" size="small" show-elevator show-total></i-page>
     </div>
@@ -50,7 +50,7 @@
 <script>
   import MixinData from './mixin-data';
   export default {
-    name: 'pageloanConditionList',
+    name: 'pageloanFeeList',
     mixins: [MixinData],
     data() {
       return {
@@ -77,14 +77,14 @@
         if (page) {
           this.$data.currentPage = page;
         }
-        let resp = await this.$http.post('loanConditionListMock', {
+        let resp = await this.$http.post('loanFeeListMock', {
           ...this.$data.searchForm,
           currentPage: this.$data.currentPage,
           pageSize: this.$data.pageSize
         });
         this.$data.dataLoading = false;
         if (resp.body.resultList.length !== 0) {
-          this.$data.conditionListData = resp.body.resultList;
+          this.$data.feeListData = resp.body.resultList;
           this.$data.currentPage = resp.body.currentPage;
           this.$data.total = resp.body.totalNum;
         } else {
@@ -92,7 +92,7 @@
             title: '没有数据可加载',
             duration: 2
           });
-          this.$data.conditionListData = [];
+          this.$data.feeListData = [];
         }
       },
       search() {
