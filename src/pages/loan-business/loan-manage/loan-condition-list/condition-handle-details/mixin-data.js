@@ -10,20 +10,21 @@ export default {
         },
         {
           title: '车辆型号',
-          width: 120,
           key: 'carModel'
         },
         {
           title: '车牌号',
-          width: 100,
+          width: 120,
           key: 'carPlateNo'
         },
         {
           title: '发动机号',
+          width: 180,
           key: 'carEngineNo'
         },
         {
           title: '车架号',
+          width: 180,
           key: 'carFrameNo'
         },
         {
@@ -38,14 +39,17 @@ export default {
         {
           title: '是否安装GPS',
           width: 110,
-          key: 'isGPS',
+          key: 'isInstallGps',
           render: (h, params) => {
-            return h('span', {}, this.enumCode2Name(params.row.isGPS, 'YesNoEnum'));
+            return h('span', {}, this.enumCode2Name(params.row.isInstallGps, 'YesNoEnum'));
           }
         },
         {
           title: 'GPS安装状态',
-          key: 'GPSstate'
+          key: 'gpsInstallStatus',
+          render: (h, params) => {
+            return h('span', {}, this.enumCode2Name(params.row.gpsInstallStatus, 'GpsInstallStatusEnum'));
+          }
         },
         {
           title: '操作',
@@ -78,7 +82,7 @@ export default {
                   click: async () => {
                     this.$data.GPSinstallShowModal = true;
                     this.$data.clickRow = await params.row;
-                    this.GPSinstallGetlist();
+                    this.GPSinstallGetlist(params.row);
                   }
                 }
               }, 'GPS安装落实')
@@ -95,7 +99,7 @@ export default {
           width: 100,
           key: 'guaPersonType',
           render: (h, params) => {
-            return h('span', {}, params.row.guaPersonType === '1' ? '个人' : '企业');
+            return h('span', {}, this.enumCode2Name(params.row.guaPersonType, 'MemberTypeEnum'));
           }
         },
         {
@@ -123,7 +127,10 @@ export default {
         },
         {
           title: '落实状态',
-          key: 'implementState'
+          key: 'lsStatus',
+          render: (h, params) => {
+            return h('span', {}, this.enumCode2Name(params.row.lsStatus, 'LoanLuoShiStatusEnum'));
+          }
         },
         {
           title: '操作',
@@ -156,19 +163,19 @@ export default {
           title: '项目',
           align: 'center',
           width: 200,
-          key: 'project'
+          key: 'paymentConName'
         },
         {
           title: '备注',
-          key: 'remarks',
+          key: 'paymentConContent',
           render: (h, params) => {
             return h('i-input', {
               props: {
-                'value': params.row.remarks
+                'value': params.row.paymentConContent
               },
               on: {
                 'on-blur': (event) => {
-                  this.$data.conditionData[params.index].remarks = event.target.value;
+                  this.$data.conditionData[params.index].paymentConContent = event.target.value;
                 }
               }
             });
@@ -176,32 +183,26 @@ export default {
         },
         {
           title: '落实状态',
-          key: 'implementState',
+          key: 'status',
           width: 200,
           render: (h, params) => {
             return h('i-select', {
               props: {
-                'value': params.row.implementState
+                'value': params.row.status
               },
               on: {
                 'on-change': (val) => {
-                  this.$data.conditionData[params.index].implementState = val;
+                  this.$data.conditionData[params.index].status = val;
                 }
               }
-            }, [
-              h('i-option', {
+            }, this.enumSelectData.get('LoanLuoShiStatusEnum').map((item) => {
+              return h('i-option', {
                 props: {
-                  label: '未落实',
-                  value: '1'
+                  label: item.itemName,
+                  value: item.itemCode
                 }
-              }),
-              h('i-option', {
-                props: {
-                  label: '已落实',
-                  value: '2'
-                }
-              })
-            ]);
+              });
+            }));
           }
         }
       ],
@@ -212,33 +213,33 @@ export default {
           title: '处理人',
           align: 'center',
           width: 180,
-          key: 'name'
+          key: 'handleUserName'
         },
         {
           title: '任务节点',
-          key: 'taskNode',
+          key: 'taskName',
           render: (h, params) => {
-            return h('span', {}, this.enumCode2Name(params.row.taskNode, 'LoanBizNodeEnum'));
+            return h('span', {}, this.enumCode2Name(params.row.taskName, 'LoanBizNodeEnum'));
           }
         },
         {
           title: '开始时间',
           width: 120,
-          key: 'timenStart'
+          key: 'startTime'
         },
         {
           title: '结束时间',
           width: 120,
-          key: 'timeEnd'
+          key: 'endTime'
         },
         {
           title: '耗时',
           width: 100,
-          key: 'longTime'
+          key: 'timeConsuming'
         },
         {
           title: '结论',
-          key: 'conclusion'
+          key: 'approveStatus'
         },
         {
           title: '意见信息',
@@ -251,31 +252,34 @@ export default {
         {
           title: 'GPS型号',
           width: 150,
-          key: 'GPSModel'
+          key: 'gpsModel'
         },
         {
           title: 'IMEI',
-          key: 'IMEI'
+          key: 'imei'
         },
         {
           title: 'GPS合作商',
           width: 180,
-          key: 'GPScooperative'
+          key: 'gpsJoinMerchant'
         },
         {
           title: '安装状态',
           width: 180,
-          key: 'installState'
+          key: 'gpsInstallStatus',
+          render: (h, params) => {
+            return h('span', {}, this.enumCode2Name(params.row.gpsInstallStatus, 'GpsInstallStatusEnum'));
+          }
         },
         {
           title: '办理人',
           width: 100,
-          key: 'handleName'
+          key: 'makeUser'
         },
         {
           title: '办理时间',
           width: 200,
-          key: 'handleTime'
+          key: 'makeDate'
         },
         {
           title: '操作',
@@ -308,7 +312,7 @@ export default {
                 },
                 on: {
                   click: () => {
-                    // this.remove(params.index);
+                    this.$data.GPSinstallData.splice(params.index, 1);
                   }
                 }
               }, '删除')

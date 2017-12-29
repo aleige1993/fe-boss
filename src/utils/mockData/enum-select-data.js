@@ -1144,6 +1144,114 @@ export default [
               'itemName': '待签署'
             }
           ]
+        },
+        {
+          'groupKey': 'PaymentTaskStatusEnum',
+          'items': [
+            {
+              'itemCode': '0',
+              'itemName': '回退处理中'
+            },
+            {
+              'itemCode': '1',
+              'itemName': '放款条件落实待处理'
+            },
+            {
+              'itemCode': '2',
+              'itemName': '放款条件落实处理中'
+            },
+            {
+              'itemCode': '3',
+              'itemName': '放款费用落实待处理'
+            },
+            {
+              'itemCode': '4',
+              'itemName': '放款费用落实处理中'
+            },
+            {
+              'itemCode': '5',
+              'itemName': '放款审批待处理'
+            },
+            {
+              'itemCode': '6',
+              'itemName': '放款审批处理中'
+            },
+            {
+              'itemCode': '7',
+              'itemName': '提交第三方(核心)放款处理中'
+            },
+            {
+              'itemCode': '8',
+              'itemName': '第三方(核心)放款处理成功'
+            },
+            {
+              'itemCode': '9',
+              'itemName': '第三方(核心)放款处理失败'
+            }
+          ]
+        },
+        {
+          'groupKey': 'ReceivModeEnum',
+          'items': [
+            {
+              'itemCode': '1',
+              'itemName': '现金'
+            },
+            {
+              'itemCode': '2',
+              'itemName': '转账'
+            },
+            {
+              'itemCode': '3',
+              'itemName': 'POS'
+            },
+            {
+              'itemCode': '4',
+              'itemName': '支票'
+            }
+          ]
+        },
+        // 担保人（保证人）类型
+        {
+          'groupKey': 'MemberTypeEnum',
+          'items': [
+            {
+              'itemCode': '1',
+              'itemName': '个人'
+            },
+            {
+              'itemCode': '2',
+              'itemName': '公司'
+            }
+          ]
+        },
+        // 放款落实状态
+        {
+          'groupKey': 'LoanLuoShiStatusEnum',
+          'items': [
+            {
+              'itemCode': '0',
+              'itemName': '未落实'
+            },
+            {
+              'itemCode': '1',
+              'itemName': '已落实'
+            }
+          ]
+        },
+        // 车辆gps安装状态
+        {
+          'groupKey': 'GpsInstallStatusEnum',
+          'items': [
+            {
+              'itemCode': '0',
+              'itemName': '未安装'
+            },
+            {
+              'itemCode': '1',
+              'itemName': '已安装'
+            }
+          ]
         }
       ],
       'reCode': '0000',

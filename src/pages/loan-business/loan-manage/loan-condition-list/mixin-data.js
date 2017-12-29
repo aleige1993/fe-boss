@@ -1,7 +1,7 @@
 export default {
   data() {
     return {
-      // 费用收取落实
+      // 放款条件落实
       conditionListColumns: [
         {
           title: '项目编号',
@@ -31,16 +31,16 @@ export default {
         },
         {
           title: '期数',
-          key: 'loanPeriods',
+          key: 'totalPeriods',
           width: 80
         },
         {
           title: '贷款金额(元)',
-          key: 'loanAmt'
+          key: 'loanTotalAmt'
         },
         {
           title: '签约完成时间',
-          key: 'endDate',
+          key: 'signConfirmDate',
           width: 110
         },
         {
@@ -81,7 +81,9 @@ export default {
                     this.$router.push({
                       path: '/index/loanbusiness/loan/handle',
                       query: {
-                        currentPage: this.$data.currentPage
+                        currentPage: this.$data.currentPage,
+                        paymentNo: params.row.paymentNo,
+                        loanNo: params.row.loanNo
                       }
                     });
                   }
