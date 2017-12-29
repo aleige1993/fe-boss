@@ -21,6 +21,11 @@
             <i-button @click="showSelectContractTemplate=!showSelectContractTemplate" slot="append">选择合同模板 <Icon type="ios-more"></Icon></i-button>
           </i-input>
         </i-form-item>
+        <i-form-item label="合同类型" prop="contractType">
+          <i-select v-model="formCustom.contractType">
+            <i-option v-for="item in enumSelectData.get('ContractTypeEnum')" :key="item.itemCode" :value="item.itemCode">{{item.itemName}}</i-option>
+          </i-select>
+        </i-form-item>
         <i-form-item label="签订方式" prop="signType">
           <i-select v-model="formCustom.signType">
             <i-option v-for="item in enumSelectData.get('SinTypeEnum')" :key="item.itemCode" :value="item.itemCode">{{item.itemName}}</i-option>
@@ -68,6 +73,7 @@
         formCustom: {
           productNo: '',
           productName: '',
+          contractType: '',
           contractTemplateName: '',
           contractTemplateNo: '',
           signType: '',
@@ -82,6 +88,13 @@
           {
             title: '合同名称',
             key: 'contractTemplateName'
+          },
+          {
+            title: '合同类型',
+            key: 'contractType',
+            render: (h, params) => {
+              return h('span', {}, this.enumCode2Name(params.row.contractType, 'ContractTypeEnum'));
+            }
           },
           {
             title: '适用类型',
@@ -130,6 +143,8 @@
         let resp = await this.$http.post('/pms/capital/listContractTemplateCfg', {
           productNo: this.childMsg.productNo
         });
+        alert('合同模板配置有改动，此页面需要重新联调！');
+        console.log(resp.body.resultList);
         this.$data.dataLoading = false;
         if (resp.body.resultList.length !== 0) {
           this.$data.data1 = resp.body.resultList;
@@ -173,8 +188,8 @@
               productNo: row.productNo,
               contractTemplateNo: row.contractTemplateNo
             });
+            loadingMsg();
             if (respDel.success) {
-              loadingMsg();
               this.$Message.success('删除成功');
               this.getPrivateCustomerList();
             }

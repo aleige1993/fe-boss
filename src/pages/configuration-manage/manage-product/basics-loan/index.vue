@@ -45,7 +45,7 @@
         showAddModal: false,
         currentPage: 1,
         total: 0,
-        pageSize: 4,
+        pageSize: 15,
         formCustom: {
           loanDocName: ''
         }
@@ -82,10 +82,10 @@
         let resAdd = await this.$http.post('/pms/cfgLoanDoc/save', {
           loanDocName: this.$data.formCustom.loanDocName
         });
+        this.$data.showAddModal = false;
+        this.$data.buttonLoading = false; // 关闭按钮的loading状态
         if (resAdd.success) {
-          this.$data.buttonLoading = false; // 关闭按钮的loading状态
           this.$Message.success('添加贷款材料成功');
-          this.$data.showAddModal = false;
           this.getPrivateCustomerList();
         }
       },
@@ -107,8 +107,8 @@
             let respDel = await this.$http.get('/pms/cfgLoanDoc/remove', {
               loanDocCode
             });
+            loadingMsg();
             if (respDel.success) {
-              loadingMsg();
               this.$Message.success('删除贷款材料成功');
               this.getPrivateCustomerList(1);
             }
@@ -127,9 +127,9 @@
           loanDocName: this.$data.formCustom.loanDocName,
           loanDocCode: this.$data.formCustom.loanDocCode
         });
+        this.$data.buttonLoading = false;
+        this.$data.showAddModal = false;
         if (resModify.success) {
-          this.$data.buttonLoading = false;
-          this.$data.showAddModal = false;
           this.$Message.success('修改贷款材料成功');
           this.getPrivateCustomerList();
         }

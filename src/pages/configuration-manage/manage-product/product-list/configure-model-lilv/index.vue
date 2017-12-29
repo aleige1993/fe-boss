@@ -334,7 +334,7 @@
         <i-button type="ghost" style="margin-left: 8px" @click="formCancel">取消</i-button>
       </i-form-item>
     </i-form>
-    <pt-modal :title="isAdd ? '新增' : '修改'" v-model="showAdd" :width="520">
+    <bs-modal :title="isAdd ? '新增' : '修改'" v-model="showAdd" :width="520">
       <i-form ref="formInModel" :model="formInModel" label-position="left" :label-width="100">
         <i-form-item label="车类" prop="bizType">
           <i-select v-model="formInModel.bizType" placeholder="请选择">
@@ -348,7 +348,7 @@
         </i-form-item>
         <i-form-item label="利率模式" prop="interestType">
           <i-select v-model="formInModel.interestType" placeholder="请选择">
-            <i-option v-for="item in enumSelectData.get('InterestType')" :key="item.itemCode" :value="item.itemCode">{{item.itemName}}</i-option>
+            <i-option v-for="item in enumSelectData.get('RateModeEnum')" :key="item.itemCode" :value="item.itemCode">{{item.itemName}}</i-option>
           </i-select>
         </i-form-item>
         <i-form-item label="名义利率" prop="loanNominalRate">
@@ -369,22 +369,28 @@
           <i-button type="ghost" style="margin-left: 8px" @click="formInCancel">取消</i-button>
         </i-form-item>
       </i-form>
-    </pt-modal>
-    <pt-modal :title="'资方利率'" v-model="zfLilvModel" :width="1200">
-      <zf-lilv-Model v-if="zfLilvModel" :zf-msg="zfClickRow"></zf-lilv-Model>
-    </pt-modal>
+    </bs-modal>
+    <bs-modal :title="'资方利率'" v-model="zfLilvModel" :width="1200">
+      <zf-lilv-Model ref="zfLilvVM" v-if="zfLilvModel" :zf-msg="zfClickRow" @show-select-capital='showSelectCapitalFun'></zf-lilv-Model>
+    </bs-modal>
+    <!--选择资方的弹窗-->
+    <bs-modal title="选择资方" :width="1200" v-model="showSelectCapital" :zIndex="999">
+      <table-invest-list type="modal" ref="tableInvestList" @on-row-dbclick="selectCapital"></table-invest-list>
+    </bs-modal>
   </div>
 </template>
 
 <script>
-  import PTModal from '@/components/bs-modal';
+  import TableInvestList from '@/components/table-invest-list'; // 选择资方
   import zfLilvModel from './zf-lilv-Model';
   import MixinData from './mixin-data';
+  import BsModal from '@/components/bs-modal';
   export default {
     name: 'confModeLilv',
     mixins: [MixinData],
     components: {
-      'pt-modal': PTModal,
+      TableInvestList,
+      BsModal,
       'zf-lilv-Model': zfLilvModel
     },
     props: {
@@ -393,6 +399,7 @@
     data() {
       return {
         isAdd: true,
+        showSelectCapital: false,
         dataLoading: false, // 表格的loading
         btnLoading: false, // 外部提交按钮的loading
         buttonLoading: false, // 新增提交按钮的loading
@@ -444,6 +451,19 @@
       this.getPrivateCustomerList();  // 获取模态框列表数据
     },
     methods: {
+      //
+      showSelectCapitalFun() {
+        this.$data.showSelectCapital = true;
+      },
+      // 选择资方 将数据传给子组件
+      async selectCapital(row, index) {
+        let capitalData = await {
+          capitalNo: row.capitalNo,
+          capitalName: row.capitalName
+        };
+        this.$refs.zfLilvVM.zfliCapitalData(capitalData);
+        this.$data.showSelectCapital = false;
+      },
       // 获取表单数据
       async getFormList() {
         let productNo = this.childMsg.productNo;
@@ -485,10 +505,7 @@
         let resAdd = await this.$http.post('/pms/productRate/save', {
           productNo, // 产品编号
           packageNo: this.$data.ProductPackageForm.packageNo, // 套餐编号
-          bizType: this.formInModel.bizType, // 车类
-          loanPeriods: this.formInModel.loanPeriods, // 贷款期限
-          loanNominalRate: this.formInModel.loanNominalRate, // 贷款名义利率
-          loanRealRate: this.formInModel.loanRealRate // 贷款实际利率
+          ...this.$data.formInModel
         });
         this.$data.buttonLoading = false;
         this.$data.showAdd = false;
@@ -536,8 +553,8 @@
             let respDel = await this.$http.post('/pms/productRate/remove', {
               packageRateNo: row.packageRateNo // 套餐编号
             });
+            loadingMsg();
             if (respDel.success) {
-              loadingMsg();
               this.$Message.success('删除成功');
               this.getPrivateCustomerList();
             }

@@ -89,10 +89,10 @@
           productNo: '123754',
           productName: '测试001'
         });
+        this.$data.showAddModal = false;
+        this.$data.buttonLoading = false; // 关闭按钮的loading状态
         if (resAdd.success) {
-          this.$data.buttonLoading = false; // 关闭按钮的loading状态
           this.$Message.success('添加准入规则成功');
-          this.$data.showAddModal = false;
           this.getPrivateCustomerList();
         }
       },
@@ -119,9 +119,9 @@
           productNo: '123456789',
           productName: '模拟测试名称'
         });
+        this.$data.showAddModal = false;
+        this.$data.buttonLoading = false;
         if (resModify.success) {
-          this.$data.showAddModal = false;
-          this.$data.buttonLoading = false;
           this.$Message.success('修改准入规则成功');
           this.getPrivateCustomerList();
         }
@@ -135,8 +135,8 @@
             let respDel = await this.$http.get('/pms/cfgApproveRule/remove', {
               approveRuleCode
             });
+            loadingMsg();
             if (respDel.success) {
-              loadingMsg();
               this.$Message.success('删除准入规则成功');
               this.getPrivateCustomerList(this.$JumpPage.getPageRemove(this.$data.currentPage, this.$data.pageSize, this.$data.total));
             }

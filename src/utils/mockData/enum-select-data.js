@@ -749,6 +749,19 @@ export default [
           ]
         },
         {
+          'groupKey': 'RateModeEnum',
+          'items': [
+            {
+              'itemCode': '1',
+              'itemName': '固定利率'
+            },
+            {
+              'itemCode': '2',
+              'itemName': '浮动利率'
+            }
+          ]
+        },
+        {
           'groupKey': 'OperatingModeEnum',
           'items': [
             {

@@ -97,10 +97,10 @@
           feeTypeName: this.$data.formCustom.feeTypeName,
           feeType: this.$data.formCustom.feeType
         });
+        this.$data.buttonLoading = false; // 关闭按钮的loading状态
+        this.$data.showAddModal = false;
         if (resAdd.success) {
-          this.$data.buttonLoading = false; // 关闭按钮的loading状态
           this.$Message.success('添加费用类型成功');
-          this.$data.showAddModal = false;
           this.getPrivateCustomerList();
         }
       },
@@ -121,8 +121,8 @@
             let respDel = await this.$http.get('/pms/cfgFeeType/remove', {
               feeTypeNo
             });
+            loadingMsg();
             if (respDel.success) {
-              loadingMsg();
               this.$Message.success('删除费用类型成功');
               this.getPrivateCustomerList(
                 this.$JumpPage.getPageRemove(this.$data.currentPage, this.$data.pageSize, this.$data.total)

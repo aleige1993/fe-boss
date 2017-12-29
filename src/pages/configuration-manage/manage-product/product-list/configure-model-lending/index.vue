@@ -4,7 +4,10 @@
   <br>
   <br>
   <div class="text-right">
-    <i-button type="primary" @click="formSubmit">确认</i-button>
+    <i-button type="primary" @click="formSubmit" :loading="btnLoading">
+      <span v-if="!btnLoading">确认</span>
+      <span v-else>loading...</span>
+    </i-button>
     <i-button type="ghost" style="margin-left: 8px" @click="formCancel">取消</i-button>
   </div>
 </div>
@@ -16,10 +19,11 @@
     props: {
       childMsg: Object
     },
-    lendingDocCode: [],
+    loanRuleNoArray: [],
     data() {
       return {
         dataLoading: false,
+        btnLoading: false,
         columns1: [
           {
             type: 'selection',
@@ -28,11 +32,11 @@
           },
           {
             title: '放款条件ID',
-            key: 'lendingDocCode'
+            key: 'loanRuleNo'
           },
           {
             title: '放款条件名称',
-            key: 'lendingDocName'
+            key: 'loanRule'
           }
         ],
         data1: []
@@ -46,13 +50,17 @@
       async getPrivateCustomerList() {
         this.$data.dataLoading = true;
         let productNo = this.childMsg.productNo;
-        let resp = await this.$http.get('/pms/product/lendingDocList', {
-          productNo
+        let resp = await this.$http.get('/pms/productLoan/list', {
+          productNo,
+          currentPage: 1,
+          pageSize: 99999
         });
+        console.log(resp.body.resultList);
         this.$data.dataLoading = false;
         if (resp.body.length !== 0) {
-          let _data = resp.body.map(item => {
-            if (item.isSelectd === 1) {
+          let _data = resp.body.resultList.map(item => {
+            console.log(item);
+            if (item.isSelected === 1) {
               item._checked = true;
             }
             return item;
@@ -67,13 +75,15 @@
         }
       },
       async formSubmit() {
+        this.$data.btnLoading = true;
         let productNo = this.childMsg.productNo;
         let productName = this.childMsg.productName;
-        let resp = await this.$http.post('/pms/product/bindLoanDoc', {
+        let resp = await this.$http.post('/pms/product/bindLoanRule', {
           productNo,
           productName,
-          lendingDocCode: this.$data.lendingDocCode
+          rules: this.$data.loanRuleNoArray
         });
+        this.$data.btnLoading = false;
         if (resp.success) {
           this.$Message.success('配置成功');
           this.$emit('notice-lending');
@@ -85,11 +95,11 @@
       selectRow(selection) {      // selection 已选项数据
         let _dataArray = selection.map(item => {
           let json = {};
-          json['lendingDocCode'] = item.lendingDocCode;
-          json['lendingDocName'] = item.lendingDocName;
+          json['loanRuleNo'] = item.loanRuleNo;
+          json['loanRule'] = item.loanRule;
           return json;
         });
-        this.$data.lendingDocCode = _dataArray;
+        this.$data.loanRuleNoArray = _dataArray;
       }
     }
   };

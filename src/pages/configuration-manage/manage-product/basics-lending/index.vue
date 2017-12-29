@@ -16,8 +16,8 @@
     </div>
     <pt-modal title="新增" v-model="showAddModal">
       <i-form  ref="formCustom" :model="formCustom" label-position="left" :label-width="130">
-        <i-form-item label="放款条件名称" prop="vehicleDocName">
-          <i-input v-model="formCustom.vehicleDocName" type="textarea" :autosize="{minRows: 2,maxRows: 5}" placeholder="请输入放款条件名称..."></i-input>
+        <i-form-item label="放款条件名称" prop="loanRule">
+          <i-input v-model="formCustom.loanRule" type="textarea" :autosize="{minRows: 2,maxRows: 5}" placeholder="请输入放款条件名称..."></i-input>
         </i-form-item>
         <i-form-item class="text-right">
           <i-button type="primary" @click="formSubmit" :loading="buttonLoading">
@@ -48,9 +48,9 @@
         buttonLoading: false,
         currentPage: 1,
         total: 0,
-        pageSize: 4,
+        pageSize: 15,
         formCustom: {
-          vehicleDocName: ''
+          loanRule: ''
         }
       };
     },
@@ -64,7 +64,8 @@
         if (page) {
           this.$data.currentPage = page;
         }
-        let resp = await this.$http.get('/pms/cfgVehicleDoc/list', {
+        let resp = await this.$http.get('/pms/productLoan/list', {
+          productNo: '',
           currentPage: this.$data.currentPage,
           pageSize: this.$data.pageSize
         });
@@ -83,12 +84,12 @@
       },
       // 新增的保存请求方法
       async addSuBmit() {
-        let resAdd = await this.$http.post('/pms/cfgVehicleDoc/save', {
-          vehicleDocName: this.$data.formCustom.vehicleDocName
+        let resAdd = await this.$http.post('/pms/productLoan/save', {
+          loanRule: this.$data.formCustom.loanRule
         });
         this.$data.buttonLoading = false; // 关闭按钮的loading状态
         if (resAdd.success) {
-          this.$Message.success('添加放款条件成功');
+          this.$Message.success('新增放款条件成功');
           this.$data.showAddModal = false;
           this.getPrivateCustomerList();
         }
@@ -108,13 +109,13 @@
       },
       // 修改情况下的提交数据
       async setSubmit() {
-        let resModify = await this.$http.post('/pms/cfgVehicleDoc/modify', {
-          vehicleDocCode: this.$data.formCustom.vehicleDocCode,
-          vehicleDocName: this.$data.formCustom.vehicleDocName
+        let resModify = await this.$http.post('/pms/productLoan/modify', {
+          loanRuleNo: this.$data.formCustom.loanRuleNo,
+          loanRule: this.$data.formCustom.loanRule
         });
+        this.$data.showAddModal = false;
+        this.$data.buttonLoading = false;
         if (resModify.success) {
-          this.$data.showAddModal = false;
-          this.$data.buttonLoading = false;
           this.$Message.success('修改放款条件成功');
           this.getPrivateCustomerList();
         }
@@ -123,13 +124,13 @@
       async remove(row) {
         Alertify.confirm('确定要删除吗？', async (ok) => {
           if (ok) {
-            let vehicleDocCode = row.vehicleDocCode;
+            let loanRuleNo = row.loanRuleNo;
             const loadingMsg = this.$Message.loading('删除中...', 0);
-            let respDel = await this.$http.get('/pms/cfgVehicleDoc/remove', {
-              vehicleDocCode
+            let respDel = await this.$http.post('/pms/productLoan/remove', {
+              loanRuleNo
             });
+            loadingMsg();
             if (respDel.success) {
-              loadingMsg();
               this.$Message.success('删除放款条件成功');
               let jumpPage = this.$JumpPage.getPageRemove(this.$data.currentPage, this.$data.pageSize, this.$data.total);
               this.getPrivateCustomerList(jumpPage);

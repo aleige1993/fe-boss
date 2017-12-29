@@ -69,8 +69,8 @@ export default {
                         let respn = await this.$http.post('/member/have/company/delete', {
                           recordId: params.row.id
                         });
+                        loading();
                         if (respn.success) {
-                          loading();
                           this.$Message.success('操作成功');
                           this.getOweComList();
                         }

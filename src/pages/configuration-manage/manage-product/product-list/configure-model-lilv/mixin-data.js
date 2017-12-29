@@ -18,7 +18,7 @@ export default {
           title: '利率模式',
           key: 'interestType',
           render: (h, params) => {
-            return h('span', {}, this.enumCode2Name(params.row.interestType, 'InterestType'));
+            return h('span', {}, this.enumCode2Name(params.row.interestType, 'RateModeEnum'));
           }
         },
         {
@@ -32,7 +32,7 @@ export default {
         {
           title: '操作',
           key: 'action',
-          width: 200,
+          width: 220,
           align: 'center',
           render: (h, params) => {
             return h('div', [
