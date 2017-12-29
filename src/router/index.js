@@ -102,12 +102,7 @@ let MyRouter = new Router({
           path: 'loanbusiness', name: 'loanBusiness', component: resolve => require(['@/pages/loan-business'], resolve),
           children: [
             // 贷款业务-业务审批
-            { path: '/', name: 'loanBusinessExamination', component: resolve => require(['@/pages/loan-business/business-examination/examination-first'], resolve),
-              children: [
-                // 贷款业务-业务审批-业务初审
-                { path: '/', name: 'loanBusinessExaminationFirst', component: resolve => require(['@/pages/loan-business/business-examination/examination-first'], resolve)}
-              ]
-            },
+            { path: '/', name: 'loanBusinessExamination', component: resolve => require(['@/pages/loan-business/business-list'], resolve)},
             { path: 'approve', name: 'loanBusinessApprove', component: resolve => require(['@/pages/loan-business/business-approve'], resolve)},
             // 贷款业务-业务受理
             { path: 'accept', name: 'loanBusinessAccept', props: { customerType: '1' }, component: resolve => require(['@/pages/loan-business/business-acceptance'], resolve)},
