@@ -370,7 +370,6 @@
           productType: this.$data.formCustom.productType,  // 产品类型
           status: this.$data.formCustom.status  // 产品状态
         });
-        console.log(resModify);
         if (resModify.success) {
           this.$data.showAddModal = false;
           this.$data.buttonLoading = false;
