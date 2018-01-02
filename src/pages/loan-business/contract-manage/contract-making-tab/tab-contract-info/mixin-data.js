@@ -41,7 +41,10 @@ export default {
           title: '保证人类型',
           width: 170,
           align: 'center',
-          key: 'guaPersonType'
+          key: 'guaPersonType',
+          render: (h, params) => {
+            return h('span', {}, this.enumCode2Name(params.row.guaPersonType, 'MemberTypeEnum'));
+          }
         },
         {
           title: '保证人编号',

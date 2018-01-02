@@ -371,27 +371,61 @@
       </i-form>
     </bs-modal>
     <bs-modal :title="'资方利率'" v-model="zfLilvModel" :width="1200">
-      <zf-lilv-Model ref="zfLilvVM" v-if="zfLilvModel" :zf-msg="zfClickRow" @show-select-capital='showSelectCapitalFun'></zf-lilv-Model>
+      <div>
+        <div class="form-top-actions">
+          <i-button @click="addModalOpenZFLV" type="info"><i class="iconfont icon-xinzeng"></i> 新增</i-button>
+        </div>
+        <i-table :loading="ZFLVdataLoading" border ref="zfTable" :columns="columnsZFLV" :data="dataZFLV"></i-table>
+      </div>
     </bs-modal>
     <!--选择资方的弹窗-->
     <bs-modal title="选择资方" :width="1200" v-model="showSelectCapital" :zIndex="999">
       <table-invest-list type="modal" ref="tableInvestList" @on-row-dbclick="selectCapital"></table-invest-list>
     </bs-modal>
+    <!--资方利率的新增与修改-->
+    <bs-modal :title="isAddZFLV ? '新增' : '修改'" v-model="ZFLVshowAddModal">
+      <i-form v-if="ZFLVshowAddModal" ref="rateForm" :model="rateForm" label-position="right" :label-width="100" style="padding-bottom:0;">
+        <i-form-item
+          label="资方"
+          prop="capitalNo">
+          <input type="hidden" v-model="rateForm.capitalNo"/>
+          <i-input v-model="rateForm.capitalName" :readonly="true" placeholder="选择资方">
+            <i-button @click="showSelectCapital=!showSelectCapital" slot="append">选择资方 <Icon type="ios-more"></Icon></i-button>
+          </i-input>
+        </i-form-item>
+        <i-form-item label="名义利率" prop="nominalRate">
+          <i-input placeholder="名义利率" v-model="rateForm.nominalRate">
+            <span slot="append">%/年</span>
+          </i-input>
+        </i-form-item>
+        <i-form-item label="实际利率" prop="realRate">
+          <i-input placeholder="实际利率" v-model="rateForm.realRate">
+            <span slot="append">%/年</span>
+          </i-input>
+        </i-form-item>
+        <i-form-item class="text-right">
+          <i-button type="primary" @click="formSubmitZFLV" :loading="ZFLVbtnLoading">
+            <span v-if="!ZFLVbtnLoading">提交</span>
+            <span v-else>loading...</span>
+          </i-button>
+          <i-button type="ghost" style="margin-left: 8px" @click="formCancel">取消</i-button>
+        </i-form-item>
+      </i-form>
+    </bs-modal>
   </div>
 </template>
 
 <script>
+  import MixinDataZFLV from './zf-lilv-model-Mixin-data';
   import TableInvestList from '@/components/table-invest-list'; // 选择资方
-  import zfLilvModel from './zf-lilv-Model';
   import MixinData from './mixin-data';
   import BsModal from '@/components/bs-modal';
   export default {
     name: 'confModeLilv',
-    mixins: [MixinData],
+    mixins: [MixinData, MixinDataZFLV],
     components: {
       TableInvestList,
-      BsModal,
-      'zf-lilv-Model': zfLilvModel
+      BsModal
     },
     props: {
       childMsg: Object
@@ -399,6 +433,16 @@
     data() {
       return {
         isAdd: true,
+        isAddZFLV: true, // 资方利率表的 是否新增
+        ZFLVshowAddModal: false, // 资方利率表的 模态框
+        ZFLVbtnLoading: false,
+        ZFLVdataLoading: false,
+        rateForm: {
+          capitalName: '', // 出资方
+          capitalNo: '',
+          nominalRate: '', // 名义利率
+          realRate: '' // 实际利率
+        },
         showSelectCapital: false,
         dataLoading: false, // 表格的loading
         btnLoading: false, // 外部提交按钮的loading
@@ -443,7 +487,6 @@
           loanNominalRate: '',  // 贷款名义利率
           loanRealRate: ''  // 贷款实际利率
         }
-
       };
     },
     mounted() {
@@ -451,17 +494,103 @@
       this.getPrivateCustomerList();  // 获取模态框列表数据
     },
     methods: {
-      //
-      showSelectCapitalFun() {
-        this.$data.showSelectCapital = true;
+      /******************************************************************************************/
+      // 查询列表数据
+      async getPrivateCustomerListZFLV() {
+        this.$data.ZFLVdataLoading = true;
+        let resp = await this.$http.get('/pms/productRate/fundRateList', {
+          packageRateNo: this.zfClickRow.packageRateNo
+        });
+        this.$data.ZFLVdataLoading = false;
+        if (resp.body.length !== 0) {
+          this.$data.dataZFLV = resp.body;
+        } else {
+          this.$Notice.warning({
+            title: '没有数据可加载',
+            duration: 2
+          });
+          this.$data.dataZFLV = [];
+        }
       },
+      // 新增的保存请求方法
+      async addSuBmitZFLV() {
+        let resAdd = await this.$http.post('/pms/productRate/fundRateSave', {
+          packageRateNo: this.zfClickRow.packageRateNo,
+          capitalName: this.$data.rateForm.capitalName, // 出资方
+          nominalRate: this.$data.rateForm.nominalRate, // 名义利率
+          realRate: this.$data.rateForm.realRate // 名义利率
+        });
+        this.$data.ZFLVbtnLoading = false; // 关闭按钮的loading状态
+        this.$data.ZFLVshowAddModal = false;
+        if (resAdd.success) {
+          this.$Message.success('新增成功');
+          this.getPrivateCustomerListZFLV();
+        }
+      },
+      addModalOpenZFLV() {
+        this.isAddZFLV = true;
+        this.$data.ZFLVshowAddModal = true;
+        this.$data.rateForm = {};
+      },
+      setListZFLV(row) {
+        this.isAddZFLV = false;
+        this.$data.ZFLVshowAddModal = true;
+        this.rateForm = row;
+      },
+      // 修改情况下的提交数据
+      async setSubmitZFLV() {
+        let fundRateNo = this.rateForm.fundRateNo;
+        let resModify = await this.$http.post('/pms/productRate/fundRateModify', {
+          fundRateNo,
+          packageRateNo: this.zfClickRow.packageRateNo,
+          capitalName: this.$data.rateForm.capitalName, // 出资方
+          nominalRate: this.$data.rateForm.nominalRate, // 名义利率
+          realRate: this.$data.rateForm.realRate // 名义利率
+        });
+        this.$data.ZFLVshowAddModal = false;
+        this.$data.ZFLVbtnLoading = false;
+        if (resModify.success) {
+          this.$Message.success('修改成功');
+          this.getPrivateCustomerListZFLV();
+        }
+      },
+      // 删除数据的请求
+      async removeZFLV(row) {
+        Alertify.confirm('确定要删除吗？', async (ok) => {
+          if (ok) {
+            let fundRateNo = row.fundRateNo;
+            const loadingMsg = this.$Message.loading('删除中...', 0);
+            let respDel = await this.$http.post('/pms/productRate/fundRateRemove', {
+              fundRateNo
+            });
+            loadingMsg();
+            if (respDel.success) {
+              this.$Message.success('删除成功');
+              this.getPrivateCustomerListZFLV();
+            }
+          }
+        });
+      },
+      // 新增模态框的保存按钮点击事件
+      formSubmitZFLV() {
+        this.$data.ZFLVbtnLoading = true;
+        // 如果是新增
+        if (this.isAddZFLV) {
+          this.addSuBmitZFLV();
+        } else {
+          this.setSubmitZFLV();
+        }
+      },
+      formCancelZFLV() {
+        this.$data.ZFLVshowAddModal = false;
+        this.$data.rateForm = {};
+        this.this.zfClickRow = {};
+      },
+      /****************************************************************************************/
       // 选择资方 将数据传给子组件
       async selectCapital(row, index) {
-        let capitalData = await {
-          capitalNo: row.capitalNo,
-          capitalName: row.capitalName
-        };
-        this.$refs.zfLilvVM.zfliCapitalData(capitalData);
+        this.$data.rateForm.capitalNo = await row.capitalNo;
+        this.$data.rateForm.capitalName = await row.capitalName;
         this.$data.showSelectCapital = false;
       },
       // 获取表单数据
@@ -603,10 +732,11 @@
         this.modelFOrmReset();
       },
       // 打开资方模态框
-      openZF(row) {
+      async openZF(row) {
         this.$data.zfClickRow = {};
-        this.$data.zfClickRow = row;
+        this.$data.zfClickRow = await row;
         this.$data.zfLilvModel = true;
+        this.getPrivateCustomerListZFLV();  // 获取模态框-资方利率表数据
       },
       modelFOrmReset() {
         this.$data.formInModel = {};

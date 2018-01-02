@@ -80,7 +80,9 @@ export default {
                     this.$router.push({
                       path: '/index/loanbusiness/loan/fee/handle',
                       query: {
-                        currentPage: this.$data.currentPage
+                        currentPage: this.$data.currentPage,
+                        paymentNo: params.row.paymentNo,
+                        loanNo: params.row.loanNo
                       }
                     });
                   }

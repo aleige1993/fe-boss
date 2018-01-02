@@ -244,13 +244,14 @@ export default [
         'pageSize': 15,
         'resultList|3': [
           {
-            'guaPersonType|1': ['个人', '公司'],
-            'guaPersonNo|+1': 123456789,
+            'guaPersonType|1': ['1', '2'],
             'guaPersonName': '马云',
-            'guaPersonCertType': '身份证',
-            'guaPersonCertNo|1': /^[1-9]\d{5}(18|19|([23]\d))\d{2}((0[1-9])|(10|11|12))(([0-2][1-9])|10|20|30|31)\d{3}[0-9Xx]$/,
             'guaPersonMobile': /023[0-9]{8}/,
-            'guaPersonAddr': '重庆企业天地'
+            'guaPersonAddr': '重庆企业天地',
+            'guaPersonNo': '1111111',
+            'guaPersonCertType|1': ['1', '2'],
+            'guaPersonCertNo': /^[1-9]\d{5}(18|19|([23]\d))\d{2}((0[1-9])|(10|11|12))(([0-2][1-9])|10|20|30|31)\d{3}[0-9Xx]$/,
+            'lsStatus|1': ['1', '2']
           }
         ]
       },
@@ -259,7 +260,7 @@ export default [
       'success': true
     })
   },
-  // 签约管理-合同制作-车辆信息
+  // 签约管理-合同制作-车辆信息 &  放款管理-办理详情-车辆信息
   {
     url: '/biz/listLoanCarByLoanNo',
     on: true,
@@ -271,11 +272,27 @@ export default [
           {
             'carBrandName': '长安',
             'carModel': 'CS75',
+            'carEngineNo': /[0-9A-Z]{18}/,
+            'isMortgage|1': ['0', '1'],
+            'isInstallGps|1': ['0', '1'],
+            'gpsInstallStatus|1': ['0', '1'],
             'carVendor': '重庆长安',
             'carColor|1': ['月光白', '钛金色', '尊贵黑', '绿色', '水晶银灰', '弥红色'],
             'carPlateNo|1': /渝[ABCD]{1} [0-9A-Z]{5}/,
-            'carEngineNo|1': /[0-9A-Z]{18}/,
-            'carFrameNo|1': /[0-9A-Z]{18}/
+            'carFrameNo|1': /[0-9A-Z]{18}/,
+            'loanCarGpsDTOList|3': [
+              {
+                'gpsModel': /GPS型号[0-9A-Z]{4}/, // gps型号
+                'imei': /IMEI[0-9A-Z]{4}/, // IMEI
+                'gpsJoinMerchant': /GPS合作商[0-9]{4}/, // GPS合作商
+                'gpsInstallStatus|1': ['0', '1'], // GPS安装状态
+                'makeDate': '@date', // 办理时间
+                'makeUser': '@name', // 办理人
+                'id|1-100': 1, // 记录ID
+                'loanCarNo|1-100': 1, // 抵押车辆编号
+                'loanNo': '11111' // 项目编号
+              }
+            ]
           }
         ]
       },
@@ -406,35 +423,9 @@ export default [
       'success': true
     })
   },
-  // 放款管理-办理详情-车辆信息
-  {
-    url: '/handle/car',
-    on: true,
-    resp: Mock.mock({
-      'body': {
-        'currentPage': 1,
-        'pageSize': 15,
-        'resultList|3': [
-          {
-            'carBrandName': '长安',
-            'carModel': 'CS75',
-            'carPlateNo': /渝B [0-9A-Z]{5}/,
-            'carEngineNo': /[0-9A-Z]{18}/,
-            'carFrameNo': /[0-9A-Z]{18}/,
-            'isMortgage|1': ['0', '1'],
-            'isGPS|1': ['0', '1'],
-            'GPSstate|1': ['0', '1']
-          }
-        ]
-      },
-      'reCode': '0000',
-      'reMsg': '成功',
-      'success': true
-    })
-  },
   // 放款管理-办理详情-担保信息
   {
-    url: '/handle/assure',
+    url: '/biz/listGuaranteeByLoanNo',
     on: true,
     resp: Mock.mock({
       'body': {
@@ -448,7 +439,7 @@ export default [
             'guaPersonCertType|1': ['1', '2'],
             'guaPersonCertNo': /^[1-9]\d{5}(18|19|([23]\d))\d{2}((0[1-9])|(10|11|12))(([0-2][1-9])|10|20|30|31)\d{3}[0-9Xx]$/,
             'guaPersonMobile': /1[3578]{1}[0-9]{9}/,
-            'implementState|1': ['1', '2']
+            'lsStatus|1': ['1', '2']
           }
         ]
       },
@@ -459,7 +450,7 @@ export default [
   },
   // 放款管理-办理详情-放款条件列表
   {
-    url: '/handle/condition',
+    url: '/biz/getPaymentCondition',
     on: true,
     resp: Mock.mock({
       'body': {
@@ -467,9 +458,9 @@ export default [
         'pageSize': 15,
         'resultList|3': [
           {
-            'project': 'GPS安装完成',
-            'remarks': /备注:[0-9A-Z]{18}/,
-            'implementState|1': ['1', '2']
+            'paymentConName': 'GPS安装完成',
+            'paymentConContent': /[0-9A-Z]{18}/,
+            'status|1': ['0', '1']
           }
         ]
       },
@@ -480,45 +471,22 @@ export default [
   },
   // 放款管理-办理详情-审批信息
   {
-    url: '/handle/examine',
+    url: '/biz/listApproveHistory',
     on: true,
     resp: Mock.mock({
       'body': {
         'currentPage': 1,
         'pageSize': 15,
-        'resultList|3': [
+        'totalNum': 10,
+        'resultList|10': [
           {
-            'name': 'mockjs',
-            'taskNode|1': ['1', '2', '3', '4'],
-            'timenStart': '@date',
-            'timeEnd': '@date',
-            'longTime': '@time',
-            'conclusion': /结论 [0-9a-z]{18}/,
+            'handleUserName': 'mockjs',
+            'taskName|1': ['1', '2', '3', '4'],
+            'startTime': '@date',
+            'endTime': '@date',
+            'timeConsuming': '@time',
+            'approveStatus': /结论 [0-9a-z]{18}/,
             'opinion': /意见信息 [0-9a-z]{18}/
-          }
-        ]
-      },
-      'reCode': '0000',
-      'reMsg': '成功',
-      'success': true
-    })
-  },
-  // 放款管理-办理详情-GPS安装信息列表
-  {
-    url: '/handle/GPSinstall',
-    on: true,
-    resp: Mock.mock({
-      'body': {
-        'currentPage': 1,
-        'pageSize': 15,
-        'resultList|3': [
-          {
-            'GPSModel': /型号 [0-9]{4}/,
-            'IMEI': /[A-Z0-9]{18}/,
-            'GPScooperative': /GPS合作商 [0-9]{4}/,
-            'installState': '1',
-            'handleName': 'mockjs',
-            'handleTime': '@date'
           }
         ]
       },
@@ -529,7 +497,7 @@ export default [
   },
   // 放款管理-放款条件列表
   {
-    url: '/loanFeeListMock',
+    url: '/biz/loan/pagePaymentApplyRecord',
     on: true,
     resp: Mock.mock({
       'body': {
@@ -538,15 +506,16 @@ export default [
         'totalNum': 20,
         'resultList|10': [
           {
+            'paymentNo': 'mockjs', // 放款编号
             'loanNo': '111111',
             'custName': 'mockjs',
             'certType|1': ['1', '2'],
             'certNo': /^[1-9]\d{5}(18|19|([23]\d))\d{2}((0[1-9])|(10|11|12))(([0-2][1-9])|10|20|30|31)\d{3}[0-9Xx]$/,
             'productName': '@name',
-            'loanPeriods|1': ['3', '6', '12', '18', '24'],
-            'loanAmt|1000-100000': 1000,
+            'totalPeriods|1': ['3', '6', '12', '18', '24'],
+            'loanTotalAmt|1000-100000': 1000,
             'applyTime': '@date()',
-            'endDate': '@date()',
+            'signConfirmDate': '@date()',
             'taskArriveTime': '@date()',
             'timeConsuming': '@time',
             'taskNode|1': ['1', '2', '3', '4', '5']

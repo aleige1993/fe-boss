@@ -15,8 +15,8 @@
         <i-form-item prop="loanNo">
           <i-input type="text" v-model="searchForm.loanNo" placeholder="项目编号"></i-input>
         </i-form-item>
-        <i-form-item>
-          <i-input v-model="searchForm.companyName" type="text" placeholder="客户名称"></i-input>
+        <i-form-item prop="custName">
+          <i-input v-model="searchForm.custName" type="text" placeholder="客户名称"></i-input>
         </i-form-item>
         <i-form-item prop="certType">
           <i-select style="width: 120px;" v-model="searchForm.certType" placeholder="证件类型">
@@ -26,14 +26,14 @@
         <i-form-item prop="certNo">
           <i-input v-model="searchForm.certNo" type="text" placeholder="证件号码" style="width: 170px"></i-input>
         </i-form-item>
-        <i-form-item prop="applyStartTime">
-          <bs-datepicker v-model="searchForm.applyStartTime" type="text" placeholder="申请时间"></bs-datepicker>
+        <i-form-item prop="startDate">
+          <bs-datepicker v-model="searchForm.startDate" type="text" placeholder="申请时间"></bs-datepicker>
         </i-form-item>
         <i-form-item prop="password">
           -
         </i-form-item>
-        <i-form-item prop="applyEndTime">
-          <bs-datepicker v-model="searchForm.applyEndTime" type="text" placeholder="申请时间"></bs-datepicker>
+        <i-form-item prop="endDate">
+          <bs-datepicker v-model="searchForm.endDate" type="text" placeholder="申请时间"></bs-datepicker>
         </i-form-item>
         <i-form-item>
           <i-button @click="search" type="primary"><i-icon type="ios-search-strong"></i-icon> 搜索</i-button>
@@ -61,9 +61,10 @@
         clickRow: {},
         searchForm: {
           'loanNo': '',
+          'custName': '',
           'certType': '',
           'certNo': '',
-          'applyStartTime': '',
+          'startDate': '',
           'applyEndTime': ''
         }
       };
@@ -77,7 +78,7 @@
         if (page) {
           this.$data.currentPage = page;
         }
-        let resp = await this.$http.post('loanConditionListMock', {
+        let resp = await this.$http.post('/biz/loan/pagePaymentApplyRecord', {
           ...this.$data.searchForm,
           currentPage: this.$data.currentPage,
           pageSize: this.$data.pageSize

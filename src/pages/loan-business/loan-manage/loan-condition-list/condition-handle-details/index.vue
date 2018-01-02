@@ -16,75 +16,75 @@
             <i-row>
               <i-col span="8">
                 <i-form-item label="项目编号">
-                  <span v-text="formData.loanNo"></span>
+                  <span v-text="formData.paymentApplyRecordDTO.loanNo"></span>
                 </i-form-item>
               </i-col>
               <i-col span="8">
                 <i-form-item label="经销商">
-                  <span v-text="formData.merchantName"></span>
+                  <span v-text="formData.paymentApplyRecordDTO.merchantName"></span>
                 </i-form-item>
               </i-col>
             </i-row>
             <i-row>
               <i-col span="8">
                 <i-form-item label="姓名">
-                  <span v-text="formData.custName"></span>
+                  <span v-text="formData.paymentApplyRecordDTO.custName"></span>
                 </i-form-item>
               </i-col>
               <i-col span="8">
                 <i-form-item label="证件类型">
-                  <span v-text="enumCode2Name(formData.legalPersonCerttype, 'CertTypeEnum')"></span>
+                  <span v-text="enumCode2Name(formData.paymentApplyRecordDTO.certType, 'CertTypeEnum')"></span>
                 </i-form-item>
               </i-col>
               <i-col span="8">
                 <i-form-item label="证件号码">
-                  <span v-text="formData.legalPersonCertno"></span>
+                  <span v-text="formData.paymentApplyRecordDTO.certNo"></span>
                 </i-form-item>
               </i-col>
             </i-row>
             <i-row>
               <i-col span="8">
                 <i-form-item label="联系电话">
-                  <span v-text="formData.tel"></span>
+                  <span v-text="formData.paymentApplyRecordDTO.telPhone"></span>
                 </i-form-item>
               </i-col>
               <i-col span="8">
                 <i-form-item label="联系地址">
-                  <span v-text="formData.addr"></span>
+                  <span v-text="formData.paymentApplyRecordDTO.addr"></span>
                 </i-form-item>
               </i-col>
             </i-row>
             <i-row>
               <i-col span="8">
                 <i-form-item label="产品">
-                  <span v-text="formData.productName"></span>
+                  <span v-text="formData.paymentApplyRecordDTO.productName"></span>
                 </i-form-item>
               </i-col>
               <i-col span="8">
                 <i-form-item label="期数(月)">
-                  <span v-text="formData.loanPeriods"></span>
+                  <span v-text="formData.paymentApplyRecordDTO.totalPeriods"></span>
                 </i-form-item>
               </i-col>
               <i-col span="8">
                 <i-form-item label="借款金额(元)">
-                  <span v-text="formData.loanAmt"></span>
+                  <span v-text="formData.paymentApplyRecordDTO.loanTotalAmt"></span>
                 </i-form-item>
               </i-col>
             </i-row>
             <i-row>
               <i-col span="8">
                 <i-form-item label="运营模式">
-                  <span v-text="enumCode2Name(formData.operatingMode, 'OperatingModeEnum')"></span>
+                  <span v-text="enumCode2Name(formData.paymentApplyRecordDTO.operatingMode, 'OperatingModeEnum')"></span>
                 </i-form-item>
               </i-col>
               <i-col span="8">
                 <i-form-item label="合同起始日">
-                  <span v-text="formData.startDate"></span>
+                  <span v-text="formData.paymentApplyRecordDTO.contractStartDate"></span>
                 </i-form-item>
               </i-col>
               <i-col span="8">
                 <i-form-item label="合同到期日">
-                  <span v-text="formData.endDate"></span>
+                  <span v-text="formData.paymentApplyRecordDTO.contractEndDate"></span>
                 </i-form-item>
               </i-col>
             </i-row>
@@ -113,9 +113,9 @@
               </i-col>-->
               <i-col span="8">
                 <i-form-item
-                  label="结论" prop="auditStatus"
+                  label="结论" prop="approveStatus"
                   :rules="{required: true, message: '结论不能为空', trigger: 'change'}">
-                  <i-radio-group v-model="formData.auditStatus">
+                  <i-radio-group v-model="formData.approveStatus">
                     <i-radio v-for="item in enumSelectData.get('ApproveStatusEnum')" :label="item.itemCode" :key="item.itemCode" style="margin-right: 20px; margin-top: -5px">{{item.itemName}}</i-radio>
                   </i-radio-group>
                 </i-form-item>
@@ -125,9 +125,9 @@
               <i-col span="8">
                 <i-form-item
                   label="意见信息"
-                  prop="auditOpinion"
+                  prop="opinion"
                   :rules="{required: true, message: '意见信息不能为空', trigger: 'blur'}">
-                  <i-input type="textarea" v-model="formData.auditOpinion" :rows="2" placeholder="">
+                  <i-input type="textarea" v-model="formData.opinion" :rows="2" placeholder="">
                   </i-input>
                 </i-form-item>
               </i-col>
@@ -137,6 +137,9 @@
       </i-tab-pane>
       <i-tab-pane label="审批信息">
         <i-table :loading="examineTableLoading" border ref="examineTable" :columns="examineColumns" :data="examineData"></i-table>
+        <div class="page-container">
+          <i-page @on-change="jumpPageExamine" :total="totalExamine" :page-size="pageSizeExamine" size="small" show-elevator show-total></i-page>
+        </div>
       </i-tab-pane>
       <div class="form-footer-actions">
         <i-button @click="saveSubimt" :loading="initFormLoading" type="success">
@@ -172,8 +175,7 @@
                      prop="mortgageState"
                      :rules="{required: true, message: '请选择抵押状态', trigger: 'change'}">
           <i-select v-model="formalities.mortgageState">
-            <i-option value="0">未抵押</i-option>
-            <i-option value="1">已抵押</i-option>
+            <i-option v-for="item in enumSelectData.get('MortgageStatusEnum')" :key="item.itemCode" :value="item.itemCode">{{item.itemName}}</i-option>
           </i-select>
         </i-form-item>
         <i-form-item label="备注"
@@ -212,43 +214,42 @@
       <div class="form-top-actions">
         <i-button @click="addGPSModal" type="info"><i class="iconfont icon-xinzeng"></i>&nbsp;新增</i-button>
       </div>
-      <i-table v-if="GPSinstallShowModal" :loading="GPSinstallTableLoading" border ref="examineTable" :columns="GPSinstallColumns" :data="GPSinstallData"></i-table>
+      <i-table v-if="GPSinstallShowModal" border ref="examineTable" :columns="GPSinstallColumns" :data="GPSinstallData"></i-table>
     </bs-modal>
     <!--GPS安装信息新增和修改模态框-->
     <bs-modal v-model="GPSShowModal" :title="isAddGPS?'新增':'修改'" :width="520">
       <i-form v-if="GPSShowModal" ref="formAddGPS" :model="formAddGPS" label-position="right" :label-width="90">
         <i-form-item label="GPS型号"
-                     prop="GPSModel"
+                     prop="gpsModel"
                      :rules="{required: true, message: 'GPS型号不能为空', trigger: 'blur'}">
-          <i-input v-model="formAddGPS.GPSModel" placeholder=""></i-input>
+          <i-input v-model="formAddGPS.gpsModel" placeholder=""></i-input>
         </i-form-item>
         <i-form-item label="IMEI"
-                     prop="IMEI"
+                     prop="imei"
                      :rules="{required: true, message: 'IMEI不能为空', trigger: 'blur'}">
-          <i-input v-model="formAddGPS.IMEI" placeholder=""></i-input>
+          <i-input v-model="formAddGPS.imei" placeholder=""></i-input>
         </i-form-item>
         <i-form-item label="GPS合作商"
-                     prop="GPScooperative"
+                     prop="gpsJoinMerchant"
                      :rules="{required: true, message: 'GPS合作商不能为空', trigger: 'blur'}">
-          <i-input v-model="formAddGPS.GPScooperative" placeholder=""></i-input>
+          <i-input v-model="formAddGPS.gpsJoinMerchant" placeholder=""></i-input>
         </i-form-item>
         <i-form-item label="安装状态"
-                     prop="installState"
+                     prop="gpsInstallStatus"
                      :rules="{required: true, message: '请选择安装状态', trigger: 'change'}">
-          <i-select v-model="formAddGPS.installState">
-            <i-option value="0">未安装</i-option>
-            <i-option value="1">已安装</i-option>
+          <i-select v-model="formAddGPS.gpsInstallStatus">
+            <i-option v-for="item in enumSelectData.get('GpsInstallStatusEnum')" :key="item.itemCode" :value="item.itemCode">{{item.itemName}}</i-option>
           </i-select>
         </i-form-item>
         <i-form-item label="办理人"
-                     prop="handleName"
+                     prop="makeUser"
                      :rules="{required: true, message: '办理人不能为空', trigger: 'blur'}">
-          <i-input v-model="formAddGPS.handleName" placeholder=""></i-input>
+          <i-input v-model="formAddGPS.makeUser" placeholder=""></i-input>
         </i-form-item>
         <i-form-item label="办理时间"
-                     prop="handleTime"
+                     prop="makeDate"
                      :rules="{required: true, message: '办理时间不能为空', trigger: 'blur'}">
-          <bs-datepicker v-model="formAddGPS.handleTime" type="text" placeholder="办理时间"></bs-datepicker>
+          <bs-datepicker v-model="formAddGPS.makeDate" type="text" placeholder="办理时间"></bs-datepicker>
         </i-form-item>
         <i-form-item class="text-right">
           <i-button type="primary" @click="addGPSSubmit" :loading="addGPSButtonLoading">
@@ -275,8 +276,7 @@
                      prop="implementState"
                      :rules="{required: true, message: '请选择落实状态', trigger: 'change'}">
           <i-select v-model="formagGuarantee.implementState">
-            <i-option value="0">未抵押</i-option>
-            <i-option value="1">已抵押</i-option>
+            <i-option v-for="item in enumSelectData.get('MortgageStatusEnum')" :key="item.itemCode" :value="item.itemCode">{{item.itemName}}</i-option>
           </i-select>
         </i-form-item>
         <i-form-item label="备注"
@@ -327,6 +327,9 @@
         clickRow: {},
         isAddGPS: true,
         tabIndex: 0,
+        totalExamine: 0,
+        pageSizeExamine: 15,
+        currentPageExamine: 1,
         carDataLoading: false, // 车辆表loading
         assureDataLoading: false, // 担保表loading
         conditionLoading: false, // 放款条件loading
@@ -338,17 +341,54 @@
         GPSinstallShowModal: false, // GPS安装信息modal
         GPSShowModal: false, // 显示GPS安装信息新增弹窗modal
         addGPSButtonLoading: false, // 显示GPS安装信息新增弹窗modal提交按钮的loading
-        GPSinstallTableLoading: false, // GPS安装信息modal列表loading
         guaranteeShowModal: false, // 担保落实modal
         formagGuaranteeButtonLoading: false, // 担保落实modal的提交按钮loading
         formData: {
-          'loanNo': '',
-          'merchantName': '',
-          'custName': '',
-          'formData': '',
-          'operatingMode': '',
-          'auditStatus': '',
-          'auditOpinion': ''
+          'loanRecordDTO': {
+            'shareAmt': '',
+            'scRate': '',
+            'capitalRate': '',
+            'loanAmt': '',
+            'expectLoanDate': ''
+          },
+          'paymentApplyRecordDTO': {
+            'custNo': '',
+            'certType': '',
+            'loanNo': '',
+            'operatingMode': '',
+            'contractStartDate': '',
+            'contractEndDate': '',
+            'paymentNo': '',
+            'custName': '',
+            'productName': '',
+            'totalPeriods': '',
+            'merchantName': '',
+            'signConfirmDate': '',
+            'certNo': '',
+            'telPhone': '',
+            'custType': '',
+            'addr': '',
+            'applyDate': '',
+            'loanTotalAmt': '',
+            'productNo': '',
+            'merchantNo': ''
+          },
+          'loanAccountDTO': {
+            'loanAcctNo': '',
+            'loanBankCode': '',
+            'loanOpenBankCode': '',
+            'loanBankName': '',
+            'loanAcctName': '',
+            'loanOpenBankName': ''
+          },
+          'repayAccountDTO': {
+            'repayBankCode': '',
+            'repayOpenBankCode': '',
+            'repayAcctName': '',
+            'repayOpenBankName': '',
+            'repayAcctNo': '',
+            'repayBankName': ''
+          }
         },
         formalities: {
           'uploadFileName': '',
@@ -360,7 +400,17 @@
           'attachPath': '',
           'remark': ''
         },
-        formAddGPS: {},
+        formAddGPS: {
+          'gpsModel': '',
+          'imei': '',
+          'gpsJoinMerchant': '',
+          'gpsInstallStatus': '',
+          'makeDate': '',
+          'makeUser': '',
+          'id|1-100': '',
+          'loanCarNo': '',
+          'loanNo': ''
+        },
         formagGuarantee: {
           'uploadFileName': '',
           'implementState': ''
@@ -377,59 +427,120 @@
       // 获取车辆信息列表的data
       async carGetlist() {
         this.$data.carDataLoading = true;
-        let reps = await this.$http.post('/handle/car');
+        let reps = await this.$http.post('/biz/listLoanCarByLoanNo', {
+          loanNo: this.$route.query.loanNo
+        });
         this.$data.carDataLoading = false;
         if (reps.success) {
-          this.$data.carData = reps.body.resultList;
-        } else {
-          this.$data.carData = [];
+          if (reps.body.resultList.length !== 0) {
+            this.$data.carData = reps.body.resultList;
+          } else {
+            this.$Notice.warning({
+              title: '车辆信息列表没有数据可加载',
+              duration: 2
+            });
+            this.$data.carData = [];
+          }
         }
       },
       // 获取担保信息列表的data
       async assureGtelist() {
         this.$data.assureDataLoading = true;
-        let reps = await this.$http.post('/handle/assure');
+        let reps = await this.$http.post('/biz/listGuaranteeByLoanNo', {
+          loanNo: this.$route.query.loanNo
+        });
         this.$data.assureDataLoading = false;
         if (reps.success) {
-          this.$data.assureData = reps.body.resultList;
-        } else {
-          this.$data.assureData = [];
+          if (reps.body.resultList.length !== 0) {
+            this.$data.assureData = reps.body.resultList;
+          } else {
+            this.$Notice.warning({
+              title: '担保信息列表没有数据可加载',
+              duration: 2
+            });
+            this.$data.assureData = [];
+          }
         }
       },
       // 获取放款条件列表的data
       async conditionGetlist() {
         this.$data.conditionLoading = true;
-        let reps = await this.$http.post('/handle/condition');
+        let reps = await this.$http.post('biz/getPaymentCondition', {
+          loanNo: this.$route.query.loanNo
+        });
         this.$data.conditionLoading = false;
         if (reps.success) {
-          this.$data.conditionData = reps.body.resultList;
-        } else {
-          this.$data.conditionData = [];
+          if (reps.body.resultList.length !== 0) {
+            this.$data.conditionData = reps.body.resultList;
+          } else {
+            this.$Notice.warning({
+              title: '放款条件列表没有数据可加载',
+              duration: 2
+            });
+            this.$data.conditionData = [];
+          }
         }
       },
       // 获取审批信息列表的data
-      async examineGetlist() {
+      async examineGetlist(page) {
         this.$data.examineTableLoading = true;
-        let reps = await this.$http.post('/handle/examine');
+        if (page) {
+          this.$data.currentPageExamine = page;
+        }
+        let reps = await this.$http.post('biz/listApproveHistory', {
+          loanNo: this.$route.query.loanNo,
+          currentPage: this.$data.currentPageExamine,
+          pageSize: this.$data.pageSizeExamine
+        });
         this.$data.examineTableLoading = false;
         if (reps.success) {
-          this.$data.examineData = reps.body.resultList;
-        } else {
-          this.$data.examineData = [];
+          if (reps.body.resultList.length !== 0) {
+            this.$data.examineData = reps.body.resultList;
+            this.$data.currentPageExamine = reps.body.currentPage;
+            this.$data.totalExamine = reps.body.totalNum;
+          } else {
+            this.$Notice.warning({
+              title: '审批信息列表没有数据可加载',
+              duration: 2
+            });
+            this.$data.examineData = [];
+          }
         }
       },
+      // 获取审批信息列表的data 分页
+      jumpPageExamine(page) {
+        this.examineGetlist(page);
+      },
       // 获取GPS安装信息列表的data
-      async GPSinstallGetlist() {
-        this.$data.GPSinstallTableLoading = true;
-        let reps = await this.$http.post('/handle/GPSinstall', {
-          ...this.$data.clickRow
-        });
-        this.$data.GPSinstallTableLoading = false;
-        if (reps.success) {
-          this.$data.GPSinstallData = reps.body.resultList;
+      GPSinstallGetlist(row) {
+        console.log(row);
+        if (row.loanCarGpsDTOList) {
+          this.$data.GPSinstallData = row.loanCarGpsDTOList;
         } else {
           this.$data.GPSinstallData = [];
         }
+      },
+      // GPS安装弹窗-打开新增弹窗
+      addGPSModal() {
+        this.$data.isAddGPS = true;
+        this.$data.GPSShowModal = true;
+        this.$data.formAddGPS = {};
+      },
+      // GPS安装弹窗-新增弹窗-提交按钮
+      addGPSSubmit() {
+        this.$data.addGPSButtonLoading = true;
+        let formName = 'formAddGPS';
+        this.$refs[formName].validate(async (valid) => {
+          if (valid) {
+            // 插入新数据unshift
+            await this.$data.GPSinstallData.unshift(this.$data.formAddGPS);
+            this.$Message.success('修改GPS安装信息成功');
+            this.$data.GPSShowModal = false;
+          } else {
+            this.$Message.error('<span style="color: red">*</span>项不能为空');
+          }
+          this.$data.addGPSButtonLoading = false;
+        });
       },
       // 所有的提交
       saveSubimt() {
@@ -473,27 +584,6 @@
           }
           await bsWait(1000);
           this.$data.formalitiesButtonLoading = false;
-        });
-      },
-      // GPS安装弹窗-打开新增弹窗
-      addGPSModal() {
-        this.$data.isAddGPS = true;
-        this.$data.GPSShowModal = true;
-        this.$data.formAddGPS = {};
-      },
-      // GPS安装弹窗-新增弹窗-提交按钮
-      addGPSSubmit() {
-        this.$data.addGPSButtonLoading = true;
-        let formName = 'formAddGPS';
-        this.$refs[formName].validate(async (valid) => {
-          if (valid) {
-            this.$Message.success('提交成功');
-            this.$data.GPSShowModal = false;
-          } else {
-            this.$Message.error('<span style="color: red">*</span>项不能为空');
-          }
-          await bsWait(1000);
-          this.$data.addGPSButtonLoading = false;
         });
       },
       // 办理抵质押物手续文件上传成功

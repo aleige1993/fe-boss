@@ -1,11 +1,11 @@
 export default {
   data() {
     return {
-      columns1: [
+      columnsZFLV: [
         {
           title: '资方',
           width: 200,
-          key: 'fund'
+          key: 'capitalName'
         },
         {
           title: '名义利率(%/年)',
@@ -32,7 +32,7 @@ export default {
                 },
                 on: {
                   click: () => {
-                    this.setList($.extend({}, params.row));
+                    this.setListZFLV($.extend({}, params.row));
                   }
                 }
               }, '修改'),
@@ -43,7 +43,7 @@ export default {
                 },
                 on: {
                   click: () => {
-                    this.remove($.extend({}, params.row));
+                    this.removeZFLV($.extend({}, params.row));
                   }
                 }
               }, '删除')
@@ -51,9 +51,9 @@ export default {
           }
         }
       ],
-      data1: [
+      dataZFLV: [
         {
-          'fund': 'mockjs',
+          'capitalName': 'mockjs',
           'nominalRate|1-10': 1,
           'realRate': '2.5'
         }

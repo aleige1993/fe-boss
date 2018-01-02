@@ -8,7 +8,7 @@ export default {
           width: 100,
           key: 'guaPersonType',
           render: (h, params) => {
-            return h('span', {}, params.row.guaPersonType === '1' ? '个人' : '企业');
+            return h('span', {}, this.enumCode2Name(params.row.guaPersonType, 'MemberTypeEnum'));
           }
         },
         {
