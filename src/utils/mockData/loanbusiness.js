@@ -526,5 +526,15 @@ export default [
       'reMsg': '成功',
       'success': true
     })
+  },
+  // 放款管理-设置当前处理人 （可通用）
+  {
+    url: '/biz/loan/settingHandleUser',
+    on: true,
+    resp: Mock.mock({
+      'reCode': '0000',
+      'reMsg': '成功',
+      'success': true
+    })
   }
 ];

@@ -94,7 +94,8 @@ export default [
                 url: '/index/loanbusiness/loan',
                 childMenus: [
                   { name: '放款条件落实', url: '/index/loanbusiness/loan' },
-                  { name: '放款费用落实', url: '/index/loanbusiness/loan/fee' }
+                  { name: '放款费用落实', url: '/index/loanbusiness/loan/fee' },
+                  { name: '放款审批', url: '/index/loanbusiness/loan/approval' }
                 ]
               }
             ]

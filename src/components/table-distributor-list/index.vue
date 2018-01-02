@@ -70,12 +70,12 @@
         if (page) {
           this.$data.currentPage = page;
         }
-        // 当组件以modal形式显示的时候 传merchantStatus值为5（显示授信通过的数据）
+        // 当组件以modal形式显示的时候 传merchantStatus值为2（显示授信通过的数据）
         let merchantStatusCode = '';
         if (this.type === 'page') {
           merchantStatusCode = '';
         } else if (this.type === 'modal') {
-          merchantStatusCode = '5';
+          merchantStatusCode = '2';
         }
         let resp = await this.$http.post('merchant/listMerchant', {
           corpName: this.$data.formSearch.corpName, // 公司名称，模糊查询
