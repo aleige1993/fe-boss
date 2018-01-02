@@ -5,12 +5,12 @@
       <i-breadcrumb-item href="/">首页</i-breadcrumb-item>
       <i-breadcrumb-item href="/components/breadcrumb">贷款业务</i-breadcrumb-item>
       <i-breadcrumb-item href="/index/loanbusiness/loan/fee">放款费用落实列表</i-breadcrumb-item>
-      <i-breadcrumb-item>办理详情</i-breadcrumb-item>
+      <i-breadcrumb-item>放款费用落实详情</i-breadcrumb-item>
     </i-breadcrumb>
     <br>
     <br>
     <i-tabs v-model="tabIndex" :animated="false" type="card">
-      <i-tab-pane label="基本">
+      <i-tab-pane label="基本信息">
         <i-form ref="formData" :model="formData" label-position="right" :label-width="120">
           <bs-form-block :title="'借款信息'">
             <i-row>
@@ -33,19 +33,19 @@
               </i-col>
               <i-col span="8">
                 <i-form-item label="证件类型">
-                  <span v-text="enumCode2Name(formData.legalPersonCerttype, 'CertTypeEnum')"></span>
+                  <span v-text="enumCode2Name(formData.certType, 'CertTypeEnum')"></span>
                 </i-form-item>
               </i-col>
               <i-col span="8">
                 <i-form-item label="证件号码">
-                  <span v-text="formData.legalPersonCertno"></span>
+                  <span v-text="formData.custName"></span>
                 </i-form-item>
               </i-col>
             </i-row>
             <i-row>
               <i-col span="8">
                 <i-form-item label="联系电话">
-                  <span v-text="formData.tel"></span>
+                  <span v-text="formData.telPhone"></span>
                 </i-form-item>
               </i-col>
               <i-col span="8">

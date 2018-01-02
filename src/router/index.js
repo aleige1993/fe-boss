@@ -148,7 +148,11 @@ let MyRouter = new Router({
                 // 贷款业务-放款管理-放款费用落实
                 { path: 'fee', name: 'loanFeeList', component: resolve => require(['@/pages/loan-business/loan-manage/loan-fee-list'], resolve)},
                 // 贷款业务-放款管理-放款费用落实-办理详情
-                { path: 'fee/handle', name: 'feeHandleDetails', component: resolve => require(['@/pages/loan-business/loan-manage/loan-fee-list/fee-handle-details'], resolve)}
+                { path: 'fee/handle', name: 'feeHandleDetails', component: resolve => require(['@/pages/loan-business/loan-manage/loan-fee-list/fee-handle-details'], resolve)},
+                // 贷款业务-放款管理-放款审批列表
+                { path: 'approval', name: 'loanApprovalList', component: resolve => require(['@/pages/loan-business/loan-manage/loan-approval-list'], resolve)},
+                // 贷款业务-放款管理-放款审批列表-办理详情
+                { path: 'approval/handle', name: 'approvalHandleDetails', component: resolve => require(['@/pages/loan-business/loan-manage/loan-approval-list/approval-handle-details'], resolve)}
               ]
             }
           ]

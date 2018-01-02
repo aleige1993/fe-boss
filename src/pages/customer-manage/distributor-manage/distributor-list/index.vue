@@ -164,7 +164,7 @@
         if (resp.success) {
           let text = this.$data.isAdd ? '新增成功' : '修改成功';
           this.$Message.success(text);
-          this.getPrivateCustomerList();
+          this.$refs.tableDistributorList.getPrivateCustomerList();
         }
       },
       // 修改
