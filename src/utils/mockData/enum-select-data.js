@@ -1026,7 +1026,15 @@ export default [
             },
             {
               'itemCode': '9',
-              'itemName': '放款申请'
+              'itemName': '放款条件落实'
+            },
+            {
+              'itemCode': '10',
+              'itemName': '放款费用落实'
+            },
+            {
+              'itemCode': '11',
+              'itemName': '放款审批'
             },
             {
               'itemCode': '99',
@@ -1225,6 +1233,20 @@ export default [
             }
           ]
         },
+        // 车辆办理抵押状态
+        {
+          'groupKey': 'MortgageStatusEnum',
+          'items': [
+            {
+              'itemCode': '0',
+              'itemName': '未抵押'
+            },
+            {
+              'itemCode': '1',
+              'itemName': '已抵押'
+            }
+          ]
+        },
         // 放款落实状态
         {
           'groupKey': 'LoanLuoShiStatusEnum',
@@ -1250,6 +1272,35 @@ export default [
             {
               'itemCode': '1',
               'itemName': '已安装'
+            }
+          ]
+        },
+        {
+          'groupKey': 'BizStatusEnum',
+          'items': [
+            {
+              'itemCode': '0',
+              'itemName': '未处理'
+            },
+            {
+              'itemCode': '1',
+              'itemName': '处理中'
+            },
+            {
+              'itemCode': '2',
+              'itemName': '已处理'
+            },
+            {
+              'itemCode': '3',
+              'itemName': '草稿'
+            },
+            {
+              'itemCode': '8',
+              'itemName': '已放款'
+            },
+            {
+              'itemCode': '9',
+              'itemName': '废弃'
             }
           ]
         }

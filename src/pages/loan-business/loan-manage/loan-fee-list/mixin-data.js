@@ -30,16 +30,17 @@ export default {
         },
         {
           title: '期数',
-          key: 'loanPeriods',
-          width: 80
+          key: 'totalPeriods',
+          width: 70
         },
         {
           title: '贷款金额(元)',
-          key: 'loanAmt'
+          width: 120,
+          key: 'loanTotalAmt'
         },
         {
           title: '签约完成时间',
-          key: 'endDate',
+          key: 'signConfirmDate',
           width: 110
         },
         {
@@ -54,7 +55,7 @@ export default {
         },
         {
           title: '当前环节',
-          width: 90,
+          width: 120,
           key: 'taskNode',
           render: (h, params) => {
             return h('span', {}, this.enumCode2Name(params.row.taskNode, 'LoanBizNodeEnum'));
@@ -70,7 +71,8 @@ export default {
               h('Button', {
                 props: {
                   type: 'primary',
-                  size: 'small'
+                  size: 'small',
+                  disabled: (params.row.status === '1') || (params.row.status === '2')
                 },
                 style: {
                   marginRight: '5px'

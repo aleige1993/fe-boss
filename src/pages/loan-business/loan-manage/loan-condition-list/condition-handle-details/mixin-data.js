@@ -30,10 +30,17 @@ export default {
         {
           title: '是否抵押',
           width: 90,
-          align: 'center',
           key: 'isMortgage',
           render: (h, params) => {
             return h('span', {}, this.enumCode2Name(params.row.isMortgage, 'YesNoEnum'));
+          }
+        },
+        {
+          title: '抵押状态',
+          width: 90,
+          key: 'mortgageStatus',
+          render: (h, params) => {
+            return h('span', {}, this.enumCode2Name(params.row.mortgageStatus, 'MortgageStatusEnum'));
           }
         },
         {
@@ -46,6 +53,7 @@ export default {
         },
         {
           title: 'GPS安装状态',
+          width: 110,
           key: 'gpsInstallStatus',
           render: (h, params) => {
             return h('span', {}, this.enumCode2Name(params.row.gpsInstallStatus, 'GpsInstallStatusEnum'));
@@ -70,6 +78,7 @@ export default {
                   click: () => {
                     this.$data.formalitiesShowModal = true;
                     this.$data.clickRow = params.row;
+                    this.$data.formalities = params.row;
                   }
                 }
               }, '办理抵押'),
@@ -81,8 +90,9 @@ export default {
                 on: {
                   click: async () => {
                     this.$data.GPSinstallShowModal = true;
+                    this.$data.clickRow = {};
                     this.$data.clickRow = await params.row;
-                    this.GPSinstallGetlist(params.row);
+                    this.$data.loanCarGpsDTOList = this.$data.carData[params.index].loanCarGpsDTOList;
                   }
                 }
               }, 'GPS安装落实')
@@ -248,7 +258,7 @@ export default {
       ],
       examineData: [],
       // GPS安装信息
-      GPSinstallColumns: [
+      loanCarGpsDTOColumns: [
         {
           title: 'GPS型号',
           width: 150,
@@ -297,11 +307,11 @@ export default {
                   marginRight: '5px'
                 },
                 on: {
-                  click: () => {
+                  click: async () => {
                     this.$data.isAddGPS = false;
                     this.$data.GPSShowModal = true;
                     this.$data.formAddGPS = {};
-                    this.$data.formAddGPS = params.row;
+                    this.$data.formAddGPS = await params.row;
                   }
                 }
               }, '修改'),
@@ -312,7 +322,7 @@ export default {
                 },
                 on: {
                   click: () => {
-                    this.$data.GPSinstallData.splice(params.index, 1);
+                    this.$data.loanCarGpsDTOList.splice(params.index, 1);
                   }
                 }
               }, '删除')
@@ -320,7 +330,7 @@ export default {
           }
         }
       ],
-      GPSinstallData: []
+      loanCarGpsDTOList: []
     };
   }
 };

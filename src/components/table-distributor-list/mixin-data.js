@@ -4,20 +4,25 @@ export default {
       distributorColumns: [
         {
           title: '渠道商编号',
-          width: '100',
+          width: 80,
           key: 'merchantNo'
         },
         {
           title: '渠道商类型',
-          width: '100',
+          width: 80,
           key: 'merchantType',
           render: (h, params) => {
             return h('span', {}, this.enumCode2Name(params.row.merchantType, 'MerchantTypeEnum'));
           }
         },
         {
+          title: '渠道商简称',
+          width: 80,
+          key: 'roadAddr'
+        },
+        {
           title: '客户编号',
-          width: '170',
+          width: 170,
           key: 'corpNo'
         },
         {
@@ -26,40 +31,55 @@ export default {
         },
         {
           title: '统一社会信用代码',
+          width: 90,
           key: 'suCreditCode'
         },
         {
           title: '法定代表人',
+          width: 80,
           key: 'legalPerson'
         },
         {
           title: '注册时间',
-          width: '110',
+          width: 110,
           key: 'regDate'
         },
         {
           title: '注册资金',
+          width: 70,
           key: 'regCapital'
         },
         {
           title: '公司电话',
+          width: 115,
           key: 'telephone'
         },
         {
           title: '授信总额度',
+          width: 70,
           key: 'creditTotalLimit'
         },
         {
           title: '可用额度',
+          width: 70,
           key: 'currentUsableLimit'
         },
         {
           title: '单笔最大可用额度',
+          width: 90,
           key: 'singleUsableLimit'
         },
         {
+          title: '是否在app中显示',
+          width: 75,
+          key: 'isDisplayInApp',
+          render: (h, params) => {
+            return h('span', {}, this.enumCode2Name(params.row.isDisplayInApp, 'YesNoEnum'));
+          }
+        },
+        {
           title: '授信状态', // 0:未授信1-授信审核中2-授信通过3-授信拒绝4-授信驳回5-授信过期6-冻结
-          width: '90',
+          width: 90,
           key: 'merchantStatus',
           render: (h, params) => {
             return h('span', {}, this.enumCode2Name(params.row.merchantStatus, 'MerchantStatusEnum'));
@@ -69,7 +89,7 @@ export default {
       columnsFeatureActionColumns: [
         {
           title: '操作',
-          width: 260,
+          width: 230,
           align: 'center',
           key: 'action',
           render: (h, params) => {
@@ -105,11 +125,14 @@ export default {
               }, '修改'),
               h('i-button', {
                 props: {
-                  type: 'error'
+                  type: 'error',
+                  disabled: params.row.merchantStatus !== '0'
                 },
                 on: {
                   click: () => {
-                    this.remove($.extend({}, params.row));
+                    if (params.row.merchantStatus === '0') {
+                      this.remove($.extend({}, params.row));
+                    }
                   }
                 }
               }, '删除'),

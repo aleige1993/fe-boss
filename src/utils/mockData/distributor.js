@@ -29,7 +29,7 @@ export default [
         'pageSize': 4,
         'resultList|10': [
           {
-            'merchantNo|+1': 11111111, // 渠道商编号
+            'merchantNo': '123456789123456789', // 渠道商编号
             'isEnablePlatform|1': ['1', '2'],
             'merchantType|1': ['1', '2', '3'], // 渠道商类型 1.4S店2.一网商3.二网商
             'corpNo|+1': 111111, // 公司编号
@@ -42,7 +42,7 @@ export default [
             'creditTotalLimit': '9999999',
             'currentUsableLimit': '9999999',
             'singleUsableLimit': '9999999',
-            'merchantStatus|1': ['1', '2', '3', '4', '5', '6'], // 授信状态
+            'merchantStatus|1': ['0', '1', '2', '3', '4', '5', '6'], // 授信状态
             'custMgrName': '11111111' // 客户经理编号
           }
         ],
@@ -119,21 +119,14 @@ export default [
         'pageSize': 15,
         'resultList|10': [
           {
-            'merchantNo|+1': 11111,
-            'applyNo|+1': 1111111,
-            'creditTotalLimit': '',
-            'singleUsableLimit': '',
-            'creditStartDate': '',
-            'creditEndDate': '',
-            'creditReleaseType': '',
-            'applyUserCode': '',
-            'applyUserName': '',
-            'applyTime': '',
-            'applyStatus': '',
-            'gmtCreate': '',
-            'gmtModified': '',
-            'merchantAbbr': '',
-            'corpName': ''
+            'merchantNo': '123456789123456789', // 渠道商编号
+            'corpName': 'mockjs', // 公司名称
+            'creditTotalLimit': '9999999',
+            'singleUsableLimit': '9999999',
+            'creditStartDate': '@date',
+            'creditEndDate': '@date',
+            'creditReleaseType': '1',
+            'applyStatus|1': ['1', '2', '3', '4', '5', '6']
           }
         ],
         'startIndex': 0,

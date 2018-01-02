@@ -908,7 +908,7 @@ export default [
       body: {
         resultList: [
           {
-            'attachUrl': 'www.baidu.cim',
+            'attachUrl': 'www.baidu.com',
             'attachName': '脱衣舞视频',
             'attachSuffixType': ''
           }

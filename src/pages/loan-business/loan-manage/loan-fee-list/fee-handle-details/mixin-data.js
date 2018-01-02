@@ -31,16 +31,16 @@ export default {
         },
         {
           title: '是否挂账',
-          key: 'isBill',
+          key: 'isHang',
           width: 200,
           render: (h, params) => {
             return h('i-select', {
               props: {
-                'value': params.row.isBill
+                'value': params.row.isHang
               },
               on: {
                 'on-change': (val) => {
-                  this.$data.feeData[params.index].isBill = val;
+                  this.$data.feeData[params.index].isHang = val;
                 }
               }
             }, this.enumSelectData.get('YesNoEnum').map((item) => {
@@ -55,15 +55,15 @@ export default {
         },
         {
           title: '已收金额(元)',
-          key: 'AMted',
+          key: 'alreadyReceivAmt',
           render: (h, params) => {
             return h('i-input', {
               props: {
-                'value': params.row.AMted
+                'value': params.row.alreadyReceivAmt
               },
               on: {
                 'on-blur': (event) => {
-                  this.$data.feeData[params.index].AMted = event.target.value;
+                  this.$data.feeData[params.index].alreadyReceivAmt = event.target.value;
                 }
               }
             });
@@ -71,58 +71,40 @@ export default {
         },
         {
           title: '收取方式',
-          key: 'isCollect',
+          key: 'receivMode',
           width: 200,
           render: (h, params) => {
             return h('i-select', {
               props: {
-                'value': params.row.isCollect
+                'value': params.row.receivMode
               },
               on: {
                 'on-change': (val) => {
-                  this.$data.feeData[params.index].isCollect = val;
+                  this.$data.feeData[params.index].receivMode = val;
                 }
               }
-            }, [
-              h('i-option', {
+            }, this.enumSelectData.get('ReceivModeEnum').map((item) => {
+              return h('i-option', {
                 props: {
-                  label: '现金',
-                  value: '1'
+                  label: item.itemName,
+                  value: item.itemCode
                 }
-              }),
-              h('i-option', {
-                props: {
-                  label: '转账',
-                  value: '2'
-                }
-              }),
-              h('i-option', {
-                props: {
-                  label: 'POS',
-                  value: '3'
-                }
-              }),
-              h('i-option', {
-                props: {
-                  label: '支票',
-                  value: '4'
-                }
-              })
-            ]);
+              });
+            }));
           }
         },
         {
           title: '是否结清',
-          key: 'isSettle',
+          key: 'isClearing',
           width: 200,
           render: (h, params) => {
             return h('i-select', {
               props: {
-                'value': params.row.isSettle
+                'value': params.row.isClearing
               },
               on: {
                 'on-change': (val) => {
-                  this.$data.feeData[params.index].isSettle = val;
+                  this.$data.feeData[params.index].isClearing = val;
                 }
               }
             }, this.enumSelectData.get('YesNoEnum').map((item) => {
@@ -136,19 +118,7 @@ export default {
           }
         }
       ],
-      feeData: [
-        {
-          'feeName': '费用项目001',
-          'feeTakeType': '1',
-          'feePercent': '1',
-          'feeAmt': '1111',
-          'feeActualAmt': '1111',
-          'isBill': '0',
-          'AMted': '1111',
-          'isCollect': '1',
-          'isSettle': '1'
-        }
-      ],
+      feeData: [],
       // 放款条件
       conditionColumns: [
         {
