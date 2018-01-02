@@ -43,3 +43,32 @@ export default {
     }
   ]
 };
+/* export default {
+  'groupKey': 'BizStatusEnum',
+  'items': [
+    {
+      'itemCode':'0',
+      'itemName':'未处理'
+    },
+    {
+      'itemCode':'1',
+      'itemName':'处理中'
+    },
+    {
+      'itemCode':'2',
+      'itemName':'已处理'
+    },
+    {
+      'itemCode':'3',
+      'itemName':'草稿'
+    },
+    {
+      'itemCode':'8',
+      'itemName':'已放款'
+    },
+    {
+      'itemCode':'9',
+      'itemName':'废弃'
+    }
+  ]
+}*/

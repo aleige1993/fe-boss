@@ -15,6 +15,15 @@ export default {
      * 提交审批
     */
     async submitLoanApprove() {
+      let submitUrl = '';
+      let loanNode = this.$route.query.status;
+      if (loanNode === '3') {
+        submitUrl = '/biz/saveLoanApprove';
+      } else if (loanNode === '4') {
+        submitUrl = '/biz/saveFirstApprove';
+      } else {
+        submitUrl = '/biz/saveSecondApprove';
+      }
       let vmApplyInfo = this.$refs['applyInfo'];
       let vmApproveInfo = this.$refs['approveInfo'];
       let applyData = {};
@@ -22,11 +31,25 @@ export default {
       alert(vmApplyInfo.validate());
       if (vmApplyInfo.validate()) {
         applyData = vmApplyInfo.getApplyData();
-        if (vmApproveInfo.validate()) {
-          approveData = vmApproveInfo.getApproveData();
+        let approveInfoValid = true;
+        approveData = vmApproveInfo.getApproveData();
+        if (approveData.loanApproveDTO.result === 'A') {
+          approveInfoValid = vmApproveInfo.validate();
+        }
+        if (approveInfoValid) {
+          // approveData = vmApproveInfo.getApproveData();
           this.$data.submitApproveLoading = true;
           const loading = this.$Message.loading('正在提交审批...', 0);
-          let resp = await this.$http.post('/biz/saveLoanApprove', $.extend({ opeType: '2' }, applyData, approveData));
+          let submitData = {};
+          if (loanNode === '3') {
+            submitData = $.extend({ opeType: '2' }, applyData, approveData);
+          } else {
+            submitData = {
+              loanNo: applyData.loanVO.loanNo,
+              loanApproveDTO: approveData.loanApproveDTO
+            };
+          }
+          let resp = await this.$http.post(submitUrl, submitData);
           this.$data.submitApproveLoading = false;
           loading();
           if (resp.success) {
@@ -34,7 +57,6 @@ export default {
           }
         }
       }
-      // console.log($.extend({}, applyData, approveData));
     }
   }
 };

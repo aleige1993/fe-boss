@@ -84,13 +84,17 @@ export default {
           title: '已耗时',
           key: 'taskArriveTime',
           width: 120
-        }
-        /* {
-          title: '当前环节',
-          key: 'taskNode',
-          width: 120
         },
         {
+          title: '当前环节',
+          key: 'taskNode',
+          fixed: 'right',
+          width: 120,
+          render: (h, params) => {
+            return h('span', {}, this.enumCode2Name(params.row.taskNode, 'LoanBizNodeEnum') + '-' + this.enumCode2Name(params.row.status, 'BizStatusEnum'));
+          }
+        }
+        /*  {
           title: '当前处理人',
           key: 'mobile',
           width: 200
@@ -108,11 +112,42 @@ export default {
         {
           title: '操作',
           key: 'action',
-          width: 260,
+          width: 360,
           fixed: 'right',
           align: 'center',
           render: (h, params) => {
+            let statusText = this.enumCode2Name(params.row.taskNode, 'LoanBizNodeEnum');
             return h('div', [
+              h('Button', {
+                props: {
+                  type: 'primary',
+                  size: 'small',
+                  loading: this.$data.applyApproveLoading,
+                  disabled: false
+                },
+                style: { marginRight: '5px' },
+                on: {
+                  click: async () => {
+                    this.$data.applyApproveLoading = true;
+                    let resp = await this.$http.post('/biz/holdUpLoanBizByLoanNo', { loanNo: params.row.loanNo });
+                    this.$data.applyApproveLoading = false;
+                    if (resp.success) {
+                      this.$router.push({
+                        path: '/index/loanbusiness/doapprove',
+                        query: {
+                          id: params.row.loanNo,
+                          status: params.row.taskNode
+                        },
+                        force: true
+                      });
+                    } else {
+                      this.$Notice.error({
+                        desc: '设置处理人失败请稍后重试'
+                      });
+                    }
+                  }
+                }
+              }, statusText),
               h('Button', {
                 props: {
                   type: 'primary',
@@ -188,11 +223,11 @@ export default {
                   click: () => {
                     Alertify.confirm('确定删除当前客户吗？', async (ok) => {
                       if (ok) {
-                        let resp = await this.$http.post('/member/delete', {
-                          memberNo: params.row.memberNo
+                        let resp = await this.$http.post('/biz/deleteByLoanNo', {
+                          loanNo: params.row.loanNo
                         });
                         if (resp.success) {
-                          this.getPrivateCustomerList();
+                          this.getPrivateCustomerLoanList();
                         }
                       }
                     });

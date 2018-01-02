@@ -43,7 +43,8 @@ export default {
               h('Button', {
                 props: {
                   type: 'primary',
-                  size: 'small'
+                  size: 'small',
+                  disabled: this.readonly
                 },
                 style: {
                   marginRight: '5px'
@@ -57,7 +58,8 @@ export default {
               h('Button', {
                 props: {
                   type: 'error',
-                  size: 'small'
+                  size: 'small',
+                  disabled: this.readonly
                 },
                 on: {
                   click: () => {

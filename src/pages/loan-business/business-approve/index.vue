@@ -3,16 +3,16 @@
     <i-breadcrumb separator=">">
       <i-breadcrumb-item href="/">首页</i-breadcrumb-item>
       <i-breadcrumb-item href="/index/loanbusiness">贷款业务</i-breadcrumb-item>
-      <i-breadcrumb-item>业务审批</i-breadcrumb-item>
+      <i-breadcrumb-item>{{breadCrumbName}} {{applyInfoReadonly}} {{firstApproveInfoReadonly}}</i-breadcrumb-item>
     </i-breadcrumb>
     <div class="form-top-actions"></div>
 
     <i-tabs v-model="tabIndex" type="card" :animated="false" style="padding-bottom: 46px;">
       <i-tab-pane :label="'基本信息'">
-        <apply-info ref="applyInfo" :customerType="'1'" :applyBasicInfo="formData" :loanAction="'firstApprove'"></apply-info>
+        <apply-info ref="applyInfo" :customerType="'1'" :applyBasicInfo="formData" :loanAction="'firstApprove'" :readonly="applyInfoReadonly"></apply-info>
       </i-tab-pane>
       <i-tab-pane :label="'审批信息'">
-        <approve-info ref="approveInfo" :applyBasicInfo="formData"></approve-info>
+        <approve-info ref="approveInfo" :applyBasicInfo="formData" :readonly="firstApproveInfoReadonly"></approve-info>
       </i-tab-pane>
       <i-tab-pane label="人行征信报告">
         <iframe v-if="tabIndex == 2" src="http://www.baidu.com" width="100%" :height="iframeHeight" frameborder="0"></iframe>
@@ -54,12 +54,32 @@
     data() {
       return {
         iframeHeight: 460,
-        tabIndex: 1,
+        tabIndex: 0,
         initFormLoading: false,
         submitApproveLoading: false,
         memberNo: '1',
         corpNo: '1'
       };
+    },
+    computed: {
+      breadCrumbName() {
+        let loanNode = this.$route.query.status;
+        if (loanNode === '3') {
+          return '业务初审';
+        } else if (loanNode === '4') {
+          return '业务一级审批';
+        } else {
+          return '业务二级审批';
+        }
+      },
+      applyInfoReadonly() {
+        let loanNode = this.$route.query.status;
+        return loanNode === '4' || loanNode === '5';
+      },
+      firstApproveInfoReadonly() {
+        let loanNode = this.$route.query.status;
+        return loanNode === '4' || loanNode === '5';
+      }
     },
     props: {
       customerType: {
