@@ -66,6 +66,12 @@ export default {
         this.$data.approveData.loanApproveFeePlanDTOS = approveFeePlanResp.body;
       }
     },
+    async getFirstApproveList(loanNo) {
+      let firstApproveListResp = await this.$http.post('/biz/listApproveFirst', { loanNo }); // 初审信息
+      if (firstApproveListResp.success) {
+        this.$data.approveData.loanApproveFirstDTOS = firstApproveListResp.body;
+      }
+    },
     /**
      * 初审状态 -- 根据申请编号和产品编号，产品期数获取审批初始化信息
     */
@@ -122,7 +128,7 @@ export default {
       if (this.$data.approveData.loanApproveCreditDTO.loanMode === '1') {
         paymentCustNo = this.applyBasicInfo.merchantNo || '110041';
       } else {
-        paymentCustNo = this.applyBasicInfo.memberNo;
+        paymentCustNo = this.applyBasicInfo.memberNo || this.applyBasicInfo.corpNo;
       }
       let resp = await this.$http.post('/biz/queryCustLoanAccount', {
         loanNo,
@@ -133,7 +139,11 @@ export default {
       });
       if (resp.success) {
         this.$data.approveData.loanPaymentAccountDTOS.acctName = resp.body.paymentAccountName;
+        this.$data.approveData.loanPaymentAccountDTOS.acctNo = resp.body.paymentAcctNo;
+        this.$data.approveData.loanPaymentAccountDTOS.bankName = resp.body.paymentBankName;
         this.$data.approveData.loanRePaymentAccountDTOS.acctName = resp.body.repaymentAccountName;
+        this.$data.approveData.loanRePaymentAccountDTOS.acctNo = resp.body.repaymentAcctNo;
+        this.$data.approveData.loanRePaymentAccountDTOS.bankName = resp.body.repaymentBankName;
         this.$data.paymentAccountList = resp.body.paymentAccountList;
         this.$data.repaymentAccountList = resp.body.repaymentAccountList;
       }

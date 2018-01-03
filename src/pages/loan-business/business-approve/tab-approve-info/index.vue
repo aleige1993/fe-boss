@@ -86,7 +86,7 @@
               <i-col span="8">
                 <i-form-item class="required" label="放款方式" prop="loanApproveCreditDTO.loanMode"
                              :rules="{required: true, message: '请输入放款方式'}">
-                  <i-select :readonly="disabled" @on-change="getBankList" v-model="approveData.loanApproveCreditDTO.loanMode">
+                  <i-select :disabled="readonly" @on-change="getBankList" v-model="approveData.loanApproveCreditDTO.loanMode">
                     <i-option v-for="item in enumSelectData.get('LoanModeEnum')" :key="item.itemCode" :value="item.itemCode">{{item.itemName}}</i-option>
                   </i-select>
                 </i-form-item>
@@ -154,7 +154,10 @@
                 </i-form-item>
               </i-col>
               <i-col span="8">
-                <i-form-item class="required" label="账号" prop="loanPaymentAccountDTOS.bankName"
+                <i-form-item v-if="readonly">
+                  <i-input type="text" :readonly="true" v-model="approveData.loanPaymentAccountDTOS.acctNo"></i-input>
+                </i-form-item>
+                <i-form-item v-else class="required" label="账号" prop="loanPaymentAccountDTOS.bankName"
                              :rules="{required: true, message: '请选择放款账户账号'}">
                   <input type="hidden" v-model="approveData.loanPaymentAccountDTOS.bankName">
                   <i-select :disabled="readonly" @on-change="paymentAccountChange" :label-in-value="true">
@@ -179,7 +182,10 @@
                 </i-form-item>
               </i-col>
               <i-col span="8">
-                <i-form-item class="required" label="账号" prop="loanRePaymentAccountDTOS.bankName"
+                <i-form-item v-if="readonly">
+                  <i-input type="text" :readonly="true" v-model="approveData.loanRePaymentAccountDTOS.acctNo"></i-input>
+                </i-form-item>
+                <i-form-item v-else class="required" label="账号" prop="loanRePaymentAccountDTOS.bankName"
                              :rules="{required: true, message: '请选择还款账户账号'}">
                   <input type="hidden" v-model="approveData.loanRePaymentAccountDTOS.bankName">
                   <i-select :disabled="readonly" @on-change="repaymentAccountChange" :label-in-value="true" >
@@ -214,6 +220,7 @@
                     <i-radio label="A">通过</i-radio>
                     <i-radio label="R">拒绝</i-radio>
                     <i-radio label="B">退回</i-radio>
+                    <i-radio label="D">废弃</i-radio>
                   </i-radio-group>
                 </i-form-item>
               </i-col>
@@ -327,6 +334,7 @@
         // this.getFirstApproveInfo(this.applyBasicInfo.loanNo);
         // 如果是初审，用产品和申请期限初始化有关产品的基础信息
         this.getProductApproveInfo(this.applyBasicInfo.loanNo, this.applyBasicInfo.productNo, this.applyBasicInfo.applyPeriods);
+        this.getFirstApproveList(this.applyBasicInfo.loanNo);
         this.getLoanPeriodByProductNo(this.applyBasicInfo.productNo);
         this.getBankList(this.applyBasicInfo.loanNo);
       }

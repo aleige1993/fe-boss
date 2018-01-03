@@ -137,5 +137,8 @@
     }
   };
 </script>
-<style lang="scss" scoped>
+<style lang="scss">
+  .ivu-table-cell button[disabled] {
+    display: none;
+  }
 </style>

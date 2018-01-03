@@ -446,7 +446,7 @@
             <i-form-item label="担保人类型" prop="guaPersonType"
                          :rules="{required: true, message: '请选择担保人类型'}">
               <i-select v-model="formAssure.guaPersonType">
-                <i-option v-for="item in enumSelectData.get('MemberTypeEnum')" :key="item.itemCode" :value="item.itemCode">{{item.itemName}}</i-option>
+                <i-option v-for="item in enumSelectData.get('CustTypeEnum')" :key="item.itemCode" :value="item.itemCode">{{item.itemName}}</i-option>
               </i-select>
             </i-form-item>
           </i-col>

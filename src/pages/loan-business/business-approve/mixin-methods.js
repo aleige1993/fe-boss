@@ -17,6 +17,7 @@ export default {
     async submitLoanApprove() {
       let submitUrl = '';
       let loanNode = this.$route.query.status;
+      // 根据状态设置提交的url
       if (loanNode === '3') {
         submitUrl = '/biz/saveLoanApprove';
       } else if (loanNode === '4') {
@@ -28,18 +29,22 @@ export default {
       let vmApproveInfo = this.$refs['approveInfo'];
       let applyData = {};
       let approveData = {};
-      alert(vmApplyInfo.validate());
+      // alert(vmApplyInfo.validate());
       if (vmApplyInfo.validate()) {
         applyData = vmApplyInfo.getApplyData();
         let approveInfoValid = true;
         approveData = vmApproveInfo.getApproveData();
-        if (approveData.loanApproveDTO.result === 'A') {
+        // 只有审批通过才需要执行审批信息的表单验证
+        if (approveData.loanApproveDTO.result === 'A' && !this.applyInfoReadonly) {
           approveInfoValid = vmApproveInfo.validate();
         }
         if (approveInfoValid) {
           // approveData = vmApproveInfo.getApproveData();
           this.$data.submitApproveLoading = true;
-          const loading = this.$Message.loading('正在提交审批...', 0);
+          const loading = this.$Message.loading({
+            content: '正在提交审批...',
+            duration: 0
+          });
           let submitData = {};
           if (loanNode === '3') {
             submitData = $.extend({ opeType: '2' }, applyData, approveData);
@@ -54,6 +59,9 @@ export default {
           loading();
           if (resp.success) {
             this.$Message.success('审批成功');
+            this.$router.push({
+              name: 'loanBusinessList'
+            });
           }
         }
       }

@@ -9,7 +9,7 @@
 
     <i-tabs v-model="tabIndex" type="card" :animated="false" style="padding-bottom: 46px;">
       <i-tab-pane :label="'基本信息'">
-        <apply-info ref="applyInfo" :customerType="'1'" :applyBasicInfo="formData" :loanAction="'firstApprove'" :readonly="applyInfoReadonly"></apply-info>
+        <apply-info ref="applyInfo" :customerType="formData.custType" :applyBasicInfo="formData" :loanAction="'firstApprove'" :readonly="applyInfoReadonly"></apply-info>
       </i-tab-pane>
       <i-tab-pane :label="'审批信息'">
         <approve-info ref="approveInfo" :applyBasicInfo="formData" :readonly="firstApproveInfoReadonly"></approve-info>
@@ -27,7 +27,7 @@
         <approve-history v-if="tabIndex == 5"></approve-history>
       </i-tab-pane>
     </i-tabs>
-    <div class="form-footer-actions">
+    <div v-if="!isFromDetail" class="form-footer-actions">
       <i-button @click="submitLoanApprove" :loading="submitApproveLoading" type="success">
         <span v-if="!submitApproveLoading"><i class="iconfont icon-tijiao"></i> 提交</span>
         <span v-else> loading...</span>
@@ -64,13 +64,7 @@
     computed: {
       breadCrumbName() {
         let loanNode = this.$route.query.status;
-        if (loanNode === '3') {
-          return '业务初审';
-        } else if (loanNode === '4') {
-          return '业务一级审批';
-        } else {
-          return '业务二级审批';
-        }
+        return this.enumCode2Name(loanNode, 'LoanBizNodeEnum');
       },
       applyInfoReadonly() {
         let loanNode = this.$route.query.status;
@@ -79,6 +73,10 @@
       firstApproveInfoReadonly() {
         let loanNode = this.$route.query.status;
         return loanNode === '4' || loanNode === '5';
+      },
+      isFromDetail() {
+        let from = this.$route.query.from;
+        return '' + from === 'detail';
       }
     },
     props: {

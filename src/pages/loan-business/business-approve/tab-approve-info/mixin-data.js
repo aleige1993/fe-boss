@@ -18,7 +18,8 @@ export default {
           render: (h, params) => {
             return h('i-select', {
               props: {
-                disabled: this.readonly
+                disabled: this.readonly,
+                value: params.row.status
               },
               on: {
                 'on-change': (value) => {

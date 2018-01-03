@@ -107,6 +107,7 @@ let MyRouter = new Router({
             { path: 'firststageapprove', name: 'loanBusinessFirstStageApproveList', props: { 'taskNode': '4'}, component: resolve => require(['@/pages/loan-business/business-list'], resolve)},
             { path: 'secondstageapprove', name: 'loanBusinessSecondStageApproveList', props: { 'taskNode': '5'}, component: resolve => require(['@/pages/loan-business/business-list'], resolve)},
             { path: 'doapprove', name: 'loanBusinessApprove', component: resolve => require(['@/pages/loan-business/business-approve'], resolve)},
+            { path: 'detail', name: 'loanBusinessApprove', component: resolve => require(['@/pages/loan-business/business-approve'], resolve)},
             // 贷款业务-业务受理
             { path: 'accept', name: 'loanBusinessAccept', props: { customerType: '1' }, component: resolve => require(['@/pages/loan-business/business-acceptance'], resolve)},
             // 贷款业务-业务受理-企业客户
