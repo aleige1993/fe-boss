@@ -161,7 +161,30 @@
                       @on-group-remove="deleteloanFileGroup">
       </loan-file-list>
     </bs-form-block>
-
+    <!--审核意见-->
+    <i-form v-if="!readonly" ref="formData" :model="formData" label-position="right" :label-width="160">
+      <bs-form-block title="审核意见" >
+        <i-row>
+          <i-col span="8">
+            <i-form-item label="结论">
+              <i-radio-group v-model="formData.result">
+                <i-radio label="A">通过</i-radio>
+                <i-radio label="R">拒绝</i-radio>
+                <i-radio label="B">退回</i-radio>
+                <i-radio label="D">废弃</i-radio>
+              </i-radio-group>
+            </i-form-item>
+          </i-col>
+        </i-row>
+        <i-row>
+          <i-col span="18">
+            <i-form-item label="意见信息">
+              <i-input type="textarea" v-model="formData.opinion" :rows="4"></i-input>
+            </i-form-item>
+          </i-col>
+        </i-row>
+      </bs-form-block>
+    </i-form>
     <!--选择产品的弹窗-->
     <bs-modal title="选择产品" :width="1200" v-model="showSelectProduct">
       <table-product-list v-if="showSelectProduct" :type="'modal'" @on-row-dbclick="selectProduct"></table-product-list>
