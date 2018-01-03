@@ -100,6 +100,78 @@
           <bs-form-block :title="'担保信息'">
             <i-table :loading="assureDataLoading" border ref="selection" :columns="assureColumns" :data="assureData"></i-table>
           </bs-form-block>
+          <bs-form-block :title="'费用收取落实'">
+            <i-table :loading="feeTableLoading" border ref="selection" :columns="feeColumns" :data="feeData"></i-table>
+          </bs-form-block>
+          <bs-form-block :title="'放款信息'">
+            <i-row>
+              <i-col span="8">
+                <i-form-item label="放款金额">
+                  <span v-text="formData.loanAmt"></span>
+                </i-form-item>
+              </i-col>
+              <i-col span="8">
+                <i-form-item label="资金方利率">
+                  <span v-text="formData.capitalYearRate"></span>
+                </i-form-item>
+              </i-col>
+            </i-row>
+            <i-row>
+              <i-col span="8">
+                <i-form-item label="应收分润金额">
+                  <span v-text="formData.profitAmt"></span>
+                </i-form-item>
+              </i-col>
+              <i-col span="8">
+                <i-form-item label="颂车利率">
+                  <span v-text="formData.songcheRate"></span>
+                </i-form-item>
+              </i-col>
+              <i-col span="8">
+                <i-form-item label="预计放款日期">
+                  <span v-text="formData.estimateLoanDate"></span>
+                </i-form-item>
+              </i-col>
+            </i-row>
+            <i-row>
+              <i-col span="8">
+                <i-form-item label="账户名">
+                  <span v-text="formData.loanAcctName"></span>
+                </i-form-item>
+              </i-col>
+              <i-col span="8">
+                <i-form-item label="账号">
+                  <span v-text="formData.loanAcctNo"></span>
+                </i-form-item>
+              </i-col>
+              <i-col span="8">
+                <i-form-item label="开户银行">
+                  <span v-text="formData.loanOpenBankName"></span>
+                </i-form-item>
+              </i-col>
+            </i-row>
+          </bs-form-block>
+          <bs-form-block :title="'还款账户信息'">
+            <i-form inline label-position="right" :label-width="100">
+              <i-row>
+                <i-col span="8">
+                  <i-form-item label="账户名">
+                    <span v-text="formData.repayAcctName"></span>
+                  </i-form-item>
+                </i-col>
+                <i-col span="8">
+                  <i-form-item label="账号">
+                    <span v-text="formData.repayAcctNo"></span>
+                  </i-form-item>
+                </i-col>
+                <i-col span="8">
+                  <i-form-item label="开户银行">
+                    <span v-text="formData.repayOpenBankName"></span>
+                  </i-form-item>
+                </i-col>
+              </i-row>
+            </i-form>
+          </bs-form-block>
           <bs-form-block :title="'放款条件'">
             <i-table :loading="conditionLoading" border ref="selection" :columns="conditionColumns" :data="conditionData"></i-table>
           </bs-form-block>
@@ -219,7 +291,7 @@
       <div class="form-top-actions">
         <i-button @click="addGPSModal" type="info"><i class="iconfont icon-xinzeng"></i>&nbsp;新增</i-button>
       </div>
-      <i-table v-if="GPSinstallShowModal" border ref="examineTable" :columns="GPSinstallColumns" :data="GPSinstallData"></i-table>
+      <i-table v-if="GPSinstallShowModal" border ref="examineTable" :columns="loanCarGpsDTOColumns" :data="loanCarGpsDTOList"></i-table>
     </bs-modal>
     <!--GPS安装信息新增和修改模态框-->
     <bs-modal v-model="GPSShowModal" :title="isAddGPS?'新增':'修改'" :width="520">
@@ -348,6 +420,8 @@
         addGPSButtonLoading: false, // 显示GPS安装信息新增弹窗modal提交按钮的loading
         guaranteeShowModal: false, // 担保落实modal
         formagGuaranteeButtonLoading: false, // 担保落实modal的提交按钮loading
+        // 费用收取落实
+        feeTableLoading: false,
         formData: {
           'loanRecordDTO': {
             'shareAmt': '',
@@ -520,9 +594,9 @@
       GPSinstallGetlist(row) {
         console.log(row);
         if (row.loanCarGpsDTOList) {
-          this.$data.GPSinstallData = row.loanCarGpsDTOList;
+          this.$data.loanCarGpsDTOList = row.loanCarGpsDTOList;
         } else {
-          this.$data.GPSinstallData = [];
+          this.$data.loanCarGpsDTOList = [];
         }
       },
       // GPS安装弹窗-打开新增弹窗
@@ -538,7 +612,7 @@
         this.$refs[formName].validate(async (valid) => {
           if (valid) {
             // 插入新数据unshift
-            await this.$data.GPSinstallData.unshift(this.$data.formAddGPS);
+            await this.$data.loanCarGpsDTOList.unshift(this.$data.formAddGPS);
             this.$Message.success('修改GPS安装信息成功');
             this.$data.GPSShowModal = false;
           } else {

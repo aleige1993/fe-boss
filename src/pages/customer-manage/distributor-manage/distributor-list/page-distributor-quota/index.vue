@@ -103,19 +103,15 @@
               </i-form-item>
             </i-col>
           </i-row>
-          <i-row>
-            <i-col span="8">
-              <br>
-              <br>
-              <i-form-item class="text-right">
-                <i-button type="primary" @click="submitFun" :loading="btnLoading">
-                  <span v-if="!btnLoading">提交审核</span>
-                  <span v-else>正在提交审核...</span>
-                </i-button>
-                <i-button type="ghost" @click="cancelFun" style="margin-left: 8px">取消</i-button>
-              </i-form-item>
-            </i-col>
-          </i-row>
+          <div class="form-footer-actions">
+            <i-form-item>
+              <i-button type="primary" @click="submitFun" :loading="btnLoading">
+                <span v-if="!btnLoading">提交审核</span>
+                <span v-else>正在提交审核...</span>
+              </i-button>
+              <i-button type="ghost" @click="cancelFun" style="margin-left: 8px">取消</i-button>
+            </i-form-item>
+          </div>
         </i-form>
       </i-col>
     </i-row>

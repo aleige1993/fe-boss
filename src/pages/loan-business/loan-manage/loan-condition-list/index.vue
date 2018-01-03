@@ -79,7 +79,7 @@
           this.$data.currentPage = page;
         }
         let resp = await this.$http.post('/biz/loan/pagePaymentApplyRecord', {
-          taskStatus: '1;2',
+          taskNode: '9',
           ...this.$data.searchForm,
           currentPage: this.$data.currentPage,
           pageSize: this.$data.pageSize

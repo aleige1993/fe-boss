@@ -62,8 +62,22 @@
           <i-col>
             <i-form-item
               label="渠道商简称"
-              prop="roadAddr">
+              prop="roadAddr"
+              :rules="{required: true, message: '请选择渠道商类型', trigger: 'blur'}">
               <i-input v-model="formAdd.roadAddr" placeholder=""></i-input>
+            </i-form-item>
+          </i-col>
+        </i-row>
+        <!--是否在app中显示-->
+        <i-row>
+          <i-col>
+            <i-form-item
+              label="是否在app中显示"
+              :rules="{required: true, message: '请选择是否在app中显示', trigger: 'change'}"
+              prop="isDisplayInApp">
+              <i-select v-model="formAdd.isDisplayInApp">
+                <i-option v-for="item in enumSelectData.get('YesNoEnum')" :key="item.itemCode" :value="item.itemCode">{{item.itemName}}</i-option>
+              </i-select>
             </i-form-item>
           </i-col>
         </i-row>
@@ -130,6 +144,7 @@
           'creditReleaseType': '',
           'merchantStatus': '',
           'merchantType': '',
+          'isDisplayInApp': '',
           'merchantLogo': ''
         },
         isAdd: false,

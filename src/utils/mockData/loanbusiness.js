@@ -292,7 +292,15 @@ export default [
                 'loanCarNo|1-100': 1, // 抵押车辆编号
                 'loanNo': '11111' // 项目编号
               }
-            ]
+            ],
+            'makeName': '办理文件名.jpg',
+            'makeUrl': 'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1514905175804&di=3aaae824c3b82cd0fa906d7cb46316d1&imgtype=0&src=http%3A%2F%2Fimg.mp.itc.cn%2Fupload%2F20170714%2Fc6d3a406ce44421cbdd2e5796a486f3a_th.jpg',
+            'makeDate': '@date',
+            'makeUser': 'mockjs',
+            'warrantNo': '0000001',
+            'registerCompany': '巴山车管所',
+            'mortgageStatus|1': ['0', '1'],
+            'remark': /备注: [0-9a-zA-z]{10}/
           }
         ]
       },
@@ -433,13 +441,18 @@ export default [
         'pageSize': 15,
         'resultList|3': [
           {
+            'makeName': '办理抵押图片.jpg',
+            'makeUrl': 'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1514905175804&di=3aaae824c3b82cd0fa906d7cb46316d1&imgtype=0&src=http%3A%2F%2Fimg.mp.itc.cn%2Fupload%2F20170714%2Fc6d3a406ce44421cbdd2e5796a486f3a_th.jpg',
+            'makeUser': 'mockjs',
+            'remark': /备注: [0-9a-zA-z]{10}/,
+            'makeDate': '@date',
             'guaPersonType|1': ['1', '2'],
             'guaPersonNo': '1111111',
             'guaPersonName': 'mockjs',
             'guaPersonCertType|1': ['1', '2'],
             'guaPersonCertNo': /^[1-9]\d{5}(18|19|([23]\d))\d{2}((0[1-9])|(10|11|12))(([0-2][1-9])|10|20|30|31)\d{3}[0-9Xx]$/,
             'guaPersonMobile': /1[3578]{1}[0-9]{9}/,
-            'lsStatus|1': ['1', '2']
+            'lsStatus|1': ['0', '1']
           }
         ]
       },
@@ -518,7 +531,8 @@ export default [
             'signConfirmDate': '@date()',
             'taskArriveTime': '@date()',
             'timeConsuming': '@time',
-            'taskNode|1': ['1', '2', '3', '4', '5']
+            'status|1': ['0', '1', '2', '3', '4', '5', '6', '7'],
+            'taskNode|1': ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '99']
           }
         ]
       },
@@ -530,6 +544,15 @@ export default [
   // 放款管理-设置当前处理人 （可通用）
   {
     url: '/biz/loan/settingHandleUser',
+    on: true,
+    resp: Mock.mock({
+      'reCode': '0000',
+      'reMsg': '成功',
+      'success': true
+    })
+  },
+  {
+    url: '/biz/payment/paymentCondition',
     on: true,
     resp: Mock.mock({
       'reCode': '0000',

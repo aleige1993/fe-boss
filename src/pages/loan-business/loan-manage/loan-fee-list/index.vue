@@ -78,7 +78,7 @@
           this.$data.currentPage = page;
         }
         let resp = await this.$http.post('/biz/loan/pagePaymentApplyRecord', {
-          taskStatus: '3;4', // 对应状态标识查看枚举PaymentTaskStatusEnum查阅
+          taskNode: '10', // 对应状态标识查看枚举LoanBizNodeEnum查阅
           ...this.$data.searchForm,
           currentPage: this.$data.currentPage,
           pageSize: this.$data.pageSize

@@ -53,7 +53,6 @@ export default {
                 },
                 on: {
                   click: () => {
-                    console.log('corpNo------' + params.row.corpNo);
                     this.$router.push({
                       path: '/index/customer/distributor/details',
                       query: {

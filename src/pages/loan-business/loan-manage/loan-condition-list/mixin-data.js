@@ -32,10 +32,11 @@ export default {
         {
           title: '期数',
           key: 'totalPeriods',
-          width: 80
+          width: 70
         },
         {
           title: '贷款金额(元)',
+          width: 120,
           key: 'loanTotalAmt'
         },
         {
@@ -55,7 +56,7 @@ export default {
         },
         {
           title: '当前环节',
-          width: 90,
+          width: 120,
           key: 'taskNode',
           render: (h, params) => {
             return h('span', {}, this.enumCode2Name(params.row.taskNode, 'LoanBizNodeEnum'));
@@ -71,7 +72,8 @@ export default {
               h('Button', {
                 props: {
                   type: 'primary',
-                  size: 'small'
+                  size: 'small',
+                  disabled: (params.row.status === '1') || (params.row.status === '2')
                 },
                 style: {
                   marginRight: '5px'
@@ -84,7 +86,7 @@ export default {
                       return;
                     }
                     this.$router.push({
-                      path: '/index/loanbusiness/loan/fee/handle',
+                      path: '/index/loanbusiness/loan/handle',
                       query: {
                         currentPage: this.$data.currentPage,
                         paymentNo: params.row.paymentNo,

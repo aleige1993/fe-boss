@@ -11,80 +11,82 @@
     <br>
     <i-tabs v-model="tabIndex" :animated="false" type="card">
       <i-tab-pane label="额度信息">
-        <i-form ref="formQuota" :model="formQuota" label-position="right" :label-width="120" style="padding: 30px 0;">
-          <i-row>
-            <i-col span="8">
-              <i-form-item label="客户名称">
-                <span v-text="formQuota.corpName"></span>
-              </i-form-item>
-            </i-col>
-          </i-row>
-          <i-row>
-            <i-col span="8">
-              <i-form-item label="客户经理">
-                <span v-text="formQuota.custMgrName"></span>
-              </i-form-item>
-            </i-col>
-          </i-row>
-          <!--授信总额度-->
+        <bs-form-block :title="'额度信息'">
+          <i-form ref="formQuota" :model="formQuota" label-position="right" :label-width="120" style="padding: 30px 0;">
+            <i-row>
+              <i-col span="8">
+                <i-form-item label="客户名称">
+                  <span v-text="formQuota.corpName"></span>
+                </i-form-item>
+              </i-col>
+            </i-row>
+            <i-row>
+              <i-col span="8">
+                <i-form-item label="客户经理">
+                  <span v-text="formQuota.custMgrName"></span>
+                </i-form-item>
+              </i-col>
+            </i-row>
+            <!--授信总额度-->
             <br>
             <br>
-          <i-row>
-            <i-col span="8">
-            <i-form-item label="授信总额度" prop="creditTotalLimit">
-              <i-input v-model="formQuota.creditTotalLimit" placeholder="">
-                <span slot="append">元</span>
-              </i-input>
-            </i-form-item>
-            </i-col>
-          </i-row>
-          <i-row>
-            <i-col span="8">
-          <!--可用额度-->
-            <i-form-item label="可用额度"><!--currentUsableLimit-->
-              <i-input v-model="formQuota.creditTotalLimit" :readonly="true" placeholder="">
-                <span slot="append">元</span>
-              </i-input>
-            </i-form-item>
-            </i-col>
-          </i-row>
-          <i-row>
-            <i-col span="8">
-          <!--单笔最大额度-->
-            <i-form-item label="单笔最大额度" prop="singleUsableLimit">
-              <i-input v-model="formQuota.singleUsableLimit" placeholder="">
-                <!--<span slot="append">元</span>-->
-              </i-input>
-            </i-form-item>
-            </i-col>
-          </i-row>
-          <i-row>
-            <i-col span="8">
-          <!--授信起始日期-->
-            <i-form-item label="授信起始日期" prop="creditStartDate">
-              <bs-datepicker v-model="''+formQuota.creditStartDate"></bs-datepicker>
-            </i-form-item>
-            </i-col>
-          </i-row>
-          <i-row>
-            <i-col span="8">
-          <!--授信到期日期-->
-            <i-form-item label="授信到期日期" prop="creditEndDate">
-              <bs-datepicker v-model="''+formQuota.creditEndDate"></bs-datepicker>
-            </i-form-item>
-            </i-col>
-          </i-row>
-          <i-row>
-            <i-col span="8">
-          <!--额度释放方式-->
-            <i-form-item label="额度释放方式" prop="creditReleaseType">
-              <i-select v-model="formQuota.creditReleaseType">
-                <i-option v-for="item in enumSelectData.get('CreditReleaseTypeEnum')" :key="item.itemCode" :value="item.itemCode">{{item.itemName}}</i-option>
-              </i-select>
-            </i-form-item>
-            </i-col>
-          </i-row>
-        </i-form>
+            <i-row>
+              <i-col span="8">
+                <i-form-item label="授信总额度" prop="creditTotalLimit">
+                  <i-input v-model="formQuota.creditTotalLimit" placeholder="">
+                    <span slot="append">元</span>
+                  </i-input>
+                </i-form-item>
+              </i-col>
+            </i-row>
+            <i-row>
+              <i-col span="8">
+                <!--可用额度-->
+                <i-form-item label="可用额度"><!--currentUsableLimit-->
+                  <i-input v-model="formQuota.creditTotalLimit" :readonly="true" placeholder="">
+                    <span slot="append">元</span>
+                  </i-input>
+                </i-form-item>
+              </i-col>
+            </i-row>
+            <i-row>
+              <i-col span="8">
+                <!--单笔最大额度-->
+                <i-form-item label="单笔最大额度" prop="singleUsableLimit">
+                  <i-input v-model="formQuota.singleUsableLimit" placeholder="">
+                    <!--<span slot="append">元</span>-->
+                  </i-input>
+                </i-form-item>
+              </i-col>
+            </i-row>
+            <i-row>
+              <i-col span="8">
+                <!--授信起始日期-->
+                <i-form-item label="授信起始日期" prop="creditStartDate">
+                  <bs-datepicker v-model="''+formQuota.creditStartDate"></bs-datepicker>
+                </i-form-item>
+              </i-col>
+            </i-row>
+            <i-row>
+              <i-col span="8">
+                <!--授信到期日期-->
+                <i-form-item label="授信到期日期" prop="creditEndDate">
+                  <bs-datepicker v-model="''+formQuota.creditEndDate"></bs-datepicker>
+                </i-form-item>
+              </i-col>
+            </i-row>
+            <i-row>
+              <i-col span="8">
+                <!--额度释放方式-->
+                <i-form-item label="额度释放方式" prop="creditReleaseType">
+                  <i-select v-model="formQuota.creditReleaseType">
+                    <i-option v-for="item in enumSelectData.get('CreditReleaseTypeEnum')" :key="item.itemCode" :value="item.itemCode">{{item.itemName}}</i-option>
+                  </i-select>
+                </i-form-item>
+              </i-col>
+            </i-row>
+          </i-form>
+        </bs-form-block>
         <bs-form-block :title="'审核意见'">
           <i-form ref="approveDto" :model="approveDto" label-position="right" :label-width="120">
             <i-row>
@@ -118,20 +120,17 @@
             </i-row>
           </i-form>
         </bs-form-block>
-        <br>
-        <br>
-        <div class="text-center">
-          <i-button type="primary" @click="submitFun" :loading="btnLoading">
-            <span v-if="!btnLoading">提交审核</span>
-            <span v-else>正在提交审核...</span>
-          </i-button>
-          <i-button type="ghost" @click="cancelFun" style="margin-left: 8px">取消</i-button>
-        </div>
-
       </i-tab-pane>
       <i-tab-pane label="审核历史信息">
         <table-examine-history if="tabIndex===1"></table-examine-history>
       </i-tab-pane>
+      <div class="form-footer-actions">
+        <i-button type="primary" @click="submitFun" :loading="btnLoading">
+          <span v-if="!btnLoading">提交审核</span>
+          <span v-else>正在提交审核...</span>
+        </i-button>
+        <i-button type="ghost" @click="cancelFun" style="margin-left: 8px">取消</i-button>
+      </div>
     </i-tabs>
   </div>
 
@@ -200,8 +199,7 @@
         }
       },
       submitFun() {
-        const formName = 'approveDto';
-        this.$refs[formName].validate((valid) => {
+        this.$refs['approveDto'].validate((valid) => {
           if (valid) {
             this.submiting();
           } else {
@@ -209,7 +207,14 @@
           }
         });
       },
-      cancelFun() {}
+      cancelFun() {
+        this.$router.push({
+          path: '/index/customer/distributor/credit',
+          query: {
+            currentPage: 1
+          }
+        });
+      }
     }
   };
 </script>
