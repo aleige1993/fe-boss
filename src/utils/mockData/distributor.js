@@ -18,6 +18,41 @@ export default [
       'success': true
     })
   },
+  // 渠道商授信额度分页查询
+  {
+    url: '/merchant/credit/list',
+    on: true,
+    resp: Mock.mock({
+      'body': {
+        'currentPage': 1,
+        'pageSize': 15,
+        'totalNum': 15,
+        'resultList|15': [
+          {
+            'merchantNo': '111111111', // 渠道商编号
+            'applyNo': '111111',
+            'creditTotalLimit|500-1000': 500,
+            'singleUsableLimit|500-1000': 500,
+            'creditStartDate': '@date()',
+            'creditEndDate': '@date()',
+            'creditReleaseType|1': ['1'],
+            'applyUserCode': '123456',
+            'applyUserName': '@name',
+            'applyTime': '@date',
+            'applyStatus|1': ['1', '2', '3', '4', '5', '6', '7'],
+            'merchantAbbr': 'mockjs',
+            'corpName': 'mockjs',
+            'corpNo': '111111',
+            'custMgrNo': '111111',
+            'custMgrName': '111111'
+          }
+        ]
+      },
+      'reCode': '0000',
+      'reMsg': '成功',
+      'success': true
+    })
+  },
   // 渠道商列表信息列表分页查询
   {
     url: '/merchant/listMerchant',

@@ -217,46 +217,6 @@ export default {
         }
       ],
       conditionData: [],
-      // 审批信息
-      examineColumns: [
-        {
-          title: '处理人',
-          align: 'center',
-          width: 180,
-          key: 'handleUserName'
-        },
-        {
-          title: '任务节点',
-          key: 'taskName',
-          render: (h, params) => {
-            return h('span', {}, this.enumCode2Name(params.row.taskName, 'LoanBizNodeEnum'));
-          }
-        },
-        {
-          title: '开始时间',
-          width: 120,
-          key: 'startTime'
-        },
-        {
-          title: '结束时间',
-          width: 120,
-          key: 'endTime'
-        },
-        {
-          title: '耗时',
-          width: 100,
-          key: 'timeConsuming'
-        },
-        {
-          title: '结论',
-          key: 'approveStatus'
-        },
-        {
-          title: '意见信息',
-          key: 'opinion'
-        }
-      ],
-      examineData: [],
       // GPS安装信息
       loanCarGpsDTOColumns: [
         {

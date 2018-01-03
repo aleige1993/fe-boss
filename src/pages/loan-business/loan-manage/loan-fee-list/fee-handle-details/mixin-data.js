@@ -170,47 +170,7 @@ export default {
           }
         }
       ],
-      conditionData: [],
-      // 审批信息
-      examineColumns: [
-        {
-          title: '处理人',
-          align: 'center',
-          width: 180,
-          key: 'name'
-        },
-        {
-          title: '任务节点',
-          key: 'taskNode',
-          render: (h, params) => {
-            return h('span', {}, this.enumCode2Name(params.row.taskNode, 'LoanBizNodeEnum'));
-          }
-        },
-        {
-          title: '开始时间',
-          width: 120,
-          key: 'timenStart'
-        },
-        {
-          title: '结束时间',
-          width: 120,
-          key: 'timeEnd'
-        },
-        {
-          title: '耗时',
-          width: 100,
-          key: 'longTime'
-        },
-        {
-          title: '结论',
-          key: 'conclusion'
-        },
-        {
-          title: '意见信息',
-          key: 'opinion'
-        }
-      ],
-      examineData: []
+      conditionData: []
     };
   }
 };
