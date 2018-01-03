@@ -906,6 +906,10 @@ export default [
             {
               'itemCode': '6',
               'itemName': '冻结'
+            },
+            {
+              'itemCode': '7',
+              'itemName': '授信待审核'
             }
           ]
         },
@@ -1295,8 +1299,8 @@ export default [
               'itemName': '草稿'
             },
             {
-              'itemCode': '8',
-              'itemName': '已放款'
+              'itemCode': '4',
+              'itemName': '拒绝'
             },
             {
               'itemCode': '9',

@@ -78,7 +78,7 @@ export default {
           }
         },
         {
-          title: '授信状态', // 0:未授信1-授信审核中2-授信通过3-授信拒绝4-授信驳回5-授信过期6-冻结
+          title: '授信状态', // 0:未授信1-授信审核中2-授信通过3-授信拒绝4-授信驳回5-授信过期6-冻结7-授信待审核
           width: 90,
           key: 'merchantStatus',
           render: (h, params) => {
@@ -113,13 +113,15 @@ export default {
                   }
                 }
               }, '详情'),
-              h('i-button', {
+              h('i-button', { // 0:未授信1-授信审核中2-授信通过3-授信拒绝4-授信驳回5-授信过期6-冻结7-授信待审核
                 props: {
-                  type: 'success'
+                  type: 'success',
+                  disabled: (params.row.merchantStatus !== '0') && (params.row.merchantStatus !== '4')
                 },
                 on: {
                   click: () => {
-                    this.$emit('on-set-row', params.row);
+                    let rowData = $.extend({}, params.row);
+                    this.$emit('on-set-row', rowData);
                   }
                 }
               }, '修改'),

@@ -61,14 +61,19 @@
         clickRow: {},
         searchForm: {
           'loanNo': '',
+          'custName': '',
           'certType': '',
           'certNo': '',
-          'applyStartTime': '',
+          'startDate': '',
+          'endDate': '',
           'applyEndTime': ''
         }
       };
     },
     mounted() {
+      if (this.$route.query.currentPage) {
+        this.$data.currentPag = this.$route.query.currentPag;
+      }
       this.getList();
     },
     methods: {
@@ -77,7 +82,7 @@
         if (page) {
           this.$data.currentPage = page;
         }
-        let resp = await this.$http.post('/biz/loan/pagePaymentApplyRecord', {
+        let resp = await this.$http.post('/biz/payment/pagePaymentApplyRecord', {
           taskNode: '10', // 对应状态标识查看枚举LoanBizNodeEnum查阅
           ...this.$data.searchForm,
           currentPage: this.$data.currentPage,

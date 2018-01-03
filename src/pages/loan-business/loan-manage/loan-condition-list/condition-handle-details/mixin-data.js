@@ -177,15 +177,15 @@ export default {
         },
         {
           title: '备注',
-          key: 'paymentConContent',
+          key: 'remark',
           render: (h, params) => {
             return h('i-input', {
               props: {
-                'value': params.row.paymentConContent
+                'value': params.row.remark
               },
               on: {
                 'on-blur': (event) => {
-                  this.$data.conditionData[params.index].paymentConContent = event.target.value;
+                  this.$data.conditionData[params.index].remark = event.target.value;
                 }
               }
             });
@@ -270,12 +270,11 @@ export default {
         },
         {
           title: 'GPS合作商',
-          width: 180,
           key: 'gpsJoinMerchant'
         },
         {
           title: '安装状态',
-          width: 180,
+          width: 100,
           key: 'gpsInstallStatus',
           render: (h, params) => {
             return h('span', {}, this.enumCode2Name(params.row.gpsInstallStatus, 'GpsInstallStatusEnum'));
@@ -283,7 +282,6 @@ export default {
         },
         {
           title: '办理人',
-          width: 100,
           key: 'makeUser'
         },
         {

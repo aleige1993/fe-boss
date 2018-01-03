@@ -64,6 +64,7 @@
           currentPage: this.$data.currentPage,
           pageSize: this.$data.pageSize
         });
+        console.log(resp);
         this.$data.dataLoading = false;
         if (resp.body.resultList.length !== 0) {
           this.$data.distributorList = resp.body.resultList;

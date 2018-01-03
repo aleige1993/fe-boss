@@ -458,8 +458,8 @@
         });
         this.$data.conditionLoading = false;
         if (reps.success) {
-          if (reps.body.resultList.length !== 0) {
-            this.$data.conditionData = reps.body.resultList;
+          if (reps.body.length !== 0) {
+            this.$data.conditionData = reps.body;
           } else {
             this.$Notice.warning({
               title: '放款条件列表没有数据可加载',
@@ -467,6 +467,8 @@
             });
             this.$data.conditionData = [];
           }
+        } else {
+          this.$data.conditionData = [];
         }
       },
       // 获取审批信息列表的data
@@ -563,6 +565,7 @@
             msg();
             this.$data.initFormLoading = false;
           } else {
+            this.$data.tabIndex = 0;
             this.$Message.error('<span style="color: red">*</span>项不能为空');
             msg();
             this.$data.initFormLoading = false;

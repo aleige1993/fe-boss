@@ -105,6 +105,7 @@
           if (ok) {
             const loadingMsg = this.$Message.loading('删除中...', 0);
             let respDel = await this.$http.get('merchant/deleteMerchant', {
+              merchantStatus: row.merchantStatus,
               merchantNo: row.merchantNo
             });
             loadingMsg();
