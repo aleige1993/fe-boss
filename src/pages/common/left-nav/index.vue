@@ -79,8 +79,9 @@ export default {
       font-size: 14px;
       border-left: 4px solid transparent;
       &:hover{
-        color: #333;
-        text-decoration: none;
+        background-color: #c5dcef;
+        border-left: 4px solid $color-primary;
+        color: $color-primary;
       }
       &.active{
         background-color: #c5dcef;
@@ -102,7 +103,7 @@ export default {
   line-height: 32px;
   padding-left: 36px;
   border-left: 4px solid #ecf4f8;
-  &.link-exact-active{
+  &.link-exact-active, &:hover{
     background-color: #c5dcef;
     border-left: 4px solid $color-primary;
     color: $color-primary;

@@ -57,6 +57,7 @@
         total: 0,
         currentPage: 1,
         certTypeEnum: [],
+        applyApproveLoading: false,
         searchForm: {
           currentPage: 1,
           pageSize: 15,
@@ -86,9 +87,16 @@
       }
     },
     props: {
-      type: String,
-      default: 'page',
-      required: false
+      'taskNode': {
+        type: String,
+        default: '',
+        required: false
+      },
+      'type': {
+        type: String,
+        default: 'page',
+        required: false
+      }
     },
     methods: {
       goToAdd() {
@@ -99,6 +107,7 @@
         if (page) {
           this.$data.searchForm.currentPage = page;
         }
+        this.$data.searchForm.taskNode = this.taskNode;
         let resp = await this.$http.post('/biz/listLoanBizByCon', this.$data.searchForm);
         this.$data.dataLoading = false;
         this.$data.privateCustomerLoanList = resp.body.resultList;
@@ -115,6 +124,11 @@
         // this.$emit('on-row-dbclick', row, index);
       }
     },
+    watch: {
+      'taskNode'() {
+        this.getPrivateCustomerLoanList();
+      }
+    },
     mounted() {
       this.getPrivateCustomerLoanList();
       let enumSelectData = this.$store.getters.enumSelectData;
@@ -123,5 +137,8 @@
     }
   };
 </script>
-<style lang="scss" scoped>
+<style lang="scss">
+  .ivu-table-cell button[disabled] {
+    display: none;
+  }
 </style>

@@ -17,11 +17,15 @@ export default {
           key: 'status',
           render: (h, params) => {
             return h('i-select', {
+              props: {
+                disabled: this.readonly,
+                value: params.row.status
+              },
               on: {
                 'on-change': (value) => {
                   let rowData = { ...params.row };
                   rowData.status = value;
-                  this.$set(this.$data.approveData.loanApproveRuleDTOS, params.index, rowData);
+                  this.$data.approveData.loanApproveRuleDTOS[params.index] = rowData;
                 }
               }
             }, [
@@ -114,7 +118,7 @@ export default {
       feeMethodCol: [
         {
           title: '费用项目代码',
-          key: 'feeId'
+          key: 'feeTypeCode'
         },
         {
           title: '费用项目',
@@ -145,13 +149,14 @@ export default {
           render: (h, params) => {
             return h('i-input', {
               props: {
-                'v-model': params.row.feeActualAmt
+                'v-model': params.row.feeActualAmt,
+                disabled: this.readonly
               },
               on: {
-                'on-change': (value) => {
+                'on-blur': (event) => {
                   let rowData = Object.assign({}, params.row);
-                  rowData.feeActualAmt = value;
-                  // this.$set(this.$data.approveData.loanApproveFeePlanDTOS, params.index, rowData);
+                  rowData.feeActualAmt = event.target.value;
+                  this.$data.approveData.loanApproveFeePlanDTOS[params.index] = rowData;
                 }
               }
             });
@@ -163,13 +168,14 @@ export default {
           render: (h, params) => {
             return h('i-input', {
               props: {
-                'value': params.row.remark
+                'value': params.row.remark,
+                readonly: this.readonly
               },
               on: {
-                'input': (value) => {
+                'on-blur': (event) => {
                   let rowData = Object.assign({}, params.row);
-                  rowData.remark = value;
-                  this.$set(this.$data.approveData.loanApproveFeePlanDTOS, params.index, rowData);
+                  rowData.remark = event.target.value;
+                  this.$data.approveData.loanApproveFeePlanDTOS[params.index] = rowData;
                 }
               }
             });
@@ -215,13 +221,14 @@ export default {
           render: (h, params) => {
             return h('i-input', {
               props: {
-                'value': params.row.acctNo
+                'value': params.row.acctNo,
+                readonly: this.readonly
               },
               on: {
                 'on-blur': (event) => {
                   let rowData = Object.assign({}, params.row);
                   rowData.acctNo = event.target.value;
-                  this.$set(this.$data.approveData.loanCapitalDTOS, params.index, rowData);
+                  this.$data.approveData.loanCapitalDTOS[params.index] = rowData;
                 }
               }
             });
@@ -270,7 +277,7 @@ export default {
           'riskControlContent': '',
           'remark': '',
           'repaymentMode': '',
-          'loanMode': '',
+          'loanMode': '1',
           carSaleAmt: '' // 车辆销售价格
         },
         // 费用收取方案
@@ -288,7 +295,7 @@ export default {
         ],
         // 审核意见
         'loanApproveDTO': {
-          'result': '',
+          'result': 'A',
           'opinion': ''
         },
         // 放款账户

@@ -41,7 +41,7 @@
     props: {
       title: {
         type: String,
-        default: '材料名称',
+        default: '',
         required: false
       },
       data: {

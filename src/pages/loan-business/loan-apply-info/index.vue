@@ -38,7 +38,7 @@
             <i-form-item label="客户性质"
                          prop="custKind"
                          :rules="{required: true, message: '请选择'}">
-              <i-select v-model="formData.custKind">
+              <i-select v-model="formData.custKind" :disabled="readonly">
                 <i-option :value="'1'">新增客户</i-option>
                 <i-option :value="'2'">结清再贷</i-option>
               </i-select>
@@ -47,7 +47,7 @@
           <!--车辆价格-->
           <i-col span="8">
             <i-form-item label="车辆价格" prop="carBuyAmt">
-              <i-input v-model="formData.carBuyAmt" placeholder="">
+              <i-input v-model="formData.carBuyAmt" :readonly="readonly" placeholder="">
                 <span slot="append">元</span>
               </i-input>
             </i-form-item>
@@ -56,7 +56,7 @@
           <i-col span="8">
             <i-form-item label="申请金额" prop="applyAmt"
                          :rules="{required: true, message: '请输入申请金额'}">
-              <i-input v-model="formData.applyAmt" placeholder="">
+              <i-input v-model="formData.applyAmt" :readonly="readonly" placeholder="">
                 <span slot="append">元</span>
               </i-input>
             </i-form-item>
@@ -66,14 +66,14 @@
           <!--申请时间-->
           <i-col span="8">
             <i-form-item label="申请时间" prop="applyTime">
-              <bs-datepicker v-model="formData.applyTime" format="yyyy-MM-dd" type="date" placeholder="申请时间" style="width: 100%"></bs-datepicker>
+              <bs-datepicker :readonly="readonly" v-model="formData.applyTime" format="yyyy-MM-dd" type="date" placeholder="申请时间" style="width: 100%"></bs-datepicker>
             </i-form-item>
           </i-col>
           <!--申请期限-->
           <i-col span="8">
             <i-form-item label="申请期限" prop="applyPeriods"
                          :rules="{required: true, message: '请输入申请期限'}">
-              <i-input v-model="formData.applyPeriods" placeholder="">
+              <i-input v-model="formData.applyPeriods" :readonly="readonly" placeholder="">
                 <span slot="append">月</span>
               </i-input>
             </i-form-item>
@@ -81,7 +81,7 @@
           <!--首付或保证金意向-->
           <i-col span="8">
             <i-form-item label="首付或保证金意向" prop="depositOrDownPayment">
-              <i-input v-model="formData.depositOrDownPayment" placeholder="">
+              <i-input v-model="formData.depositOrDownPayment" :readonly="readonly" placeholder="">
                 <span slot="append">元</span>
               </i-input>
             </i-form-item>
@@ -91,7 +91,7 @@
         <i-row>
           <i-col span="8">
             <i-form-item label="车辆用途" prop="carUse">
-              <i-select v-model="formData.carUse">
+              <i-select v-model="formData.carUse" :disabled="readonly">
                 <i-option value="1">自用</i-option>
                 <i-option value="2">商用</i-option>
               </i-select>
@@ -122,10 +122,11 @@
             </i-form-item>
           </i-col>
           <i-col span="8">
-            <i-form-item label="渠道商">
+            <i-form-item label="渠道商" prop="merchantAbbr"
+              :rules="{required: true, message: '请选择渠道商'}">
               <input type="hidden" v-model="formData.merchantAbbr"/>
               <i-input v-model="formData.merchantAbbr" :readonly="true" placeholder="选择渠道商">
-                <i-button v-if="loanAction=='apply'" @click="showSelectDistributor=!showSelectDistributor" slot="append">选择渠道商 <Icon type="ios-more"></Icon></i-button>
+                <i-button v-if="!readonly" @click="showSelectDistributor=!showSelectDistributor" slot="append">选择渠道商 <Icon type="ios-more"></Icon></i-button>
               </i-input>
             </i-form-item>
           </i-col>
@@ -133,25 +134,25 @@
       </bs-form-block>
     </i-form>
     <!--客户信息组件-->
-    <personal-info :readonly="loanAction!='apply'" v-if="customerType == '1'" :memberNo="memberNo" @getMember="getMember"></personal-info>
-    <company-customer-info :readonly="loanAction!='apply'" v-if="customerType == '2'" :corpNo="corpNo" @on-select-company="selectCompany"></company-customer-info>
+    <personal-info :readonly="readonly" v-if="customerType == '1'" :memberNo="memberNo" @getMember="getMember"></personal-info>
+    <company-customer-info :readonly="readonly" v-if="customerType == '2'" :corpNo="corpNo" @on-select-company="selectCompany"></company-customer-info>
     <!--车辆信息-->
     <bs-form-block :title="'车辆信息'">
-      <div class="form-top-actions">
+      <div class="form-top-actions" v-if="!readonly">
         <i-button @click="openModalCar" type="info"><i class="iconfont icon-xinzeng"></i>&nbsp;新增</i-button>
       </div>
       <i-table :loading="carDataLoading" border ref="selection" :columns="carColumns" :data="carData"></i-table>
     </bs-form-block>
     <!--担保信息-->
     <bs-form-block :title="'担保信息'">
-      <div class="form-top-actions">
+      <div class="form-top-actions" v-if="!readonly">
         <i-button @click="openModalAssure" type="info"><i class="iconfont icon-xinzeng"></i>&nbsp;新增</i-button>
       </div>
       <i-table :loading="assureDataLoading" border ref="selection" :columns="assureColumns" :data="assureData"></i-table>
     </bs-form-block>
     <!--贷款材料清单-->
     <bs-form-block :title="'贷款材料清单'">
-      <div class="form-top-actions">
+      <div class="form-top-actions" v-if="!readonly">
         <i-button @click="addLoanFIleGroup" type="info"><i class="iconfont icon-xinzeng"></i>&nbsp;新增</i-button>
       </div>
       <!--<i-table :loading="loanDataLoading" border ref="selection" :columns="loanColumns" :data="loanData"></i-table>-->
@@ -445,7 +446,7 @@
             <i-form-item label="担保人类型" prop="guaPersonType"
                          :rules="{required: true, message: '请选择担保人类型'}">
               <i-select v-model="formAssure.guaPersonType">
-                <i-option v-for="item in enumSelectData.get('MemberTypeEnum')" :key="item.itemCode" :value="item.itemCode">{{item.itemName}}</i-option>
+                <i-option v-for="item in enumSelectData.get('CustTypeEnum')" :key="item.itemCode" :value="item.itemCode">{{item.itemName}}</i-option>
               </i-select>
             </i-form-item>
           </i-col>
@@ -607,6 +608,11 @@
         type: Object,
         required: false,
         default: null
+      },
+      readonly: {
+        type: Boolean,
+        default: false,
+        required: false
       },
       loanAction: {
         type: String,

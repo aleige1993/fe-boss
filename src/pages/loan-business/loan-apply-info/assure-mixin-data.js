@@ -8,7 +8,7 @@ export default {
           width: 100,
           key: 'guaPersonType',
           render: (h, params) => {
-            return h('span', {}, this.enumCode2Name(params.row.guaPersonType, 'MemberTypeEnum'));
+            return h('span', {}, this.enumCode2Name(params.row.guaPersonType, 'CustTypeEnum'));
           }
         },
         {
@@ -58,7 +58,8 @@ export default {
               h('Button', {
                 props: {
                   type: 'primary',
-                  size: 'small'
+                  size: 'small',
+                  disabled: this.readonly
                 },
                 style: {
                   marginRight: '5px'
@@ -72,7 +73,8 @@ export default {
               h('Button', {
                 props: {
                   type: 'error',
-                  size: 'small'
+                  size: 'small',
+                  disabled: this.readonly
                 },
                 on: {
                   click: () => {
