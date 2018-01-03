@@ -71,7 +71,17 @@ export default {
                   type: 'success'
                 },
                 on: {
-                  click: () => {
+                  click: async () => {
+                    let reps = await this.$http.post('merchant/credit/startApprove', {
+                      merchantNo: params.row.merchantNo,
+                      applyNo: params.row.applyNo,
+                      applyStatus: params.row.applyStatus
+                    });
+                    console.log(reps);
+                    if (!reps.success) {
+                      this.$Message.error(reps.reMsg);
+                      return;
+                    }
                     this.$router.push({
                       path: '/index/customer/distributor/credit/examine',
                       query: {

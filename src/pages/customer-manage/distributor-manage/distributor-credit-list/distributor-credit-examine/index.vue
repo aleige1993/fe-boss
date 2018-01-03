@@ -191,7 +191,7 @@
           this.$Message.success('已提交审核');
           await bsWait(1000);
           this.$router.push({
-            path: '/index/customer/distributor/credit',
+            path: '/index/customer/distributor',
             query: {
               currentPage: 1
             }

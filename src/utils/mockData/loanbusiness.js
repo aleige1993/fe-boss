@@ -318,8 +318,14 @@ export default [
         {
           'feeTypeCode|1': /[A-Z]{4,8}/,
           'feeName|1': ['租赁服务费', 'GPS安装费', '租赁保证金'],
-          'feeTakeType|1': ['一次性收取', '分期收取'],
-          'feeActualAmt|500-10000': 500
+          'feeTakeType|1': ['1', '2'],
+          'isClearing|1': ['0', '1'],
+          'isHang|1': ['0', '1'],
+          'receivMode|1': ['1', '2', '3', '4'],
+          'feePercent|1-100': 1,
+          'feeActualAmt|500-10000': 500,
+          'feeAmt|500-10000': 500,
+          'alreadyReceivAmt|500-10000': 500
         }
       ],
       'reCode': '0000',
@@ -466,17 +472,13 @@ export default [
     url: '/biz/getPaymentCondition',
     on: true,
     resp: Mock.mock({
-      'body': {
-        'currentPage': 1,
-        'pageSize': 15,
-        'resultList|3': [
-          {
-            'paymentConName': 'GPS安装完成',
-            'paymentConContent': /[0-9A-Z]{18}/,
-            'status|1': ['0', '1']
-          }
-        ]
-      },
+      'body|3': [
+        {
+          'paymentConName': 'GPS安装完成',
+          'remark': /[0-9A-Z]{18}/,
+          'status|1': ['0', '1']
+        }
+      ],
       'reCode': '0000',
       'reMsg': '成功',
       'success': true
@@ -508,9 +510,9 @@ export default [
       'success': true
     })
   },
-  // 放款管理-放款条件列表
+  // 放款管理-放款列表
   {
-    url: '/biz/loan/pagePaymentApplyRecord',
+    url: '/biz/payment/pagePaymentApplyRecord',
     on: true,
     resp: Mock.mock({
       'body': {
@@ -531,8 +533,8 @@ export default [
             'signConfirmDate': '@date()',
             'taskArriveTime': '@date()',
             'timeConsuming': '@time',
-            'status|1': ['0', '1', '2', '3', '4', '5', '6', '7'],
-            'taskNode|1': ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '99']
+            'status|1': ['0', '1', '2', '3', '4', '9'],
+            'taskNode|1': ['9']
           }
         ]
       },
@@ -551,8 +553,29 @@ export default [
       'success': true
     })
   },
+  // 放款条件落实提交
   {
     url: '/biz/payment/paymentCondition',
+    on: true,
+    resp: Mock.mock({
+      'reCode': '0000',
+      'reMsg': '成功',
+      'success': true
+    })
+  },
+  // 放款费用落实提交
+  {
+    url: '/biz/payment/paymentFee',
+    on: true,
+    resp: Mock.mock({
+      'reCode': '0000',
+      'reMsg': '成功',
+      'success': true
+    })
+  },
+  // 放款审批提交
+  {
+    url: '/biz/payment/paymentApprove',
     on: true,
     resp: Mock.mock({
       'reCode': '0000',

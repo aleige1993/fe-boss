@@ -70,9 +70,10 @@ export default {
                   click: () => {
                     this.$data.formalitiesShowModal = true;
                     this.$data.clickRow = params.row;
+                    this.$data.formalities = params.row;
                   }
                 }
-              }, '办理抵押'),
+              }, '抵押详情'),
               h('Button', {
                 props: {
                   type: 'error',
@@ -82,10 +83,10 @@ export default {
                   click: async () => {
                     this.$data.GPSinstallShowModal = true;
                     this.$data.clickRow = await params.row;
-                    this.GPSinstallGetlist(params.row);
+                    this.$data.loanCarGpsDTOList = this.$data.carData[params.index].loanCarGpsDTOList;
                   }
                 }
-              }, 'GPS安装落实')
+              }, 'GPS安装详情')
             ]);
           }
         }
@@ -147,11 +148,10 @@ export default {
                 on: {
                   click: () => {
                     this.$data.guaranteeShowModal = true;
-                    this.$data.formagGuarantee = {};
                     this.$data.formagGuarantee = params.row;
                   }
                 }
-              }, '担保落实')
+              }, '担保详情')
             ]);
           }
         }
@@ -187,124 +187,34 @@ export default {
         },
         {
           title: '是否挂账',
-          key: 'isBill',
+          key: 'isHang',
           width: 200,
           render: (h, params) => {
-            return h('i-select', {
-              props: {
-                'value': params.row.isBill
-              },
-              on: {
-                'on-change': (val) => {
-                  this.$data.feeData[params.index].isBill = val;
-                }
-              }
-            }, this.enumSelectData.get('YesNoEnum').map((item) => {
-              return h('i-option', {
-                props: {
-                  label: item.itemName,
-                  value: item.itemCode
-                }
-              });
-            }));
+            return h('span', {}, this.enumCode2Name(params.row.isHang, 'YesNoEnum'));
           }
         },
         {
           title: '已收金额(元)',
-          key: 'AMted',
-          render: (h, params) => {
-            return h('i-input', {
-              props: {
-                'value': params.row.AMted
-              },
-              on: {
-                'on-blur': (event) => {
-                  this.$data.feeData[params.index].AMted = event.target.value;
-                }
-              }
-            });
-          }
+          key: 'alreadyReceivAmt'
         },
         {
           title: '收取方式',
-          key: 'isCollect',
+          key: 'receivMode',
           width: 200,
           render: (h, params) => {
-            return h('i-select', {
-              props: {
-                'value': params.row.isCollect
-              },
-              on: {
-                'on-change': (val) => {
-                  this.$data.feeData[params.index].isCollect = val;
-                }
-              }
-            }, [
-              h('i-option', {
-                props: {
-                  label: '现金',
-                  value: '1'
-                }
-              }),
-              h('i-option', {
-                props: {
-                  label: '转账',
-                  value: '2'
-                }
-              }),
-              h('i-option', {
-                props: {
-                  label: 'POS',
-                  value: '3'
-                }
-              }),
-              h('i-option', {
-                props: {
-                  label: '支票',
-                  value: '4'
-                }
-              })
-            ]);
+            return h('span', {}, this.enumCode2Name(params.row.receivMode, 'ReceivModeEnum'));
           }
         },
         {
           title: '是否结清',
-          key: 'isSettle',
+          key: 'isClearing',
           width: 200,
           render: (h, params) => {
-            return h('i-select', {
-              props: {
-                'value': params.row.isSettle
-              },
-              on: {
-                'on-change': (val) => {
-                  this.$data.feeData[params.index].isSettle = val;
-                }
-              }
-            }, this.enumSelectData.get('YesNoEnum').map((item) => {
-              return h('i-option', {
-                props: {
-                  label: item.itemName,
-                  value: item.itemCode
-                }
-              });
-            }));
+            return h('span', {}, this.enumCode2Name(params.row.isClearing, 'YesNoEnum'));
           }
         }
       ],
-      feeData: [
-        {
-          'feeName': '费用项目001',
-          'feeTakeType': '1',
-          'feePercent': '1',
-          'feeAmt': '1111',
-          'feeActualAmt': '1111',
-          'isBill': '0',
-          'AMted': '1111',
-          'isCollect': '1',
-          'isSettle': '1'
-        }
-      ],
+      feeData: [],
       // 放款条件
       conditionColumns: [
         {
@@ -315,42 +225,14 @@ export default {
         },
         {
           title: '备注',
-          key: 'paymentConContent',
-          render: (h, params) => {
-            return h('i-input', {
-              props: {
-                'value': params.row.paymentConContent
-              },
-              on: {
-                'on-blur': (event) => {
-                  this.$data.conditionData[params.index].paymentConContent = event.target.value;
-                }
-              }
-            });
-          }
+          key: 'remark'
         },
         {
           title: '落实状态',
           key: 'status',
           width: 200,
           render: (h, params) => {
-            return h('i-select', {
-              props: {
-                'value': params.row.status
-              },
-              on: {
-                'on-change': (val) => {
-                  this.$data.conditionData[params.index].status = val;
-                }
-              }
-            }, this.enumSelectData.get('LoanLuoShiStatusEnum').map((item) => {
-              return h('i-option', {
-                props: {
-                  label: item.itemName,
-                  value: item.itemCode
-                }
-              });
-            }));
+            return h('span', {}, this.enumCode2Name(params.row.status, 'LoanLuoShiStatusEnum'));
           }
         }
       ],
@@ -408,12 +290,11 @@ export default {
         },
         {
           title: 'GPS合作商',
-          width: 180,
           key: 'gpsJoinMerchant'
         },
         {
           title: '安装状态',
-          width: 180,
+          width: 100,
           key: 'gpsInstallStatus',
           render: (h, params) => {
             return h('span', {}, this.enumCode2Name(params.row.gpsInstallStatus, 'GpsInstallStatusEnum'));
@@ -421,51 +302,12 @@ export default {
         },
         {
           title: '办理人',
-          width: 100,
           key: 'makeUser'
         },
         {
           title: '办理时间',
           width: 200,
           key: 'makeDate'
-        },
-        {
-          title: '操作',
-          key: 'action',
-          width: 150,
-          align: 'center',
-          render: (h, params) => {
-            return h('div', [
-              h('Button', {
-                props: {
-                  type: 'primary',
-                  size: 'small'
-                },
-                style: {
-                  marginRight: '5px'
-                },
-                on: {
-                  click: () => {
-                    this.$data.isAddGPS = false;
-                    this.$data.GPSShowModal = true;
-                    this.$data.formAddGPS = {};
-                    this.$data.formAddGPS = params.row;
-                  }
-                }
-              }, '修改'),
-              h('Button', {
-                props: {
-                  type: 'error',
-                  size: 'small'
-                },
-                on: {
-                  click: () => {
-                    this.$data.loanCarGpsDTOList.splice(params.index, 1);
-                  }
-                }
-              }, '删除')
-            ]);
-          }
         }
       ],
       loanCarGpsDTOList: []
