@@ -78,8 +78,8 @@ export default {
           }
         },
         {
-          title: '授信状态', // 0:未授信1-授信审核中2-授信通过3-授信拒绝4-授信驳回5-授信过期6-冻结7-授信待审核
-          width: 90,
+          title: '渠道商状态', // 0:未授信1-授信申请中2-已授信5-授信过期6-冻结
+          width: 100,
           key: 'merchantStatus',
           render: (h, params) => {
             return h('span', {}, this.enumCode2Name(params.row.merchantStatus, 'MerchantStatusEnum'));
@@ -113,10 +113,9 @@ export default {
                   }
                 }
               }, '详情'),
-              h('i-button', { // 0:未授信1-授信审核中2-授信通过3-授信拒绝4-授信驳回5-授信过期6-冻结7-授信待审核
+              h('i-button', {
                 props: {
-                  type: 'success',
-                  disabled: (params.row.merchantStatus !== '0') && (params.row.merchantStatus !== '4')
+                  type: 'success'
                 },
                 on: {
                   click: () => {

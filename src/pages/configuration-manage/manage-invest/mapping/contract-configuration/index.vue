@@ -36,7 +36,7 @@
         <!--签订方式-->
         <i-form-item prop="signType" label="签订方式">
           <Select v-model="dataForm.signType">
-            <i-option v-for="item in enumSelectData.get('SinTypeEnum')" :key="item.itemCode" :value="item.itemCode">{{item.itemName}}</i-option>
+            <i-option v-for="item in enumSelectData.get('SignTypeEnum')" :key="item.itemCode" :value="item.itemCode">{{item.itemName}}</i-option>
           </Select>
         </i-form-item>
         <i-form-item class="text-right">

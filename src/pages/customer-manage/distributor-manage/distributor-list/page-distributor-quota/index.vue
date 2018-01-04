@@ -96,6 +96,10 @@
           </i-select>
         </i-form-item>
         <i-form-item class="text-right">
+          <i-button type="primary" @click="saveDraft" :loading="draftLoading" style="margin-right: 10px">
+            <span v-if="!draftLoading">保存草稿</span>
+            <span v-else>正在保存草稿...</span>
+          </i-button>
           <i-button type="primary" @click="submitFun" :loading="btnLoading">
             <span v-if="!btnLoading">提交审核</span>
             <span v-else>正在提交审核...</span>
@@ -124,6 +128,7 @@
         currentPage: 1,
         pageSize: 15,
         dataLoading: false,
+        draftLoading: false,
         searchLoading: false,
         formSearch: {
           corpName: ''
@@ -156,6 +161,7 @@
         this.$data.formQuota.corpName = this.$route.query.corpName;
         this.$data.formQuota.custMgrName = this.$route.query.custMgrName;
         this.$data.formQuota.merchantNo = this.$route.query.merchantNo;
+        this.$data.formQuota.merchantStatus = this.$route.query.merchantStatus;
       },
       async getList(page) {
         this.$data.dataLoading = true;
@@ -187,15 +193,25 @@
       },
       // 打开modal
       addModal() {
+        if (this.$data.formQuota.merchantStatus === '1') {
+          this.$Message.warning({
+            content: '当前渠道商状态为“授信申请中”，不可新增授信额度信息！',
+            duration: 3
+          });
+          return;
+        }
         this.$data.isAdd = true;
         this.$data.showAddModal = true;
         this.$data.formQuota = {};
+        this.routeDateFun();
       },
       // 修改modal
       setList(row) {
         this.$data.isAdd = false;
         this.$data.showAddModal = true;
         this.$data.formQuota = row;
+        this.$data.formQuota.creditTotalLimit = row.creditTotalLimit + '';
+        this.$data.formQuota.singleUsableLimit = row.singleUsableLimit + '';
       },
       // 新增审核提交
       async submiting() {
@@ -210,6 +226,7 @@
           creditReleaseType: this.$data.formQuota.creditReleaseType
         });
         this.$data.btnLoading = false;
+        this.$data.showAddModal = false;
         if (resp.success) {
           this.$Message.success('已提交额度信息');
           await bsWait(1000);
@@ -229,8 +246,29 @@
           creditReleaseType: this.$data.formQuota.creditReleaseType
         });
         this.$data.btnLoading = false;
+        this.$data.showAddModal = false;
         if (resp.success) {
           this.$Message.success('已修改额度信息');
+          await bsWait(1000);
+          this.getList();
+        }
+      },
+      // 保存草稿
+      async saveDraft() {
+        this.$data.draftLoading = true;
+        let resp = await this.$http.post('merchant/credit/tempSave', {
+          merchantNo: this.$data.formQuota.merchantNo,
+          applyNo: this.$data.formQuota.applyNo,
+          creditTotalLimit: this.$data.formQuota.creditTotalLimit,
+          singleUsableLimit: this.$data.formQuota.singleUsableLimit,
+          creditStartDate: this.$data.formQuota.creditStartDate,
+          creditEndDate: this.$data.formQuota.creditEndDate,
+          creditReleaseType: this.$data.formQuota.creditReleaseType
+        });
+        this.$data.draftLoading = false;
+        this.$data.showAddModal = false;
+        if (resp.success) {
+          this.$Message.success('已保存草稿');
           await bsWait(1000);
           this.getList();
         }

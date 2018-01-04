@@ -413,6 +413,7 @@
           loanNo: this.$route.query.loanNo
         });
         this.$data.carDataLoading = false;
+        console.log(reps);
         if (reps.success) {
           if (reps.body.resultList.length !== 0) {
             this.$data.carData = reps.body.resultList;

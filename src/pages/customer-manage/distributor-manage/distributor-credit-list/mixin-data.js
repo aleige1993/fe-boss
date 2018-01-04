@@ -34,10 +34,10 @@ export default {
           }
         },
         {
-          title: '授信状态', // 0:未授信1-授信审核中2-授信通过3-授信拒绝4-授信驳回5-授信过期6-冻结
+          title: '授信状态',
           key: 'applyStatus',
           render: (h, params) => {
-            return h('span', {}, this.enumCode2Name(params.row.applyStatus, 'MerchantStatusEnum'));
+            return h('span', {}, this.enumCode2Name(params.row.applyStatus, 'MerchantCreditStatusEnum'));
           }
         },
         {
@@ -77,18 +77,18 @@ export default {
                       applyNo: params.row.applyNo,
                       applyStatus: params.row.applyStatus
                     });
-                    console.log(reps);
                     if (!reps.success) {
                       this.$Message.error(reps.reMsg);
-                      return;
+                    } else {
+                      this.$router.push({
+                        path: '/index/customer/distributor/credit/examine',
+                        query: {
+                          applyNo: params.row.applyNo,
+                          merchantNo: params.row.merchantNo,
+                          hasTab: true
+                        }
+                      });
                     }
-                    this.$router.push({
-                      path: '/index/customer/distributor/credit/examine',
-                      query: {
-                        applyNo: params.row.applyNo,
-                        merchantNo: params.row.merchantNo
-                      }
-                    });
                   }
                 }
               }, '审核')

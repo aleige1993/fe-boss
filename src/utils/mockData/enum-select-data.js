@@ -801,7 +801,7 @@ export default [
           ]
         },
         {
-          'groupKey': 'SinTypeEnum',
+          'groupKey': 'SignTypeEnum',
           'items': [
             {
               'itemCode': '1',
@@ -876,12 +876,39 @@ export default [
             }
           ]
         },
+        // 渠道商状态
         {
           'groupKey': 'MerchantStatusEnum',
           'items': [
             {
               'itemCode': '0',
               'itemName': '未授信'
+            },
+            {
+              'itemCode': '1',
+              'itemName': '授信申请中'
+            },
+            {
+              'itemCode': '2',
+              'itemName': '已授信'
+            },
+            {
+              'itemCode': '5',
+              'itemName': '授信过期'
+            },
+            {
+              'itemCode': '6',
+              'itemName': '冻结'
+            }
+          ]
+        },
+        // 渠道商授信状态
+        {
+          'groupKey': 'MerchantCreditStatusEnum',
+          'items': [
+            {
+              'itemCode': '0',
+              'itemName': '草稿'
             },
             {
               'itemCode': '1',
@@ -900,16 +927,12 @@ export default [
               'itemName': '授信驳回'
             },
             {
-              'itemCode': '5',
-              'itemName': '授信过期'
-            },
-            {
-              'itemCode': '6',
-              'itemName': '冻结'
-            },
-            {
               'itemCode': '7',
               'itemName': '授信待审核'
+            },
+            {
+              'itemCode': '8',
+              'itemName': '授信废弃'
             }
           ]
         },

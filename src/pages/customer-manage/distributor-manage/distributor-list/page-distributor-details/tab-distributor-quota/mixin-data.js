@@ -26,10 +26,10 @@ export default {
           }
         },
         {
-          title: '授信状态', // 0:未授信1-授信审核中2-授信通过3-授信拒绝4-授信驳回5-授信过期6-冻结
+          title: '授信状态',
           key: 'applyStatus',
           render: (h, params) => {
-            return h('span', {}, this.enumCode2Name(params.row.applyStatus, 'MerchantStatusEnum'));
+            return h('span', {}, this.enumCode2Name(params.row.applyStatus, 'MerchantCreditStatusEnum'));
           }
         },
         {

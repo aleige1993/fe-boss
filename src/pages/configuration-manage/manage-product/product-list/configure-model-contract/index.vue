@@ -28,7 +28,7 @@
         </i-form-item>
         <i-form-item label="签订方式" prop="signType">
           <i-select v-model="formCustom.signType">
-            <i-option v-for="item in enumSelectData.get('SinTypeEnum')" :key="item.itemCode" :value="item.itemCode">{{item.itemName}}</i-option>
+            <i-option v-for="item in enumSelectData.get('SignTypeEnum')" :key="item.itemCode" :value="item.itemCode">{{item.itemName}}</i-option>
           </i-select>
         </i-form-item>
         <i-form-item label="适用类型" prop="applicableType">
@@ -98,13 +98,16 @@
           },
           {
             title: '适用类型',
-            key: 'applicableType'
+            key: 'applicableType',
+            render: (h, params) => {
+              return h('span', {}, this.applicableTypeSelect(params.row.applicableType));
+            }
           },
           {
             title: '签订方式',
             key: 'signType',
             render: (h, params) => {
-              return h('span', {}, this.enumCode2Name(params.row.signType, 'SinTypeEnum'));
+              return h('span', {}, this.enumCode2Name(params.row.signType, 'SignTypeEnum'));
             }
           },
           {
@@ -137,14 +140,23 @@
       this.getPrivateCustomerList();
     },
     methods: {
+      // 适用类型枚举
+      applicableTypeSelect(code) {
+        let text = '';
+        if (code === '1') {
+          text = '云易行';
+        } else if (code === '2') {
+          text = '海乐行';
+        }
+        return text;
+      },
       // 查询列表数据
       async getPrivateCustomerList() {
         this.$data.formCustom.dataLoading = true;
         let resp = await this.$http.post('/pms/capital/listContractTemplateCfg', {
           productNo: this.childMsg.productNo
         });
-        alert('合同模板配置有改动，此页面需要重新联调！');
-        console.log(resp.body.resultList);
+        console.log(resp);
         this.$data.dataLoading = false;
         if (resp.body.resultList.length !== 0) {
           this.$data.data1 = resp.body.resultList;
@@ -164,6 +176,7 @@
           productName: this.childMsg.productName,
           contractTemplateNo: this.$data.formCustom.contractTemplateNo,
           contractTemplateName: this.$data.formCustom.contractTemplateName,
+          contractType: this.$data.formCustom.contractType,
           signType: this.$data.formCustom.signType,
           applicableType: this.$data.formCustom.applicableType
         });
