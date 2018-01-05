@@ -206,11 +206,11 @@
               loanNo: this.$data.loanNo
             });
             msg();
-            console.log('租金还款生成还款计划---->' + JSON.stringify(resp));
             if (resp.success) {
               if (resp.body.length !== 0) {
                 this.$data.isCapital = true;
                 this.$data.repayPlanCapitalList = resp.body;
+                this.$Message.success('生成资金方还款计划成功！');
               }
             }
           }
@@ -225,11 +225,11 @@
               loanNo: this.$data.loanNo
             });
             msg();
-            console.log('租金还款生成还款计划---->' + JSON.stringify(resp));
             if (resp.success) {
               if (resp.body.length !== 0) {
                 this.$data.isRental = true;
                 this.$data.repayPlanRentalList = resp.body;
+                this.$Message.success('生成租金方还款计划成功！');
               }
             }
           }

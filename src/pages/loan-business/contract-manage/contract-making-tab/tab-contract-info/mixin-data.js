@@ -117,7 +117,10 @@ export default {
         },
         {
           title: '生成方式',
-          key: 'makeSystem'
+          key: 'makeSystem',
+          render: (h, params) => {
+            return h('span', {}, this.enumCode2Name(params.row.makeSystem, 'MakeSystemEnum'));
+          }
         },
         {
           title: '操作',

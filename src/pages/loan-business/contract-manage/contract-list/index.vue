@@ -112,6 +112,7 @@
           pageSize: this.$data.pageSize,
           ...this.$data.formSearch
         });
+        console.log(resp);
         this.$data.dataLoading = false;
         if (resp.body.resultList.length !== 0) {
           this.$data.data1 = resp.body.resultList;
@@ -132,6 +133,7 @@
           query: {
             isDetails: this.isDetails,
             loanNo: row.loanNo, // 项目编号（业务申请编号）
+            signNo: row.signNo, // 签约编号
             certNo: row.certNo, // 证件号码
             custNo: row.custNo // 客户编号
           }

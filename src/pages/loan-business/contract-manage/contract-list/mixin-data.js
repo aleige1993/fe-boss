@@ -65,9 +65,9 @@ export default {
         {
           title: '当前状态',
           width: 150,
-          key: 'taskStatus',
+          key: 'signStatus',
           render: (h, params) => {
-            return h('span', {}, this.enumCode2Name(params.row.taskStatus, 'BizStatusEnum'));
+            return h('span', {}, this.enumCode2Name(params.row.signStatus, 'BizStatusEnum'));
           }
         },
         {
@@ -85,7 +85,7 @@ export default {
                 props: {
                   type: 'primary',
                   size: 'small',
-                  disabled: (params.row.taskStatus !== '0') && (params.row.taskStatus !== '1')
+                  disabled: (params.row.signStatus !== '0') && (params.row.signStatus !== '1')
                 },
                 style: {
                   marginRight: '5px'
