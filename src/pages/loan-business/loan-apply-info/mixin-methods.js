@@ -173,13 +173,13 @@ export default {
         let guaResp = await getGuaListResp;
         let loanDocResp = await getLoanDocListResp;
         if (carResp.success) {
-          this.$data.carData = carResp.body.resultList;
+          this.$data.carData = carResp.body.resultList || [];
         }
         if (guaResp.success) {
-          this.$data.assureData = guaResp.body.resultList;
+          this.$data.assureData = guaResp.body.resultList || [];
         }
         if (loanDocResp.success) {
-          this.$data.loanData = loanDocResp.body.resultList;
+          this.$data.loanData = loanDocResp.body.resultList || [];
         }
       }
     }
