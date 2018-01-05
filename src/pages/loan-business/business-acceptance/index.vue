@@ -91,7 +91,6 @@
           _dataTemp.loanVO.status = '2';
           _dataTemp.opeType = '2';
           this.saveLoanBiz(_dataTemp);
-        } else {
         }
       },
       // 如果是修改或者删除，初始化页面数据

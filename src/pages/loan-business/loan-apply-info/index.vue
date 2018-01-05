@@ -157,12 +157,12 @@
       </div>
       <!--<i-table :loading="loanDataLoading" border ref="selection" :columns="loanColumns" :data="loanData"></i-table>-->
       <loan-file-list v-for="(item, index) in loanData" :key="index"
-                      :group-index="index" :title="item.loanDocName" :data="item.docDetailAttachList"
+                      :group-index="index" :status="item.status" :title="item.loanDocName" :data="item.docDetailAttachList"
                       @on-group-remove="deleteloanFileGroup">
       </loan-file-list>
     </bs-form-block>
     <!--审核意见-->
-    <i-form v-if="!readonly" ref="formData" :model="formData" label-position="right" :label-width="160">
+    <i-form v-if="!readonly" ref="formApplyOpinion" :model="formData" label-position="right" :label-width="160">
       <bs-form-block title="审核意见" >
         <i-row>
           <i-col span="8">

@@ -119,7 +119,6 @@ export default {
           this.$emit('personalData', this.$data.personalBasicInfo);
           resReturn = true;
         } else {
-          this.$Message.error('<span style="color: red">*</span>项不能为空');
           resReturn = false;
         }
       });

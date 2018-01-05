@@ -2,6 +2,12 @@
   <div class="loan-file-list">
     <h4 class="list-title">{{title}} <a href="javascript:;" class="text-danger" @click.prevent="deleteGroup" ><i-icon type="close-circled"></i-icon></a></h4>
     <div class="list-files clearfix">
+      <p>
+        <i-radio-group>
+          <i-radio label="1">是</i-radio>
+          <i-radio label="0">否</i-radio>
+        </i-radio-group>
+      </p>
       <template v-for="(item, index) in data">
         <template v-if="isImg(item.attachUrl)">
           <bs-big-img  style="float: left" :thumbWidth="128" :thumbHeight="128" :fullWidth="1280"
@@ -53,6 +59,11 @@
         type: Number,
         required: false,
         default: 0
+      },
+      status: {
+        type: String,
+        default: '1',
+        required: false
       }
     },
     methods: {
