@@ -59,10 +59,6 @@
           });
           this.$data.data1 = _data;
         } else {
-          this.$Notice.warning({
-            title: '列表没有数据可加载',
-            duration: 2
-          });
           this.$data.data1 = [];
         }
       },

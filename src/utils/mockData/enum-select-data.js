@@ -980,43 +980,6 @@ export default [
           ]
         },
         {
-          'groupKey': 'SignTaskStatusEnum',
-          'items': [
-            {
-              'itemCode': '0',
-              'itemName': '回退处理中'
-            },
-            {
-              'itemCode': '1',
-              'itemName': '合同制作待处理'
-            },
-            {
-              'itemCode': '2',
-              'itemName': '合同制作处理中'
-            },
-            {
-              'itemCode': '3',
-              'itemName': '合同复核待处理'
-            },
-            {
-              'itemCode': '4',
-              'itemName': '合同复核处理中'
-            },
-            {
-              'itemCode': '5',
-              'itemName': '合同签署待确认'
-            },
-            {
-              'itemCode': '6',
-              'itemName': '合同签署确认中'
-            },
-            {
-              'itemCode': '7',
-              'itemName': '合同签署确认完成'
-            }
-          ]
-        },
-        {
           'groupKey': 'LoanBizNodeEnum',
           'items': [
             {
@@ -1324,6 +1287,10 @@ export default [
             {
               'itemCode': '4',
               'itemName': '拒绝'
+            },
+            {
+              'itemCode': '5',
+              'itemName': '退回'
             },
             {
               'itemCode': '9',

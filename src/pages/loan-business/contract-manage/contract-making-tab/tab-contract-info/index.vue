@@ -366,10 +366,6 @@
           if (this.$data.contractInfoForm.contractInfo.loanContractFileList.length !== 0) {
             this.$data.contractInfoData = this.$data.contractInfoForm.contractInfo.loanContractFileList;
           } else {
-            this.$Notice.warning({
-              title: '合同信息列表没有数据可加载',
-              duration: 2
-            });
             this.$data.contractInfoData = [];
           }
         }
@@ -394,10 +390,6 @@
           if (resp.body.length !== 0) {
             this.$data.feeTakeData = resp.body;
           } else {
-            this.$Notice.warning({
-              title: '个人贷款费用收取方案列表没有数据可加载',
-              duration: 2
-            });
             this.$data.feeTakeData = [];
           }
         }
@@ -415,10 +407,6 @@
           if (resp.body.resultList.length !== 0) {
             this.$data.carData = resp.body.resultList;
           } else {
-            this.$Notice.warning({
-              title: '车辆信息列表没有数据可加载',
-              duration: 2
-            });
             this.$data.carData = [];
           }
         }
@@ -434,10 +422,6 @@
           if (resp.body.resultList.length !== 0) {
             this.$data.guaPersonData = resp.body.resultList;
           } else {
-            this.$Notice.warning({
-              title: '担保信息列表没有数据可加载',
-              duration: 2
-            });
             this.$data.guaPersonData = [];
           }
         }

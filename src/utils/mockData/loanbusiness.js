@@ -139,7 +139,7 @@ export default [
             'tel': '',
             'addr': '',
             'productNo': '',
-            'taskStatus|1': ['1', '2', '3'],
+            'taskStatus|1': ['0', '1', '2', '3', '4', '5', '9'],
             'merchantNo': '',
             'handleUserCode': '',
             'handleUserName': '',

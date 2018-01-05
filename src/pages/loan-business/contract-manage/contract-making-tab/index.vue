@@ -134,20 +134,12 @@
           if (resp.body.loanCapitalList.length !== 0) {
             this.$data.loanCapitalData = resp.body.loanCapitalList;
           } else {
-            this.$Notice.warning({
-              title: '资金方信息列表没有数据可加载',
-              duration: 2
-            });
             this.$data.loanCapitalData = [];
           }
           // 资方还款计划列表data
           if (resp.body.repayPlanCapitalList.length !== 0) {
             this.$data.repayPlanCapitalList = resp.body.repayPlanCapitalList;
           } else {
-            this.$Notice.warning({
-              title: '资金方还款计划列表没有数据可加载',
-              duration: 2
-            });
             this.$data.repayPlanCapitalList = [];
           }
         }
@@ -164,10 +156,6 @@
           if (resp.body.repayPlanRentalList.length !== 0) {
             resp.body.repayPlanRentalList && (this.$data.repayPlanRentalList = resp.body.repayPlanRentalList);
           } else {
-            this.$Notice.warning({
-              title: '租金还款计划列表没有数据可加载',
-              duration: 2
-            });
             this.$data.repayPlanRentalList = [];
           }
         }

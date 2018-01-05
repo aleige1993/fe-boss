@@ -505,10 +505,6 @@
         if (resp.body.length !== 0) {
           this.$data.dataZFLV = resp.body;
         } else {
-          this.$Notice.warning({
-            title: '没有数据可加载',
-            duration: 2
-          });
           this.$data.dataZFLV = [];
         }
       },
@@ -620,10 +616,6 @@
           let formData = resp.body.resultList;
           this.$data.data1 = formData;
         } else {
-          this.$Notice.warning({
-            title: '列表没有数据可加载',
-            duration: 2
-          });
           this.$data.data1 = [];
         }
       },

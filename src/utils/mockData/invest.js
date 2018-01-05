@@ -106,8 +106,9 @@ export default [
         'resultList|10': [
           {
             'id|+1': 1,
-            'name|1': ['海尔云贷贷款合同', '@name'],
-            'type|1': ['贷款合同01', '贷款合同02', '贷款合同03'],
+            'contractTemplateName': 'mockjs',
+            'enclosure|1': ['附件1', '附件2'],
+            'yundaiContractId|1': ['签约平台模板ID01', '签约平台模板ID02', '签约平台模板ID03'],
             'enclosure': /[a-z][A-Z][0-9]{3}\.pdf/,
             'SignId': /[A-Z]{2}[0-9]{9}/
           }

@@ -67,7 +67,7 @@ export default {
           width: 150,
           key: 'taskStatus',
           render: (h, params) => {
-            return h('span', {}, this.enumCode2Name(params.row.taskStatus, 'SignTaskStatusEnum'));
+            return h('span', {}, this.enumCode2Name(params.row.taskStatus, 'BizStatusEnum'));
           }
         },
         {
@@ -84,7 +84,8 @@ export default {
               h('Button', {
                 props: {
                   type: 'primary',
-                  size: 'small'
+                  size: 'small',
+                  disabled: (params.row.taskStatus !== '0') && (params.row.taskStatus !== '1')
                 },
                 style: {
                   marginRight: '5px'

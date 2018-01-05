@@ -66,6 +66,7 @@
           loanNo: '',
           corpName: '',
           certType: '',
+          certNo: '',
           startDate: '',
           endDate: ''
         }
@@ -101,7 +102,12 @@
         if (page) {
           this.$data.currentPage = page;
         }
+        let taskNodeCode = '6';
+        if (this.isDetails) {
+          taskNodeCode = '7';
+        }
         let resp = await this.$http.post('/biz/sign/page', {
+          taskNode: taskNodeCode,
           currentPage: this.$data.currentPage,
           pageSize: this.$data.pageSize,
           ...this.$data.formSearch
@@ -112,10 +118,6 @@
           this.$data.currentPage = resp.body.currentPage;
           this.$data.total = resp.body.totalNum;
         } else {
-          this.$Notice.warning({
-            title: '没有数据可加载',
-            duration: 2
-          });
           this.$data.data1 = [];
         }
       },
