@@ -238,10 +238,6 @@
         if (resp.body.length !== 0) {
           this.$data.data1 = resp.body;
         } else {
-          this.$Notice.warning({
-            title: '列表没有数据可加载',
-            duration: 2
-          });
           this.$data.data1 = [];
         }
       },

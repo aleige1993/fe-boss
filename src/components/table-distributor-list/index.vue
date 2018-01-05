@@ -92,10 +92,6 @@
           this.$data.currentPage = resp.body.currentPage;
           this.$data.total = resp.body.totalNum;
         } else {
-          this.$Notice.warning({
-            title: '没有数据可加载',
-            duration: 2
-          });
           this.$data.distributorList = [];
         }
       },

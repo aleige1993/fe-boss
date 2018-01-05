@@ -4,6 +4,14 @@ export default {
       // 车辆信息
       carColumns: [
         {
+          title: '担保类型',
+          width: 90,
+          key: 'guaranteeType',
+          render: (h, params) => {
+            return h('span', {}, this.enumCode2Name(params.row.guaranteeType, 'WarrantTypeEnum'));
+          }
+        },
+        {
           title: '车辆品牌',
           align: 'center',
           key: 'carBrandName'
@@ -28,27 +36,11 @@ export default {
           key: 'carFrameNo'
         },
         {
-          title: '是否抵押',
-          width: 90,
-          key: 'isMortgage',
-          render: (h, params) => {
-            return h('span', {}, this.enumCode2Name(params.row.isMortgage, 'YesNoEnum'));
-          }
-        },
-        {
           title: '抵押状态',
           width: 90,
           key: 'mortgageStatus',
           render: (h, params) => {
             return h('span', {}, this.enumCode2Name(params.row.mortgageStatus, 'MortgageStatusEnum'));
-          }
-        },
-        {
-          title: '是否安装GPS',
-          width: 110,
-          key: 'isInstallGps',
-          render: (h, params) => {
-            return h('span', {}, this.enumCode2Name(params.row.isInstallGps, 'YesNoEnum'));
           }
         },
         {
@@ -69,7 +61,8 @@ export default {
               h('Button', {
                 props: {
                   type: 'primary',
-                  size: 'small'
+                  size: 'small',
+                  disabled: params.row.mortgageStatus === '0'
                 },
                 style: {
                   marginRight: '5px'
@@ -217,46 +210,6 @@ export default {
         }
       ],
       conditionData: [],
-      // 审批信息
-      examineColumns: [
-        {
-          title: '处理人',
-          align: 'center',
-          width: 180,
-          key: 'handleUserName'
-        },
-        {
-          title: '任务节点',
-          key: 'taskName',
-          render: (h, params) => {
-            return h('span', {}, this.enumCode2Name(params.row.taskName, 'LoanBizNodeEnum'));
-          }
-        },
-        {
-          title: '开始时间',
-          width: 120,
-          key: 'startTime'
-        },
-        {
-          title: '结束时间',
-          width: 120,
-          key: 'endTime'
-        },
-        {
-          title: '耗时',
-          width: 100,
-          key: 'timeConsuming'
-        },
-        {
-          title: '结论',
-          key: 'approveStatus'
-        },
-        {
-          title: '意见信息',
-          key: 'opinion'
-        }
-      ],
-      examineData: [],
       // GPS安装信息
       loanCarGpsDTOColumns: [
         {

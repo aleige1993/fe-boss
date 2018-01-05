@@ -14,6 +14,7 @@ export default {
         },
         {
           title: '模板附件',
+          width: 200,
           key: 'enclosure',
           render: (h, params) => {
             return h('div', [

@@ -97,6 +97,12 @@ export default [
                   { name: '放款费用落实', url: '/index/loanbusiness/loan/fee' },
                   { name: '放款审批', url: '/index/loanbusiness/loan/approval' }
                 ]
+              },
+              { name: '抵押物管理',
+                url: '/index/loanbusiness/pawn',
+                childMenus: [
+                  { name: '抵押物待办列表', url: '/index/loanbusiness/pawn' }
+                ]
               }
             ]
           },

@@ -25,7 +25,7 @@ export default {
           title: '签订方式',
           key: 'signType',
           render: (h, params) => {
-            return h('span', {}, this.enumCode2Name(params.row.signType, 'SinTypeEnum'));
+            return h('span', {}, this.enumCode2Name(params.row.signType, 'SignTypeEnum'));
           }
         },
         {

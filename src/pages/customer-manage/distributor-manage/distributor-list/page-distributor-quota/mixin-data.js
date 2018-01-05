@@ -34,7 +34,7 @@ export default {
         },
         {
           title: '操作',
-          width: 200,
+          width: 220,
           align: 'center',
           key: 'action',
           render: (h, params) => {
@@ -42,6 +42,9 @@ export default {
               h('i-button', {
                 props: {
                   type: 'primary'
+                },
+                style: {
+                  marginRight: '5px'
                 },
                 on: {
                   click: () => {
@@ -53,7 +56,34 @@ export default {
                     });
                   }
                 }
-              }, '审核历史')
+              }, '审核历史'),
+              h('Button', {
+                props: {
+                  type: 'primary',
+                  size: 'small',
+                  disabled: (params.row.applyStatus !== '0') && (params.row.applyStatus !== '4')
+                },
+                style: {
+                  marginRight: '5px'
+                },
+                on: {
+                  click: () => {
+                    this.setList($.extend({}, params.row));
+                  }
+                }
+              }, '修改'),
+              h('Button', {
+                props: {
+                  type: 'error',
+                  size: 'small',
+                  disabled: params.row.applyStatus !== '0'
+                },
+                on: {
+                  click: () => {
+                    this.remove($.extend({}, params.row));
+                  }
+                }
+              }, '删除')
             ]);
           }
         }

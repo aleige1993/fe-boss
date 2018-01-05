@@ -801,7 +801,7 @@ export default [
           ]
         },
         {
-          'groupKey': 'SinTypeEnum',
+          'groupKey': 'SignTypeEnum',
           'items': [
             {
               'itemCode': '1',
@@ -876,12 +876,39 @@ export default [
             }
           ]
         },
+        // 渠道商状态
         {
           'groupKey': 'MerchantStatusEnum',
           'items': [
             {
               'itemCode': '0',
               'itemName': '未授信'
+            },
+            {
+              'itemCode': '1',
+              'itemName': '授信申请中'
+            },
+            {
+              'itemCode': '2',
+              'itemName': '已授信'
+            },
+            {
+              'itemCode': '5',
+              'itemName': '授信过期'
+            },
+            {
+              'itemCode': '6',
+              'itemName': '冻结'
+            }
+          ]
+        },
+        // 渠道商授信状态
+        {
+          'groupKey': 'MerchantCreditStatusEnum',
+          'items': [
+            {
+              'itemCode': '0',
+              'itemName': '草稿'
             },
             {
               'itemCode': '1',
@@ -900,16 +927,12 @@ export default [
               'itemName': '授信驳回'
             },
             {
-              'itemCode': '5',
-              'itemName': '授信过期'
-            },
-            {
-              'itemCode': '6',
-              'itemName': '冻结'
-            },
-            {
               'itemCode': '7',
               'itemName': '授信待审核'
+            },
+            {
+              'itemCode': '8',
+              'itemName': '授信废弃'
             }
           ]
         },
@@ -953,43 +976,6 @@ export default [
             {
               'itemCode': '3',
               'itemName': '二网商'
-            }
-          ]
-        },
-        {
-          'groupKey': 'SignTaskStatusEnum',
-          'items': [
-            {
-              'itemCode': '0',
-              'itemName': '回退处理中'
-            },
-            {
-              'itemCode': '1',
-              'itemName': '合同制作待处理'
-            },
-            {
-              'itemCode': '2',
-              'itemName': '合同制作处理中'
-            },
-            {
-              'itemCode': '3',
-              'itemName': '合同复核待处理'
-            },
-            {
-              'itemCode': '4',
-              'itemName': '合同复核处理中'
-            },
-            {
-              'itemCode': '5',
-              'itemName': '合同签署待确认'
-            },
-            {
-              'itemCode': '6',
-              'itemName': '合同签署确认中'
-            },
-            {
-              'itemCode': '7',
-              'itemName': '合同签署确认完成'
             }
           ]
         },
@@ -1301,6 +1287,10 @@ export default [
             {
               'itemCode': '4',
               'itemName': '拒绝'
+            },
+            {
+              'itemCode': '5',
+              'itemName': '退回'
             },
             {
               'itemCode': '9',

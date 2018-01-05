@@ -158,6 +158,15 @@ let MyRouter = new Router({
                 // 贷款业务-放款管理-放款审批列表-办理详情
                 { path: 'approval/handle', name: 'approvalHandleDetails', component: resolve => require(['@/pages/loan-business/loan-manage/loan-approval-list/approval-handle-details'], resolve)}
               ]
+            },
+            // 贷款业务-抵押物管理
+            { path: 'pawn', name: 'pawnManage', component: resolve => require(['@/pages/loan-business/pawn-manage'], resolve),
+              children: [
+                // 贷款业务-抵押物管理-抵押物代办列表
+                { path: '/', name: 'pawnList', component: resolve => require(['@/pages/loan-business/pawn-manage/pawn-list'], resolve)},
+                // 贷款业务-放款管理-放款条件落实-办理详情
+                { path: 'handle', name: 'pawnListHandle', component: resolve => require(['@/pages/loan-business/pawn-manage/pawn-list/pawn-handle-details'], resolve)}
+              ]
             }
           ]
         }

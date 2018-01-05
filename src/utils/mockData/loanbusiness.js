@@ -139,7 +139,7 @@ export default [
             'tel': '',
             'addr': '',
             'productNo': '',
-            'taskStatus|1': ['1', '2', '3'],
+            'taskStatus|1': ['0', '1', '2', '3', '4', '5', '9'],
             'merchantNo': '',
             'handleUserCode': '',
             'handleUserName': '',
@@ -270,6 +270,7 @@ export default [
         'pageSize': 15,
         'resultList|3': [
           {
+            'guaranteeType|1': ['1', '2'],
             'carBrandName': '长安',
             'carModel': 'CS75',
             'carEngineNo': /[0-9A-Z]{18}/,
@@ -553,6 +554,16 @@ export default [
       'success': true
     })
   },
+  // 抵押物管理-设置当前处理人 （可通用）
+  {
+    url: '/biz/payment/settingHandleUserWithPawn',
+    on: true,
+    resp: Mock.mock({
+      'reCode': '0000',
+      'reMsg': '成功',
+      'success': true
+    })
+  },
   // 放款条件落实提交
   {
     url: '/biz/payment/paymentCondition',
@@ -578,6 +589,41 @@ export default [
     url: '/biz/payment/paymentApprove',
     on: true,
     resp: Mock.mock({
+      'reCode': '0000',
+      'reMsg': '成功',
+      'success': true
+    })
+  },
+  // 抵押物待办列表
+  {
+    url: '/biz/payment/pagePaymentWaitDonePawn',
+    on: true,
+    resp: Mock.mock({
+      'body': {
+        'currentPage': 1,
+        'pageSize': 10,
+        'totalNum': 20,
+        'resultList|10': [
+          {
+            'paymentNo': 'mockjs', // 放款编号
+            'loanNo': '111111',
+            'custName': 'mockjs',
+            'certType|1': ['1', '2'],
+            'certNo': /^[1-9]\d{5}(18|19|([23]\d))\d{2}((0[1-9])|(10|11|12))(([0-2][1-9])|10|20|30|31)\d{3}[0-9Xx]$/,
+            'productName': '@name',
+            'totalPeriods|1': ['3', '6', '12', '18', '24'],
+            'loanTotalAmt|1000-100000': 1000,
+            'applyTime': '@date()',
+            'signConfirmDate': '@date()',
+            'taskArriveTime': '@date()',
+            'timeConsuming': '@time',
+            'status|1': ['0', '1', '2', '3', '4', '9'],
+            'taskNode|1': ['9'],
+            'backDays|1-365': 1,
+            'surplusBackDays|1-365': 1
+          }
+        ]
+      },
       'reCode': '0000',
       'reMsg': '成功',
       'success': true

@@ -92,10 +92,6 @@
         if (resp.body.resultList.length !== 0) {
           this.$data.data1 = resp.body.resultList;
         } else {
-          this.$Notice.warning({
-            title: '"渠道商操作员管理列表"没有数据可加载',
-            duration: 2
-          });
           this.$data.data1 = [];
         }
       },

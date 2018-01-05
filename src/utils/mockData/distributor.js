@@ -18,6 +18,41 @@ export default [
       'success': true
     })
   },
+  // 渠道商授信额度分页查询
+  {
+    url: '/merchant/credit/list',
+    on: true,
+    resp: Mock.mock({
+      'body': {
+        'currentPage': 1,
+        'pageSize': 15,
+        'totalNum': 15,
+        'resultList|15': [
+          {
+            'merchantNo': '111111111', // 渠道商编号
+            'applyNo': '111111',
+            'creditTotalLimit|500-1000': 500,
+            'singleUsableLimit|500-1000': 500,
+            'creditStartDate': '@date()',
+            'creditEndDate': '@date()',
+            'creditReleaseType|1': ['1'],
+            'applyUserCode': '123456',
+            'applyUserName': '@name',
+            'applyTime': '@date',
+            'applyStatus|1': ['0', '1', '2', '3', '4', '7', '8'],
+            'merchantAbbr': 'mockjs',
+            'corpName': 'mockjs',
+            'corpNo': '111111',
+            'custMgrNo': '111111',
+            'custMgrName': '111111'
+          }
+        ]
+      },
+      'reCode': '0000',
+      'reMsg': '成功',
+      'success': true
+    })
+  },
   // 渠道商列表信息列表分页查询
   {
     url: '/merchant/listMerchant',
@@ -42,7 +77,8 @@ export default [
             'creditTotalLimit': '9999999',
             'currentUsableLimit': '9999999',
             'singleUsableLimit': '9999999',
-            'merchantStatus|1': ['0', '1', '2', '3', '4', '5', '6'], // 授信状态
+            'isDisplayInApp|1': ['0', '1'], // 是否在APP中显示
+            'merchantStatus|1': ['0', '1', '2', '5', '6'], // 渠道商状态
             'custMgrName': '11111111' // 客户经理编号
           }
         ],
@@ -126,13 +162,23 @@ export default [
             'creditStartDate': '@date',
             'creditEndDate': '@date',
             'creditReleaseType': '1',
-            'applyStatus|1': ['1', '2', '3', '4', '5', '6']
+            'applyStatus|1': ['0', '1', '2', '3', '4', '7', '8']
           }
         ],
         'startIndex': 0,
         'totalNum': 10,
         'totalPage': 2
       },
+      'reCode': '0000',
+      'reMsg': '成功',
+      'success': true
+    })
+  },
+  // 渠道商渠道商授信审核按钮 验证
+  {
+    url: '/merchant/credit/startApprove',
+    on: true,
+    resp: Mock.mock({
       'reCode': '0000',
       'reMsg': '成功',
       'success': true
