@@ -13,22 +13,23 @@
     <div class="page-container">
       <i-page :total="total" :page-size="15" :current="currentPage" @on-change="jumpPage" size="small" show-elevator show-total></i-page>
     </div>
-    <pt-modal title="isAdd ? '添加' : '修改'" v-model="addModal" :width="600" :zIndex="200">
-      <Form ref="formValidate" label-position="left" :label-width="80">
-        <i-form-item label="标题" prop="name" :rules="{required: true, message: '标题不能为空', trigger: 'blur'}">
-          <i-input v-model="banner.title" placeholder="" ></i-input>
+    <pt-modal :title="isAdd ? '添加' : '修改'" v-model="addModal" :width="600" :zIndex="200">
+      <i-form ref="fromData" :model="fromData" label-position="left" :label-width="80">
+        <i-form-item label="标题" prop="title" :rules="{required: true, message: '标题不能为空', trigger: 'blur'}">
+          <i-input v-model="fromData.title" placeholder="" ></i-input>
         </i-form-item>
-        <i-form-item label="banner链接" :rules="{required: true, message: 'banner链接不能为空', trigger: 'blur'}" prop="mail">
-          <i-input v-model="banner.linkUrl" placeholder=""></i-input>
+        <i-form-item label="链接" prop="linkUrl" :rules="{required: true, message: '链接不能为空', trigger: 'blur'}">
+          <i-input v-model="fromData.linkUrl" placeholder=""></i-input>
         </i-form-item>
         <i-form-item
-          :rules="{required: true, message: '协议附件不能为空', trigger: 'blur'}"
-          label="合同模板附件"
-          prop="contractTemplateAttach">
+          :rules="{required: true, message: '请选择图片', trigger: 'blur'}"
+          label="选择图片"
+          prop="bannerUrl">
           <i-upload
             :show-upload-list="false"
             :on-success="uploadSuccess"
             :on-error="uploadError"
+            :format="['jpg','jpeg','png']"
             type="drag"
             :action="$config.HTTPBASEURL + '/common/upload'">
             <div style="padding: 20px 0">
@@ -37,15 +38,15 @@
             </div>
           </i-upload>
           <p v-if="isAdd" class="show-upload-text" v-text="uploadFileName"></p>
-          <p v-else class="show-upload-text" v-text="formContract.contractTemplateAttach"></p>
-          <input type="hidden" v-model="formContract.contractTemplateAttach" style="width: 100%;border: 0;">
+          <p v-else class="show-upload-text" v-text="fromData.bannerUrl"></p>
+          <input type="hidden" v-model="fromData.bannerUrl" style="width: 100%;border: 0;">
         </i-form-item>
-        <i-form-item label="排序" prop="name">
-          <i-input v-model="banner.index" placeholder=""></i-input>
+        <i-form-item label="排序" prop="index" :rules="{required: true, message: '排序不能为空', trigger: 'blur'}">
+          <i-input v-model="fromData.index" placeholder=""></i-input>
         </i-form-item>
-        <i-form-item label="是否激活" prop="mail">
-          <i-select v-model="banner.activeStatus">
-            <i-option v-for="item in enumSelectData.get('YesNoEnum')" :key="item.itemCode" :value="item.itemCode">{{item.itemName}}</i-option>
+        <i-form-item label="是否激活" prop="activeStatus" :rules="{required: true, message: '请选择是否激活', trigger: 'change'}">
+          <i-select v-model="fromData.activeStatus">
+            <i-option v-for="item in certTypeEnum" :key="item.itemCode" :value="item.itemCode">{{item.itemName}}</i-option>
           </i-select>
         </i-form-item>
         <i-form-item class="text-right">
@@ -55,7 +56,7 @@
           </i-button>
           <i-button type="ghost" @click="cancelFun" style="margin-left: 8px">取消</i-button>
         </i-form-item>
-      </Form>
+      </i-form>
     </pt-modal>
   </div>
 </template>
@@ -71,10 +72,23 @@
         isAdd: true,
         addModal: false,
         dataLoading: false,
+        buttonLoading: false,
         total: 0,
         currentPage: 1,
-        certTypeEnum: [],
+        certTypeEnum: {},
+        uploadFileName: '',
+        searchForm: {
+          'projectNo': '',
+          'toAccName': '',
+          'transCardId': '',
+          'btime': '',
+          'etime': '',
+          'status': '',
+          currentPage: 1,
+          pageSize: 15
+        },
         fromData: {
+          'id': '',
           'title': '',
           'bannerUrl': '',
           'linkUrl': '',
@@ -115,22 +129,43 @@
         if (page) {
           this.$data.searchForm.currentPage = page;
         }
-        let resp = await this.$http.post('/cfg/banner/list', this.$data.searchForm);
+        let resp = await this.$http.post('/cfg/banner/list', {
+          ...this.$data.searchForm
+        });
         this.$data.dataLoading = false;
         this.$data.privateCustomerLoanList = resp.body.resultList;
         this.$data.currentPage = resp.body.currentPage;
         this.$data.total = resp.body.totalNum;
       },
-//      async addBanner() {
-//        console.log(this.$data.banner);
-//        this.$data.dataLoading = true;
-//        let resp = await this.$http.post('/cfg/banner/add', this.$data.banner);
-//        this.$data.dataLoading = false;
-//      }
+      async submitSuccess() {
+        this.$data.buttonLoading = true;
+        let url = this.$data.isAdd ? 'cfg/banner/add' : 'cfg/banner/modify';
+        let resp = await this.$http.post(url, {
+          ...this.$data.fromData
+        });
+        this.$data.buttonLoading = false;
+        this.$data.addModal = false;
+        if (resp.success) {
+          let text = this.$data.isAdd ? '添加成功' : '修改成功';
+          this.$Message.success(text);
+          this.getProxyPayList();
+        }
+      },
+      // 提交
+      submitFun() {
+        const formName = 'fromData';
+        this.$refs[formName].validate((valid) => {
+          if (valid) {
+            this.submitSuccess();
+          } else {
+            this.$Message.error('"<span style="color: red">*</span>"必填项不能为空');
+          }
+        });
+      },
       // 上传成功
       uploadSuccess(res, file, fileList) {
         this.$data.uploadFileName = file.name;
-        this.$data.formContract.contractTemplateAttach = res.body.url;
+        this.$data.fromData.bannerUrl = res.body.url;
       },
       // 上传失败
       uploadError(err, file, fileList) {
@@ -139,36 +174,23 @@
           desc: err
         });
       },
-      async submitSuccess() {
-        this.$data.buttonLoading = true;
-        let resp = await this.$http.post('cfg/banner/add', {
-          ...this.$data.fromData
-        });
-        this.$data.buttonLoading = false;
-        this.$data.showAddModal = false;
-//        if (resp.success) {
-//          let text = this.$data.isAdd ? '新增成功' : '修改成功';
-//          this.$Message.success(text);
-//          this.$refs.tableDistributorList.getPrivateCustomerList();
-//        }
-      },
-      // 提交
-      submitFun() {
-        const formName = 'banner';
-        this.$refs[formName].validate((valid) => {
-          if (valid) {
-            this.submitSuccess();
-          } else {
-            this.$Message.error('"<span style="color: red">*</span>"必填项不能为空');
-          }
-        });
+      // 取消 按钮
+      cancelFun() {
+        this.$data.addModal = false;
       }
     },
     mounted() {
       this.getProxyPayList();
-      let enumSelectData = this.$store.getters.enumSelectData;
-      this.$data.certTypeEnum = enumSelectData.get('CertTypeEnum');
-      // console.log(.get('YesNoEnum'));
+      this.$data.certTypeEnum = [
+        {
+          'itemCode': '1',
+          'itemName': '是'
+        },
+        {
+          'itemCode': '0',
+          'itemName': '否'
+        }
+      ];
     }
   };
 </script>

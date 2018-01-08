@@ -53,6 +53,7 @@ export default {
     async submitCreditApply() {
       if (this.$data.applyData.creditApplyParam.corpNo === '') {
         this.$Notice.error({
+          title: '错误提示',
           desc: '请选择一个公司'
         });
       } else {

@@ -132,7 +132,7 @@ export default {
       this.$refs['formData'].validate((valid) => {
         if (!valid) {
           this.$Notice.error({
-            desc: '请先完善申请信息'
+            title: '错误提示', desc: '请先完善申请信息'
           });
         }
         _valid = valid;

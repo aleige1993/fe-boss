@@ -8,29 +8,26 @@
     <div class="search-form-container">
       <i-form inline>
         <i-form-item prop="user">
-          <i-input v-model="searchForm.projectNo" type="text" placeholder="项目编号"></i-input>
+          <i-input type="text" v-model="searchForm.projectNo" placeholder="项目编号"></i-input>
         </i-form-item>
         <i-form-item prop="password">
-          <i-input v-model="searchForm.idHolder" type="text" placeholder="扣款人姓名"></i-input>
+          <i-input v-model="searchForm.idHolder" type="text" placeholder="扣款人名称"></i-input>
         </i-form-item>
         <i-form-item prop="password">
-          <i-input v-model="searchForm.transSerialNo" type="text" placeholder="证件号码"></i-input>
+          <i-input v-model="searchForm.idCard" type="text" placeholder="证件号码"></i-input>
         </i-form-item>
         <i-form-item prop="password">
-          扣款发起时间
-        </i-form-item>
-        <i-form-item prop="password">
-          <bs-datepicker v-model="searchForm.applyStartTime" type="text" placeholder="选择时间"></bs-datepicker>
+          <bs-datepicker v-model="searchForm.receiveSTime" type="text" placeholder="查询时间"></bs-datepicker>
         </i-form-item>
         <i-form-item prop="password">
           -
         </i-form-item>
         <i-form-item prop="password">
-          <bs-datepicker v-model="searchForm.applyEndTime" type="text" placeholder="选择时间"></bs-datepicker>
+          <bs-datepicker v-model="searchForm.receiveETime" type="text" placeholder="查询时间"></bs-datepicker>
         </i-form-item>
         <i-form-item prop="password">
-          <i-select style="width: 120px;" v-model="searchForm.certType" placeholder="扣款状态">
-            <i-option v-for="item in enumSelectData.get('CertTypeEnum')" :key="item.itemCode" :value="item.itemCode">{{item.itemName}}</i-option>
+          <i-select style="width: 120px;" v-model="searchForm.orderStat" placeholder="扣款状态">
+            <i-option v-for="item in certTypeEnum" :value="item.itemCode" :key="item.itemCode">{{item.itemName}}</i-option>
           </i-select>
         </i-form-item>
         <i-form-item>
@@ -38,8 +35,11 @@
         </i-form-item>
       </i-form>
     </div>
+    <div class="form-top-actions" slot="topAction">
+      <i-button type="info" @click="payment">批量扣款</i-button>
+    </div>
     <slot name="topAction"></slot>
-    <i-table :loading="dataLoading" @on-row-dblclick="selectRow" border ref="selection" :columns="resultCustomerColumns" :data="privateCustomerLoanList"></i-table>
+    <i-table border :loading="dataLoading" ref="selection" @on-select="selectRow" @on-select-all="selectRow" :columns="resultCustomerColumns" :data="privateCustomerLoanList"></i-table>
     <div class="page-container">
       <i-page :total="total" :page-size="15" :current="currentPage" @on-change="jumpPage" size="small" show-elevator show-total></i-page>
     </div>
@@ -59,13 +59,15 @@
         certTypeEnum: [],
         searchForm: {
           'projectNo': '',
-          'transId': '',
-          'transSerialNo': '',
-          'bankName': '',
-          'idHolder': '',
+          'toAccName': '',
+          'transCardId': '',
+          'btime': '',
+          'etime': '',
+          'status': '',
           currentPage: 1,
           pageSize: 15
-        }
+        },
+        paymentId: []
       };
     },
     computed: {
@@ -83,29 +85,38 @@
       required: false
     },
     methods: {
-      async getProxyPayList(page) {
-        this.$data.dataLoading = true;
-        if (page) {
-          this.$data.searchForm.currentPage = page;
-        }
-        let resp = await this.$http.post('/pay/payment', this.$data.searchForm);
-        this.$data.dataLoading = false;
-        this.$data.privateCustomerLoanList = resp.body.resultList;
-        this.$data.currentPage = resp.body.currentPage;
-        this.$data.total = resp.body.totalNum;
-      },
       jumpPage(page) {
         this.getProxyPayList(page);
       },
       search() {
         this.getProxyPayList();
       },
-      selectRow(row, index) {
-        // this.$emit('on-row-dbclick', row, index);
+      selectRow(selection, row) {
+        this.paymentId = [];
+        selection.map(item => {
+          this.paymentId.push(item.payForNo);
+        });
       },
-      async payment(idArray) {
+      async getProxyPayList(page) {
+        this.$data.dataLoading = true;
+        if (page) {
+          this.$data.searchForm.currentPage = page;
+        }
+        let resp = await this.$http.post('/pay/receive', this.$data.searchForm);
+        this.$data.dataLoading = false;
+        resp.body.resultList.map(item => {
+          if (!(item.orderStat === 'F' || item.orderStat === 'D')) {
+            item._disabled = true;
+          }
+          return item;
+        });
+        this.$data.privateCustomerLoanList = resp.body.resultList;
+        this.$data.currentPage = resp.body.currentPage;
+        this.$data.total = resp.body.totalNum;
+      },
+      async payment() {
         let resp = await this.$http.post('/pay/apply/payment', {
-          pay4Nos: idArray
+          pay4Nos: this.paymentId
         });
         if (resp.messageFault.reCode === '0000') {
           this.$Message.success('付款成功');
@@ -115,8 +126,24 @@
     },
     mounted() {
       this.getProxyPayList();
-      let enumSelectData = this.$store.getters.enumSelectData;
-      this.$data.certTypeEnum = enumSelectData.get('CertTypeEnum');
+      this.$data.certTypeEnum = [
+        {
+          'itemCode': 'D',
+          'itemName': '待扣款'
+        },
+        {
+          'itemCode': 'I',
+          'itemName': '扣款中'
+        },
+        {
+          'itemCode': 'S',
+          'itemName': '扣款成功'
+        },
+        {
+          'itemCode': 'F',
+          'itemName': '扣款失败'
+        }
+      ];
       // console.log(.get('YesNoEnum'));
     }
   };

@@ -105,7 +105,7 @@
             }
           } else {
             this.$Notice.error({
-              desc: '清完善银行信息!'
+              title: '错误提示', desc: '清完善银行信息!'
             });
           }
         });
