@@ -2,7 +2,7 @@ import Vue from 'vue';
 import Router from 'vue-router';
 import Config from '@/utils/Config';
 import UserLogin from '@/utils/UserLogin';
-// page
+/* eslint-disable */
 import Errors from '@/pages/errors';
 import PageNotFound from '@/pages/errors';
 Vue.use(Router);
