@@ -60,12 +60,13 @@ class Http {
       } else if (res.data.reCode === '0000' || res.data.reCode === 'BS0000') {
         return res.data;
       } else {
-        toastr.error(_url + '<br/>' + res.data.reCode + ' <br/> ' + res.data.reMsg);
+        // toastr.error(_url + '<br/>' + res.data.reCode + ' <br/> ' + res.data.reMsg);
+        Vue.prototype.$Notice.error({ title: '错误提示',  desc: _url + '<br/>' + res.data.reCode + ' <br/> ' + res.data.reMsg });
         return res.data;
       }
     }).catch(err => {
       // error todo
-      toastr.error(err);
+      Vue.prototype.$Notice.error({ title: '错误提示', desc: err });
     });
   }
   /**
@@ -106,12 +107,12 @@ class Http {
       } else if (res.data.reCode === '0000' || res.data.reCode === 'BS0000') {
         return res.data;
       } else {
-        toastr.error(_url + '<br/>' + res.data.reCode + ' <br/> ' + res.data.reMsg);
+        Vue.prototype.$Notice.error({ title: '错误提示', desc: _url + '<br/>' + res.data.reCode + ' <br/> ' + res.data.reMsg });
         return res.data;
       }
     }).catch(err => {
       // error todo
-      toastr.error(err);
+      Vue.prototype.$Notice.error({ title: '错误提示', desc: err });
     });
   }
 }
