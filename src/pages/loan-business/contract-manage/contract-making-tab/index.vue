@@ -127,6 +127,7 @@
         let resp = await this.$http.post('/biz/sign/contract/listRepayPlanCapital', {
           loanNo: this.$data.loanNo
         });
+        console.log(resp);
         this.$data.loanCapitalListLoading = false;
         this.$data.capitalPlanCapitalListLoading = false;
         if (resp.success) {

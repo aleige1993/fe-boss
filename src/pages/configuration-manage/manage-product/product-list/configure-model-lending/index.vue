@@ -55,11 +55,9 @@
           currentPage: 1,
           pageSize: 99999
         });
-        console.log(resp.body.resultList);
         this.$data.dataLoading = false;
         if (resp.body.length !== 0) {
           let _data = resp.body.resultList.map(item => {
-            console.log(item);
             if (item.isSelected === 1) {
               item._checked = true;
             }

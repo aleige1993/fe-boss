@@ -1297,6 +1297,20 @@ export default [
               'itemName': '废弃'
             }
           ]
+        },
+        // 合同宿主
+        {
+          'groupKey': 'ContractSourceEnum',
+          'items': [
+            {
+              'itemCode': '1',
+              'itemName': '资金方'
+            },
+            {
+              'itemCode': '2',
+              'itemName': '产品'
+            }
+          ]
         }
       ],
       'reCode': '0000',

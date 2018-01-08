@@ -1,6 +1,9 @@
 <template>
 <!--合同模板列表模态框-->
   <div id="table-contractTemplate-list">
+    <div class="form-block-title">
+      查询条件
+    </div>
     <div class="search-form-container">
       <i-form inline label-position="left" ref="formSearch" :model="formSearch">
         <i-form-item prop="contractTemplateName" label="合同名称" :label-width="100">
@@ -14,7 +17,8 @@
         </i-form-item>
       </i-form>
     </div>
-    <i-table @on-row-dblclick="selectRow" border  :page-size="pageSize" :loading="dataLoading" ref="contractTemplateTable" :columns="columns1" :data="data1"></i-table>
+    <slot name="topAction" v-if="!isModal"></slot>
+    <i-table border :page-size="pageSize" :loading="dataLoading" ref="contractTemplateTable" :columns="resultColumns" :data="data1" @on-row-dblclick="selectRow"></i-table>
     <div class="page-container">
       <i-page :current="currentPage" :total="total" size="small" show-elevator show-total @on-change="jumpPage">
       </i-page>
@@ -27,8 +31,21 @@
   export default {
     name: '',
     mixins: [DataMixin],
+    props: {
+      contractSource: {
+        type: String, // 合同宿主contractSource。（1为资金方，2为产品）
+        default: '1',
+        required: false
+      },
+      type: {
+        type: String,
+        default: 'page',
+        required: false
+      }
+    },
     data() {
       return {
+        isModal: false,
         dataLoading: false,
         currentPage: 1,
         total: 0,
@@ -39,6 +56,17 @@
           currentPage: 1
         }
       };
+    },
+    computed: {
+      resultColumns() {
+        if (this.type === 'modal') {
+          this.$data.isModal = true;
+          return this.$data.columns1;
+        } else {
+          this.$data.isModal = false;
+          return [...this.$data.columns1, ...this.$data.columnsFeatureActionColumns];
+        }
+      }
     },
     mounted() {
       this.getPrivateCustomerList();
@@ -52,7 +80,8 @@
         let resp = await this.$http.post('/contract/listContractTemplate', {
           currentPage: this.$data.currentPage,
           pageSize: this.$data.pageSize,
-          contractTemplateName: this.$data.formSearch.contractTemplateName
+          contractTemplateName: this.$data.formSearch.contractTemplateName,
+          contractSource: this.contractSource // 1:资金方，2:产品
         });
         this.$data.dataLoading = false;
         if (resp.body.resultList.length !== 0) {
@@ -64,7 +93,7 @@
         }
       },
       search() {
-        this.getPrivateCustomerList(1);
+        this.getPrivateCustomerList();
       },
       jumpPage(page) {
         this.getPrivateCustomerList(page);
