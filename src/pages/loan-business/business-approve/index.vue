@@ -3,16 +3,16 @@
     <i-breadcrumb separator=">">
       <i-breadcrumb-item href="/">首页</i-breadcrumb-item>
       <i-breadcrumb-item href="/index/loanbusiness">贷款业务</i-breadcrumb-item>
-      <i-breadcrumb-item>{{breadCrumbName}} {{applyInfoReadonly}} {{firstApproveInfoReadonly}}</i-breadcrumb-item>
+      <i-breadcrumb-item>{{breadCrumbName}} {{isFromDetail}}</i-breadcrumb-item>
     </i-breadcrumb>
     <div class="form-top-actions"></div>
 
     <i-tabs v-model="tabIndex" type="card" :animated="false" style="padding-bottom: 46px;">
       <i-tab-pane :label="'基本信息'">
-        <apply-info ref="applyInfo" :customerType="formData.custType" :applyBasicInfo="formData" :loanAction="'firstApprove'" :readonly="applyInfoReadonly"></apply-info>
+        <apply-info ref="applyInfo" :customerType="formData.custType" :applyBasicInfo="formData" :loanAction="'firstApprove'" :readonly="applyInfoReadonly || isFromDetail"></apply-info>
       </i-tab-pane>
       <i-tab-pane :label="'审批信息'">
-        <approve-info ref="approveInfo" :applyBasicInfo="formData" :readonly="firstApproveInfoReadonly"></approve-info>
+        <approve-info ref="approveInfo" :applyBasicInfo="formData" :readonly="firstApproveInfoReadonly || isFromDetail"></approve-info>
       </i-tab-pane>
       <i-tab-pane label="人行征信报告">
         <iframe v-if="tabIndex == 2" src="http://www.baidu.com" width="100%" :height="iframeHeight" frameborder="0"></iframe>
@@ -75,8 +75,7 @@
         return loanNode === '4' || loanNode === '5';
       },
       isFromDetail() {
-        let from = this.$route.query.from;
-        return '' + from === 'detail';
+        return location.href.indexOf('detail') !== -1;
       }
     },
     props: {

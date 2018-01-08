@@ -53,6 +53,7 @@ export default {
             this.$data.loanData.push({
               loanDocName: name,
               loanDocCode: '',
+              status: '1',
               docDetailAttachList: []
             });
           }

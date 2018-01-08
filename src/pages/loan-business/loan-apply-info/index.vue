@@ -157,7 +157,7 @@
       </div>
       <!--<i-table :loading="loanDataLoading" border ref="selection" :columns="loanColumns" :data="loanData"></i-table>-->
       <loan-file-list v-for="(item, index) in loanData" :key="index"
-                      :group-index="index" :status="item.status" :title="item.loanDocName" :data="item.docDetailAttachList"
+                      :group-index="index" v-model="item.status" :title="item.loanDocName" :data="item.docDetailAttachList"
                       @on-group-remove="deleteloanFileGroup">
       </loan-file-list>
     </bs-form-block>
@@ -191,7 +191,7 @@
     </bs-modal>
     <!--车辆信息的新增修改模态框-->
     <bs-modal :title="isAddCar ? '新增' : '编辑'" v-model="showModalCar" :width="1200">
-      <i-form v-if="showModalCar" ref="formCar" :model="formCar" label-position="right" :label-width="120">
+      <i-form v-if="showModalCar" ref="formCar" :model="formCar" label-position="right" :label-width="140">
         <i-row>
           <i-col span="8">
             <i-form-item
@@ -263,8 +263,7 @@
           <i-col span="8">
             <i-form-item label="车辆颜色">
               <i-select v-model="formCar.carColor">
-                <i-option value="1">米色</i-option>
-                <i-option value="2">金色</i-option>
+                <i-option v-for="item in enumSelectData.get('CarColorEnum')" :key="item.itemCode" :value="item.itemCode">{{item.itemName}}</i-option>
               </i-select>
             </i-form-item>
           </i-col>
@@ -310,8 +309,7 @@
           <!--出厂日期-->
           <i-col span="8">
             <i-form-item label="出厂日期" prop="carBirthday">
-              <i-input v-model="formCar.carBirthday" placeholder="">
-              </i-input>
+              <bs-datepicker v-model="formCar.carBirthday" placeholder="出厂日期"></bs-datepicker>
             </i-form-item>
           </i-col>
           <!--上牌城市-->
@@ -324,7 +322,7 @@
           <!--上牌时间-->
           <i-col span="8">
             <i-form-item label="上牌时间" prop="carOnDate">
-              <bs-datepicker v-model="formCar.carOnDate" type="text" placeholder="申请时间"></bs-datepicker>
+              <bs-datepicker v-model="formCar.carOnDate" placeholder="申请时间"></bs-datepicker>
             </i-form-item>
           </i-col>
         </i-row>
@@ -366,10 +364,7 @@
               label="车辆状况"
               prop="carStatus">
               <i-select v-model="formCar.carStatus">
-                <i-option value="1">优</i-option>
-                <i-option value="2">良</i-option>
-                <i-option value="3">中</i-option>
-                <i-option value="4">差</i-option>
+                <i-option v-for="item in enumSelectData.get('CarConditionEnum')" :key="item.itemCode" :value="item.itemCode">{{item.itemName}}</i-option>
               </i-select>
             </i-form-item>
           </i-col>
@@ -394,14 +389,6 @@
           <i-col span="8">
             <i-form-item label="是否挂靠" prop="carIsAnchored">
               <i-select v-model="formCar.carIsAnchored">
-                <i-option v-for="item in enumSelectData.get('YesNoEnum')" :key="item.itemCode" :value="item.itemCode">{{item.itemName}}</i-option>
-              </i-select>
-            </i-form-item>
-          </i-col>
-          <!--是否公牌-->
-          <i-col span="8">
-            <i-form-item label="是否挂靠" prop="carIsPubPlate">
-              <i-select v-model="formCar.carIsPubPlate">
                 <i-option v-for="item in enumSelectData.get('YesNoEnum')" :key="item.itemCode" :value="item.itemCode">{{item.itemName}}</i-option>
               </i-select>
             </i-form-item>
@@ -463,7 +450,7 @@
     </bs-modal>
     <!--担保信息的新增修改模态框-->
     <bs-modal :title="isAddAssure ? '新增' : '编辑'" v-model="showModalAssure" :width="800">
-      <i-form ref="formAssure" :model="formAssure" label-position="right" :label-width="100">
+      <i-form ref="formAssure" :model="formAssure" label-position="right" :label-width="120">
         <i-row>
           <i-col span="12">
             <i-form-item label="担保人类型" prop="guaPersonType"

@@ -1,13 +1,21 @@
 <template>
   <div class="loan-file-list">
-    <h4 class="list-title">{{title}} <a href="javascript:;" class="text-danger" @click.prevent="deleteGroup" ><i-icon type="close-circled"></i-icon></a></h4>
+    <h4 class="list-title">
+      {{title}}
+      <a href="javascript:;" class="text-danger" @click.prevent="deleteGroup" >
+        <i-icon type="close-circled"></i-icon>
+      </a>
+    </h4>
     <div class="list-files clearfix">
-      <p>
-        <i-radio-group>
-          <i-radio label="1">是</i-radio>
-          <i-radio label="0">否</i-radio>
-        </i-radio-group>
-      </p>
+      <div style="margin-bottom: 30px;">
+        <span class="pull-left">
+          {{title}}是否缺少：
+          <i-radio-group v-model="status" style="margin-left: 10px;">
+            <i-radio label="1">缺少</i-radio>
+            <i-radio label="0">不缺少</i-radio>
+          </i-radio-group>
+        </span>
+      </div>
       <template v-for="(item, index) in data">
         <template v-if="isImg(item.attachUrl)">
           <bs-big-img  style="float: left" :thumbWidth="128" :thumbHeight="128" :fullWidth="1280"
@@ -41,7 +49,8 @@
     name: 'loanFileList',
     data() {
       return {
-        isUploading: false
+        isUploading: false,
+        status: '1'
       };
     },
     props: {
@@ -64,7 +73,8 @@
         type: String,
         default: '1',
         required: false
-      }
+      },
+      value: String // 1 已落实 0 未落实
     },
     methods: {
       deleteGroup() {
@@ -104,6 +114,14 @@
       isImg(fileUrl) {
         let suffix = this.getFileSuffix(fileUrl);
         return suffix === 'png' || suffix === 'jpg' || suffix === 'gif' || suffix === 'jpeg' || suffix === 'bmp' || suffix === 'pic';
+      }
+    },
+    mounted() {
+      this.$data.status = this.value;
+    },
+    watch: {
+      status(newVal, oldVal) {
+        this.$emit('input', newVal);
       }
     }
   };
