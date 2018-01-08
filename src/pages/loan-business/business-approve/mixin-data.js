@@ -4,7 +4,7 @@ export default {
       uploadFileName: '',
       personalBasicInfo: {},
       showBasicList: true, // 当选择客户姓名之后就显示以下的相关信息
-      isFromDetail: false,
+      // isFromDetail: false,
       showSelectCustomer: false,
       formData: {
         // id: 29, // 如果是编辑

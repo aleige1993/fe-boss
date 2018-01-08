@@ -2,7 +2,7 @@ import Vue from 'vue';
 import Router from 'vue-router';
 import Config from '@/utils/Config';
 import UserLogin from '@/utils/UserLogin';
-// page
+/* eslint-disable */
 import Errors from '@/pages/errors';
 import PageNotFound from '@/pages/errors';
 Vue.use(Router);
@@ -94,7 +94,12 @@ let MyRouter = new Router({
                 // 配置管理-资方管理-合同模板维护
                 { path:'contract', name: 'contract', component: resolve => { require(['@/pages/configuration-manage/manage-invest/contract'], resolve) } }
               ]
-            }// 配置管理-资方管理end
+            },// 配置管理-资方管理end
+            // banner管理
+            {
+              path: 'bannermanage', name: 'bannerManage', component: resolve => require(['@/pages/configuration-manage/banner-manage'], resolve),
+            }
+            // banner管理 end
           ]
         },// 配置管理end
         // 贷款业务
@@ -169,8 +174,25 @@ let MyRouter = new Router({
               ]
             }
           ]
-        }
+        },
         // 贷款业务 end
+        // 账务管理
+        {
+          path: 'financemanage', name: 'financeManage', component: resolve => require(['@/pages/finance-manage'], resolve),
+          children: [
+            // 代付管理
+            { path: 'proxypay', name: 'financeProxypay', component: resolve => require(['@/pages/finance-manage/proxy-pay'], resolve)},
+            // 代收管理
+            { path: 'proxyreceive', name: 'financeProxyReceive', component: resolve => require(['@/pages/finance-manage/proxy-receive'], resolve)},
+            // 应收账单
+            { path: 'shouldreceiptorder', name: 'financeShouldReceiptOrder', component: resolve => require(['@/pages/finance-manage/shouldreceipt-order'], resolve)},
+            // 实收账单
+            { path: 'actualreceiptorder', name: 'financeActualReceiptOrder', component: resolve => require(['@/pages/finance-manage/actualreceipt-order'], resolve)},
+            // 减免记录
+            { path: 'deraterecord', name: 'financeDerateRecord', component: resolve => require(['@/pages/finance-manage/derate-record'], resolve)},
+          ]
+        },
+        // 账务管理 end
       ]
     }
   ],
