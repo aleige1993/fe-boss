@@ -81,6 +81,10 @@
           _dataTemp.opeType = '1';
           this.saveLoanBiz(_dataTemp);
         } else {
+          this.$Notice.error({
+            title: '提示',
+            desc: '请先完成表单的必填项再提交'
+          });
         }
       },
       // 提交
@@ -91,6 +95,11 @@
           _dataTemp.loanVO.status = '2';
           _dataTemp.opeType = '2';
           this.saveLoanBiz(_dataTemp);
+        } else {
+          this.$Notice.error({
+            title: '提示',
+            desc: '请先完成表单的必填项再提交'
+          });
         }
       },
       // 如果是修改或者删除，初始化页面数据

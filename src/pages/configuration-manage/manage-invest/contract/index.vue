@@ -7,38 +7,35 @@
       <i-breadcrumb-item href="/index/conf/invest">资方管理</i-breadcrumb-item>
       <i-breadcrumb-item>合同模板维护</i-breadcrumb-item>
     </i-breadcrumb>
-    <div class="form-block-title">
-      查询条件
-    </div>
-    <div class="search-form-container">
-      <i-form inline label-position="left" ref="formSearch" :model="formSearch">
-        <i-form-item prop="contractTemplateName" label="合同名称" :label-width="100">
-          <i-input type="text" placeholder="合同名称"  v-model="formSearch.contractTemplateName"></i-input>
-        </i-form-item>
-        <i-form-item>
-          <i-button type="primary" @click="search">
-            <i-icon type="ios-search-strong"></i-icon>
-            搜索
-          </i-button>
-        </i-form-item>
-      </i-form>
-    </div>
-    <div class="form-top-actions">
-      <i-button @click="addModal" type="info"><i class="iconfont icon-xinzeng"></i> 新增</i-button>
-    </div>
-    <i-table border :page-size="pageSize" :loading="dataLoading" ref="contractTemplateTable" :columns="resultColumns" :data="data1" @on-row-dblclick="selectRow"></i-table>
-    <div class="page-container">
-      <i-page :current="currentPage" :total="total" size="small" show-elevator show-total @on-change="jumpPage">
-      </i-page>
-    </div>
-    <bs-modal :title="isAdd ? '新增' : '修改'" v-model="ShowModal" :width="600">
-      <i-form v-if="ShowModal" ref="formContract" :model="formContract" label-position="right" :label-width="150">
+    <table-contract-template-list ref="tableContractList" :contractSource="'1'" @on-row-dbclick="selectContractTemplate" @on-set-row="setList">
+      <div class="form-top-actions" slot="topAction">
+        <i-button @click="addModal" type="info"><i class="iconfont icon-xinzeng"></i> 新增</i-button>
+      </div>
+    </table-contract-template-list>
+    <bs-modal :title="isAdd ? '新增' : '修改'" v-model="ShowModal" :width="620">
+      <i-form v-if="ShowModal" ref="formContract" :model="formContract" label-position="right" :label-width="130">
         <i-form-item
           label="合同名称"
           :rules="{required: true, message: '合同名称不能为空', trigger: 'blur'}"
           prop="contractTemplateName">
           <i-input v-model="formContract.contractTemplateName">
           </i-input>
+        </i-form-item>
+        <i-form-item
+          label="合同宿主"
+          :rules="{required: true, message: '合同宿主不能为空', trigger: 'change'}"
+          prop="contractSource">
+          <i-select v-model="formContract.contractSource">
+            <i-option v-for="item in enumSelectData.get('ContractSourceEnum')" :key="item.itemCode" :value="item.itemCode">{{item.itemName}}</i-option>
+          </i-select>
+        </i-form-item>
+        <i-form-item
+          label="合同类型"
+          :rules="{required: true, message: '合同类型不能为空', trigger: 'change'}"
+          prop="contractType">
+          <i-select v-model="formContract.contractType">
+            <i-option v-for="item in enumSelectData.get('ContractTypeEnum')" :key="item.itemCode" :value="item.itemCode">{{item.itemName}}</i-option>
+          </i-select>
         </i-form-item>
         <i-form-item label="云贷签约平台模板ID" prop="yundaiContractId">
           <i-input v-model="formContract.yundaiContractId" placeholder="非必填项">
@@ -76,13 +73,13 @@
 </template>
 
 <script>
-  import DataMixin from './mixin-data';
   import BSModal from '@/components/bs-modal';
+  import GetContractTemplateModal from '@/components/table-contract-template-list'; // 选择合同模板
   export default {
     name: 'manage-invest-maintain',
-    mixins: [DataMixin],
     components: {
-      'bs-modal': BSModal
+      'bs-modal': BSModal,
+      'table-contract-template-list': GetContractTemplateModal
     },
     data() {
       return {
@@ -102,56 +99,25 @@
         formContract: {
           contractTemplateNo: '', // 合同编号
           contractTemplateName: '', // 合同名称
+          contractSource: '', // 合同宿主
+          contractType: '', // 合同类型
           yundaiContractId: '', // 云贷签约平台模板ID
           contractTemplateAttach: '' // 合同附件
         }
       };
     }, // end data
-    computed: {
-      resultColumns() {
-        if (this.type === 'modal') {
-          return this.$data.columns1;
-        } else {
-          return [...this.$data.columns1, ...this.$data.columnsFeatureActionColumns];
-        }
-      }
-    },
-    props: {
-      type: String,
-      default: 'page',
-      required: false
-    },
     mounted() {
-      this.getPrivateCustomerList();
+      // this.getPrivateCustomerList();
     },
     methods: {
+      // 选择合同模板
+      selectContractTemplate(row, index) {
+        this.$data.formCustom.contractTemplateNo = row.contractTemplateNo;
+        this.$data.formCustom.contractTemplateName = row.contractTemplateName;
+        this.$data.showSelectContractTemplate = false;
+      },
       selectRow(row, index) {
         this.$emit('on-row-dbclick', row, index);
-      },
-      async getPrivateCustomerList(page) {
-        this.$data.dataLoading = true;
-        if (page) {
-          this.formSearch.currentPage = page;
-        }
-        let resp = await this.$http.post('/contract/listContractTemplate', {
-          currentPage: this.$data.currentPage,
-          pageSize: this.$data.pageSize,
-          contractTemplateName: this.$data.formSearch.contractTemplateName
-        });
-        this.$data.dataLoading = false;
-        if (resp.body.resultList.length !== 0) {
-          this.$data.data1 = resp.body.resultList;
-          this.$data.currentPage = resp.body.currentPage;
-          this.$data.total = resp.body.totalNum;
-        } else {
-          this.$data.data1 = [];
-        }
-      },
-      search() {
-        this.getPrivateCustomerList();
-      },
-      jumpPage(page) {
-        this.getPrivateCustomerList(page);
       },
       // 新增弹窗
       addModal() {
@@ -163,7 +129,7 @@
       setList(row) {
         this.isAdd = false;
         this.$data.ShowModal = true;
-        this.formContract = row;
+        this.$data.formContract = row;
       },
       // 新增的保存请求方法
       async addSetSuBmit(tit) {
@@ -172,6 +138,8 @@
         let resAdd = await this.$http.post('/contract/saveContractTemplate', {
           id,
           contractTemplateName: this.$data.formContract.contractTemplateName,
+          contractSource: this.$data.formContract.contractSource,
+          contractType: this.$data.formContract.contractType,
           contractTemplateAttach: this.$data.formContract.contractTemplateAttach,
           contractTemplateNo: this.$data.formContract.contractTemplateNo,
           yundaiContractId: this.$data.formContract.yundaiContractId
@@ -180,7 +148,7 @@
         this.$data.ShowModal = false;
         if (resAdd.success) {
           this.$Message.success(tit);
-          this.getPrivateCustomerList();
+          this.$refs['tableContractList'].getPrivateCustomerList();
         }
       },
       // 提交 按钮
@@ -193,23 +161,6 @@
             this.addSetSuBmit(tit);
           } else {
             this.$Message.error('<span style="color: red">*</span>项不能为空');
-          }
-        });
-      },
-      // 删除数据的请求
-      async remove(row) {
-        Alertify.confirm('确定要删除吗？', async (ok) => {
-          if (ok) {
-            const loadingMsg = this.$Message.loading('删除中...', 0);
-            let respDel = await this.$http.post('/contract/deleteContractTemplate', {
-              contractTemplateNo: row.contractTemplateNo
-            });
-            loadingMsg();
-            if (respDel.success) {
-              this.$Message.success('删除成功');
-              let jumpPage = this.$JumpPage.getPageRemove(this.$data.currentPage, this.$data.pageSize, this.$data.total);
-              this.getPrivateCustomerList(jumpPage);
-            }
           }
         });
       },

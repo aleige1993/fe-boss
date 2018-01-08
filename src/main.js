@@ -1,5 +1,7 @@
 //  The Vue build version to load with the `import` command
+/** global fundebug */
 // (runtime-only or standalone) has been set in webpack.base.conf with an alias.
+/* eslint-disable */
 import Vue from 'vue';
 import App from './App';
 import router from './router';
@@ -46,36 +48,28 @@ Vue.prototype.$userLogin = UserLogin;
 import filter from './filter';
 import mixins from './mixins';
 //加载效果公共函数
-Vue.prototype.$showLoading = ()=> {
-  store.dispatch("toggleLoading", true);
+Vue.prototype.$showLoading = () => {
+  store.dispatch('toggleLoading', true);
 };
-Vue.prototype.$hideLoading = ()=> {
-  store.dispatch("toggleLoading", false);
+Vue.prototype.$hideLoading = () => {
+  store.dispatch('toggleLoading', false);
 };
 
-function formatComponentName(vm)
-{
+function formatComponentName(vm) {
   if (vm.$root === vm) return 'root';
-
-  var name = vm._isVue ? (vm.$options && vm.$options.name) || (vm.$options && vm.$options._componentTag) : vm.name;
+  let name = vm._isVue ? (vm.$options && vm.$options.name) || (vm.$options && vm.$options._componentTag) : vm.name;
   return (name ? 'component <' + name + '>' : 'anonymous component') + (vm._isVue && vm.$options && vm.$options.__file ? ' at ' + (vm.$options && vm.$options.__file) : '');
-
-}
-
-Vue.config.errorHandler = function(err, vm, info)
-{
+};
+Vue.config.errorHandler = function(err, vm, info) {
   var componentName = formatComponentName(vm);
   var propsData = vm.$options && vm.$options.propsData;
-
-  fundebug.notifyError(err,
-    {
-      metaData:
-        {
-          componentName: componentName,
-          propsData: propsData,
-          info: info
-        }
-    });
+  fundebug.notifyError(err, {
+    metaData: {
+      componentName: componentName,
+      propsData: propsData,
+      info: info
+    }
+  });
 };
 /* eslint-disable no-new */
 $('.page-loading').show();
@@ -98,3 +92,4 @@ new Http().post('/common/items', {}).then(response => {
     components: { App }
   });
 });
+/* eslint-disable */

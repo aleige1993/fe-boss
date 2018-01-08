@@ -153,9 +153,11 @@
       },
       // 新增的保存请求方法
       async addSuBmit() {
+        this.$data.buttonLoading = true;
         let feeTypeName = this.getFeeTypeName();
         let resAdd = await this.$http.post('/pms/productFeeDetail/save', {
           feeTypeNo: this.$data.formInModel.feeTypeNo,  // 费用类型编号
+          feeTypeCode: this.$data.formInModel.feeTypeCode,  // 费用类型代码
           incomeType: this.$data.formInModel.incomeType, // 收取类型
           feeTypeName,  // 费用类型名称
           feeType: this.$data.formInModel.feeType,  // 收支方向
@@ -184,9 +186,11 @@
       },
       // 修改情况下的提交数据
       async setSubmit() {
+        this.$data.buttonLoading = true;
         let feeTypeName = this.getFeeTypeName();
         let resModify = await this.$http.post('/pms/productFeeDetail/modify', {
           feeTypeNo: this.$data.formInModel.feeTypeNo,  // 费用类型编号
+          feeTypeCode: this.$data.formInModel.feeTypeCode,  // 费用类型代码
           incomeType: this.$data.formInModel.incomeType, // 收取类型
           feeTypeName,  // 费用类型名称
           feeType: this.$data.formInModel.feeType,  // 收支方向
@@ -222,7 +226,6 @@
       },
       // 新增模态框的保存按钮点击事件
       formInSubmit() {
-        this.$data.buttonLoading = true;
         let formName = 'formInModel';
         this.$refs[formName].validate((valid) => {
           if (valid) {

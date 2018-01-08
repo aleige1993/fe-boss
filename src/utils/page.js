@@ -1,3 +1,6 @@
+/*
+ * Created by HuiyangLi on 2017/12/31.
+ */
 export default {
   // 封装：删除请求成功后 重新加载页面回到指定的当前分页
   // 说明：

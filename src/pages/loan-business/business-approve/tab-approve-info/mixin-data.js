@@ -197,7 +197,7 @@ export default {
       loanFundPartyCol: [
         {
           title: '资方名称',
-          key: 'acctName' // capitalName
+          key: 'capitalName' // capitalName
         },
         {
           title: '放款比例（%）',

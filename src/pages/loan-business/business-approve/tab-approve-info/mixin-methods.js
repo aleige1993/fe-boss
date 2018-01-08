@@ -82,6 +82,7 @@ export default {
         loanNo,
         productPeriods
       });
+      console.log(resp.body.loanProductCapitalDTOList);
       this.$data.initPageLoading = false;
       if (resp.success) {
         let result = resp.body;
