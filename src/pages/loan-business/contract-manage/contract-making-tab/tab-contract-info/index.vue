@@ -348,7 +348,9 @@
         this.$data.isDetails = true;
       }
       let loanNo = await this.$route.query.loanNo;
+      let signNo = await this.$route.query.signNo;
       this.$data.contractInfoForm.loanNo = loanNo;
+      this.$data.contractInfoForm.signNo = signNo;
       await this.getfindContractApproveInfo(); //  获取合同信息详情
       this.getApproveCredit(); //  获取借款信息详情
       this.getCarList(); // 获取车辆信息列表data
@@ -359,12 +361,13 @@
       //  获取合同信息详情
       async getfindContractApproveInfo() {
         let resp = await this.$http.post('/biz/sign/contract/findContractApproveInfo', {
-          loanNo: this.$data.contractInfoForm.loanNo
+          signNo: this.$data.contractInfoForm.signNo
         });
+        console.log(resp.body);
         if (resp.success) {
           this.$data.contractInfoForm = resp.body;
-          if (this.$data.contractInfoForm.contractInfo.loanContractFileList.length !== 0) {
-            this.$data.contractInfoData = this.$data.contractInfoForm.contractInfo.loanContractFileList;
+          if (resp.body.contractInfo.loanContractFileList.length !== 0) {
+            this.$data.contractInfoData = resp.body.contractInfo.loanContractFileList;
           } else {
             this.$data.contractInfoData = [];
           }
@@ -426,6 +429,19 @@
           }
         }
       },
+      // 生成合同ajax
+      async createContractAjax() {
+        let resp = await this.$http.post('/biz/sign/create/contract', {
+          signNo: this.$data.contractInfoForm.signNo,
+          startDate: this.$data.contractInfoForm.contractInfo.startDate,
+          endDate: this.$data.contractInfoForm.contractInfo.endDate
+        });
+        if (resp.success && resp.body.length !== 0) {
+          this.$data.contractInfoData = resp.body;
+        } else {
+          this.$data.contractInfoData = [];
+        }
+      },
       // 生成合同
       contractGenerating() {
         const formName = 'contractInfoForm';
@@ -446,7 +462,7 @@
               });
               return;
             }
-            alert('生成合同');
+            this.createContractAjax();
           } else {
             this.$Message.error('"<span style="color: red">*</span>"必填项不能为空');
           }

@@ -57,19 +57,47 @@ export default {
           title: '应还款日',
           width: 170,
           align: 'center',
-          key: 'repayDate'
+          key: 'repayDate',
+          render: (h, params) => {
+            return h('span', {
+              style: {
+                color: params.row.nowPeriods === 999 && 'red'
+              }
+            }, params.row.nowPeriods === 999 ? '合计' : params.row.repayDate);
+          }
         },
         {
           title: '应还本金',
-          key: 'repayAmt'
+          key: 'repayAmt',
+          render: (h, params) => {
+            return h('span', {
+              style: {
+                color: params.row.nowPeriods === 999 && 'red'
+              }
+            }, params.row.repayAmt);
+          }
         },
         {
           title: '应付利息',
-          key: 'repayRate'
+          key: 'repayRate',
+          render: (h, params) => {
+            return h('span', {
+              style: {
+                color: params.row.nowPeriods === 999 && 'red'
+              }
+            }, params.row.repayAmt);
+          }
         },
         {
           title: '应还（付）总额',
-          key: 'repayTotalAmt'
+          key: 'repayTotalAmt',
+          render: (h, params) => {
+            return h('span', {
+              style: {
+                color: params.row.nowPeriods === 999 && 'red'
+              }
+            }, params.row.repayAmt);
+          }
         }
       ],
       repayPlanCapitalList: [],
@@ -79,19 +107,47 @@ export default {
           title: '应还款日',
           width: 170,
           align: 'center',
-          key: 'repayDate'
+          key: 'repayDate',
+          render: (h, params) => {
+            return h('span', {
+              style: {
+                color: params.row.nowPeriods === 999 && 'red'
+              }
+            }, params.row.nowPeriods === 999 ? '合计' : params.row.repayDate);
+          }
         },
         {
           title: '应还本金',
-          key: 'repayAmt'
+          key: 'repayAmt',
+          render: (h, params) => {
+            return h('span', {
+              style: {
+                color: params.row.nowPeriods === 999 && 'red'
+              }
+            }, params.row.repayAmt);
+          }
         },
         {
           title: '应付利息',
-          key: 'repayRate'
+          key: 'repayRate',
+          render: (h, params) => {
+            return h('span', {
+              style: {
+                color: params.row.nowPeriods === 999 && 'red'
+              }
+            }, params.row.repayAmt);
+          }
         },
         {
           title: '应还（付）总额',
-          key: 'repayTotalAmt'
+          key: 'repayTotalAmt',
+          render: (h, params) => {
+            return h('span', {
+              style: {
+                color: params.row.nowPeriods === 999 && 'red'
+              }
+            }, params.row.repayAmt);
+          }
         }
       ],
       repayPlanRentalList: []
