@@ -74,7 +74,7 @@
         total: 0,
         currentPage: 1,
         certTypeEnum: [],
-        banner: {
+        fromData: {
           'title': '',
           'bannerUrl': '',
           'linkUrl': '',
@@ -101,6 +101,9 @@
       required: false
     },
     methods: {
+      selectRow(row, index) {
+        this.$emit('on-row-dbclick', row, index);
+      },
       jumpPage(page) {
         this.getProxyPayList(page);
       },
@@ -138,8 +141,8 @@
       },
       async submitSuccess() {
         this.$data.buttonLoading = true;
-        let resp = await this.$http.post('merchant/saveMerchant', {
-          ...this.$data.formAdd
+        let resp = await this.$http.post('cfg/banner/add', {
+          ...this.$data.fromData
         });
         this.$data.buttonLoading = false;
         this.$data.showAddModal = false;
