@@ -58,7 +58,9 @@ export default {
                 style: { marginRight: '5px' },
                 on: {
                   click: () => {
-
+                    this.$data.isAdd = false;
+                    this.$data.addModal = true;
+                    this.$data.fromData = params.row;
                   }
                 }
               }, '修改'),
@@ -70,7 +72,19 @@ export default {
                 // style: { marginRight: '5px' },
                 on: {
                   click: () => {
-
+                    Alertify.confirm('是否确认删除这条数据', async (ok) => {
+                      if (ok) {
+                        const loading = this.$Message.loading('处理中...', 0);
+                        let resp = await this.$http.post('cfg/banner/remove', {
+                          id: params.row.id
+                        });
+                        loading();
+                        if (resp.success) {
+                          this.$Message.success('删除成功');
+                          this.getProxyPayList();
+                        }
+                      }
+                    });
                   }
                 }
               }, '删除')

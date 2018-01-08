@@ -9,82 +9,90 @@ export default {
         },
         {
           title: '项目编号',
-          key: 'payForNo',
+          key: 'projectNo',
           width: 140
         },
         {
           title: '支付流水号',
-          key: 'transNo',
+          key: 'transSerialNo',
           width: 140
         },
         {
-          title: '代付金额',
-          key: 'transMoney',
+          title: '代扣金额',
+          key: 'txnAmt',
           width: 120
         },
         {
-          title: '收款人姓名',
+          title: '扣款人姓名',
           width: 120,
-          key: 'toAccName'
+          key: 'idHolder'
         },
         {
-          title: '收款人账号',
-          key: 'toAccNo',
+          title: '扣款人账号',
+          key: 'accNo',
           width: 200
         },
         {
-          title: '收款人开户银行',
-          key: 'toAccDept',
+          title: '扣款人开户银行',
+          key: 'bankName',
           width: 140
         },
         {
-          title: '收款人开户行省名',
-          key: 'toProName',
-          width: 140
-        },
-        {
-          title: '收款人开户行市名',
-          key: 'toCityName',
-          width: 140
-        },
-        {
-          title: '收款人身份证号',
-          key: 'transCardId',
+          title: '扣款人身份证号',
+          key: 'idCard',
           width: 200
         },
         {
           title: '银行卡预留手机号',
-          key: 'transMobile',
+          key: 'mobile',
           width: 120
         },
         {
-          title: '预计付款时间',
-          key: 'expectTime',
+          title: '扣款发起时间',
+          key: 'receiveTime',
           width: 120
         },
         {
-          title: '实际付款时间',
-          key: 'actualTime',
+          title: '扣款完成时间',
+          key: 'succTime',
           width: 120
         },
         {
-          title: '付款状态',
-          key: 'state',
+          title: '扣款成功金额',
+          key: 'succAmt',
+          width: 120
+        },
+        {
+          title: '扣款状态',
+          key: 'orderStat',
           width: 100,
           fixed: 'right',
           align: 'center',
           render: (h, params) => {
-            if (params.row.state === '0') {
-              return '付款中';
-            } else if (params.row.state === '1') {
+            if (params.row.orderStat === 'S') {
               return '成功';
-            } else if (params.row.state === '-1') {
+            } else if (params.row.orderStat === 'F') {
               return '失败';
-            } else if (params.row.state === '2') {
-              return '已退款';
-            } else if (params.row.state === '3') {
-              return '待付款';
+            } else if (params.row.orderStat === 'I') {
+              return '扣款中';
+            } else if (params.row.orderStat === 'D') {
+              return '待扣款';
             }
+            // if (params.row.state === '0') {
+            //   return '付款中';
+            // } else if (params.row.state === '1') {
+            //   return '成功';
+            // } else if (params.row.state === '-1') {
+            //   return h('Tooltip', {
+            //     props: {
+            //       content: `失败原因：${params.row.transRemark}`
+            //     }
+            //   }, '失败');
+            // } else if (params.row.state === '2') {
+            //   return '已退款';
+            // } else if (params.row.state === '3') {
+            //   return '待付款';
+            // }
           }
         }
       ],
@@ -96,7 +104,7 @@ export default {
           fixed: 'right',
           align: 'center',
           render: (h, params) => {
-            if (params.row.state === '-1' || params.row.state === '3') {
+            if (params.row.orderStat === 'F' || params.row.orderStat === 'D') {
               return h('div', [
                 h('Button', {
                   props: {
@@ -105,11 +113,12 @@ export default {
                   },
                   // style: { marginRight: '5px' },
                   on: {
-                    click: async () => {
-                      this.payment(params.row.payForNo.split(','));
+                    click: () => {
+                      this.paymentId = params.row.payForNo.split(',');
+                      this.payment();
                     }
                   }
-                }, '付款')
+                }, '扣款')
               ]);
             }
           }

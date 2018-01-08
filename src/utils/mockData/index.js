@@ -245,6 +245,55 @@ let ary = [
       }
     })
   },
+  {
+    url: '/pay/receive',
+    on: true,
+    resp: Mock.mock({
+      'body': {
+        'currentPage': 1,
+        'isMore': 0,
+        'pageSize': 10,
+        'resultList': [
+          {
+            'accNo': '62487158124887000148121',
+            'additionalInfo': '备注',
+            'alidDate': '2812',
+            'bankName': '中国工商银行',
+            'batchId': '47542124545451',
+            'createUserCode': '785423',
+            'gmtCreate': 1515054288000,
+            'gmtModified': 1515054294000,
+            'idCard': '500548785454215421',
+            'idCardType': '01',
+            'idHolder': '张三',
+            'mobile': '13145484548',
+            'modifiedUserCode': '52454622',
+            'orderStat': 'D',
+            'payCode': '787454',
+            'projectNo': '2343242356789',
+            'receiveNo': '2342342342342342',
+            'receiveTime': 1514995200000,
+            'reqReserved': '备注',
+            'succAmt': 200000,
+            'tradeDate': '2018-01-04 16:23:55',
+            'transBatchId': '85412852',
+            'transId': '784454545121',
+            'transNo': '478751212454512',
+            'transSerialNo': '784548412482215785',
+            'txnAmt': 200000,
+            'validNo': '254',
+            'succTime': 1514995200000
+          }
+        ],
+        'startIndex': 0,
+        'totalNum': 1,
+        'totalPage': 1
+      },
+      'reCode': '0000',
+      'reMsg': '成功:',
+      'success': true
+    })
+  },
   // banner 管理
   {
     url: '/cfg/banner/list',
