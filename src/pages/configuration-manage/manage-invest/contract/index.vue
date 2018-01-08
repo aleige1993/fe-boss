@@ -178,7 +178,7 @@
       uploadError(err, file, fileList) {
         this.$data.uploadFileName = '';
         this.$Notice.error({
-          desc: err
+          title: '错误提示', desc: err
         });
       }
     }

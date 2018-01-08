@@ -302,7 +302,7 @@
       uploadErrorAlities(err, file, fileList) {
         this.$data.formalities.makeName = '';
         this.$Notice.error({
-          desc: err
+          title: '错误提示', desc: err
         });
       }
     }

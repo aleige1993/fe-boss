@@ -219,7 +219,7 @@
       // 上传失败
       uploadError(err, file, fileList) {
         this.$Notice.error({
-          desc: err
+          title: '错误提示', desc: err
         });
       },
       // 子组件通知 单选了每一行
@@ -245,7 +245,8 @@
       clickRowedFun() {
         if (JSON.stringify(this.$data.clickRow) === '{}') {
           this.$Notice.error({
-            title: '请先选择渠道商',
+            title: '错误提示',
+            desc: '请先选择渠道商',
             duration: 2
           });
           return false;
