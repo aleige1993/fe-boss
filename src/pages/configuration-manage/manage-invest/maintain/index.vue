@@ -71,7 +71,6 @@
       },
       // 修改弹窗
       setListZf(row) {
-        console.log(row);
         this.$data.isAdd = false;
         this.$data.clickRow = {
           isAdd: false,

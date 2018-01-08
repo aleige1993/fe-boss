@@ -513,6 +513,7 @@
         let resAdd = await this.$http.post('/pms/productRate/fundRateSave', {
           packageRateNo: this.zfClickRow.packageRateNo,
           capitalName: this.$data.rateForm.capitalName, // 出资方
+          capitalNo: this.$data.rateForm.capitalNo, // 出资方NO
           nominalRate: this.$data.rateForm.nominalRate, // 名义利率
           realRate: this.$data.rateForm.realRate // 名义利率
         });

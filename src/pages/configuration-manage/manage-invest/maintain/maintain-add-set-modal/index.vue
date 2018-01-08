@@ -237,8 +237,8 @@
       // 修改情况的弹窗
       async setSubmit() {
         let resSet = await this.$http.post('/pms/capital/accBaseInfoSave', this.$data.formMaintain);
+        this.$data.buttonLoading = false; // 关闭按钮的loading状态
         if (resSet.success) {
-          this.$data.buttonLoading = false; // 关闭按钮的loading状态
           this.$Message.success('修改成功', 2000);
           this.$data.formMaintain.capitalNo = resSet.body.capitalNo;
         }
