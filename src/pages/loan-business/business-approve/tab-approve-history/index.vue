@@ -52,12 +52,13 @@
     props: ['id'],
     methods: {
       async getHistoryInfo() {
-        if (this.id && this.id !== '') {
+        let _id = this.$route.query.id;
+        if (_id && _id !== '') {
           this.$data.historyLoading = true;
-          let resp = await this.$http.post('/credit/listAuditLog', { creditLimitNo: this.id });
+          let resp = await this.$http.post('/biz/listApproveHistory', { loanNo: _id });
           this.$data.historyLoading = false;
           if (resp.success) {
-            this.$data.approveHistoryData = resp.body;
+            this.$data.approveHistoryData = resp.body.resultList;
           }
         } else {
           this.$data.approveHistoryData = [];

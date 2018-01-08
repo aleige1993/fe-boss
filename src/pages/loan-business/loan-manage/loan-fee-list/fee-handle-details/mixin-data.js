@@ -125,19 +125,20 @@ export default {
           title: '项目',
           align: 'center',
           width: 200,
-          key: 'project'
+          key: 'paymentConName'
         },
         {
           title: '备注',
-          key: 'remarks',
+          key: 'remark',
           render: (h, params) => {
             return h('i-input', {
               props: {
-                'value': params.row.remarks
+                'value': params.row.remark,
+                'readonly': params.row.status === '1'
               },
               on: {
                 'on-blur': (event) => {
-                  this.$data.conditionData[params.index].remarks = event.target.value;
+                  this.$data.conditionData[params.index].remark = event.target.value;
                 }
               }
             });
@@ -145,76 +146,31 @@ export default {
         },
         {
           title: '落实状态',
-          key: 'implementState',
+          key: 'status',
           width: 200,
           render: (h, params) => {
             return h('i-select', {
               props: {
-                'value': params.row.implementState
+                'value': params.row.status,
+                'disabled': params.row.status === '1'
               },
               on: {
                 'on-change': (val) => {
-                  this.$data.conditionData[params.index].implementState = val;
+                  this.$data.conditionData[params.index].status = val;
                 }
               }
-            }, [
-              h('i-option', {
+            }, this.enumSelectData.get('LoanLuoShiStatusEnum').map((item) => {
+              return h('i-option', {
                 props: {
-                  label: '未落实',
-                  value: '1'
+                  label: item.itemName,
+                  value: item.itemCode
                 }
-              }),
-              h('i-option', {
-                props: {
-                  label: '已落实',
-                  value: '2'
-                }
-              })
-            ]);
+              });
+            }));
           }
         }
       ],
-      conditionData: [],
-      // 审批信息
-      examineColumns: [
-        {
-          title: '处理人',
-          align: 'center',
-          width: 180,
-          key: 'name'
-        },
-        {
-          title: '任务节点',
-          key: 'taskNode',
-          render: (h, params) => {
-            return h('span', {}, this.enumCode2Name(params.row.taskNode, 'LoanBizNodeEnum'));
-          }
-        },
-        {
-          title: '开始时间',
-          width: 120,
-          key: 'timenStart'
-        },
-        {
-          title: '结束时间',
-          width: 120,
-          key: 'timeEnd'
-        },
-        {
-          title: '耗时',
-          width: 100,
-          key: 'longTime'
-        },
-        {
-          title: '结论',
-          key: 'conclusion'
-        },
-        {
-          title: '意见信息',
-          key: 'opinion'
-        }
-      ],
-      examineData: []
+      conditionData: []
     };
   }
 };

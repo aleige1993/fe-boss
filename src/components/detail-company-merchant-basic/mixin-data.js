@@ -142,8 +142,7 @@ export default {
               h('Button', {
                 props: {
                   type: 'primary',
-                  size: 'small',
-                  disabled: this.isFromDetail
+                  size: 'small'
                 },
                 style: {
                   marginRight: '5px'
@@ -158,7 +157,7 @@ export default {
                 props: {
                   type: 'error',
                   size: 'small',
-                  disabled: this.isFromDetail
+                  disabled: !this.isFromDetail
                 },
                 on: {
                   click: () => {

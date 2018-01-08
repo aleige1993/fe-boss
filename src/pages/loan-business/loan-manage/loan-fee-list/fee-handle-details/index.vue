@@ -177,9 +177,9 @@
             <i-row>
               <i-col span="8">
                 <i-form-item
-                  label="结论" prop="auditStatus"
+                  label="结论" prop="approveStatus"
                   :rules="{required: true, message: '结论不能为空', trigger: 'change'}">
-                  <i-radio-group v-model="formData.auditStatus">
+                  <i-radio-group v-model="formData.approveStatus">
                     <i-radio v-for="item in enumSelectData.get('ApproveStatusEnum')" :label="item.itemCode" :key="item.itemCode" style="margin-right: 20px; margin-top: -5px">{{item.itemName}}</i-radio>
                   </i-radio-group>
                 </i-form-item>
@@ -189,9 +189,9 @@
               <i-col span="8">
                 <i-form-item
                   label="意见信息"
-                  prop="auditOpinion"
+                  prop="opinion"
                   :rules="{required: true, message: '意见信息不能为空', trigger: 'blur'}">
-                  <i-input type="textarea" v-model="formData.auditOpinion" :rows="2" placeholder="">
+                  <i-input type="textarea" v-model="formData.opinion" :rows="2" placeholder="">
                   </i-input>
                 </i-form-item>
               </i-col>
@@ -200,10 +200,7 @@
         </i-form>
       </i-tab-pane>
       <i-tab-pane label="审批信息">
-        <i-table :loading="examineTableLoading" border ref="examineTable" :columns="examineColumns" :data="examineData"></i-table>
-        <div class="page-container">
-          <i-page @on-change="jumpPageExamine" :total="totalExamine" :page-size="pageSizeExamine" size="small" show-elevator show-total></i-page>
-        </div>
+        <table-loan-info v-if="tabIndex===1" :requestData="{loanNo: $route.query.loanNo}"></table-loan-info>
       </i-tab-pane>
       <div class="form-footer-actions">
         <i-button @click="saveSubimt" :loading="initFormLoading" type="success">
@@ -217,20 +214,22 @@
 
 <script>
   import MixinData from './mixin-data';
+  import TableLoanInfo from '@/components/table-loan-approval-info';
   export default {
     name: 'feeLoanHandleDetails',
     mixins: [MixinData],
+    components: {
+      TableLoanInfo
+    },
     data() {
       return {
         tabIndex: 0,
         feeTableLoading: false, // 费用收取落实tableLoading
         conditionLoading: false, // 放款条件tableLoading
-        currentPageExamine: 1,
-        totalExamine: 0,
-        pageSizeExamine: 15,
-        examineTableLoading: false, // 审批信息loading
         initFormLoading: false, // 提交按钮loading
         formData: {
+          'approveStatus': '',
+          'opinion': '',
           'paymentRecordDTO': {
             'shareAmt': '',
             'scRate': '',
@@ -288,7 +287,6 @@
     },
     mounted() {
       this.conditionGetlist(); // 执行获取放款条件列表的data
-      this.examineGetlist(); // 执行获取审批信息列表的data
       this.feeGetlist(); // 执行获取费用收取落实列表的data
     },
     methods: {
@@ -300,80 +298,62 @@
         });
         this.$data.conditionLoading = false;
         if (reps.success) {
-          if (reps.body.resultList.length !== 0) {
-            this.$data.conditionData = reps.body.resultList;
+          if (reps.body.length !== 0) {
+            this.$data.conditionData = reps.body;
           } else {
-            this.$Notice.warning({
-              title: '放款条件列表没有数据可加载',
-              duration: 2
-            });
-            this.$data.conditionData = [];
-          }
-        }
-      },
-      // 获取费用收取落实列表的data
-      async feeGetlist() {
-        this.$data.feeTableLoading = true;
-        let reps = await this.$http.post('biz/listApproveFeePlan');
-        this.$data.feeTableLoading = false;
-        if (reps.success) {
-          if (reps.body.resultList.length !== 0) {
-            this.$data.conditionData = reps.body.resultList;
-          } else {
-            this.$Notice.warning({
-              title: '费用收取落实列表没有数据可加载',
-              duration: 2
-            });
             this.$data.conditionData = [];
           }
         } else {
           this.$data.conditionData = [];
         }
       },
-      // 获取审批信息列表的data
-      async examineGetlist(page) {
-        this.$data.examineTableLoading = true;
-        if (page) {
-          this.$data.currentPageExamine = page;
-        }
-        let reps = await this.$http.post('biz/listApproveHistory', {
-          loanNo: this.$route.query.loanNo,
-          currentPage: this.$data.currentPageExamine,
-          pageSize: this.$data.pageSizeExamine
-        });
-        this.$data.examineTableLoading = false;
+      // 获取费用收取落实列表的data
+      async feeGetlist() {
+        this.$data.feeTableLoading = true;
+        let reps = await this.$http.post('/biz/listApproveFeePlan');
+        this.$data.feeTableLoading = false;
         if (reps.success) {
-          if (reps.body.resultList.length !== 0) {
-            this.$data.examineData = reps.body.resultList;
-            this.$data.currentPageExamine = reps.body.currentPage;
-            this.$data.totalExamine = reps.body.totalNum;
+          if (reps.body !== 0) {
+            this.$data.feeData = reps.body;
           } else {
-            this.$Notice.warning({
-              title: '审批信息列表没有数据可加载',
-              duration: 2
-            });
-            this.$data.examineData = [];
+            this.$data.feeData = [];
           }
+        } else {
+          this.$data.feeData = [];
         }
       },
-      // 获取审批信息列表的data 分页
-      jumpPageExamine(page) {
-        this.examineGetlist(page);
+      // 提交的ajax
+      async allSubimt() {
+        let rep = await this.$http.post('/biz/payment/paymentFee', {
+          paymentNo: this.$route.query.paymentNo,
+          paymentFeePlanLuoShiParamList: this.$data.feeData, // 费用收取列表集合
+          paymentConditionSubmitParams: this.$data.conditionData, // 放款条件表集合
+          loanApproveParam: {
+            approveStatus: this.$data.formData.approveStatus,
+            opinion: this.$data.formData.opinion
+          }
+        });
+        if (rep.success) {
+          this.$Message.success('提交成功');
+          this.$router.push({
+            path: '/index/loanbusiness/loan/fee',
+            query: {
+              currentPage: this.$route.query.currentPage
+            }
+          });
+        }
       },
-      // 所有的提交
+      // 所有的提交按钮
       saveSubimt() {
-        let formName = 'formData';
-        this.$refs[formName].validate(async (valid) => {
-          this.$data.initFormLoading = true;
-          const msg = await this.$Message.loading('正在提交...', 0);
+        this.$refs['formData'].validate(async (valid) => {
           if (valid) {
-            this.$Message.success('提交成功');
+            this.$data.initFormLoading = true;
+            await this.allSubimt();
+            this.$data.initFormLoading = false;
           } else {
+            this.$data.tabIndex = 0;
             this.$Message.error('<span style="color: red">*</span>项不能为空');
           }
-          await bsWait(1000);
-          msg();
-          this.$data.initFormLoading = false;
         });
       }
     }

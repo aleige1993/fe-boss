@@ -55,6 +55,14 @@ export default {
           key: 'timeConsuming'
         },
         {
+          title: '处理状态',
+          width: 90,
+          key: 'status',
+          render: (h, params) => {
+            return h('span', {}, this.enumCode2Name(params.row.status, 'BizStatusEnum'));
+          }
+        },
+        {
           title: '当前环节',
           width: 120,
           key: 'taskNode',

@@ -12,7 +12,11 @@
 
     <i-tabs v-model="tabIndex" type="card" :animated="false" style="padding-bottom: 46px;">
       <i-tab-pane :label="'基本信息'">
-        <modal-personal-basic :customerType="customerType" ref="personalInfo" @personalData="getPersonalData"></modal-personal-basic>
+        <loan-apply-info :customerType="applyBasicInfo ? applyBasicInfo.custType : customerType"
+                         :readonly="readonly"
+                         :applyBasicInfo="applyBasicInfo" ref="personalInfo"
+                         @personalData="getPersonalData">
+        </loan-apply-info>
       </i-tab-pane>
       <!--<i-tab-pane :label="'审批信息'">
         <modal-personal-approval></modal-personal-approval>
@@ -32,7 +36,7 @@
 </template>
 
 <script>
-  import modalPersonalBasic from '../loan-apply-info/index.vue';
+  import LoanApplyInfo from '../loan-apply-info/index.vue';
   /* import modalPersonalApproval from './personal-approval';*/
   export default {
     name: 'personalBbusinessRegistration',
@@ -40,17 +44,16 @@
       return {
         tabIndex: 0,
         initFormLoading: false,
-        personalData: {}
+        personalData: {},
+        applyBasicInfo: null,
+        readonly: false
       };
     },
     components: {
-      'modal-personal-basic': modalPersonalBasic
-      // 'modal-personal-approval': modalPersonalApproval
+      LoanApplyInfo
     },
     props: {
       customerType: String
-    },
-    mounted() {
     },
     methods: {
       // 保存的ajax
@@ -60,6 +63,9 @@
         this.$data.initFormLoading = false;
         if (resp.success) {
           this.$Message.success('保存成功');
+          this.$router.push({
+            name: 'loanBusinessList'
+          });
         }
       },
       // 监听子组件（基本信息）传递数据到父组件
@@ -85,8 +91,38 @@
           _dataTemp.loanVO.status = '2';
           _dataTemp.opeType = '2';
           this.saveLoanBiz(_dataTemp);
-        } else {
         }
+      },
+      // 如果是修改或者删除，初始化页面数据
+      async initPage() {
+        let loanNo = this.$route.query.id;
+        let isFromDetail = this.$route.query.from === 'detail';
+        if (loanNo) {
+          let resp = await this.$http.post('/biz/getLoanBizByLoanNo', {
+            loanNo
+          });
+          if (resp.success) {
+            this.$data.applyBasicInfo = resp.body;
+          }
+        } else {
+          this.$data.applyBasicInfo = null;
+        }
+        if (isFromDetail) {
+          this.$data.readonly = isFromDetail;
+        } else {
+          this.$data.readonly = false;
+        }
+      }
+    },
+    mounted() {
+      this.initPage();
+    },
+    watch: {
+      '$route.query': {
+        handler(newVal, oldVal) {
+          this.initPage();
+        },
+        deep: true
       }
     }
   };

@@ -1,5 +1,5 @@
 <template>
-  <div id="">
+  <div id="distributor-list">
     <i-breadcrumb separator=">">
       <i-breadcrumb-item href="/">首页</i-breadcrumb-item>
       <i-breadcrumb-item href="/index/customer/distributor">渠道商管理</i-breadcrumb-item>
@@ -29,6 +29,9 @@
               <i-input v-model="formAdd.corpName" :readonly="true" placeholder="选择客户">
                 <i-button @click="showSelectCompany=!showSelectCompany" slot="append">选择客户 <Icon type="ios-more"></Icon></i-button>
               </i-input>
+              <p class="formAddClass" v-if="formAdd.creditCode===''">“社会征信统一代码”不存在，不能提交！</p>
+              <p class="formAddClass" v-if="formAdd.legalPerson===''">“法定代表人”不存在，不能提交！</p>
+              <p class="formAddClass" v-if="formAdd.telephone===''">“公司电话”不存在，不能提交！</p>
             </i-form-item>
           </i-col>
         </i-row>
@@ -86,7 +89,10 @@
             <br>
             <br>
             <i-form-item class="text-right">
-              <i-button type="primary" @click="submitFun" :loading="buttonLoading">
+              <i-button type="primary"
+                        @click="submitFun"
+                        :disabled="(formAdd.creditCode==='')||(formAdd.legalPerson==='')||(formAdd.telephone==='')"
+                        :loading="buttonLoading">
                 <span v-if="!buttonLoading">提交</span>
                 <span v-else>loading...</span>
               </i-button>
@@ -166,6 +172,9 @@
       selectCompanyRow(row, index) {
         this.$data.formAdd.corpNo = row.corpNo;
         this.$data.formAdd.corpName = row.corpName;
+        this.$data.formAdd.creditCode = row.creditCode;
+        this.$data.formAdd.legalPerson = row.legalPerson;
+        this.$data.formAdd.telephone = row.telephone;
         this.$data.showSelectCompany = false;
       },
       // 新增
@@ -263,6 +272,7 @@
             path: '/index/customer/distributor/quota',
             query: {
               currentPage: this.$data.currentPage,
+              merchantStatus: this.$data.clickRow.merchantStatus,
               merchantNo: this.$data.clickRow.merchantNo,
               corpName: this.$data.clickRow.corpName,
               custMgrName: this.$data.clickRow.custMgrName
@@ -288,5 +298,12 @@
   };
 </script>
 <style lang="scss" scoped="">
+  #distributor-list {
+    & .formAddClass {
+      color: red;
+      line-height: 16px;
+      font-size:12px;
+    }
+  }
 
 </style>

@@ -139,7 +139,8 @@ export default [
             'tel': '',
             'addr': '',
             'productNo': '',
-            'taskStatus|1': ['1', '2', '3'],
+            'taskStatus|1': ['0', '1', '2', '3', '4', '5', '9'],
+            'signStatus|1': ['0', '1', '2', '3', '4', '5', '9'],
             'merchantNo': '',
             'handleUserCode': '',
             'handleUserName': '',
@@ -270,6 +271,7 @@ export default [
         'pageSize': 15,
         'resultList|3': [
           {
+            'guaranteeType|1': ['1', '2'],
             'carBrandName': '长安',
             'carModel': 'CS75',
             'carEngineNo': /[0-9A-Z]{18}/,
@@ -318,8 +320,14 @@ export default [
         {
           'feeTypeCode|1': /[A-Z]{4,8}/,
           'feeName|1': ['租赁服务费', 'GPS安装费', '租赁保证金'],
-          'feeTakeType|1': ['一次性收取', '分期收取'],
-          'feeActualAmt|500-10000': 500
+          'feeTakeType|1': ['1', '2'],
+          'isClearing|1': ['0', '1'],
+          'isHang|1': ['0', '1'],
+          'receivMode|1': ['1', '2', '3', '4'],
+          'feePercent|1-100': 1,
+          'feeActualAmt|500-10000': 500,
+          'feeAmt|500-10000': 500,
+          'alreadyReceivAmt|500-10000': 500
         }
       ],
       'reCode': '0000',
@@ -466,17 +474,13 @@ export default [
     url: '/biz/getPaymentCondition',
     on: true,
     resp: Mock.mock({
-      'body': {
-        'currentPage': 1,
-        'pageSize': 15,
-        'resultList|3': [
-          {
-            'paymentConName': 'GPS安装完成',
-            'paymentConContent': /[0-9A-Z]{18}/,
-            'status|1': ['0', '1']
-          }
-        ]
-      },
+      'body|3': [
+        {
+          'paymentConName': 'GPS安装完成',
+          'remark': /[0-9A-Z]{18}/,
+          'status|1': ['0', '1']
+        }
+      ],
       'reCode': '0000',
       'reMsg': '成功',
       'success': true
@@ -508,9 +512,9 @@ export default [
       'success': true
     })
   },
-  // 放款管理-放款条件列表
+  // 放款管理-放款列表
   {
-    url: '/biz/loan/pagePaymentApplyRecord',
+    url: '/biz/payment/pagePaymentApplyRecord',
     on: true,
     resp: Mock.mock({
       'body': {
@@ -531,8 +535,8 @@ export default [
             'signConfirmDate': '@date()',
             'taskArriveTime': '@date()',
             'timeConsuming': '@time',
-            'status|1': ['0', '1', '2', '3', '4', '5', '6', '7'],
-            'taskNode|1': ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '99']
+            'status|1': ['0', '1', '2', '3', '4', '9'],
+            'taskNode|1': ['9']
           }
         ]
       },
@@ -551,10 +555,76 @@ export default [
       'success': true
     })
   },
+  // 抵押物管理-设置当前处理人 （可通用）
+  {
+    url: '/biz/payment/settingHandleUserWithPawn',
+    on: true,
+    resp: Mock.mock({
+      'reCode': '0000',
+      'reMsg': '成功',
+      'success': true
+    })
+  },
+  // 放款条件落实提交
   {
     url: '/biz/payment/paymentCondition',
     on: true,
     resp: Mock.mock({
+      'reCode': '0000',
+      'reMsg': '成功',
+      'success': true
+    })
+  },
+  // 放款费用落实提交
+  {
+    url: '/biz/payment/paymentFee',
+    on: true,
+    resp: Mock.mock({
+      'reCode': '0000',
+      'reMsg': '成功',
+      'success': true
+    })
+  },
+  // 放款审批提交
+  {
+    url: '/biz/payment/paymentApprove',
+    on: true,
+    resp: Mock.mock({
+      'reCode': '0000',
+      'reMsg': '成功',
+      'success': true
+    })
+  },
+  // 抵押物待办列表
+  {
+    url: '/biz/payment/pagePaymentWaitDonePawn',
+    on: true,
+    resp: Mock.mock({
+      'body': {
+        'currentPage': 1,
+        'pageSize': 10,
+        'totalNum': 20,
+        'resultList|10': [
+          {
+            'paymentNo': 'mockjs', // 放款编号
+            'loanNo': '111111',
+            'custName': 'mockjs',
+            'certType|1': ['1', '2'],
+            'certNo': /^[1-9]\d{5}(18|19|([23]\d))\d{2}((0[1-9])|(10|11|12))(([0-2][1-9])|10|20|30|31)\d{3}[0-9Xx]$/,
+            'productName': '@name',
+            'totalPeriods|1': ['3', '6', '12', '18', '24'],
+            'loanTotalAmt|1000-100000': 1000,
+            'applyTime': '@date()',
+            'signConfirmDate': '@date()',
+            'taskArriveTime': '@date()',
+            'timeConsuming': '@time',
+            'status|1': ['0', '1', '2', '3', '4', '9'],
+            'taskNode|1': ['9'],
+            'backDays|1-365': 1,
+            'surplusBackDays|1-365': 1
+          }
+        ]
+      },
       'reCode': '0000',
       'reMsg': '成功',
       'success': true

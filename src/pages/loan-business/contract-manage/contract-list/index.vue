@@ -66,6 +66,7 @@
           loanNo: '',
           corpName: '',
           certType: '',
+          certNo: '',
           startDate: '',
           endDate: ''
         }
@@ -101,21 +102,23 @@
         if (page) {
           this.$data.currentPage = page;
         }
+        let taskNodeCode = '6';
+        if (this.isDetails) {
+          taskNodeCode = '7';
+        }
         let resp = await this.$http.post('/biz/sign/page', {
+          taskNode: taskNodeCode,
           currentPage: this.$data.currentPage,
           pageSize: this.$data.pageSize,
           ...this.$data.formSearch
         });
+        console.log(resp);
         this.$data.dataLoading = false;
         if (resp.body.resultList.length !== 0) {
           this.$data.data1 = resp.body.resultList;
           this.$data.currentPage = resp.body.currentPage;
           this.$data.total = resp.body.totalNum;
         } else {
-          this.$Notice.warning({
-            title: '没有数据可加载',
-            duration: 2
-          });
           this.$data.data1 = [];
         }
       },
@@ -130,6 +133,7 @@
           query: {
             isDetails: this.isDetails,
             loanNo: row.loanNo, // 项目编号（业务申请编号）
+            signNo: row.signNo, // 签约编号
             certNo: row.certNo, // 证件号码
             custNo: row.custNo // 客户编号
           }

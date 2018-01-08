@@ -38,7 +38,7 @@
             <i-form-item label="客户性质"
                          prop="custKind"
                          :rules="{required: true, message: '请选择'}">
-              <i-select v-model="formData.custKind">
+              <i-select v-model="formData.custKind" :disabled="readonly">
                 <i-option :value="'1'">新增客户</i-option>
                 <i-option :value="'2'">结清再贷</i-option>
               </i-select>
@@ -47,7 +47,7 @@
           <!--车辆价格-->
           <i-col span="8">
             <i-form-item label="车辆价格" prop="carBuyAmt">
-              <i-input v-model="formData.carBuyAmt" placeholder="">
+              <i-input v-model="formData.carBuyAmt" :readonly="readonly" placeholder="">
                 <span slot="append">元</span>
               </i-input>
             </i-form-item>
@@ -56,7 +56,7 @@
           <i-col span="8">
             <i-form-item label="申请金额" prop="applyAmt"
                          :rules="{required: true, message: '请输入申请金额'}">
-              <i-input v-model="formData.applyAmt" placeholder="">
+              <i-input v-model="formData.applyAmt" :readonly="readonly" placeholder="">
                 <span slot="append">元</span>
               </i-input>
             </i-form-item>
@@ -66,14 +66,14 @@
           <!--申请时间-->
           <i-col span="8">
             <i-form-item label="申请时间" prop="applyTime">
-              <bs-datepicker v-model="formData.applyTime" format="yyyy-MM-dd" type="date" placeholder="申请时间" style="width: 100%"></bs-datepicker>
+              <bs-datepicker :readonly="readonly" v-model="formData.applyTime" format="yyyy-MM-dd" type="date" placeholder="申请时间" style="width: 100%"></bs-datepicker>
             </i-form-item>
           </i-col>
           <!--申请期限-->
           <i-col span="8">
             <i-form-item label="申请期限" prop="applyPeriods"
                          :rules="{required: true, message: '请输入申请期限'}">
-              <i-input v-model="formData.applyPeriods" placeholder="">
+              <i-input v-model="formData.applyPeriods" :readonly="readonly" placeholder="">
                 <span slot="append">月</span>
               </i-input>
             </i-form-item>
@@ -81,7 +81,7 @@
           <!--首付或保证金意向-->
           <i-col span="8">
             <i-form-item label="首付或保证金意向" prop="depositOrDownPayment">
-              <i-input v-model="formData.depositOrDownPayment" placeholder="">
+              <i-input v-model="formData.depositOrDownPayment" :readonly="readonly" placeholder="">
                 <span slot="append">元</span>
               </i-input>
             </i-form-item>
@@ -91,7 +91,7 @@
         <i-row>
           <i-col span="8">
             <i-form-item label="车辆用途" prop="carUse">
-              <i-select v-model="formData.carUse">
+              <i-select v-model="formData.carUse" :disabled="readonly">
                 <i-option value="1">自用</i-option>
                 <i-option value="2">商用</i-option>
               </i-select>
@@ -122,10 +122,11 @@
             </i-form-item>
           </i-col>
           <i-col span="8">
-            <i-form-item label="渠道商">
+            <i-form-item label="渠道商" prop="merchantAbbr"
+              :rules="{required: true, message: '请选择渠道商'}">
               <input type="hidden" v-model="formData.merchantAbbr"/>
               <i-input v-model="formData.merchantAbbr" :readonly="true" placeholder="选择渠道商">
-                <i-button v-if="loanAction=='apply'" @click="showSelectDistributor=!showSelectDistributor" slot="append">选择渠道商 <Icon type="ios-more"></Icon></i-button>
+                <i-button v-if="!readonly" @click="showSelectDistributor=!showSelectDistributor" slot="append">选择渠道商 <Icon type="ios-more"></Icon></i-button>
               </i-input>
             </i-form-item>
           </i-col>
@@ -133,41 +134,64 @@
       </bs-form-block>
     </i-form>
     <!--客户信息组件-->
-    <personal-info :readonly="loanAction!='apply'" v-if="customerType == '1'" :memberNo="memberNo" @getMember="getMember"></personal-info>
-    <company-customer-info :readonly="loanAction!='apply'" v-if="customerType == '2'" :corpNo="corpNo" @on-select-company="selectCompany"></company-customer-info>
+    <personal-info :readonly="readonly" v-if="customerType == '1'" :memberNo="memberNo" @getMember="getMember"></personal-info>
+    <company-customer-info :readonly="readonly" v-if="customerType == '2'" :corpNo="corpNo" @on-select-company="selectCompany"></company-customer-info>
     <!--车辆信息-->
     <bs-form-block :title="'车辆信息'">
-      <div class="form-top-actions">
+      <div class="form-top-actions" v-if="!readonly">
         <i-button @click="openModalCar" type="info"><i class="iconfont icon-xinzeng"></i>&nbsp;新增</i-button>
       </div>
       <i-table :loading="carDataLoading" border ref="selection" :columns="carColumns" :data="carData"></i-table>
     </bs-form-block>
     <!--担保信息-->
     <bs-form-block :title="'担保信息'">
-      <div class="form-top-actions">
+      <div class="form-top-actions" v-if="!readonly">
         <i-button @click="openModalAssure" type="info"><i class="iconfont icon-xinzeng"></i>&nbsp;新增</i-button>
       </div>
       <i-table :loading="assureDataLoading" border ref="selection" :columns="assureColumns" :data="assureData"></i-table>
     </bs-form-block>
     <!--贷款材料清单-->
     <bs-form-block :title="'贷款材料清单'">
-      <div class="form-top-actions">
+      <div class="form-top-actions" v-if="!readonly">
         <i-button @click="addLoanFIleGroup" type="info"><i class="iconfont icon-xinzeng"></i>&nbsp;新增</i-button>
       </div>
       <!--<i-table :loading="loanDataLoading" border ref="selection" :columns="loanColumns" :data="loanData"></i-table>-->
       <loan-file-list v-for="(item, index) in loanData" :key="index"
-                      :group-index="index" :title="item.loanDocName" :data="item.docDetailAttachList"
+                      :group-index="index" v-model="item.status" :title="item.loanDocName" :data="item.docDetailAttachList"
                       @on-group-remove="deleteloanFileGroup">
       </loan-file-list>
     </bs-form-block>
-
+    <!--审核意见-->
+    <i-form v-if="!readonly" ref="formApplyOpinion" :model="formData" label-position="right" :label-width="160">
+      <bs-form-block title="审核意见" >
+        <i-row>
+          <i-col span="8">
+            <i-form-item label="结论">
+              <i-radio-group v-model="formData.result">
+                <i-radio label="A">通过</i-radio>
+                <i-radio label="R">拒绝</i-radio>
+                <i-radio label="B">退回</i-radio>
+                <i-radio label="D">废弃</i-radio>
+              </i-radio-group>
+            </i-form-item>
+          </i-col>
+        </i-row>
+        <i-row>
+          <i-col span="18">
+            <i-form-item label="意见信息">
+              <i-input type="textarea" v-model="formData.opinion" :rows="4"></i-input>
+            </i-form-item>
+          </i-col>
+        </i-row>
+      </bs-form-block>
+    </i-form>
     <!--选择产品的弹窗-->
     <bs-modal title="选择产品" :width="1200" v-model="showSelectProduct">
       <table-product-list v-if="showSelectProduct" :type="'modal'" @on-row-dbclick="selectProduct"></table-product-list>
     </bs-modal>
     <!--车辆信息的新增修改模态框-->
     <bs-modal :title="isAddCar ? '新增' : '编辑'" v-model="showModalCar" :width="1200">
-      <i-form v-if="showModalCar" ref="formCar" :model="formCar" label-position="right" :label-width="120">
+      <i-form v-if="showModalCar" ref="formCar" :model="formCar" label-position="right" :label-width="140">
         <i-row>
           <i-col span="8">
             <i-form-item
@@ -239,8 +263,7 @@
           <i-col span="8">
             <i-form-item label="车辆颜色">
               <i-select v-model="formCar.carColor">
-                <i-option value="1">米色</i-option>
-                <i-option value="2">金色</i-option>
+                <i-option v-for="item in enumSelectData.get('CarColorEnum')" :key="item.itemCode" :value="item.itemCode">{{item.itemName}}</i-option>
               </i-select>
             </i-form-item>
           </i-col>
@@ -286,8 +309,7 @@
           <!--出厂日期-->
           <i-col span="8">
             <i-form-item label="出厂日期" prop="carBirthday">
-              <i-input v-model="formCar.carBirthday" placeholder="">
-              </i-input>
+              <bs-datepicker v-model="formCar.carBirthday" placeholder="出厂日期"></bs-datepicker>
             </i-form-item>
           </i-col>
           <!--上牌城市-->
@@ -300,7 +322,7 @@
           <!--上牌时间-->
           <i-col span="8">
             <i-form-item label="上牌时间" prop="carOnDate">
-              <bs-datepicker v-model="formCar.carOnDate" type="text" placeholder="申请时间"></bs-datepicker>
+              <bs-datepicker v-model="formCar.carOnDate" placeholder="申请时间"></bs-datepicker>
             </i-form-item>
           </i-col>
         </i-row>
@@ -342,10 +364,7 @@
               label="车辆状况"
               prop="carStatus">
               <i-select v-model="formCar.carStatus">
-                <i-option value="1">优</i-option>
-                <i-option value="2">良</i-option>
-                <i-option value="3">中</i-option>
-                <i-option value="4">差</i-option>
+                <i-option v-for="item in enumSelectData.get('CarConditionEnum')" :key="item.itemCode" :value="item.itemCode">{{item.itemName}}</i-option>
               </i-select>
             </i-form-item>
           </i-col>
@@ -370,14 +389,6 @@
           <i-col span="8">
             <i-form-item label="是否挂靠" prop="carIsAnchored">
               <i-select v-model="formCar.carIsAnchored">
-                <i-option v-for="item in enumSelectData.get('YesNoEnum')" :key="item.itemCode" :value="item.itemCode">{{item.itemName}}</i-option>
-              </i-select>
-            </i-form-item>
-          </i-col>
-          <!--是否公牌-->
-          <i-col span="8">
-            <i-form-item label="是否挂靠" prop="carIsPubPlate">
-              <i-select v-model="formCar.carIsPubPlate">
                 <i-option v-for="item in enumSelectData.get('YesNoEnum')" :key="item.itemCode" :value="item.itemCode">{{item.itemName}}</i-option>
               </i-select>
             </i-form-item>
@@ -439,13 +450,13 @@
     </bs-modal>
     <!--担保信息的新增修改模态框-->
     <bs-modal :title="isAddAssure ? '新增' : '编辑'" v-model="showModalAssure" :width="800">
-      <i-form ref="formAssure" :model="formAssure" label-position="right" :label-width="100">
+      <i-form ref="formAssure" :model="formAssure" label-position="right" :label-width="120">
         <i-row>
           <i-col span="12">
             <i-form-item label="担保人类型" prop="guaPersonType"
                          :rules="{required: true, message: '请选择担保人类型'}">
               <i-select v-model="formAssure.guaPersonType">
-                <i-option v-for="item in enumSelectData.get('MemberTypeEnum')" :key="item.itemCode" :value="item.itemCode">{{item.itemName}}</i-option>
+                <i-option v-for="item in enumSelectData.get('CustTypeEnum')" :key="item.itemCode" :value="item.itemCode">{{item.itemName}}</i-option>
               </i-select>
             </i-form-item>
           </i-col>
@@ -607,6 +618,11 @@
         type: Object,
         required: false,
         default: null
+      },
+      readonly: {
+        type: Boolean,
+        default: false,
+        required: false
       },
       loanAction: {
         type: String,

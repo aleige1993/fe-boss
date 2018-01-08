@@ -125,10 +125,7 @@
         </i-form>
       </i-tab-pane>
       <i-tab-pane label="审批信息">
-        <i-table :loading="examineTableLoading" border ref="examineTable" :columns="examineColumns" :data="examineData"></i-table>
-        <div class="page-container">
-          <i-page @on-change="jumpPageExamine" :total="totalExamine" :page-size="pageSizeExamine" size="small" show-elevator show-total></i-page>
-        </div>
+        <table-loan-info v-if="tabIndex===1" :requestData="{loanNo: $route.query.loanNo}"></table-loan-info>
       </i-tab-pane>
       <div class="form-footer-actions">
         <i-button @click="saveSubimt" :loading="initFormLoading" type="success">
@@ -297,24 +294,22 @@
 <script>
   import MixinData from './mixin-data';
   import BsModal from '@/components/bs-modal';
+  import TableLoanInfo from '@/components/table-loan-approval-info';
   export default {
     name: 'pageLoanHandleDetails',
     mixins: [MixinData],
     components: {
-      BsModal
+      BsModal,
+      TableLoanInfo
     },
     data() {
       return {
         clickRow: {},
         isAddGPS: true,
         tabIndex: 0,
-        totalExamine: 0,
-        pageSizeExamine: 15,
-        currentPageExamine: 1,
         carDataLoading: false, // 车辆表loading
         assureDataLoading: false, // 担保表loading
         conditionLoading: false, // 放款条件loading
-        examineTableLoading: false, // 审批信息loading
         initFormLoading: false, // 提交按钮loading
         formalitiesShowModal: false, // 办理抵质押物手续modal
         GPSinstallButtonLoading: false, // GPS安装信息modal里的提交按钮loading
@@ -409,7 +404,6 @@
       this.carGetlist(); // 执行获取车辆信息列表的data
       this.assureGtelist(); // 执行获取担保信息列表的data
       this.conditionGetlist(); // 执行获取放款条件列表的data
-      this.examineGetlist(); // 执行获取审批信息列表的data
     },
     methods: {
       // 获取车辆信息列表的data
@@ -419,16 +413,15 @@
           loanNo: this.$route.query.loanNo
         });
         this.$data.carDataLoading = false;
+        console.log(reps);
         if (reps.success) {
           if (reps.body.resultList.length !== 0) {
             this.$data.carData = reps.body.resultList;
           } else {
-            this.$Notice.warning({
-              title: '车辆信息列表没有数据可加载',
-              duration: 2
-            });
             this.$data.carData = [];
           }
+        } else {
+          this.$data.carData = [];
         }
       },
       // 获取担保信息列表的data
@@ -442,12 +435,10 @@
           if (reps.body.resultList.length !== 0) {
             this.$data.assureData = reps.body.resultList;
           } else {
-            this.$Notice.warning({
-              title: '担保信息列表没有数据可加载',
-              duration: 2
-            });
             this.$data.assureData = [];
           }
+        } else {
+          this.$data.assureData = [];
         }
       },
       // 获取放款条件列表的data
@@ -458,46 +449,14 @@
         });
         this.$data.conditionLoading = false;
         if (reps.success) {
-          if (reps.body.resultList.length !== 0) {
-            this.$data.conditionData = reps.body.resultList;
+          if (reps.body.length !== 0) {
+            this.$data.conditionData = reps.body;
           } else {
-            this.$Notice.warning({
-              title: '放款条件列表没有数据可加载',
-              duration: 2
-            });
             this.$data.conditionData = [];
           }
+        } else {
+          this.$data.conditionData = [];
         }
-      },
-      // 获取审批信息列表的data
-      async examineGetlist(page) {
-        this.$data.examineTableLoading = true;
-        if (page) {
-          this.$data.currentPageExamine = page;
-        }
-        let reps = await this.$http.post('biz/listApproveHistory', {
-          loanNo: this.$route.query.loanNo,
-          currentPage: this.$data.currentPageExamine,
-          pageSize: this.$data.pageSizeExamine
-        });
-        this.$data.examineTableLoading = false;
-        if (reps.success) {
-          if (reps.body.resultList.length !== 0) {
-            this.$data.examineData = reps.body.resultList;
-            this.$data.currentPageExamine = reps.body.currentPage;
-            this.$data.totalExamine = reps.body.totalNum;
-          } else {
-            this.$Notice.warning({
-              title: '审批信息列表没有数据可加载',
-              duration: 2
-            });
-            this.$data.examineData = [];
-          }
-        }
-      },
-      // 获取审批信息列表的data 分页
-      jumpPageExamine(page) {
-        this.examineGetlist(page);
       },
       // GPS安装弹窗-打开新增弹窗
       addGPSModal() {
@@ -553,19 +512,14 @@
       },
       // 所有的提交按钮
       saveSubimt() {
-        let formName = 'formData';
-        this.$refs[formName].validate(async (valid) => {
-          this.$data.initFormLoading = true;
-          const msg = await this.$Message.loading('正在提交...', 0);
+        this.$refs['formData'].validate(async (valid) => {
           if (valid) {
-            this.allSubimt();
-            await bsWait(1000);
-            msg();
+            this.$data.initFormLoading = true;
+            await this.allSubimt();
             this.$data.initFormLoading = false;
           } else {
+            this.$data.tabIndex = 0;
             this.$Message.error('<span style="color: red">*</span>项不能为空');
-            msg();
-            this.$data.initFormLoading = false;
           }
         });
       },

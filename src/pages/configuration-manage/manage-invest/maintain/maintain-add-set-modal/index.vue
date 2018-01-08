@@ -211,10 +211,6 @@
         });
         if (resGetList.success) {
           if (resGetList.body.length === 0) {
-            this.$Notice.warning({
-              title: '列表没有数据可加载',
-              duration: 2
-            });
             this.$data.data1 = [];
           } else {
             this.$data.data1 = resGetList.body;

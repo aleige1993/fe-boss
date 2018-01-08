@@ -107,8 +107,12 @@ let MyRouter = new Router({
           path: 'loanbusiness', name: 'loanBusiness', component: resolve => require(['@/pages/loan-business'], resolve),
           children: [
             // 贷款业务-业务审批
-            { path: '/', name: 'loanBusinessExamination', component: resolve => require(['@/pages/loan-business/business-list'], resolve)},
-            { path: 'approve', name: 'loanBusinessApprove', component: resolve => require(['@/pages/loan-business/business-approve'], resolve)},
+            { path: '/', name: 'loanBusinessList',  props: { 'taskNode': ''}, component: resolve => require(['@/pages/loan-business/business-list'], resolve)},
+            { path: 'firstapprove', name: 'loanBusinessFirstApproveList', props: { 'taskNode': '3'}, component: resolve => require(['@/pages/loan-business/business-list'], resolve)},
+            { path: 'firststageapprove', name: 'loanBusinessFirstStageApproveList', props: { 'taskNode': '4'}, component: resolve => require(['@/pages/loan-business/business-list'], resolve)},
+            { path: 'secondstageapprove', name: 'loanBusinessSecondStageApproveList', props: { 'taskNode': '5'}, component: resolve => require(['@/pages/loan-business/business-list'], resolve)},
+            { path: 'doapprove', name: 'loanBusinessApprove', component: resolve => require(['@/pages/loan-business/business-approve'], resolve)},
+            { path: 'detail', name: 'loanBusinessApprove', component: resolve => require(['@/pages/loan-business/business-approve'], resolve)},
             // 贷款业务-业务受理
             { path: 'accept', name: 'loanBusinessAccept', props: { customerType: '1' }, component: resolve => require(['@/pages/loan-business/business-acceptance'], resolve)},
             // 贷款业务-业务受理-企业客户
@@ -159,6 +163,15 @@ let MyRouter = new Router({
                 // 贷款业务-放款管理-放款审批列表-办理详情
                 { path: 'approval/handle', name: 'approvalHandleDetails', component: resolve => require(['@/pages/loan-business/loan-manage/loan-approval-list/approval-handle-details'], resolve)}
               ]
+            },
+            // 贷款业务-抵押物管理
+            { path: 'pawn', name: 'pawnManage', component: resolve => require(['@/pages/loan-business/pawn-manage'], resolve),
+              children: [
+                // 贷款业务-抵押物管理-抵押物代办列表
+                { path: '/', name: 'pawnList', component: resolve => require(['@/pages/loan-business/pawn-manage/pawn-list'], resolve)},
+                // 贷款业务-放款管理-放款条件落实-办理详情
+                { path: 'handle', name: 'pawnListHandle', component: resolve => require(['@/pages/loan-business/pawn-manage/pawn-list/pawn-handle-details'], resolve)}
+              ]
             }
           ]
         },
@@ -185,13 +198,13 @@ let MyRouter = new Router({
   ],
   linkExactActiveClass: 'link-exact-active',
   linkActiveClass: 'link-active',
-  scrollBehavior (to, from, savedPosition) {
-    return { x: 0, y: 0 }
+  scrollBehavior(to, from, savedPosition) {
+    return { x: 0, y: 0 };
   }
 });
 const notNeddLoginPageRouteNames = ['login'];
 MyRouter.beforeEach((to, from, next) => {
-  if ('dev' === Config.ENV) {
+  if (Config.ENV === 'dev') {
     next();
     return;
   }

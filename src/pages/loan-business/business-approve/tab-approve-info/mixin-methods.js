@@ -40,7 +40,40 @@ export default {
       this.$data.showSelectProduct = false;
     },
     /**
-     * 根据申请编号和产品编号，产品期数获取审批初始化信息
+     * 一级审批和二级审批状态 -- 获取初审信息
+     */
+    async getFirstApproveInfo(loanNo) {
+      this.$data.initPageLoading = true;
+      let approveRulePromise = this.$http.post('/biz/listApproveRule', { loanNo }); // 准入规则
+      let paymentConditionPromise = this.$http.post('/biz/getPaymentCondition', { loanNo }); // 放款条件
+      let approveCreditPromise = this.$http.post('/biz/getApproveCredit', { loanNo }); // 用信方案
+      let approveFeePlanPromise = this.$http.post('/biz/listApproveFeePlan', { loanNo }); // 费用收取方案列表
+      let approveRuleResp = await approveRulePromise;
+      let paymentConditionResp = await paymentConditionPromise;
+      let approveCreditResp = await approveCreditPromise;
+      let approveFeePlanResp = await approveFeePlanPromise;
+      this.$data.initPageLoading = false;
+      if (approveRuleResp.success) {
+        this.$data.approveData.loanApproveRuleDTOS = approveRuleResp.body;
+      }
+      if (paymentConditionResp.success) {
+        this.$data.approveData.loanPaymentConditionDTOS = paymentConditionResp.body.resultList;
+      }
+      if (approveCreditResp.success) {
+        this.$data.approveData.loanApproveCreditDTO = approveCreditResp.body;
+      }
+      if (approveFeePlanResp.success) {
+        this.$data.approveData.loanApproveFeePlanDTOS = approveFeePlanResp.body;
+      }
+    },
+    async getFirstApproveList(loanNo) {
+      let firstApproveListResp = await this.$http.post('/biz/listApproveFirst', { loanNo }); // 初审信息
+      if (firstApproveListResp.success) {
+        this.$data.approveData.loanApproveFirstDTOS = firstApproveListResp.body;
+      }
+    },
+    /**
+     * 初审状态 -- 根据申请编号和产品编号，产品期数获取审批初始化信息
     */
     async getProductApproveInfo(loanNo, productNo, productPeriods) {
       this.$data.initPageLoading = true;
@@ -85,19 +118,20 @@ export default {
       }
     },
     /**
-     * 获取放款和还款银行账户列表
+     * 初审状态 -- 获取放款和还款银行账户列表
      * @param meberId 账户ID
      * @param memberType 账户类型 个人客户；企业客户或者渠道商
      * @returns {Promise.<void>}
      */
-    async getBankList() {
+    async getBankList(loanNo) {
       let paymentCustNo = '';
       if (this.$data.approveData.loanApproveCreditDTO.loanMode === '1') {
         paymentCustNo = this.applyBasicInfo.merchantNo || '110041';
       } else {
-        paymentCustNo = this.applyBasicInfo.memberNo;
+        paymentCustNo = this.applyBasicInfo.memberNo || this.applyBasicInfo.corpNo;
       }
       let resp = await this.$http.post('/biz/queryCustLoanAccount', {
+        loanNo,
         custNo: this.applyBasicInfo.memberNo || this.applyBasicInfo.corpNo, // 客户编号
         custType: this.applyBasicInfo.custType, // 客户类型 CustTypeEnum
         loanMode: this.$data.approveData.loanApproveCreditDTO.loanMode, // 放款方式 LoanModeEnum
@@ -105,7 +139,11 @@ export default {
       });
       if (resp.success) {
         this.$data.approveData.loanPaymentAccountDTOS.acctName = resp.body.paymentAccountName;
+        this.$data.approveData.loanPaymentAccountDTOS.acctNo = resp.body.paymentAcctNo;
+        this.$data.approveData.loanPaymentAccountDTOS.bankName = resp.body.paymentBankName;
         this.$data.approveData.loanRePaymentAccountDTOS.acctName = resp.body.repaymentAccountName;
+        this.$data.approveData.loanRePaymentAccountDTOS.acctNo = resp.body.repaymentAcctNo;
+        this.$data.approveData.loanRePaymentAccountDTOS.bankName = resp.body.repaymentBankName;
         this.$data.paymentAccountList = resp.body.paymentAccountList;
         this.$data.repaymentAccountList = resp.body.repaymentAccountList;
       }

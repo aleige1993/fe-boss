@@ -4,7 +4,7 @@ export default {
       uploadFileName: '',
       personalBasicInfo: {},
       showBasicList: true, // 当选择客户姓名之后就显示以下的相关信息
-      isFromDetail: false,
+      // isFromDetail: false,
       showSelectCustomer: false,
       formData: {
         // id: 29, // 如果是编辑
@@ -39,7 +39,7 @@ export default {
         memberNo: '', // 客户编号
         certNo: '', // 证件号码
         loanChannel: '', // 项目来源;1-Android,2-IOS,3-Web(后台手工录入),4-TX(泰象)
-        custType: '1', // 客户类型1-个人客户2-公司客户
+        custType: '', // 客户类型1-个人客户2-公司客户
         taskAssignee: '', // 任务签收人
         status: '', // 状态0-未处理1-处理中2-已处理,3-草稿,9-废弃
         apply_address: '',

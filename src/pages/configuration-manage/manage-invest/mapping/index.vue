@@ -33,19 +33,19 @@
       <i-form v-if="ShowModel" ref="formMapping" :model="formMapping" label-position="right" :label-width="150">
         <i-form-item
           label="产品"
-          :rules="{required: true, message: '产品不能为空', trigger: 'blur'}"
+          :rules="{required: true, message: '产品不能为空', trigger: 'change'}"
           prop="capitalName">
           <input type="hidden" v-model="formMapping.productName"/>
-          <i-input v-model="formMapping.productName" :disabled="true" placeholder="选择产品">
+          <i-input v-model="formMapping.productName" :readonly="true" placeholder="选择产品">
             <i-button @click="showSelectProduct=!showSelectProduct" slot="append">选择产品 <Icon type="ios-more"></Icon></i-button>
           </i-input>
         </i-form-item>
         <i-form-item
           label="资方"
-          :rules="{required: true, message: '资方不能为空', trigger: 'blur'}"
+          :rules="{required: true, message: '资方不能为空', trigger: 'change'}"
           prop="capitalName">
           <input type="hidden" v-model="formMapping.capitalName"/>
-          <i-input v-model="formMapping.capitalName" :disabled="true" placeholder="选择资方">
+          <i-input v-model="formMapping.capitalName" :readonly="true" placeholder="选择资方">
             <i-button @click="showSelectCapital=!showSelectCapital" slot="append">选择资方 <Icon type="ios-more"></Icon></i-button>
           </i-input>
         </i-form-item>
@@ -189,10 +189,6 @@
           this.$data.currentPage = resp.body.currentPage;
           this.$data.total = resp.body.totalNum;
         } else {
-          this.$Notice.warning({
-            title: '没有数据可加载',
-            duration: 2
-          });
           this.$data.data1 = [];
         }
       },

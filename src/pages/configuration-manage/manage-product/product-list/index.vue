@@ -290,10 +290,6 @@
         if (resp.body.resultList.length !== 0) {
           this.$data.dataFeature = resp.body.resultList;
         } else {
-          this.$Notice.warning({
-            title: '产品特性列表没有数据可加载',
-            duration: 2
-          });
           this.$data.dataFeature = [];
         }
       },
@@ -317,10 +313,6 @@
           this.$data.currentPage = resp.body.currentPage;
           this.$data.total = resp.body.totalNum;
         } else {
-          this.$Notice.warning({
-            title: '没有数据可加载',
-            duration: 2
-          });
           this.$data.data1 = [];
         }
       },

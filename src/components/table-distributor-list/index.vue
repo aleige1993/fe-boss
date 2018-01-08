@@ -92,10 +92,6 @@
           this.$data.currentPage = resp.body.currentPage;
           this.$data.total = resp.body.totalNum;
         } else {
-          this.$Notice.warning({
-            title: '没有数据可加载',
-            duration: 2
-          });
           this.$data.distributorList = [];
         }
       },
@@ -105,6 +101,7 @@
           if (ok) {
             const loadingMsg = this.$Message.loading('删除中...', 0);
             let respDel = await this.$http.get('merchant/deleteMerchant', {
+              merchantStatus: row.merchantStatus,
               merchantNo: row.merchantNo
             });
             loadingMsg();

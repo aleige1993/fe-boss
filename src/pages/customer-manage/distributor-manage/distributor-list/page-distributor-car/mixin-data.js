@@ -34,14 +34,12 @@ export default {
           width: 200,
           align: 'center',
           render: (h, params) => {
-            if (this.$data.isDetail) {
-              return;
-            };
             return h('div', [
               h('Button', {
                 props: {
                   type: params.row.salesStatus === '0' ? 'primary' : 'warning',
-                  size: 'small'
+                  size: 'small',
+                  disabled: this.$data.isDetail
                 },
                 on: {
                   click: () => {
@@ -68,7 +66,8 @@ export default {
               h('Button', {
                 props: {
                   type: 'primary',
-                  size: 'small'
+                  size: 'small',
+                  disabled: this.$data.isDetail
                 },
                 style: {
                   marginRight: '5px'
@@ -82,7 +81,8 @@ export default {
               h('Button', {
                 props: {
                   type: 'error',
-                  size: 'small'
+                  size: 'small',
+                  disabled: this.$data.isDetail
                 },
                 on: {
                   click: () => {

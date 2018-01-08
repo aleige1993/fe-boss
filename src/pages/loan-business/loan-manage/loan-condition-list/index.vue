@@ -65,11 +65,15 @@
           'certType': '',
           'certNo': '',
           'startDate': '',
+          'endDate': '',
           'applyEndTime': ''
         }
       };
     },
     mounted() {
+      if (this.$route.query.currentPage) {
+        this.$data.currentPag = this.$route.query.currentPag;
+      }
       this.getList();
     },
     methods: {
@@ -78,7 +82,7 @@
         if (page) {
           this.$data.currentPage = page;
         }
-        let resp = await this.$http.post('/biz/loan/pagePaymentApplyRecord', {
+        let resp = await this.$http.post('/biz/payment/pagePaymentApplyRecord', {
           taskNode: '9',
           ...this.$data.searchForm,
           currentPage: this.$data.currentPage,
@@ -90,10 +94,6 @@
           this.$data.currentPage = resp.body.currentPage;
           this.$data.total = resp.body.totalNum;
         } else {
-          this.$Notice.warning({
-            title: '没有数据可加载',
-            duration: 2
-          });
           this.$data.conditionListData = [];
         }
       },

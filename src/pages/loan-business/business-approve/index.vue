@@ -3,16 +3,16 @@
     <i-breadcrumb separator=">">
       <i-breadcrumb-item href="/">首页</i-breadcrumb-item>
       <i-breadcrumb-item href="/index/loanbusiness">贷款业务</i-breadcrumb-item>
-      <i-breadcrumb-item>业务审批</i-breadcrumb-item>
+      <i-breadcrumb-item>{{breadCrumbName}} {{isFromDetail}}</i-breadcrumb-item>
     </i-breadcrumb>
     <div class="form-top-actions"></div>
 
     <i-tabs v-model="tabIndex" type="card" :animated="false" style="padding-bottom: 46px;">
       <i-tab-pane :label="'基本信息'">
-        <apply-info ref="applyInfo" :customerType="'1'" :applyBasicInfo="formData" :loanAction="'firstApprove'"></apply-info>
+        <apply-info ref="applyInfo" :customerType="formData.custType" :applyBasicInfo="formData" :loanAction="'firstApprove'" :readonly="applyInfoReadonly || isFromDetail"></apply-info>
       </i-tab-pane>
       <i-tab-pane :label="'审批信息'">
-        <approve-info ref="approveInfo" :applyBasicInfo="formData"></approve-info>
+        <approve-info ref="approveInfo" :applyBasicInfo="formData" :readonly="firstApproveInfoReadonly || isFromDetail"></approve-info>
       </i-tab-pane>
       <i-tab-pane label="人行征信报告">
         <iframe v-if="tabIndex == 2" src="http://www.baidu.com" width="100%" :height="iframeHeight" frameborder="0"></iframe>
@@ -27,7 +27,7 @@
         <approve-history v-if="tabIndex == 5"></approve-history>
       </i-tab-pane>
     </i-tabs>
-    <div class="form-footer-actions">
+    <div v-if="!isFromDetail" class="form-footer-actions">
       <i-button @click="submitLoanApprove" :loading="submitApproveLoading" type="success">
         <span v-if="!submitApproveLoading"><i class="iconfont icon-tijiao"></i> 提交</span>
         <span v-else> loading...</span>
@@ -54,12 +54,29 @@
     data() {
       return {
         iframeHeight: 460,
-        tabIndex: 1,
+        tabIndex: 0,
         initFormLoading: false,
         submitApproveLoading: false,
         memberNo: '1',
         corpNo: '1'
       };
+    },
+    computed: {
+      breadCrumbName() {
+        let loanNode = this.$route.query.status;
+        return this.enumCode2Name(loanNode, 'LoanBizNodeEnum');
+      },
+      applyInfoReadonly() {
+        let loanNode = this.$route.query.status;
+        return loanNode === '4' || loanNode === '5';
+      },
+      firstApproveInfoReadonly() {
+        let loanNode = this.$route.query.status;
+        return loanNode === '4' || loanNode === '5';
+      },
+      isFromDetail() {
+        return location.href.indexOf('detail') !== -1;
+      }
     },
     props: {
       customerType: {

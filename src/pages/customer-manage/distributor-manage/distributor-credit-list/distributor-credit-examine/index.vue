@@ -120,9 +120,13 @@
             </i-row>
           </i-form>
         </bs-form-block>
+        <br>
+        <br>
       </i-tab-pane>
       <i-tab-pane label="审核历史信息">
         <table-examine-history if="tabIndex===1"></table-examine-history>
+        <br>
+        <br>
       </i-tab-pane>
       <div class="form-footer-actions">
         <i-button type="primary" @click="submitFun" :loading="btnLoading">
@@ -191,7 +195,7 @@
           this.$Message.success('已提交审核');
           await bsWait(1000);
           this.$router.push({
-            path: '/index/customer/distributor/credit',
+            path: '/index/customer/distributor',
             query: {
               currentPage: 1
             }

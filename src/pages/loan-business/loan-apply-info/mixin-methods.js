@@ -34,8 +34,10 @@ export default {
       // console.log(company);
       this.$data.formData.corpNo = company.corpNo;
       this.$data.formData.corpName = company.corpName;
+      this.$data.formData.mobileNo = company.telephone;
       this.$data.formData.certType = '';
       this.$data.formData.certNo = '';
+      this.$data.formData.creditCode = company.creditCode;
       this.$data.formData.custManagerNo = company.custMgrNo;
       this.$data.formData.custManagerName = company.custMgrName;
       this.$data.formData.deptNo = company.bizDepartmentCode;
@@ -49,6 +51,7 @@ export default {
       if (CertData.mbMemberDTO) {
         this.$data.formData.memberNo = CertData.mbMemberDTO['memberNo'];
         this.$data.formData.memberName = CertData.mbMemberDTO.name;
+        this.$data.formData.mobileNo = CertData.mobile;
         this.$data.formData.certType = CertData.mbMemberDTO.certType;
         this.$data.formData.certNo = CertData.mbMemberDTO.certNo;
         this.$data.formData.custManagerNo = CertData.mbMemberDTO.custMgrNo;
@@ -116,7 +119,6 @@ export default {
           this.$emit('personalData', this.$data.personalBasicInfo);
           resReturn = true;
         } else {
-          this.$Message.error('<span style="color: red">*</span>项不能为空');
           resReturn = false;
         }
       });
@@ -155,6 +157,7 @@ export default {
       if (this.applyBasicInfo) {
         this.$data.formData = $.extend({}, this.applyBasicInfo);
         this.$data.memberNo = this.applyBasicInfo.memberNo;
+        this.$data.corpNo = this.applyBasicInfo.corpNo;
         this.$data.initApplyInfoLoading = true;
         let getLoanCarListResp = this.$http.post('/biz/listLoanCarByLoanNo', {
           loanNo: this.applyBasicInfo.loanNo
@@ -170,13 +173,13 @@ export default {
         let guaResp = await getGuaListResp;
         let loanDocResp = await getLoanDocListResp;
         if (carResp.success) {
-          this.$data.carData = carResp.body.resultList;
+          this.$data.carData = carResp.body.resultList || [];
         }
         if (guaResp.success) {
-          this.$data.assureData = carResp.body.resultList;
+          this.$data.assureData = guaResp.body.resultList || [];
         }
         if (loanDocResp.success) {
-          this.$data.loanData = carResp.body.resultList;
+          this.$data.loanData = loanDocResp.body.resultList || [];
         }
       }
     }
