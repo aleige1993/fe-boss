@@ -17,6 +17,9 @@
           <i-input v-model="searchForm.idCard" type="text" placeholder="证件号码"></i-input>
         </i-form-item>
         <i-form-item prop="password">
+          扣款发起时间
+        </i-form-item>
+        <i-form-item prop="password">
           <bs-datepicker v-model="searchForm.receiveSTime" type="text" placeholder="查询时间"></bs-datepicker>
         </i-form-item>
         <i-form-item prop="password">
@@ -36,7 +39,7 @@
       </i-form>
     </div>
     <div class="form-top-actions" slot="topAction">
-      <i-button type="info" @click="payment">批量扣款</i-button>
+      <i-button type="info" @click="massPayment">批量扣款</i-button>
     </div>
     <slot name="topAction"></slot>
     <i-table border :loading="dataLoading" ref="selection" @on-select="selectRow" @on-select-all="selectRow" :columns="resultCustomerColumns" :data="privateCustomerLoanList"></i-table>
@@ -67,7 +70,7 @@
           currentPage: 1,
           pageSize: 15
         },
-        paymentId: []
+        receiveNos: [] //批量代付ID
       };
     },
     computed: {
@@ -91,18 +94,13 @@
       search() {
         this.getProxyPayList();
       },
-      selectRow(selection, row) {
-        this.paymentId = [];
-        selection.map(item => {
-          this.paymentId.push(item.payForNo);
-        });
-      },
       async getProxyPayList(page) {
         this.$data.dataLoading = true;
         if (page) {
           this.$data.searchForm.currentPage = page;
         }
         let resp = await this.$http.post('/pay/receive', this.$data.searchForm);
+        console.log(JSON.stringify(resp));
         this.$data.dataLoading = false;
         resp.body.resultList.map(item => {
           if (!(item.orderStat === 'F' || item.orderStat === 'D')) {
@@ -114,12 +112,29 @@
         this.$data.currentPage = resp.body.currentPage;
         this.$data.total = resp.body.totalNum;
       },
-      async payment() {
-        let resp = await this.$http.post('/pay/apply/payment', {
-          pay4Nos: this.paymentId
+      selectRow(selection, row) {
+        this.receiveNos = [];
+        selection.map(item => {
+          this.receiveNos.push(item.payForNo);
         });
-        if (resp.messageFault.reCode === '0000') {
-          this.$Message.success('付款成功');
+      },
+      massPayment() {
+        if (!this.receiveNos.length) {
+          this.$Notice.error({
+            title: '错误提示',
+            desc: '请先选择需扣款项'
+          });
+        } else {
+          this.submit(this.receiveNos);
+        }
+      },
+      async submit(idArray) {
+        console.log('ID:' + JSON.stringify(idArray));
+        let resp = await this.$http.post('/pay/apply/receive', {
+          receiveNos: idArray
+        });
+        if (resp.reCode === '0000') {
+          this.$Message.success('扣款成功');
           this.getProxyPayList();
         }
       }

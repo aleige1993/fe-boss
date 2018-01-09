@@ -48,6 +48,11 @@ export default {
           width: 140
         },
         {
+          title: '收款人开户行机构名',
+          key: 'toAccDept',
+          width: 140
+        },
+        {
           title: '收款人身份证号',
           key: 'transCardId',
           width: 200
@@ -63,8 +68,13 @@ export default {
           width: 120
         },
         {
-          title: '实际付款时间',
+          title: '付款发起时间',
           key: 'actualTime',
+          width: 120
+        },
+        {
+          title: '付款完成时间',
+          key: 'transEndtime',
           width: 120
         },
         {
@@ -110,8 +120,7 @@ export default {
                   // style: { marginRight: '5px' },
                   on: {
                     click: () => {
-                      this.paymentId = params.row.payForNo.split(',');
-                      this.payment();
+                      this.submit(params.row.payForNo.split(','));
                     }
                   }
                 }, '付款')

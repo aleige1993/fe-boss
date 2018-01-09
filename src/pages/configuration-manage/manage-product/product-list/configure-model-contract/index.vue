@@ -101,7 +101,6 @@
             title: '适用类型',
             key: 'applicableType',
             render: (h, params) => {
-              console.log(params.row.applicableType);
               return h('span', {}, this.applicableTypeSelect(params.row.applicableType));
             }
           },

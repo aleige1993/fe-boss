@@ -3,27 +3,19 @@ export default {
     return {
       customerColumns: [
         {
-          title: '标题',
-          key: 'title'
+          title: '短信内容',
+          key: 'smsContent'
         },
         {
-          title: '外部URL',
-          key: 'linkUrl'
+          title: '触发点',
+          key: 'triggerPoint'
         },
         {
-          title: '图片展示',
-          key: 'bannerUrl',
-          render: (h, params) => {
-            return h('img', {
-              attrs: {
-                style: 'height:60px; margin:10px 0',
-                src: params.row.bannerUrl
-              }
-            });
-          }
+          title: '阿里云模板ID',
+          key: 'aliSmsId'
         },
         {
-          title: '是否激活',
+          title: '是否自动触发',
           key: 'activeStatus',
           render: (h, params) => {
             if (params.row.activeStatus === '1') {
@@ -32,10 +24,6 @@ export default {
               return '否';
             }
           }
-        },
-        {
-          title: '排序',
-          key: 'index'
         },
         {
           title: '操作时间',
