@@ -78,21 +78,6 @@ export default {
             } else if (params.row.orderStat === 'D') {
               return '待扣款';
             }
-            // if (params.row.state === '0') {
-            //   return '付款中';
-            // } else if (params.row.state === '1') {
-            //   return '成功';
-            // } else if (params.row.state === '-1') {
-            //   return h('Tooltip', {
-            //     props: {
-            //       content: `失败原因：${params.row.transRemark}`
-            //     }
-            //   }, '失败');
-            // } else if (params.row.state === '2') {
-            //   return '已退款';
-            // } else if (params.row.state === '3') {
-            //   return '待付款';
-            // }
           }
         }
       ],
@@ -114,8 +99,7 @@ export default {
                   // style: { marginRight: '5px' },
                   on: {
                     click: () => {
-                      this.paymentId = params.row.payForNo.split(',');
-                      this.payment();
+                      this.submit(params.row.receiveNo.toString().split(','));
                     }
                   }
                 }, '扣款')

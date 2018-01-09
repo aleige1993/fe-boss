@@ -98,8 +98,13 @@ let MyRouter = new Router({
             // banner管理
             {
               path: 'bannermanage', name: 'bannerManage', component: resolve => require(['@/pages/configuration-manage/banner-manage'], resolve),
-            }
+            },
             // banner管理 end
+            // 短信管理
+            {
+              path: 'smsmanage', name: 'smsManage', component: resolve => require(['@/pages/configuration-manage/sms-manage'], resolve),
+            }
+            // 短信管理 end
           ]
         },// 配置管理end
         // 贷款业务
