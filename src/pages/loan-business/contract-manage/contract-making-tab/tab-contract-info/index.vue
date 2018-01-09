@@ -218,7 +218,10 @@
       </i-row>
     </i-form>
     <div class="form-top-actions" style="padding-top:0;">
-      <i-button v-if="!isDetails" @click="contractGenerating" type="info"><i class="iconfont icon-xinzeng"></i> 生成合同</i-button>
+      <i-button v-if="!isDetails" @click="contractGenerating" type="info" :loading="contractGeneratingLoading">
+      <span v-if="!contractGeneratingLoading"><i class="iconfont icon-xinzeng"></i> 生成合同</span>
+      <span v-else>loading...</span>
+      </i-button>
     </div>
     <i-table border :loading="contractInfoListLoading" ref="contractInfoTable" :columns="contractInfoColumns" :data="contractInfoData">
     </i-table>
@@ -268,6 +271,7 @@
         carListLoading: false, // 车辆表loading
         guaPersonListLoading: false, // 担保信息表loading
         feeTakeLoading: false, // 费用收取表loading
+        contractGeneratingLoading: false, // 费用收取表loading
         contractInfoListLoading: false, // 合同信息表loading
         // 借款信息
         approveCredit: {},
@@ -431,11 +435,14 @@
       },
       // 生成合同ajax
       async createContractAjax() {
+        this.$data.contractGeneratingLoading = true;
         let resp = await this.$http.post('/biz/sign/create/contract', {
           signNo: this.$data.contractInfoForm.signNo,
           startDate: this.$data.contractInfoForm.contractInfo.startDate,
           endDate: this.$data.contractInfoForm.contractInfo.endDate
         });
+        console.log(resp);
+        this.$data.contractGeneratingLoading = false;
         if (resp.success && resp.body.length !== 0) {
           this.$data.contractInfoData = resp.body;
         } else {

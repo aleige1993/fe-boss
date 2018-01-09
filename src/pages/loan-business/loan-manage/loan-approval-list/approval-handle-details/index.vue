@@ -473,7 +473,7 @@
       uploadErrorAlities(err, file, fileList) {
         this.$data.formalities.uploadFileName = '';
         this.$Notice.error({
-          desc: err
+          title: '错误提示', desc: err
         });
       },
       // 担保落实文件上传成功
@@ -485,7 +485,7 @@
       uploadErrorGuarantee(err, file, fileList) {
         this.$data.formalities.uploadFileName = '';
         this.$Notice.error({
-          desc: err
+          title: '错误提示', desc: err
         });
       }
     }

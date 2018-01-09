@@ -26,7 +26,7 @@ export default {
         this.$router.push('/login');
       } else {
         this.$Notice.error({
-          title: '',
+          title: '错误提示',
           desc: '系统繁忙，请稍后重试'
         });
       }

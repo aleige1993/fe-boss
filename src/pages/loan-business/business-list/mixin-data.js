@@ -135,7 +135,7 @@ export default {
                       });
                     } else {
                       this.$Notice.error({
-                        desc: '设置处理人失败请稍后重试'
+                        title: '错误提示', desc: '设置处理人失败请稍后重试'
                       });
                     }
                   }

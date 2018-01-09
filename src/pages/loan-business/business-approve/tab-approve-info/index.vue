@@ -212,7 +212,7 @@
             <i-table :columns="loanFundPartyCol" :data="approveData.loanCapitalDTOS"></i-table>
           </bs-form-block>
           <!--审核意见-->
-          <bs-form-block title="审核意见" v-if="!readonly && !isFromDetail">
+          <bs-form-block title="审核意见" v-if="!readonly">
             <i-row>
               <i-col span="8">
                 <i-form-item label="结论">

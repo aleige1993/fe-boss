@@ -558,6 +558,7 @@
       uploadErrorAlities(err, file, fileList) {
         this.$data.formalities.makeName = '';
         this.$Notice.error({
+          title: '错误提示',
           desc: err
         });
       },
@@ -570,6 +571,7 @@
       uploadErrorGuarantee(err, file, fileList) {
         this.$data.formagGuarantee.makeName = '';
         this.$Notice.error({
+          title: '错误提示',
           desc: err
         });
       }

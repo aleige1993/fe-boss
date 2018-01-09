@@ -77,10 +77,15 @@
         <span v-else> loading...</span>
       </i-button>
     </div>
+    <!--<bs-modal :title="'更改资金方信息'" :width="520">
+      <i-form ref="formMaintain" :model="setCapitalForm" label-position="right" :label-width="120">
+      </i-form>
+    </bs-modal>-->
   </div>
 </template>
 
 <script>
+  import BSModal from '@/components/bs-modal';
   import TabContractInfo from './tab-contract-info'; // 合同信息
   import examineMixinData from './examine-mixin-data';
   import capitalMixinData from './capital-mixin-data';
@@ -88,6 +93,7 @@
     name: 'contractMakingTab',
     mixins: [examineMixinData, capitalMixinData],
     components: {
+      BSModal,
       TabContractInfo
     },
     data() {
@@ -127,7 +133,6 @@
         let resp = await this.$http.post('/biz/sign/contract/listRepayPlanCapital', {
           loanNo: this.$data.loanNo
         });
-        console.log(resp);
         this.$data.loanCapitalListLoading = false;
         this.$data.capitalPlanCapitalListLoading = false;
         if (resp.success) {
@@ -167,21 +172,40 @@
         const msg = this.$Message.loading('正在提交中...', 0);
         // await bsWait(1000);
         let refData = await this.$refs.contractInfo.loanApproveSumbit();
-        msg();
-        this.$data.initFormLoading = false;
         let requestData = {
           ...refData,
           repayPlanCapitalList: this.$data.repayPlanCapitalList, // 资金方还款计划表数据
           repayPlanRentalList: this.$data.repayPlanRentalList // 租金放还款计划表数据
         };
+        msg();
+        this.$data.initFormLoading = false;
         // 初审的提交
-        if (!this.$route.query.isDetails) {
-          let resp = await this.$http.post('/biz/sign/contract/fristApprove', { requestData });
+        if (!this.$route.query.isDetails || this.$route.query.isDetails === 'false') {
+          let resp = await this.$http.post('/biz/sign/contract/fristApprove', { ...requestData });
+          console.log(resp);
+          if (resp.success) {
+            this.$Message.success('提交成功！');
+            // 回到合同制作列表
+            if (!this.$route.query.isDetails) {
+              this.$router.push({
+                path: '/index/loanbusiness/contract',
+                query: {
+                  currentPage: this.$route.query.currentPage
+                }
+              });
+            } else {
+              this.$router.push({
+                path: '/index/loanbusiness/contract/againExamine',
+                query: {
+                  currentPage: this.$route.query.currentPage
+                }
+              });
+            }
+          }
         }
-        if (refData !== null) {
-          this.$Message.success('提交成功！');
+        /* if (refData !== null) {
           // 回到合同制作列表
-          /* if (!this.$route.query.isDetails) {
+          if (!this.$route.query.isDetails) {
             this.$router.push({
               path: '/index/loanbusiness/contract',
               query: {
@@ -195,8 +219,8 @@
                 currentPage: this.$route.query.currentPage
               }
             });
-          }*/
-        };
+          }
+        }*/
       },
       // 资金方的 生成还款计划事件
       async capitalGenerating() {
@@ -237,7 +261,9 @@
         });
       },
       // 资金方信息列表更改
-      loanCapitalSetRow(row) {}
+      loanCapitalSetRow(row) {
+
+      }
     }
   };
 </script>
