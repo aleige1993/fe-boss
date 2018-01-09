@@ -124,7 +124,8 @@ export default {
      * @param memberType 账户类型 个人客户；企业客户或者渠道商
      * @returns {Promise.<void>}
      */
-    async getBankList(loanNo) {
+    async getBankList() {
+      let loanNo = this.$route.query.id;
       let paymentCustNo = '';
       if (this.$data.approveData.loanApproveCreditDTO.loanMode === '1') {
         paymentCustNo = this.applyBasicInfo.merchantNo || '110041';
