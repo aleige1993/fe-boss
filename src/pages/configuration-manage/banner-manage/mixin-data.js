@@ -26,7 +26,7 @@ export default {
           title: '是否激活',
           key: 'activeStatus',
           render: (h, params) => {
-            if (params.row.activeStatus) {
+            if (params.row.activeStatus === '1') {
               return '是';
             } else {
               return '否';
@@ -81,7 +81,7 @@ export default {
                         loading();
                         if (resp.success) {
                           this.$Message.success('删除成功');
-                          this.getProxyPayList();
+                          this.$refs.tableInvestList.getProxyPayList();
                         }
                       }
                     });

@@ -6,7 +6,7 @@
       <i-breadcrumb-item>banner管理</i-breadcrumb-item>
     </i-breadcrumb>
     <div class="form-top-actions">
-      <i-button type="info" @click="addModal=!addModal"><i class="iconfont icon-xinzeng"></i> 新增</i-button>
+      <i-button type="info" @click="add"><i class="iconfont icon-xinzeng"></i> 新增</i-button>
     </div>
     <slot name="topAction"></slot>
     <i-table border :loading="dataLoading" ref="selection" @on-select="selectRow" :columns="resultCustomerColumns" :data="privateCustomerLoanList"></i-table>
@@ -44,7 +44,7 @@
         <i-form-item label="排序" prop="index" :rules="{required: true, message: '排序不能为空', trigger: 'blur'}">
           <i-input v-model="fromData.index" placeholder=""></i-input>
         </i-form-item>
-        <i-form-item label="是否激活" prop="activeStatus" :rules="{required: true, message: '请选择是否激活', trigger: 'change'}">
+        <i-form-item label="是否激活" prop="activeStatus" :rules="{required: true, message: '请选择是否激活', trigger: 'blur'}">
           <i-select v-model="fromData.activeStatus">
             <i-option v-for="item in certTypeEnum" :key="item.itemCode" :value="item.itemCode">{{item.itemName}}</i-option>
           </i-select>
@@ -124,6 +124,11 @@
       search() {
         this.getProxyPayList();
       },
+      add() {
+        this.$data.isAdd = true;
+        this.$data.addModal = true;
+        this.$data.fromData = {};
+      },
       async getProxyPayList(page) {
         this.$data.dataLoading = true;
         if (page) {
@@ -144,6 +149,7 @@
           ...this.$data.fromData
         });
         this.$data.buttonLoading = false;
+        this.$data.isAdd = true;
         this.$data.addModal = false;
         if (resp.success) {
           let text = this.$data.isAdd ? '添加成功' : '修改成功';
@@ -153,8 +159,7 @@
       },
       // 提交
       submitFun() {
-        const formName = 'fromData';
-        this.$refs[formName].validate((valid) => {
+        this.$refs['fromData'].validate((valid) => {
           if (valid) {
             this.submitSuccess();
           } else {
