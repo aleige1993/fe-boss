@@ -85,7 +85,7 @@ export default {
               style: {
                 color: params.row.nowPeriods === 999 && 'red'
               }
-            }, params.row.repayAmt);
+            }, params.row.repayRate);
           }
         },
         {
@@ -96,7 +96,7 @@ export default {
               style: {
                 color: params.row.nowPeriods === 999 && 'red'
               }
-            }, params.row.repayAmt);
+            }, params.row.repayTotalAmt);
           }
         }
       ],
@@ -135,7 +135,7 @@ export default {
               style: {
                 color: params.row.nowPeriods === 999 && 'red'
               }
-            }, params.row.repayAmt);
+            }, params.row.repayRate);
           }
         },
         {
@@ -146,7 +146,7 @@ export default {
               style: {
                 color: params.row.nowPeriods === 999 && 'red'
               }
-            }, params.row.repayAmt);
+            }, params.row.repayTotalAmt);
           }
         }
       ],

@@ -65,9 +65,9 @@
           <i-col>
             <i-form-item
               label="渠道商简称"
-              prop="roadAddr"
+              prop="merchantAbbr"
               :rules="{required: true, message: '请选择渠道商类型', trigger: 'blur'}">
-              <i-input v-model="formAdd.roadAddr" placeholder=""></i-input>
+              <i-input v-model="formAdd.merchantAbbr" placeholder=""></i-input>
             </i-form-item>
           </i-col>
         </i-row>
@@ -138,7 +138,7 @@
           'cityCode': '',
           'districtName': '',
           'districtCode': '',
-          'roadAddr': '',
+          'merchantAbbr': '',
           'applyNo': '',
           'regCapital': '',
           'telephone': '',
