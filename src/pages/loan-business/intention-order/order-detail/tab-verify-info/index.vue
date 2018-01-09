@@ -50,12 +50,12 @@
       </span>
       <i-table :loading="dataLoading" :columns="bankAccountColumns" :data="verifyInfo.memberCardDTOList"></i-table>
     </bs-form-block>
-    <bs-form-block title="征信授权信息" v-if="verifyInfo.memberCreditDTO">
+    <bs-form-block title="征信授权信息">
       <span slot="title">身份证信息
-        <span v-if="verifyInfo.creditAuthStatus === '0'" class="text-danger">【未授权】</span>
-        <span v-else class="text-primary">【已授权】</span>
+        <span v-if="verifyInfo.creditAuthStatus === '1'" class="text-primary">【已授权】</span>
+        <span v-else  class="text-danger">【未授权】</span>
       </span>
-      <i-row>
+      <i-row v-if="verifyInfo.memberCreditDTO">
         <i-col span="8">
           <i-form-item label="授权时间">{{verifyInfo.memberCreditDTO.comfirmTime}}</i-form-item>
         </i-col>
@@ -66,7 +66,7 @@
           <i-form-item label="授权地点维度">{{verifyInfo.memberCreditDTO.latitude}}</i-form-item>
         </i-col>
       </i-row>
-      <i-row>
+      <i-row v-if="verifyInfo.memberCreditDTO">
         <i-col span="24">
           <i-form-item label="授权地点">{{verifyInfo.memberCreditDTO.comfirmAddr}}</i-form-item>
         </i-col>
