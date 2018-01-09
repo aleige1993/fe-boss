@@ -10,11 +10,13 @@ Vue.mixin({
       let enumSelectData = this.$store.getters.enumSelectData;
       let selects = enumSelectData.get(enumType);
       let name = '';
-      selects.map(item => {
-        if (item.itemCode === code) {
-          name = item.itemName;
-        }
-      });
+      if (selects && selects.length > 0) {
+        selects.map(item => {
+          if (item.itemCode === code) {
+            name = item.itemName;
+          }
+        });
+      }
       return name;
     }
   }

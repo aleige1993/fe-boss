@@ -3,7 +3,7 @@
     <i-breadcrumb separator=">">
       <i-breadcrumb-item href="/">首页</i-breadcrumb-item>
       <i-breadcrumb-item href="/index/conf">配置管理</i-breadcrumb-item>
-      <i-breadcrumb-item>banner管理</i-breadcrumb-item>
+      <i-breadcrumb-item>短信管理</i-breadcrumb-item>
     </i-breadcrumb>
     <div class="form-top-actions">
       <i-button type="info" @click="add"><i class="iconfont icon-xinzeng"></i> 新增</i-button>
@@ -15,37 +15,19 @@
     </div>
     <pt-modal :title="isAdd ? '添加' : '修改'" v-model="addModal" :width="600" :zIndex="200">
       <i-form ref="fromData" :model="fromData" label-position="left" :label-width="80">
-        <i-form-item label="标题" prop="title" :rules="{required: true, message: '标题不能为空', trigger: 'blur'}">
-          <i-input v-model="fromData.title" placeholder="" ></i-input>
+        <i-form-item label="短信内容" prop="smsContent" :rules="{required: true, message: '短信内容不能为空', trigger: 'blur'}">
+          <i-input type="textarea" v-model="fromData.smsContent" placeholder="" ></i-input>
         </i-form-item>
-        <i-form-item label="链接" prop="linkUrl" :rules="{required: true, message: '链接不能为空', trigger: 'blur'}">
-          <i-input v-model="fromData.linkUrl" placeholder=""></i-input>
+        <i-form-item label="触发点" prop="triggerPoint" :rules="{required: true, message: '请选择触发点', trigger: 'blur'}">
+          <i-select v-model="fromData.triggerPoint">
+            <i-option v-for="item in smsTriggerPointEnum" :key="item.itemCode" :value="item.itemCode">{{item.itemName}}</i-option>
+          </i-select>
         </i-form-item>
-        <i-form-item
-          :rules="{required: true, message: '请选择图片', trigger: 'blur'}"
-          label="选择图片"
-          prop="bannerUrl">
-          <i-upload
-            :show-upload-list="false"
-            :on-success="uploadSuccess"
-            :on-error="uploadError"
-            :format="['jpg','jpeg','png']"
-            type="drag"
-            :action="$config.HTTPBASEURL + '/common/upload'">
-            <div style="padding: 20px 0">
-              <i-icon type="ios-cloud-upload" size="52" style="color: #3399ff"></i-icon>
-              <p>单击或拖动文件上传</p>
-            </div>
-          </i-upload>
-          <p v-if="isAdd" class="show-upload-text" v-text="uploadFileName"></p>
-          <p v-else class="show-upload-text" v-text="fromData.bannerUrl"></p>
-          <input type="hidden" v-model="fromData.bannerUrl" style="width: 100%;border: 0;">
+        <i-form-item label="阿里云模板ID" prop="aliSmsId" :rules="{required: true, message: '阿里云模板ID不能为空', trigger: 'blur'}">
+          <i-input v-model="fromData.aliSmsId" placeholder="" ></i-input>
         </i-form-item>
-        <i-form-item label="排序" prop="index" :rules="{required: true, message: '排序不能为空', trigger: 'blur'}">
-          <i-input-number :min="1" v-model="fromData.index" placeholder="" style="width: 100%"></i-input-number>
-        </i-form-item>
-        <i-form-item label="是否激活" prop="activeStatus" :rules="{required: true, message: '请选择是否激活', trigger: 'blur'}">
-          <i-select v-model="fromData.activeStatus">
+        <i-form-item label="是否自动触发" prop="autoTrigger" :rules="{required: true, message: '请选择是否自动触发', trigger: 'blur'}">
+          <i-select v-model="fromData.autoTrigger">
             <i-option v-for="item in certTypeEnum" :key="item.itemCode" :value="item.itemCode">{{item.itemName}}</i-option>
           </i-select>
         </i-form-item>
@@ -76,6 +58,7 @@
         total: 0,
         currentPage: 1,
         certTypeEnum: {},
+        smsTriggerPointEnum: {},
         uploadFileName: '',
         searchForm: {
           'projectNo': '',
@@ -89,11 +72,10 @@
         },
         fromData: {
           'id': '',
-          'title': '',
-          'bannerUrl': '',
-          'linkUrl': '',
-          'index': '',
-          'activeStatus': ''
+          'smsContent': '',
+          'triggerPoint': '',
+          'aliSmsId': '',
+          'autoTrigger': ''
         }
       };
     },
@@ -134,7 +116,7 @@
         if (page) {
           this.$data.searchForm.currentPage = page;
         }
-        let resp = await this.$http.post('/cfg/banner/list', {
+        let resp = await this.$http.post('/cfg/smsTemplate/list', {
           ...this.$data.searchForm
         });
         this.$data.dataLoading = false;
@@ -176,7 +158,6 @@
       uploadError(err, file, fileList) {
         this.$data.uploadFileName = '';
         this.$Notice.error({
-          title: '错误提示',
           desc: err
         });
       },
@@ -187,6 +168,8 @@
     },
     mounted() {
       this.getProxyPayList();
+      let enumSelectData = this.$store.getters.enumSelectData;
+      this.$data.smsTriggerPointEnum = enumSelectData.get('smsTriggerPointEnum');
       this.$data.certTypeEnum = [
         {
           'itemCode': '1',

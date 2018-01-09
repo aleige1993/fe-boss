@@ -1,7 +1,7 @@
 <template>
   <div class="bs-form-block">
     <div class="block-title">
-      {{title}}
+      <slot name="title">{{title}}</slot>
     </div>
     <div class="block-body" v-bind:style="{padding: padding, borderWidth: borderWidth}" >
       <slot></slot>

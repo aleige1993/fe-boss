@@ -17,6 +17,9 @@
           <i-input v-model="searchForm.transCardId" type="text" placeholder="证件号码"></i-input>
         </i-form-item>
         <i-form-item prop="password">
+          预计放款时间
+        </i-form-item>
+        <i-form-item prop="password">
           <bs-datepicker v-model="searchForm.btime" type="text" placeholder="查询时间"></bs-datepicker>
         </i-form-item>
         <i-form-item prop="password">
@@ -25,13 +28,18 @@
         <i-form-item prop="password">
           <bs-datepicker v-model="searchForm.etime" type="text" placeholder="查询时间"></bs-datepicker>
         </i-form-item>
+        <i-form-item prop="password">
+          <i-select style="width: 120px;" v-model="searchForm.orderStat" placeholder="付款状态">
+            <i-option v-for="item in certTypeEnum" :value="item.itemCode" :key="item.itemCode">{{item.itemName}}</i-option>
+          </i-select>
+        </i-form-item>
         <i-form-item>
           <i-button @click="search" type="primary"><i-icon type="ios-search-strong"></i-icon> 搜索</i-button>
         </i-form-item>
       </i-form>
     </div>
     <div class="form-top-actions" slot="topAction">
-      <i-button type="info" @click="payment">批量付款</i-button>
+      <i-button type="info" @click="massPayment">批量付款</i-button>
     </div>
     <slot name="topAction"></slot>
     <i-table border :loading="dataLoading" ref="selection" @on-select="selectRow" @on-select-all="selectRow" :columns="resultCustomerColumns" :data="privateCustomerLoanList"></i-table>
@@ -62,7 +70,7 @@
           currentPage: 1,
           pageSize: 15
         },
-        paymentId: []
+        pay4Nos: [] //批量代付ID
       };
     },
     computed: {
@@ -86,12 +94,6 @@
       search() {
         this.getProxyPayList();
       },
-      selectRow(selection, row) {
-        this.paymentId = [];
-        selection.map(item => {
-          this.paymentId.push(item.payForNo);
-        });
-      },
       async getProxyPayList(page) {
         this.$data.dataLoading = true;
         if (page) {
@@ -109,11 +111,29 @@
         this.$data.currentPage = resp.body.currentPage;
         this.$data.total = resp.body.totalNum;
       },
-      async payment() {
-        let resp = await this.$http.post('/pay/apply/payment', {
-          pay4Nos: this.paymentId
+      selectRow(selection, row) {
+        this.pay4Nos = [];
+        selection.map(item => {
+          this.pay4Nos.push(item.payForNo);
         });
-        if (resp.messageFault.reCode === '0000') {
+      },
+      massPayment() {
+        if (!this.pay4Nos.length) {
+          this.$Notice.error({
+            title: '错误提示',
+            desc: '请先选择需付款项'
+          });
+        } else {
+          this.submit(this.pay4Nos);
+        }
+      },
+      async submit(idArray) {
+        console.log(idArray);
+        let resp = await this.$http.post('/pay/apply/payment', {
+          pay4Nos: idArray
+        });
+        console.log(resp);
+        if (resp.reCode === '0000') {
           this.$Message.success('付款成功');
           this.getProxyPayList();
         }
@@ -121,9 +141,24 @@
     },
     mounted() {
       this.getProxyPayList();
-      let enumSelectData = this.$store.getters.enumSelectData;
-      this.$data.certTypeEnum = enumSelectData.get('CertTypeEnum');
-      // console.log(.get('YesNoEnum'));
+      this.$data.certTypeEnum = [
+        {
+          'itemCode': '3',
+          'itemName': '待付款'
+        },
+        {
+          'itemCode': '0',
+          'itemName': '付款中'
+        },
+        {
+          'itemCode': '1',
+          'itemName': '付款成功'
+        },
+        {
+          'itemCode': '-1',
+          'itemName': '付款失败'
+        }
+      ];
     }
   };
 </script>

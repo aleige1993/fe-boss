@@ -98,8 +98,13 @@ let MyRouter = new Router({
             // banner管理
             {
               path: 'bannermanage', name: 'bannerManage', component: resolve => require(['@/pages/configuration-manage/banner-manage'], resolve),
-            }
+            },
             // banner管理 end
+            // 短信管理
+            {
+              path: 'smsmanage', name: 'smsManage', component: resolve => require(['@/pages/configuration-manage/sms-manage'], resolve),
+            }
+            // 短信管理 end
           ]
         },// 配置管理end
         // 贷款业务
@@ -134,6 +139,13 @@ let MyRouter = new Router({
                 { path: 'detail', name: 'loanBusinessCreditDetail', component: resolve => require(['@/pages/loan-business/credit-manage/credit-detail'], resolve)},
                 // 贷款业务-授信管理-授信审批
                 { path: 'doapprove', name: 'loanBusinessCreditApprove', component: resolve => require(['@/pages/loan-business/credit-manage/credit-approve'], resolve)}
+              ]
+            },
+            // 客户意向订单查询
+            { path: 'intentionorder', name: 'intentionOrder', component: resolve => require(['@/pages/loan-business/intention-order'], resolve),
+              children: [
+                { path: '/', name: 'intentionOrderList', component: resolve => require(['@/pages/loan-business/intention-order/order-list'], resolve)},
+                { path: ':orderId', name: 'intentionOrderDetail', component: resolve => require(['@/pages/loan-business/intention-order/order-detail'], resolve)},
               ]
             },
             // 贷款业务-签约管理
@@ -229,3 +241,4 @@ MyRouter.beforeEach((to, from, next) => {
   }
 });
 export default MyRouter;
+/* eslint-disable */
