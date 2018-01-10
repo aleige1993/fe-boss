@@ -50,7 +50,7 @@ export default {
         },
         {
           title: '已耗时',
-          width: 100,
+          width: 150,
           key: 'timeConsuming'
         },
         {
@@ -86,7 +86,14 @@ export default {
                   marginRight: '5px'
                 },
                 on: {
-                  click: () => {
+                  click: async () => {
+                    // 设置当前处理人
+                    let rep = await this.$http.post('/biz/payment/settingHandleUser', {
+                      paymentNo: params.row.paymentNo
+                    });
+                    if (!rep.success) {
+                      return;
+                    }
                     this.$router.push({
                       path: '/index/loanbusiness/loan/fee/handle',
                       query: {

@@ -128,7 +128,7 @@
               <i-col span="8">
                 <i-form-item label="参加工作年限" prop="mbMemberDTO.workYears">
                   <i-select :disabled="isFromDetail" v-model="formData.mbMemberDTO.workYears">
-                    <i-option v-for="item in enumSelectData.get('YearsEnum')" :key="item.itemCode" :value="item.itemCode">{{item.itemName}}</i-option>
+                    <i-option v-for="item in enumSelectData.get('YearsEnum')" :key="item.itemCode" :value="item.itemCode/1">{{item.itemName}}</i-option>
                   </i-select>
                 </i-form-item>
               </i-col>
@@ -153,7 +153,7 @@
               <i-col span="8">
                 <i-form-item label="本地居住年限" prop="mbMemberDTO.liveYears">
                   <i-select :disabled="isFromDetail" v-model="formData.mbMemberDTO.liveYears">
-                    <i-option v-for="item in enumSelectData.get('YearsEnum')" :key="item.itemCode" :value="item.itemCode">{{item.itemName}}</i-option>
+                    <i-option v-for="item in enumSelectData.get('YearsEnum')" :key="item.itemCode" :value="item.itemCode/1">{{item.itemName}}</i-option>
                   </i-select>
                 </i-form-item>
               </i-col>
@@ -435,7 +435,11 @@ export default {
     },
     age() {
       let birthday = this.$data.formData.mbMemberDTO.birthday;
-      return Tools.getAgeFromBirthday(birthday);
+      if (birthday === '') {
+        return '';
+      } else {
+        return Tools.getAgeFromBirthday(birthday);
+      }
     }
   },
   components: {

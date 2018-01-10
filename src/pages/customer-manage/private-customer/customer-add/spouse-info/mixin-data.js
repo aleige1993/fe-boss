@@ -1,3 +1,5 @@
+import Tools from '../../../../../utils/Tools';
+
 export default {
   data() {
     return {
@@ -56,13 +58,7 @@ export default {
                 },
                 on: {
                   click: () => {
-                    this.$router.push({
-                      path: '/index/customer/detail',
-                      query: {
-                        id: params.row.spoMemberNo,
-                        from: 'detail'
-                      }
-                    });
+                    Tools.openWin(`#/index/customer/detail?noaction=true&id=${params.row.spoMemberNo}&from=detail`);
                   }
                 }
               }, '详情'),

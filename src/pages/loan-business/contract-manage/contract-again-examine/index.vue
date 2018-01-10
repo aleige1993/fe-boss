@@ -18,7 +18,6 @@
     },
     data() {
       return {
-        isDetails: true
       };
     }
   };

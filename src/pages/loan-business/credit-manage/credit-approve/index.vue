@@ -138,9 +138,9 @@
                      :rules="{required: true, message: '请输入描述信息'}">
           <i-input type="textarea" :rows="4" v-model="firstApproveForm.description"></i-input>
         </i-form-item>
-        <i-form-item label="查询结果" prop="fileUrl"
+        <i-form-item label="查询结果" prop="fileName"
                      :rules="{required: true, message: '请上传凭证'}">
-          <input type="hidden" :value="firstApproveForm.fileUrl">
+          <input type="hidden" v-model="firstApproveForm.fileName">
           <i-upload :show-upload-list="false"
               multiple type="drag" :on-success="uploadFirstApproveFileSuccess"
               :action="$config.HTTPBASEURL+'/common/upload'">
@@ -167,9 +167,9 @@
                      :rules="{required: true, message: '请输入描述信息'}">
           <i-input type="textarea" :rows="4" v-model="outApproveForm.description"></i-input>
         </i-form-item>
-        <i-form-item label="查询结果" prop="fileUrl"
+        <i-form-item label="查询结果" prop="fileName"
                      :rules="{required: true, message: '请上传查询结果'}">
-          <input type="hidden" :value="outApproveForm.fileUrl">
+          <input type="hidden" v-model="outApproveForm.fileName">
           <i-upload :show-upload-list="false"
               multiple type="drag" :on-success="uploadOutApproveFileSuccess"
               :action="$config.HTTPBASEURL+'/common/upload'">

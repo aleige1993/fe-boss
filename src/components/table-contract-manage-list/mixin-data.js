@@ -51,6 +51,7 @@ export default {
         },
         {
           title: '已耗时',
+          width: 150,
           key: 'timeConsuming'
         },
         {

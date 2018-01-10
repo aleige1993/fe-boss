@@ -22,6 +22,7 @@
           <!--客户名称-->
           <i-col>
             <i-form-item
+              v-if="isAdd"
               label="客户名称"
               :rules="{required: true, message: '客户名称不能为空', trigger: 'blur'}"
               prop="corpName">
@@ -32,6 +33,9 @@
               <p class="formAddClass" v-if="formAdd.creditCode===''">“社会征信统一代码”不存在，不能提交！</p>
               <p class="formAddClass" v-if="formAdd.legalPerson===''">“法定代表人”不存在，不能提交！</p>
               <p class="formAddClass" v-if="formAdd.telephone===''">“公司电话”不存在，不能提交！</p>
+            </i-form-item>
+            <i-form-item v-else label="客户名称">
+              <span v-text="formAdd.corpName"></span>
             </i-form-item>
           </i-col>
         </i-row>

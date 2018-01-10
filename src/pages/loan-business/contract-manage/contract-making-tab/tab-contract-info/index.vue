@@ -223,7 +223,7 @@
       <span v-else>loading...</span>
       </i-button>
     </div>
-    <i-table border :loading="contractInfoListLoading" ref="contractInfoTable" :columns="contractInfoColumns" :data="contractInfoData">
+    <i-table border :loading="contractInfoListLoading" ref="contractInfoTable" :columns="contractInfoColumns" :data="contractInfoForm.contractInfo.loanContractFileList">
     </i-table>
   </bs-form-block>
   <!--审核意见-->
@@ -346,10 +346,11 @@
       };
     },
     async mounted() {
-      if (this.$route.query.isDetails === 'false' || !this.$route.query.isDetails) {
-        this.$data.isDetails = false;
-      } else {
-        this.$data.isDetails = true;
+      if (this.$route.query.taskNode === '7') {
+        this.$data.isDetails = await true;
+      }
+      if (this.$route.query.taskNode === '6') {
+        this.$data.isDetails = await false;
       }
       let loanNo = await this.$route.query.loanNo;
       let signNo = await this.$route.query.signNo;
@@ -367,12 +368,13 @@
         let resp = await this.$http.post('/biz/sign/contract/findContractApproveInfo', {
           signNo: this.$data.contractInfoForm.signNo
         });
+        console.log(resp.body);
         if (resp.success) {
           this.$data.contractInfoForm = resp.body;
           if (resp.body.contractInfo.loanContractFileList.length !== 0) {
-            this.$data.contractInfoData = resp.body.contractInfo.loanContractFileList;
+            this.$data.contractInfoForm.contractInfo.loanContractFileList = resp.body.contractInfo.loanContractFileList;
           } else {
-            this.$data.contractInfoData = [];
+            this.$data.contractInfoForm.contractInfo.loanContractFileList = [];
           }
         }
       },
@@ -442,9 +444,9 @@
         });
         this.$data.contractGeneratingLoading = false;
         if (resp.success && resp.body.length !== 0) {
-          this.$data.contractInfoData = resp.body;
+          this.$data.contractInfoForm.contractInfo.loanContractFileList = resp.body;
         } else {
-          this.$data.contractInfoData = [];
+          this.$data.contractInfoForm.contractInfo.loanContractFileList = [];
         }
       },
       // 生成合同
@@ -490,6 +492,7 @@
               content: '合同信息中审核意见的“结论”和“意见信息”项不能为空',
               duration: 2
             });
+            returnRef = null;
           }
         });
         return returnRef;

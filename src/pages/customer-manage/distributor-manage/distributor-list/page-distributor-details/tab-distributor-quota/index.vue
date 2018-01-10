@@ -1,20 +1,22 @@
 <template>
 <div id="">
-  <div class="form-block-title">
-    公司名称
-  </div>
-  <div class="search-form-container">
-    <i-form inline ref="formSearch" :model="formSearch">
-      <i-form-item prop="user">
-        <i-input v-model="formSearch.corpName" style="width: 240px;" type="text" placeholder="公司名称"></i-input>
-      </i-form-item>
-      <i-form-item>
-        <i-button type="primary"><i-icon type="ios-search-strong" @cilck="search"></i-icon>
-          <span v-if="!searchLoading"> 搜索</span>
-          <span v-else> loading</span>
-        </i-button>
-      </i-form-item>
-    </i-form>
+  <div v-if="!isDetails">
+    <div class="form-block-title">
+      公司名称
+    </div>
+    <div class="search-form-container">
+      <i-form inline ref="formSearch" :model="formSearch">
+        <i-form-item prop="user">
+          <i-input v-model="formSearch.corpName" style="width: 240px;" type="text" placeholder="公司名称"></i-input>
+        </i-form-item>
+        <i-form-item>
+          <i-button type="primary"><i-icon type="ios-search-strong" @cilck="search"></i-icon>
+            <span v-if="!searchLoading"> 搜索</span>
+            <span v-else> loading</span>
+          </i-button>
+        </i-form-item>
+      </i-form>
+    </div>
   </div>
   <i-table :loading="dataLoading" border ref="tableData" :columns="distributorColumns" :data="distributorList"></i-table>
   <div class="page-container">
@@ -30,6 +32,7 @@
     mixins: [MixinData],
     data() {
       return {
+        isDetails: false,
         total: 0,
         currentPage: 1,
         pageSize: 15,
@@ -40,7 +43,11 @@
         }
       };
     },
+    props: ['detail'],
     mounted() {
+      if (this.detail === 'detail') {
+        this.$data.isDetails = true;
+      };
       this.getList();
     },
     methods: {

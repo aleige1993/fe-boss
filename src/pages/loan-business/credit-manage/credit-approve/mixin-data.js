@@ -182,8 +182,7 @@ export default {
               h('Button', {
                 props: {
                   type: 'primary',
-                  size: 'small',
-                  disabled: this.creditStatus !== '4'
+                  size: 'small'
                 },
                 style: {
                   marginRight: '5px'
