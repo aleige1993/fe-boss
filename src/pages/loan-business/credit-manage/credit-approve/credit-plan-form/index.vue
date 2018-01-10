@@ -67,7 +67,7 @@
       <i-table :columns="creditPlanRateCol" :data="creditPlan.creditPlanRateList"></i-table>
       <bs-form-child-title style="margin:10px 0" title="放款前提"></bs-form-child-title>
       <div class="form-top-actions" v-if="!detail">
-        <i-button type="primary" @click="addCreditLoanReadyModal = !addCreditLoanReadyModal">添加用款费率</i-button>
+        <i-button type="primary" @click="addCreditLoanReadyModal = !addCreditLoanReadyModal">添加放款前提</i-button>
       </div>
       <i-table :columns="creditLoanReadyCol" :data="creditPlan.creditLoanReadyList"></i-table>
       <i-row style="margin-top: 15px;" v-if="!detail">
@@ -81,21 +81,17 @@
       <i-form ref="creditRateForm" :model="creditRateForm" :label-width="150" label-position="right">
         <i-form-item label="期限" prop="periods"
                      :rules="{required: true, message: '请输入期限'}">
-          <i-input v-model="creditRateForm.periods">
-            <span slot="append">元</span>
-          </i-input>
+          <i-input v-model="creditRateForm.periods"></i-input>
         </i-form-item>
         <i-form-item label="资金方收取年利率%" prop="capitalYearRate"
                      :rules="{required: true, message: '请输入资金方收取年利率'}">
           <i-input v-model="creditRateForm.capitalYearRate">
-            <span slot="append">元</span>
+            <span slot="append">%</span>
           </i-input>
         </i-form-item>
         <i-form-item label="颂车收取手续费率%" prop="scPoundageRate"
                      :rules="{required: true, message: '请输入颂车收取手续费率'}">
-          <i-select v-model="creditRateForm.scPoundageRate">
-            <i-option v-for="item in enumSelectData.get('RepaymentTypeEnum')" :key="item.itemCode" :value="item.itemCode">{{item.itemName}}</i-option>
-          </i-select>
+          <i-input v-model="creditRateForm.scPoundageRate"><span slot="append">%</span></i-input>
         </i-form-item>
         <i-form-item label="收款方式" prop="payMode"
                      :rules="{required: true, message: '请选择收款方式'}">

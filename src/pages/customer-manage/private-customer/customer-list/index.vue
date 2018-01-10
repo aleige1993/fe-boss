@@ -90,9 +90,7 @@
         this.getPrivateCustomerList();
       },
       selectSpouseRow(row, index) {
-        this.$Modal.info({
-          content: index
-        });
+        // todo
       }
     },
     components: {
