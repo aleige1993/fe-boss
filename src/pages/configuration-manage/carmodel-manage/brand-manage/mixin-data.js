@@ -3,55 +3,27 @@ export default {
     return {
       customerColumns: [
         {
-          title: '标题',
-          key: 'title'
+          title: '品牌ID',
+          key: 'smsContent'
         },
         {
-          title: '外部URL',
-          key: 'linkUrl'
+          title: '品牌名称',
+          key: 'triggerPoint'
         },
         {
-          title: '图片展示',
-          key: 'bannerUrl',
-          align: 'center',
-          render: (h, params) => {
-            // return h('img', {
-            //   attrs: {
-            //     style: 'height:60px; margin:10px 0',
-            //     src: params.row.bannerUrl
-            //   }
-            // });
-            return h('bs-big-img', {
-              attrs: {
-                style: 'margin:10px 0'
-              },
-              props: {
-                // thumbWidth: 100,
-                thumbHeight: 80,
-                fullWidth: 1000,
-                thumb: params.row.bannerUrl,
-                full: params.row.bannerUrl
-              }
-            });
-          }
+          title: '品牌分类',
+          key: 'aliSmsId'
         },
         {
-          title: '是否激活',
-          key: 'activeStatus',
-          render: (h, params) => {
-            if (params.row.activeStatus === '1') {
-              return '是';
-            } else {
-              return '否';
-            }
-          }
+          title: '品牌LOGO',
+          key: 'activeStatus'
         },
         {
-          title: '排序',
-          key: 'index'
+          title: '创建时间',
+          key: 'gmtModified'
         },
         {
-          title: '操作时间',
+          title: '来源方式',
           key: 'gmtModified'
         }
       ],
@@ -88,8 +60,9 @@ export default {
                     Alertify.confirm('是否确认删除这条数据', async (ok) => {
                       if (ok) {
                         const loading = this.$Message.loading('处理中...', 0);
-                        let resp = await this.$http.post('cfg/banner/remove', {
-                          id: params.row.id
+                        let resp = await this.$http.post('/cfg/smsTemplate/remove', {
+                          templateNo: params.row.templateNo
+                          // templateNo: '400642986955767808'
                         });
                         loading();
                         if (resp.success) {
