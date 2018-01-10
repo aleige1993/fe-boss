@@ -13,7 +13,7 @@ export default {
           key: 'contractTemplateName'
         },
         {
-          title: '合同宿主',
+          title: '合同属主',
           key: 'contractSource',
           render: (h, params) => {
             return h('span', {}, this.enumCode2Name(params.row.contractSource, 'ContractSourceEnum'));

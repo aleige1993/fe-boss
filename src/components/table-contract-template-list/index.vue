@@ -33,7 +33,7 @@
     mixins: [DataMixin],
     props: {
       contractSource: {
-        type: String, // 合同宿主contractSource。（1为资金方，2为产品）
+        type: String, // 合同属主contractSource。（1为资金方，2为产品）
         default: '1',
         required: false
       },
