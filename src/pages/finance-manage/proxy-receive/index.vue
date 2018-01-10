@@ -70,7 +70,7 @@
           currentPage: 1,
           pageSize: 15
         },
-        receiveNos: [] //批量代付ID
+        receiveNos: [] // 批量代扣ID
       };
     },
     computed: {
@@ -100,7 +100,6 @@
           this.$data.searchForm.currentPage = page;
         }
         let resp = await this.$http.post('/pay/receive', this.$data.searchForm);
-        console.log(JSON.stringify(resp));
         this.$data.dataLoading = false;
         resp.body.resultList.map(item => {
           if (!(item.orderStat === 'F' || item.orderStat === 'D')) {
@@ -129,7 +128,7 @@
         }
       },
       async submit(idArray) {
-        console.log('ID:' + JSON.stringify(idArray));
+        console.log(JSON.stringify(idArray));
         let resp = await this.$http.post('/pay/apply/receive', {
           receiveNos: idArray
         });

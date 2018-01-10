@@ -318,7 +318,7 @@
         addGPSButtonLoading: false, // 显示GPS安装信息新增弹窗modal提交按钮的loading
         guaranteeShowModal: false, // 担保落实modal
         formData: {
-          'loanRecordDTO': {
+          'paymentRecordDTO': {
             'shareAmt': '',
             'scRate': '',
             'capitalRate': '',
@@ -404,8 +404,22 @@
       this.carGetlist(); // 执行获取车辆信息列表的data
       this.assureGtelist(); // 执行获取担保信息列表的data
       this.conditionGetlist(); // 执行获取放款条件列表的data
+      this.getFindPaymentApplyRecordInfo(); // 获取放款条件详情
     },
     methods: {
+      // 获取放款条件详情
+      async getFindPaymentApplyRecordInfo() {
+        let reps = await this.$http.post('/biz/payment/findPaymentApplyRecordInfo', {
+          paymentNo: this.$route.query.paymentNo,
+          isFktjxq: '1' // 当为放款条件落实则传1，其余全部传0
+        });
+        console.log(reps);
+        if (reps.success) {
+          this.$data.formData = reps.body;
+        } else {
+          this.$data.formData = {};
+        }
+      },
       // 获取车辆信息列表的data
       async carGetlist() {
         this.$data.carDataLoading = true;
@@ -413,7 +427,6 @@
           loanNo: this.$route.query.loanNo
         });
         this.$data.carDataLoading = false;
-        console.log(reps);
         if (reps.success) {
           if (reps.body.resultList.length !== 0) {
             this.$data.carData = reps.body.resultList;

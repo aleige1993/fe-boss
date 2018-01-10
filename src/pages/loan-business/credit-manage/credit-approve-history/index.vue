@@ -14,7 +14,10 @@
           },
           {
             title: '任务节点',
-            key: 'taskName'
+            key: 'taskName',
+            render: (h, params) => {
+              return h('span', {}, this.enumCode2Name(params.row.taskName, 'LoanBizNodeEnum'));
+            }
           },
           {
             title: '开始时间',
@@ -26,19 +29,14 @@
           },
           {
             title: '耗时',
+            width: 140,
             key: 'timeConsuming'
           },
           {
             title: '结论',
             key: 'approveStatus',
             render: (h, params) => {
-              if (params.row.approveStatus === 'A') {
-                return '通过';
-              } else if (params.row.approveStatus === 'R') {
-                return '拒绝';
-              } else {
-                return '退回';
-              }
+              return h('span', {}, this.enumCode2Name(params.row.approveStatus, 'ApproveStatusEnum'));
             }
           },
           {

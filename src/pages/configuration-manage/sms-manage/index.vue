@@ -71,7 +71,8 @@
           pageSize: 15
         },
         fromData: {
-          'id': '',
+          'templateNo': '',
+          'templateTitle': '',
           'smsContent': '',
           'triggerPoint': '',
           'aliSmsId': '',
@@ -119,6 +120,7 @@
         let resp = await this.$http.post('/cfg/smsTemplate/list', {
           ...this.$data.searchForm
         });
+        console.log(JSON.stringify(resp));
         this.$data.dataLoading = false;
         this.$data.privateCustomerLoanList = resp.body.resultList;
         this.$data.currentPage = resp.body.currentPage;
@@ -126,12 +128,11 @@
       },
       async submitSuccess() {
         this.$data.buttonLoading = true;
-        let url = this.$data.isAdd ? 'cfg/banner/add' : 'cfg/banner/modify';
+        let url = this.$data.isAdd ? '/cfg/smsTemplate/add' : '/cfg/smsTemplate/modify';
         let resp = await this.$http.post(url, {
           ...this.$data.fromData
         });
         this.$data.buttonLoading = false;
-        this.$data.isAdd = true;
         this.$data.addModal = false;
         if (resp.success) {
           let text = this.$data.isAdd ? '添加成功' : '修改成功';
@@ -147,18 +148,6 @@
           } else {
             this.$Message.error('"<span style="color: red">*</span>"必填项不能为空');
           }
-        });
-      },
-      // 上传成功
-      uploadSuccess(res, file, fileList) {
-        this.$data.uploadFileName = file.name;
-        this.$data.fromData.bannerUrl = res.body.url;
-      },
-      // 上传失败
-      uploadError(err, file, fileList) {
-        this.$data.uploadFileName = '';
-        this.$Notice.error({
-          desc: err
         });
       },
       // 取消 按钮

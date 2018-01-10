@@ -51,7 +51,7 @@ export default {
         },
         {
           title: '已耗时',
-          width: 110,
+          width: 150,
           key: 'timeConsuming'
         },
         {
@@ -64,7 +64,7 @@ export default {
         },
         {
           title: '当前状态',
-          width: 150,
+          width: 120,
           key: 'signStatus',
           render: (h, params) => {
             return h('span', {}, this.enumCode2Name(params.row.signStatus, 'BizStatusEnum'));
@@ -73,34 +73,64 @@ export default {
         {
           title: '操作',
           key: 'action',
-          width: 100,
+          width: 150,
           align: 'center',
           render: (h, params) => {
-            // 设置当前处理人
-            if (!this.settingHandleUser(params.row)) {
-              return;
-            }
             return h('div', [
               h('Button', {
                 props: {
                   type: 'primary',
                   size: 'small',
-                  disabled: (params.row.signStatus !== '0') && (params.row.signStatus !== '1')
+                  // disabled: this.statusBool(params.row)
+                  disabled: false
                 },
                 style: {
                   marginRight: '5px'
                 },
                 on: {
                   click: () => {
+                    // 设置当前处理人
+                    if (!this.settingHandleUser(params.row)) {
+                      return;
+                    }
                     this.openMakingModal($.extend({}, params.row));
                   }
                 }
-              }, this.isDetails ? '合同复核' : '合同制作')
+              }, this.actionListName())
             ]);
           }
         }
       ],
       data1: []
     };
+  },
+  methods: {
+    statusBool(row) {
+      let retBool = false;
+      // 合同制作列表时
+      if (this.taskNode === '6') {
+        retBool = (row.taskNode !== '6' || ((row.signStatus !== '0') && (row.signStatus !== '1')));
+      }
+      // 合同复核列表时
+      if (this.taskNode === '7') {
+        retBool = (row.taskNode !== '7' || ((row.signStatus !== '0') && (row.signStatus !== '1')));
+      }
+      // 合同签署确认列表时
+      if (this.taskNode === '8') {
+        retBool = (row.taskNode !== '8' || ((row.signStatus !== '0') && (row.signStatus !== '1')));
+      }
+      return retBool;
+    },
+    actionListName() {
+      if (this.taskNode === '6') {
+        return '合同制作';
+      }
+      if (this.taskNode === '7') {
+        return '合同复核';
+      }
+      if (this.taskNode === '8') {
+        return '合同签署确认';
+      }
+    }
   }
 };

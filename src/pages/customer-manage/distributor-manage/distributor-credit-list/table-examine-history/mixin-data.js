@@ -18,6 +18,7 @@ export default {
         },
         {
           title: '耗时',
+          width: 140,
           key: 'timeLong'
         },
         {

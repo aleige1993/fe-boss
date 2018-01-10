@@ -7,8 +7,8 @@
             <i-row>
               <i-col span="8">
                 <i-form-item label="公司名称">
-                  <span v-text="formData.baseDTO.corpName" @click="gotoPersonal" style="color: #2b90f8;cursor: pointer">
-                  </span>
+                  <i-button type="text" @click="gotoPersonal" v-text="formData.baseDTO.corpName"></i-button>
+                  <i-button type="success" @click="gotoPersonal">查看详情</i-button>
                 </i-form-item>
               </i-col>
               <i-col span="8">
