@@ -18,7 +18,7 @@ export default {
         {
           title: '渠道商简称',
           width: 80,
-          key: 'roadAddr'
+          key: 'merchantAbbr'
         },
         {
           title: '客户编号',

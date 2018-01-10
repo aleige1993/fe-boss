@@ -498,6 +498,11 @@ export default [
         'resultList|10': [
           {
             'handleUserName': 'mockjs',
+            'approveTaskNo': 'mockjs',
+            'loanNo': 'mockjs',
+            'handleUserCode': 'mockjs',
+            'taskName': 'mockjs',
+            'id': 'mockjs',
             'taskName|1': ['1', '2', '3', '4'],
             'startTime': '@date',
             'endTime': '@date',
@@ -625,6 +630,53 @@ export default [
           }
         ]
       },
+      'reCode': '0000',
+      'reMsg': '成功',
+      'success': true
+    })
+  },
+  // 获取合同签约确认详情
+  {
+    url: '/biz/sign/findSignConfirmInfo',
+    on: true,
+    resp: Mock.mock({
+      'body': {
+        'certNo': '1111',
+        'custNo': '1111',
+        'certType': '1',
+        'loanNo': '1111',
+        'contractList|3': [
+          {
+            'signContractDate': '@date',
+            'loanNo': '1111',
+            'endDate': '@date',
+            'contractNo|+1': 100,
+            'makeContractUrl': 'test.jpg',
+            'signStatus|1': ['0', '1'],
+            'pkNo|+1': 100,
+            'signMode|1': ['1', '2'],
+            'signContractUrl': 'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1515508790506&di=1f690cac26e72801436b7659c07a51d5&imgtype=0&src=http%3A%2F%2Fa.hiphotos.baidu.com%2Fzhidao%2Fpic%2Fitem%2F562c11dfa9ec8a13abf43d9df403918fa1ecc0e5.jpg',
+            'contractName': 'mockjs',
+            'makeSystem|1': ['1', '2'],
+            'onlineSignStatus|1': ['1', '2', '3'],
+            'startDate': '@date'
+          }
+        ],
+        'tel': '',
+        'signNo': '',
+        'custName': '',
+        'addr': ''
+      },
+      'reCode': '0000',
+      'reMsg': '成功',
+      'success': true
+    })
+  },
+  // 合同签署确认
+  {
+    url: '/biz/sign/signConfirm',
+    on: true,
+    resp: Mock.mock({
       'reCode': '0000',
       'reMsg': '成功',
       'success': true

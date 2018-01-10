@@ -367,7 +367,6 @@
         let resp = await this.$http.post('/biz/sign/contract/findContractApproveInfo', {
           signNo: this.$data.contractInfoForm.signNo
         });
-        console.log(resp.body);
         if (resp.success) {
           this.$data.contractInfoForm = resp.body;
           if (resp.body.contractInfo.loanContractFileList.length !== 0) {
@@ -441,7 +440,6 @@
           startDate: this.$data.contractInfoForm.contractInfo.startDate,
           endDate: this.$data.contractInfoForm.contractInfo.endDate
         });
-        console.log(resp);
         this.$data.contractGeneratingLoading = false;
         if (resp.success && resp.body.length !== 0) {
           this.$data.contractInfoData = resp.body;
@@ -452,7 +450,7 @@
       // 生成合同
       contractGenerating() {
         const formName = 'contractInfoForm';
-        this.$refs[formName].validate((valid) => {
+        this.$refs[formName].validate(async (valid) => {
           if (valid) {
             this.$data.contractInfoForm.loanApprove = this.$data.loanApprove;
             // console.log(this.CreateRepayPlan); // isCapital(资金方)，isRental(租金方)，
@@ -461,15 +459,19 @@
                 content: '请生成资金方还款计划',
                 duration: 2
               });
+              this.$emit('on-tabIndex-func', 1); // 告知父元素切换tab至“还款计划表”
               return;
             } else if (!this.CreateRepayPlan.isRental) {
               this.$Message.error({
                 content: '请生成租金方还款计划',
                 duration: 2
               });
+              this.$emit('on-tabIndex-func', 2); // 告知父元素切换tab至“租金计划表”
               return;
             }
-            this.createContractAjax();
+            await this.createContractAjax();
+            // 告知父组件的 已经点击了“生成按钮”
+            this.$emit('on-create-contracted');
           } else {
             this.$Message.error('"<span style="color: red">*</span>"必填项不能为空');
           }

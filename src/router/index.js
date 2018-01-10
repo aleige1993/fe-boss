@@ -141,6 +141,13 @@ let MyRouter = new Router({
                 { path: 'doapprove', name: 'loanBusinessCreditApprove', component: resolve => require(['@/pages/loan-business/credit-manage/credit-approve'], resolve)}
               ]
             },
+            // 客户意向订单查询
+            { path: 'intentionorder', name: 'intentionOrder', component: resolve => require(['@/pages/loan-business/intention-order'], resolve),
+              children: [
+                { path: '/', name: 'intentionOrderList', component: resolve => require(['@/pages/loan-business/intention-order/order-list'], resolve)},
+                { path: ':orderId', name: 'intentionOrderDetail', component: resolve => require(['@/pages/loan-business/intention-order/order-detail'], resolve)},
+              ]
+            },
             // 贷款业务-签约管理
             { path: 'contract', name: 'loanContractManage', component: resolve => require(['@/pages/loan-business/contract-manage'], resolve),
               children: [
@@ -150,6 +157,10 @@ let MyRouter = new Router({
                 { path: 'making', name: 'loanContractMakingTab', component: resolve => require(['@/pages/loan-business/contract-manage/contract-making-tab'], resolve)},
                 // 贷款业务-签约管理->合同复核
                 { path: 'againExamine', name: 'againExamine', component: resolve => require(['@/pages/loan-business/contract-manage/contract-again-examine'], resolve)},
+                // 贷款业务-签约管理->合同签署确认
+                { path: 'sign', name: 'loanContractSign', component: resolve => require(['@/pages/loan-business/contract-manage/contract-signing'], resolve)},
+                // 贷款业务-签约管理->合同签署确认-详情页面
+                { path: 'signDetails', name: 'loanContractSignDetails', component: resolve => require(['@/pages/loan-business/contract-manage/contract-signing-details-tab'], resolve)},
               ]
             },
             // 贷款业务-放款管理
@@ -230,3 +241,4 @@ MyRouter.beforeEach((to, from, next) => {
   }
 });
 export default MyRouter;
+/* eslint-disable */

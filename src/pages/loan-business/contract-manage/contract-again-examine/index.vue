@@ -1,15 +1,20 @@
 <template>
   <!--复核-->
   <div id="contract-again-examine">
-    <page-contract-again-examine :isDetails="isDetails"></page-contract-again-examine>
+    <!--
+    taskNode:6==>合同制作
+    taskNode:7==>合同复核
+    taskNode:8==>合同签署确认
+    -->
+    <page-contract-list :taskNode="'7'"></page-contract-list>
   </div>
 </template>
 <script>
-  import PageContractAgainExamine from '../contract-list';
+  import pageContractList from '@/components/table-contract-manage-list';
   export default {
     name: 'contractAgainExamine',
     components: {
-      PageContractAgainExamine
+      pageContractList
     },
     data() {
       return {
