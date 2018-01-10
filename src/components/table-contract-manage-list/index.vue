@@ -132,28 +132,25 @@
         // 跳转到合同 制作/复核 审批详情页面
         if (this.taskNode === '6' || this.taskNode === '7') {
           this.$router.push({
-            currentPage: this.$data.currentPage,
             path: '/index/loanbusiness/contract/making',
             query: {
-              isDetails: this.taskNode,
+              currentPage: this.$data.currentPage,
+              taskNode: this.taskNode,
               loanNo: row.loanNo, // 项目编号（业务申请编号）
-              signNo: row.signNo, // 签约编号
-              certNo: row.certNo, // 证件号码
-              custNo: row.custNo // 客户编号
+              signNo: row.signNo // 签约编号
+
             }
           });
         }
         // 跳转到合同 签署确认 审批详情页面
         if (this.taskNode === '8') {
           this.$router.push({
-            currentPage: this.$data.currentPage,
             path: '/index/loanbusiness/contract/signDetails',
             query: {
-              isDetails: this.taskNode,
+              currentPage: this.$data.currentPage,
+              taskNode: this.taskNode,
               loanNo: row.loanNo, // 项目编号（业务申请编号）
-              signNo: row.signNo, // 签约编号
-              certNo: row.certNo, // 证件号码
-              custNo: row.custNo // 客户编号
+              signNo: row.signNo // 签约编号
             }
           });
         }

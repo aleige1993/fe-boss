@@ -45,12 +45,15 @@
           },
           {
             title: '耗时',
-            width: 100,
+            width: 140,
             key: 'timeConsuming'
           },
           {
             title: '结论',
-            key: 'approveStatus'
+            key: 'approveStatus',
+            render: (h, params) => {
+              return h('span', {}, this.enumCode2Name(params.row.approveStatus, 'ApproveStatusEnum'));
+            }
           },
           {
             title: '意见信息',

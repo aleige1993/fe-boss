@@ -202,12 +202,19 @@
         this.$data.initFormLoading = false;
         if (resp.success) {
           this.$Message.success('提交成功！');
+          // 初审 回到合同制作列表
+          this.$router.push({
+            path: '/index/loanbusiness/contract/sign',
+            query: {
+              currentPage: this.$route.query.currentPage
+            }
+          });
         }
       },
-      async saveSubimt() {
-        this.$refs['loanApprove'].validate(async (valid) => {
+      saveSubimt() {
+        this.$refs['loanApprove'].validate((valid) => {
           if (valid) {
-            await this.saveAjax();
+            this.saveAjax();
           } else {
             this.$Message.error('"<span style="color: red">*</span>"必填项不能为空');
           }

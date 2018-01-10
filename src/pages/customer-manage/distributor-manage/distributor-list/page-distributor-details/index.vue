@@ -21,7 +21,7 @@
         <tab-bank-account-info v-if="tabIndex===2" :customer="{corpNo: $route.query.corpNo}"></tab-bank-account-info>
       </i-tab-pane>
       <i-tab-pane :label="'授信额度'">
-        <tab-credit-list v-if="tabIndex === 3" :isDetail="$route.query.from"></tab-credit-list>
+        <tab-credit-list v-if="tabIndex === 3" :detail="$route.query.from"></tab-credit-list>
       </i-tab-pane>
     </i-tabs>
   </div>

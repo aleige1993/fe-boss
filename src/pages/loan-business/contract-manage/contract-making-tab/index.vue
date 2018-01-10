@@ -4,9 +4,10 @@
     <i-breadcrumb separator=">">
       <i-breadcrumb-item href="/">首页</i-breadcrumb-item>
       <i-breadcrumb-item href="/index/loanbusiness">贷款业务</i-breadcrumb-item>
-      <i-breadcrumb-item :href="!isDetails?'/index/loanbusiness/contract':'/index/loanbusiness/contract/againExamine'">签约管理</i-breadcrumb-item>
-      <i-breadcrumb-item v-if="!isDetails">个人业务合同制作</i-breadcrumb-item>
-      <i-breadcrumb-item v-else>个人业务合同复核</i-breadcrumb-item>
+      <i-breadcrumb-item v-if="$route.query.taskNode==='6'" href="/index/loanbusiness/contract">签约管理</i-breadcrumb-item>
+      <i-breadcrumb-item v-if="$route.query.taskNode==='7'" href="/index/loanbusiness/contract/againExamine">签约管理</i-breadcrumb-item>
+      <i-breadcrumb-item v-if="$route.query.taskNode==='6'" >个人业务合同制作</i-breadcrumb-item>
+      <i-breadcrumb-item v-if="$route.query.taskNode==='7'" >个人业务合同复核</i-breadcrumb-item>
     </i-breadcrumb>
     <br>
     <br>
@@ -23,7 +24,7 @@
           <!--资金方还款计划表-->
           <bs-form-block :title="'资金方还款计划表'">
             <div class="form-top-actions" style="padding-top:0;">
-              <i-button v-if="!isDetails" @click="capitalGenerating" type="info"><i class="iconfont icon-xinzeng"></i> 生成还款计划</i-button>
+              <i-button v-if="$route.query.taskNode === '6'" @click="capitalGenerating" type="info"><i class="iconfont icon-xinzeng"></i> 生成还款计划</i-button>
             </div>
             <i-table border :loading="capitalPlanCapitalListLoading" ref="capitalTable" :columns="repayPlanCapitalColumns" :data="repayPlanCapitalList">
             </i-table>
@@ -57,7 +58,7 @@
           <!--租金还款计划表-->
           <bs-form-block :title="'租金还款计划表'">
             <div class="form-top-actions" style="padding-top:0;">
-              <i-button v-if="!isDetails" @click="rentGenerating" type="info"><i class="iconfont icon-xinzeng"></i> 生成还款计划</i-button>
+              <i-button v-if="$route.query.taskNode === '6'" @click="rentGenerating" type="info"><i class="iconfont icon-xinzeng"></i> 生成还款计划</i-button>
             </div>
             <i-table border :loading="rentPlanCapitalListLoading" ref="rentTable" :columns="repayPlanRentalColumns" :data="repayPlanRentalList">
             </i-table>
@@ -74,7 +75,7 @@
     <div class="form-footer-actions">
       <i-button @click="saveSubimt" :loading="initFormLoading" type="success">
         <span v-if="!initFormLoading"><i class="iconfont icon-tijiao"></i>
-        <span v-if="!isDetails"> 提交</span>
+        <span v-if="$route.query.taskNode==='7'"> 提交</span>
         <span v-else> 提交审核</span>
         </span>
         <span v-else> loading...</span>
@@ -102,7 +103,6 @@
     data() {
       return {
         loanNo: '',
-        isDetails: false,
         isCapital: false, // 资金方是否生成了计划表
         isRental: false, // 租金方是否生成了计划表
         isCreateContract: false,
@@ -123,13 +123,6 @@
       };
     },
     async mounted() {
-      if (this.$route.query.isDetails) {
-        if (this.$route.query.isDetails === 'false' || !this.$route.query.isDetails) {
-          this.$data.isDetails = false;
-        } else {
-          this.$data.isDetails = true;
-        }
-      }
       this.$data.loanNo = await this.$route.query.loanNo;
       this.getRepayPlanCapitalList(); // 获取资方列表data
       this.getRepayPlanRentalList(); // 获取租金还款计划列表data
@@ -195,23 +188,22 @@
         this.$data.initFormLoading = true;
         const msg = this.$Message.loading('正在提交中...', 0);
         let refData = await this.$refs.contractInfo.loanApproveSumbit();
+        msg();
+        this.$data.initFormLoading = false;
+        if (refData === null) {
+          return;
+        }
         let requestData = await {
           ...refData,
           repayPlanCapitalList: this.$data.repayPlanCapitalList, // 资金方还款计划表数据
           repayPlanRentalList: this.$data.repayPlanRentalList // 租金放还款计划表数据
         };
-        msg();
-        this.$data.initFormLoading = false;
         // 初审的提交
-        if (!this.$route.query.isDetails || this.$route.query.isDetails === 'false') {
+        if (this.$route.query.taskNode === '6') {
           // 初审时 判断是否已点击“生成合同”
           if (!this.$data.isCreateContract) {
             this.$Message.warning('请生成合同！');
             this.$data.tabIndex = 0;
-            console.log($);
-            /* $('html, body').animate({
-              scrollTop: $("#div1").offset().top
-            }, 2000);*/
             return;
           }
           let resp = await this.$http.post('/biz/sign/contract/fristApprove', { ...requestData });
@@ -226,7 +218,7 @@
             });
           }
         }
-        if (this.$route.query.isDetails || this.$route.query.isDetails === 'true') {
+        if (this.$route.query.taskNode === '7') {
           let resp = await this.$http.post('/biz/sign/contract/reviewApprove', {
             signNo: requestData.signNo,
             loanApprove: requestData.loanApprove
