@@ -22,8 +22,8 @@
           </i-input>
         </i-form-item>
         <i-form-item
-          label="合同宿主"
-          :rules="{required: true, message: '合同宿主不能为空', trigger: 'change'}"
+          label="合同属主"
+          :rules="{required: true, message: '合同属主不能为空', trigger: 'change'}"
           prop="contractSource">
           <i-select v-model="formContract.contractSource">
             <i-option v-for="item in enumSelectData.get('ContractSourceEnum')" :key="item.itemCode" :value="item.itemCode">{{item.itemName}}</i-option>
@@ -99,7 +99,7 @@
         formContract: {
           contractTemplateNo: '', // 合同编号
           contractTemplateName: '', // 合同名称
-          contractSource: '', // 合同宿主
+          contractSource: '', // 合同属主
           contractType: '', // 合同类型
           yundaiContractId: '', // 云贷签约平台模板ID
           contractTemplateAttach: '' // 合同附件

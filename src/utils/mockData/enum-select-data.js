@@ -1298,7 +1298,7 @@ export default [
             }
           ]
         },
-        // 合同宿主
+        // 合同属主
         {
           'groupKey': 'ContractSourceEnum',
           'items': [

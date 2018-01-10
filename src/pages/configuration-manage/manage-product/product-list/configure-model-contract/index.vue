@@ -48,7 +48,7 @@
     </bs-modal>
     <!--选择合同模板的弹窗-->
     <bs-modal title="选择合同模板" :width="1200" v-model="showSelectContractTemplate">
-      <!--传入合同宿主contractSource。（1为资金方，2为产品）-->
+      <!--传入合同属主contractSource。（1为资金方，2为产品）-->
       <table-contracttemplate-list :type="'modal'" :contractSource="'2'" @on-row-dbclick="selectContractTemplate"></table-contracttemplate-list>
     </bs-modal>
   </div>
