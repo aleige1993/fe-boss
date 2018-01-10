@@ -42,7 +42,7 @@
           <input type="hidden" v-model="fromData.bannerUrl" style="width: 100%;border: 0;">
         </i-form-item>
         <i-form-item label="排序" prop="index" :rules="{required: true, message: '排序不能为空', trigger: 'blur'}">
-          <i-input-number :min="1" v-model="fromData.index" placeholder="" style="width: 100%"></i-input-number>
+          <i-input v-model="fromData.index" placeholder="" style="width: 100%"></i-input>
         </i-form-item>
         <i-form-item label="是否激活" prop="activeStatus" :rules="{required: true, message: '请选择是否激活', trigger: 'blur'}">
           <i-select v-model="fromData.activeStatus">
@@ -149,7 +149,6 @@
           ...this.$data.fromData
         });
         this.$data.buttonLoading = false;
-        this.$data.isAdd = true;
         this.$data.addModal = false;
         if (resp.success) {
           let text = this.$data.isAdd ? '添加成功' : '修改成功';

@@ -70,7 +70,7 @@
           currentPage: 1,
           pageSize: 15
         },
-        pay4Nos: [] //批量代付ID
+        pay4Nos: [] // 批量代付ID
       };
     },
     computed: {
