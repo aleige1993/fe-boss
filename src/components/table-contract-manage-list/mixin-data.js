@@ -81,8 +81,8 @@ export default {
                 props: {
                   type: 'primary',
                   size: 'small',
-                  // disabled: this.statusBool(params.row)
-                  disabled: false
+                  disabled: this.statusBool(params.row)
+                  // disabled: false
                 },
                 style: {
                   marginRight: '5px'
