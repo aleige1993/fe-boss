@@ -12,9 +12,9 @@ export default {
   getAgeFromBirthday(strBirthday) {
     let returnAge;
     let strBirthdayArr = strBirthday.split('-');
-    let birthYear = strBirthdayArr[0];
-    let birthMonth = strBirthdayArr[1];
-    let birthDay = strBirthdayArr[2];
+    let birthYear = strBirthdayArr[0] / 1;
+    let birthMonth = strBirthdayArr[1] / 1;
+    let birthDay = strBirthdayArr[2] / 1;
     let d = new Date();
     let nowYear = d.getFullYear();
     let nowMonth = d.getMonth() + 1;

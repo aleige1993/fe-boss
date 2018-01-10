@@ -8,7 +8,10 @@ export default {
         },
         {
           title: '关系',
-          key: 'relative'
+          key: 'relative',
+          render: (h, params) => {
+            return this.enumCode2Name(params.row.relative, 'RelativeEnum');
+          }
         },
         {
           title: '手机号码',
@@ -16,7 +19,10 @@ export default {
         },
         {
           title: '联系人类型',
-          key: 'contactType'
+          key: 'contactType',
+          render: (h, params) => {
+            return this.enumCode2Name(params.row.contactType, 'ContactTypeEnum');
+          }
         },
         {
           title: '操作',

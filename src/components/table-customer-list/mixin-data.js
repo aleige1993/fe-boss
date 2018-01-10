@@ -13,7 +13,8 @@ export default {
         {
           title: '性别',
           key: 'sex',
-          width: 100,
+          align: 'center',
+          width: 80,
           render: (h, params) => {
             return h('span', {}, this.enumCode2Name(params.row.sex, 'SexEnum'));
           }
@@ -21,6 +22,8 @@ export default {
         {
           title: '证件类型',
           key: 'certType',
+          width: 150,
+          align: 'center',
           render: (h, params) => {
             return h('span', {}, this.enumCode2Name(params.row.certType, 'CertTypeEnum'));
           }
@@ -36,6 +39,8 @@ export default {
         {
           title: '状态',
           key: 'status',
+          align: 'center',
+          width: 100,
           render: (h, params) => {
             return h('span', {}, this.enumCode2Name(params.row.status, 'MemberStatusEnum'));
           }
@@ -126,7 +131,7 @@ export default {
                         });
                         msg();
                         if (resp.success) {
-                          this.$Message.success('删除成功');
+                          this.$Message.success(text + '成功');
                           this.getPrivateCustomerList();
                         }
                       }
