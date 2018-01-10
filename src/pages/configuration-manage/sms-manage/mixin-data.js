@@ -2,13 +2,20 @@ export default {
   data() {
     return {
       customerColumns: [
+        // {
+        //   title: 'NO',
+        //   key: 'templateNo'
+        // },
         {
           title: '短信内容',
           key: 'smsContent'
         },
         {
           title: '触发点',
-          key: 'triggerPoint'
+          key: 'triggerPoint',
+          render: (h, params) => {
+            return h('span', {}, this.enumCode2Name(params.row.triggerPoint, 'smsTriggerPointEnum'));
+          }
         },
         {
           title: '阿里云模板ID',
@@ -63,13 +70,14 @@ export default {
                     Alertify.confirm('是否确认删除这条数据', async (ok) => {
                       if (ok) {
                         const loading = this.$Message.loading('处理中...', 0);
-                        let resp = await this.$http.post('cfg/banner/remove', {
-                          id: params.row.id
+                        let resp = await this.$http.post('/cfg/smsTemplate/remove', {
+                          templateNo: params.row.templateNo
+                          // templateNo: '400642986955767808'
                         });
                         loading();
                         if (resp.success) {
                           this.$Message.success('删除成功');
-                          this.$refs.tableInvestList.getProxyPayList();
+                          this.getProxyPayList();
                         }
                       }
                     });

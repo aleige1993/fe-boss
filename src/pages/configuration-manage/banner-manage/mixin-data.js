@@ -81,7 +81,7 @@ export default {
                         loading();
                         if (resp.success) {
                           this.$Message.success('删除成功');
-                          this.$refs.tableInvestList.getProxyPayList();
+                          this.getProxyPayList();
                         }
                       }
                     });
