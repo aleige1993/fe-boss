@@ -310,8 +310,11 @@
       // 获取费用收取落实列表的data
       async feeGetlist() {
         this.$data.feeTableLoading = true;
-        let reps = await this.$http.post('/biz/listApproveFeePlan');
+        let reps = await this.$http.post('/biz/listApproveFeePlan', {
+          loanNo: this.$route.query.loanNo
+        });
         this.$data.feeTableLoading = false;
+        console.log(reps);
         if (reps.success) {
           if (reps.body !== 0) {
             this.$data.feeData = reps.body;
@@ -338,7 +341,7 @@
           this.$router.push({
             path: '/index/loanbusiness/loan/fee',
             query: {
-              currentPage: this.$route.query.currentPage
+              currentPage: this.$route.query.currentPage / 1
             }
           });
         }

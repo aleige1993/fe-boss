@@ -275,7 +275,7 @@
           this.$router.push({
             path: '/index/loanbusiness/pawn',
             query: {
-              currentPage: (this.$route.query.currentPage ? this.$route.query.currentPage : '1')
+              currentPage: (this.$route.query.currentPage ? (this.$route.query.currentPage / 1) : 1)
             }
           });
         }

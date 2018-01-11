@@ -103,8 +103,8 @@
         let resp = await this.$http.post('/credit/apply/page', this.$data.searchForm);
         this.$data.dataLoading = false;
         this.$data.privateCustomerList = resp.body.resultList;
-        this.$data.currentPage = resp.body.currentPage;
-        this.$data.total = resp.body.totalNum;
+        this.$data.currentPage = resp.body.currentPage / 1;
+        this.$data.total = resp.body.totalNum / 1;
       },
       jumpPage(page) {
         this.getCompanyCreditList(page);

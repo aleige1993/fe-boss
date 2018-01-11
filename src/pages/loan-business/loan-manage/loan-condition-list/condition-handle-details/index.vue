@@ -413,7 +413,6 @@
           paymentNo: this.$route.query.paymentNo,
           isFktjxq: '1' // 当为放款条件落实则传1，其余全部传0
         });
-        console.log(reps);
         if (reps.success) {
           this.$data.formData = reps.body;
         } else {
@@ -518,7 +517,7 @@
           this.$router.push({
             path: '/index/loanbusiness/loan',
             query: {
-              currentPage: this.$route.query.currentPage
+              currentPage: this.$route.query.currentPage / 1
             }
           });
         }
