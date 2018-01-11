@@ -157,7 +157,7 @@
     },
     methods: {
       routeDateFun() {
-        this.$data.ParentCurrentPage = this.$route.query.currentPage;
+        this.$data.ParentCurrentPage = this.$route.query.currentPage / 1;
         this.$data.formQuota.corpName = this.$route.query.corpName;
         this.$data.formQuota.custMgrName = this.$route.query.custMgrName;
         this.$data.formQuota.merchantNo = this.$route.query.merchantNo;
