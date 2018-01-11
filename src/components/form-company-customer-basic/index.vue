@@ -81,15 +81,15 @@
                 </i-form-item>
               </i-col>
             </i-row>
-            <i-row>
+            <!--<i-row>
               <i-col span="8">
                 <i-form-item label="是否合作渠道商" prop="baseDTO.isMerchant">
                   <i-select :disabled="isFromDetail" v-model="formData.baseDTO.isMerchant">
-                    <i-option v-for="item in enumSelectData.get('YesNoEnum')" :key="item.itemCode" :value="item.itemCode">{{item.itemName}}</i-option>
+                    <i-option v-for="item in enumSelectData.get('YesNoEnum')" :key="item.itemCode" :value="item.itemCode/1">{{item.itemName}}</i-option>
                   </i-select>
                 </i-form-item>
               </i-col>
-            </i-row>
+            </i-row>-->
             <i-row>
               <i-col span="18">
                 <i-form-item v-if="isFromDetail" label="注册地址">

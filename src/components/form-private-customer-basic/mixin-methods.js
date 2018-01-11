@@ -79,7 +79,7 @@ export default {
           this.saveBasicCustomerInfo(_data);
         } else {
           this.$Notice.error({
-            title: '错误提示', desc: '请完善银行信息!'
+            title: '错误提示', desc: '请先完善基本信息再提交!'
           });
         }
       });
