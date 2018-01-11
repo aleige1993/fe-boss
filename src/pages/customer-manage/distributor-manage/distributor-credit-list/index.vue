@@ -47,7 +47,7 @@
     },
     mounted() {
       // 从新增页面跳转回来，加载之前的指定页码
-      this.$data.currentPage = this.$route.query.currentPage;
+      this.$data.currentPage = this.$route.query.currentPage / 1;
       this.getList();
     },
     components: {
@@ -68,8 +68,8 @@
         this.$data.dataLoading = false;
         if (resp.body.resultList.length !== 0) {
           this.$data.distributorList = resp.body.resultList;
-          this.$data.currentPage = resp.body.currentPage;
-          this.$data.total = resp.body.totalNum;
+          this.$data.currentPage = resp.body.currentPage / 1;
+          this.$data.total = resp.body.totalNum / 1;
         } else {
           this.$data.distributorList = [];
         }

@@ -65,17 +65,7 @@
           currentPage: 1,
           pageSize: 15,
           'channelNo': '', // 渠道编号（1：Android；2：苹果；3：微信；4：其他）
-          'orderStatus': '', // 订单状态，("1", "草稿"),
-          // ("2", "待实名认证"), ("3", "待绑定银行卡"),
-          // ("4", "待征信授权"), ("5", "待获取联系人"),
-          // ("6", "待审核"), ("7", "待补充资料"),
-          // ("8", "额度审核中"), ("9", "额度已审核"),
-          // ("10", "待制作合同"), ("11", "合同制作中"),
-          // ("12", "待签署合同"), ("13", "合同已签署"),
-          // ("14", "待放款"), ("15", "放款审核中"),
-          // ("16", "已放款"), ("17", "还款中"),
-          // ("18", "已完成"), ("19", "审核未通过"),
-          // ("20", "订单取消");
+          'orderStatus': '', // 订单状态
           'applyStartTime': '',
           'applyEndTime': ''
         }
@@ -100,8 +90,8 @@
         let resp = await this.$http.post('/loan/biz/listIntentionOrder', this.$data.searchForm);
         this.$data.dataLoading = false;
         this.$data.customerIntentionOrderList = resp.body.resultList;
-        this.$data.currentPage = resp.body.currentPage;
-        this.$data.total = resp.body.totalNum;
+        this.$data.currentPage = resp.body.currentPage / 1;
+        this.$data.total = resp.body.totalNum / 1;
       },
       jumpPage(page) {
         this.getCustomerIntentionOrderList(page);

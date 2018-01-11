@@ -80,7 +80,7 @@ export default {
                 props: {
                   type: 'primary',
                   size: 'small',
-                  disabled: (params.row.status === '1') || (params.row.status === '2')
+                  disabled: (params.row.status !== '0') && (params.row.status !== '1')
                 },
                 style: {
                   marginRight: '5px'

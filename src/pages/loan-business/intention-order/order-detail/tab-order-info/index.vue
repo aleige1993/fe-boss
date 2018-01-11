@@ -14,7 +14,7 @@
       </i-row>
       <i-row>
         <i-col span="8">
-          <i-form-item label="会员姓名">{{orderInfo.memberName}}</i-form-item>
+          <i-form-item label="会员姓名">{{orderInfo.realName}}</i-form-item>
         </i-col>
         <i-col span="8">
           <i-form-item label="身份证号">{{orderInfo.certNo}}</i-form-item>
@@ -25,7 +25,7 @@
       </i-row>
       <i-row>
         <i-col span="8">
-          <i-form-item label="车辆品牌">{{orderInfo.orderNo}}</i-form-item>
+          <i-form-item label="车辆品牌">{{orderInfo.brandName}}</i-form-item>
         </i-col>
         <i-col span="8">
           <i-form-item label="车辆系列">{{orderInfo.seriesName}}</i-form-item>
@@ -36,7 +36,10 @@
       </i-row>
       <i-row>
         <i-col span="8">
-          <i-form-item label="车类">{{orderInfo.orderNo}}</i-form-item>
+          <i-form-item label="车类">
+            <span v-if="orderInfo.productType === '1'">新车</span>
+            <span v-if="orderInfo.productType === '2'">二手车</span>
+          </i-form-item>
         </i-col>
         <i-col span="8">
           <i-form-item label="厂家指导价">{{orderInfo.guideAmt}}</i-form-item>

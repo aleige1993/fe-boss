@@ -254,7 +254,11 @@
               <!--:rules="{required: true, message: '车辆品牌不能为空'}"
               prop="carBrandCode"-->
               <input type="hidden" v-model="formCar.carModel">
-              <bs-carpicker @on-change="selectLoanCar"></bs-carpicker>
+              <bs-carpicker :currBrand="formCar.carBrandName"
+                            :currSeries="formCar.carTypeName"
+                            :currModel="formCar.carModel"
+                            @on-change="selectLoanCar">
+              </bs-carpicker>
             </i-form-item>
           </i-col>
         </i-row>

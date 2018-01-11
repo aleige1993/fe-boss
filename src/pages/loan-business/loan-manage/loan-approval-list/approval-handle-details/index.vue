@@ -366,8 +366,21 @@
       this.assureGtelist(); // 执行获取担保信息列表的data
       this.conditionGetlist(); // 执行获取放款条件列表的data
       this.feeGetlist(); // 执行获取费用收取落实列表的data
+      this.getFindPaymentApplyRecordInfo(); // 获取放款条件详情
     },
     methods: {
+      // 获取放款条件详情
+      async getFindPaymentApplyRecordInfo() {
+        let reps = await this.$http.post('/biz/payment/findPaymentApplyRecordInfo', {
+          paymentNo: this.$route.query.paymentNo,
+          isFktjxq: '1' // 当为放款条件落实则传1，其余全部传0
+        });
+        if (reps.success) {
+          this.$data.formData = reps.body;
+        } else {
+          this.$data.formData = {};
+        }
+      },
       // 获取车辆信息列表的data
       async carGetlist() {
         this.$data.carDataLoading = true;
@@ -420,7 +433,9 @@
       // 获取费用收取落实列表的data
       async feeGetlist() {
         this.$data.feeTableLoading = true;
-        let reps = await this.$http.post('/biz/listApproveFeePlan');
+        let reps = await this.$http.post('/biz/listApproveFeePlan', {
+          loanNo: this.$route.query.loanNo
+        });
         this.$data.feeTableLoading = false;
         if (reps.success) {
           if (reps.body !== 0) {
@@ -446,7 +461,7 @@
           this.$router.push({
             path: '/index/loanbusiness/loan/approval',
             query: {
-              currentPage: this.$route.query.currentPage
+              currentPage: this.$route.query.currentPage / 1
             }
           });
         }

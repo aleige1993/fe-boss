@@ -143,6 +143,13 @@
           </bs-form-block>
           <bs-form-block :title="'费用收取方案'">
             <i-table :columns="feeMethodCol" :data="approveData.loanApproveFeePlanDTOS"></i-table>
+            <i-row style="margin-top: 10px;">
+              <i-col span="8">
+                <i-form-item class="required" label="可融资金额">
+                  <i-input :readonly="true" :rows="4" v-model="approveData.loanApproveCreditDTO.riskControlContent"></i-input>
+                </i-form-item>
+              </i-col>
+            </i-row>
           </bs-form-block>
           <!--放款账户信息-->
           <bs-form-block :title="'放款账户信息'">

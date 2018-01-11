@@ -328,7 +328,8 @@
                   <bs-dispicker :currProvince="formData.mbMemberWorkDTO.provinceName"
                                 :currDistrict="formData.mbMemberWorkDTO.districtName"
                                 :currCity="formData.mbMemberWorkDTO.cityName"
-                                @on-change="selectCompanyDistance"></bs-dispicker>
+                                @on-change="selectCompanyDistance">
+                  </bs-dispicker>
                   <i-input v-model="formData.mbMemberWorkDTO.roadAddr" placeholder="街道信息" style="width: 220px;"></i-input>
                 </i-form-item>
                 <i-form-item v-else label="公司地址">
@@ -487,6 +488,9 @@ export default {
       this.formData.mbMemberWorkDTO.provinceCode = row.bizProvinceCode;
       this.formData.mbMemberWorkDTO.districtCode = row.bizCityCode;
       this.formData.mbMemberWorkDTO.cityCode = row.bizDistrictCode;
+      this.formData.mbMemberWorkDTO.provinceName = row.bizProvinceName;
+      this.formData.mbMemberWorkDTO.districtName = row.bizCityName;
+      this.formData.mbMemberWorkDTO.cityName = row.bizDistrictName;
       this.formData.mbMemberWorkDTO.roadAddr = row.bizRoadAddr;
     },
     async initPageData() {

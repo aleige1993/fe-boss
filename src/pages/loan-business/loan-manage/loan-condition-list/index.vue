@@ -72,7 +72,7 @@
     },
     mounted() {
       if (this.$route.query.currentPage) {
-        this.$data.currentPag = this.$route.query.currentPag;
+        this.$data.currentPag = this.$route.query.currentPage / 1;
       }
       this.getList();
     },
@@ -88,11 +88,12 @@
           currentPage: this.$data.currentPage,
           pageSize: this.$data.pageSize
         });
+        console.log(resp);
         this.$data.dataLoading = false;
         if (resp.body.resultList.length !== 0) {
           this.$data.conditionListData = resp.body.resultList;
-          this.$data.currentPage = resp.body.currentPage;
-          this.$data.total = resp.body.totalNum;
+          this.$data.currentPage = resp.body.currentPage / 1;
+          this.$data.total = parseFloat(resp.body.totalNum);
         } else {
           this.$data.conditionListData = [];
         }
