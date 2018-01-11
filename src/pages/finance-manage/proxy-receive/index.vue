@@ -114,7 +114,7 @@
       selectRow(selection, row) {
         this.receiveNos = [];
         selection.map(item => {
-          this.receiveNos.push(item.payForNo);
+          this.receiveNos.push(item.receiveNo.toString());
         });
       },
       massPayment() {
@@ -128,7 +128,7 @@
         }
       },
       async submit(idArray) {
-        console.log(JSON.stringify(idArray));
+//        console.log(JSON.stringify(idArray));
         let resp = await this.$http.post('/pay/apply/receive', {
           receiveNos: idArray
         });
