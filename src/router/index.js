@@ -95,6 +95,15 @@ let MyRouter = new Router({
                 { path:'contract', name: 'contract', component: resolve => { require(['@/pages/configuration-manage/manage-invest/contract'], resolve) } }
               ]
             },// 配置管理-资方管理end
+            // 车型管理
+            {
+              path: 'carmodelmanage', name: 'carModelManage', component: resolve => require(['@/pages/configuration-manage/carmodel-manage'], resolve),
+              children: [
+                // 品牌管理
+                { path:'brandmanage', name: 'carModelBrandManage', component: resolve => { require(['@/pages/configuration-manage/carmodel-manage/brand-manage'], resolve) } },
+              ]
+            },
+            // 车型管理 end
             // banner管理
             {
               path: 'bannermanage', name: 'bannerManage', component: resolve => require(['@/pages/configuration-manage/banner-manage'], resolve),
