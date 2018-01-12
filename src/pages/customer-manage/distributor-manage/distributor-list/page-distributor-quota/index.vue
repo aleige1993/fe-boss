@@ -229,6 +229,10 @@
       },
       // 保存草稿
       async saveDraft() {
+        if (!this.TestCreditTotal()) {
+          this.$Message.error('“授信总额度”不能小于“单笔最大额度”！');
+          return;
+        }
         this.$data.draftLoading = true;
         let resp = await this.$http.post('merchant/credit/tempSave', {
           merchantNo: this.$data.formQuota.merchantNo,
@@ -251,6 +255,10 @@
       submitFun() {
         this.$refs['formQuota'].validate((valid) => {
           if (valid) {
+            if (!this.TestCreditTotal()) {
+              this.$Message.error('“授信总额度”不能小于“单笔最大额度”！');
+              return;
+            }
             if (this.$data.isAdd) {
               this.submiting();
             } else {
@@ -260,6 +268,17 @@
             this.$Message.error('"<span style="color: red">*</span>"必填项不能为空');
           }
         });
+      },
+      // 新增授信额度信息里验证授信总额度不能小于最大额度
+      TestCreditTotal() {
+        if (
+          (this.$data.formQuota.creditTotalLimit && this.$data.formQuota.singleUsableLimit) &&
+          ((this.$data.formQuota.creditTotalLimit !== '') && (this.$data.formQuota.singleUsableLimit !== '')) &&
+          (this.$data.formQuota.singleUsableLimit / 1) > (this.$data.formQuota.creditTotalLimit / 1)
+        ) {
+          return false;
+        }
+        return true;
       },
       async remove(row) {
         Alertify.confirm('确定要删除吗？', async (ok) => {
