@@ -11,7 +11,7 @@
 - on-change : 选择了地址后的回掉，
 
     接受参数：distance -- 选择后的地址信息 类型--Object，包含的属性如下
-    
+
     ~~~
       distance.provinceCode; // 省份code
       distance.provinceName; // 省份名称

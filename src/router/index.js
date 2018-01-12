@@ -126,7 +126,7 @@ let MyRouter = new Router({
           children: [
             // 贷款业务-业务审批
             { path: '/', name: 'loanBusinessList',  props: { 'taskNode': ''}, component: resolve => require(['@/pages/loan-business/business-list'], resolve)},
-            { path: 'mypending', name: 'loanBusinessMyPendingList',  props: { 'taskNode': '1'}, component: resolve => require(['@/pages/loan-business/business-list'], resolve)},
+            { path: 'mypending', name: 'loanBusinessMyPendingList',  props: { 'taskNode': '1', status: '0;3'}, component: resolve => require(['@/pages/loan-business/business-list'], resolve)},
             { path: 'firstapprove', name: 'loanBusinessFirstApproveList', props: { 'taskNode': '3'}, component: resolve => require(['@/pages/loan-business/business-list'], resolve)},
             { path: 'firststageapprove', name: 'loanBusinessFirstStageApproveList', props: { 'taskNode': '4'}, component: resolve => require(['@/pages/loan-business/business-list'], resolve)},
             { path: 'secondstageapprove', name: 'loanBusinessSecondStageApproveList', props: { 'taskNode': '5'}, component: resolve => require(['@/pages/loan-business/business-list'], resolve)},

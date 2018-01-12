@@ -14,6 +14,7 @@ export default {
         },
         {
           title: '产品类型',
+          width: 100,
           key: 'productType',
           render: (h, params) => {
             return h('span', {}, this.enumCode2Name(params.row.productType, 'ProductTypeEnum'));

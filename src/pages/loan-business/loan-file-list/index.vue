@@ -2,7 +2,7 @@
   <div class="loan-file-list">
     <h4 class="list-title">
       {{title}}
-      <a href="javascript:;" class="text-danger" @click.prevent="deleteGroup" >
+      <a v-if="!readonly" href="javascript:;" class="text-danger" @click.prevent="deleteGroup" >
         <i-icon type="close-circled"></i-icon>
       </a>
     </h4>
@@ -30,7 +30,7 @@
           </bs-file-item>
         </template>
       </template>
-      <i-upload style="display: inline-block; float: left; width:128px; margin-left: 5px; position: relative" :show-upload-list="false"
+      <i-upload v-if="!readonly" style="display: inline-block; float: left; width:128px; margin-left: 5px; position: relative" :show-upload-list="false"
                 multiple type="drag"
                 :on-progress="uploading"
                 :on-success="uploadFileSuccess"
@@ -73,6 +73,11 @@
         type: String,
         default: '1',
         required: false
+      },
+      readonly: {
+        type: Boolean,
+        required: false,
+        default: false
       },
       value: String // 1 已落实 0 未落实
     },

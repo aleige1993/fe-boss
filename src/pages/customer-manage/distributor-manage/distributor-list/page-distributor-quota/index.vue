@@ -8,22 +8,6 @@
       <i-breadcrumb-item>授信额度信息</i-breadcrumb-item>
     </i-breadcrumb>
     <div id="tableDistributorQuota">
-      <div class="form-block-title">
-        公司名称
-      </div>
-      <div class="search-form-container">
-        <i-form inline ref="formSearch" :model="formSearch">
-          <i-form-item prop="user">
-            <i-input v-model="formSearch.corpName" style="width: 240px;" type="text" placeholder="公司名称"></i-input>
-          </i-form-item>
-          <i-form-item>
-            <i-button type="primary"><i-icon type="ios-search-strong" @cilck="search"></i-icon>
-              <span v-if="!searchLoading"> 搜索</span>
-              <span v-else> loading</span>
-            </i-button>
-          </i-form-item>
-        </i-form>
-      </div>
       <div class="form-top-actions">
         <i-button @click="addModal" type="info"><i class="iconfont icon-xinzeng"></i>&nbsp;新增授信额度信息</i-button>
       </div>
@@ -129,10 +113,6 @@
         pageSize: 15,
         dataLoading: false,
         draftLoading: false,
-        searchLoading: false,
-        formSearch: {
-          corpName: ''
-        },
         showAddModal: false,
         ParentCurrentPage: '',
         btnLoading: false,
@@ -170,7 +150,6 @@
         }
         let resp = await this.$http.post('merchant/credit/list', {
           merchantNo: this.$route.query.merchantNo,
-          corpName: this.$data.formSearch.corpName, // 公司名称，模糊查询
           currentPage: this.$data.currentPage,
           pageSize: this.$data.pageSize
         });
@@ -185,11 +164,6 @@
       },
       jumpPage(page) {
         this.getList(page);
-      },
-      async search() {
-        this.$data.searchLoading = true;
-        await this.getList(1);
-        this.$data.searchLoading = false;
       },
       // 打开modal
       addModal() {

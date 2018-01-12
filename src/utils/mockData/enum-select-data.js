@@ -895,10 +895,20 @@ export default [
             {
               'itemCode': '5',
               'itemName': '授信过期'
+            }
+          ]
+        },
+        // 渠道商状态 激活/冻结
+        {
+          'groupKey': 'EnableStatusEnum',
+          'items': [
+            {
+              'itemCode': '0',
+              'itemName': '冻结'
             },
             {
-              'itemCode': '6',
-              'itemName': '冻结'
+              'itemCode': '1',
+              'itemName': '激活'
             }
           ]
         },

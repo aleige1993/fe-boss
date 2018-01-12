@@ -101,3 +101,12 @@ h1,h2,h3,h4,h5,h6 {
 .ivu-select-disabled .ivu-select-selection{
   color: #666;
 }
+// 表格内的字体英文基线以下不显示的问题修复
+.ivu-table-cell {
+  font-size: 12px;
+  line-height: 16px;
+}
+// 地址联动。当地址会有自动带入值得情况时，改变placeholder属性的字体颜色
+.select-show-input .ivu-select-single .ivu-select-selection .ivu-select-placeholder {
+  color: #495060;
+}

@@ -6,7 +6,7 @@
           <i-input v-model="searchForm.corpName" type="text" placeholder="公司名称"></i-input>
         </i-form-item>
         <i-form-item prop="password">
-          <i-input v-model="searchForm.creditCode" type="text" placeholder="统一社会信用编码"></i-input>
+          <i-input v-model="searchForm.creditCode" type="text" placeholder="统一社会信用代码"></i-input>
         </i-form-item>
         <i-form-item>
           <i-button @click="search" type="primary"><i-icon type="ios-search-strong"></i-icon> 搜索</i-button>
@@ -60,8 +60,8 @@ export default {
       let resp = await this.$http.post('/corp/listCorp', this.$data.searchForm);
       this.$data.dataLoading = false;
       this.$data.companyCustomerData = resp.body.resultList;
-      this.$data.currentPage = resp.body.currentPage;
-      this.$data.total = resp.body.totalNum;
+      this.$data.currentPage = resp.body.currentPage / 1;
+      this.$data.total = resp.body.totalNum / 1;
     },
     jumpPage(page) {
       this.getCompanyCustomerList(page);

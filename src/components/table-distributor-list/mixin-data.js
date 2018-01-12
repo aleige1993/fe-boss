@@ -27,11 +27,12 @@ export default {
         },
         {
           title: '公司名称',
+          width: 150,
           key: 'corpName'
         },
         {
           title: '统一社会信用代码',
-          width: 90,
+          width: 150,
           key: 'suCreditCode'
         },
         {
@@ -46,7 +47,7 @@ export default {
         },
         {
           title: '注册资金',
-          width: 70,
+          width: 120,
           key: 'regCapital'
         },
         {
@@ -56,17 +57,17 @@ export default {
         },
         {
           title: '授信总额度',
-          width: 70,
+          width: 120,
           key: 'creditTotalLimit'
         },
         {
           title: '可用额度',
-          width: 70,
+          width: 120,
           key: 'currentUsableLimit'
         },
         {
           title: '单笔最大可用额度',
-          width: 90,
+          width: 120,
           key: 'singleUsableLimit'
         },
         {
@@ -139,24 +140,32 @@ export default {
               }, '删除'),
               h('i-button', {
                 props: {
-                  type: 'warning',
-                  disabled: params.row.merchantStatus === '6'
+                  type: params.row.enableStatus === '0' ? 'info' : 'warning',
+                  disabled: params.row.merchantStatus !== '1' // 渠道商状态为申请中是不能点
                 },
                 on: {
                   click: () => {
-                    Alertify.confirm('确定要冻结当前用户吗？', async (ok) => {
-                      if (ok) {
-                        this.congeal($.extend({}, params.row));
-                      }
-                    });
+                    this.congeal($.extend({}, params.row));
                   }
                 }
-              }, '冻结')
+              }, this.merchantStatusBtnText(params.row))
             ]);
           }
         }
       ],
       distributorList: []
     };
+  },
+  methods: {
+    merchantStatusBtnText(row) {
+      let BtnText = '';
+      if (row.enableStatus === '0') {
+        BtnText = '激活';
+      }
+      if (row.enableStatus === '1') {
+        BtnText = '冻结';
+      }
+      return BtnText;
+    }
   }
 };

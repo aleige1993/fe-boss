@@ -1,5 +1,22 @@
 export default {
   methods: {
+    verifyCertNo() {
+      if (!this.$route.query.id) {
+        if (this.$data.checkoutCertNoTimer) {
+          this.$data.checkoutCertNoTimer = null;
+        }
+        this.$data.checkoutCertNoTimer = setTimeout(async () => {
+          this.$data.checkingCertNo = true;
+          let resp = await this.$http.post('/member/isExists', { certNo: this.$data.formData.mbMemberDTO.certNo });
+          this.$data.checkingCertNo = false;
+          if (resp.success) {
+            if (resp.body.exists === 'true') {
+              Alertify.alert('您输入的证件号已经存在，请换一个证件再试');
+            }
+          }
+        }, 500);
+      }
+    },
     uploadFaceSuccess(res, file, fileList) {
       this.$data.formData.mbMemberDTO.certFrontUrl = res.body.url;
     },

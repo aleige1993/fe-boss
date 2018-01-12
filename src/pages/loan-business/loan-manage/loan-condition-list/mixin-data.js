@@ -10,6 +10,7 @@ export default {
         },
         {
           title: '客户名称',
+          width: 170,
           key: 'custName'
         },
         {
@@ -27,6 +28,7 @@ export default {
         },
         {
           title: '产品',
+          width: 170,
           key: 'productName'
         },
         {
@@ -73,7 +75,7 @@ export default {
         {
           title: '操作',
           key: 'action',
-          width: 100,
+          minWidth: 100,
           align: 'center',
           render: (h, params) => {
             return h('div', [
