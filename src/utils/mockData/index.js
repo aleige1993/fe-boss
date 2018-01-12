@@ -337,6 +337,185 @@ let ary = [
         ]
       }
     })
+  },
+
+  // 车型管理
+  {
+    url: '/ces/brand/page',
+    on: true,
+    resp: Mock.mock({
+      'body': {
+        'currentPage': 1,
+        'isMore': 1,
+        'pageSize': 10,
+        'resultList': [
+          {
+            'brandName': '奥迪',
+            'brandNo': '390819145165307904',
+            'id': 7,
+            'initial': 'A',
+            'logo': 'http://pic1.jisuapi.cn/car/static/images/logo/300/1.png'
+          },
+          {
+            'brandName': '阿斯顿·马丁',
+            'brandNo': '390819145588932608',
+            'id': 8,
+            'initial': 'A',
+            'logo': 'http://pic1.jisuapi.cn/car/static/images/logo/300/2.png'
+          },
+          {
+            'brandName': '阿尔法·罗密欧',
+            'brandNo': '390819146008363008',
+            'id': 9,
+            'initial': 'A',
+            'logo': 'http://pic1.jisuapi.cn/car/static/images/logo/300/3.png'
+          },
+          {
+            'brandName': 'AC Schnitzer',
+            'brandNo': '390819146427793408',
+            'id': 10,
+            'initial': 'A',
+            'logo': 'http://pic1.jisuapi.cn/car/static/images/logo/300/4.png'
+          },
+          {
+            'brandName': 'ALPINA',
+            'brandNo': '390819146851418112',
+            'id': 11,
+            'initial': 'A',
+            'logo': 'http://pic1.jisuapi.cn/car/static/images/logo/300/33702.png'
+          },
+          {
+            'brandName': 'ARCFOX',
+            'brandNo': '390819147270848512',
+            'id': 12,
+            'initial': 'A',
+            'logo': 'http://pic1.jisuapi.cn/car/static/images/logo/300/41347.png'
+          },
+          {
+            'brandName': '安凯客车',
+            'brandNo': '390819147694473216',
+            'id': 13,
+            'initial': 'A'
+          },
+          {
+            'brandName': '本田',
+            'brandNo': '390819148113903616',
+            'id': 14,
+            'initial': 'B',
+            'logo': 'http://pic1.jisuapi.cn/car/static/images/logo/300/7.png'
+          },
+          {
+            'brandName': '别克',
+            'brandNo': '390819148537528320',
+            'id': 15,
+            'initial': 'B',
+            'logo': 'http://pic1.jisuapi.cn/car/static/images/logo/300/8.png'
+          },
+          {
+            'brandName': '宝马',
+            'brandNo': '390819148956958720',
+            'id': 16,
+            'initial': 'B',
+            'logo': 'http://pic1.jisuapi.cn/car/static/images/logo/300/10.png'
+          }
+        ],
+        'startIndex': 0,
+        'totalNum': 188,
+        'totalPage': 19
+      },
+      'reCode': '0000',
+      'reMsg': '成功:',
+      'success': true
+    })
+  },
+  {
+    url: '/recomm/brand/page',
+    on: true,
+    resp: Mock.mock({
+      'body': {
+        'currentPage': 1,
+        'isMore': 0,
+        'pageSize': 10,
+        'resultList': [
+          {
+            'brandName': '阿尔法·罗密欧',
+            'brandNo': '390819146008363008',
+            'logo': 'http://pic1.jisuapi.cn/car/static/images/logo/300/3.png',
+            'recommNo': '390820560625467392',
+            'recommOrder': 1
+          },
+          {
+            'brandName': '奥迪',
+            'brandNo': '390819145165307904',
+            'logo': 'http://pic1.jisuapi.cn/car/static/images/logo/300/1.png',
+            'recommNo': '390819145165307904',
+            'recommOrder': 7
+          },
+          {
+            'brandName': '阿斯顿·马丁',
+            'brandNo': '390819145588932608',
+            'logo': 'http://pic1.jisuapi.cn/car/static/images/logo/300/2.png',
+            'recommNo': '390819145588932608',
+            'recommOrder': 8
+          },
+          {
+            'brandName': '北京',
+            'brandNo': '390819152744415232',
+            'logo': 'http://pic1.jisuapi.cn/car/static/images/logo/300/18.png',
+            'recommNo': '390819152744415232',
+            'recommOrder': 25
+          },
+          {
+            'brandName': '东风风神',
+            'brandNo': '390819161174966272',
+            'logo': 'http://pic1.jisuapi.cn/car/static/images/logo/300/38.png',
+            'recommNo': '390819161174966272',
+            'recommOrder': 45
+          },
+          {
+            'brandName': '福特',
+            'brandNo': '390819165809672192',
+            'logo': 'http://pic1.jisuapi.cn/car/static/images/logo/300/52.png',
+            'recommNo': '390819165809672192',
+            'recommOrder': 56
+          },
+          {
+            'brandName': '海马',
+            'brandNo': '390819171287433216',
+            'logo': 'http://pic1.jisuapi.cn/car/static/images/logo/300/72.png',
+            'recommNo': '390819171287433216',
+            'recommOrder': 69
+          },
+          {
+            'brandName': '恒天',
+            'brandNo': '390819175074889728',
+            'logo': 'http://pic1.jisuapi.cn/car/static/images/logo/300/84.png',
+            'recommNo': '390819175074889728',
+            'recommOrder': 78
+          },
+          {
+            'brandName': '凯迪拉克',
+            'brandNo': '390819182653997056',
+            'logo': 'http://pic1.jisuapi.cn/car/static/images/logo/300/102.png',
+            'recommNo': '390819182653997056',
+            'recommOrder': 96
+          },
+          {
+            'brandName': '领克',
+            'brandNo': '390819193609519104',
+            'logo': 'http://pic1.jisuapi.cn/car/static/images/logo/300/41.png',
+            'recommNo': '390819193609519104',
+            'recommOrder': 122
+          }
+        ],
+        'startIndex': 0,
+        'totalNum': 10,
+        'totalPage': 1
+      },
+      'reCode': '0000',
+      'reMsg': '成功:success',
+      'success': true
+    })
   }
 ];
 let result = [

@@ -115,7 +115,8 @@ export default {
                   type: 'primary',
                   size: 'small',
                   loading: this.$data.applyApproveLoading,
-                  disabled: (params.row.taskNode !== '3' && params.row.taskNode !== '4' && params.row.taskNode !== '5') || params.row.status === '9',
+                  disabled: (params.row.taskNode !== '3' && params.row.taskNode !== '4' && params.row.taskNode !== '5') ||
+                    params.row.status === '9' || this.taskNode === '',
                   class: { 'hide': params.row.status === '9' }
                 },
                 style: { marginRight: '5px' },
@@ -202,7 +203,8 @@ export default {
                     });
                   }
                 }
-              }, '修改'),
+              }, '处理'),
+
               h('Button', {
                 props: {
                   type: 'error',

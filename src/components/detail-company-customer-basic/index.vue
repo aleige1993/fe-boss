@@ -89,13 +89,13 @@
                 </i-form-item>
               </i-col>
             </i-row>
-            <i-row>
+            <!--<i-row>
               <i-col span="8">
                 <i-form-item label="是否合作渠道商" prop="baseDTO.isMerchant">
                   {{enumCode2Name(formData.baseDTO.isMerchant, 'YesNoEnum')}}
                 </i-form-item>
               </i-col>
-            </i-row>
+            </i-row>-->
             <i-row>
               <i-col span="18">
                 <i-form-item label="注册地址">
