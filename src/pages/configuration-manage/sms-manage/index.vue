@@ -123,8 +123,8 @@
 //        console.log(JSON.stringify(resp));
         this.$data.dataLoading = false;
         this.$data.privateCustomerLoanList = resp.body.resultList;
-        this.$data.currentPage = resp.body.currentPage;
-        this.$data.total = resp.body.totalNum;
+        this.$data.currentPage = resp.body.currentPage / 1;
+        this.$data.total = resp.body.totalNum / 1;
       },
       async submitSuccess() {
         this.$data.buttonLoading = true;

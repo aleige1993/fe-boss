@@ -75,7 +75,6 @@ Vue.config.errorHandler = function(err, vm, info) {
 $('.page-loading').show();
 new Http().post('/common/items', {}).then(response => {
   $('.page-loading').hide();
-  console.log(response);
   if (response.success) {
     let data = response.body;
     let storeData = new Map();

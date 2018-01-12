@@ -90,7 +90,7 @@
         if (resp.body.resultList.length !== 0) {
           this.$data.distributorList = resp.body.resultList;
           this.$data.currentPage = resp.body.currentPage;
-          this.$data.total = resp.body.totalNum;
+          this.$data.total = resp.body.totalNum / 1;
         } else {
           this.$data.distributorList = [];
         }

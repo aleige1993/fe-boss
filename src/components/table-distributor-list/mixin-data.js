@@ -85,6 +85,14 @@ export default {
           render: (h, params) => {
             return h('span', {}, this.enumCode2Name(params.row.merchantStatus, 'MerchantStatusEnum'));
           }
+        },
+        {
+          title: '启停状态', // 0:冻结1:激活
+          width: 100,
+          key: 'enableStatus',
+          render: (h, params) => {
+            return h('span', {}, this.enumCode2Name(params.row.enableStatus, 'EnableStatusEnum'));
+          }
         }
       ],
       columnsFeatureActionColumns: [
@@ -140,8 +148,8 @@ export default {
               }, '删除'),
               h('i-button', {
                 props: {
-                  type: params.row.enableStatus === '0' ? 'info' : 'warning',
-                  disabled: params.row.merchantStatus !== '1' // 渠道商状态为申请中是不能点
+                  type: params.row.enableStatus === '0' ? 'warning' : 'info',
+                  disabled: params.row.merchantStatus === '1' || params.row.merchantStatus === '6' // 渠道商状态为申请中和变更中是不能点
                 },
                 on: {
                   click: () => {
