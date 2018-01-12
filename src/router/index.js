@@ -103,6 +103,8 @@ let MyRouter = new Router({
                 { path:'brand', name: 'carModelBrand', component: resolve => { require(['@/pages/configuration-manage/carmodel-manage/brand-manage'], resolve) } },
                 // 推荐品牌管理
                 { path:'topbrand', name: 'carModelTopBrand', component: resolve => { require(['@/pages/configuration-manage/carmodel-manage/topbrand-manage'], resolve) } },
+                // 车型管理
+                { path:'model', name: 'carModel', component: resolve => { require(['@/pages/configuration-manage/carmodel-manage/model-manage'], resolve) } },
               ]
             },
             // 车型管理 end

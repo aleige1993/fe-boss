@@ -53,7 +53,7 @@ export default {
                       if (ok) {
                         const loading = this.$Message.loading('处理中...', 0);
                         let resp = await this.$http.post('/recomm/brand/del', {
-                          recommBrandNo: params.row.recommNo
+                          no: params.row.recommNo
                         });
                         loading();
                         if (resp.success) {
