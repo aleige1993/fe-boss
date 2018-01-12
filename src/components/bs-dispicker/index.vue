@@ -1,5 +1,5 @@
 <template>
-  <span>
+  <span  class="select-show-input">
     <i-select :placeholder="currProvince" :disabled="readonly"  :label-in-value="true" v-model="distanceData.provinceCode"  @on-change="provinceChange" style="width: 150px">
       <i-option v-for="item in provinceDropList" :value="item.regionCode" :key="item.regionCode">{{item.regionName}}</i-option>
     </i-select>
@@ -110,6 +110,5 @@
     }
   };
 </script>
-<style>
-
+<style  lang="scss" scoped>
 </style>

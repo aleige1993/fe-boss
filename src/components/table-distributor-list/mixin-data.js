@@ -139,24 +139,32 @@ export default {
               }, '删除'),
               h('i-button', {
                 props: {
-                  type: 'warning',
-                  disabled: params.row.merchantStatus === '6'
+                  type: params.row.enableStatus === '0' ? 'info' : 'warning',
+                  disabled: params.row.merchantStatus !== '1' // 渠道商状态为申请中是不能点
                 },
                 on: {
                   click: () => {
-                    Alertify.confirm('确定要冻结当前用户吗？', async (ok) => {
-                      if (ok) {
-                        this.congeal($.extend({}, params.row));
-                      }
-                    });
+                    this.congeal($.extend({}, params.row));
                   }
                 }
-              }, '冻结')
+              }, this.merchantStatusBtnText(params.row))
             ]);
           }
         }
       ],
       distributorList: []
     };
+  },
+  methods: {
+    merchantStatusBtnText(row) {
+      let BtnText = '';
+      if (row.enableStatus === '0') {
+        BtnText = '激活';
+      }
+      if (row.enableStatus === '1') {
+        BtnText = '冻结';
+      }
+      return BtnText;
+    }
   }
 };

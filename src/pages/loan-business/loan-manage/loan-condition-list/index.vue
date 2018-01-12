@@ -26,10 +26,13 @@
         <i-form-item prop="certNo">
           <i-input v-model="searchForm.certNo" type="text" placeholder="证件号码" style="width: 170px"></i-input>
         </i-form-item>
+        <!--<i-form-item style="width: 200px">
+          <bs-datepicker-range v-model="searchForm.startDate" type="text" placeholder="申请时间"></bs-datepicker-range>
+        </i-form-item>-->
         <i-form-item prop="startDate">
-          <bs-datepicker v-model="searchForm.startDate" type="text" placeholder="申请时间"></bs-datepicker>
+          <bs-datepicker v-model="searchForm.startDate+'  -  '+searchForm.endDate" type="text" placeholder="申请时间"></bs-datepicker>
         </i-form-item>
-        <i-form-item prop="password">
+        <i-form-item>
           -
         </i-form-item>
         <i-form-item prop="endDate">
@@ -64,8 +67,8 @@
           'custName': '',
           'certType': '',
           'certNo': '',
-          'startDate': '',
-          'endDate': '',
+          'startDate': '2018-01-01',
+          'endDate': '2018-01-03',
           'applyEndTime': ''
         }
       };

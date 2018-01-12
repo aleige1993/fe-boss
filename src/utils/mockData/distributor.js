@@ -18,6 +18,26 @@ export default [
       'success': true
     })
   },
+  {
+    url: '/merchant/statusMerchant',
+    type: 'get',
+    on: true,
+    resp: Mock.mock({
+      'reCode': '0000',
+      'reMsg': '成功',
+      'success': true
+    })
+  },
+  {
+    url: '/merchant/changeStatus',
+    type: 'get',
+    on: true,
+    resp: Mock.mock({
+      'reCode': '0000',
+      'reMsg': '成功',
+      'success': true
+    })
+  },
   // 渠道商授信额度分页查询
   {
     url: '/merchant/credit/list',
@@ -78,7 +98,8 @@ export default [
             'currentUsableLimit': '9999999',
             'singleUsableLimit': '9999999',
             'isDisplayInApp|1': ['0', '1'], // 是否在APP中显示
-            'merchantStatus|1': ['0', '1', '2', '5', '6'], // 渠道商状态
+            'merchantStatus|1': ['0', '1', '2', '5'], // 渠道商状态
+            'enableStatus|1': ['0', '1'], // 渠道商状态 激活/冻结
             'custMgrName': '11111111' // 客户经理编号
           }
         ],

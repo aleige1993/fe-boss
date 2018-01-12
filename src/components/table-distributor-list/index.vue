@@ -122,18 +122,29 @@
       },
       // 冻结
       async congeal(row) {
-        const msg = this.$Message.loading('正在冻结...', 0);
-        let resp = await this.$http.get('merchant/statusMerchant', {
-          merchantNo: row.merchantNo,
-          merchantStatus: '6'
-        });
-        msg();
-        if (resp.success) {
-          this.$Message.success('冻结成功');
-          this.getPrivateCustomerList();
-        } else {
-          this.$Message.error('冻结失败');
+        let statusText = '';
+        if (row.enableStatus === '0') { //0=冻结；1=激活
+          statusText = '激活';
         }
+        if (row.enableStatus === '1') { //0=冻结；1=激活
+          statusText = '冻结';
+        }
+        Alertify.confirm('确定要' + statusText + '当前用户吗？', async (ok) => {
+          if (ok) {
+            const msg = this.$Message.loading('正在冻结' + statusText + '...', 0);
+            let resp = await this.$http.get('merchant/changeStatus', {
+              merchantNo: row.merchantNo,
+              enableStatus: row.enableStatus
+            });
+            msg();
+            if (resp.success) {
+              this.$Message.success(statusText + '成功');
+              this.getPrivateCustomerList();
+            } else {
+              this.$Message.error(statusText + '失败');
+            }
+          }
+        });
       },
       // 单选每一行时出触发 执行父组件的on-radio-fun事件
       radioFun(currentRow, oldCurrentRow) {
