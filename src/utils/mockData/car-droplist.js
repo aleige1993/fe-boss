@@ -6,43 +6,57 @@ export default [
       reCode: '0000',
       success: true,
       body: {
-        'list': [
+        'resultList': [
           {
             'groupList': [
               {
-                'brandName': '奥迪',
                 'id': 7,
-                'initial': 'A'
+                'brandNo': 390819145165307904,
+                'initial': 'A',
+                'brandName': '奥迪',
+                'logo': 'http://pic1.jisuapi.cn/car/static/images/logo/300/1.png'
               },
               {
-                'brandName': '阿斯顿·马丁',
                 'id': 8,
-                'initial': 'A'
+                'brandNo': 390819145588932608,
+                'initial': 'A',
+                'brandName': '阿斯顿·马丁',
+                'logo': 'http://pic1.jisuapi.cn/car/static/images/logo/300/2.png'
               },
               {
-                'brandName': '阿尔法·罗密欧',
                 'id': 9,
-                'initial': 'A'
+                'brandNo': 390819146008363008,
+                'initial': 'A',
+                'brandName': '阿尔法·罗密欧',
+                'logo': 'http://pic1.jisuapi.cn/car/static/images/logo/300/3.png'
               },
               {
-                'brandName': 'AC Schnitzer',
                 'id': 10,
-                'initial': 'A'
+                'brandNo': 390819146427793408,
+                'initial': 'A',
+                'brandName': 'AC Schnitzer',
+                'logo': 'http://pic1.jisuapi.cn/car/static/images/logo/300/4.png'
               },
               {
-                'brandName': 'ALPINA',
                 'id': 11,
-                'initial': 'A'
+                'brandNo': 390819146851418112,
+                'initial': 'A',
+                'brandName': 'ALPINA',
+                'logo': 'http://pic1.jisuapi.cn/car/static/images/logo/300/33702.png'
               },
               {
-                'brandName': 'ARCFOX',
                 'id': 12,
-                'initial': 'A'
+                'brandNo': 390819147270848512,
+                'initial': 'A',
+                'brandName': 'ARCFOX',
+                'logo': 'http://pic1.jisuapi.cn/car/static/images/logo/300/41347.png'
               },
               {
-                'brandName': '安凯客车',
                 'id': 13,
-                'initial': 'A'
+                'brandNo': 390819147694473216,
+                'initial': 'A',
+                'brandName': '安凯客车',
+                'logo': null
               }
             ],
             'groupName': 'A'
@@ -50,112 +64,358 @@ export default [
           {
             'groupList': [
               {
-                'brandName': '本田',
                 'id': 14,
-                'initial': 'B'
+                'brandNo': 390819148113903616,
+                'initial': 'B',
+                'brandName': '本田',
+                'logo': 'http://pic1.jisuapi.cn/car/static/images/logo/300/7.png'
               },
               {
-                'brandName': '别克',
                 'id': 15,
-                'initial': 'B'
+                'brandNo': 390819148537528320,
+                'initial': 'B',
+                'brandName': '别克',
+                'logo': 'http://pic1.jisuapi.cn/car/static/images/logo/300/8.png'
               },
               {
-                'brandName': '宝马',
                 'id': 16,
-                'initial': 'B'
+                'brandNo': 390819148956958720,
+                'initial': 'B',
+                'brandName': '宝马',
+                'logo': 'http://pic1.jisuapi.cn/car/static/images/logo/300/10.png'
               },
               {
-                'brandName': '奔驰',
                 'id': 17,
-                'initial': 'B'
+                'brandNo': 390819149376389120,
+                'initial': 'B',
+                'brandName': '奔驰',
+                'logo': 'http://pic1.jisuapi.cn/car/static/images/logo/300/9.png'
               },
               {
-                'brandName': '比亚迪',
                 'id': 18,
-                'initial': 'B'
+                'brandNo': 390819149795819520,
+                'initial': 'B',
+                'brandName': '比亚迪',
+                'logo': 'http://pic1.jisuapi.cn/car/static/images/logo/300/11.png'
               },
               {
-                'brandName': '标致',
                 'id': 19,
-                'initial': 'B'
+                'brandNo': 390819150215249920,
+                'initial': 'B',
+                'brandName': '标致',
+                'logo': 'http://pic1.jisuapi.cn/car/static/images/logo/300/13.png'
               },
               {
-                'brandName': '宝骏',
                 'id': 20,
-                'initial': 'B'
+                'brandNo': 390819150638874624,
+                'initial': 'B',
+                'brandName': '宝骏',
+                'logo': 'http://pic1.jisuapi.cn/car/static/images/logo/300/12.png'
               },
               {
-                'brandName': '奔腾',
                 'id': 21,
-                'initial': 'B'
+                'brandNo': 390819151062499328,
+                'initial': 'B',
+                'brandName': '奔腾',
+                'logo': 'http://pic1.jisuapi.cn/car/static/images/logo/300/17.png'
               },
               {
-                'brandName': '保时捷',
                 'id': 22,
-                'initial': 'B'
+                'brandNo': 390819151481929728,
+                'initial': 'B',
+                'brandName': '保时捷',
+                'logo': 'http://pic1.jisuapi.cn/car/static/images/logo/300/15.png'
               },
               {
-                'brandName': '北汽幻速',
                 'id': 23,
-                'initial': 'B'
+                'brandNo': 390819151901360128,
+                'initial': 'B',
+                'brandName': '北汽幻速',
+                'logo': 'http://pic1.jisuapi.cn/car/static/images/logo/300/14.png'
               },
               {
-                'brandName': '北汽绅宝',
                 'id': 24,
-                'initial': 'B'
+                'brandNo': 390819152324984832,
+                'initial': 'B',
+                'brandName': '北汽绅宝',
+                'logo': 'http://pic1.jisuapi.cn/car/static/images/logo/300/16.png'
               },
               {
-                'brandName': '北京',
                 'id': 25,
-                'initial': 'B'
+                'brandNo': 390819152744415232,
+                'initial': 'B',
+                'brandName': '北京',
+                'logo': 'http://pic1.jisuapi.cn/car/static/images/logo/300/18.png'
               },
               {
-                'brandName': '北汽威旺',
                 'id': 26,
-                'initial': 'B'
+                'brandNo': 390819153168039936,
+                'initial': 'B',
+                'brandName': '北汽威旺',
+                'logo': 'http://pic1.jisuapi.cn/car/static/images/logo/300/19.png'
               },
               {
-                'brandName': '北汽制造',
                 'id': 27,
-                'initial': 'B'
+                'brandNo': 390819153591664640,
+                'initial': 'B',
+                'brandName': '北汽制造',
+                'logo': 'http://pic1.jisuapi.cn/car/static/images/logo/300/20.png'
               },
               {
-                'brandName': '宝沃',
                 'id': 28,
-                'initial': 'B'
+                'brandNo': 390819154011095040,
+                'initial': 'B',
+                'brandName': '宝沃',
+                'logo': 'http://pic1.jisuapi.cn/car/static/images/logo/300/24.png'
               },
               {
-                'brandName': '宾利',
                 'id': 29,
-                'initial': 'B'
+                'brandNo': 390819154434719744,
+                'initial': 'B',
+                'brandName': '宾利',
+                'logo': 'http://pic1.jisuapi.cn/car/static/images/logo/300/21.png'
               },
               {
-                'brandName': '比速汽车',
                 'id': 30,
-                'initial': 'B'
+                'brandNo': 390819154854150144,
+                'initial': 'B',
+                'brandName': '比速汽车',
+                'logo': null
               },
               {
-                'brandName': '巴博斯',
                 'id': 31,
-                'initial': 'B'
+                'brandNo': 390819155277774848,
+                'initial': 'B',
+                'brandName': '巴博斯',
+                'logo': 'http://pic1.jisuapi.cn/car/static/images/logo/300/23.png'
               },
               {
-                'brandName': '北汽道达',
                 'id': 32,
-                'initial': 'B'
+                'brandNo': 390819155697205248,
+                'initial': 'B',
+                'brandName': '北汽道达',
+                'logo': 'http://pic1.jisuapi.cn/car/static/images/logo/300/39989.png'
               },
               {
-                'brandName': '北汽新能源',
                 'id': 33,
-                'initial': 'B'
+                'brandNo': 390819156120829952,
+                'initial': 'B',
+                'brandName': '北汽新能源',
+                'logo': 'http://pic1.jisuapi.cn/car/static/images/logo/300/25.png'
               },
               {
-                'brandName': '布加迪',
                 'id': 34,
-                'initial': 'B'
+                'brandNo': 390819156540260352,
+                'initial': 'B',
+                'brandName': '布加迪',
+                'logo': 'http://pic1.jisuapi.cn/car/static/images/logo/300/22.png'
               }
             ],
             'groupName': 'B'
+          },
+          {
+            'groupList': [
+              {
+                'id': 35,
+                'brandNo': 390819156959690752,
+                'initial': 'C',
+                'brandName': '长安',
+                'logo': 'http://pic1.jisuapi.cn/car/static/images/logo/300/28.png'
+              },
+              {
+                'id': 36,
+                'brandNo': 390819157379121152,
+                'initial': 'C',
+                'brandName': '长城',
+                'logo': 'http://pic1.jisuapi.cn/car/static/images/logo/300/30.png'
+              },
+              {
+                'id': 37,
+                'brandNo': 390819157798551552,
+                'initial': 'C',
+                'brandName': '长安商用',
+                'logo': null
+              },
+              {
+                'id': 38,
+                'brandNo': 390819158217981952,
+                'initial': 'C',
+                'brandName': '昌河',
+                'logo': 'http://pic1.jisuapi.cn/car/static/images/logo/300/31.png'
+              },
+              {
+                'id': 39,
+                'brandNo': 390819158641606656,
+                'initial': 'C',
+                'brandName': '长安跨越',
+                'logo': 'http://pic1.jisuapi.cn/car/static/images/logo/300/39991.png'
+              },
+              {
+                'id': 40,
+                'brandNo': 390819159065231360,
+                'initial': 'C',
+                'brandName': '成功汽车',
+                'logo': null
+              },
+              {
+                'id': 41,
+                'brandNo': 390819159484661760,
+                'initial': 'C',
+                'brandName': '长安轻型车',
+                'logo': 'http://pic1.jisuapi.cn/car/static/images/logo/300/39990.png'
+              }
+            ],
+            'groupName': 'C'
+          },
+          {
+            'groupList': [
+              {
+                'id': 42,
+                'brandNo': 390819159908286464,
+                'initial': 'D',
+                'brandName': '大众',
+                'logo': 'http://pic1.jisuapi.cn/car/static/images/logo/300/36.png'
+              },
+              {
+                'id': 43,
+                'brandNo': 390819160331911168,
+                'initial': 'D',
+                'brandName': '东风风行',
+                'logo': 'http://pic1.jisuapi.cn/car/static/images/logo/300/37.png'
+              },
+              {
+                'id': 44,
+                'brandNo': 390819160751341568,
+                'initial': 'D',
+                'brandName': '东南',
+                'logo': 'http://pic1.jisuapi.cn/car/static/images/logo/300/39.png'
+              },
+              {
+                'id': 45,
+                'brandNo': 390819161174966272,
+                'initial': 'D',
+                'brandName': '东风风神',
+                'logo': 'http://pic1.jisuapi.cn/car/static/images/logo/300/38.png'
+              },
+              {
+                'id': 46,
+                'brandNo': 390819161594396672,
+                'initial': 'D',
+                'brandName': '东风',
+                'logo': 'http://pic1.jisuapi.cn/car/static/images/logo/300/47.png'
+              },
+              {
+                'id': 47,
+                'brandNo': 390819162018021376,
+                'initial': 'D',
+                'brandName': '东风风光',
+                'logo': 'http://pic1.jisuapi.cn/car/static/images/logo/300/40.png'
+              },
+              {
+                'id': 48,
+                'brandNo': 390819162437451776,
+                'initial': 'D',
+                'brandName': '道奇',
+                'logo': 'http://pic1.jisuapi.cn/car/static/images/logo/300/41.png'
+              },
+              {
+                'id': 49,
+                'brandNo': 390819162861076480,
+                'initial': 'D',
+                'brandName': 'DS',
+                'logo': 'http://pic1.jisuapi.cn/car/static/images/logo/300/42.png'
+              },
+              {
+                'id': 50,
+                'brandNo': 390819163280506880,
+                'initial': 'D',
+                'brandName': '东风小康',
+                'logo': 'http://pic1.jisuapi.cn/car/static/images/logo/300/43.png'
+              },
+              {
+                'id': 51,
+                'brandNo': 390819163704131584,
+                'initial': 'D',
+                'brandName': '东风风度',
+                'logo': 'http://pic1.jisuapi.cn/car/static/images/logo/300/46.png'
+              },
+              {
+                'id': 52,
+                'brandNo': 390819164123561984,
+                'initial': 'D',
+                'brandName': '大发',
+                'logo': null
+              },
+              {
+                'id': 53,
+                'brandNo': 390819164547186688,
+                'initial': 'D',
+                'brandName': '电咖',
+                'logo': null
+              }
+            ],
+            'groupName': 'D'
+          },
+          {
+            'groupList': [
+              {
+                'id': 54,
+                'brandNo': 390819164966617088,
+                'initial': 'F',
+                'brandName': '丰田',
+                'logo': 'http://pic1.jisuapi.cn/car/static/images/logo/300/51.png'
+              },
+              {
+                'id': 55,
+                'brandNo': 390819165390241792,
+                'initial': 'F',
+                'brandName': '福田',
+                'logo': 'http://pic1.jisuapi.cn/car/static/images/logo/300/53.png'
+              },
+              {
+                'id': 56,
+                'brandNo': 390819165809672192,
+                'initial': 'F',
+                'brandName': '福特',
+                'logo': 'http://pic1.jisuapi.cn/car/static/images/logo/300/52.png'
+              },
+              {
+                'id': 57,
+                'brandNo': 390819166233296896,
+                'initial': 'F',
+                'brandName': '菲亚特',
+                'logo': 'http://pic1.jisuapi.cn/car/static/images/logo/300/55.png'
+              },
+              {
+                'id': 58,
+                'brandNo': 390819166656921600,
+                'initial': 'F',
+                'brandName': '福迪',
+                'logo': 'http://pic1.jisuapi.cn/car/static/images/logo/300/56.png'
+              },
+              {
+                'id': 59,
+                'brandNo': 390819167076352000,
+                'initial': 'F',
+                'brandName': '福汽启腾',
+                'logo': 'http://pic1.jisuapi.cn/car/static/images/logo/300/57.png'
+              },
+              {
+                'id': 60,
+                'brandNo': 390819167495782400,
+                'initial': 'F',
+                'brandName': '法拉利',
+                'logo': 'http://pic1.jisuapi.cn/car/static/images/logo/300/54.png'
+              },
+              {
+                'id': 61,
+                'brandNo': 390819167919407104,
+                'initial': 'F',
+                'brandName': '福田乘用车',
+                'logo': null
+              }
+            ],
+            'groupName': 'F'
           }
         ]
       }

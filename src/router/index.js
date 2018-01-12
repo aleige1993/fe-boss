@@ -100,7 +100,9 @@ let MyRouter = new Router({
               path: 'carmodelmanage', name: 'carModelManage', component: resolve => require(['@/pages/configuration-manage/carmodel-manage'], resolve),
               children: [
                 // 品牌管理
-                { path:'brandmanage', name: 'carModelBrandManage', component: resolve => { require(['@/pages/configuration-manage/carmodel-manage/brand-manage'], resolve) } },
+                { path:'brand', name: 'carModelBrand', component: resolve => { require(['@/pages/configuration-manage/carmodel-manage/brand-manage'], resolve) } },
+                // 推荐品牌管理
+                { path:'topbrand', name: 'carModelTopBrand', component: resolve => { require(['@/pages/configuration-manage/carmodel-manage/topbrand-manage'], resolve) } },
               ]
             },
             // 车型管理 end

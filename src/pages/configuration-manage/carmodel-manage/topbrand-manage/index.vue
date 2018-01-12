@@ -4,7 +4,7 @@
       <i-breadcrumb-item href="/">首页</i-breadcrumb-item>
       <i-breadcrumb-item href="/index/conf">配置管理</i-breadcrumb-item>
       <i-breadcrumb-item href="/index/conf/carmodelmanage">车型管理</i-breadcrumb-item>
-      <i-breadcrumb-item>品牌管理</i-breadcrumb-item>
+      <i-breadcrumb-item>推荐品牌管理</i-breadcrumb-item>
     </i-breadcrumb>
     <div class="search-form-container">
       <i-form inline>
@@ -15,13 +15,13 @@
           <i-input type="text" v-model="searchForm.brandName" placeholder=""></i-input>
         </i-form-item>
         <i-form-item>
-          <i-button @click="search" type="primary"><i-icon type="ios-search-strong"></i-icon> 搜索</i-button>
+          <i-button @click="searchList" type="primary"><i-icon type="ios-search-strong"></i-icon> 搜索</i-button>
         </i-form-item>
       </i-form>
     </div>
-    <!--<div class="form-top-actions">-->
-      <!--<i-button type="info" @click="add"><i class="iconfont icon-xinzeng"></i> 新增</i-button>-->
-    <!--</div>-->
+    <div class="form-top-actions">
+      <i-button type="info" @click="add"><i class="iconfont icon-xinzeng"></i> 新增推荐</i-button>
+    </div>
     <slot name="topAction"></slot>
     <i-table border :loading="dataLoading" ref="selection" @on-select="selectRow" :columns="resultCustomerColumns" :data="privateCustomerLoanList"></i-table>
     <div class="page-container">
@@ -29,31 +29,20 @@
     </div>
     <pt-modal :title="isAdd ? '添加' : '修改'" v-model="addModal" :width="600" :zIndex="200">
       <i-form ref="fromData" :model="fromData" label-position="left" :label-width="80">
-        <i-form-item label="品牌名称" prop="brandName">
-          <i-input v-model="fromData.brandName" placeholder="" readonly></i-input>
+        <i-form-item label="品牌名称" prop="brandNo" :rules="{required: true, message: '请选择品牌名称'}">
+          <i-select
+            v-if="isAdd"
+            v-model="fromData.brandNo"
+            filterable
+            remote
+            :remote-method="remoteSearch"
+            :loading="search.loading">
+            <i-option v-for="item in search.returnlist" :key="item.brandNo" :value="item.brandNo">{{item.brandName}}</i-option>
+          </i-select>
+          <i-input v-else v-model="fromData.brandName" placeholder="" readonly></i-input>
         </i-form-item>
-        <i-form-item label="首字母" prop="initial">
-          <i-input v-model="fromData.initial" placeholder="" readonly></i-input>
-        </i-form-item>
-        <i-form-item
-          :rules="{required: true, message: '请选择图片', trigger: 'blur'}"
-          label="品牌LOGO"
-          prop="logo">
-          <i-upload
-            :show-upload-list="false"
-            :on-success="uploadSuccess"
-            :on-error="uploadError"
-            :format="['jpg','jpeg','png']"
-            type="drag"
-            :action="$config.HTTPBASEURL + '/common/upload'">
-            <div style="padding: 20px 0">
-              <i-icon type="ios-cloud-upload" size="52" style="color: #3399ff"></i-icon>
-              <p>单击或拖动文件上传</p>
-            </div>
-          </i-upload>
-          <p v-if="isAdd" class="show-upload-text" v-text="uploadFileName"></p>
-          <p v-else class="show-upload-text" v-text="fromData.logo"></p>
-          <input type="hidden" v-model="fromData.logo" style="width: 100%;border: 0;">
+        <i-form-item label="排序" prop="recommOrder" :rules="{required: true, message: '排序不能为空', trigger: 'blur'}">
+          <i-input v-model="fromData.recommOrder" placeholder=""></i-input>
         </i-form-item>
         <i-form-item class="text-right">
           <i-button type="primary" @click="submitFun" :loading="buttonLoading">
@@ -81,18 +70,23 @@
         buttonLoading: false,
         total: 0,
         currentPage: 1,
-        smsTriggerPointEnum: {},
         uploadFileName: '',
         searchForm: {
           'brandName': '',
+          'recommStatus': '0',
           currentPage: 1,
           pageSize: 15
         },
         fromData: {
           'brandName': '',
-          'initial': '',
-          'logo': '',
-          'brandNo': ''
+          'brandNo': '',
+          'recommOrder': ''
+        },
+        // 模糊搜索品牌
+        search: {
+          loading: false,
+          loadList: [],
+          returnlist: []
         }
       };
     },
@@ -120,7 +114,7 @@
       jumpPage(page) {
         this.getProxyPayList(page);
       },
-      search() {
+      searchList() {
         this.getProxyPayList();
       },
       add() {
@@ -128,12 +122,31 @@
         this.$data.addModal = true;
         this.$data.fromData = {};
       },
+      remoteSearch(query) {
+        if (query !== '') {
+          this.search.loading = true;
+          let _this = this;
+          setTimeout(() => {
+            _this.search.loading = false;
+//            const list = _this.search.loadList.map(item => {
+//              return {
+//                brandNo: item.brandNo,
+//                brandName: item.brandName
+//              };
+//            });
+//            console.log(list);
+            _this.search.returnlist = _this.search.loadList.filter(item => item.brandName.toLowerCase().indexOf(query.toLowerCase()) > -1);
+          }, 200);
+        } else {
+          this.search.returnlist = [];
+        }
+      },
       async getProxyPayList(page) {
         this.$data.dataLoading = true;
         if (page) {
           this.$data.searchForm.currentPage = page;
         }
-        let resp = await this.$http.post('/ces/brand/page', {
+        let resp = await this.$http.post('/recomm/brand/page', {
           ...this.$data.searchForm
         });
         this.$data.dataLoading = false;
@@ -141,12 +154,38 @@
         this.$data.currentPage = resp.body.currentPage;
         this.$data.total = resp.body.totalNum;
       },
+      async getBrandList() {
+        let resp = await this.$http.post('/ces/getMasterBrand', {
+          brandName: ''
+        });
+        let list = resp.body.resultList.map(item => {
+          item.groupList.map(sitem => {
+            this.search.loadList.push(sitem);
+          });
+        });
+//        console.log(JSON.stringify(this.search.loadList));
+      },
       async submitSuccess() {
         this.$data.buttonLoading = true;
-        let url = this.$data.isAdd ? '' : '/ces/brand/update';
-        let resp = await this.$http.post(url, {
-          ...this.$data.fromData
-        });
+        let url = this.$data.isAdd ? '/recomm/brand/add' : '/recomm/brand/status';
+        let brandNo = this.$data.fromData.brandNo;
+        let recommNo = this.$data.fromData.recommNo;
+        let recommOrder = this.$data.fromData.recommOrder;
+        let data = {};
+        if (this.$data.isAdd) {
+          data.recommBrands = [{
+            brandNo: brandNo,
+            recommOrder: recommOrder
+          }];
+        } else {
+          data = {
+            recommBrandNo: recommNo,
+            order: recommOrder
+          };
+        }
+        console.log(url);
+        console.log(data);
+        let resp = await this.$http.post(url, data);
         this.$data.buttonLoading = false;
         this.$data.addModal = false;
         if (resp.success) {
@@ -165,19 +204,6 @@
           }
         });
       },
-      // 上传成功
-      uploadSuccess(res, file, fileList) {
-        this.$data.uploadFileName = file.name;
-        this.$data.fromData.logo = res.body.url;
-      },
-      // 上传失败
-      uploadError(err, file, fileList) {
-        this.$data.uploadFileName = '';
-        this.$Notice.error({
-          title: '错误提示',
-          desc: err
-        });
-      },
       // 取消 按钮
       cancelFun() {
         this.$data.addModal = false;
@@ -185,8 +211,7 @@
     },
     mounted() {
       this.getProxyPayList();
-      let enumSelectData = this.$store.getters.enumSelectData;
-      this.$data.smsTriggerPointEnum = enumSelectData.get('smsTriggerPointEnum');
+      this.getBrandList();
     }
   };
 </script>

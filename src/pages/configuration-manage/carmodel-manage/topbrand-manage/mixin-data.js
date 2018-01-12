@@ -8,32 +8,11 @@ export default {
         },
         {
           title: '品牌名称',
-          key: 'brandName',
-          align: 'center'
+          key: 'brandName'
         },
         {
-          title: '首字母',
-          key: 'initial',
-          align: 'center'
-        },
-        {
-          title: '品牌LOGO',
-          key: 'logo',
-          align: 'center',
-          render: (h, params) => {
-            return h('bs-big-img', {
-              attrs: {
-                style: 'margin:10px 0'
-              },
-              props: {
-                // thumbWidth: 100,
-                thumbHeight: 80,
-                fullWidth: 1000,
-                thumb: params.row.logo,
-                full: params.row.logo
-              }
-            });
-          }
+          title: '排序',
+          key: 'recommOrder'
         },
         {
           title: '创建时间',
@@ -73,8 +52,8 @@ export default {
                     Alertify.confirm('是否确认删除这条数据', async (ok) => {
                       if (ok) {
                         const loading = this.$Message.loading('处理中...', 0);
-                        let resp = await this.$http.post('/ces/brand/del', {
-                          brandNo: params.row.brandNo
+                        let resp = await this.$http.post('/recomm/brand/del', {
+                          recommBrandNo: params.row.recommNo
                         });
                         loading();
                         if (resp.success) {
@@ -85,7 +64,7 @@ export default {
                     });
                   }
                 }
-              }, '删除')
+              }, '取消推荐')
             ]);
           }
         }

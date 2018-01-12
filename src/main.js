@@ -31,6 +31,8 @@ import FormSecondTitle from '@/components/bs-form-child-title';
 Vue.component('bs-form-child-title', FormSecondTitle);
 import bsDatePicker from '@/components/bs-datepicker';
 Vue.component('bs-datepicker', bsDatePicker);
+import bsDatePickerRange from '@/components/bs-datepicker-range';
+Vue.component('bs-datepicker-range', bsDatePickerRange);
 import BsBigImg from '@/components/bs-big-img';
 Vue.component('bs-big-img', BsBigImg);
 import BsFileItem from '@/components/bs-file-item';
