@@ -10,6 +10,9 @@ export default {
   },
   /* 根据出生日期算出年龄 */
   getAgeFromBirthday(strBirthday) {
+    if (!strBirthday || strBirthday === '') {
+      return '';
+    }
     let returnAge;
     let strBirthdayArr = strBirthday.split('-');
     let birthYear = strBirthdayArr[0] / 1;

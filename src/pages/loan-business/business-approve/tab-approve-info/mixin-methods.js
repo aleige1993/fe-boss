@@ -28,6 +28,50 @@ export default {
       });
     },
     /**
+     * 选择要计算融资金额的行
+     */
+    selectFinanceRow(selection) {
+      this.$data.countFinanceList = selection.map(item => {
+        return {
+          calcAmt: item.feeActualAmt || '',
+          calcSign: item.calcSign || '+'
+        };
+      });
+    },
+    hasFinanceAmtInvalid() {
+      let invalid = false;
+      this.$data.countFinanceList.each((item, index) => {
+        if (item.calcAmt === '') {
+          invalid = true;
+        }
+      });
+      return invalid;
+    },
+    /**
+     * 计算可融资金额
+     */
+    async countFinanceAmount() {
+      let selectData = this.$data.countFinanceList;
+      if (selectData.length === 0) {
+        this.$Notice.error({
+          title: '错误提示',
+          desc: '请先至少选择一条费用收取方案'
+        });
+      } else if (this.hasFinanceAmtInvalid()) {
+        this.$Notice.error({
+          title: '错误提示',
+          desc: '请先填写所选项的应收金额'
+        });
+      } else {
+        this.$data.countFinanceLoading = true;
+        let resp = await this.$http.post('/biz/countFinancingAmt', this.$data.countFinanceList);
+        this.$data.countFinanceLoading = false;
+        if (resp.success) {
+          this.$data.financingAmt = resp.body.financingAmt;
+        }
+      }
+    },
+    /**
      * 用信方案选择产品
      * @param row
      * @param index
