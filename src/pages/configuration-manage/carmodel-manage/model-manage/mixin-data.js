@@ -3,41 +3,47 @@ export default {
     return {
       customerColumns: [
         {
-          title: '品牌ID',
-          key: 'brandNo'
+          title: '车型编号',
+          key: 'modelNo',
+          width: 200
         },
         {
-          title: '品牌名称',
-          key: 'brandName',
-          align: 'center'
+          title: '车型名称',
+          key: 'modelFullName'
         },
         {
-          title: '首字母',
-          key: 'initial',
-          align: 'center'
+          title: '厂商指导价',
+          key: 'guidancePrice',
+          width: 200
         },
+        // {
+        //   title: '车型图片',
+        //   key: 'logo',
+        //   align: 'center',
+        //   render: (h, params) => {
+        //     return h('bs-big-img', {
+        //       attrs: {
+        //         style: 'margin:10px 0'
+        //       },
+        //       props: {
+        //         // thumbWidth: 100,
+        //         thumbHeight: 80,
+        //         fullWidth: 1000,
+        //         thumb: params.row.logo,
+        //         full: params.row.logo
+        //       }
+        //     });
+        //   }
+        // },
         {
-          title: '品牌LOGO',
-          key: 'logo',
-          align: 'center',
-          render: (h, params) => {
-            return h('bs-big-img', {
-              attrs: {
-                style: 'margin:10px 0'
-              },
-              props: {
-                // thumbWidth: 100,
-                thumbHeight: 80,
-                fullWidth: 1000,
-                thumb: params.row.logo,
-                full: params.row.logo
-              }
-            });
-          }
+          title: '年份',
+          key: 'seriesYear',
+          width: 200
         },
         {
           title: '创建时间',
-          key: 'gmtCreate'
+          key: 'gmtCreate',
+          width: 200
         }
       ],
       customerActionColumns: [
@@ -55,10 +61,18 @@ export default {
                 },
                 style: { marginRight: '5px' },
                 on: {
-                  click: () => {
+                  click: async() => {
                     this.$data.isAdd = false;
                     this.$data.addModal = true;
-                    this.$data.fromData = params.row;
+                    // this.$data.fromData = params.row;
+                    const loading = this.$Message.loading('加载中...', 0);
+                    let resp = await this.$http.post('/ces/model/detail', {
+                      no: params.row.modelNo
+                    });
+                    loading();
+                    if (resp.success) {
+                      this.$data.fromData = resp.body;
+                    }
                   }
                 }
               }, '修改'),
@@ -74,7 +88,7 @@ export default {
                       if (ok) {
                         const loading = this.$Message.loading('处理中...', 0);
                         let resp = await this.$http.post('/ces/brand/del', {
-                          no: params.row.brandNo
+                          brandNo: params.row.brandNo
                         });
                         loading();
                         if (resp.success) {

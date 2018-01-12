@@ -339,7 +339,7 @@ let ary = [
     })
   },
 
-  // 车型管理
+  // 车型管理 - 品牌管理
   {
     url: '/ces/brand/page',
     on: true,
@@ -514,6 +514,173 @@ let ary = [
       },
       'reCode': '0000',
       'reMsg': '成功:success',
+      'success': true
+    })
+  },
+  // 车型管理 - 车型管理
+  {
+    url: '/ces/model/page',
+    on: true,
+    resp: Mock.mock({
+      'body': {
+        'currentPage': 1,
+        'isMore': 1,
+        'pageSize': 10,
+        'resultList': [
+          {
+            'gmtCreate': '2017-12-08 10:37:56',
+            'guidancePrice': '40.60万',
+            'id': 29611,
+            'modelFullName': '奥迪A6L 2018款 30周年年型 TFSI 进取型',
+            'modelName': '2018款 30周年年型 TFSI 进取型',
+            'modelNo': '390820553474179072',
+            'seriesYear': '2018'
+          },
+          {
+            'gmtCreate': '2017-12-08 10:37:56',
+            'guidancePrice': '42.10万',
+            'id': 29612,
+            'modelFullName': '奥迪A6L 2018款 30周年年型 35 TFSI 时尚型',
+            'modelName': '2018款 30周年年型 35 TFSI 时尚型',
+            'modelNo': '390820553893609472',
+            'seriesYear': '2018'
+          },
+          {
+            'gmtCreate': '2017-12-08 10:37:56',
+            'guidancePrice': '44.94万',
+            'id': 29613,
+            'modelFullName': '奥迪A6L 2018款 30周年年型 35 TFSI 运动型',
+            'modelName': '2018款 30周年年型 35 TFSI 运动型',
+            'modelNo': '390820554313039872',
+            'seriesYear': '2018'
+          },
+          {
+            'gmtCreate': '2017-12-08 10:37:56',
+            'guidancePrice': '46.70万',
+            'id': 29614,
+            'modelFullName': '奥迪A6L 2018款 30周年年型 30 FSI 风尚型',
+            'modelName': '2018款 30周年年型 30 FSI 风尚型',
+            'modelNo': '390820554736664576',
+            'seriesYear': '2018'
+          },
+          {
+            'gmtCreate': '2017-12-08 10:37:56',
+            'guidancePrice': '51.28万',
+            'id': 29615,
+            'modelFullName': '奥迪A6L 2018款 30周年年型 45 TFSI quattro 运动型',
+            'modelName': '2018款 30周年年型 45 TFSI quattro 运动型',
+            'modelNo': '390820555156094976',
+            'seriesYear': '2018'
+          },
+          {
+            'gmtCreate': '2017-12-08 10:37:56',
+            'guidancePrice': '58.98万',
+            'id': 29616,
+            'modelFullName': '奥迪A6L 2018款 30周年年型 45 TFSI quattro 豪华型',
+            'modelName': '2018款 30周年年型 45 TFSI quattro 豪华型',
+            'modelNo': '390820555575525376',
+            'seriesYear': '2018'
+          },
+          {
+            'gmtCreate': '2017-12-08 10:37:56',
+            'guidancePrice': '69.80万',
+            'id': 29617,
+            'modelFullName': '奥迪A6L 2018款 30周年年型 50 TFSI quattro 尊享型',
+            'modelName': '2018款 30周年年型 50 TFSI quattro 尊享型',
+            'modelNo': '390820555999150080',
+            'seriesYear': '2018'
+          },
+          {
+            'gmtCreate': '2017-12-08 10:37:56',
+            'guidancePrice': '41.88万',
+            'id': 29618,
+            'modelFullName': '奥迪A6L 2017款 TFSI 技术型',
+            'modelName': '2017款 TFSI 技术型',
+            'modelNo': '390820556418580480',
+            'seriesYear': '2017'
+          },
+          {
+            'gmtCreate': '2017-12-08 10:37:56',
+            'guidancePrice': '43.88万',
+            'id': 29619,
+            'modelFullName': '奥迪A6L 2017款 30 FSI 技术型',
+            'modelName': '2017款 30 FSI 技术型',
+            'modelNo': '390820556842205184',
+            'seriesYear': '2017'
+          },
+          {
+            'gmtCreate': '2017-12-08 10:37:56',
+            'guidancePrice': '45.65万',
+            'id': 29620,
+            'modelFullName': '奥迪A6L 2017款 TFSI 舒适型',
+            'modelName': '2017款 TFSI 舒适型',
+            'modelNo': '390820557261635584',
+            'seriesYear': '2017'
+          }
+        ],
+        'startIndex': 0,
+        'totalNum': 29683,
+        'totalPage': 2969
+      },
+      'reCode': '0000',
+      'reMsg': '成功:',
+      'success': true
+    })
+  },
+  {
+    url: '/ces/model/detail',
+    on: true,
+    resp: Mock.mock({
+      'body': {
+        'brandName': '奥迪',
+        'classType': '中大型车',
+        'doors': '4',
+        'driveType': '前置前驱',
+        'engine': '1.8T 190马力 L4',
+        'engineEnvirStandard': '国V',
+        'engineExhaust': '1798',
+        'engineExhaustForFloat': '1.8',
+        'engineFuel': '汽油',
+        'engineIntake': '涡轮增压',
+        'engineMaxNj': '320',
+        'engineMaxNjSpeed': '1400-4100',
+        'engineMaxPower': '140',
+        'engineMaxPowerSpeed': '4200-6200',
+        'engineType': '-',
+        'gearNum': '7',
+        'gearboxType': '双离合变速箱(DCT)',
+        'guidancePrice': '406000.0',
+        'highSpeed': '235',
+        'hight': '1466',
+        'hlSize': '245/45 R18',
+        'listedTime': '2017.08',
+        'ljH': '-',
+        'ljQ': '-',
+        'logourl': 'http://api.test.cheegu.com/img/brand/5164D3D15AE9E3A1FF64A104AA3FF714.png',
+        'longMm': '5036',
+        'luggage': '470',
+        'masterBrand': '一汽-大众奥迪',
+        'modelFullName': '奥迪A6L 2018款 30周年年型 TFSI 进取型',
+        'modelImg': '//qncar2.autoimg.cn/cardfs/product/g5/M03/52/5F/autohomecar__wKgHzFmmhIGAeTHFAAwWCgxRjNc833.jpg?imageView2/1/w/240/h/180/format/jpeg',
+        'modelNo': 390820553474179072,
+        'name': '2018款 30周年年型 TFSI 进取型',
+        'parkingType': '电子驻车',
+        'qlSize': '245/45 R18',
+        'referprice': '40.60万',
+        'seats': '5',
+        'serialId': 3118,
+        'serialName': '奥迪A6L',
+        'serialPic': 'http://car2.autoimg.cn/cardfs/product/g15/M06/F0/89/s_autohomecar__wKgH5VeoZpGALcoBAAsR5oY50CU663.jpg',
+        'stated': '20',
+        'struct': '4门5座三厢车',
+        'tag': '',
+        'tank': '75',
+        'width': '1874',
+        'yyyy': '2018',
+        'zj': '3012'
+      },
+      'reCode': '0000',
+      'reMsg': '成功:成功',
       'success': true
     })
   }
