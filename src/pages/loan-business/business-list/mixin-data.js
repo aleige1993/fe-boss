@@ -1,6 +1,7 @@
 export default {
   data() {
     return {
+      productList: [],
       customerColumns: [
         {
           title: '项目编号',
@@ -24,11 +25,7 @@ export default {
           key: 'memberName',
           width: 200,
           render: (h, params) => {
-            if (params.row.custType === '1') {
-              return params.row.memberName;
-            } else {
-              return params.row.corpName;
-            }
+            return params.row.memberName;
           }
         },
         {
@@ -46,14 +43,12 @@ export default {
         {
           title: '证件号码',
           key: 'certNo',
-          width: 200,
-          render: (h, params) => {
-            if (params.row.custType === '1') {
-              return params.row.certNo;
-            } else {
-              return params.row.creditCode;
-            }
-          }
+          width: 200
+        },
+        {
+          title: '渠道商名称',
+          key: 'merchantAbbr',
+          width: 120
         },
         {
           title: '产品',
@@ -76,13 +71,27 @@ export default {
           width: 200
         },
         {
+          title: '渠道业务编号',
+          key: 'orderNo',
+          width: 200
+        },
+        {
+          title: '来源渠道',
+          key: 'loanChannel',
+          align: 'center',
+          width: 120,
+          render: (h, params) => {
+            return this.enumCode2Name(params.row.loanChannel, 'BizChannelEnum');
+          }
+        },
+        {
           title: '任务送达时间',
           key: 'taskArriveTime',
           width: 192
         },
         {
           title: '已耗时',
-          key: 'taskArriveTime',
+          key: 'timeConsuming',
           width: 192
         },
         {

@@ -3,7 +3,6 @@ export default {
     return {
       initApplyInfoLoading: false,
       memberNo: '',
-      corpNo: '',
       member: {},
       uploadFileName: '',
       showSelectProduct: false,
@@ -97,12 +96,12 @@ export default {
         taskAssigneeName: '', // 任务签收人姓名
         taskArriveTime: '', // 任务送达时间
         memberName: '', // 客户名称
-        corpNo: '', // 公司编号
+        // corpNo: '', // 公司编号
         productName: '', // 产品名称
         deptNo: '', // 业务归属部门ID
         deptCooperationStartDate: '', // 业务部门合作开始时间
         carType: '', // 车类型，1-一手车；2-二手车
-        creditCode: '', // 公司社会统一信用代码
+        // creditCode: '', // 公司社会统一信用代码
         applyPeriods: '', // 申请期数
         depositOrDownPayment: '', // 首付或保证金
         custManagerName: '', // 客户经理名称
@@ -112,7 +111,7 @@ export default {
         productNo: '', // 产品编号
         loanUse: '', // 贷款用途
         carUse: '', // 车辆用途1-自用2-指定第三方自用3-商用
-        corpName: '', // 公司名称
+        // corpName: '', // 公司名称
         mobileNo: '', // 手机号码
         taskNode: '', // 任务节点
         guaMethod: '', // 担保方式1-个人担保2-夫妻担保3-直系亲属担保

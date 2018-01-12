@@ -30,21 +30,27 @@ export default {
       this.$data.formAssure.guaPersonName = row.corpName;
       this.$data.showSelectCompanyGua = false;
     },
+    /**
+     * 选择公司客户
+     * @param company
+     */
     selectCompany(company) {
       // console.log(company);
-      this.$data.formData.corpNo = company.corpNo;
-      this.$data.formData.corpName = company.corpName;
+      this.$data.formData.memberNo = company.corpNo;
+      this.$data.formData.memberName = company.corpName;
       this.$data.formData.mobileNo = company.telephone;
       this.$data.formData.certType = '';
-      this.$data.formData.certNo = '';
-      this.$data.formData.creditCode = company.creditCode;
+      this.$data.formData.certNo = company.creditCode;
       this.$data.formData.custManagerNo = company.custMgrNo;
       this.$data.formData.custManagerName = company.custMgrName;
       this.$data.formData.deptNo = company.bizDepartmentCode;
       this.$data.formData.deptName = company.bizDepartmentName;
       this.$data.formData.deptCooperationStartDate = company.joinStartDate;
     },
-    // 接收姓名组件的客户信息
+    /**
+     * 选择个人客户
+     * @param CertData
+     */
     getMember(CertData) {
       // console.log(CertData);
       this.$data.member = CertData;
@@ -103,7 +109,7 @@ export default {
         if (valid) {
           if (
             (typeof this.$data.member.mbMemberDTO === 'undefined' || this.$data.member.mbMemberDTO.memberNo === '') &&
-            (typeof this.$data.formData.corpNo === 'undefined' || this.$data.formData.corpNo === '')
+            (typeof this.$data.formData.memberNo === 'undefined' || this.$data.formData.memberNo === '')
           ) {
             this.$Message.error('请先选择一个客户', 2);
             return;
@@ -157,7 +163,7 @@ export default {
       if (this.applyBasicInfo) {
         this.$data.formData = $.extend({}, this.applyBasicInfo);
         this.$data.memberNo = this.applyBasicInfo.memberNo;
-        this.$data.corpNo = this.applyBasicInfo.corpNo;
+        // this.$data.corpNo = this.applyBasicInfo.corpNo;
         this.$data.initApplyInfoLoading = true;
         let getLoanCarListResp = this.$http.post('/biz/listLoanCarByLoanNo', {
           loanNo: this.applyBasicInfo.loanNo

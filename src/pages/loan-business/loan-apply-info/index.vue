@@ -135,7 +135,7 @@
     </i-form>
     <!--客户信息组件-->
     <personal-info :readonly="readonly" v-if="customerType == '1'" :memberNo="memberNo" @getMember="getMember"></personal-info>
-    <company-customer-info :readonly="readonly" v-if="customerType == '2'" :corpNo="corpNo" @on-select-company="selectCompany"></company-customer-info>
+    <company-customer-info :readonly="readonly" v-if="customerType == '2'" :corpNo="memberNo" @on-select-company="selectCompany"></company-customer-info>
     <!--车辆信息-->
     <bs-form-block :title="'车辆信息'">
       <div class="form-top-actions" v-if="!readonly">
@@ -156,7 +156,7 @@
         <i-button @click="addLoanFIleGroup" type="info"><i class="iconfont icon-xinzeng"></i>&nbsp;新增</i-button>
       </div>
       <!--<i-table :loading="loanDataLoading" border ref="selection" :columns="loanColumns" :data="loanData"></i-table>-->
-      <loan-file-list v-for="(item, index) in loanData" :key="index"
+      <loan-file-list v-for="(item, index) in loanData" :key="index" :readonly="readonly"
                       :group-index="index" v-model="item.status" :title="item.loanDocName" :data="item.docDetailAttachList"
                       @on-group-remove="deleteloanFileGroup">
       </loan-file-list>
@@ -165,7 +165,7 @@
     <i-form v-if="!readonly" ref="formApplyOpinion" :model="formData" label-position="right" :label-width="160">
       <bs-form-block title="审核意见" >
         <i-row>
-          <i-col span="8">
+          <i-col span="18">
             <i-form-item label="结论">
               <i-radio-group v-model="formData.result">
                 <i-radio label="A">通过</i-radio>
@@ -210,13 +210,12 @@
               :rules="{required: true, message: '权利人类型不能为空'}"
               prop="custType">
               <i-select v-model="formCar.custType">
-                <i-option value="1">个人</i-option>
-                <i-option value="2">企业</i-option>
+                <i-option v-for="item in enumSelectData.get('PawnTypeEnum')" :key="item.itemCode" :value="item.itemCode">{{item.itemName}}</i-option>
               </i-select>
             </i-form-item>
           </i-col>
           <!--权利人-->
-          <i-col span="8">
+          <i-col span="8" v-if="formCar.custType=='1' || formCar.custType=='2'">
             <i-form-item
               label="权利人"
               :rules="{required: true, message: '权利人不能为空'}"
@@ -408,7 +407,7 @@
           </i-col>
           <!--发票号-->
           <i-col span="8">
-            <i-form-item label="发票开具单位" prop="billNo">
+            <i-form-item label="发票编号" prop="billNo">
               <i-input v-model="formCar.billNo" placeholder="">
               </i-input>
             </i-form-item>
@@ -497,8 +496,7 @@
           <i-col span="12">
             <i-form-item label="担保方式" prop="guaType">
               <i-select v-model="formAssure.guaType">
-                <i-option value="1">连带责任保证</i-option>
-                <i-option value="2">一般保证</i-option>
+                <i-option v-for="item in enumSelectData.get('GuaranteeTypeEnum')" :key="item.itemCode" :value="item.itemCode">{{item.itemName}}</i-option>
               </i-select>
             </i-form-item>
           </i-col>

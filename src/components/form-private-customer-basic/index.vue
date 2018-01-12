@@ -57,7 +57,7 @@
               <i-col span="8">
                 <i-form-item label="证件号码" prop="mbMemberDTO.certNo"
                   :rules="{required: true, message: '证件号码不能为空', trigger: 'blur'}">
-                  <i-input :readonly="isFromDetail" @blur="alert(1)" v-model.lazy="formData.mbMemberDTO.certNo"></i-input>
+                  <i-input :readonly="isFromDetail" @on-blur="verifyCertNo" v-model.lazy="formData.mbMemberDTO.certNo"></i-input>
                 </i-form-item>
               </i-col>
               <i-col span="8">
@@ -450,25 +450,6 @@ export default {
     BsModal,
     TreeGrid,
     BsDispicker
-  },
-  watch: {
-    'formData.mbMemberDTO.certNo'(newVal, oldVal) {
-      if (!this.$route.query.id) {
-        if (this.$data.checkoutCertNoTimer) {
-          this.$data.checkoutCertNoTimer = null;
-        }
-        this.$data.checkoutCertNoTimer = setTimeout(async () => {
-          this.$data.checkingCertNo = true;
-          let resp = await this.$http.post('/member/isExists', { certNo: newVal });
-          this.$data.checkingCertNo = false;
-          if (resp.success) {
-            if (resp.body.exists) {
-              Alertify.alert('您输入的证件号已经存在，请换一个证件再试');
-            }
-          }
-        }, 500);
-      }
-    }
   },
   methods: {
     selectEmployer(row, index) {

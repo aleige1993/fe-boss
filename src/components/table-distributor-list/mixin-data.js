@@ -27,11 +27,12 @@ export default {
         },
         {
           title: '公司名称',
+          width: 150,
           key: 'corpName'
         },
         {
           title: '统一社会信用代码',
-          width: 90,
+          width: 150,
           key: 'suCreditCode'
         },
         {
@@ -46,7 +47,7 @@ export default {
         },
         {
           title: '注册资金',
-          width: 70,
+          width: 120,
           key: 'regCapital'
         },
         {
@@ -56,17 +57,17 @@ export default {
         },
         {
           title: '授信总额度',
-          width: 70,
+          width: 120,
           key: 'creditTotalLimit'
         },
         {
           title: '可用额度',
-          width: 70,
+          width: 120,
           key: 'currentUsableLimit'
         },
         {
           title: '单笔最大可用额度',
-          width: 90,
+          width: 120,
           key: 'singleUsableLimit'
         },
         {

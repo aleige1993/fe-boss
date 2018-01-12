@@ -38,7 +38,9 @@
               <i-col span="8">
                 <i-form-item class="required" label="车辆销售价" prop="loanApproveCreditDTO.carSaleAmt"
                              :rules="{required: true, message: '请输入车辆销售价'}">
-                  <i-input :readonly="readonly" v-model="approveData.loanApproveCreditDTO.carSaleAmt"></i-input>
+                  <i-input :readonly="readonly" v-model="approveData.loanApproveCreditDTO.carSaleAmt">
+                    <span slot="append">元</span>
+                  </i-input>
                 </i-form-item>
               </i-col>
             </i-row>
@@ -72,7 +74,9 @@
               <i-col span="8">
                 <i-form-item class="required" label="产品利率" prop="loanApproveCreditDTO.loanNominalRate"
                              :rules="{required: true, message: '请输入产品利率'}">
-                  <i-input :readonly="true" v-model="approveData.loanApproveCreditDTO.loanNominalRate"></i-input>
+                  <i-input :readonly="true" v-model="approveData.loanApproveCreditDTO.loanNominalRate">
+                    <span slot="append">%</span>
+                  </i-input>
                 </i-form-item>
               </i-col>
               <i-col span="8">
@@ -120,7 +124,9 @@
               <i-col span="8">
                 <i-form-item class="required" label="车辆保险费" prop="loanApproveCreditDTO.carInsurance"
                              :rules="{required: true, message: '请选择车辆保险费'}">
-                  <i-input :readonly="true"  v-model="approveData.loanApproveCreditDTO.carInsurance"></i-input>
+                  <i-input :readonly="true"  v-model="approveData.loanApproveCreditDTO.carInsurance">
+                    <span slot="append">元</span>
+                  </i-input>
                 </i-form-item>
               </i-col>
               <i-col span="8">
@@ -221,7 +227,7 @@
           <!--审核意见-->
           <bs-form-block title="审核意见" v-if="!readonly">
             <i-row>
-              <i-col span="8">
+              <i-col span="18">
                 <i-form-item label="结论">
                   <i-radio-group v-model="approveData.loanApproveDTO.result">
                     <i-radio label="A">通过</i-radio>
