@@ -58,7 +58,9 @@ class Http {
           }
         );
       } else if (res.data.reCode === '0000' || res.data.reCode === 'BS0000') {
-        return res.data;
+        let data = res.data;
+        data.success = data.success === 'true';
+        return data;
       } else {
         // toastr.error(_url + '<br/>' + res.data.reCode + ' <br/> ' + res.data.reMsg);
         Vue.prototype.$Notice.error({ title: '错误提示',  desc: _url + '<br/>' + res.data.reCode + ' <br/> ' + res.data.reMsg });
@@ -105,7 +107,9 @@ class Http {
           }
         );
       } else if (res.data.reCode === '0000' || res.data.reCode === 'BS0000') {
-        return res.data;
+        let data = res.data;
+        data.success = data.success === 'true';
+        return data;
       } else {
         Vue.prototype.$Notice.error({ title: '错误提示', desc: _url + '<br/>' + res.data.reCode + ' <br/> ' + res.data.reMsg });
         return res.data;

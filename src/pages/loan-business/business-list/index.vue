@@ -9,28 +9,51 @@
       业务列表
     </div>
     <div class="search-form-container">
-      <i-form inline>
-        <i-form-item prop="user">
+      <i-form inline :model="searchForm" ref="loanSearchForm">
+        <i-form-item prop="loanNo">
           <i-input type="text" v-model="searchForm.loanNo" placeholder="项目编号"></i-input>
         </i-form-item>
-        <i-form-item prop="password">
+        <i-form-item prop="custName">
           <i-input v-model="searchForm.custName" type="text" placeholder="客户名称"></i-input>
         </i-form-item>
-        <i-form-item prop="password">
+        <i-form-item prop="certType">
           <i-select style="width: 120px;" v-model="searchForm.certType" placeholder="证件类型">
             <i-option v-for="item in enumSelectData.get('CertTypeEnum')" :key="item.itemCode" :value="item.itemCode">{{item.itemName}}</i-option>
           </i-select>
         </i-form-item>
-        <i-form-item prop="password">
+        <i-form-item prop="certNo">
           <i-input v-model="searchForm.certNo" type="text" placeholder="证件号码"></i-input>
         </i-form-item>
-        <i-form-item prop="password">
+        <i-form-item prop="productNo">
+          <i-select v-model="searchForm.productNo" type="text" placeholder="产品" style="width: 180px;">
+            <i-option v-for="product in productList" :value="product.productNo">{{product.productName}}</i-option>
+          </i-select>
+        </i-form-item>
+        <i-form-item prop="orderNo">
+          <i-input v-model="searchForm.orderNo" type="text" placeholder="渠道业务编号"></i-input>
+        </i-form-item>
+        <i-form-item prop="loanChannel">
+          <i-select style="width: 120px;" v-model="searchForm.loanChannel" placeholder="来源渠道">
+            <i-option v-for="item in enumSelectData.get('BizChannelEnum')" :key="item.itemCode" :value="item.itemCode">{{item.itemName}}</i-option>
+          </i-select>
+        </i-form-item>
+        <i-form-item prop="loanChannel" v-if="taskNode===''">
+          <i-select style="width: 120px;" v-model="searchForm.taskNode" placeholder="任务节点">
+            <i-option v-for="item in enumSelectData.get('LoanBizNodeEnum')" :key="item.itemCode" :value="item.itemCode">{{item.itemName}}</i-option>
+          </i-select>
+        </i-form-item>
+        <i-form-item prop="loanChannel" v-if="taskNode===''">
+          <i-select style="width: 120px;" v-model="searchForm.status" placeholder="状态">
+            <i-option v-for="item in enumSelectData.get('BizStatusEnum')" :key="item.itemCode" :value="item.itemCode">{{item.itemName}}</i-option>
+          </i-select>
+        </i-form-item>
+        <i-form-item prop="applyStartTime">
           <bs-datepicker v-model="searchForm.applyStartTime" type="text" placeholder="申请时间"></bs-datepicker>
         </i-form-item>
-        <i-form-item prop="password">
+        <i-form-item>
           -
         </i-form-item>
-        <i-form-item prop="password">
+        <i-form-item prop="applyEndTime">
           <bs-datepicker v-model="searchForm.applyEndTime" type="text" placeholder="申请时间"></bs-datepicker>
         </i-form-item>
         <i-form-item>
@@ -48,7 +71,7 @@
 <script>
   import MixinData from './mixin-data';
   export default {
-    name: 'privateCustomer',
+    name: 'loanBusinessList',
     mixins: [MixinData],
     data() {
       return {
@@ -70,6 +93,8 @@
           'certNo': '',
           'productNo': '',
           'productName': '',
+          'orderNo': '',
+          'loanChannel': '',
           'applyStartTime': '',
           'applyEndTime': '',
           'taskNode': '',
@@ -92,6 +117,11 @@
         default: '',
         required: false
       },
+      'status': {
+        type: String,
+        default: '',
+        required: false
+      },
       'type': {
         type: String,
         default: 'page',
@@ -102,17 +132,31 @@
       goToAdd() {
         this.$router.push('/index/customer/modify');
       },
+      async getProductList() {
+        let resp = await this.$http.get('/pms/product/list', { productName: '', currentPage: 1, pageSize: 99999 });
+        if (resp.success) {
+          this.$data.productList = resp.body.resultList;
+        }
+      },
       async getPrivateCustomerLoanList(page) {
+        let requestUrl = '/biz/listLoanBizByCon';
+        if (this.taskNode === '1') {
+          requestUrl = '/biz/listWaitLoanBizByCon';
+        }
         this.$data.dataLoading = true;
         if (page) {
           this.$data.searchForm.currentPage = page;
         }
-        this.$data.searchForm.taskNode = this.taskNode;
-        let resp = await this.$http.post('/biz/listLoanBizByCon', this.$data.searchForm);
+        // 如果不是查询全部，就用指定的状态赋值
+        if (this.taskNode !== '') {
+          this.$data.searchForm.taskNode = this.taskNode;
+          this.$data.searchForm.status = this.status;
+        }
+        let resp = await this.$http.post(requestUrl, this.$data.searchForm);
         this.$data.dataLoading = false;
         this.$data.privateCustomerLoanList = resp.body.resultList;
-        this.$data.currentPage = resp.body.currentPage;
-        this.$data.total = resp.body.totalNum;
+        this.$data.currentPage = resp.body.currentPage / 1;
+        this.$data.total = resp.body.totalNum / 1;
       },
       jumpPage(page) {
         this.getPrivateCustomerLoanList(page);
@@ -127,10 +171,14 @@
     watch: {
       'taskNode'() {
         this.getPrivateCustomerLoanList();
+        this.$refs['loanSearchForm'].resetFields();
+        this.$data.searchForm.taskNode = this.taskNode;
+        this.$data.searchForm.status = this.status;
       }
     },
     mounted() {
       this.getPrivateCustomerLoanList();
+      this.getProductList();
       let enumSelectData = this.$store.getters.enumSelectData;
       this.$data.certTypeEnum = enumSelectData.get('CertTypeEnum');
       // console.log(.get('YesNoEnum'));

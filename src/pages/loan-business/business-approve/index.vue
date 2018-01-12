@@ -3,7 +3,7 @@
     <i-breadcrumb separator=">">
       <i-breadcrumb-item href="/">首页</i-breadcrumb-item>
       <i-breadcrumb-item href="/index/loanbusiness">贷款业务</i-breadcrumb-item>
-      <i-breadcrumb-item>{{breadCrumbName}} {{isFromDetail}}</i-breadcrumb-item>
+      <i-breadcrumb-item>{{breadCrumbName}}</i-breadcrumb-item>
     </i-breadcrumb>
     <div class="form-top-actions"></div>
 
@@ -17,14 +17,14 @@
       <i-tab-pane label="人行征信报告">
         <iframe v-if="tabIndex == 2" src="http://www.baidu.com" width="100%" :height="iframeHeight" frameborder="0"></iframe>
       </i-tab-pane>
-      <i-tab-pane label="芝麻信用报告">
+      <!--<i-tab-pane label="芝麻信用报告">
         <iframe v-if="tabIndex == 3" src="http://www.songchedai.com" width="100%" :height="iframeHeight" frameborder="0"></iframe>
-      </i-tab-pane>
+      </i-tab-pane>-->
       <i-tab-pane label="大数据信息">
-        <tab-big-data v-if="tabIndex == 4"></tab-big-data>
+        <tab-big-data v-if="tabIndex == 3"></tab-big-data>
       </i-tab-pane>
       <i-tab-pane :label="'审核历史意见'">
-        <approve-history v-if="tabIndex == 5"></approve-history>
+        <approve-history v-if="tabIndex == 4"></approve-history>
       </i-tab-pane>
     </i-tabs>
     <div v-if="!isFromDetail" class="form-footer-actions">
