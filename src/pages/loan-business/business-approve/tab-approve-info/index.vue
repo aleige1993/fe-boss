@@ -148,11 +148,15 @@
             </i-row>
           </bs-form-block>
           <bs-form-block :title="'费用收取方案'">
-            <i-table :columns="feeMethodCol" :data="approveData.loanApproveFeePlanDTOS"></i-table>
+            <i-table :columns="feeMethodCol" @on-selection-change="selectFinanceRow" :data="approveData.loanApproveFeePlanDTOS"></i-table>
             <i-row style="margin-top: 10px;">
-              <i-col span="8">
+              <i-col span="24">
                 <i-form-item class="required" label="可融资金额">
-                  <i-input :readonly="true" :rows="4" v-model="approveData.loanApproveCreditDTO.riskControlContent"></i-input>
+                  <i-input style="width: 120px" :readonly="true" v-model="financingAmt"></i-input>
+                  <i-button type="primary" @click="countFinanceAmount" :loading="countFinanceLoading" size="large">
+                    <span v-if="countFinanceLoading">正在计算...</span>
+                    <span v-else>计算可融资金额</span>
+                  </i-button>
                 </i-form-item>
               </i-col>
             </i-row>

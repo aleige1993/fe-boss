@@ -101,7 +101,7 @@ export default {
                 props: {
                   type: 'error',
                   size: 'small',
-                  disabled: this.creditStatus !== '3'
+                  disabled: this.$route.query.status !== '3'
                 },
                 on: {
                   click: () => {
@@ -116,6 +116,43 @@ export default {
       ],
       // 费用收取方案
       feeMethodCol: [
+        {
+          type: 'selection',
+          width: 60,
+          align: 'center'
+        },
+        {
+          title: '计算方式',
+          width: 120,
+          render: (h, params) => {
+            return h('i-select', {
+              props: {
+                disabled: this.readonly,
+                value: '+'
+              },
+              on: {
+                'on-change': (value) => {
+                  let rowData = { ...params.row };
+                  rowData.calcSign = value;
+                  this.$data.approveData.loanApproveFeePlanDTOS[params.index] = rowData;
+                }
+              }
+            }, [
+              h('i-option', {
+                props: {
+                  label: '加',
+                  value: '+'
+                }
+              }),
+              h('i-option', {
+                props: {
+                  label: '减',
+                  value: '-'
+                }
+              })
+            ]);
+          }
+        },
         {
           title: '费用项目代码',
           key: 'feeTypeCode'
@@ -182,6 +219,9 @@ export default {
           }
         }
       ],
+      countFinanceLoading: false,
+      countFinanceList: [],
+      financingAmt: '',
       // 放款条件
       loanPaymentConditionCol: [
         {
@@ -204,7 +244,7 @@ export default {
           key: 'paymentPercent'
         },
         {
-          title: '资方借款利率',
+          title: '资方借款利率（%）',
           key: 'loanRate'
         },
         {
