@@ -213,7 +213,7 @@
             this.$router.push({
               path: '/index/loanbusiness/contract',
               query: {
-                currentPage: this.$route.query.currentPage / 1
+                currentPage: this.$route.query.currentPage
               }
             });
           }
@@ -229,7 +229,7 @@
             this.$router.push({
               path: '/index/loanbusiness/contract/againExamine',
               query: {
-                currentPage: this.$route.query.currentPage / 1
+                currentPage: this.$route.query.currentPage
               }
             });
           }
@@ -289,8 +289,8 @@
         if (reps.success) {
           if (reps.body.resultList.length !== 0) {
             this.$data.examineData = reps.body.resultList;
-            this.$data.currentPageExamine = reps.body.currentPage;
-            this.$data.totalExamine = reps.body.totalNum;
+            this.$data.currentPageExamine = reps.body.currentPage / 1;
+            this.$data.totalExamine = reps.body.totalNum / 1;
           } else {
             this.$data.examineData = [];
           }

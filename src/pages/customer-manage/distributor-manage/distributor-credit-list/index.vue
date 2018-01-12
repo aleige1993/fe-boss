@@ -47,7 +47,9 @@
     },
     mounted() {
       // 从新增页面跳转回来，加载之前的指定页码
-      this.$data.currentPage = this.$route.query.currentPage / 1;
+      if (this.$route.query.currentPage) {
+        this.$data.currentPage = this.$route.query.currentPage / 1;
+      }
       this.getList();
     },
     components: {
