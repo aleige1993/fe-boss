@@ -177,7 +177,7 @@ export default {
           key: 'feePercent'
         },
         {
-          title: '固定金额（元）',
+          title: '费用金额（元）',
           key: 'feeAmt'
         },
         {
@@ -318,7 +318,7 @@ export default {
           'remark': '',
           'repaymentMode': '',
           'loanMode': '1',
-          carSaleAmt: '' // 车辆销售价格
+          carSaleAmt: '' // 可融资金额
         },
         // 费用收取方案
         'loanApproveFeePlanDTOS': [
