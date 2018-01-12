@@ -67,8 +67,8 @@
         this.$data.dataLoading = false;
         if (resp.body.resultList.length !== 0) {
           this.$data.data1 = resp.body.resultList;
-          this.$data.currentPage = resp.body.currentPage / 1;
-          this.$data.total = resp.body.totalNum / 1;
+          this.$data.currentPage = resp.body.currentPage;
+          this.$data.total = resp.body.totalNum;
         } else {
           this.$data.data1 = [];
         }

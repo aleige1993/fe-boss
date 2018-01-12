@@ -123,10 +123,10 @@
       // 冻结
       async congeal(row) {
         let statusText = '';
-        if (row.enableStatus === '0') { //0=冻结；1=激活
+        if (row.enableStatus === '0') { // 0=冻结；1=激活
           statusText = '激活';
         }
-        if (row.enableStatus === '1') { //0=冻结；1=激活
+        if (row.enableStatus === '1') { // 0=冻结；1=激活
           statusText = '冻结';
         }
         Alertify.confirm('确定要' + statusText + '当前用户吗？', async (ok) => {

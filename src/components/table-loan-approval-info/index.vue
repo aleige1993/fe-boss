@@ -95,8 +95,8 @@
         if (reps.success) {
           if (reps.body.resultList.length !== 0) {
             this.$data.examineData = reps.body.resultList;
-            this.$data.currentPageExamine = reps.body.currentPage / 1;
-            this.$data.totalExamine = reps.body.totalNum / 1;
+            this.$data.currentPageExamine = reps.body.currentPage;
+            this.$data.totalExamine = reps.body.totalNum;
           } else {
             this.$data.examineData = [];
           }

@@ -206,7 +206,7 @@
           this.$router.push({
             path: '/index/loanbusiness/contract/sign',
             query: {
-              currentPage: this.$route.query.currentPage / 1
+              currentPage: this.$route.query.currentPage
             }
           });
         }

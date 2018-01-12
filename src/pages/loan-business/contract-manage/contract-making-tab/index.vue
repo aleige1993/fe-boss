@@ -213,7 +213,7 @@
             this.$router.push({
               path: '/index/loanbusiness/contract',
               query: {
-                currentPage: this.$route.query.currentPage / 1
+                currentPage: this.$route.query.currentPage
               }
             });
           }
@@ -229,7 +229,7 @@
             this.$router.push({
               path: '/index/loanbusiness/contract/againExamine',
               query: {
-                currentPage: this.$route.query.currentPage / 1
+                currentPage: this.$route.query.currentPage
               }
             });
           }
