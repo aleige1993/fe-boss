@@ -19,6 +19,11 @@
         <i-form-item label="贷款材料名称" prop="loanDocName">
           <i-input v-model="formCustom.loanDocName" type="textarea" :autosize="{minRows: 2,maxRows: 5}" placeholder="请输入贷款材料名称..."></i-input>
         </i-form-item>
+        <i-form-item label="客户类型" prop="approveRuleName">
+          <i-select v-model="formCustom.custType" placeholder="请选择客户类型">
+            <i-option v-for="item in enumSelectData.get('CustTypeEnum')" :value="item.itemCode">{{item.itemName}}</i-option>
+          </i-select>
+        </i-form-item>
         <i-form-item class="text-right">
           <i-button type="primary" @click="formSubmit">提交</i-button>
           <i-button type="ghost" @click="formCancel" style="margin-left: 8px">取消</i-button>
@@ -47,7 +52,8 @@
         total: 0,
         pageSize: 15,
         formCustom: {
-          loanDocName: ''
+          loanDocName: '',
+          custType: ''
         }
       };
     },
@@ -76,7 +82,8 @@
       // 新增的保存请求方法
       async addSuBmit() {
         let resAdd = await this.$http.post('/pms/cfgLoanDoc/save', {
-          loanDocName: this.$data.formCustom.loanDocName
+          loanDocName: this.$data.formCustom.loanDocName,
+          custType: this.$data.formCustom.custType
         });
         this.$data.showAddModal = false;
         this.$data.buttonLoading = false; // 关闭按钮的loading状态
@@ -121,7 +128,8 @@
       async modifySubmit() {
         let resModify = await this.$http.post('/pms/cfgLoanDoc/modify', {
           loanDocName: this.$data.formCustom.loanDocName,
-          loanDocCode: this.$data.formCustom.loanDocCode
+          loanDocCode: this.$data.formCustom.loanDocCode,
+          custType: this.$data.formCustom.custType
         });
         this.$data.buttonLoading = false;
         this.$data.showAddModal = false;

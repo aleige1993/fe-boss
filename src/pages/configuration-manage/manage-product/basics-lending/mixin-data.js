@@ -12,6 +12,13 @@ export default {
           key: 'loanRule'
         },
         {
+          title: '客户类型',
+          key: 'custType',
+          render: (h, params) => {
+            return this.enumCode2Name(params.row.custType, 'CustTypeEnum');
+          }
+        },
+        {
           title: '操作',
           key: 'action',
           width: 200,

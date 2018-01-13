@@ -64,7 +64,7 @@ export default {
       redirectUrl: '',
       errorInfo: '',
       loginForm: {
-        loginName: 'test',
+        loginName: 'admin',
         loginPwd: '111111'
       }
     };

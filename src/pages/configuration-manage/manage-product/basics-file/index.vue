@@ -19,6 +19,11 @@
         <i-form-item label="归档材料名称" prop="finishedDocName">
           <i-input v-model="formCustom.finishedDocName" type="textarea" :autosize="{minRows: 2,maxRows: 5}" placeholder="请输入归档材料名称..."></i-input>
         </i-form-item>
+        <i-form-item label="客户类型" prop="approveRuleName">
+          <i-select v-model="formCustom.custType" placeholder="请选择客户类型">
+            <i-option v-for="item in enumSelectData.get('CustTypeEnum')" :value="item.itemCode">{{item.itemName}}</i-option>
+          </i-select>
+        </i-form-item>
         <i-form-item class="text-right">
           <i-button type="primary" @click="formSubmit" :loading="buttonLoading">
             <span v-if="!buttonLoading">提交</span>
@@ -50,7 +55,8 @@
         total: 0,
         pageSize: 15,
         formCustom: {
-          finishedDocName: ''
+          finishedDocName: '',
+          custType: ''
         }
       };
     },
@@ -80,7 +86,8 @@
       // 新增的保存请求方法
       async addSuBmit() {
         let resAdd = await this.$http.post('/pms/cfgFinishedDoc/save', {
-          finishedDocName: this.$data.formCustom.finishedDocName
+          finishedDocName: this.$data.formCustom.finishedDocName,
+          custType: this.$data.formCustom.custType
         });
         this.$data.showAddModal = false;
         this.$data.buttonLoading = false; // 关闭按钮的loading状态
@@ -107,7 +114,8 @@
       async setSubmit() {
         let resModify = await this.$http.post('/pms/cfgFinishedDoc/modify', {
           finishedDocCode: this.$data.formCustom.finishedDocCode,
-          finishedDocName: this.$data.formCustom.finishedDocName
+          finishedDocName: this.$data.formCustom.finishedDocName,
+          custType: this.$data.formCustom.custType
         });
         this.$data.showAddModal = false;
         this.$data.buttonLoading = false;

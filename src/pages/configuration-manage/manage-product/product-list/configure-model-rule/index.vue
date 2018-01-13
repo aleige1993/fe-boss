@@ -34,6 +34,13 @@
           {
             title: '准入规则名称',
             key: 'approveRuleName'
+          },
+          {
+            title: '客户类型',
+            key: 'custType',
+            render: (h, params) => {
+              return this.enumCode2Name(params.row.custType, 'CustTypeEnum');
+            }
           }
         ],
         data1: []

@@ -74,7 +74,8 @@ export default {
       this.$data.formData.productType = row.productType;
       this.$data.showSelectProduct = false;
       let resp = await this.$http.get('/pms/product/loanDocList', {
-        productNo: row.productNo
+        productNo: row.productNo,
+        custType: this.customerType
       });
       if (resp.success) {
         // 筛选出当前产品选中的配置
@@ -172,7 +173,8 @@ export default {
           loanNo: this.applyBasicInfo.loanNo
         });
         let getLoanDocListResp = this.$http.post('/biz/listDocDetailByLoanNo', {
-          loanNo: this.applyBasicInfo.loanNo
+          loanNo: this.applyBasicInfo.loanNo,
+          custType: this.applyBasicInfo.custType
         });
         this.$data.initApplyInfoLoading = false;
         let carResp = await getLoanCarListResp;

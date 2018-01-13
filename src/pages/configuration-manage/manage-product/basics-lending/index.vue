@@ -17,7 +17,12 @@
     <pt-modal title="新增" v-model="showAddModal">
       <i-form  ref="formCustom" :model="formCustom" label-position="left" :label-width="130">
         <i-form-item label="放款条件名称" prop="loanRule">
-          <i-input v-model="formCustom.loanRule" type="textarea" :autosize="{minRows: 2,maxRows: 5}" placeholder="请输入放款条件名称..."></i-input>
+          <i-input v-model="formCustom.loanRule" type="textarea" :rows="4" :autosize="{minRows: 2,maxRows: 5}" placeholder="请输入放款条件名称..."></i-input>
+        </i-form-item>
+        <i-form-item label="客户类型" prop="approveRuleName">
+          <i-select v-model="formCustom.custType" placeholder="请选择客户类型">
+            <i-option v-for="item in enumSelectData.get('CustTypeEnum')" :value="item.itemCode">{{item.itemName}}</i-option>
+          </i-select>
         </i-form-item>
         <i-form-item class="text-right">
           <i-button type="primary" @click="formSubmit" :loading="buttonLoading">
@@ -50,7 +55,8 @@
         total: 0,
         pageSize: 15,
         formCustom: {
-          loanRule: ''
+          loanRule: '',
+          custType: ''
         }
       };
     },
@@ -81,7 +87,8 @@
       // 新增的保存请求方法
       async addSuBmit() {
         let resAdd = await this.$http.post('/pms/productLoan/save', {
-          loanRule: this.$data.formCustom.loanRule
+          loanRule: this.$data.formCustom.loanRule,
+          custType: this.$data.formCustom.custType
         });
         this.$data.buttonLoading = false; // 关闭按钮的loading状态
         if (resAdd.success) {
@@ -107,7 +114,8 @@
       async setSubmit() {
         let resModify = await this.$http.post('/pms/productLoan/modify', {
           loanRuleNo: this.$data.formCustom.loanRuleNo,
-          loanRule: this.$data.formCustom.loanRule
+          loanRule: this.$data.formCustom.loanRule,
+          custType: this.$data.formCustom.custType
         });
         this.$data.showAddModal = false;
         this.$data.buttonLoading = false;

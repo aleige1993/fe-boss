@@ -124,9 +124,10 @@
               <i-col span="8">
                 <i-form-item class="required" label="车辆保险费" prop="loanApproveCreditDTO.carInsurance"
                              :rules="{required: true, message: '请选择车辆保险费'}">
-                  <i-input :readonly="true"  v-model="approveData.loanApproveCreditDTO.carInsurance">
-                    <span slot="append">元</span>
-                  </i-input>
+                  <!--<i-input :readonly="true"  v-model="approveData.loanApproveCreditDTO.carInsurance"></i-input>-->
+                  <i-select v-model="approveData.loanApproveCreditDTO.carInsurance" placeholder="请选择">
+                    <i-option v-for="item in enumSelectData.get('CarInsuranceEnum')" :key="item.itemCode" :value="item.itemCode">{{item.itemName}}</i-option>
+                  </i-select>
                 </i-form-item>
               </i-col>
               <i-col span="8">
@@ -148,7 +149,7 @@
             </i-row>
           </bs-form-block>
           <bs-form-block :title="'费用收取方案'">
-            <i-table ref="feeMethodsTable" :columns="feeMethodCol" @on-select="selectFinanceRow" :data="approveData.loanApproveFeePlanDTOS"></i-table>
+            <i-table ref="feeMethodsTable" :columns="feeMethodCol" :data="approveData.loanApproveFeePlanDTOS"></i-table>
             <i-row style="margin-top: 10px;">
               <i-col span="24">
                 <i-form-item class="required" label="可融资金额">
@@ -350,7 +351,6 @@
     methods: {
       getPageInitData() {
         // 如果是一级审批或者二级审批，用业务编号初始化页面数据获取订单申请和审批信息，
-        // this.getFirstApproveInfo(this.applyBasicInfo.loanNo);
         // 如果是初审，用产品和申请期限初始化有关产品的基础信息
         this.getProductApproveInfo(this.applyBasicInfo.loanNo, this.applyBasicInfo.productNo, this.applyBasicInfo.applyPeriods);
         this.getFirstApproveList(this.applyBasicInfo.loanNo);

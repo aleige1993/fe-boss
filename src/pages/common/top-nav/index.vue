@@ -67,7 +67,7 @@ export default {
   height: 50px;
   box-shadow: 0 4px 4px #dddde0;
   background-color: #fff;
-  padding: 10px 50px 0;
+  padding: 10px 10px 0;
   position: fixed;
   width: 100%;
   top: 40px;

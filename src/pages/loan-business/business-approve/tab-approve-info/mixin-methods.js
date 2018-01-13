@@ -80,9 +80,10 @@ export default {
       this.$data.approveData.loanApproveCreditDTO.productName = row.productName;
       // this.$data.formData.productType = row.productType;
       this.$data.showSelectProduct = false;
+      this.getLoanPeriodByProductNo(row.productNo);
     },
     /**
-     * 一级审批和二级审批状态 -- 获取初审信息
+     * 一级审批和二级审批状态 -- 获取初审信息    ---这个接口暂时废弃
      */
     async getFirstApproveInfo(loanNo) {
       this.$data.initPageLoading = true;
@@ -123,7 +124,8 @@ export default {
         productNo,
         loanNo,
         productPeriods,
-        applyAmt: '' // 申请金额
+        custType: this.applyBasicInfo.custType || '', // 客户类型
+        applyAmt: this.applyBasicInfo.applyAmt || '' // 申请金额
       });
       this.$data.initPageLoading = false;
       if (resp.success) {

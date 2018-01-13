@@ -13,6 +13,13 @@ export default {
           key: 'sysProcessOpinion'
         },
         {
+          title: '客户类型',
+          key: 'custType',
+          render: (h, params) => {
+            return this.enumCode2Name(params.row.custType, 'CustTypeEnum');
+          }
+        },
+        {
           title: '初审意见',
           key: 'status',
           render: (h, params) => {
@@ -168,10 +175,10 @@ export default {
             return h('span', {}, this.enumCode2Name(params.row.feeTakeType, 'ReceiveTypeEnum'));
           }
         },
-        {
+        /* {
           title: '计算方式',
           key: 'feeCountType'
-        },
+        },*/
         {
           title: '比例%',
           key: 'feePercent'
@@ -231,6 +238,26 @@ export default {
         {
           title: '内容',
           key: 'paymentConContent'
+        },
+        {
+          title: '操作',
+          render: (h, params) => {
+            return h('div', [
+              h('Button', {
+                props: {
+                  type: 'error',
+                  size: 'small',
+                  disabled: this.$route.query.status !== '3'
+                },
+                on: {
+                  click: () => {
+                    // console.log(params);
+                    this.$data.approveData.loanPaymentConditionDTOS.splice(params.index, 1);
+                  }
+                }
+              }, '删除')
+            ]);
+          }
         }
       ],
       // 资金方

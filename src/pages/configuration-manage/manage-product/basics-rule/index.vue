@@ -19,7 +19,11 @@
         <i-form-item label="准入规则名称" prop="approveRuleName">
           <i-input v-model="formCustom.approveRuleName" type="textarea" :autosize="{minRows: 2,maxRows: 5}" placeholder="请输入准入规则名称..."></i-input>
         </i-form-item>
-
+        <i-form-item label="客户类型" prop="approveRuleName">
+          <i-select v-model="formCustom.custType" placeholder="请选择客户类型">
+            <i-option v-for="item in enumSelectData.get('CustTypeEnum')" :value="item.itemCode">{{item.itemName}}</i-option>
+          </i-select>
+        </i-form-item>
         <i-form-item class="text-right">
           <i-button type="primary" @click="formSubmit" :loading="buttonLoading">
             <span v-if="!buttonLoading">提交</span>
@@ -52,7 +56,8 @@
         pageSize: 15,
         currentPage: 1,
         formCustom: {
-          approveRuleName: ''
+          approveRuleName: '',
+          custType: ''
         }
       };
     },
@@ -83,6 +88,7 @@
       async addSuBmit() {
         let resAdd = await this.$http.post('/pms/cfgApproveRule/save', {
           approveRuleName: this.$data.formCustom.approveRuleName,
+          custType: this.$data.formCustom.custType,
           productNo: '123754',
           productName: '测试001'
         });
@@ -113,6 +119,7 @@
         let resModify = await this.$http.post('/pms/cfgApproveRule/modify', {
           approveRuleName: this.$data.formCustom.approveRuleName,
           approveRuleCode: this.$data.formCustom.approveRuleCode,
+          custType: this.$data.formCustom.custType,
           productNo: '123456789',
           productName: '模拟测试名称'
         });

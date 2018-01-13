@@ -37,6 +37,13 @@
           {
             title: '放款条件名称',
             key: 'loanRule'
+          },
+          {
+            title: '客户类型',
+            key: 'custType',
+            render: (h, params) => {
+              return this.enumCode2Name(params.row.custType, 'CustTypeEnum');
+            }
           }
         ],
         data1: []
