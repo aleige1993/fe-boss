@@ -19,6 +19,7 @@
         <i-form-item label="准入规则名称" prop="approveRuleName">
           <i-input v-model="formCustom.approveRuleName" type="textarea" :autosize="{minRows: 2,maxRows: 5}" placeholder="请输入准入规则名称..."></i-input>
         </i-form-item>
+
         <i-form-item class="text-right">
           <i-button type="primary" @click="formSubmit" :loading="buttonLoading">
             <span v-if="!buttonLoading">提交</span>
@@ -72,8 +73,8 @@
         this.$data.dataLoading = false;
         if (resp.body.resultList.length !== 0) {
           this.$data.data1 = resp.body.resultList;
-          this.$data.currentPage = resp.body.currentPage;
-          this.$data.total = resp.body.totalNum;
+          this.$data.currentPage = resp.body.currentPage / 1;
+          this.$data.total = resp.body.totalNum / 1;
         } else {
           this.$data.data1 = [];
         }

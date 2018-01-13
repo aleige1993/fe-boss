@@ -28,6 +28,48 @@ export default {
       });
     },
     /**
+     * 判断是否有选择的行的应收金额没填
+     */
+    hasFinanceAmtInvalid(dataList) {
+      let invalid = false;
+      dataList.forEach((item, index) => {
+        if (item.calcAmt === '') {
+          invalid = true;
+        }
+      });
+      return invalid;
+    },
+    /**
+     * 计算可融资金额
+     */
+    async countFinanceAmount() {
+      let selection = this.$refs['feeMethodsTable'].getSelection();
+      let selectData = selection.map(item => {
+        return {
+          calcAmt: item.feeActualAmt || '',
+          calcSign: item.calcSign || '+'
+        };
+      });
+      if (selectData.length === 0) {
+        this.$Notice.error({
+          title: '错误提示',
+          desc: '请先至少选择一条费用收取方案'
+        });
+      } else if (this.hasFinanceAmtInvalid(selectData)) {
+        this.$Notice.error({
+          title: '错误提示',
+          desc: '请先填写所选项的应收金额'
+        });
+      } else {
+        this.$data.countFinanceLoading = true;
+        let resp = await this.$http.post('/biz/countFinancingAmt', this.$data.countFinanceList);
+        this.$data.countFinanceLoading = false;
+        if (resp.success) {
+          this.$data.approveData.loanApproveCreditDTO.carSaleAmt = resp.body.financingAmt;
+        }
+      }
+    },
+    /**
      * 用信方案选择产品
      * @param row
      * @param index
@@ -80,7 +122,8 @@ export default {
       let resp = await this.$http.post('/biz/queryApproveProductCredit', {
         productNo,
         loanNo,
-        productPeriods
+        productPeriods,
+        applyAmt: '' // 申请金额
       });
       this.$data.initPageLoading = false;
       if (resp.success) {

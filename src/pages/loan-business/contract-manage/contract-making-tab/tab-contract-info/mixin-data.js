@@ -43,7 +43,7 @@ export default {
           align: 'center',
           key: 'guaPersonType',
           render: (h, params) => {
-            return h('span', {}, this.enumCode2Name(params.row.guaPersonType, 'MemberTypeEnum'));
+            return h('span', {}, this.enumCode2Name(params.row.guaPersonType, 'CustTypeEnum'));
           }
         },
         {

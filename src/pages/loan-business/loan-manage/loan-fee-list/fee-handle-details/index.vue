@@ -341,7 +341,7 @@
           this.$router.push({
             path: '/index/loanbusiness/loan/fee',
             query: {
-              currentPage: this.$route.query.currentPage / 1
+              currentPage: this.$route.query.currentPage
             }
           });
         }

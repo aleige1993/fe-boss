@@ -49,8 +49,7 @@
     name: 'loanFileList',
     data() {
       return {
-        isUploading: false,
-        status: '1'
+        isUploading: false
       };
     },
     props: {

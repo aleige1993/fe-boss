@@ -1221,7 +1221,7 @@ export default [
         },
         // 担保人（保证人）类型
         {
-          'groupKey': 'MemberTypeEnum',
+          'groupKey': 'CustTypeEnum',
           'items': [
             {
               'itemCode': '1',

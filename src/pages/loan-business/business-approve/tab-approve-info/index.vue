@@ -35,14 +35,14 @@
                   </i-select>
                 </i-form-item>
               </i-col>
-              <i-col span="8">
+              <!--<i-col span="8">
                 <i-form-item class="required" label="车辆销售价" prop="loanApproveCreditDTO.carSaleAmt"
                              :rules="{required: true, message: '请输入车辆销售价'}">
                   <i-input :readonly="readonly" v-model="approveData.loanApproveCreditDTO.carSaleAmt">
                     <span slot="append">元</span>
                   </i-input>
                 </i-form-item>
-              </i-col>
+              </i-col>-->
             </i-row>
             <i-row>
               <i-col span="8">
@@ -148,11 +148,17 @@
             </i-row>
           </bs-form-block>
           <bs-form-block :title="'费用收取方案'">
-            <i-table :columns="feeMethodCol" :data="approveData.loanApproveFeePlanDTOS"></i-table>
+            <i-table ref="feeMethodsTable" :columns="feeMethodCol" @on-select="selectFinanceRow" :data="approveData.loanApproveFeePlanDTOS"></i-table>
             <i-row style="margin-top: 10px;">
-              <i-col span="8">
+              <i-col span="24">
                 <i-form-item class="required" label="可融资金额">
-                  <i-input :readonly="true" :rows="4" v-model="approveData.loanApproveCreditDTO.riskControlContent"></i-input>
+                  <i-input style="width: 120px" :readonly="true" v-model="approveData.loanApproveCreditDTO.carSaleAmt"></i-input>
+                  <i-poptip trigger="hover" title="提示标题" content="提示内容提示内容提示内容提示内容提示内容提示内容提示内容提示内容提示内容提示内容提示内容">
+                    <i-button type="primary" @click="countFinanceAmount" :loading="countFinanceLoading" size="large">
+                      <span v-if="countFinanceLoading">正在计算...</span>
+                      <span v-else>计算可融资金额</span>
+                    </i-button>
+                  </i-poptip>
                 </i-form-item>
               </i-col>
             </i-row>
