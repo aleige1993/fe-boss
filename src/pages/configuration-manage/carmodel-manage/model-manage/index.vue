@@ -49,7 +49,7 @@
             <i-form-item class="upload-image" label="车型图片" :rules="{required: true, message: '请上传车型图片'}" prop="modelImg">
               <input type="hidden" v-model="fromData.modelImg"/>
               <bs-big-img :thumb="fromData.modelImg" :thumbHeight="32" :full="fromData.modelImg" :full-width="945"></bs-big-img>
-              <i-upload :on-success="uploadSuccess" :on-error="uploadError" :action="$config.HTTPBASEURL+'/common/upload'" :show-upload-list="false">
+              <i-upload :on-success="uploadModelSuccess" :on-error="uploadError" :action="$config.HTTPBASEURL+'/common/upload'" :show-upload-list="false">
                 <i-form-item prop="password">
                   <a href="javascript:">修改</a>
                 </i-form-item>
@@ -197,7 +197,7 @@
             <i-form-item class="upload-image" label="logo地址" :rules="{required: true, message: '请上传logo地址'}" prop="modelImg">
               <input type="hidden" v-model="fromData.logourl"/>
               <bs-big-img :thumb="fromData.logourl" :thumbHeight="32" :full="fromData.logourl" :full-width="945"></bs-big-img>
-              <i-upload :on-success="uploadSuccess" :on-error="uploadError" :action="$config.HTTPBASEURL+'/common/upload'" :show-upload-list="false">
+              <i-upload :on-success="uploadLogoSuccess" :on-error="uploadError" :action="$config.HTTPBASEURL+'/common/upload'" :show-upload-list="false">
                 <i-form-item prop="password">
                   <a href="javascript:">修改</a>
                 </i-form-item>
@@ -251,7 +251,7 @@
             <i-form-item class="upload-image" label="车系图片" :rules="{required: true, message: '请上传车系图片'}" prop="modelImg">
               <input type="hidden" v-model="fromData.serialPic"/>
               <bs-big-img :thumb="fromData.serialPic" :thumbHeight="32" :full="fromData.serialPic" :full-width="945"></bs-big-img>
-              <i-upload :on-success="uploadSuccess" :on-error="uploadError" :action="$config.HTTPBASEURL+'/common/upload'" :show-upload-list="false">
+              <i-upload :on-success="uploadSerialSuccess" :on-error="uploadError" :action="$config.HTTPBASEURL+'/common/upload'" :show-upload-list="false">
                 <i-form-item prop="password">
                   <a href="javascript:">修改</a>
                 </i-form-item>
@@ -378,6 +378,7 @@
         let resp = await this.$http.post(url, {
           ...this.$data.fromData
         });
+        console.log(JSON.stringify(this.$data.fromData));
         this.$data.buttonLoading = false;
         this.$data.addModal = false;
         if (resp.success) {
@@ -397,13 +398,17 @@
         });
       },
       // 上传成功
-      uploadSuccess(res, file, fileList) {
-        this.$data.uploadFileName = file.name;
-        this.$data.fromData.logo = res.body.url;
+      uploadModelSuccess(res, file, fileList) {
+        this.$data.fromData.modelImg = res.body.url;
+      },
+      uploadSerialSuccess(res, file, fileList) {
+        this.$data.fromData.serialPic = res.body.url;
+      },
+      uploadLogoSuccess(res, file, fileList) {
+        this.$data.fromData.logourl = res.body.url;
       },
       // 上传失败
       uploadError(err, file, fileList) {
-        this.$data.uploadFileName = '';
         this.$Notice.error({
           title: '错误提示',
           desc: err
