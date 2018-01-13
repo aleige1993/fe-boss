@@ -15,18 +15,11 @@ export default {
           key: 'bannerUrl',
           align: 'center',
           render: (h, params) => {
-            // return h('img', {
-            //   attrs: {
-            //     style: 'height:60px; margin:10px 0',
-            //     src: params.row.bannerUrl
-            //   }
-            // });
             return h('bs-big-img', {
               attrs: {
                 style: 'margin:10px 0'
               },
               props: {
-                // thumbWidth: 100,
                 thumbHeight: 80,
                 fullWidth: 1000,
                 thumb: params.row.bannerUrl,

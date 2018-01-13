@@ -632,7 +632,7 @@ let ary = [
     on: true,
     resp: Mock.mock({
       'body': {
-        'brandName': '奥迪',
+        'brandName': '奥迪AAAA',
         'classType': '中大型车',
         'doors': '4',
         'driveType': '前置前驱',
