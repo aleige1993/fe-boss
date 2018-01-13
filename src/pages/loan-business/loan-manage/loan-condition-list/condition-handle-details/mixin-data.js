@@ -102,7 +102,7 @@ export default {
           width: 100,
           key: 'guaPersonType',
           render: (h, params) => {
-            return h('span', {}, this.enumCode2Name(params.row.guaPersonType, 'MemberTypeEnum'));
+            return h('span', {}, this.enumCode2Name(params.row.guaPersonType, 'CustTypeEnum'));
           }
         },
         {

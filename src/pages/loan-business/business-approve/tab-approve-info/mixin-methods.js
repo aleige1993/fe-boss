@@ -28,16 +28,8 @@ export default {
       });
     },
     /**
-     * 选择要计算融资金额的行
+     * 判断是否有选择的行的应收金额没填
      */
-    selectFinanceRow(selection, row) {
-      this.$data.countFinanceList = selection.map(item => {
-        return {
-          calcAmt: item.feeActualAmt || item.feeAmt || 0,
-          calcSign: item.calcSign || '+'
-        };
-      });
-    },
     hasFinanceAmtInvalid(dataList) {
       let invalid = false;
       dataList.forEach((item, index) => {
