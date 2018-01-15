@@ -48,6 +48,7 @@
               <i-col span="8">
                 <i-form-item label="行业类型" prop="baseDTO.industryType"
                              :rules="{required: true, message: '请输入行业类型'}">
+                  {{formData.baseDTO.industryType}}
                   <i-select :disabled="isFromDetail" v-model="formData.baseDTO.industryType">
                     <i-option v-for="item in enumSelectData.get('IndustryTypeEnum')" :key="item.itemCode" :value="item.itemCode">{{item.itemName}}</i-option>
                   </i-select>
