@@ -94,7 +94,7 @@ let MyRouter = new Router({
                 // 配置管理-资方管理-合同模板维护
                 { path:'contract', name: 'contract', component: resolve => { require(['@/pages/configuration-manage/manage-invest/contract'], resolve) } },
                 // 配置管理-资方管理-合同模板属性配置
-                { path:'contractsetting', name: 'contractsetting', component: resolve => { require(['@/pages/configuration-manage/manage-invest/contract-setting'], resolve) } },
+                { path:'contractsetting', name: 'contractSetting', component: resolve => { require(['@/pages/configuration-manage/manage-invest/contract-setting'], resolve) } },
               ]
             },// 配置管理-资方管理end
             // 车型管理
