@@ -50,7 +50,7 @@ export default {
         {
           title: '操作',
           key: 'action',
-          width: 100,
+          width: 160,
           align: 'center',
           render: (h, params) => {
             return h('div', [
@@ -75,31 +75,31 @@ export default {
                     }
                   }
                 }
-              }, '修改')
-              // h('Button', {
-              //   props: {
-              //     type: 'error',
-              //     size: 'small'
-              //   },
-              //   // style: { marginRight: '5px' },
-              //   on: {
-              //     click: () => {
-              //       Alertify.confirm('是否确认删除这条数据', async (ok) => {
-              //         if (ok) {
-              //           const loading = this.$Message.loading('处理中...', 0);
-              //           let resp = await this.$http.post('/ces/brand/del', {
-              //             brandNo: params.row.brandNo
-              //           });
-              //           loading();
-              //           if (resp.success) {
-              //             this.$Message.success('删除成功');
-              //             this.getProxyPayList();
-              //           }
-              //         }
-              //       });
-              //     }
-              //   }
-              // }, '删除')
+              }, '修改'),
+              h('Button', {
+                props: {
+                  type: 'error',
+                  size: 'small'
+                },
+                // style: { marginRight: '5px' },
+                on: {
+                  click: () => {
+                    Alertify.confirm('是否确认删除这条数据', async (ok) => {
+                      if (ok) {
+                        const loading = this.$Message.loading('处理中...', 0);
+                        let resp = await this.$http.post('/ces/brand/del', {
+                          brandNo: params.row.brandNo
+                        });
+                        loading();
+                        if (resp.success) {
+                          this.$Message.success('删除成功');
+                          this.getProxyPayList();
+                        }
+                      }
+                    });
+                  }
+                }
+              }, '删除')
             ]);
           }
         }

@@ -23,9 +23,9 @@ export default {
         },
         {
           title: '是否自动触发',
-          key: 'activeStatus',
+          key: 'autoTrigger',
           render: (h, params) => {
-            if (params.row.activeStatus === '1') {
+            if (params.row.autoTrigger === '1') {
               return '是';
             } else {
               return '否';

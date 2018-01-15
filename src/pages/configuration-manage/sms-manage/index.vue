@@ -120,7 +120,6 @@
         let resp = await this.$http.post('/cfg/smsTemplate/list', {
           ...this.$data.searchForm
         });
-//        console.log(JSON.stringify(resp));
         this.$data.dataLoading = false;
         this.$data.privateCustomerLoanList = resp.body.resultList;
         this.$data.currentPage = resp.body.currentPage / 1;

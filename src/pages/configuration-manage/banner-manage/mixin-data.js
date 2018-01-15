@@ -81,8 +81,8 @@ export default {
                     Alertify.confirm('是否确认删除这条数据', async (ok) => {
                       if (ok) {
                         const loading = this.$Message.loading('处理中...', 0);
-                        let resp = await this.$http.post('/ces/brand/del', {
-                          brandNo: params.row.brandNo
+                        let resp = await this.$http.post('/cfg/banner/remove', {
+                          id: params.row.id
                         });
                         loading();
                         if (resp.success) {
