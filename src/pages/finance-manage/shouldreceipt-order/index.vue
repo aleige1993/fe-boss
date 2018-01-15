@@ -96,9 +96,9 @@
         }
         let resp = await this.$http.post('/biz/listLoanBizByCon', this.$data.searchForm);
         this.$data.dataLoading = false;
-        this.$data.privateCustomerLoanList = resp.body.resultList / 1;
+        this.$data.privateCustomerLoanList = resp.body.resultList;
         this.$data.currentPage = resp.body.currentPage / 1;
-        this.$data.total = resp.body.totalNum;
+        this.$data.total = resp.body.totalNum / 1;
       },
       jumpPage(page) {
         this.getPrivateCustomerLoanList(page);
