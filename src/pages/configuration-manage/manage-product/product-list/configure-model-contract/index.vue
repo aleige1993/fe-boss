@@ -157,7 +157,6 @@
         let resp = await this.$http.post('/pms/capital/listContractTemplateCfg', {
           productNo: this.childMsg.productNo
         });
-        console.log(resp);
         this.$data.dataLoading = false;
         if (resp.body.resultList.length !== 0) {
           this.$data.data1 = resp.body.resultList;

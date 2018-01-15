@@ -9,7 +9,10 @@ export default {
         },
         {
           title: '车型名称',
-          key: 'modelName'
+          key: 'modelName',
+          render: (h, params) => {
+            return h('span', {}, params.row.brandName + '  ' + params.row.seriesName + params.row.modelName);
+          }
         },
         {
           title: '厂商指导价（万元）',

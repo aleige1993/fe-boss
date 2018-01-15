@@ -232,7 +232,7 @@
       <i-row>
         <i-col span="8">
           <i-form-item label="结论" prop="approveStatus" :rules="{required: true, message: '结论不能为空', trigger: 'change'}">
-            <i-radio-group v-model="loanApprove.approveStatus">
+            <i-radio-group @on-change="approveStatusRadio" v-model="loanApprove.approveStatus">
               <i-radio v-for="item in enumSelectData.get('ApproveStatusEnum')" :label="item.itemCode" :key="item.itemCode" style="margin-right: 20px; margin-top: -5px">{{item.itemName}}</i-radio>
             </i-radio-group>
           </i-form-item>
@@ -363,7 +363,11 @@
       this.getFeeTakeList(); // 查询费用收取方案列表data
     },
     methods: {
-      //  获取合同信息详情
+      // 通知父组件返回 结论
+      approveStatusRadio(val) {
+        this.$emit('on-radio-approveStatus', val); // 告知父组件结论的状态
+      },
+      // 获取合同信息详情
       async getfindContractApproveInfo() {
         let resp = await this.$http.post('/biz/sign/contract/findContractApproveInfo', {
           signNo: this.$data.contractInfoForm.signNo
