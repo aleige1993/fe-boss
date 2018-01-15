@@ -88,9 +88,7 @@
       async addSuBmit() {
         let resAdd = await this.$http.post('/pms/cfgApproveRule/save', {
           approveRuleName: this.$data.formCustom.approveRuleName,
-          custType: this.$data.formCustom.custType,
-          productNo: '123754',
-          productName: '测试001'
+          custType: this.$data.formCustom.custType
         });
         this.$data.showAddModal = false;
         this.$data.buttonLoading = false; // 关闭按钮的loading状态
@@ -119,9 +117,7 @@
         let resModify = await this.$http.post('/pms/cfgApproveRule/modify', {
           approveRuleName: this.$data.formCustom.approveRuleName,
           approveRuleCode: this.$data.formCustom.approveRuleCode,
-          custType: this.$data.formCustom.custType,
-          productNo: '123456789',
-          productName: '模拟测试名称'
+          custType: this.$data.formCustom.custType
         });
         this.$data.showAddModal = false;
         this.$data.buttonLoading = false;
