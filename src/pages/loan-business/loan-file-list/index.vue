@@ -82,14 +82,14 @@
     },
     methods: {
       deleteGroup() {
-        Alertify.alert('确定要删除当前组以及下面的所有文件吗？', ok => {
+        Alertify.confirm('确定要删除当前组以及下面的所有文件吗？', ok => {
           if (ok) {
             this.$emit('on-group-remove', this.groupIndex);
           }
         });
       },
       deleteFile(file, index) {
-        Alertify.alert('确定要删除当前文件吗？', ok => {
+        Alertify.confirm('确定要删除当前文件吗？', ok => {
           if (ok) {
             this.data.splice(index, 1);
           }

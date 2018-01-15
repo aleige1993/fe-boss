@@ -162,7 +162,7 @@
       </loan-file-list>
     </bs-form-block>
     <!--审核意见-->
-    <i-form v-if="!readonly" ref="formApplyOpinion" :model="formData" label-position="right" :label-width="160">
+    <i-form v-if="!readonly && formData.loanChannel !== '3' && loanAction === 'apply'" ref="formApplyOpinion" :model="formData" label-position="right" :label-width="160">
       <bs-form-block title="审核意见" >
         <i-row>
           <i-col span="18">
