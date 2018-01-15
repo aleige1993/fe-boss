@@ -5,13 +5,13 @@
       <ul v-if="secondMenuList.length !== 0">
         <!-- <li><a href="#/form"><Icon v-bind:class="{active: isOpen}" type="ios-arrow-right"></Icon> 贷款业务</a></li> -->
         <li v-for="second in secondMenuList">
-
-          <bs-collepse v-if="second.childMenus"  :title="second.name">
+          <bs-collepse v-if="second.childMenus.length"  :title="second.name">
             <ul class="second-nav">
               <li v-for="thirdMenu in second.childMenus"><router-link :to="thirdMenu.url">{{thirdMenu.name || 'aaa'}}</router-link></li>
             </ul>
           </bs-collepse>
-          <router-link v-else :to="second.url"><Icon v-bind:class="{active: isOpen}" type="ios-arrow-right"></Icon> {{second.name}}</router-link>
+          <!--<router-link v-else :to="second.url"><Icon v-bind:class="{active: isOpen}" type="ios-arrow-right"></Icon> {{second.name}}</router-link>-->
+          <router-link style="text-indent: 10px" v-else :to="second.url">{{second.name}}</router-link>
         </li>
         <!--<li>-->
           <!--<bs-collepse title="业务审批">-->
@@ -41,6 +41,7 @@ export default {
     secondMenuList() {
       let currTopMenuIndex = this.$store.getters.selectedTopMenuIndex;
       let menuList = this.$store.getters.menuList;
+      console.log(JSON.stringify(menuList[currTopMenuIndex]));
       return menuList.length !== 0 ? menuList[currTopMenuIndex].childMenus : [];
     },
     topMenuName() {
