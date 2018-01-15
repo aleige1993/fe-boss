@@ -13,7 +13,11 @@
     <br>
     <i-tabs v-model="tabIndex" :animated="false" type="card">
       <i-tab-pane label="合同信息">
-        <tab-contract-info ref="contractInfo" @on-tabIndex-func="tabIndexFunc" @on-create-contracted="isCreateContractFun" :CreateRepayPlan="{isCapital, isRental}"></tab-contract-info>
+        <tab-contract-info ref="contractInfo"
+                           @on-tabIndex-func="tabIndexFunc"
+                           @on-create-contracted="isCreateContractFun"
+                           @on-radio-approveStatus="radioApproveStatus"
+                           :CreateRepayPlan="{isCapital, isRental}"></tab-contract-info>
       </i-tab-pane>
       <i-tab-pane label="还款计划表">
         <div v-if="tabIndex===1">
@@ -102,6 +106,7 @@
     },
     data() {
       return {
+        approveStatus: '',
         loanNo: '',
         isCapital: false, // 资金方是否生成了计划表
         isRental: false, // 租金方是否生成了计划表
@@ -129,6 +134,10 @@
       this.examineGetlist(); // 获取审批历史信息列表data
     },
     methods: {
+      // 通过子组件的告知 得到结论状态
+      radioApproveStatus(val) {
+        this.$data.approveStatus = val;
+      },
       // 切换tab
       tabIndexFunc(num) {
         if (num) {
@@ -194,14 +203,14 @@
           return;
         }
         let requestData = await {
-          ...refData,
-          repayPlanCapitalList: this.$data.repayPlanCapitalList, // 资金方还款计划表数据
-          repayPlanRentalList: this.$data.repayPlanRentalList // 租金放还款计划表数据
+          ...refData
+          // repayPlanCapitalList: this.$data.repayPlanCapitalList, // 资金方还款计划表数据
+          // repayPlanRentalList: this.$data.repayPlanRentalList // 租金放还款计划表数据
         };
         // 初审的提交
         if (this.$route.query.taskNode === '6') {
-          // 初审时 判断是否已点击“生成合同”
-          if (!this.$data.isCreateContract) {
+          // 初审时 审核意见的结论是“同意”的情况下才判断是否已点击“生成合同”
+          if (!this.$data.isCreateContract && this.$data.approveStatus === 'A') {
             this.$Message.warning('请生成合同！');
             this.$data.tabIndex = 0;
             return;
@@ -247,8 +256,9 @@
             if (resp.success) {
               if (resp.body.length !== 0) {
                 this.$data.isCapital = true;
-                this.$data.repayPlanCapitalList = resp.body;
+                this.$data.repayPlanCapitalList = await resp.body;
                 this.$Message.success('生成资金方还款计划成功！');
+                this.getRepayPlanCapitalList(); // 获取资方列表data
               }
             }
           }
@@ -266,8 +276,9 @@
             if (resp.success) {
               if (resp.body.length !== 0) {
                 this.$data.isRental = true;
-                this.$data.repayPlanRentalList = resp.body;
+                this.$data.repayPlanRentalList = await resp.body;
                 this.$Message.success('生成租金方还款计划成功！');
+                this.getRepayPlanRentalList(); // 获取租金还款计划列表data
               }
             }
           }

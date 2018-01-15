@@ -41,7 +41,6 @@ export default {
     secondMenuList() {
       let currTopMenuIndex = this.$store.getters.selectedTopMenuIndex;
       let menuList = this.$store.getters.menuList;
-      console.log(JSON.stringify(menuList[currTopMenuIndex]));
       return menuList.length !== 0 ? menuList[currTopMenuIndex].childMenus : [];
     },
     topMenuName() {

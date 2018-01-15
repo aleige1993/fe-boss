@@ -17,7 +17,7 @@
         :rules="{required: true, message: '费用类型不能为空', trigger: 'change'}"
         label="费用类型"
         prop="feeTypeNo">
-        <i-select v-model="formInModel.feeTypeNo" placeholder="请选择">
+        <i-select v-model="formInModel.feeTypeNo" placeholder="请选择" @on-change="feeTypeCodeChange">
           <i-option v-for="item in costTypeSelect" :key="item.feeTypeNo" :value="item.feeTypeNo">{{item.feeTypeName}}</i-option>
         </i-select>
       </i-form-item>
@@ -25,8 +25,7 @@
         :rules="{required: true, message: '费用类型代码不能为空', trigger: 'blur'}"
         label="费用类型代码"
         prop="feeTypeCode">
-        <i-input placeholder="费用类型代码" v-model="formInModel.feeTypeCode">
-        </i-input>
+        <i-input :readonly="true" placeholder="费用类型代码" v-model="formInModel.feeTypeCode"></i-input>
       </i-form-item>
       <i-form-item
         :rules="{required: true, message: '计算方式不能为空', trigger: 'change'}"
@@ -112,6 +111,14 @@
       this.getPrivateCustomerList();  // 获取模态框列表数据
     },
     methods: {
+      // 费用类型代码随费用类型变化
+      feeTypeCodeChange(value) {
+        this.$data.costTypeSelect.forEach((item) => {
+          if (item.feeTypeNo === value) {
+            this.$data.formInModel.feeTypeCode = item.feeTypeCode;
+          }
+        });
+      },
       // 获取模态框列表数据
       async getPrivateCustomerList() {
         this.$data.dataLoading = true;
