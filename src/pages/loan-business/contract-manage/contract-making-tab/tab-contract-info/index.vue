@@ -368,7 +368,6 @@
         let resp = await this.$http.post('/biz/sign/contract/findContractApproveInfo', {
           signNo: this.$data.contractInfoForm.signNo
         });
-        console.log(resp.body);
         if (resp.success) {
           this.$data.contractInfoForm = resp.body;
           if (resp.body.contractInfo.loanContractFileList.length !== 0) {

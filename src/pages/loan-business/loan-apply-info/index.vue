@@ -210,7 +210,7 @@
               :rules="{required: true, message: '权利人类型不能为空'}"
               prop="custType">
               <i-select v-model="formCar.custType">
-                <i-option v-for="item in enumSelectData.get('PawnTypeEnum')" :key="item.itemCode" :value="item.itemCode">{{item.itemName}}</i-option>
+                <i-option v-for="item in enumSelectData.get('CustTypeEnum')" :key="item.itemCode" :value="item.itemCode">{{item.itemName}}</i-option>
               </i-select>
             </i-form-item>
           </i-col>
@@ -640,6 +640,11 @@
     },
     methods: {
 
+    },
+    watch: {
+      'formCar.custType'() {
+        this.$data.formCar.carOwnerName = '';
+      }
     }
   };
 </script>

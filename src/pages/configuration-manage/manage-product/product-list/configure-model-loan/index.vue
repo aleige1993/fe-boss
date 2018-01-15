@@ -33,6 +33,13 @@
           {
             title: '贷款材料名称',
             key: 'loanDocName'
+          },
+          {
+            title: '客户类型',
+            key: 'custType',
+            render: (h, params) => {
+              return this.enumCode2Name(params.row.custType, 'CustTypeEnum');
+            }
           }
         ],
         data1: []
