@@ -379,7 +379,6 @@
         let resp = await this.$http.post(url, {
           ...this.$data.fromData
         });
-        console.log(JSON.stringify(this.$data.fromData));
         this.$data.buttonLoading = false;
         this.$data.addModal = false;
         if (resp.success) {

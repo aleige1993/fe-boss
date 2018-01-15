@@ -202,18 +202,25 @@ export default {
                 },
                 style: { marginRight: '5px' },
                 on: {
-                  click: () => {
-                    this.$router.push({
-                      path: '/index/loanbusiness/accept',
-                      query: {
-                        id: params.row.loanNo
-                      },
-                      force: true
-                    });
+                  click: async () => {
+                    let resp = await this.$http.post('/biz/holdUpLoanBizByLoanNo', { loanNo: params.row.loanNo });
+                    if (resp.success) {
+                      this.$router.push({
+                        path: '/index/loanbusiness/accept',
+                        query: {
+                          id: params.row.loanNo
+                        },
+                        force: true
+                      });
+                    } else {
+                      this.$Notice.error({
+                        title: '错误信息',
+                        desc: '设置处理人出错'
+                      });
+                    }
                   }
                 }
               }, '处理'),
-
               h('Button', {
                 props: {
                   type: 'error',

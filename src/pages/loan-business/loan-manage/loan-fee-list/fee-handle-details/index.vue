@@ -314,7 +314,6 @@
           loanNo: this.$route.query.loanNo
         });
         this.$data.feeTableLoading = false;
-        console.log(reps);
         if (reps.success) {
           if (reps.body !== 0) {
             this.$data.feeData = reps.body;

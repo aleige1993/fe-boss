@@ -254,8 +254,8 @@
               </i-col>
             </i-row>
           </bs-form-block>
-          <!--工作信息-->
-          <bs-form-block v-if="type==='page'" :title="'工作信息'">
+          <!--工作信息 职业类型不是自由职业者时才需要-->
+          <bs-form-block v-if="type==='page' && formData.mbMemberDTO.workType !== '2'" :title="'工作信息'">
             <i-row>
               <i-col span="8">
                 <i-form-item label="单位名称"
