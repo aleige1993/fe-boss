@@ -8,7 +8,7 @@
               <i-col span="8">
                 <i-form-item label="公司名称">
                   <i-button type="text" @click="gotoPersonal" v-text="formData.baseDTO.corpName"></i-button>
-                  <i-button type="success" @click="gotoPersonal">查看详情</i-button>
+                  <i-button type="success" @click="gotoPersonal">查看客户详情</i-button>
                 </i-form-item>
               </i-col>
               <i-col span="8">
@@ -227,6 +227,7 @@
 import MixinData from './mixin-data';
 import MixinMethods from './mixin-methods';
 import BSModal from '@/components/bs-modal';
+import Tools from '../../utils/Tools';
 export default {
   name: 'detailCompanyCustomerBasic',
   mixins: [MixinData, MixinMethods],
@@ -248,7 +249,7 @@ export default {
   },
   methods: {
     gotoPersonal() {
-      window.open(`#/index/customer/companycustomer/modify?id=${this.corpNo}&name=${this.$data.formData.baseDTO.corpName}&from=detail`);
+      Tools.openWin(`#/index/customer/companycustomer/modify?id=${this.corpNo}&name=${this.$data.formData.baseDTO.corpName}&from=detail`);
     }
   },
   watch: {
