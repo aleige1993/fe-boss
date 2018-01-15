@@ -89,8 +89,8 @@
       },
       // 提交
       saveSubimt() {
+        console.log(this.$data.personalData);
         if (this.$refs['personalInfo'].verification()) {
-          // console.log(this.$data.personalData);
           let _dataTemp = $.extend({}, this.$data.personalData);
           _dataTemp.loanVO.status = '2';
           _dataTemp.opeType = '2';

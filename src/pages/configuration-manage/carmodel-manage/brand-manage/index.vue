@@ -35,25 +35,44 @@
         <i-form-item label="首字母" prop="initial">
           <i-input v-model="fromData.initial" placeholder="" readonly></i-input>
         </i-form-item>
-        <i-form-item
-          :rules="{required: true, message: '请选择图片', trigger: 'blur'}"
-          label="品牌LOGO"
-          prop="logo">
+        <!--<i-form-item-->
+          <!--:rules="{required: true, message: '请选择图片', trigger: 'blur'}"-->
+          <!--label="品牌LOGO"-->
+          <!--prop="logo">-->
+          <!--<i-upload-->
+            <!--:show-upload-list="false"-->
+            <!--:on-success="uploadSuccess"-->
+            <!--:on-error="uploadError"-->
+            <!--:format="['jpg','jpeg','png']"-->
+            <!--type="drag"-->
+            <!--:action="$config.HTTPBASEURL + '/common/upload'">-->
+            <!--<div style="padding: 20px 0">-->
+              <!--<i-icon type="ios-cloud-upload" size="52" style="color: #3399ff"></i-icon>-->
+              <!--<p>单击或拖动文件上传</p>-->
+            <!--</div>-->
+          <!--</i-upload>-->
+          <!--<p v-if="isAdd" class="show-upload-text" v-text="uploadFileName"></p>-->
+          <!--<p v-else class="show-upload-text" v-text="fromData.logo"></p>-->
+          <!--<input type="hidden" v-model="fromData.logo" style="width: 100%;border: 0;">-->
+        <!--</i-form-item>-->
+        <i-form-item label="品牌LOGO"
+                     prop="bannerUrl"
+                     :rules="{required: true, message: '请选择图片', trigger: 'blur'}">
+          <input type="hidden" v-model="fromData.logo"/>
           <i-upload
-            :show-upload-list="false"
+            :format="['jpg','jpeg','png']"
             :on-success="uploadSuccess"
             :on-error="uploadError"
-            :format="['jpg','jpeg','png']"
-            type="drag"
-            :action="$config.HTTPBASEURL + '/common/upload'">
-            <div style="padding: 20px 0">
-              <i-icon type="ios-cloud-upload" size="52" style="color: #3399ff"></i-icon>
-              <p>单击或拖动文件上传</p>
+            :action="$config.HTTPBASEURL+'/common/upload'"
+            :show-upload-list="false">
+            <div class="upload-image">
+              <div v-if="isAdd">
+                <i-icon type="ios-cloud-upload" size="52" style="color: #3399ff"></i-icon>
+                <p>单击或拖动文件上传</p>
+              </div>
+              <img v-else height="95" :src="fromData.logo" alt="">
             </div>
           </i-upload>
-          <p v-if="isAdd" class="show-upload-text" v-text="uploadFileName"></p>
-          <p v-else class="show-upload-text" v-text="fromData.logo"></p>
-          <input type="hidden" v-model="fromData.logo" style="width: 100%;border: 0;">
         </i-form-item>
         <i-form-item class="text-right">
           <i-button type="primary" @click="submitFun" :loading="buttonLoading">
@@ -138,8 +157,10 @@
         });
         this.$data.dataLoading = false;
         this.$data.privateCustomerLoanList = resp.body.resultList;
-        this.$data.currentPage = resp.body.currentPage / 1;
-        this.$data.total = resp.body.totalNum / 1;
+        this.$data.currentPage = resp.body.currentPage;
+        this.$data.total = resp.body.totalNum;
+        this.$data.currentPage = resp.body.currentPage;
+        this.$data.total = resp.body.totalNum;
       },
       async submitSuccess() {
         this.$data.buttonLoading = true;
@@ -191,4 +212,8 @@
   };
 </script>
 <style lang="scss" scoped>
+  .upload-image {
+    text-align: center;
+    cursor: pointer;
+  }
 </style>

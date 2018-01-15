@@ -40,7 +40,7 @@
             <i-row>
               <i-col span="8">
                 <i-form-item label="注册资金">
-                  <span v-text="formData.baseDTO.regCapital"></span>
+                  <span v-text="formData.baseDTO.regCapital"></span>万元
                 </i-form-item>
               </i-col>
               <i-col span="8">
@@ -57,7 +57,7 @@
             <i-row>
               <i-col span="8">
                 <i-form-item label="行业类型">
-                  <span v-text="formData.baseDTO.industryType"></span>
+                  <!--<span v-text="formData.baseDTO.industryType"></span>-->
                   {{enumCode2Name(formData.baseDTO.industryType, 'UnitTypeEnum')}}
                 </i-form-item>
               </i-col>
@@ -154,7 +154,7 @@
               </i-col>
               <i-col span="8">
                 <i-form-item label="持股比例">
-                  <span v-text="formData.baseDTO.legalPersonStock"></span><span slot="append">%</span>
+                  <span v-text="formData.baseDTO.legalPersonStock"></span><span>%</span>
                 </i-form-item>
               </i-col>
             </i-row>
