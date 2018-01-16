@@ -4,13 +4,13 @@ export default {
       columns1: [
         {
           title: '签约编号',
-          width: 170,
+          minWidth: 90,
           align: 'center',
           key: 'signNo'
         },
         {
           title: '项目编号',
-          width: 170,
+          minWidth: 90,
           key: 'loanNo'
         },
         {
@@ -19,7 +19,7 @@ export default {
         },
         {
           title: '证件类型',
-          width: 90,
+          width: 80,
           key: 'certType',
           render: (h, params) => {
             return h('span', {}, this.enumCode2Name(params.row.certType, 'CertTypeEnum'));
@@ -27,7 +27,7 @@ export default {
         },
         {
           title: '证件号码',
-          width: 180,
+          minWidth: 90,
           key: 'certNo'
         },
         {
@@ -41,7 +41,7 @@ export default {
         },
         {
           title: '融资金额（元）',
-          width: 130,
+          width: 100,
           key: 'loanAmt'
         },
         {
@@ -51,12 +51,12 @@ export default {
         },
         {
           title: '已耗时',
-          width: 150,
+          width: 90,
           key: 'timeConsuming'
         },
         {
           title: '当前环节',
-          width: 120,
+          width: 100,
           key: 'taskNode',
           render: (h, params) => {
             return h('span', {}, this.enumCode2Name(params.row.taskNode, 'LoanBizNodeEnum'));
@@ -64,7 +64,7 @@ export default {
         },
         {
           title: '当前状态',
-          width: 120,
+          width: 100,
           key: 'signStatus',
           render: (h, params) => {
             return h('span', {}, this.enumCode2Name(params.row.signStatus, 'BizStatusEnum'));
@@ -73,7 +73,7 @@ export default {
         {
           title: '操作',
           key: 'action',
-          width: 150,
+          width: 100,
           align: 'center',
           render: (h, params) => {
             return h('div', [
