@@ -136,14 +136,18 @@ export default {
      */
     validate() {
       let _valid = false;
-      this.$refs['formData'].validate((valid) => {
-        if (!valid) {
-          this.$Notice.error({
-            title: '错误提示', desc: '请先完善申请信息'
-          });
-        }
-        _valid = valid;
-      });
+      if (this.$data.formData.result !== 'A') {
+        _valid = true;
+      } else {
+        this.$refs['formData'].validate((valid) => {
+          if (!valid) {
+            this.$Notice.error({
+              title: '错误提示', desc: '请先完善申请信息'
+            });
+          }
+          _valid = valid;
+        });
+      }
       return _valid;
     },
     /**

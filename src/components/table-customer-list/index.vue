@@ -73,6 +73,9 @@
         if (page) {
           this.$data.searchForm.currentPage = page;
         }
+        if (this.type === 'modal') {
+          this.$data.searchForm.status = '1';
+        }
         let resp = await this.$http.post('/member/page', this.$data.searchForm);
         this.$data.dataLoading = false;
         this.$data.privateCustomerList = resp.body.resultList;

@@ -74,32 +74,22 @@
       },
       // 保存草稿
       saveDraft() {
-        if (this.$refs['personalInfo'].verification()) {
-          // console.log(this.$data.personalData);
-          let _dataTemp = $.extend({}, this.$data.personalData);
+        let vmApplyInfo = this.$refs['personalInfo'];
+        if (vmApplyInfo.validate()) {
+          let _dataTemp = vmApplyInfo.getApplyData();
           _dataTemp.loanVO.status = '3';
           _dataTemp.opeType = '1';
           this.saveLoanBiz(_dataTemp);
-        } else {
-          this.$Notice.error({
-            title: '提示',
-            desc: '请先完成表单的必填项再提交'
-          });
         }
       },
       // 提交
       saveSubimt() {
-        console.log(this.$data.personalData);
-        if (this.$refs['personalInfo'].verification()) {
-          let _dataTemp = $.extend({}, this.$data.personalData);
+        let vmApplyInfo = this.$refs['personalInfo'];
+        if (vmApplyInfo.validate()) {
+          let _dataTemp = vmApplyInfo.getApplyData();
           _dataTemp.loanVO.status = '2';
           _dataTemp.opeType = '2';
           this.saveLoanBiz(_dataTemp);
-        } else {
-          this.$Notice.error({
-            title: '提示',
-            desc: '请先完成表单的必填项再提交'
-          });
         }
       },
       // 如果是修改或者删除，初始化页面数据

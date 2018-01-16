@@ -230,15 +230,19 @@ export default {
      */
     validate() {
       let _valid = false;
-      this.$refs['busApproveForm'].validate((valid) => {
-        if (!valid) {
-          this.$Notice.error({
-            title: '错误提示',
-            desc: '请先完善审批信息'
-          });
-        }
-        _valid = valid;
-      });
+      if (this.$data.approveData.loanApproveDTO.result !== 'A') {
+        _valid = true;
+      } else {
+        this.$refs['busApproveForm'].validate((valid) => {
+          if (!valid) {
+            this.$Notice.error({
+              title: '错误提示',
+              desc: '请先完善审批信息'
+            });
+          }
+          _valid = valid;
+        });
+      }
       return _valid;
     },
     /**

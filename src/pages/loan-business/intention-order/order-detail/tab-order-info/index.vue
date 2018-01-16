@@ -45,7 +45,7 @@
           <i-form-item label="厂家指导价">{{orderInfo.guideAmt}}</i-form-item>
         </i-col>
         <i-col span="8">
-          <i-form-item label="车辆价格">{{orderInfo.finalAmt}}</i-form-item>
+          <i-form-item label="车辆价格">{{orderInfo.finalAmt}} 元</i-form-item>
         </i-col>
       </i-row>
       <i-row>
@@ -75,7 +75,7 @@
           <i-form-item label="首付意向金额（元）">{{orderInfo.downPayAmt}}</i-form-item>
         </i-col>
         <i-col span="8">
-          <i-form-item label="分期金额（元）">{{orderInfo.quotaAmt}}</i-form-item>
+          <i-form-item label="分期金额（元）">{{orderInfo.quotaAmt}} 元</i-form-item>
         </i-col>
         <i-col span="8">
           <i-form-item label="车辆用途">{{orderInfo.applyPurpose}}</i-form-item>
