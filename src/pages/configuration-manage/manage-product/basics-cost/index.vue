@@ -79,7 +79,7 @@
           pageSize: this.$data.pageSize
         });
         this.$data.dataLoading = false;
-        if (resp.body.resultList.length !== 0) {
+        if (resp.success && resp.body.resultList.length !== 0) {
           this.$data.data1 = resp.body.resultList;
           this.$data.currentPage = resp.body.currentPage / 1;
           this.$data.total = resp.body.totalNum / 1;
@@ -91,7 +91,7 @@
       async addSuBmit() {
         let resAdd = await this.$http.post('/pms/cfgFeeType/save', {
           feeTypeName: this.$data.formCustom.feeTypeName,
-          feeType: this.$data.formCustom.feeType
+          feeTypeCode: this.$data.formCustom.feeTypeCode
         });
         this.$data.buttonLoading = false; // 关闭按钮的loading状态
         this.$data.showAddModal = false;
@@ -136,7 +136,7 @@
       async setSubmit() {
         let resModify = await this.$http.post('/pms/cfgFeeType/modify', {
           feeTypeName: this.$data.formCustom.feeTypeName,
-          feeType: this.$data.formCustom.feeType,
+          feeTypeCode: this.$data.formCustom.feeTypeCode,
           feeTypeNo: this.$data.formCustom.feeTypeNo
         });
         this.$data.showAddModal = false;

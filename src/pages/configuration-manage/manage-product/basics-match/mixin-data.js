@@ -4,6 +4,7 @@ export default {
       columns1: [
         {
           title: '产品编码',
+          width: 170,
           align: 'center',
           key: 'productNo'
         },
@@ -13,9 +14,10 @@ export default {
         },
         {
           title: '适用车类',
-          key: 'carType',
+          width: 120,
+          key: 'productType',
           render: (h, params) => {
-            return h('span', {}, this.enumCode2Name(params.row.carType, 'BizTypeEnum'));
+            return h('span', {}, this.enumCode2Name(params.row.productType, 'BizTypeEnum'));
           }
         },
         {

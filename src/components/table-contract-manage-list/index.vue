@@ -113,7 +113,7 @@
           ...this.$data.formSearch
         });
         this.$data.dataLoading = false;
-        if (resp.body.resultList.length !== 0) {
+        if (resp.success && resp.body.resultList.length !== 0) {
           this.$data.data1 = resp.body.resultList;
           this.$data.currentPage = resp.body.currentPage / 1;
           this.$data.total = resp.body.totalNum / 1;
@@ -122,9 +122,17 @@
         }
       },
       jumpPage(page) {
+        if (!this.$DateTest.testDateFun(this.$data.formSearch.startDate, this.$data.formSearch.endDate)) {
+          this.$Message.error('“开始日期”不能大于“结束日期”');
+          return;
+        }
         this.getList(page);
       },
       search() {
+        if (!this.$DateTest.testDateFun(this.$data.formSearch.startDate, this.$data.formSearch.endDate)) {
+          this.$Message.error('“开始日期”不能大于“结束日期”');
+          return;
+        }
         this.getList();
       },
       // 打开合同制作模态框

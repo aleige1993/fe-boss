@@ -127,7 +127,7 @@
           productNo
         });
         this.$data.dataLoading = false;
-        if (resp.body.resultList.length !== 0) {
+        if (resp.success && resp.body.resultList.length !== 0) {
           this.$data.data1 = resp.body.resultList;
         } else {
           this.$data.data1 = [];
@@ -139,13 +139,10 @@
           currentPage: 1,
           pageSize: 99999
         });
-        if (SelectResp.body.resultList.length !== 0) {
+        if (SelectResp.success && SelectResp.body.resultList.length !== 0) {
           this.$data.costTypeSelect = SelectResp.body.resultList;
         } else {
-          this.$Notice.warning({
-            title: '基础配置-费用类型：无数据加载',
-            duration: 2
-          });
+          this.$data.costTypeSelect = [];
         }
       },
       getFeeTypeName() {

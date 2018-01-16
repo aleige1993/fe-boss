@@ -61,11 +61,10 @@
         clickRow: {},
         searchForm: {
           'loanNo': '',
-          'custName': '',
+          'companyName': '',
           'certType': '',
           'certNo': '',
-          'startDate': '',
-          'endDate': '',
+          'applyStartTime': '',
           'applyEndTime': ''
         }
       };
@@ -89,7 +88,7 @@
           pageSize: this.$data.pageSize
         });
         this.$data.dataLoading = false;
-        if (resp.body.resultList.length !== 0) {
+        if (resp.success && resp.body.resultList && resp.body.resultList.length !== 0) {
           this.$data.feeListData = resp.body.resultList;
           this.$data.currentPage = resp.body.currentPage / 1;
           this.$data.total = resp.body.totalNum / 1;
@@ -98,9 +97,17 @@
         }
       },
       search() {
+        if (!this.$DateTest.testDateFun(this.$data.searchForm.applyStartTime, this.$data.searchForm.applyEndTime)) {
+          this.$Message.error('“开始日期”不能大于“结束日期”');
+          return;
+        }
         this.getList();
       },
       jumpPage(page) {
+        if (!this.$DateTest.testDateFun(this.$data.searchForm.applyStartTime, this.$data.searchForm.applyEndTime)) {
+          this.$Message.error('“开始日期”不能大于“结束日期”');
+          return;
+        }
         this.getList(page);
       }
     }

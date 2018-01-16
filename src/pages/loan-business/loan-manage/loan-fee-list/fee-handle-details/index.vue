@@ -67,12 +67,12 @@
               </i-col>
               <i-col span="8">
                 <i-form-item label="期数(月)">
-                  <span v-text="formData.paymentApplyRecordDTO.loanPeriods"></span>
+                  <span v-text="formData.paymentApplyRecordDTO.totalPeriods"></span>
                 </i-form-item>
               </i-col>
               <i-col span="8">
                 <i-form-item label="借款金额(元)">
-                  <span v-text="formData.paymentApplyRecordDTO.loanAmt"></span>
+                  <span v-text="formData.paymentApplyRecordDTO.loanTotalAmt"></span>
                 </i-form-item>
               </i-col>
             </i-row>
@@ -84,12 +84,12 @@
               </i-col>
               <i-col span="8">
                 <i-form-item label="合同起始日">
-                  <span v-text="formData.paymentApplyRecordDTO.startDate"></span>
+                  <span v-text="formData.paymentApplyRecordDTO.contractStartDate"></span>
                 </i-form-item>
               </i-col>
               <i-col span="8">
                 <i-form-item label="合同到期日">
-                  <span v-text="formData.paymentApplyRecordDTO.endDate"></span>
+                  <span v-text="formData.paymentApplyRecordDTO.contractEndDate"></span>
                 </i-form-item>
               </i-col>
             </i-row>
@@ -285,11 +285,28 @@
         }
       };
     },
-    mounted() {
+    async mounted() {
+      let loanNo = await this.$route.query.loanNo;
+      let signNo = await this.$route.query.signNo;
+      this.$data.formData.paymentApplyRecordDTO.loanNo = loanNo;
+      this.$data.formData.paymentApplyRecordDTO.signNo = signNo;
+      this.getFindPaymentApplyRecordInfo(); //  获取放款条件详情
       this.conditionGetlist(); // 执行获取放款条件列表的data
       this.feeGetlist(); // 执行获取费用收取落实列表的data
     },
     methods: {
+      // 获取放款条件详情
+      async getFindPaymentApplyRecordInfo() {
+        let reps = await this.$http.post('/biz/payment/findPaymentApplyRecordInfo', {
+          paymentNo: this.$route.query.paymentNo,
+          isFktjxq: '0' // 当为放款条件落实则传1，其余全部传0
+        });
+        if (reps.success) {
+          this.$data.formData = reps.body;
+        } else {
+          this.$data.formData = {};
+        }
+      },
       // 获取放款条件列表的data
       async conditionGetlist() {
         this.$data.conditionLoading = true;
@@ -297,12 +314,8 @@
           loanNo: this.$route.query.loanNo
         });
         this.$data.conditionLoading = false;
-        if (reps.success) {
-          if (reps.body.length !== 0) {
-            this.$data.conditionData = reps.body;
-          } else {
-            this.$data.conditionData = [];
-          }
+        if (reps.success && reps.body.length !== 0) {
+          this.$data.conditionData = reps.body;
         } else {
           this.$data.conditionData = [];
         }

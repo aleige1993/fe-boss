@@ -106,9 +106,17 @@
         this.$data.total = resp.body.totalNum / 1;
       },
       jumpPage(page) {
+        if (!this.$DateTest.testDateFun(this.$data.searchForm.applyStartTime, this.$data.searchForm.applyEndTime)) {
+          this.$Message.error('“开始日期”不能大于“结束日期”');
+          return;
+        }
         this.getPrivateCustomerLoanList(page);
       },
       search() {
+        if (!this.$DateTest.testDateFun(this.$data.searchForm.applyStartTime, this.$data.searchForm.applyEndTime)) {
+          this.$Message.error('“开始日期”不能大于“结束日期”');
+          return;
+        }
         this.getPrivateCustomerLoanList();
       },
       selectRow(row, index) {

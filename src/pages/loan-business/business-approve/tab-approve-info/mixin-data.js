@@ -14,6 +14,7 @@ export default {
         },
         {
           title: '客户类型',
+          width: 100,
           key: 'custType',
           render: (h, params) => {
             return this.enumCode2Name(params.row.custType, 'CustTypeEnum');
@@ -304,6 +305,36 @@ export default {
       ],
       paymentAccountList: [], // 贷款账户下拉
       repaymentAccountList: [], // 还款账户下拉
+      // 贷款期限和利率
+      loanPeriodsColumns: [
+        {
+          title: '车类',
+          width: 200,
+          key: 'bizType',
+          render: (h, params) => {
+            return h('span', {}, this.enumCode2Name(params.row.bizType, 'BizTypeEnum'));
+          }
+        },
+        {
+          title: '贷款期限(月)',
+          key: 'loanPeriods'
+        },
+        {
+          title: '利率模式',
+          key: 'interestType',
+          render: (h, params) => {
+            return h('span', {}, this.enumCode2Name(params.row.interestType, 'RateModeEnum'));
+          }
+        },
+        {
+          title: '名义利率(%/年)',
+          key: 'loanNominalRate'
+        },
+        {
+          title: '实际利率(%/年)',
+          key: 'loanRealRate'
+        }
+      ],
       loanPeriodsList: [], // 贷款期限下拉菜单
       approveData: {
         // 贷款准入规则
@@ -327,7 +358,7 @@ export default {
         ],
         // 用信方案
         'loanApproveCreditDTO': {
-          'loanPeriods': '12',
+          'loanPeriods': '',
           'loanRealRate': '',
           'capitalNo': '',
           'loanNominalRate': '',

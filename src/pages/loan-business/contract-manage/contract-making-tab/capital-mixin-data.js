@@ -24,8 +24,8 @@ export default {
         {
           title: '账号',
           key: 'acctNo'
-        },
-        {
+        }
+        /* {
           title: '操作',
           key: 'action',
           width: 150,
@@ -48,7 +48,7 @@ export default {
               }, '更改')
             ]);
           }
-        }
+        }*/
       ],
       loanCapitalData: [],
       // 资金方还款计划表

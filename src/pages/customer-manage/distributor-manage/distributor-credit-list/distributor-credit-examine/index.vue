@@ -157,8 +157,8 @@
           custMgrNo: '',
           CreditMoney: '', // 授信总额度
           currentUsableLimit: '', // 可用额度（自动带入授信总额度）
-          startDate: '', // 授信起始日期
-          endDate: '', // 授信起始日期
+          creditStartDate: '', // 授信起始日期
+          creditEndDate: '', // 授信起始日期
           CreditOpenModel: '' // 额度释放方式
         },
         approveDto: {
@@ -205,6 +205,10 @@
       submitFun() {
         this.$refs['approveDto'].validate((valid) => {
           if (valid) {
+            if (!this.$DateTest.testDateFun(this.$data.formQuota.creditStartDate, this.$data.formQuota.creditEndDate)) {
+              this.$Message.error('“授信起始日期”不能大于“授信到期日期”');
+              return;
+            }
             this.submiting();
           } else {
             this.$Message.error('"<span style="color: red">*</span>"必填项不能为空');

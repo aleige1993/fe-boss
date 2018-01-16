@@ -17,17 +17,24 @@
     <bs-modal :title="isAdd ? '新增' : '修改'" v-model="showAddModal">
       <i-form  ref="formData" :model="formData" label-position="left" :label-width="100">
         <i-form-item
+          v-if="isAdd"
           label="产品名称"
-          :rules="{required: true, message: '产品不能为空', trigger: 'blur'}"
+          :rules="{required: true, message: '产品不能为空', trigger: 'change'}"
           prop="productName">
-          <input type="hidden" v-model="formData.productName"/>
-          <i-input v-model="formData.productNo" :readonly="true" placeholder="选择产品">
+          <input type="hidden" v-model="formData.productNo"/>
+          <i-input v-model="formData.productName" :readonly="true" placeholder="选择产品">
             <i-button @click="showSelectProduct=!showSelectProduct" slot="append">选择产品 <Icon type="ios-more"></Icon></i-button>
           </i-input>
         </i-form-item>
-        <i-form-item label="车类" prop="carType"
+        <i-form-item
+          v-else
+          label="产品名称"
+          prop="productName">
+          <span v-text="formData.productName"></span>
+        </i-form-item>
+        <i-form-item label="车类" prop="productType"
                      :rules="{required: true, message: '请选择', trigger: 'change'}">
-          <i-select v-model="formData.carType">
+          <i-select v-model="formData.productType">
             <i-option v-for="item in enumSelectData.get('BizTypeEnum')" :key="item.itemCode" :value="item.itemCode">{{item.itemName}}</i-option>
           </i-select>
         </i-form-item>
@@ -41,7 +48,7 @@
       </i-form>
     </bs-modal>
     <!--选择产品的弹窗-->
-    <bs-modal title="选择产品" :width="1200" v-model="showSelectProduct">
+    <bs-modal title="选择产品" :width="1200" v-model="showSelectProduct" :alert="'双击单行选择'">
       <table-product-list :type="'modal'" @on-row-dbclick="selectProduct"></table-product-list>
     </bs-modal>
   </div>
@@ -72,7 +79,7 @@
           productMatchNo: '',
           productNo: '',
           productName: '',
-          carType: ''
+          productType: ''
         }
       };
     },
@@ -97,14 +104,28 @@
           currentPage: this.$data.currentPage,
           pageSize: this.$data.pageSize
         });
+        console.log(resp);
         this.$data.dataLoading = false;
-        if (resp.body.body.resultList.length !== 0) {
+        if (resp.success && resp.body.resultList.length !== 0) {
           this.$data.data1 = resp.body.resultList;
           this.$data.currentPage = resp.body.currentPage / 1;
           this.$data.total = resp.body.totalNum / 1;
         } else {
           this.$data.data1 = [];
         }
+      },
+      jumpPage(page) {
+        this.getPrivateCustomerList(page);
+      },
+      addModal() {
+        this.isAdd = true;
+        this.$data.showAddModal = true;
+        this.$data.formData = {};
+      },
+      setList(row) {
+        this.isAdd = false;
+        this.$data.showAddModal = true;
+        this.formData = row;
       },
       // 新增的保存请求方法
       async addSuBmit() {
@@ -121,40 +142,10 @@
           this.getPrivateCustomerList();
         }
       },
-      jumpPage(page) {
-        this.getPrivateCustomerList(page);
-      },
-      addModal() {
-        this.isAdd = true;
-        this.$data.showAddModal = true;
-        this.$data.formData = {};
-      },
-      // 删除数据的请求
-      async remove(row) {
-        Alertify.confirm('确定要删除吗？', async (ok) => {
-          if (ok) {
-            let productMatchNo = row.productMatchNo;
-            const loadingMsg = this.$Message.loading('删除中...', 0);
-            let respDel = await this.$http.get('/pms/productMatch/save', {
-              productMatchNo
-            });
-            loadingMsg();
-            if (respDel.success) {
-              this.$Message.success('删除成功');
-              this.getPrivateCustomerList(1);
-            }
-          }
-        });
-      },
-      setList(row) {
-        this.isAdd = false;
-        this.$data.showAddModal = true;
-        this.formData = row;
-      },
       // 修改情况下的提交数据
       async setSubmit() {
         this.$data.buttonLoading = true;
-        let resModify = await this.$http.post('/pms/productMatch/list', {
+        let resModify = await this.$http.post('/pms/productMatch/save', {
           productMatchNo: this.$data.formData.productMatchNo,
           productNo: this.$data.formData.productNo,
           productName: this.$data.formData.productName,
@@ -166,6 +157,24 @@
           this.$Message.success('修改成功');
           this.getPrivateCustomerList();
         }
+      },
+      // 删除数据的请求
+      async remove(row) {
+        Alertify.confirm('确定要删除吗？', async (ok) => {
+          if (ok) {
+            let productMatchNo = row.productMatchNo;
+            const loadingMsg = this.$Message.loading('删除中...', 0);
+            let respDel = await this.$http.post('/pms/productMatch/remove', {
+              productMatchNo
+            });
+            loadingMsg();
+            if (respDel.success) {
+              this.$Message.success('删除成功');
+              let jumpPage = this.$JumpPage.getPageRemove(this.$data.currentPage, this.$data.pageSize, this.$data.total);
+              this.getPrivateCustomerList(jumpPage);
+            }
+          }
+        });
       },
       // 新增模态框的保存按钮点击事件
       formSubmit() {

@@ -36,6 +36,7 @@
           },
           {
             title: '客户类型',
+            width: 100,
             key: 'custType',
             render: (h, params) => {
               return this.enumCode2Name(params.row.custType, 'CustTypeEnum');
@@ -57,7 +58,7 @@
           productNo
         });
         this.$data.dataLoading = false;
-        if (resp.body.length !== 0) {
+        if (resp.success && resp.body.length !== 0) {
           let _data = resp.body.map(item => {
             if (item.isSelected === 1) {
               item._checked = true;

@@ -240,9 +240,10 @@
       </i-row>
       <i-row>
         <i-col span="8">
-          <i-form-item label="意见信息" prop="opinion" :rules="{required: true, message: '意见信息不能为空', trigger: 'blur'}">
-            <i-input type="textarea" v-model="loanApprove.opinion" :rows="2" placeholder="">
-            </i-input>
+          <i-form-item label="意见信息"
+                       prop="opinion"
+                       :rules="{required: (loanApprove.approveStatus!=='A'), message: '意见信息不能为空', trigger: 'blur'}">
+            <i-input type="textarea" v-model="loanApprove.opinion" :rows="2" placeholder=""></i-input>
           </i-form-item>
         </i-col>
       </i-row>
@@ -397,12 +398,10 @@
           loanNo: this.$data.contractInfoForm.loanNo
         });
         this.$data.feeTakeLoading = false;
-        if (resp.success) {
-          if (resp.body.length !== 0) {
-            this.$data.feeTakeData = resp.body;
-          } else {
-            this.$data.feeTakeData = [];
-          }
+        if (resp.success && resp.body.length !== 0) {
+          this.$data.feeTakeData = resp.body;
+        } else {
+          this.$data.feeTakeData = [];
         }
       },
       // 获取车辆信息列表data
@@ -414,12 +413,10 @@
           loanNo: this.$data.contractInfoForm.loanNo
         });
         this.$data.carListLoading = false;
-        if (resp.success) {
-          if (resp.body.resultList.length !== 0) {
-            this.$data.carData = resp.body.resultList;
-          } else {
-            this.$data.carData = [];
-          }
+        if (resp.success && resp.body.resultList.length !== 0) {
+          this.$data.carData = resp.body.resultList;
+        } else {
+          this.$data.carData = [];
         }
       },
       // 获取担保信息列表data
@@ -457,6 +454,10 @@
         const formName = 'contractInfoForm';
         this.$refs[formName].validate(async (valid) => {
           if (valid) {
+            if (!this.$DateTest.testDateFun(this.$data.contractInfoForm.contractInfo.startDate, this.$data.contractInfoForm.contractInfo.endDate)) {
+              this.$Message.error('“开始日期”不能大于“结束日期”');
+              return;
+            }
             this.$data.contractInfoForm.loanApprove = this.$data.loanApprove;
             // console.log(this.CreateRepayPlan); // isCapital(资金方)，isRental(租金方)，
             if (!this.CreateRepayPlan.isCapital) {
