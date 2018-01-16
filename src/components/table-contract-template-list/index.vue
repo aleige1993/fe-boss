@@ -20,7 +20,7 @@
     <slot name="topAction" v-if="!isModal"></slot>
     <i-table border :page-size="pageSize" :loading="dataLoading" ref="contractTemplateTable" :columns="resultColumns" :data="data1" @on-row-dblclick="selectRow"></i-table>
     <div class="page-container">
-      <i-page :current="currentPage" :total="total" size="small" show-elevator show-total @on-change="jumpPage">
+      <i-page :current="currentPage" :page-size="pageSize" :total="total" size="small" show-elevator show-total @on-change="jumpPage">
       </i-page>
     </div>
   </div>
@@ -74,11 +74,8 @@
     methods: {
       async getPrivateCustomerList(page) {
         this.$data.dataLoading = true;
-        if (page) {
-          this.formSearch.currentPage = page;
-        }
         let resp = await this.$http.post('/contract/listContractTemplate', {
-          currentPage: this.$data.currentPage,
+          currentPage: page || this.$data.currentPage,
           pageSize: this.$data.pageSize,
           contractTemplateName: this.$data.formSearch.contractTemplateName
           // contractSource: this.contractSource // 1:资金方，2:产品
