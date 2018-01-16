@@ -24,7 +24,7 @@ export default {
     openModalCar() {
       this.$data.isAddCar = true;
       this.$data.showModalCar = true;
-      this.$data.formCar = {};
+      this.$refs['formCar'].resetFields();
     },
     // 车辆提交
     async addSuBmitCar() {
@@ -64,6 +64,26 @@ export default {
       Alertify.confirm('确定要删除吗？', async (ok) => {
         if (ok) {
           this.$data.carData.splice(index, 1);
+        }
+      });
+    },
+    showAddCarEvalModal() {
+      this.$data.isAddCarEval = true;
+      this.$data.showCarEvalFormModal = true;
+      this.$refs['formCarEval'].resetFields();
+    },
+    /**
+     * 提交车辆评估信息
+     */
+    submitCarEval() {
+      this.$refs['formCarEval'].validate(valid => {
+        if (valid) {
+          if (this.$data.isAddCarEval) {
+            this.$data.formCar.carEvalVOList.push(this.$data.formCarEval);
+          } else {
+            this.$set(this.$data.formCar.carEvalVOList, this.$data.modifyCarEvalRowIndex, this.$data.formCarEval);
+          }
+          this.$data.showCarEvalFormModal = false;
         }
       });
     }

@@ -16,7 +16,81 @@ export default {
       // 车辆
       isAddCar: true,
       showModalCar: false,
+      // 车辆信息 -- 评估报告
+      showCarEvalFormModal: false,
+      isAddCarEval: true,
+      modifyCarEvalRowIndex: 0,
       carDataLoading: false,
+      carEvalColumns: [
+        {
+          title: '第三方评估商名称',
+          key: 'evalProviderName'
+        },
+        {
+          title: '抵押估价',
+          key: 'guarantyAmt'
+        },
+        {
+          title: '质押估价',
+          key: 'pledgeAmt'
+        },
+        {
+          title: '车商收购价',
+          key: 'merchantBuyAmt'
+        },
+        {
+          title: '个人交易价',
+          key: 'individualSaleAmt'
+        },
+        {
+          title: '评估方式',
+          key: 'evalType',
+          render: (h, params) => {
+            return params.row.evalType === '1' ? '手工' : '自动';
+          }
+        },
+        {
+          title: '操作',
+          key: 'action',
+          render: (h, params) => {
+            return h('div', [
+              h('Button', {
+                props: {
+                  type: 'primary',
+                  size: 'small'
+                },
+                style: {
+                  marginRight: '5px'
+                },
+                on: {
+                  click: () => {
+                    this.$data.isAddCarEval = false;
+                    this.$data.showCarEvalFormModal = true;
+                    this.$data.formCarEval = Object.assign({}, params.row);
+                    this.$data.modifyCarEvalRowIndex = params.index;
+                  }
+                }
+              }, '修改'),
+              h('Button', {
+                props: {
+                  type: 'error',
+                  size: 'small'
+                },
+                on: {
+                  click: () => {
+                    Alertify.confirm('确定要删除当前评估信息吗？', ok => {
+                      if (ok) {
+                        this.$data.formCar.carEvalVOList.splice(params.index, 1);
+                      }
+                    });
+                    this.remove(params.index);
+                  }
+                }
+              }, '删除')
+            ]);
+          }
+        }
+      ],
       formCar: {
         carOutputStand: '',
         loanNo: '',
@@ -54,7 +128,20 @@ export default {
         carFrameNo: '',
         carMileage: '',
         carModel: '',
-        billCorpName: ''
+        billCorpName: '',
+        carEvalVOList: [] // 车辆评估信息
+      },
+      formCarEval: {
+        'loanCarNo': '', // 抵押车辆编号
+        'loanNo': '', // 项目编号
+        'evalProviderNo': '', // 第三方评估商编号
+        'evalProviderName': '', // 第三方评估商名称
+        'guarantyAmt': '', // 抵押估价
+        'pledgeAmt': '', // 质押估价
+        'merchantBuyAmt': '', // 车商收购价
+        'merchantSaleAmt': '', // 车商售卖价
+        'individualSaleAmt': '', // 个人交易价
+        'evalType': '' // 评估方式1-手工，2-自动
       },
       // 担保信息
       isAddAssure: true,
