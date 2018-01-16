@@ -110,7 +110,7 @@
       add() {
         this.$data.isAdd = true;
         this.$data.addModal = true;
-        this.$data.fromData = {};
+        this.$refs['fromData'].resetFields();
       },
       async getProxyPayList(page) {
         this.$data.dataLoading = true;

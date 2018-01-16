@@ -21,29 +21,7 @@
         <i-form-item label="链接" prop="linkUrl" :rules="{required: true, message: '链接不能为空', trigger: 'blur'}">
           <i-input v-model="fromData.linkUrl" placeholder=""></i-input>
         </i-form-item>
-        <!--<i-form-item-->
-          <!--:rules="{required: true, message: '请选择图片', trigger: 'blur'}"-->
-          <!--label="选择图片"-->
-          <!--prop="bannerUrl">-->
-          <!--<i-upload-->
-            <!--:show-upload-list="false"-->
-            <!--:on-success="uploadSuccess"-->
-            <!--:on-error="uploadError"-->
-            <!--:format="['jpg','jpeg','png']"-->
-            <!--type="drag"-->
-            <!--:action="$config.HTTPBASEURL + '/common/upload'">-->
-            <!--<div style="padding: 20px 0">-->
-              <!--<i-icon type="ios-cloud-upload" size="52" style="color: #3399ff"></i-icon>-->
-              <!--<p>单击或拖动文件上传</p>-->
-            <!--</div>-->
-          <!--</i-upload>-->
-          <!--<p v-if="isAdd" class="show-upload-text" v-text="uploadFileName"></p>-->
-          <!--<p v-else class="show-upload-text" v-text="fromData.bannerUrl"></p>-->
-          <!--<input type="hidden" v-model="fromData.bannerUrl" style="width: 100%;border: 0;">-->
-        <!--</i-form-item>-->
-        <i-form-item label="选择图片"
-                     prop="bannerUrl"
-                     :rules="{required: true, message: '请选择图片', trigger: 'blur'}">
+        <i-form-item label="选择图片" prop="bannerUrl" :rules="{required: true, message: '请选择图片', trigger: 'blur'}">
           <input type="hidden" v-model="fromData.bannerUrl"/>
           <i-upload
               :format="['jpg','jpeg','png']"
@@ -52,7 +30,7 @@
               :action="$config.HTTPBASEURL+'/common/upload'"
               :show-upload-list="false">
             <div class="upload-image">
-              <div v-if="isAdd">
+              <div v-if="!fromData.bannerUrl">
                 <i-icon type="ios-cloud-upload" size="52" style="color: #3399ff"></i-icon>
                 <p>单击或拖动文件上传</p>
               </div>
@@ -88,7 +66,7 @@
     mixins: [MixinData],
     data() {
       return {
-        isAdd: false,
+        isAdd: true,
         addModal: false,
         dataLoading: false,
         buttonLoading: false,
@@ -146,7 +124,7 @@
       add() {
         this.$data.isAdd = true;
         this.$data.addModal = true;
-        this.$data.fromData = {};
+        this.$refs['fromData'].resetFields();
       },
       async getProxyPayList(page) {
         this.$data.dataLoading = true;
@@ -189,7 +167,6 @@
       },
       // 上传成功
       uploadSuccess(res, file, fileList) {
-        this.$data.isAdd = false;
         this.$data.fromData.bannerUrl = res.body.url;
       },
       // 上传失败
