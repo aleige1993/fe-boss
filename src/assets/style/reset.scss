@@ -110,3 +110,11 @@ h1,h2,h3,h4,h5,h6 {
 .select-show-input .ivu-select-single .ivu-select-selection .ivu-select-placeholder {
   color: #495060;
 }
+// (iView)全局控制table的宽度最小为1200px
+.ivu-table-wrapper {
+  min-width: 1200px;
+}
+// (iView)对于模态框内的table不做最小宽度控制
+.pt-modal-dialog .ivu-table-wrapper {
+  min-width: 0px;
+}

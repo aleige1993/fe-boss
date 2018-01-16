@@ -307,10 +307,10 @@
       },
       jumpPageExamine(page) {
         this.examineGetlist(page);
-      },
-      // 资金方信息列表更改
-      loanCapitalSetRow(row) {
       }
+      // 资金方信息列表更改
+      /* loanCapitalSetRow(row) {
+      }*/
     }
   };
 </script>

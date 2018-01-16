@@ -233,6 +233,10 @@
           this.$Message.error('“授信总额度”不能小于“单笔最大额度”！');
           return;
         }
+        if (!this.$DateTest.testDateFun(this.$data.formQuota.creditStartDate, this.$data.formQuota.creditEndDate)) {
+          this.$Message.error('“授信起始日期”不能大于“授信到期日期”');
+          return;
+        }
         this.$data.draftLoading = true;
         let resp = await this.$http.post('merchant/credit/tempSave', {
           merchantNo: this.$data.formQuota.merchantNo,
@@ -257,6 +261,10 @@
           if (valid) {
             if (!this.TestCreditTotal()) {
               this.$Message.error('“授信总额度”不能小于“单笔最大额度”！');
+              return;
+            }
+            if (!this.$DateTest.testDateFun(this.$data.formQuota.creditStartDate, this.$data.formQuota.creditEndDate)) {
+              this.$Message.error('“授信起始日期”不能大于“授信到期日期”');
               return;
             }
             if (this.$data.isAdd) {

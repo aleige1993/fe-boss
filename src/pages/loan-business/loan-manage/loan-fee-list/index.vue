@@ -48,7 +48,6 @@
 </template>
 
 <script>
-  import testDate from '@/utils/date-test';
   import MixinData from './mixin-data';
   export default {
     name: 'pageloanFeeList',
@@ -98,13 +97,17 @@
         }
       },
       search() {
-        if (!testDate.testDateFun(this.$data.searchForm.applyStartTime, this.$data.searchForm.applyEndTime)) {
-          this.$Message.warning('开始日期不能大于结束日期');
+        if (!this.$DateTest.testDateFun(this.$data.searchForm.applyStartTime, this.$data.searchForm.applyEndTime)) {
+          this.$Message.error('“开始日期”不能大于“结束日期”');
           return;
         }
         this.getList();
       },
       jumpPage(page) {
+        if (!this.$DateTest.testDateFun(this.$data.searchForm.applyStartTime, this.$data.searchForm.applyEndTime)) {
+          this.$Message.error('“开始日期”不能大于“结束日期”');
+          return;
+        }
         this.getList(page);
       }
     }

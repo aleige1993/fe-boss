@@ -386,6 +386,7 @@
         let resp = await this.$http.post('biz/getApproveCredit', {
           loanNo: this.$data.contractInfoForm.loanNo
         });
+        console.log(resp);
         if (resp.success) {
           this.$data.approveCredit = resp.body;
         }
@@ -453,6 +454,10 @@
         const formName = 'contractInfoForm';
         this.$refs[formName].validate(async (valid) => {
           if (valid) {
+            if (!this.$DateTest.testDateFun(this.$data.contractInfoForm.contractInfo.startDate, this.$data.contractInfoForm.contractInfo.endDate)) {
+              this.$Message.error('“开始日期”不能大于“结束日期”');
+              return;
+            }
             this.$data.contractInfoForm.loanApprove = this.$data.loanApprove;
             // console.log(this.CreateRepayPlan); // isCapital(资金方)，isRental(租金方)，
             if (!this.CreateRepayPlan.isCapital) {

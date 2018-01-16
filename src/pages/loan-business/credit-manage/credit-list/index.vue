@@ -107,9 +107,17 @@
         this.$data.total = resp.body.totalNum / 1;
       },
       jumpPage(page) {
+        if (!this.$DateTest.testDateFun(this.$data.searchForm.startDate, this.$data.searchForm.endDate)) {
+          this.$Message.error('“开始日期”不能大于“结束日期”');
+          return;
+        }
         this.getCompanyCreditList(page);
       },
       search() {
+        if (!this.$DateTest.testDateFun(this.$data.searchForm.startDate, this.$data.searchForm.endDate)) {
+          this.$Message.error('“开始日期”不能大于“结束日期”');
+          return;
+        }
         this.getCompanyCreditList();
       },
       selectRow(row, index) {
