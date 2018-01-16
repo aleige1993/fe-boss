@@ -226,6 +226,17 @@ export default {
       this.$data.approveData.loanRePaymentAccountDTOS.bankCode = filterAry[0].bankCode;
     },
     /**
+     * 选择利率方案
+     * @param row
+     * @param index
+     */
+    selectPeriodsRow(row, index) {
+      this.$data.approveData.loanApproveCreditDTO.loanPeriods = row.loanPeriods;
+      this.$data.approveData.loanApproveCreditDTO.loanNominalRate = row.loanNominalRate;
+      this.$data.approveData.loanApproveCreditDTO.interestType = row.interestType;
+      this.$data.selectPeriodsAndRate = false;
+    },
+    /**
      * 表单验证
      */
     validate() {
