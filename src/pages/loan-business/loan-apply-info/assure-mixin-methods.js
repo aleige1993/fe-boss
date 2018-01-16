@@ -4,13 +4,12 @@ export default {
     async getAssureList() {
       this.$data.assureDataLoading = true;
       let resp = await this.$http.post('/loanAssureList', {});
-      if (resp.body.resultList.length !== 0) {
+      this.$data.assureDataLoading = false;
+      if (resp.success && resp.body.resultList.length !== 0) {
         this.$data.assureData = resp.body.resultList;
       } else {
-        this.$Message.warning('担保信息信息无数据');
         this.$data.assureData = [];
       }
-      this.$data.assureDataLoading = false;
     },
     // 打开担保信息新增修改模态框
     openModalAssure() {

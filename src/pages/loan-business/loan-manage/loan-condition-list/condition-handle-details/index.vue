@@ -426,12 +426,8 @@
           loanNo: this.$route.query.loanNo
         });
         this.$data.carDataLoading = false;
-        if (reps.success) {
-          if (reps.body.resultList.length !== 0) {
-            this.$data.carData = reps.body.resultList;
-          } else {
-            this.$data.carData = [];
-          }
+        if (reps.success && reps.body.resultList.length !== 0) {
+          this.$data.carData = reps.body.resultList;
         } else {
           this.$data.carData = [];
         }
@@ -460,12 +456,8 @@
           loanNo: this.$route.query.loanNo
         });
         this.$data.conditionLoading = false;
-        if (reps.success) {
-          if (reps.body.length !== 0) {
-            this.$data.conditionData = reps.body;
-          } else {
-            this.$data.conditionData = [];
-          }
+        if (reps.success && reps.body.length !== 0) {
+          this.$data.conditionData = reps.body;
         } else {
           this.$data.conditionData = [];
         }

@@ -57,7 +57,7 @@
           productNo
         });
         this.$data.dataLoading = false;
-        if (resp.body.length !== 0) {
+        if (resp.success && resp.body.length !== 0) {
           let _data = resp.body.map(item => {
             if (item.isSelectd === 1) {
               item._checked = true;
