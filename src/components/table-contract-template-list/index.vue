@@ -49,10 +49,10 @@
         dataLoading: false,
         currentPage: 1,
         total: 0,
-        pageSize: 8,
+        pageSize: 15,
         formSearch: {
           contractTemplateName: '',
-          pageSize: 8,
+          pageSize: 15,
           currentPage: 1
         }
       };
@@ -80,8 +80,8 @@
         let resp = await this.$http.post('/contract/listContractTemplate', {
           currentPage: this.$data.currentPage,
           pageSize: this.$data.pageSize,
-          contractTemplateName: this.$data.formSearch.contractTemplateName,
-          contractSource: this.contractSource // 1:资金方，2:产品
+          contractTemplateName: this.$data.formSearch.contractTemplateName
+          // contractSource: this.contractSource // 1:资金方，2:产品
         });
         this.$data.dataLoading = false;
         if (resp.success && resp.body.resultList.length !== 0) {
