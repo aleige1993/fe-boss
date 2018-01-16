@@ -254,12 +254,8 @@
             });
             msg();
             if (resp.success) {
-              if (resp.body.length !== 0) {
-                this.$data.isCapital = true;
-                this.$data.repayPlanCapitalList = await resp.body;
-                this.$Message.success('生成资金方还款计划成功！');
-                this.getRepayPlanCapitalList(); // 获取资方列表data
-              }
+              this.$Message.success('生成资金方还款计划成功！');
+              this.getRepayPlanCapitalList(); // 获取资方列表data
             }
           }
         });
@@ -274,12 +270,8 @@
             });
             msg();
             if (resp.success) {
-              if (resp.body.length !== 0) {
-                this.$data.isRental = true;
-                this.$data.repayPlanRentalList = await resp.body;
-                this.$Message.success('生成租金方还款计划成功！');
-                this.getRepayPlanRentalList(); // 获取租金还款计划列表data
-              }
+              this.$Message.success('生成租金方还款计划成功！');
+              this.getRepayPlanRentalList(); // 获取租金还款计划列表data
             }
           }
         });

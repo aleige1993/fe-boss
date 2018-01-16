@@ -240,9 +240,10 @@
       </i-row>
       <i-row>
         <i-col span="8">
-          <i-form-item label="意见信息" prop="opinion" :rules="{required: true, message: '意见信息不能为空', trigger: 'blur'}">
-            <i-input type="textarea" v-model="loanApprove.opinion" :rows="2" placeholder="">
-            </i-input>
+          <i-form-item label="意见信息"
+                       prop="opinion"
+                       :rules="{required: (loanApprove.approveStatus!=='A'), message: '意见信息不能为空', trigger: 'blur'}">
+            <i-input type="textarea" v-model="loanApprove.opinion" :rows="2" placeholder=""></i-input>
           </i-form-item>
         </i-col>
       </i-row>
@@ -386,7 +387,6 @@
         let resp = await this.$http.post('biz/getApproveCredit', {
           loanNo: this.$data.contractInfoForm.loanNo
         });
-        console.log(resp);
         if (resp.success) {
           this.$data.approveCredit = resp.body;
         }
