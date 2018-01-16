@@ -3,129 +3,92 @@ export default {
     return {
       customerColumns: [
         {
-          type: 'selection',
-          width: 60,
-          align: 'center'
+          title: '合同模板编号',
+          key: 'contractTemplateNo'
         },
         {
-          title: '项目编号',
-          key: 'payForNo',
-          width: 140
+          title: '合同模板名称',
+          key: 'contractTemplateName'
         },
         {
-          title: '支付流水号',
-          key: 'transNo',
-          width: 140
+          title: '属性名称',
+          key: 'fieldName'
         },
         {
-          title: '代付金额',
-          key: 'transMoney',
-          width: 120
+          title: '属性描述',
+          key: 'fieldDesc'
         },
         {
-          title: '收款人姓名',
-          width: 120,
-          key: 'toAccName'
-        },
-        {
-          title: '收款人账号',
-          key: 'toAccNo',
-          width: 200
-        },
-        {
-          title: '收款人开户银行',
-          key: 'toAccDept',
-          width: 140
-        },
-        {
-          title: '收款人开户行省名',
-          key: 'toProName',
-          width: 140
-        },
-        {
-          title: '收款人开户行市名',
-          key: 'toCityName',
-          width: 140
-        },
-        {
-          title: '收款人开户行机构名',
-          key: 'toAccDept',
-          width: 140
-        },
-        {
-          title: '收款人身份证号',
-          key: 'transCardId',
-          width: 200
-        },
-        {
-          title: '银行卡预留手机号',
-          key: 'transMobile',
-          width: 120
-        },
-        {
-          title: '预计付款时间',
-          key: 'expectTime',
-          width: 120
-        },
-        {
-          title: '付款发起时间',
-          key: 'actualTime',
-          width: 120
-        },
-        {
-          title: '付款完成时间',
-          key: 'transEndtime',
-          width: 120
-        },
-        {
-          title: '付款状态',
-          key: 'state',
-          width: 100,
-          fixed: 'right',
-          align: 'center',
+          title: '属性类型',
+          key: 'fieldType',
           render: (h, params) => {
-            if (params.row.state === '0') {
-              return '付款中';
-            } else if (params.row.state === '1') {
-              return '成功';
-            } else if (params.row.state === '-1') {
-              return h('Tooltip', {
-                props: {
-                  content: `失败原因：${params.row.transRemark}`
-                }
-              }, '失败');
-            } else if (params.row.state === '2') {
-              return '已退款';
-            } else if (params.row.state === '3') {
-              return '待付款';
+            if (params.row.fieldType === '1') {
+              return '常量';
+            } else {
+              return '变量';
             }
           }
+        },
+        {
+          title: '属性默认值',
+          key: 'fieldDefaultValue'
+        },
+        {
+          title: '属性取值来源实体',
+          key: 'fieldSourceEntity'
+        },
+        {
+          title: '属性取值来源字段',
+          key: 'fieldSourceAttr'
         }
       ],
       customerActionColumns: [
         {
           title: '操作',
           key: 'action',
-          width: 80,
+          width: 160,
           fixed: 'right',
           align: 'center',
           render: (h, params) => {
-            if (params.row.state === '-1' || params.row.state === '3') {
-              return h('div', [
-                h('Button', {
-                  props: {
-                    type: 'primary',
-                    size: 'small'
-                  },
-                  // style: { marginRight: '5px' },
-                  on: {
-                    click: () => {
-                      this.submit(params.row.payForNo.split(','));
-                    }
+            return h('div', [
+              h('Button', {
+                props: {
+                  type: 'primary',
+                  size: 'small'
+                },
+                style: { marginRight: '5px' },
+                on: {
+                  click: () => {
+                    this.$data.isAdd = false;
+                    this.$data.addModal = true;
+                    this.$data.fromData = $.extend({}, params.row);
                   }
-                }, '付款')
-              ]);
-            }
+                }
+              }, '修改'),
+              h('Button', {
+                props: {
+                  type: 'error',
+                  size: 'small'
+                },
+                on: {
+                  click: () => {
+                    Alertify.confirm('是否确认删除这条数据', async (ok) => {
+                      if (ok) {
+                        const loading = this.$Message.loading('处理中...', 0);
+                        let resp = await this.$http.post('/cfg/contract/remove', {
+                          id: params.row.id
+                        });
+                        loading();
+                        if (resp.success) {
+                          this.$Message.success('删除成功');
+                          this.getProxyPayList();
+                        }
+                      }
+                    });
+                  }
+                }
+              }, '删除')
+            ]);
           }
         }
       ],

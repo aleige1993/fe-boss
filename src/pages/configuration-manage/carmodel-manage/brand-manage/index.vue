@@ -35,29 +35,7 @@
         <i-form-item label="首字母" prop="initial">
           <i-input v-model="fromData.initial" placeholder="" readonly></i-input>
         </i-form-item>
-        <!--<i-form-item-->
-          <!--:rules="{required: true, message: '请选择图片', trigger: 'blur'}"-->
-          <!--label="品牌LOGO"-->
-          <!--prop="logo">-->
-          <!--<i-upload-->
-            <!--:show-upload-list="false"-->
-            <!--:on-success="uploadSuccess"-->
-            <!--:on-error="uploadError"-->
-            <!--:format="['jpg','jpeg','png']"-->
-            <!--type="drag"-->
-            <!--:action="$config.HTTPBASEURL + '/common/upload'">-->
-            <!--<div style="padding: 20px 0">-->
-              <!--<i-icon type="ios-cloud-upload" size="52" style="color: #3399ff"></i-icon>-->
-              <!--<p>单击或拖动文件上传</p>-->
-            <!--</div>-->
-          <!--</i-upload>-->
-          <!--<p v-if="isAdd" class="show-upload-text" v-text="uploadFileName"></p>-->
-          <!--<p v-else class="show-upload-text" v-text="fromData.logo"></p>-->
-          <!--<input type="hidden" v-model="fromData.logo" style="width: 100%;border: 0;">-->
-        <!--</i-form-item>-->
-        <i-form-item label="品牌LOGO"
-                     prop="bannerUrl"
-                     :rules="{required: true, message: '请选择图片', trigger: 'blur'}">
+        <i-form-item label="品牌LOGO" prop="bannerUrl" :rules="{required: true, message: '请选择图片', trigger: 'blur'}">
           <input type="hidden" v-model="fromData.logo"/>
           <i-upload
             :format="['jpg','jpeg','png']"
@@ -66,7 +44,7 @@
             :action="$config.HTTPBASEURL+'/common/upload'"
             :show-upload-list="false">
             <div class="upload-image">
-              <div v-if="isAdd">
+              <div v-if="!fromData.logo">
                 <i-icon type="ios-cloud-upload" size="52" style="color: #3399ff"></i-icon>
                 <p>单击或拖动文件上传</p>
               </div>
@@ -145,7 +123,7 @@
       add() {
         this.$data.isAdd = true;
         this.$data.addModal = true;
-        this.$data.fromData = {};
+        this.$refs['fromData'].resetFields();
       },
       async getProxyPayList(page) {
         this.$data.dataLoading = true;
@@ -188,12 +166,10 @@
       },
       // 上传成功
       uploadSuccess(res, file, fileList) {
-        this.$data.uploadFileName = file.name;
         this.$data.fromData.logo = res.body.url;
       },
       // 上传失败
       uploadError(err, file, fileList) {
-        this.$data.uploadFileName = '';
         this.$Notice.error({
           title: '错误提示',
           desc: err

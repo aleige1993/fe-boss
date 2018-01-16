@@ -48,7 +48,7 @@
       </i-form>
     </bs-modal>
     <!--选择产品的弹窗-->
-    <bs-modal title="选择产品" :width="1200" v-model="showSelectProduct">
+    <bs-modal title="选择产品" :width="1200" v-model="showSelectProduct" :alert="'双击单行选择'">
       <table-product-list :type="'modal'" @on-row-dbclick="selectProduct"></table-product-list>
     </bs-modal>
   </div>
@@ -165,6 +165,7 @@
             let productMatchNo = row.productMatchNo;
             const loadingMsg = this.$Message.loading('删除中...', 0);
             let respDel = await this.$http.post('/pms/productMatch/remove', {
+              productNo: row.productNo,
               productMatchNo
             });
             loadingMsg();
