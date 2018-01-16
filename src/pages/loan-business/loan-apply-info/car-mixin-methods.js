@@ -60,7 +60,7 @@ export default {
     },
     // 删除
     async removeCar(row, index) {
-      Alertify.confirm('确定要删除吗？', async (ok) => {
+      Alertify.confirm('确定要删除吗？', async(ok) => {
         if (ok) {
           this.$data.carData.splice(index, 1);
         }

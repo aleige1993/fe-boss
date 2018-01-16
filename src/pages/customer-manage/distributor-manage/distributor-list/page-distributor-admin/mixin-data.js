@@ -44,7 +44,7 @@ export default {
                 },
                 on: {
                   click: () => {
-                    Alertify.confirm('确定要重置密码吗？', async (ok) => {
+                    Alertify.confirm('确定要重置密码吗？', async(ok) => {
                       if (ok) {
                         const msg = this.$Message.loading('正在重置密码', 0);
                         let resp = await this.$http.get('/merchant/operator/resetPsw', {
@@ -70,7 +70,7 @@ export default {
                   click: () => {
                     let operatorStatus = params.row.operatorStatus === '0' ? '1' : '0'; // 0:冻结,1:激活
                     let text = params.row.operatorStatus === '0' ? '激活' : '冻结';
-                    Alertify.confirm(`确定要${text}当前用户吗？`, async (ok) => {
+                    Alertify.confirm(`确定要${text}当前用户吗？`, async(ok) => {
                       if (ok) {
                         const msg = this.$Message.loading(`正在${text}`, 0);
                         let resp = await this.$http.get('/merchant/operator/status', {

@@ -47,7 +47,7 @@ export default {
                 },
                 on: {
                   click: () => {
-                    Alertify.confirm('确定删除这个联系人吗？', async (ok) => {
+                    Alertify.confirm('确定删除这个联系人吗？', async(ok) => {
                       if (ok) {
                         const msg = this.$Message.loading('正在删除联系人', 0);
                         let resp = await this.$http.post('/member/ohter/contacts/delete', {

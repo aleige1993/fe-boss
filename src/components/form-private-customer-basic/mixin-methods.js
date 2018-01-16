@@ -5,7 +5,7 @@ export default {
         if (this.$data.checkoutCertNoTimer) {
           this.$data.checkoutCertNoTimer = null;
         }
-        this.$data.checkoutCertNoTimer = setTimeout(async () => {
+        this.$data.checkoutCertNoTimer = setTimeout(async() => {
           this.$data.checkingCertNo = true;
           let resp = await this.$http.post('/member/isExists', { certNo: this.$data.formData.mbMemberDTO.certNo });
           this.$data.checkingCertNo = false;

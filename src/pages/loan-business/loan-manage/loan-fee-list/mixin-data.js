@@ -86,7 +86,7 @@ export default {
                   marginRight: '5px'
                 },
                 on: {
-                  click: async () => {
+                  click: async() => {
                     // 设置当前处理人
                     let rep = await this.$http.post('/biz/payment/settingHandleUser', {
                       paymentNo: params.row.paymentNo

@@ -53,7 +53,7 @@ export default {
                 on: {
                   click: () => {
                     // this.remove(params.index);
-                    Alertify.confirm('确定要删除吗？', async (ok) => {
+                    Alertify.confirm('确定要删除吗？', async(ok) => {
                       if (ok) {
                         const loadingMsg = this.$Message.loading('删除中...', 0);
                         let resp = await this.$http.post('/corp/deleteCorpAcct', {

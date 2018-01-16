@@ -92,8 +92,8 @@ export default {
                 },
                 style: { marginRight: '5px' },
                 on: {
-                  click: async () => {
-                    Alertify.confirm('确定要撤销当前申请吗？', async (ok) => {
+                  click: async() => {
+                    Alertify.confirm('确定要撤销当前申请吗？', async(ok) => {
                       if (ok) {
                         const msg = this.$Message.loading('正在撤销授信申请', 0);
                         let resp = await this.$http.post('/credit/cancel', {
@@ -164,7 +164,7 @@ export default {
                 },
                 style: { marginRight: '5px' },
                 on: {
-                  click: async () => {
+                  click: async() => {
                     this.$data.applyApproveLoading = true;
                     let resp = await this.$http.post('/credit/settingHandleUser', { creditLimitApplyNo: params.row.creditLimitApplyNo });
                     this.$data.applyApproveLoading = false;
@@ -200,7 +200,7 @@ export default {
                 style: { marginRight: '5px' },
                 on: {
                   click: () => {
-                    Alertify.confirm('确定删除当前授信申请吗？', async (ok) => {
+                    Alertify.confirm('确定删除当前授信申请吗？', async(ok) => {
                       if (ok) {
                         const loading = this.$Message.loading('正在删除授信申请', 0);
                         let resp = await this.$http.post('/credit/delete', {

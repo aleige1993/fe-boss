@@ -61,7 +61,7 @@ export default {
                   size: 'small'
                 },
                 on: {
-                  click: async () => {
+                  click: async() => {
                     // 设置当前处理人
                     let rep = await this.$http.post('/biz/payment/settingHandleUserWithPawn');
                     if (!rep.success) {

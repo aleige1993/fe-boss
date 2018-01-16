@@ -63,7 +63,7 @@ export default {
                 },
                 on: {
                   click: () => {
-                    Alertify.confirm('是否确定删除', async (ok) => {
+                    Alertify.confirm('是否确定删除', async(ok) => {
                       if (ok) {
                         const loading = this.$Message.loading('删除中...', 0);
                         let respn = await this.$http.post('/member/have/company/delete', {

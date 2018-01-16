@@ -123,7 +123,7 @@ export default {
                   click: () => {
                     let status = params.row.status === '1' ? '2' : '1';
                     let text = params.row.status === '1' ? '冻结' : '激活';
-                    Alertify.confirm(`确定要${text}当前用户吗？`, async (ok) => {
+                    Alertify.confirm(`确定要${text}当前用户吗？`, async(ok) => {
                       if (ok) {
                         const msg = this.$Message.loading(`正在${text}`, 0);
                         let resp = await this.$http.post('/updateCorpStatus', {
@@ -139,7 +139,7 @@ export default {
                     });
                   }
                 }
-              }, this.status === '1' ? '冻结' : '激活')  // status 1激活  2冻结  3草稿
+              }, this.status === '1' ? '冻结' : '激活') // status 1激活  2冻结  3草稿
             ]);
           }
         }

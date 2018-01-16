@@ -71,7 +71,7 @@ export default {
                   size: 'small'
                 },
                 on: {
-                  click: async () => {
+                  click: async() => {
                     this.$data.GPSinstallShowModal = true;
                     this.$data.clickRow = await params.row;
                     this.$data.loanCarGpsDTOList = this.$data.carData[params.index].loanCarGpsDTOList;

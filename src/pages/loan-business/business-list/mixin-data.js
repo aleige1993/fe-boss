@@ -130,7 +130,7 @@ export default {
                 },
                 style: { marginRight: '5px' },
                 on: {
-                  click: async () => {
+                  click: async() => {
                     this.$data.applyApproveLoading = true;
                     let resp = await this.$http.post('/biz/holdUpLoanBizByLoanNo', { loanNo: params.row.loanNo });
                     this.$data.applyApproveLoading = false;
@@ -159,8 +159,8 @@ export default {
                 },
                 style: { marginRight: '5px' },
                 on: {
-                  click: async () => {
-                    Alertify.confirm('确定要撤回吗？', async (ok) => {
+                  click: async() => {
+                    Alertify.confirm('确定要撤回吗？', async(ok) => {
                       if (ok) {
                         const msg = this.$Message.loading('正在撤回', 0);
                         let resp = await this.$http.post('/biz/recallByLoanNo', { loanNo: params.row.loanNo });
@@ -202,7 +202,7 @@ export default {
                 },
                 style: { marginRight: '5px' },
                 on: {
-                  click: async () => {
+                  click: async() => {
                     let resp = await this.$http.post('/biz/holdUpLoanBizByLoanNo', { loanNo: params.row.loanNo });
                     if (resp.success) {
                       this.$router.push({
@@ -230,7 +230,7 @@ export default {
                 style: { marginRight: '5px' },
                 on: {
                   click: () => {
-                    Alertify.confirm('确定删除当前客户吗？', async (ok) => {
+                    Alertify.confirm('确定删除当前客户吗？', async(ok) => {
                       if (ok) {
                         let resp = await this.$http.post('/biz/deleteByLoanNo', {
                           loanNo: params.row.loanNo

@@ -39,7 +39,7 @@ export default {
                 },
                 on: {
                   click: () => {
-                    Alertify.confirm('是否确认删除这条记录', async (ok) => {
+                    Alertify.confirm('是否确认删除这条记录', async(ok) => {
                       if (ok) {
                         const loading = this.$Message.loading('处理中...', 0);
                         let resp = await this.$http.post('/member/case/manage/delete', {

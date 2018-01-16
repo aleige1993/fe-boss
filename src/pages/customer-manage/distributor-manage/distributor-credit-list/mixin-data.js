@@ -71,7 +71,7 @@ export default {
                   type: 'success'
                 },
                 on: {
-                  click: async () => {
+                  click: async() => {
                     let reps = await this.$http.post('merchant/credit/startApprove', {
                       merchantNo: params.row.merchantNo,
                       applyNo: params.row.applyNo,

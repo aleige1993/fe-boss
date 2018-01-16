@@ -13,6 +13,7 @@ module.exports = {
   extends: 'standard',
   // required to lint *.vue files
   plugins: [
+    'vuefix',
     'html'
   ],
   // add your custom rules here
@@ -38,7 +39,7 @@ module.exports = {
         'allowBlockStart': true,
         'allowObjectStart': true,
         'allowArrayStart': true
-    }],
+      }],
     'max-depth': [2, 4], // 代码最多允许4层嵌套
     'max-len': [1, 160, 2],
     'max-nested-callbacks': [2, 3], // 回调嵌套深度
@@ -46,7 +47,7 @@ module.exports = {
     'max-statements': [1, 30],  // 单个函数最多30条语句
     'no-array-constructor': [2], // 禁止使用数组构造器
     'no-lonely-if': 2, // // 禁止else语句内只有if语句
-    'no-multiple-empty-lines': [2, {'max': 3, 'maxEOF': 1}], // 空行最多不能超过2行
+    'no-multiple-empty-lines': [2, { 'max': 3, 'maxEOF': 1 }], // 空行最多不能超过2行
     'no-nested-ternary': 2,  // 不使用嵌套的三元表达式
     'no-spaced-func': 2, // 函数调用时 函数名与()之间不能有空格
     'no-trailing-spaces': 2, // 一行结束后面不要有空格
@@ -75,7 +76,7 @@ module.exports = {
     // allow async-await
     'generator-star-spacing': 0,
     // allow debugger during development
-    'no-debugger': process.env.NODE_ENV === 'production' ? 2 : 0,
+    'no-debugger': process.env.NODE_ENV === 'production' ? 2 : 0
   },
   globals: {
     $: false,

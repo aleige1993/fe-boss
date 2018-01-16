@@ -80,7 +80,7 @@ export default {
                 },
                 on: {
                   click: () => {
-                    Alertify.confirm('确定要删除吗？', async (ok) => {
+                    Alertify.confirm('确定要删除吗？', async(ok) => {
                       if (ok) {
                         const loadingMsg = this.$Message.loading('删除中...', 0);
                         let respDel = await this.$http.post('/contract/deleteContractTemplate', {

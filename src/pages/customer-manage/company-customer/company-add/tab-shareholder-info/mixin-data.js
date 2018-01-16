@@ -54,7 +54,7 @@ export default {
                   disabled: this.isFromDetail
                 },
                 on: {
-                  click: async () => {
+                  click: async() => {
                     Alertify.confirm('确定要删除当前股东信息吗？', async ok => {
                       if (ok) {
                         const msg = this.$Message.loading('正在删除股东信息...', 0);

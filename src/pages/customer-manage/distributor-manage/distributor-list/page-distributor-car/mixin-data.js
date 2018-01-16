@@ -48,7 +48,7 @@ export default {
                   click: () => {
                     let status = params.row.salesStatus === '0' ? '1' : '0'; // 0停售，1在售
                     let text = params.row.salesStatus === '0' ? '在售' : '停售';
-                    Alertify.confirm(`确定要${text}当前车型吗？`, async (ok) => {
+                    Alertify.confirm(`确定要${text}当前车型吗？`, async(ok) => {
                       if (ok) {
                         const msg = this.$Message.loading(`正在${text}请求...`, 0);
                         let resp = await this.$http.get('merchant/car/status', {

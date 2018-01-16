@@ -71,7 +71,7 @@ export default {
     },
     // 删除
     async removeLoan(row, index) {
-      Alertify.confirm('确定要删除吗？', async (ok) => {
+      Alertify.confirm('确定要删除吗？', async(ok) => {
         if (ok) {
           this.$data.loanData.splice(index, 1);
         }

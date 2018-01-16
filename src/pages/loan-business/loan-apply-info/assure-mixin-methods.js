@@ -52,7 +52,7 @@ export default {
     },
     // 删除
     async removeAssure(row, index) {
-      Alertify.confirm('确定要删除吗？', async (ok) => {
+      Alertify.confirm('确定要删除吗？', async(ok) => {
         if (ok) {
           this.$data.assureData.splice(index, 1);
         }

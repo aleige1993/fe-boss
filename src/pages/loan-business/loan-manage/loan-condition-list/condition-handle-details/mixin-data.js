@@ -81,7 +81,7 @@ export default {
                   size: 'small'
                 },
                 on: {
-                  click: async () => {
+                  click: async() => {
                     this.$data.GPSinstallShowModal = true;
                     this.$data.clickRow = {};
                     this.$data.clickRow = await params.row;
@@ -258,7 +258,7 @@ export default {
                   marginRight: '5px'
                 },
                 on: {
-                  click: async () => {
+                  click: async() => {
                     this.$data.isAddGPS = false;
                     this.$data.GPSShowModal = true;
                     this.$data.formAddGPS = {};

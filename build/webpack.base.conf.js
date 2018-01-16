@@ -1,12 +1,12 @@
-'use strict'
-const path = require('path')
-const utils = require('./utils')
-const config = require('../config')
-const webpack = require('webpack')
-const vueLoaderConfig = require('./vue-loader.conf')
+'use strict';
+const path = require('path');
+const utils = require('./utils');
+const config = require('../config');
+const webpack = require('webpack');
+const vueLoaderConfig = require('./vue-loader.conf');
 
-function resolve (dir) {
-  return path.join(__dirname, '..', dir)
+function resolve(dir) {
+  return path.join(__dirname, '..', dir);
 }
 
 module.exports = {
@@ -16,16 +16,16 @@ module.exports = {
   output: {
     path: config.build.assetsRoot,
     filename: '[name].js',
-    publicPath: process.env.NODE_ENV === 'production'
-      ? config.build.assetsPublicPath
-      : config.dev.assetsPublicPath
+    publicPath: process.env.NODE_ENV === 'production' ?
+      config.build.assetsPublicPath :
+      config.dev.assetsPublicPath
   },
   resolve: {
     extensions: ['.js', '.vue', '.json'],
     alias: {
       'vue$': 'vue/dist/vue.esm.js',
       '@': resolve('src'),
-      'jquery': 'jquery',
+      'jquery': 'jquery'
     }
   },
 
@@ -85,7 +85,7 @@ module.exports = {
           {
             loader: 'iview-loader',
             options: {
-              prefix: true //设置为true，允许使用i-select形式的iview标签
+              prefix: true // 设置为true，允许使用i-select形式的iview标签
             }
           }
         ]
@@ -95,8 +95,8 @@ module.exports = {
   // 增加一个plugins
   plugins: [
     new webpack.ProvidePlugin({
-      $: "jquery",
-      jQuery: "jquery",
+      $: 'jquery',
+      jQuery: 'jquery'
     })
-  ],
-}
+  ]
+};
