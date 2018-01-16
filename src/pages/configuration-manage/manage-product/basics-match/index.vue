@@ -165,6 +165,7 @@
             let productMatchNo = row.productMatchNo;
             const loadingMsg = this.$Message.loading('删除中...', 0);
             let respDel = await this.$http.post('/pms/productMatch/remove', {
+              productNo: row.productNo,
               productMatchNo
             });
             loadingMsg();
