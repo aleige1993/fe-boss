@@ -502,7 +502,7 @@
           packageRateNo: this.zfClickRow.packageRateNo
         });
         this.$data.ZFLVdataLoading = false;
-        if (resp.body.length !== 0) {
+        if (resp.success && resp.body.length !== 0) {
           this.$data.dataZFLV = resp.body;
         } else {
           this.$data.dataZFLV = [];
@@ -596,7 +596,7 @@
         let resp = await this.$http.get('/pms/productPackage/list', {
           productNo
         });
-        if (resp.body.length !== 0) {
+        if (resp.success && resp.body.length !== 0) {
           let dataObject = resp.body[0];
           for (let item in dataObject) {
             dataObject[item] = dataObject[item].toString();
@@ -613,7 +613,7 @@
           productNo
         });
         this.$data.dataLoading = false;
-        if (resp.body.resultList.length !== 0) {
+        if (resp.success && resp.body.resultList.length !== 0) {
           let formData = resp.body.resultList;
           this.$data.data1 = formData;
         } else {

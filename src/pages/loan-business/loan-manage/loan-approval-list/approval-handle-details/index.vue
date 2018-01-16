@@ -388,12 +388,10 @@
           loanNo: this.$route.query.loanNo
         });
         this.$data.carDataLoading = false;
-        if (reps.success) {
-          if (reps.body.resultList.length !== 0) {
-            this.$data.carData = reps.body.resultList;
-          } else {
-            this.$data.carData = [];
-          }
+        if (reps.success && reps.body.resultList.length !== 0) {
+          this.$data.carData = reps.body.resultList;
+        } else {
+          this.$data.carData = [];
         }
       },
       // 获取担保信息列表的data
@@ -403,12 +401,8 @@
           loanNo: this.$route.query.loanNo
         });
         this.$data.assureDataLoading = false;
-        if (reps.success) {
-          if (reps.body.resultList.length !== 0) {
-            this.$data.assureData = reps.body.resultList;
-          } else {
-            this.$data.assureData = [];
-          }
+        if (reps.success && reps.body.resultList.length !== 0) {
+          this.$data.assureData = reps.body.resultList;
         } else {
           this.$data.assureData = [];
         }

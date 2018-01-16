@@ -297,12 +297,8 @@
           loanNo: this.$route.query.loanNo
         });
         this.$data.conditionLoading = false;
-        if (reps.success) {
-          if (reps.body.length !== 0) {
-            this.$data.conditionData = reps.body;
-          } else {
-            this.$data.conditionData = [];
-          }
+        if (reps.success && reps.body.length !== 0) {
+          this.$data.conditionData = reps.body;
         } else {
           this.$data.conditionData = [];
         }
