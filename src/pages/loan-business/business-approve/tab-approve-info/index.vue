@@ -35,6 +35,14 @@
                   </i-select>
                 </i-form-item>
               </i-col>
+              <i-col span="8">
+                <i-form-item class="required" label="审批额度" prop="loanApproveCreditDTO.approveLimitAmt"
+                             :rules="{required: true, message: '请输入审批额度'}">
+                  <i-input :readonly="readonly" v-model="approveData.loanApproveCreditDTO.approveLimitAmt">
+                    <span slot="append">元</span>
+                  </i-input>
+                </i-form-item>
+              </i-col>
               <!--<i-col span="8">
                 <i-form-item class="required" label="车辆销售价" prop="loanApproveCreditDTO.carSaleAmt"
                              :rules="{required: true, message: '请输入车辆销售价'}">
@@ -45,27 +53,21 @@
               </i-col>-->
             </i-row>
             <i-row>
-              <i-col span="8">
-                <i-form-item class="required" label="审批额度" prop="loanApproveCreditDTO.approveLimitAmt"
-                             :rules="{required: true, message: '请输入审批额度'}">
-                  <i-input :readonly="readonly" v-model="approveData.loanApproveCreditDTO.approveLimitAmt">
-                    <span slot="append">元</span>
-                  </i-input>
-                </i-form-item>
-              </i-col>
+
               <i-col span="8">
                 <i-form-item class="required" label="贷款期限" prop="loanApproveCreditDTO.loanPeriods"
                              :rules="{required: true, message: '请选择贷款期限'}">
-                  <i-select :disabled="readonly" v-model="approveData.loanApproveCreditDTO.loanPeriods">
-                    <i-option v-for="item in loanPeriodsList" :key="item.loanPeriods" :value="item.loanPeriods">{{item.loanPeriods}}</i-option>
-                  </i-select>
+                  <i-input :disabled="readonly" v-model="approveData.loanApproveCreditDTO.loanPeriods">
+                    <i-button slot="append" @click="selectPeriodsAndRate = !selectPeriodsAndRate">选择利率方案</i-button>
+                  </i-input>
+                    <!--<i-option v-for="item in loanPeriodsList" :key="item.loanPeriods" :value="item.loanPeriods">{{item.loanPeriods}}</i-option>-->
                 </i-form-item>
               </i-col>
               <i-col span="8">
-                <i-form-item class="required" label="还款方式" prop="loanApproveCreditDTO.repaymentMode"
-                             :rules="{required: true, message: '请选择还款方式'}">
-                  <i-select :disabled="readonly" v-model="approveData.loanApproveCreditDTO.repaymentMode">
-                    <i-option v-for="item in enumSelectData.get('RepaymentTypeEnum')" :key="item.itemCode" :value="item.itemCode">{{item.itemName}}</i-option>
+                <i-form-item class="required" label="利率模式" prop="loanApproveCreditDTO.interestType"
+                             :rules="{required: true, message: '请选择利率模式'}">
+                  <i-select :disabled="readonly" v-model="approveData.loanApproveCreditDTO.interestType">
+                    <i-option v-for="item in enumSelectData.get('RateModeEnum')" :key="item.itemCode" :value="item.itemCode">{{item.itemName}}</i-option>
                   </i-select>
                 </i-form-item>
               </i-col>
@@ -112,13 +114,14 @@
                 </i-form-item>
               </i-col>
               <i-col span="8">
-                <i-form-item class="required" label="利率模式" prop="loanApproveCreditDTO.interestType"
-                             :rules="{required: true, message: '请选择利率模式'}">
-                  <i-select :disabled="readonly" v-model="approveData.loanApproveCreditDTO.interestType">
-                    <i-option v-for="item in enumSelectData.get('RateModeEnum')" :key="item.itemCode" :value="item.itemCode">{{item.itemName}}</i-option>
+                <i-form-item class="required" label="还款方式" prop="loanApproveCreditDTO.repaymentMode"
+                             :rules="{required: true, message: '请选择还款方式'}">
+                  <i-select :disabled="readonly" v-model="approveData.loanApproveCreditDTO.repaymentMode">
+                    <i-option v-for="item in enumSelectData.get('RepaymentTypeEnum')" :key="item.itemCode" :value="item.itemCode">{{item.itemName}}</i-option>
                   </i-select>
                 </i-form-item>
               </i-col>
+
             </i-row>
             <i-row>
               <i-col span="8">
@@ -306,6 +309,10 @@
     <bs-modal title="选择产品" :width="1200" v-model="showSelectProduct">
       <table-product-list v-if="showSelectProduct" :type="'modal'" @on-row-dbclick="selectProduct"></table-product-list>
     </bs-modal>
+    <!--选择产品的利率方案-->
+    <bs-modal v-model="selectPeriodsAndRate" :width="1200" title="选择产品的利率方案">
+      <i-table :columns="loanPeriodsColumns" :data="loanPeriodsList" @on-row-dblclick="selectPeriodsRow"></i-table>
+    </bs-modal>
     <i-spin fix v-if="initPageLoading">加载中...</i-spin>
   </div>
 </template>
@@ -323,6 +330,7 @@
         addFirstApproveModal: false,
         addConditionModal: false,
         showSelectProduct: false,
+        selectPeriodsAndRate: false,
         firstApproveForm: {
           approveDesc: '',
           approveWebsite: '',
