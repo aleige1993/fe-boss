@@ -55,7 +55,7 @@ export default {
         {
           title: '操作',
           key: 'action',
-          width: 200,
+          width: 220,
           align: 'center',
           render: (h, params) => {
             return h('div', [
@@ -78,6 +78,9 @@ export default {
                   type: 'error',
                   size: 'small'
                 },
+                style: {
+                  marginRight: '5px'
+                },
                 on: {
                   click: () => {
                     Alertify.confirm('确定要删除吗？', async (ok) => {
@@ -96,7 +99,24 @@ export default {
                     });
                   }
                 }
-              }, '删除')
+              }, '删除'),
+              h('Button', {
+                props: {
+                  type: 'primary',
+                  size: 'small'
+                },
+                on: {
+                  click: () => {
+                    this.$router.push({
+                      path: '/index/conf/invest/contractsetting',
+                      query: {
+                        id: params.row.contractTemplateNo,
+                        name: params.row.contractTemplateName
+                      }
+                    });
+                  }
+                }
+              }, '属性配置')
             ]);
           }
         }

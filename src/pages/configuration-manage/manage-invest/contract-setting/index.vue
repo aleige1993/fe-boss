@@ -1,65 +1,84 @@
 <template>
-  <div id="page-table-demo">
+  <div id="page-table">
     <i-breadcrumb separator=">">
       <i-breadcrumb-item href="/">首页</i-breadcrumb-item>
-      <i-breadcrumb-item href="/index/financemanage">财务管理1111</i-breadcrumb-item>
-      <i-breadcrumb-item>代付管理</i-breadcrumb-item>
+      <i-breadcrumb-item href="/index/conf">配置管理</i-breadcrumb-item>
+      <i-breadcrumb-item href="/index/conf/invest">资方管理</i-breadcrumb-item>
+      <i-breadcrumb-item href="/index/conf/invest/contract">合同模板维护</i-breadcrumb-item>
+      <i-breadcrumb-item>参数配置</i-breadcrumb-item>
     </i-breadcrumb>
-    <div class="search-form-container">
-      <i-form inline>
-        <i-form-item prop="user">
-          <i-input type="text" v-model="searchForm.projectNo" placeholder="项目编号"></i-input>
-        </i-form-item>
-        <i-form-item prop="password">
-          <i-input v-model="searchForm.toAccName" type="text" placeholder="收款人名称"></i-input>
-        </i-form-item>
-        <i-form-item prop="password">
-          <i-input v-model="searchForm.transCardId" type="text" placeholder="证件号码"></i-input>
-        </i-form-item>
-        <i-form-item prop="password">
-          预计放款时间
-        </i-form-item>
-        <i-form-item prop="password">
-          <bs-datepicker v-model="searchForm.btime" type="text" placeholder="查询时间"></bs-datepicker>
-        </i-form-item>
-        <i-form-item prop="password">
-          -
-        </i-form-item>
-        <i-form-item prop="password">
-          <bs-datepicker v-model="searchForm.etime" type="text" placeholder="查询时间"></bs-datepicker>
-        </i-form-item>
-        <i-form-item prop="password">
-          <i-select style="width: 120px;" v-model="searchForm.orderStat" placeholder="付款状态">
-            <i-option v-for="item in certTypeEnum" :value="item.itemCode" :key="item.itemCode">{{item.itemName}}</i-option>
-          </i-select>
-        </i-form-item>
-        <i-form-item>
-          <i-button @click="search" type="primary"><i-icon type="ios-search-strong"></i-icon> 搜索</i-button>
-        </i-form-item>
-      </i-form>
-    </div>
-    <div class="form-top-actions" slot="topAction">
-      <i-button type="info" @click="massPayment">批量付款</i-button>
+    <div class="form-top-actions">
+      <i-button type="info" @click="add"><i class="iconfont icon-xinzeng"></i> 新增</i-button>
     </div>
     <slot name="topAction"></slot>
-    <i-table border :loading="dataLoading" ref="selection" @on-select="selectRow" @on-select-all="selectRow" :columns="resultCustomerColumns" :data="privateCustomerLoanList"></i-table>
+    <i-table border :loading="dataLoading" ref="selection" @on-select="selectRow" :columns="resultCustomerColumns"
+             :data="privateCustomerLoanList"></i-table>
     <div class="page-container">
-      <i-page :total="total" :page-size="15" :current="currentPage" @on-change="jumpPage" size="small" show-elevator show-total></i-page>
+      <i-page :total="total" :page-size="15" :current="currentPage" @on-change="jumpPage" size="small" show-elevator
+              show-total></i-page>
     </div>
+    <pt-modal :title="isAdd ? '添加' : '修改'" v-model="addModal" :width="600" :zIndex="200">
+      <i-form ref="fromData" :model="fromData" label-position="left" :label-width="100">
+        <!--<i-form-item label="合同编号" prop="contractTemplateName">-->
+          <!--<i-input v-model="fromData.contractTemplateNo" placeholder="" readonly></i-input>-->
+        <!--</i-form-item>-->
+        <i-form-item label="合同名称" prop="contractTemplateName">
+          <i-input v-model="fromData.contractTemplateName" placeholder="" readonly></i-input>
+        </i-form-item>
+        <i-form-item label="属性名称" prop="fieldName" :rules="{required: true, message: '属性名称不能为空', trigger: 'blur'}">
+          <i-input v-model="fromData.fieldName" placeholder=""></i-input>
+        </i-form-item>
+        <i-form-item label="属性描述" prop="fieldDesc" :rules="{required: true, message: '属性描述不能为空', trigger: 'blur'}">
+          <i-input v-model="fromData.fieldDesc" placeholder=""></i-input>
+        </i-form-item>
+        <i-form-item label="属性类型" prop="fieldType" :rules="{required: true, message: '请选择属性类型', trigger: 'blur'}">
+          <i-select v-model="fromData.fieldType" @on-change="selectFieldType">
+            <i-option v-for="item in settingTypeEnum" :key="item.itemCode" :value="item.itemCode">{{item.itemName}}
+            </i-option>
+          </i-select>
+        </i-form-item>
+        <i-form-item label="属性默认值" prop="fieldDefaultValue">
+          <i-input v-model="fromData.fieldDefaultValue" placeholder="" :readonly="defaultValueReadonly"></i-input>
+        </i-form-item>
+        <i-form-item label="属性取值来源实体" prop="fieldSourceEntity" :rules="{required: true, message: '请选择属性取值来源实体', trigger: 'blur'}">
+          <i-select v-model="fromData.fieldSourceEntity" @on-change="selectFieldSourceEntity">
+            <i-option v-for="item in sourceEntityEnum" :key="item.entityId" :value="item.entityId">{{item.entityName}}
+            </i-option>
+          </i-select>
+        </i-form-item>
+        <i-form-item label="属性取值来源字段" prop="fieldSourceAttr">
+          <i-select v-model="fromData.fieldSourceAttr">
+            <i-option v-for="item in sourceAttrEnum" :key="item.fieldId" :value="item.fieldId">{{item.fieldName}}
+            </i-option>
+          </i-select>
+        </i-form-item>
+        <i-form-item class="text-right">
+          <i-button type="primary" @click="submitFun" :loading="buttonLoading">
+            <span v-if="!buttonLoading">提交</span>
+            <span v-else>loading...</span>
+          </i-button>
+          <i-button type="ghost" @click="cancelFun" style="margin-left: 8px">取消</i-button>
+        </i-form-item>
+      </i-form>
+    </pt-modal>
   </div>
 </template>
 <script>
   import MixinData from './mixin-data';
+  import PTModal from '@/components/bs-modal';
   export default {
-    name: 'proxyPayList',
+    name: 'pageTable',
     mixins: [MixinData],
     data() {
       return {
-        showAddModal: false,
+        isAdd: true,
+        addModal: false,
         dataLoading: false,
+        buttonLoading: false,
         total: 0,
         currentPage: 1,
-        certTypeEnum: [],
+        certTypeEnum: {},
+        uploadFileName: '',
         searchForm: {
           'projectNo': '',
           'toAccName': '',
@@ -70,8 +89,17 @@
           currentPage: 1,
           pageSize: 15
         },
-        pay4Nos: [] // 批量代付ID
+        fromData: {},
+        contractTemplateNo: this.$route.query.id, // 合同编码
+        contractTemplateName: this.$route.query.name, // 合同名称
+        defaultValueReadonly: false, // 默认值是否只读
+        settingTypeEnum: [], // 属性类型枚举
+        sourceEntityEnum: [], // 属性取值来源实体
+        sourceAttrEnum: [] // 属性取值来源字段
       };
+    },
+    components: {
+      'pt-modal': PTModal
     },
     computed: {
       resultCustomerColumns() {
@@ -88,75 +116,99 @@
       required: false
     },
     methods: {
+      selectRow(row, index) {
+        this.$emit('on-row-dbclick', row, index);
+      },
       jumpPage(page) {
         this.getProxyPayList(page);
       },
       search() {
         this.getProxyPayList();
       },
+      add() {
+        this.$refs['fromData'].resetFields();
+        this.$data.isAdd = true;
+        this.$data.addModal = true;
+        this.$data.defaultValueReadonly = false;
+        this.$data.fromData.contractTemplateNo = this.$data.contractTemplateNo;
+        this.$data.fromData.contractTemplateName = this.$data.contractTemplateName;
+      },
+      selectFieldType() {
+        if (this.$data.fromData.fieldType === '1') {
+          this.$data.defaultValueReadonly = false;
+        } else {
+          this.$data.defaultValueReadonly = true;
+          this.$data.fromData.fieldDefaultValue = null;
+        }
+      },
+      selectFieldSourceEntity() {
+        let sourceArray = [];
+        this.$data.sourceEntityEnum.map(item => {
+          if (item.entityId === this.$data.fromData.fieldSourceEntity) {
+            sourceArray = item.fieldList;
+          }
+          return sourceArray;
+        });
+        this.$data.sourceAttrEnum = sourceArray;
+      },
       async getProxyPayList(page) {
         this.$data.dataLoading = true;
         if (page) {
           this.$data.searchForm.currentPage = page;
         }
-        let resp = await this.$http.post('/pay/payment', this.$data.searchForm);
+        let resp = await this.$http.post('/cfg/contract/list', {
+          templateNo: this.$data.contractTemplateNo
+        });
         this.$data.dataLoading = false;
-        resp.body.resultList.map(item => {
-          if (!(item.state === '-1' || item.state === '3')) {
-            item._disabled = true;
-          }
-          return item;
-        });
         this.$data.privateCustomerLoanList = resp.body.resultList;
-        this.$data.currentPage = resp.body.currentPage / 1;
-        this.$data.total = resp.body.totalNum / 1;
+        this.$data.currentPage = resp.body.currentPage;
+        this.$data.total = resp.body.totalNum;
       },
-      selectRow(selection, row) {
-        this.pay4Nos = [];
-        selection.map(item => {
-          this.pay4Nos.push(item.payForNo);
-        });
-      },
-      massPayment() {
-        if (!this.pay4Nos.length) {
-          this.$Notice.error({
-            title: '错误提示',
-            desc: '请先选择需付款项'
-          });
-        } else {
-          this.submit(this.pay4Nos);
-        }
-      },
-      async submit(idArray) {
-        console.log(idArray);
-        let resp = await this.$http.post('/pay/apply/payment', {
-          pay4Nos: idArray
-        });
+      async getSourceList() {
+        let resp = await this.$http.get('/cfg/contract/listField');
         console.log(resp);
-        if (resp.reCode === '0000') {
-          this.$Message.success('付款成功');
+        this.sourceEntityEnum = resp.body;
+      },
+      async submitSuccess() {
+        this.$data.buttonLoading = true;
+        let url = this.$data.isAdd ? '/cfg/contract/add' : '/cfg/contract/modify';
+        let resp = await this.$http.post(url, {
+          ...this.$data.fromData
+        });
+        this.$data.buttonLoading = false;
+        this.$data.addModal = false;
+        if (resp.success) {
+          let text = this.$data.isAdd ? '添加成功' : '修改成功';
+          this.$Message.success(text);
           this.getProxyPayList();
         }
+      },
+      // 提交
+      submitFun() {
+        this.$refs['fromData'].validate((valid) => {
+          if (valid) {
+            this.submitSuccess();
+          } else {
+            this.$Message.error('"<span style="color: red">*</span>"必填项不能为空');
+          }
+        });
+      },
+      // 取消 按钮
+      cancelFun() {
+        this.$data.addModal = false;
       }
     },
     mounted() {
       this.getProxyPayList();
-      this.$data.certTypeEnum = [
-        {
-          'itemCode': '3',
-          'itemName': '待付款'
-        },
-        {
-          'itemCode': '0',
-          'itemName': '付款中'
-        },
+      this.getSourceList();
+      this.$data.settingTypeEnum = [
         {
           'itemCode': '1',
-          'itemName': '付款成功'
+          'itemName': '常量'
         },
         {
-          'itemCode': '-1',
-          'itemName': '付款失败'
+          'itemCode': '2',
+          'itemName': '变量'
         }
       ];
     }

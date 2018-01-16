@@ -55,7 +55,7 @@ export default {
                   click: () => {
                     this.$data.isAdd = false;
                     this.$data.addModal = true;
-                    this.$data.fromData = params.row;
+                    this.$data.fromData = $.extend({}, params.row);
                   }
                 }
               }, '修改'),

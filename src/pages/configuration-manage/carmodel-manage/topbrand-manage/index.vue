@@ -120,7 +120,7 @@
       add() {
         this.$data.isAdd = true;
         this.$data.addModal = true;
-        this.$data.fromData = {};
+        this.$refs['fromData'].resetFields();
       },
       remoteSearch(query) {
         if (query !== '') {
@@ -128,13 +128,6 @@
           let _this = this;
           setTimeout(() => {
             _this.search.loading = false;
-//            const list = _this.search.loadList.map(item => {
-//              return {
-//                brandNo: item.brandNo,
-//                brandName: item.brandName
-//              };
-//            });
-//            console.log(list);
             _this.search.returnlist = _this.search.loadList.filter(item => item.brandName.toLowerCase().indexOf(query.toLowerCase()) > -1);
           }, 200);
         } else {
@@ -163,7 +156,6 @@
             this.search.loadList.push(sitem);
           });
         });
-//        console.log(JSON.stringify(this.search.loadList));
       },
       async submitSuccess() {
         this.$data.buttonLoading = true;
@@ -183,8 +175,6 @@
             order: recommOrder
           };
         }
-        console.log(url);
-        console.log(data);
         let resp = await this.$http.post(url, data);
         this.$data.buttonLoading = false;
         this.$data.addModal = false;
