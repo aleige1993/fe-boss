@@ -8,8 +8,10 @@ import router from './router';
 import store from './store';
 import Config from './utils/Config';
 import Page from './utils/page';
+import dateTest from './utils/date-test';
 Vue.prototype.$config = Config;
-Vue.prototype.$JumpPage = Page;
+Vue.prototype.$JumpPage = Page;     // 在有分页的页面中删除请求成功后 重新加载页面回到指定的当前分页
+Vue.prototype.$DateTest= dateTest;  // 在有时间范围选择的页面中判断开始时间不能大于结束时间
 Vue.config.productionTip = false;
 import iView from 'iview';
 Vue.use(iView);

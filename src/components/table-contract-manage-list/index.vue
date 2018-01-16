@@ -122,9 +122,17 @@
         }
       },
       jumpPage(page) {
+        if (!this.$DateTest.testDateFun(this.$data.formSearch.startDate, this.$data.formSearch.endDate)) {
+          this.$Message.error('“开始日期”不能大于“结束日期”');
+          return;
+        }
         this.getList(page);
       },
       search() {
+        if (!this.$DateTest.testDateFun(this.$data.formSearch.startDate, this.$data.formSearch.endDate)) {
+          this.$Message.error('“开始日期”不能大于“结束日期”');
+          return;
+        }
         this.getList();
       },
       // 打开合同制作模态框

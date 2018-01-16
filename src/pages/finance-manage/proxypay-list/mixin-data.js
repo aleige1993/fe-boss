@@ -9,8 +9,8 @@ export default {
         },
         {
           title: '客户类型',
+          width: 100,
           key: 'custType',
-          width: 90,
           render: (h, params) => {
             if (params.row.custType === '1') {
               return '个人客户';

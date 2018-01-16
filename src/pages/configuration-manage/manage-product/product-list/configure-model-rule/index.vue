@@ -37,6 +37,7 @@
           },
           {
             title: '客户类型',
+            width: 100,
             key: 'custType',
             render: (h, params) => {
               return this.enumCode2Name(params.row.custType, 'CustTypeEnum');

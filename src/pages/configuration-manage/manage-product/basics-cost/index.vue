@@ -91,7 +91,7 @@
       async addSuBmit() {
         let resAdd = await this.$http.post('/pms/cfgFeeType/save', {
           feeTypeName: this.$data.formCustom.feeTypeName,
-          feeType: this.$data.formCustom.feeType
+          feeTypeCode: this.$data.formCustom.feeTypeCode
         });
         this.$data.buttonLoading = false; // 关闭按钮的loading状态
         this.$data.showAddModal = false;
@@ -136,7 +136,7 @@
       async setSubmit() {
         let resModify = await this.$http.post('/pms/cfgFeeType/modify', {
           feeTypeName: this.$data.formCustom.feeTypeName,
-          feeType: this.$data.formCustom.feeType,
+          feeTypeCode: this.$data.formCustom.feeTypeCode,
           feeTypeNo: this.$data.formCustom.feeTypeNo
         });
         this.$data.showAddModal = false;
