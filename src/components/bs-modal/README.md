@@ -9,7 +9,7 @@
 - slot ： 模态框主体内容
 
 #### 事件
-- on-close : 关闭当前窗口的回掉 
+- on-close : 关闭当前窗口的回掉
 #### 范例
 ```
 <pt-modal title="添加产品" @on-close="modalClose" v-model="showAddModal" :width="600" :zIndex="200">

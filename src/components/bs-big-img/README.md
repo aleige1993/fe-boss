@@ -16,11 +16,11 @@ components: {
     BsBigImg
 }
 ...
-<bs-big-img v-if="formData.mbMemberDTO.certHandUrl!==''&&isFromDetail" 
+<bs-big-img v-if="formData.mbMemberDTO.certHandUrl!==''&&isFromDetail"
     :thumb="formData.mbMemberDTO.certHandUrl"
     :thumbWidth="149" :thumbHeight="95"
-    :full="formData.mbMemberDTO.certHandUrl" 
-    :full-width="945" 
+    :full="formData.mbMemberDTO.certHandUrl"
+    :full-width="945"
     :full-height="600">
 </bs-big-img>
 

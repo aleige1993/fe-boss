@@ -13,7 +13,7 @@ module.exports = {
   extends: 'standard',
   // required to lint *.vue files
   plugins: [
-    'vuefix',
+    // 'vuefix',
     'html'
   ],
   // add your custom rules here
@@ -21,7 +21,7 @@ module.exports = {
     // allow paren-less arrow functions
     'indent': [2, 2], // 两个空格的缩进
     'quotes': [2, 'single'], // js必须使用单引号
-    'linebreak-style': [2, 'windows'], // 换行风格 unix/windows
+    'linebreak-style': [2, 'unix'], // 换行风格 unix/windows
     'semi': [2, 'always'], // 语句强制分号结尾
     'no-console': [1], // 不允许console语句
     'no-unused-vars': [1], // 声明了变量但是没有使用检测
@@ -87,4 +87,3 @@ module.exports = {
     Pace: false
   }
 };
-

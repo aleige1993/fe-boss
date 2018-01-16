@@ -25,7 +25,7 @@
     },
     methods: {
       valueChange(val) {
-        console.log(val);
+        // console.log(val);
         // this.$emit('input', val);
       }
     }
