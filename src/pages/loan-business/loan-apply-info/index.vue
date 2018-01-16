@@ -191,7 +191,7 @@
     </bs-modal>
     <!--车辆信息的新增修改模态框-->
     <bs-modal :title="isAddCar ? '新增' : '编辑'" v-model="showModalCar" :width="1200">
-      <i-form v-if="showModalCar" ref="formCar" :model="formCar" label-position="right" :label-width="140">
+      <i-form ref="formCar" :model="formCar" label-position="right" :label-width="140">
         <i-row>
           <i-col span="8">
             <i-form-item
@@ -446,10 +446,19 @@
             </i-form-item>
           </i-col>
         </i-row>
+        <i-row v-if="formData.carType == '2' && loanAction !== 'apply'">
+          <i-col span="24">
+            <div class="form-top-actions">
+              <i-button type="primary" @click="showAddCarEvalModal">添加车辆评估信息</i-button>
+            </div>
+            <i-table :columns="carEvalColumns" :data="formCar.carEvalVOList"></i-table>
+          </i-col>
+        </i-row>
         <i-form-item class="text-right">
           <i-button type="primary" @click="carSuBmit">提交</i-button>
         </i-form-item>
       </i-form>
+
     </bs-modal>
     <!--担保信息的新增修改模态框-->
     <bs-modal :title="isAddAssure ? '新增' : '编辑'" v-model="showModalAssure" :width="800">
@@ -577,6 +586,72 @@
     <!--选择渠道商-->
     <bs-modal :title="'选择渠道商'" v-model="showSelectDistributor" :width="1300">
       <table-distributor-list v-if="showSelectDistributor" ref="distributorTable" type="modal" @on-row-dbclick="selectDistributor"></table-distributor-list>
+    </bs-modal>
+    <!--车辆评估信息新增和编辑-->
+    <bs-modal :title="isAddCarEval ? '添加车辆评估' : '修改车辆评估'" v-model="showCarEvalFormModal" :width="500">
+      <i-form ref="formCarEval" :model="formCarEval" label-position="right" :label-width="120">
+        <i-row>
+          <i-col span="24">
+            <i-form-item label="第三方评估商名称" prop="evalProviderName"
+                         :rules="{required: true, message: '请选择第三方评估商名称'}">
+              <i-input v-model="formCarEval.evalProviderName"></i-input>
+            </i-form-item>
+          </i-col>
+        </i-row>
+        <i-row>
+          <i-col span="24">
+            <i-form-item label="抵押估价" prop="guarantyAmt"
+                         :rules="{required: true, message: '请选择抵押估价'}">
+              <i-input v-model="formCarEval.guarantyAmt">
+                <span alot="append">元</span>
+              </i-input>
+            </i-form-item>
+          </i-col>
+        </i-row>
+        <i-row>
+          <i-col span="24">
+            <i-form-item label="质押估价" prop="pledgeAmt"
+                         :rules="{required: true, message: '请输入质押估价'}">
+              <i-input v-model="formCarEval.pledgeAmt"><span alot="append">元</span></i-input>
+            </i-form-item>
+          </i-col>
+        </i-row>
+        <i-row>
+          <i-col span="24">
+            <i-form-item label="车商收购价" prop="merchantBuyAmt"
+                         :rules="{required: true, message: '请输入车商收购价'}">
+              <i-input v-model="formCarEval.merchantBuyAmt"><span alot="append">元</span></i-input>
+            </i-form-item>
+          </i-col>
+        </i-row>
+        <i-row>
+          <i-col span="24">
+            <i-form-item label="个人交易价" prop="individualSaleAmt"
+                         :rules="{required: true, message: '请输入个人交易价'}">
+              <i-input v-model="formCarEval.individualSaleAmt"><span alot="append">元</span></i-input>
+            </i-form-item>
+          </i-col>
+        </i-row>
+        <i-row>
+          <i-col span="24">
+            <i-form-item label="评估方式" prop="evalType"
+                         :rules="{required: true, message: '请选择第三方评估商名称'}">
+              <i-select v-model="formCarEval.evalType">
+                <i-option value="1">手工</i-option>
+                <i-option value="2">自动</i-option>
+              </i-select>
+            </i-form-item>
+          </i-col>
+        </i-row>
+        <i-row>
+          <i-col span="24">
+            <i-form-item>
+              <i-button @click="submitCarEval" type="primary">提交</i-button>
+            </i-form-item>
+          </i-col>
+        </i-row>
+
+      </i-form>
     </bs-modal>
     <i-spin fix v-if="initApplyInfoLoading"></i-spin>
   </div>
