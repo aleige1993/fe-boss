@@ -17,15 +17,9 @@ export default {
      */
     async getCreditReportUrl() {
       let loanNo = this.$route.query.id;
-      let custName = this.$data.formData.memberName;
-      let certNo = this.$data.formData.certNo;
-      let mobile = this.$data.formData.mobileNo;
       if (loanNo) {
         let resp = await this.$http.post('/biz/getCreditReportURL', {
-          loanNo,
-          custName,
-          certNo,
-          mobile
+          loanNo
         });
         if (resp.success) {
           this.$data.creditReportURL = resp.body.creditReportURL;
