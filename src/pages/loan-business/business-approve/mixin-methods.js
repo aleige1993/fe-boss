@@ -27,7 +27,7 @@ export default {
           loanNo
         });
         if (resp.success) {
-          this.$data.creditReportURL = resp.body.creditReportURL;
+          this.$data.creditReportURL = resp.body.creditFinalURL;
         }
       }
     },
