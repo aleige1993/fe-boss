@@ -139,7 +139,7 @@
         // 跳转到合同 制作/复核 审批详情页面
         if (this.taskNode === '6' || this.taskNode === '7') {
           this.$router.push({
-            path: '/index/loanbusiness/contract/making',
+            path: '/index/contract/making',
             query: {
               currentPage: this.$data.currentPage,
               taskNode: this.taskNode,
@@ -152,7 +152,7 @@
         // 跳转到合同 签署确认 审批详情页面
         if (this.taskNode === '8') {
           this.$router.push({
-            path: '/index/loanbusiness/contract/signDetails',
+            path: '/index/contract/signDetails',
             query: {
               currentPage: this.$data.currentPage,
               taskNode: this.taskNode,

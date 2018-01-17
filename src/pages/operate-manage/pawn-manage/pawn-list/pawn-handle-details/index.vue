@@ -3,8 +3,8 @@
   <div id="pawnHanleDetails">
     <i-breadcrumb separator=">">
       <i-breadcrumb-item href="/">首页</i-breadcrumb-item>
-      <i-breadcrumb-item href="/components/breadcrumb">贷款业务</i-breadcrumb-item>
-      <i-breadcrumb-item href="/index/loanbusiness/pawn">抵押物待办列表</i-breadcrumb-item>
+      <i-breadcrumb-item href="/index/operate">运营管理</i-breadcrumb-item>
+      <i-breadcrumb-item href="/index/operate/pawn">抵押物待办列表</i-breadcrumb-item>
       <i-breadcrumb-item>抵押物办理详情</i-breadcrumb-item>
     </i-breadcrumb>
     <i-tabs v-model="tabIndex" :animated="false" type="card">
@@ -273,7 +273,7 @@
         if (rep.success) {
           this.$Message.success('提交成功');
           this.$router.push({
-            path: '/index/loanbusiness/pawn',
+            path: '/index/operate/pawn',
             query: {
               currentPage: (this.$route.query.currentPage ? this.$route.query.currentPage : 1)
             }

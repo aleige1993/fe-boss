@@ -1,11 +1,11 @@
 <template>
-<!--放款条件-办理详情-->
-  <div id="condition-loan-handle-details">
+  <!--放款费用-办理详情-->
+  <div id="fee-loan-handle-details">
     <i-breadcrumb separator=">">
       <i-breadcrumb-item href="/">首页</i-breadcrumb-item>
-      <i-breadcrumb-item href="/components/breadcrumb">贷款业务</i-breadcrumb-item>
-      <i-breadcrumb-item href="/index/loanbusiness/approval">放款审批列表</i-breadcrumb-item>
-      <i-breadcrumb-item>放款审批详情</i-breadcrumb-item>
+      <i-breadcrumb-item href="/index/operate">运营管理</i-breadcrumb-item>
+      <i-breadcrumb-item href="/index/operate/loan/fee">放款费用落实列表</i-breadcrumb-item>
+      <i-breadcrumb-item>放款费用落实详情</i-breadcrumb-item>
     </i-breadcrumb>
     <br>
     <br>
@@ -38,7 +38,7 @@
               </i-col>
               <i-col span="8">
                 <i-form-item label="证件号码">
-                  <span v-text="formData.paymentApplyRecordDTO.certNo"></span>
+                  <span v-text="formData.paymentApplyRecordDTO.custName"></span>
                 </i-form-item>
               </i-col>
             </i-row>
@@ -94,12 +94,6 @@
               </i-col>
             </i-row>
           </bs-form-block>
-          <bs-form-block :title="'车辆信息'">
-            <i-table :loading="carDataLoading" border ref="selection" :columns="carColumns" :data="carData"></i-table>
-          </bs-form-block>
-          <bs-form-block :title="'担保信息'">
-            <i-table :loading="assureDataLoading" border ref="selection" :columns="assureColumns" :data="assureData"></i-table>
-          </bs-form-block>
           <bs-form-block :title="'费用收取落实'">
             <i-table :loading="feeTableLoading" border ref="selection" :columns="feeColumns" :data="feeData"></i-table>
           </bs-form-block>
@@ -107,46 +101,50 @@
             <i-row>
               <i-col span="8">
                 <i-form-item label="放款金额">
-                  <span v-text="formData.loanAmt"></span>
+                  <span v-text="formData.paymentRecordDTO.loanAmt"></span>
+                  <span v-if="formData.paymentRecordDTO.loanAmt!==''">元</span>
                 </i-form-item>
               </i-col>
               <i-col span="8">
                 <i-form-item label="资金方利率">
-                  <span v-text="formData.capitalYearRate"></span>
+                  <span v-text="formData.paymentRecordDTO.capitalRate"></span>
+                  <span v-if="formData.paymentRecordDTO.capitalRate!==''">%/年</span>
                 </i-form-item>
               </i-col>
             </i-row>
             <i-row>
               <i-col span="8">
                 <i-form-item label="应收分润金额">
-                  <span v-text="formData.profitAmt"></span>
+                  <span v-text="formData.paymentRecordDTO.shareAmt"></span>
+                  <span v-if="formData.paymentRecordDTO.shareAmt!==''">元</span>
                 </i-form-item>
               </i-col>
               <i-col span="8">
                 <i-form-item label="颂车利率">
-                  <span v-text="formData.songcheRate"></span>
+                  <span v-text="formData.paymentRecordDTO.scRate"></span>
+                  <span v-if="formData.paymentRecordDTO.scRate!==''">%/年</span>
                 </i-form-item>
               </i-col>
               <i-col span="8">
                 <i-form-item label="预计放款日期">
-                  <span v-text="formData.estimateLoanDate"></span>
+                  <span v-text="formData.paymentRecordDTO.expectLoanDate"></span>
                 </i-form-item>
               </i-col>
             </i-row>
             <i-row>
               <i-col span="8">
                 <i-form-item label="账户名">
-                  <span v-text="formData.loanAcctName"></span>
+                  <span v-text="formData.loanAccountDTO.loanAcctName"></span>
                 </i-form-item>
               </i-col>
               <i-col span="8">
                 <i-form-item label="账号">
-                  <span v-text="formData.loanAcctNo"></span>
+                  <span v-text="formData.loanAccountDTO.loanAcctNo"></span>
                 </i-form-item>
               </i-col>
               <i-col span="8">
                 <i-form-item label="开户银行">
-                  <span v-text="formData.loanOpenBankName"></span>
+                  <span v-text="formData.loanAccountDTO.loanOpenBankName"></span>
                 </i-form-item>
               </i-col>
             </i-row>
@@ -156,17 +154,17 @@
               <i-row>
                 <i-col span="8">
                   <i-form-item label="账户名">
-                    <span v-text="formData.repayAcctName"></span>
+                    <span v-text="formData.repayAccountDTO.repayAcctName"></span>
                   </i-form-item>
                 </i-col>
                 <i-col span="8">
                   <i-form-item label="账号">
-                    <span v-text="formData.repayAcctNo"></span>
+                    <span v-text="formData.repayAccountDTO.repayAcctNo"></span>
                   </i-form-item>
                 </i-col>
                 <i-col span="8">
                   <i-form-item label="开户银行">
-                    <span v-text="formData.repayOpenBankName"></span>
+                    <span v-text="formData.repayAccountDTO.repayOpenBankName"></span>
                   </i-form-item>
                 </i-col>
               </i-row>
@@ -211,93 +209,34 @@
         </i-button>
       </div>
     </i-tabs>
-    <!--办理抵质押物手续-->
-    <bs-modal v-model="formalitiesShowModal" title="抵押详情" :width="520">
-      <i-form v-if="formalitiesShowModal" ref="formalities" :model="formalities" label-position="right" :label-width="80">
-        <i-form-item label="办理时间">
-          <span v-text="formalities.makeDate"></span>
-        </i-form-item>
-        <i-form-item label="经办人">
-          <span v-text="formalities.makeUser"></span>
-        </i-form-item>
-        <i-form-item label="权证编号">
-          <span v-text="formalities.warrantNo"></span>
-        </i-form-item>
-        <i-form-item label="登记机关">
-          <span v-text="formalities.registerCompany"></span>
-        </i-form-item>
-        <i-form-item label="抵押状态">
-          <span v-text="enumCode2Name(formalities.mortgageStatus, 'MortgageStatusEnum')"></span>
-        </i-form-item>
-        <i-form-item label="备注">
-          <span v-text="formalities.remark"></span>
-        </i-form-item>
-        <i-form-item label="办理文件">
-          <Tooltip content="点击浏览/下载" placement="bottom">
-            <a :href="formalities.makeUrl" target="_blank">{{formalities.makeName}}</a>
-          </Tooltip>
-        </i-form-item>
-      </i-form>
-    </bs-modal>
-    <!--GPS安装信息-->
-    <bs-modal v-model="GPSinstallShowModal" title="GPS安装信息详情" :width="1200">
-      <i-table v-if="GPSinstallShowModal" border ref="examineTable" :columns="loanCarGpsDTOColumns" :data="loanCarGpsDTOList"></i-table>
-    </bs-modal>
-    <!--担保落实modal-->
-    <bs-modal v-model="guaranteeShowModal" title="担保落实详情" :width="520">
-      <i-form v-if="guaranteeShowModal" ref="formagGuarantee" :model="formagGuarantee" label-position="right" :label-width="80">
-        <i-form-item label="办理时间">
-          <span v-text="formagGuarantee.makeDate"></span>
-        </i-form-item>
-        <i-form-item label="经办人">
-          <span v-text="formagGuarantee.makeUser"></span>
-        </i-form-item>
-        <i-form-item label="落实状态">
-          <span v-text="enumCode2Name(formagGuarantee.lsStatus, 'MortgageStatusEnum')"></span>
-        </i-form-item>
-        <i-form-item label="备注">
-          <span v-text="formagGuarantee.remark"></span>
-        </i-form-item>
-        <i-form-item label="办理文件">
-          <Tooltip content="点击浏览/下载" placement="bottom">
-            <a :href="formalities.makeUrl" target="_blank">{{formagGuarantee.makeName}}</a>
-          </Tooltip>
-        </i-form-item>
-      </i-form>
-    </bs-modal>
   </div>
 </template>
 
 <script>
   import MixinData from './mixin-data';
-  import BsModal from '@/components/bs-modal';
   import TableLoanInfo from '@/components/table-loan-approval-info';
   export default {
-    name: 'pageLoanHandleDetails',
+    name: 'feeLoanHandleDetails',
     mixins: [MixinData],
     components: {
-      BsModal,
       TableLoanInfo
     },
     data() {
       return {
-        clickRow: {},
-        isAddGPS: true,
         tabIndex: 0,
-        carDataLoading: false, // 车辆表loading
-        assureDataLoading: false, // 担保表loading
-        conditionLoading: false, // 放款条件loading
+        feeTableLoading: false, // 费用收取落实tableLoading
+        conditionLoading: false, // 放款条件tableLoading
         initFormLoading: false, // 提交按钮loading
-        formalitiesShowModal: false, // 办理抵质押物手续modal
-        GPSinstallButtonLoading: false, // GPS安装信息modal里的提交按钮loading
-        GPSinstallShowModal: false, // GPS安装信息modal
-        addGPSButtonLoading: false, // 显示GPS安装信息新增弹窗modal提交按钮的loading
-        guaranteeShowModal: false, // 担保落实modal
-        // 费用收取落实
-        feeTableLoading: false,
         formData: {
           'approveStatus': '',
           'opinion': '',
+          'paymentRecordDTO': {
+            'shareAmt': '',
+            'scRate': '',
+            'capitalRate': '',
+            'loanAmt': '',
+            'expectLoanDate': ''
+          },
           'loanRecordDTO': {
             'shareAmt': '',
             'scRate': '',
@@ -343,68 +282,29 @@
             'repayAcctNo': '',
             'repayBankName': ''
           }
-        },
-        // 办理抵质押物手续
-        formalities: {
-          'makeName': '',
-          'makeUrl': '',
-          'makeDate': '',
-          'makeUser': '',
-          'warrantNo': '',
-          'registerCompany': '',
-          'mortgageStatus': '',
-          'remark': ''
-        },
-        formagGuarantee: {
-          'uploadFileName': '',
-          'lsStatus': ''
         }
       };
     },
-    mounted() {
-      this.carGetlist(); // 执行获取车辆信息列表的data
-      this.assureGtelist(); // 执行获取担保信息列表的data
+    async mounted() {
+      let loanNo = await this.$route.query.loanNo;
+      let signNo = await this.$route.query.signNo;
+      this.$data.formData.paymentApplyRecordDTO.loanNo = loanNo;
+      this.$data.formData.paymentApplyRecordDTO.signNo = signNo;
+      this.getFindPaymentApplyRecordInfo(); //  获取放款条件详情
       this.conditionGetlist(); // 执行获取放款条件列表的data
       this.feeGetlist(); // 执行获取费用收取落实列表的data
-      this.getFindPaymentApplyRecordInfo(); // 获取放款条件详情
     },
     methods: {
       // 获取放款条件详情
       async getFindPaymentApplyRecordInfo() {
         let reps = await this.$http.post('/biz/payment/findPaymentApplyRecordInfo', {
           paymentNo: this.$route.query.paymentNo,
-          isFktjxq: '1' // 当为放款条件落实则传1，其余全部传0
+          isFktjxq: '0' // 当为放款条件落实则传1，其余全部传0
         });
         if (reps.success) {
           this.$data.formData = reps.body;
         } else {
           this.$data.formData = {};
-        }
-      },
-      // 获取车辆信息列表的data
-      async carGetlist() {
-        this.$data.carDataLoading = true;
-        let reps = await this.$http.post('/biz/listLoanCarByLoanNo', {
-          loanNo: this.$route.query.loanNo
-        });
-        this.$data.carDataLoading = false;
-        if (reps.success && reps.body.resultList.length !== 0) {
-          this.$data.carData = reps.body.resultList;
-        } else {
-          this.$data.carData = [];
-        }
-      },
-      // 获取担保信息列表的data
-      async assureGtelist() {
-        this.$data.assureDataLoading = true;
-        let reps = await this.$http.post('/biz/listGuaranteeByLoanNo', {
-          loanNo: this.$route.query.loanNo
-        });
-        this.$data.assureDataLoading = false;
-        if (reps.success && reps.body.resultList.length !== 0) {
-          this.$data.assureData = reps.body.resultList;
-        } else {
-          this.$data.assureData = [];
         }
       },
       // 获取放款条件列表的data
@@ -414,12 +314,8 @@
           loanNo: this.$route.query.loanNo
         });
         this.$data.conditionLoading = false;
-        if (reps.success) {
-          if (reps.body.length !== 0) {
-            this.$data.conditionData = reps.body;
-          } else {
-            this.$data.conditionData = [];
-          }
+        if (reps.success && reps.body.length !== 0) {
+          this.$data.conditionData = reps.body;
         } else {
           this.$data.conditionData = [];
         }
@@ -432,7 +328,7 @@
         });
         this.$data.feeTableLoading = false;
         if (reps.success) {
-          if (reps.body !== 0) {
+          if (reps.body.length !== 0) {
             this.$data.feeData = reps.body;
           } else {
             this.$data.feeData = [];
@@ -443,8 +339,10 @@
       },
       // 提交的ajax
       async allSubimt() {
-        let rep = await this.$http.post('/biz/payment/paymentApprove', {
+        let rep = await this.$http.post('/biz/payment/paymentFee', {
           paymentNo: this.$route.query.paymentNo,
+          paymentFeePlanLuoShiParamList: this.$data.feeData, // 费用收取列表集合
+          paymentConditionSubmitParams: this.$data.conditionData, // 放款条件表集合
           loanApproveParam: {
             approveStatus: this.$data.formData.approveStatus,
             opinion: this.$data.formData.opinion
@@ -453,7 +351,7 @@
         if (rep.success) {
           this.$Message.success('提交成功');
           this.$router.push({
-            path: '/index/loanbusiness/loan/approval',
+            path: '/index/operate/loan/fee',
             query: {
               currentPage: this.$route.query.currentPage
             }
@@ -472,30 +370,6 @@
             this.$Message.error('<span style="color: red">*</span>项不能为空');
           }
         });
-      },
-      // 办理抵质押物手续文件上传成功
-      uploadSuccessAlities(res, file, fileList) {
-        this.$data.formalities.uploadFileName = file.name;
-        this.$data.formalities.makeUrl = res.body.url;
-      },
-      // 办理抵质押物手续文件上传失败
-      uploadErrorAlities(err, file, fileList) {
-        this.$data.formalities.uploadFileName = '';
-        this.$Notice.error({
-          title: '错误提示', desc: err
-        });
-      },
-      // 担保落实文件上传成功
-      uploadSuccessGuarantee(res, file, fileList) {
-        this.$data.formalities.uploadFileName = file.name;
-        this.$data.formalities.makeUrl = res.body.url;
-      },
-      // 担保落实文件上传失败
-      uploadErrorGuarantee(err, file, fileList) {
-        this.$data.formalities.uploadFileName = '';
-        this.$Notice.error({
-          title: '错误提示', desc: err
-        });
       }
     }
   };
@@ -503,13 +377,5 @@
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style lang="scss" scoped>
-  #condition-loan-handle-details {
-    & .show-upload-text {
-      position: relative;
-      padding-right: 36px;
-      line-height: 20px;
-      min-height: 20px;
-      color: #666;
-    }
-  }
+
 </style>

@@ -165,32 +165,6 @@ let MyRouter = new Router({
                 { path: '/', name: 'intentionOrderList', component: resolve => require(['@/pages/loan-business/intention-order/order-list'], resolve)},
                 { path: ':orderId', name: 'intentionOrderDetail', component: resolve => require(['@/pages/loan-business/intention-order/order-detail'], resolve)},
               ]
-            },
-            // 贷款业务-放款管理
-            { path: 'loan', name: 'loanManage', component: resolve => require(['@/pages/loan-business/loan-manage'], resolve),
-              children: [
-                // 贷款业务-放款管理-放款条件落实
-                { path: '/', name: 'loanConditionList', component: resolve => require(['@/pages/loan-business/loan-manage/loan-condition-list'], resolve)},
-                // 贷款业务-放款管理-放款条件落实-办理详情
-                { path: 'handle', name: 'conditionHandleDetails', component: resolve => require(['@/pages/loan-business/loan-manage/loan-condition-list/condition-handle-details'], resolve)},
-                // 贷款业务-放款管理-放款费用落实
-                { path: 'fee', name: 'loanFeeList', component: resolve => require(['@/pages/loan-business/loan-manage/loan-fee-list'], resolve)},
-                // 贷款业务-放款管理-放款费用落实-办理详情
-                { path: 'fee/handle', name: 'feeHandleDetails', component: resolve => require(['@/pages/loan-business/loan-manage/loan-fee-list/fee-handle-details'], resolve)},
-                // 贷款业务-放款管理-放款审批列表
-                { path: 'approval', name: 'loanApprovalList', component: resolve => require(['@/pages/loan-business/loan-manage/loan-approval-list'], resolve)},
-                // 贷款业务-放款管理-放款审批列表-办理详情
-                { path: 'approval/handle', name: 'approvalHandleDetails', component: resolve => require(['@/pages/loan-business/loan-manage/loan-approval-list/approval-handle-details'], resolve)}
-              ]
-            },
-            // 贷款业务-抵押物管理
-            { path: 'pawn', name: 'pawnManage', component: resolve => require(['@/pages/loan-business/pawn-manage'], resolve),
-              children: [
-                // 贷款业务-抵押物管理-抵押物代办列表
-                { path: '/', name: 'pawnList', component: resolve => require(['@/pages/loan-business/pawn-manage/pawn-list'], resolve)},
-                // 贷款业务-放款管理-放款条件落实-办理详情
-                { path: 'handle', name: 'pawnListHandle', component: resolve => require(['@/pages/loan-business/pawn-manage/pawn-list/pawn-handle-details'], resolve)}
-              ]
             }
           ]
         },
@@ -230,6 +204,41 @@ let MyRouter = new Router({
           ]
         },
         // 账务管理 end
+
+        // 运营管理
+        {
+          path: 'operate', name: 'financeManage', component: resolve => require(['@/pages/operate-manage'], resolve),
+          children: [
+            { path: '/', name: 'loanManage', component: resolve => require(['@/pages/operate-manage/loan-manage/loan-condition-list'], resolve) },
+            // 运营管理-放款管理
+            { path: 'loan', name: 'loanManage', component: resolve => require(['@/pages/operate-manage/loan-manage'], resolve),
+              children: [
+                // 运营管理-放款管理-放款条件落实
+                { path: '/', name: 'loanConditionList', component: resolve => require(['@/pages/operate-manage/loan-manage/loan-condition-list'], resolve)},
+                // 运营管理-放款管理-放款条件落实-办理详情
+                { path: 'handle', name: 'conditionHandleDetails', component: resolve => require(['@/pages/operate-manage/loan-manage/loan-condition-list/condition-handle-details'], resolve)},
+                // 运营管理-放款管理-放款费用落实
+                { path: 'fee', name: 'loanFeeList', component: resolve => require(['@/pages/operate-manage/loan-manage/loan-fee-list'], resolve)},
+                // 运营管理-放款管理-放款费用落实-办理详情
+                { path: 'fee/handle', name: 'feeHandleDetails', component: resolve => require(['@/pages/operate-manage/loan-manage/loan-fee-list/fee-handle-details'], resolve)},
+                // 运营管理-放款管理-放款审批列表
+                { path: 'approval', name: 'loanApprovalList', component: resolve => require(['@/pages/operate-manage/loan-manage/loan-approval-list'], resolve)},
+                // 运营管理-放款管理-放款审批列表-办理详情
+                { path: 'approval/handle', name: 'approvalHandleDetails', component: resolve => require(['@/pages/operate-manage/loan-manage/loan-approval-list/approval-handle-details'], resolve)}
+              ]
+            },
+            // 运营管理-抵押物管理
+            { path: 'pawn', name: 'pawnManage', component: resolve => require(['@/pages/operate-manage/pawn-manage'], resolve),
+              children: [
+                // 运营管理-抵押物管理-抵押物代办列表
+                { path: '/', name: 'pawnList', component: resolve => require(['@/pages/operate-manage/pawn-manage/pawn-list'], resolve)},
+                // 运营管理-放款管理-放款条件落实-办理详情
+                { path: 'handle', name: 'pawnListHandle', component: resolve => require(['@/pages/operate-manage/pawn-manage/pawn-list/pawn-handle-details'], resolve)}
+              ]
+            }
+          ]
+        },
+        // 运营管理 end
       ]
     }
   ],

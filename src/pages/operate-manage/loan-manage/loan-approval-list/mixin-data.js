@@ -1,7 +1,8 @@
 export default {
   data() {
     return {
-      feeListColumns: [
+      // 放款条件落实
+      conditionListColumns: [
         {
           title: '项目编号',
           key: 'loanNo',
@@ -95,7 +96,7 @@ export default {
                       return;
                     }
                     this.$router.push({
-                      path: '/index/loanbusiness/loan/fee/handle',
+                      path: '/index/operate/loan/approval/handle',
                       query: {
                         currentPage: this.$data.currentPage,
                         paymentNo: params.row.paymentNo,
@@ -109,7 +110,7 @@ export default {
           }
         }
       ],
-      feeListData: []
+      conditionListData: []
     };
   }
 };
