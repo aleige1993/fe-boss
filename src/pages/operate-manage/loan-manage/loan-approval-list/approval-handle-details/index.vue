@@ -192,7 +192,7 @@
                 <i-form-item
                   label="意见信息"
                   prop="opinion"
-                  :rules="{required: true, message: '意见信息不能为空', trigger: 'blur'}">
+                  :rules="{required: (formData.approveStatus!=='A'), message: '意见信息不能为空', trigger: 'blur'}">
                   <i-input type="textarea" v-model="formData.opinion" :rows="2" placeholder="">
                   </i-input>
                 </i-form-item>
