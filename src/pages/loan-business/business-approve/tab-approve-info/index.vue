@@ -281,7 +281,7 @@
               <Icon type="ios-cloud-upload" size="52" style="color: #3399ff"></Icon>
               <p>点击选择文件或者拖放文件到这里</p>
             </div>
-            <p v-else>{{firstApproveForm.resultPath}}</p>
+            <p v-else>{{firstApproveForm.resultFileName}}</p>
           </i-upload>
         </i-form-item>
         <i-form-item label="">
