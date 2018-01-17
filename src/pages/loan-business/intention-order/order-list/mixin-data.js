@@ -39,7 +39,7 @@ export default {
         },
         {
           title: '渠道商',
-          key: 'channelNo',
+          key: 'dealerName',
           width: 200
         },
         {
@@ -65,7 +65,10 @@ export default {
         {
           title: '来源终端',
           key: 'channelNo',
-          width: 192
+          width: 192,
+          render: (h, params) => {
+            return this.enumCode2Name(params.row.channelNo, 'BizChannelEnum');
+          }
         },
         {
           title: '状态',

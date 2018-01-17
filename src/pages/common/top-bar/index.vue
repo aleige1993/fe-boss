@@ -1,7 +1,7 @@
 <template>
   <div id="common-topbar">
     <div class="logo">
-      <i class="iconfont icon-logo"></i>
+      <i class="iconfont icon-logo1"></i>
     </div>
     <div class="right-actions">
       <ul v-if="isLogin">
@@ -47,7 +47,7 @@ export default {
   height: 40px;
   line-height: 40px;
   @include gradient-bg;
-  padding: 0 50px;
+  padding: 0 50px 0 0;
   position: fixed;
   width: 100%;
   top: 0;
@@ -59,8 +59,9 @@ export default {
   .logo{
     float: left;
     padding-top: 2px;
-    .icon-logo{
-      font-size: 22px;
+    .icon-logo1{
+      font-size: 32px;
+      line-height: 2;
     }
   }
   .right-actions{

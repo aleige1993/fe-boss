@@ -56,15 +56,15 @@ Vue.prototype.$showLoading = () => {
 Vue.prototype.$hideLoading = () => {
   store.dispatch('toggleLoading', false);
 };
-
-function formatComponentName(vm) {
+// fundebug
+/*let formatComponentName = (vm) => {
   if (vm.$root === vm) return 'root';
   let name = vm._isVue ? (vm.$options && vm.$options.name) || (vm.$options && vm.$options._componentTag) : vm.name;
   return (name ? 'component <' + name + '>' : 'anonymous component') + (vm._isVue && vm.$options && vm.$options.__file ? ' at ' + (vm.$options && vm.$options.__file) : '');
 };
 Vue.config.errorHandler = function(err, vm, info) {
-  var componentName = formatComponentName(vm);
-  var propsData = vm.$options && vm.$options.propsData;
+  let componentName = formatComponentName(vm);
+  let propsData = vm.$options && vm.$options.propsData;
   fundebug.notifyError(err, {
     metaData: {
       componentName: componentName,
@@ -72,7 +72,7 @@ Vue.config.errorHandler = function(err, vm, info) {
       info: info
     }
   });
-};
+};*/
 /* eslint-disable no-new */
 $('.page-loading').show();
 new Http().post('/common/items', {}).then(response => {

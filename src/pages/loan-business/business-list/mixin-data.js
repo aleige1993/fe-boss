@@ -125,7 +125,7 @@ export default {
                   size: 'small',
                   loading: this.$data.applyApproveLoading,
                   disabled: (params.row.taskNode !== '3' && params.row.taskNode !== '4' && params.row.taskNode !== '5') ||
-                    params.row.status === '9' || this.taskNode === '',
+                    params.row.status === '9' || params.row.status === '4' || this.taskNode === '',
                   class: { 'hide': params.row.status === '9' }
                 },
                 style: { marginRight: '5px' },
