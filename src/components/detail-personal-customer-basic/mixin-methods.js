@@ -9,9 +9,18 @@ export default {
           memberNo
         });
         this.$data.initFormLoading = false;
-        this.$data.formData = resp.body;
-        this.$emit('on-submit-success', resp.body);
-        this.$emit('getMember', resp.body);
+        if (resp.success) {
+          if (!resp.body) {
+            this.$Notice({
+              title: '错误信息',
+              desc: '没有找到这个客户'
+            });
+          } else {
+            this.$data.formData = resp.body;
+            this.$emit('on-submit-success', resp.body);
+            this.$emit('getMember', resp.body);
+          }
+        }
       } catch (e) {
         this.$data.initFormLoading = false;
       }

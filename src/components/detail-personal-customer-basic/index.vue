@@ -1,6 +1,6 @@
 <template>
   <div class="" style="position: relative">
-    <i-row v-if="!formData.mbMemberDTO.memberNo">
+    <i-row v-if="!memberNo">
       <i-col span="8" offset="8">
         <i-button type="text" @click="selectPersonalModal=!selectPersonalModal" long style="margin-bottom: 30px; border: 0;background-color: #fff;">
           <div class="ivu-upload">

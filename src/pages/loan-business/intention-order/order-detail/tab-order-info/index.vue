@@ -53,11 +53,11 @@
           <i-form-item label="渠道商编号">{{orderInfo.dealer}}</i-form-item>
         </i-col>
         <i-col span="8">
-          <i-form-item label="渠道商名称">{{orderInfo.dealerArea}}</i-form-item>
+          <i-form-item label="渠道商名称">{{orderInfo.dealerName}}</i-form-item>
         </i-col>
-        <i-col span="8">
+        <!--<i-col span="8">
           <i-form-item label="地区">{{orderInfo.dealerArea}}</i-form-item>
-        </i-col>
+        </i-col>-->
       </i-row>
       <i-row>
         <i-col span="8">
@@ -95,10 +95,7 @@
       <i-row>
         <i-col span="8">
           <i-form-item label="来源终端">
-            <span v-if="orderInfo.channelNo === '1'">Android</span>
-            <span v-else-if="orderInfo.channelNo === '2'">IOS</span>
-            <span v-if="orderInfo.channelNo === '3'">微信</span>
-            <span v-else>其他</span>
+            {{enumCode2Name(orderInfo.channelNo, 'BizChannelEnum')}}
           </i-form-item>
         </i-col>
         <i-col span="8">
@@ -129,6 +126,7 @@
           'seriesName': '',
           'dealer': 0,
           'dealerArea': 0,
+          'dealerName': '',
           'guideAmt': '',
           'finalAmt': '',
           'period': 0,
