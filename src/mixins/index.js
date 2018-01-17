@@ -1,4 +1,5 @@
 import Vue from 'vue';
+import Tools from '../utils/Tools';
 Vue.mixin({
   computed: {
     enumSelectData() {
@@ -18,6 +19,13 @@ Vue.mixin({
         });
       }
       return name;
+    },
+    isImg(fileUrl) {
+      let suffix = '';
+      if (fileUrl) {
+        suffix = fileUrl.substring(fileUrl.lastIndexOf('.') + 1);
+      }
+      return suffix === 'png' || suffix === 'jpg' || suffix === 'gif' || suffix === 'jpeg' || suffix === 'bmp' || suffix === 'pic';
     }
   }
 });
