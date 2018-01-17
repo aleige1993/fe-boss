@@ -26,7 +26,7 @@
         </i-form-item>
         <i-form-item prop="productNo">
           <i-select v-model="searchForm.productNo" type="text" placeholder="产品" style="width: 180px;">
-            <i-option v-for="product in productList" :value="product.productNo">{{product.productName}}</i-option>
+            <i-option v-for="product in productList" :key="product.productNo" :value="product.productNo">{{product.productName}}</i-option>
           </i-select>
         </i-form-item>
         <i-form-item prop="orderNo">

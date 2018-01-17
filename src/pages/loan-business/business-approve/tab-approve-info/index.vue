@@ -271,9 +271,9 @@
                      :rules="{required: true, message: '请输入描述信息'}">
           <i-input type="textarea" :rows="4" v-model="firstApproveForm.approveDesc"></i-input>
         </i-form-item>
-        <i-form-item label="查询结果" prop="resultPath"
+        <i-form-item label="查询结果bbb" prop="resultPath"
                      :rules="{required: true, message: '请上传凭证'}">
-          <input type="hidden" :value="firstApproveForm.resultPath">
+          <input type="hidden" v-model="firstApproveForm.resultPath"/>
           <i-upload :show-upload-list="false"
                     multiple type="drag" :on-success="uploadFirstApproveFileSuccess"
                     :action="$config.HTTPBASEURL+'/common/upload'">
@@ -281,7 +281,10 @@
               <Icon type="ios-cloud-upload" size="52" style="color: #3399ff"></Icon>
               <p>点击选择文件或者拖放文件到这里</p>
             </div>
-            <p v-else>{{firstApproveForm.resultFileName}}</p>
+            <p v-else>
+              <img v-if="isImg(firstApproveForm.resultPath)" :src="firstApproveForm.resultPath"/>
+              <span v-else>{{firstApproveForm.resultFileName}}</span>
+            </p>
           </i-upload>
         </i-form-item>
         <i-form-item label="">
