@@ -12,7 +12,7 @@ export default [
         'pageSize': 15,
         'resultList|10': [
           {
-            'productNo': 'CP1001',
+            'productNo': '11111',
             'productName|1': ['产品名称1', '产品名称2', '产品名称3', '产品名称4', '产品名称5'],
             'productType|1': ['1', '2', '3', '4', '5'],
             'status|1': ['1', '2'],

@@ -82,23 +82,10 @@ export default [
                   { name: '公司授信外审', url: '/index/loanbusiness/credit/externalapprove' },
                   { name: '公司授信审批', url: '/index/loanbusiness/credit/approve' }
                 ]
-              },
-              { name: '放款管理',
-                url: '/index/loanbusiness/loan',
-                childMenus: [
-                  { name: '放款条件落实', url: '/index/loanbusiness/loan' },
-                  { name: '放款费用落实', url: '/index/loanbusiness/loan/fee' },
-                  { name: '放款审批', url: '/index/loanbusiness/loan/approval' }
-                ]
-              },
-              { name: '抵押物管理',
-                url: '/index/loanbusiness/pawn',
-                childMenus: [
-                  { name: '抵押物待办列表', url: '/index/loanbusiness/pawn' }
-                ]
               }
             ]
           },
+          // 合同管理(原签约合同)
           {
             name: '合同管理',
             url: '/index/contract',
@@ -110,6 +97,27 @@ export default [
                   { name: '合同制作', url: '/index/contract' },
                   { name: '合同复核', url: '/index/contract/againExamine' },
                   { name: '合同签署确认', url: '/index/contract/sign' }
+                ]
+              }
+            ]
+          },
+          // 运营管理
+          {
+            name: '运营管理',
+            url: '/index/operate',
+            childMenus: [
+              { name: '放款管理',
+                url: '/index/operate/loan',
+                childMenus: [
+                  { name: '放款条件落实', url: '/index/operate/loan' },
+                  { name: '放款费用落实', url: '/index/operate/loan/fee' },
+                  { name: '放款审批', url: '/index/operate/loan/approval' }
+                ]
+              },
+              { name: '抵押物管理',
+                url: '/index/operate/pawn',
+                childMenus: [
+                  { name: '抵押物待办列表', url: '/index/operate/pawn' }
                 ]
               }
             ]

@@ -3,8 +3,8 @@
   <div id="pagePawnList">
     <i-breadcrumb separator=">">
       <i-breadcrumb-item href="/">首页</i-breadcrumb-item>
-      <i-breadcrumb-item href="/components/breadcrumb">贷款业务</i-breadcrumb-item>
-      <i-breadcrumb-item href="/index/loanbusiness/pawn">抵押物管理</i-breadcrumb-item>
+      <i-breadcrumb-item href="/index/operate">运营管理</i-breadcrumb-item>
+      <i-breadcrumb-item href="/index/operate/pawn">抵押物管理列表</i-breadcrumb-item>
       <i-breadcrumb-item>抵押物待办列表</i-breadcrumb-item>
     </i-breadcrumb>
     <div class="form-block-title">
