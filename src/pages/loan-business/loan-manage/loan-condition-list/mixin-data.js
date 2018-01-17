@@ -6,7 +6,7 @@ export default {
         {
           title: '项目编号',
           key: 'loanNo',
-          width: 170
+          width: 90
         },
         {
           title: '客户名称',
@@ -75,7 +75,7 @@ export default {
         {
           title: '操作',
           key: 'action',
-          minWidth: 100,
+          width: 100,
           align: 'center',
           render: (h, params) => {
             return h('div', [

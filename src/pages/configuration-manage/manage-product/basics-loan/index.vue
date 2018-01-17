@@ -21,7 +21,7 @@
         </i-form-item>
         <i-form-item label="客户类型" prop="approveRuleName">
           <i-select v-model="formCustom.custType" placeholder="请选择客户类型">
-            <i-option v-for="item in enumSelectData.get('CustTypeEnum')" :value="item.itemCode">{{item.itemName}}</i-option>
+            <i-option v-for="item in enumSelectData.get('CustTypeEnum')" :value="item.itemCode" :key="item.itemCode">{{item.itemName}}</i-option>
           </i-select>
         </i-form-item>
         <i-form-item class="text-right">

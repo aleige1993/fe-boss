@@ -83,14 +83,6 @@ export default [
                   { name: '公司授信审批', url: '/index/loanbusiness/credit/approve' }
                 ]
               },
-              { name: '签约管理',
-                url: '/index/loanbusiness/contract',
-                childMenus: [
-                  { name: '合同制作', url: '/index/loanbusiness/contract' },
-                  { name: '合同复核', url: '/index/loanbusiness/contract/againExamine' },
-                  { name: '合同签署确认', url: '/index/loanbusiness/contract/sign' }
-                ]
-              },
               { name: '放款管理',
                 url: '/index/loanbusiness/loan',
                 childMenus: [
@@ -107,14 +99,23 @@ export default [
               }
             ]
           },
+          {
+            name: '合同管理',
+            url: '/index/contract',
+            childMenus: [
+              { name: '合同制作', url: '/index/contract' },
+              { name: '合同复核', url: '/index/contract/againExamine' },
+              { name: '合同签署确认', url: '/index/contract/sign' }
+            ]
+          },
           // 配置管理
           {
             name: '配置管理',
-            url: '/index/conf',
+            url: '/index/conf/product',
             childMenus: [
               {
                 name: '产品配置',
-                url: '/index/conf/product',
+                url: '/index/conf',
                 childMenus: [
                   { name: '产品列表', url: '/index/conf/product' },
                   { name: '贷款材料配置', url: '/index/conf/product/loan' },

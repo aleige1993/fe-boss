@@ -4,7 +4,10 @@
     <br>
     <br>
     <div class="text-right">
-      <i-button type="primary" @click="formSubmit">确认</i-button>
+      <i-button type="primary" @click="formSubmit" :loading="buttonLoading">
+        <span v-if="!buttonLoading">确认</span>
+        <span v-else>确认中...</span>
+      </i-button>
       <i-button type="ghost" style="margin-left: 8px" @click="formCancel">取消</i-button>
     </div>
   </div>
@@ -20,6 +23,7 @@
     data() {
       return {
         dataLoading: false,
+        buttonLoading: false,
         columns1: [
           {
             title: '选择',
@@ -72,6 +76,7 @@
         }
       },
       async formSubmit() {
+        this.$data.buttonLoading = true;
         let productNo = this.childMsg.productNo;
         let productName = this.childMsg.productName;
         let resp = await this.$http.post('/pms/product/bindApproveRule', {
@@ -79,6 +84,7 @@
           productName,
           approveRuleCode: this.$data.approveRuleCode
         });
+        this.$data.buttonLoading = false;
         if (resp.success) {
           this.$Message.success('配置成功');
           this.$emit('notice-rule');

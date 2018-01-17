@@ -7,10 +7,6 @@
   <i-table :loading="dataLoading" border ref="FyTable" :columns="columns1" :data="data1"></i-table>
   <br>
   <br>
-  <div class="text-right">
-    <i-button type="primary" @click="formInSubmit">确认</i-button>
-    <i-button type="ghost" style="margin-left: 8px" @click="formCancel">取消</i-button>
-  </div>
   <pt-modal title="新增" v-model="showAdd" :width="520">
     <i-form ref="formInModel" :model="formInModel" label-position="left" :label-width="100">
       <i-form-item
@@ -62,11 +58,11 @@
         </i-input>
       </i-form-item>
       <i-form-item class="text-right">
-        <i-button type="primary" @click="formInSubmit" :loading="buttonLoading">
+        <i-button type="primary" @click="formInSubmitCost" :loading="buttonLoading">
           <span v-if="!buttonLoading">提交</span>
           <span v-else>Loading...</span>
         </i-button>
-        <i-button type="ghost" style="margin-left: 8px" @click="formInCancel">取消</i-button>
+        <i-button type="ghost" style="margin-left: 8px" @click="formInCancelCost">取消</i-button>
       </i-form-item>
     </i-form>
   </pt-modal>
@@ -229,7 +225,7 @@
         });
       },
       // 新增模态框的保存按钮点击事件
-      formInSubmit() {
+      formInSubmitCost() {
         let formName = 'formInModel';
         this.$refs[formName].validate((valid) => {
           if (valid) {
@@ -244,17 +240,18 @@
           }
         });
       },
-      formCancel() {
-        this.$emit('notice-cost');// 通知其父组件执行自定义事件“notice-cost”
-      },
-      formInCancel() {
+      formInCancelCost() {
         this.$data.showAdd = false;
       },
       // 在新增状态下 下拉菜单清空相应显示的输入框
-      selpro() {
+      selpro(val) {
         if (this.$data.isAdd) {
-          this.$data.formInModel.ratio = '';
-          this.$data.formInModel.fixedAmount = '';
+          this.$data.formInModel.ratio = ''; // 按利率
+          this.$data.formInModel.fixedAmount = ''; // 按固定金额
+        } else if (val === '1') { // 切换成按利率
+          this.$data.formInModel.fixedAmount = ''; // 按固定金额
+        } else if (val === '2') {
+          this.$data.formInModel.ratio = ''; // 按利率
         }
       }
     }

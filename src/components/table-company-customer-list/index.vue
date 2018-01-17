@@ -70,7 +70,7 @@ export default {
       this.getCompanyCustomerList(page);
     },
     search() {
-      this.getCompanyCustomerList();
+      this.getCompanyCustomerList(1);
     },
     selectRow(row, index) {
       this.$emit('on-row-dbclick', row, index);

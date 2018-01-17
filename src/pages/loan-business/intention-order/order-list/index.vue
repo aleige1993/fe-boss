@@ -23,7 +23,7 @@
         </i-form-item>
         <i-form-item>
           <i-select v-model="searchForm.orderStatus" type="text" placeholder="订单状态" style="width: 120px">
-            <i-option v-for="item in enumSelectData.get('MbOrderStatusEnum')" :value="item.itemCode">{{item.itemName}}</i-option>
+            <i-option v-for="item in enumSelectData.get('MbOrderStatusEnum')" :value="item.itemCode" :key="item.itemCode">{{item.itemName}}</i-option>
           </i-select>
         </i-form-item>
         <i-form-item>
@@ -96,7 +96,7 @@
         this.getCustomerIntentionOrderList(page);
       },
       search() {
-        this.getCustomerIntentionOrderList();
+        this.getCustomerIntentionOrderList(1);
       },
       selectRow(row, index) {
         // this.$emit('on-row-dbclick', row, index);
