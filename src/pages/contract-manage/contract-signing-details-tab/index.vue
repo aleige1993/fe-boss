@@ -157,7 +157,6 @@
         let reps = await this.$http.post('/biz/sign/findSignConfirmInfo', {
           signNo: this.$route.query.signNo
         });
-        console.log(reps);
         if (reps.success) {
           this.$data.formData = reps.body;
         } else {

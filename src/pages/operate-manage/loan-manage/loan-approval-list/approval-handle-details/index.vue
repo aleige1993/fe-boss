@@ -3,8 +3,8 @@
   <div id="condition-loan-handle-details">
     <i-breadcrumb separator=">">
       <i-breadcrumb-item href="/">首页</i-breadcrumb-item>
-      <i-breadcrumb-item href="/components/breadcrumb">贷款业务</i-breadcrumb-item>
-      <i-breadcrumb-item href="/index/loanbusiness/approval">放款审批列表</i-breadcrumb-item>
+      <i-breadcrumb-item href="/index/operate">运营管理</i-breadcrumb-item>
+      <i-breadcrumb-item href="/index/operate/approval">放款审批列表</i-breadcrumb-item>
       <i-breadcrumb-item>放款审批详情</i-breadcrumb-item>
     </i-breadcrumb>
     <br>
@@ -388,7 +388,6 @@
           loanNo: this.$route.query.loanNo
         });
         this.$data.carDataLoading = false;
-        console.log(reps);
         if (reps.success && reps.body.resultList.length !== 0) {
           this.$data.carData = reps.body.resultList;
         } else {
