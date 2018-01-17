@@ -132,7 +132,6 @@
     mounted() {
       this.$data.iframeHeight = $(window).height() - 280;
       this.initPage();
-      this.getCreditReportUrl();
     }
   };
 </script>

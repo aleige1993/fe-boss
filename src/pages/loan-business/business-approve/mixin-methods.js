@@ -8,6 +8,11 @@ export default {
         });
         if (resp.success) {
           this.$data.formData = resp.body;
+          await bsWait(500);
+          // 如果是个人客户，获取人行征信报告
+          if (resp.body.custType === '1') {
+            this.getCreditReportUrl();
+          }
         }
       }
     },

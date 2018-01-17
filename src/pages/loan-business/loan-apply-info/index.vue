@@ -117,7 +117,7 @@
           <!--提交申请地点-->
           <i-col span="8">
             <i-form-item label="提交申请地点" prop="applicationPlace">
-              <i-input v-model="formData.apply_address" placeholder="" :readonly="true">
+              <i-input v-model="formData.applyAddress" placeholder="" :readonly="true">
               </i-input>
             </i-form-item>
           </i-col>
