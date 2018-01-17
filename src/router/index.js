@@ -64,6 +64,8 @@ let MyRouter = new Router({
         // 配置管理
         { path: 'conf', name: 'ConfigurationManage', component: resolve => { require(['@/pages/configuration-manage'], resolve) },
           children: [
+            // 配置管理-产品配置(设置其为根路径)
+            { path: '/', name: 'confProduct', props: { aaa: 'bbb' }, component: resolve => { require(['@/pages/configuration-manage/manage-product/product-list/index.vue'], resolve) } },
             // 配置管理-产品配置
             { path: 'product', name: 'Product', component: resolve => { require(['@/pages/configuration-manage/manage-product'], resolve) },
               children: [
@@ -164,21 +166,6 @@ let MyRouter = new Router({
                 { path: ':orderId', name: 'intentionOrderDetail', component: resolve => require(['@/pages/loan-business/intention-order/order-detail'], resolve)},
               ]
             },
-            // 贷款业务-签约管理
-            { path: 'contract', name: 'loanContractManage', component: resolve => require(['@/pages/loan-business/contract-manage'], resolve),
-              children: [
-                // 贷款业务-签约管理->合同制作列表
-                { path: '/', name: 'loanContractMakingList', component: resolve => require(['@/pages/loan-business/contract-manage/contract-list'], resolve)},
-                // 贷款业务-签约管理->个人业务合同制作
-                { path: 'making', name: 'loanContractMakingTab', component: resolve => require(['@/pages/loan-business/contract-manage/contract-making-tab'], resolve)},
-                // 贷款业务-签约管理->合同复核
-                { path: 'againExamine', name: 'againExamine', component: resolve => require(['@/pages/loan-business/contract-manage/contract-again-examine'], resolve)},
-                // 贷款业务-签约管理->合同签署确认
-                { path: 'sign', name: 'loanContractSign', component: resolve => require(['@/pages/loan-business/contract-manage/contract-signing'], resolve)},
-                // 贷款业务-签约管理->合同签署确认-详情页面
-                { path: 'signDetails', name: 'loanContractSignDetails', component: resolve => require(['@/pages/loan-business/contract-manage/contract-signing-details-tab'], resolve)},
-              ]
-            },
             // 贷款业务-放款管理
             { path: 'loan', name: 'loanManage', component: resolve => require(['@/pages/loan-business/loan-manage'], resolve),
               children: [
@@ -208,6 +195,24 @@ let MyRouter = new Router({
           ]
         },
         // 贷款业务 end
+
+        // 合同管理
+        { path: 'contract', name: 'loanContractManage', component: resolve => require(['@/pages/contract-manage'], resolve),
+          children: [
+            // 合同管理->合同制作列表
+            { path: '/', name: 'loanContractMakingList', component: resolve => require(['@/pages/contract-manage/contract-list'], resolve)},
+            // 合同管理->个人业务合同制作
+            { path: 'making', name: 'loanContractMakingTab', component: resolve => require(['@/pages/contract-manage/contract-making-tab'], resolve)},
+            // 合同管理->合同复核
+            { path: 'againExamine', name: 'againExamine', component: resolve => require(['@/pages/contract-manage/contract-again-examine'], resolve)},
+            // 合同管理->合同签署确认
+            { path: 'sign', name: 'loanContractSign', component: resolve => require(['@/pages/contract-manage/contract-signing'], resolve)},
+            // 合同管理->合同签署确认-详情页面
+            { path: 'signDetails', name: 'loanContractSignDetails', component: resolve => require(['@/pages/contract-manage/contract-signing-details-tab'], resolve)},
+          ]
+        },
+        // 合同管理 end
+
         // 账务管理
         {
           path: 'financemanage', name: 'financeManage', component: resolve => require(['@/pages/finance-manage'], resolve),

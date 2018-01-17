@@ -64,9 +64,8 @@
           'custName': '',
           'certType': '',
           'certNo': '',
-          'startDate': '2018-01-01',
-          'endDate': '2018-01-03',
-          'applyEndTime': ''
+          'startDate': '',
+          'endDate': ''
         }
       };
     },
@@ -102,7 +101,7 @@
           this.$Message.error('“开始日期”不能大于“结束日期”');
           return;
         }
-        this.getList();
+        this.getList(1);
       },
       jumpPage(page) {
         if (!this.$DateTest.testDateFun(this.$data.searchForm.startDate, this.$data.searchForm.endDate)) {

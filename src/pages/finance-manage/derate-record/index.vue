@@ -104,7 +104,7 @@
         this.getPrivateCustomerLoanList(page);
       },
       search() {
-        this.getPrivateCustomerLoanList();
+        this.getPrivateCustomerLoanList(1);
       },
       selectRow(row, index) {
         // this.$emit('on-row-dbclick', row, index);

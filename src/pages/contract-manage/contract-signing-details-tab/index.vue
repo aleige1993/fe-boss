@@ -3,8 +3,7 @@
 <div id="contract-signing-details-tab">
   <i-breadcrumb separator=">">
     <i-breadcrumb-item href="/">首页</i-breadcrumb-item>
-    <i-breadcrumb-item href="/index/loanbusiness">贷款业务</i-breadcrumb-item>
-    <i-breadcrumb-item href="/index/loanbusiness/contract/sign">签约管理</i-breadcrumb-item>
+    <i-breadcrumb-item href="/index/contract/sign">合同管理</i-breadcrumb-item>
     <i-breadcrumb-item>合同签署确认详情</i-breadcrumb-item>
   </i-breadcrumb>
   <i-tabs v-model="tabIndex" :animated="false" type="card">
