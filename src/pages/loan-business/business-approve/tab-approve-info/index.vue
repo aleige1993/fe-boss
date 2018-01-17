@@ -235,7 +235,7 @@
             <i-table :columns="loanFundPartyCol" :data="approveData.loanCapitalDTOS"></i-table>
           </bs-form-block>
           <!--审核意见-->
-          <bs-form-block title="审核意见" v-if="!readonly">
+          <bs-form-block title="审核意见" v-if="!isFromDetail">
             <i-row>
               <i-col span="18">
                 <i-form-item label="结论">
@@ -346,6 +346,11 @@
           'paymentConContent': '' // 放款条件项目内容
         }
       };
+    },
+    computed: {
+      isFromDetail() {
+        return location.href.indexOf('detail') !== -1;
+      }
     },
     props: {
       applyBasicInfo: {
