@@ -23,7 +23,7 @@
           label="合同模板"
           prop="contractTemplateName">
           <input type="hidden" v-model="dataForm.contractTemplateName"/>
-          <i-input v-model="dataForm.contractTemplateName" :disabled="true" placeholder="选择合同模板">
+          <i-input v-model="dataForm.contractTemplateName" :readonly="true" placeholder="选择合同模板">
             <i-button @click="showSelectContractTemplate=!showSelectContractTemplate" slot="append">选择合同模板 <Icon type="ios-more"></Icon></i-button>
           </i-input>
         </i-form-item>
@@ -51,7 +51,8 @@
 
     <!--选择合同模板的弹窗-->
     <bs-modal title="选择合同模板" :width="1200" v-model="showSelectContractTemplate">
-      <table-contracttemplate-list v-if="showSelectContractTemplate" type="modal" @on-row-dbclick="selectContractTemplate"></table-contracttemplate-list>
+      <!--传入合同属主contractSource。（1为资金方，2为产品）-->
+      <table-contracttemplate-list :type="'modal'"  :contractSource="'1'" v-if="showSelectContractTemplate" @on-row-dbclick="selectContractTemplate"></table-contracttemplate-list>
     </bs-modal>
   </div>
 </template>
@@ -59,7 +60,7 @@
 <script>
   import MixinData from './mixin-data';
   import BSModal from '@/components/bs-modal';
-  import GetContractTemplateModal from '@/pages/configuration-manage/manage-invest/contract'; // 选择合同模板
+  import GetContractTemplateModal from '@/components/table-contract-template-list'; // 选择合同模板
   export default {
     name: 'contractConfiguration',
     mixins: [MixinData],

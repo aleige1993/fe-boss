@@ -498,7 +498,7 @@
           paymentNo: this.$route.query.paymentNo,
           paymentConditionSubmitParams: this.$data.conditionData, // 放款条件表集合
           paymentGuaranteeSubmitParams: this.$data.assureData, // 担保信息表集合
-          paymentCarSubmitParams: this.$data.carData, // 车辆信息表集合
+          loanCarList: this.$data.carData, // 车辆信息表集合
           loanApproveParam: {
             approveStatus: this.$data.formData.approveStatus,
             opinion: this.$data.formData.opinion
