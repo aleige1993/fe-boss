@@ -115,7 +115,7 @@
                 <i-form-item
                   label="意见信息"
                   prop="opinion"
-                  :rules="{required: true, message: '意见信息不能为空', trigger: 'blur'}">
+                  :rules="{required: (formData.approveStatus!=='A'), message: '意见信息不能为空', trigger: 'blur'}">
                   <i-input type="textarea" v-model="formData.opinion" :rows="2" placeholder="">
                   </i-input>
                 </i-form-item>
@@ -170,7 +170,7 @@
         </i-form-item>
         <i-form-item
           label="办理文件"
-          prop="makeUrl"
+          prop="mortgageUrl"
           :rules="{required: true, message: '请上传办理文件', trigger: 'blur'}">
           <i-upload
             :show-upload-list="false"
@@ -183,8 +183,9 @@
               <p>单击或拖动文件上传</p>
             </div>
           </i-upload>
-          <p class="show-upload-text" v-text="formalities.makeName"></p>
-          <input type="hidden" v-model="formalities.makeUrl" style="width: 100%;border: 0;">
+          <p v-if="carData.mortgageName&&carData.mortgageName!==''" v-text="carData.mortgageName"></p>
+          <p v-else class="show-upload-text" v-text="formalities.mortgageName"></p>
+          <input type="hidden" v-model="formalities.mortgageUrl" style="width: 100%;border: 0;">
         </i-form-item>
         <i-form-item class="text-right">
           <i-button type="primary" @click="formalitiesSubmit">提交</i-button>
@@ -368,13 +369,13 @@
         },
         // 办理抵质押物手续
         formalities: {
-          'makeName': '',
-          'makeUrl': '',
           'makeDate': '',
           'makeUser': '',
           'warrantNo': '',
           'registerCompany': '',
           'mortgageStatus': '',
+          'mortgageName': '',
+          'mortgageUrl': '',
           'remark': ''
         },
         // GPS安装信息新增和修改模态框
@@ -494,6 +495,34 @@
 
       // 提交的ajax
       async allSubimt() {
+        if (this.$data.carData.length === 0) {
+          this.$Message.error({
+            content: '没有车辆信息，无法提交！',
+            duration: 2
+          });
+          return;
+        }
+        // 车辆信息中须配置好“办理抵押” 通过其中的必填项“办理时间”字段判断
+        for (let item of this.$data.carData) {
+          if (typeof item.makeDate === 'undefined' || item.makeDate === '' || item.makeDate === null) {
+            this.$Message.error({
+              content: '车辆信息中须配置好“办理抵押”！',
+              duration: 2
+            });
+            return;
+          }
+        }
+        // 车辆信息中须配置好“GPS安装落实”
+        for (let item of this.$data.carData) {
+          if (item.loanCarGpsList && item.loanCarGpsList.length === 0) {
+            this.$Message.error({
+              content: '车辆信息中须配置好“GPS安装落实”！',
+              duration: 2
+            });
+            return;
+          }
+        }
+        this.$data.initFormLoading = true;
         let rep = await this.$http.post('/biz/payment/paymentCondition', {
           paymentNo: this.$route.query.paymentNo,
           paymentConditionSubmitParams: this.$data.conditionData, // 放款条件表集合
@@ -504,7 +533,8 @@
             opinion: this.$data.formData.opinion
           }
         });
-        if (rep.success) {
+        this.$data.initFormLoading = false;
+        /*if (rep.success) {
           this.$Message.success('提交成功');
           this.$router.push({
             path: '/index/operate/loan',
@@ -512,15 +542,13 @@
               currentPage: this.$route.query.currentPage
             }
           });
-        }
+        }*/
       },
       // 所有的提交按钮
       saveSubimt() {
         this.$refs['formData'].validate(async (valid) => {
           if (valid) {
-            this.$data.initFormLoading = true;
             await this.allSubimt();
-            this.$data.initFormLoading = false;
           } else {
             this.$data.tabIndex = 0;
             this.$Message.error('<span style="color: red">*</span>项不能为空');
@@ -532,12 +560,15 @@
         let ind = this.$data.clickRow._index; // 车辆列表的索引index
         this.$refs['formalities'].validate(async (valid) => {
           if (valid) {
-            this.$data.carData[ind] = this.$data.formalities;
+            this.$data.carData[ind] = {
+              ...this.$data.carData[ind],
+              ...this.$data.formalities
+            };
             this.$Message.success('提交成功');
+            this.$data.formalitiesShowModal = false;
           } else {
             this.$Message.error('<span style="color: red">*</span>项不能为空');
           }
-          this.$data.formalitiesShowModal = false;
         });
       },
       // 担保落实modal-提交按钮
@@ -545,22 +576,26 @@
         let ind = this.$data.formagGuarantee._index;
         this.$refs['formagGuarantee'].validate(async (valid) => {
           if (valid) {
-            this.$data.assureData[ind] = this.$data.formagGuarantee;
+            this.$data.assureData[ind] = {
+              ...this.$data.assureData[ind],
+              ...this.$data.formagGuarantee
+            };
             this.$Message.success('提交成功');
+            this.$data.guaranteeShowModal = false;
           } else {
             this.$Message.error('<span style="color: red">*</span>项不能为空');
           }
-          this.$data.guaranteeShowModal = false;
         });
       },
       // 办理抵质押物手续文件上传成功
       uploadSuccessAlities(res, file, fileList) {
-        this.$data.formalities.makeName = file.name;
-        this.$data.formalities.makeUrl = res.body.url;
+        this.$data.formalities.mortgageName = file.name;
+        this.$data.formalities.mortgageUrl = res.body.url;
+        console.log(this.$data.formalities.mortgageName);
       },
       // 办理抵质押物手续文件上传失败
       uploadErrorAlities(err, file, fileList) {
-        this.$data.formalities.makeName = '';
+        this.$data.formalities.mortgageName = '';
         this.$Notice.error({
           title: '错误提示',
           desc: err

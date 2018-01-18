@@ -80,9 +80,9 @@ let MyRouter = new Router({
                 // 配置管理-产品配置-放款条件配置
                 { path: 'lending', name: 'BasicsCar', component: resolve => { require(['@/pages/configuration-manage/manage-product/basics-lending'], resolve) } },
                 // 配置管理-产品配置-归档材料配置
-                { path: 'file', name: 'BasicsFile', component: resolve => { require(['@/pages/configuration-manage/manage-product/basics-file'], resolve) } },
+                { path: 'file', name: 'BasicsFile', component: resolve => { require(['@/pages/configuration-manage/manage-product/basics-file'], resolve) } }
                 // 配置管理-产品配置-产品匹配配置
-                { path: 'match', name: 'BasicsMatch', component: resolve => { require(['@/pages/configuration-manage/manage-product/basics-match'], resolve) } }
+                /* { path: 'match', name: 'BasicsMatch', component: resolve => { require(['@/pages/configuration-manage/manage-product/basics-match'], resolve) } }*/
               ]
             },// 配置管理-产品配置end
             // 配置管理-资方管理
