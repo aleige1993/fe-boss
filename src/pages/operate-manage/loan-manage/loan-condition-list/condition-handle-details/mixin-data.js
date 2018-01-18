@@ -8,7 +8,7 @@ export default {
           width: 90,
           key: 'guaranteeType',
           render: (h, params) => {
-            return h('span', {}, this.enumCode2Name(params.row.guaranteeType, 'WarrantTypeEnum'));
+            return h('span', {}, this.enumCode2Name(params.row.guaranteeType, 'CustTypeEnum'));
           }
         },
         {
@@ -37,18 +37,92 @@ export default {
         },
         {
           title: '抵押状态',
-          width: 90,
+          width: 120,
           key: 'mortgageStatus',
-          render: (h, params) => {
+          /* render: (h, params) => {
             return h('span', {}, this.enumCode2Name(params.row.mortgageStatus, 'MortgageStatusEnum'));
+          },*/
+          render: (h, params) => {
+            return h('i-select', {
+              props: {
+                disabled: this.readonly,
+                value: params.row.mortgageStatus
+              },
+              style: {
+                width: '80px'
+              },
+              on: {
+                'on-change': (value) => {
+                  let rowData = { ...params.row };
+                  rowData.mortgageStatus = value;
+                  this.$data.carData[params.index] = rowData;
+                }
+              }
+            }, [
+              h('i-option', {
+                props: {
+                  label: '抵押',
+                  value: '1'
+                }
+              }),
+              h('i-option', {
+                props: {
+                  label: '质押',
+                  value: '2'
+                }
+              }),
+              h('i-option', {
+                props: {
+                  label: '信用',
+                  value: '3'
+                }
+              }),
+              h('i-option', {
+                props: {
+                  label: '保证',
+                  value: '4'
+                }
+              })
+            ]);
           }
         },
         {
           title: 'GPS安装状态',
           width: 110,
           key: 'gpsInstallStatus',
-          render: (h, params) => {
+          /* render: (h, params) => {
             return h('span', {}, this.enumCode2Name(params.row.gpsInstallStatus, 'GpsInstallStatusEnum'));
+          },*/
+          render: (h, params) => {
+            return h('i-select', {
+              props: {
+                disabled: this.readonly,
+                value: params.row.gpsInstallStatus
+              },
+              style: {
+                width: '80px'
+              },
+              on: {
+                'on-change': (value) => {
+                  let rowData = { ...params.row };
+                  rowData.gpsInstallStatus = value;
+                  this.$data.carData[params.index] = rowData;
+                }
+              }
+            }, [
+              h('i-option', {
+                props: {
+                  label: '已安装',
+                  value: '1'
+                }
+              }),
+              h('i-option', {
+                props: {
+                  label: '未安装',
+                  value: '0'
+                }
+              })
+            ]);
           }
         },
         {
@@ -84,8 +158,8 @@ export default {
                   click: async() => {
                     this.$data.GPSinstallShowModal = true;
                     this.$data.clickRow = {};
-                    this.$data.clickRow = await params.row;
-                    this.$data.loanCarGpsDTOList = this.$data.carData[params.index].loanCarGpsDTOList;
+                    this.$data.clickRow = params.row;
+                    this.$data.loanCarGpsDTOList = this.$data.carData[params.index].loanCarGpsList || [];
                   }
                 }
               }, 'GPS安装落实')
