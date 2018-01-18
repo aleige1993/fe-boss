@@ -286,10 +286,10 @@
       };
     },
     async mounted() {
-      let loanNo = await this.$route.query.loanNo;
-      let signNo = await this.$route.query.signNo;
-      this.$data.formData.paymentApplyRecordDTO.loanNo = loanNo;
-      this.$data.formData.paymentApplyRecordDTO.signNo = signNo;
+      let loanNo = this.$route.query.loanNo;
+      let signNo = this.$route.query.signNo;
+      this.$data.formData.paymentApplyRecordDTO.loanNo = await loanNo;
+      this.$data.formData.paymentApplyRecordDTO.signNo = await signNo;
       this.getFindPaymentApplyRecordInfo(); //  获取放款条件详情
       this.conditionGetlist(); // 执行获取放款条件列表的data
       this.feeGetlist(); // 执行获取费用收取落实列表的data

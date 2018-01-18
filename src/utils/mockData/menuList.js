@@ -136,8 +136,8 @@ export default [
                   { name: '费用类型配置', url: '/index/conf/product/cost' },
                   { name: '准入规则配置', url: '/index/conf/product/rule' },
                   { name: '放款条件配置', url: '/index/conf/product/lending' },
-                  { name: '归档材料配置', url: '/index/conf/product/file' },
-                  { name: '产品匹配配置', url: '/index/conf/product/match' }
+                  { name: '归档材料配置', url: '/index/conf/product/file' }
+                  /* { name: '产品匹配配置', url: '/index/conf/product/match' }*/
                 ]
               },
               {

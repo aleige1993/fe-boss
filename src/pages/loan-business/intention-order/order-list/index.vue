@@ -18,7 +18,7 @@
         </i-form-item>-->
         <i-form-item>
           <i-select style="width: 120px;" v-model="searchForm.channelNo" placeholder="来源终端">
-            <i-option v-for="item in enumSelectData.get('BizChannelEnum')" :value="item.itemCode">{{item.itemName}}</i-option>
+            <i-option v-for="item in enumSelectData.get('BizChannelEnum')" :value="item.itemCode" :key="item.itemCode">{{item.itemName}}</i-option>
           </i-select>
         </i-form-item>
         <i-form-item>

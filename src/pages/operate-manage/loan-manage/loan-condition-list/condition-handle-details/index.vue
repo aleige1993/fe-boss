@@ -183,7 +183,8 @@
               <p>单击或拖动文件上传</p>
             </div>
           </i-upload>
-          <p class="show-upload-text" v-text="formalities.mortgageName"></p>
+          <p v-if="carData.mortgageName&&carData.mortgageName!==''" v-text="carData.mortgageName"></p>
+          <p v-else class="show-upload-text" v-text="formalities.mortgageName"></p>
           <input type="hidden" v-model="formalities.mortgageUrl" style="width: 100%;border: 0;">
         </i-form-item>
         <i-form-item class="text-right">
@@ -368,8 +369,6 @@
         },
         // 办理抵质押物手续
         formalities: {
-          'makeName': '',
-          'makeUrl': '',
           'makeDate': '',
           'makeUser': '',
           'warrantNo': '',
@@ -561,12 +560,15 @@
         let ind = this.$data.clickRow._index; // 车辆列表的索引index
         this.$refs['formalities'].validate(async (valid) => {
           if (valid) {
-            this.$data.carData[ind] = this.$data.formalities;
+            this.$data.carData[ind] = {
+              ...this.$data.carData[ind],
+              ...this.$data.formalities
+            };
             this.$Message.success('提交成功');
+            this.$data.formalitiesShowModal = false;
           } else {
             this.$Message.error('<span style="color: red">*</span>项不能为空');
           }
-          this.$data.formalitiesShowModal = false;
         });
       },
       // 担保落实modal-提交按钮
@@ -574,18 +576,22 @@
         let ind = this.$data.formagGuarantee._index;
         this.$refs['formagGuarantee'].validate(async (valid) => {
           if (valid) {
-            this.$data.assureData[ind] = this.$data.formagGuarantee;
+            this.$data.assureData[ind] = {
+              ...this.$data.assureData[ind],
+              ...this.$data.formagGuarantee
+            };
             this.$Message.success('提交成功');
+            this.$data.guaranteeShowModal = false;
           } else {
             this.$Message.error('<span style="color: red">*</span>项不能为空');
           }
-          this.$data.guaranteeShowModal = false;
         });
       },
       // 办理抵质押物手续文件上传成功
       uploadSuccessAlities(res, file, fileList) {
         this.$data.formalities.mortgageName = file.name;
         this.$data.formalities.mortgageUrl = res.body.url;
+        console.log(this.$data.formalities.mortgageName);
       },
       // 办理抵质押物手续文件上传失败
       uploadErrorAlities(err, file, fileList) {
