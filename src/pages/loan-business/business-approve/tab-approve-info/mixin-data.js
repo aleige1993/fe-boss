@@ -161,10 +161,10 @@ export default {
             ]);
           }
         },
-        {
+        /*{
           title: '费用项目代码',
           key: 'feeTypeCode'
-        },
+        },*/
         {
           title: '费用项目',
           key: 'feeName'
@@ -173,7 +173,35 @@ export default {
           title: '收取方式',
           key: 'feeTakeType',
           render: (h, params) => {
-            return h('span', {}, this.enumCode2Name(params.row.feeTakeType, 'ReceiveTypeEnum'));
+            return h('i-select', {
+              props: {
+                disabled: this.readonly,
+                value: params.row.feeTakeType
+              },
+              style: {
+                width: '110px'
+              },
+              on: {
+                'on-change': (value) => {
+                  let rowData = { ...params.row };
+                  rowData.feeTakeType = value;
+                  this.$data.approveData.loanApproveFeePlanDTOS[params.index] = rowData;
+                }
+              }
+            }, [
+              h('i-option', {
+                props: {
+                  label: '一次性收取',
+                  value: '1'
+                }
+              }),
+              h('i-option', {
+                props: {
+                  label: '分期收取',
+                  value: '2'
+                }
+              })
+            ]);
           }
         },
         /* {
@@ -370,7 +398,7 @@ export default {
           'dqxInsurance': '',
           'loanApplyUse': '',
           'productNo': '',
-          'loanRealUse': '',
+          // 'loanRealUse': '',
           'operatingMode': '',
           'riskControlContent': '',
           'remark': '',

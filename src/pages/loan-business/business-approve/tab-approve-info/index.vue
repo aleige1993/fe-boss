@@ -71,6 +71,14 @@
                   </i-select>
                 </i-form-item>
               </i-col>
+              <i-col span="8">
+                <i-form-item class="required" label="还款方式" prop="loanApproveCreditDTO.repaymentMode"
+                             :rules="{required: true, message: '请选择还款方式'}">
+                  <i-select :disabled="readonly" v-model="approveData.loanApproveCreditDTO.repaymentMode">
+                    <i-option v-for="item in enumSelectData.get('RepaymentTypeEnum')" :key="item.itemCode" :value="item.itemCode">{{item.itemName}}</i-option>
+                  </i-select>
+                </i-form-item>
+              </i-col>
             </i-row>
             <i-row>
               <i-col span="8">
@@ -100,12 +108,6 @@
             </i-row>
             <i-row>
               <i-col span="8">
-                <i-form-item class="required" label="贷款实际用途" prop="loanApproveCreditDTO.loanRealUse"
-                             :rules="{required: true, message: '请输入贷款实际用途'}">
-                  <i-input :readonly="readonly" v-model="approveData.loanApproveCreditDTO.loanRealUse"></i-input>
-                </i-form-item>
-              </i-col>
-              <i-col span="8">
                 <i-form-item class="required" label="贷款申报用途" prop="loanApproveCreditDTO.loanApplyUse"
                              :rules="{required: true, message: '请输入贷款申报用途'}">
                   <i-select :disabled="readonly" v-model="approveData.loanApproveCreditDTO.loanApplyUse">
@@ -113,17 +115,6 @@
                   </i-select>
                 </i-form-item>
               </i-col>
-              <i-col span="8">
-                <i-form-item class="required" label="还款方式" prop="loanApproveCreditDTO.repaymentMode"
-                             :rules="{required: true, message: '请选择还款方式'}">
-                  <i-select :disabled="readonly" v-model="approveData.loanApproveCreditDTO.repaymentMode">
-                    <i-option v-for="item in enumSelectData.get('RepaymentTypeEnum')" :key="item.itemCode" :value="item.itemCode">{{item.itemName}}</i-option>
-                  </i-select>
-                </i-form-item>
-              </i-col>
-
-            </i-row>
-            <i-row>
               <i-col span="8">
                 <i-form-item class="required" label="车辆保险费" prop="loanApproveCreditDTO.carInsurance"
                              :rules="{required: true, message: '请选择车辆保险费'}">

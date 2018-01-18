@@ -97,18 +97,18 @@
               </i-select>
             </i-form-item>
           </i-col>
-
-          <!--经度-->
           <i-col span="8">
-            <i-form-item label="经度" prop="lon">
-              <i-input v-model="formData.longitude" placeholder="" :readonly="true">
-              </i-input>
+            <i-form-item class="required" label="贷款实际用途" prop="loanUse"
+                         :rules="{required: true, message: '请输入贷款实际用途'}">
+              <i-input :readonly="readonly" v-model="formData.loanUse"></i-input>
             </i-form-item>
           </i-col>
-          <!--纬度-->
           <i-col span="8">
-            <i-form-item label="纬度" prop="lat">
-              <i-input v-model="formData.latitude" placeholder="" :readonly="true">
+            <i-form-item label="渠道商" prop="merchantAbbr"
+                         :rules="{required: true, message: '请选择渠道商'}">
+              <input type="hidden" v-model="formData.merchantAbbr"/>
+              <i-input v-model="formData.merchantAbbr" :readonly="true" placeholder="选择渠道商">
+                <i-button v-if="!readonly" @click="showSelectDistributor=!showSelectDistributor" slot="append">选择渠道商 <Icon type="ios-more"></Icon></i-button>
               </i-input>
             </i-form-item>
           </i-col>
@@ -121,12 +121,17 @@
               </i-input>
             </i-form-item>
           </i-col>
+          <!--经度-->
           <i-col span="8">
-            <i-form-item label="渠道商" prop="merchantAbbr"
-              :rules="{required: true, message: '请选择渠道商'}">
-              <input type="hidden" v-model="formData.merchantAbbr"/>
-              <i-input v-model="formData.merchantAbbr" :readonly="true" placeholder="选择渠道商">
-                <i-button v-if="!readonly" @click="showSelectDistributor=!showSelectDistributor" slot="append">选择渠道商 <Icon type="ios-more"></Icon></i-button>
+            <i-form-item label="经度" prop="lon">
+              <i-input v-model="formData.longitude" placeholder="" :readonly="true">
+              </i-input>
+            </i-form-item>
+          </i-col>
+          <!--纬度-->
+          <i-col span="8">
+            <i-form-item label="纬度" prop="lat">
+              <i-input v-model="formData.latitude" placeholder="" :readonly="true">
               </i-input>
             </i-form-item>
           </i-col>
