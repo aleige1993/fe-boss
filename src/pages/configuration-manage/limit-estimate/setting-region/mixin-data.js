@@ -3,43 +3,16 @@ export default {
     return {
       customerColumns: [
         {
-          title: '合同模板编号',
-          key: 'contractTemplateNo'
+          title: '区间下限',
+          key: 'down'
         },
         {
-          title: '合同模板名称',
-          key: 'contractTemplateName'
+          title: '区间上限',
+          key: 'up'
         },
         {
-          title: '属性名称',
-          key: 'fieldName'
-        },
-        {
-          title: '属性描述',
-          key: 'fieldDesc'
-        },
-        {
-          title: '属性类型',
-          key: 'fieldType',
-          render: (h, params) => {
-            if (params.row.fieldType === '1') {
-              return '常量';
-            } else {
-              return '变量';
-            }
-          }
-        },
-        {
-          title: '属性默认值',
-          key: 'fieldDefaultValue'
-        },
-        {
-          title: '属性取值来源实体',
-          key: 'entityDesc'
-        },
-        {
-          title: '属性取值来源字段',
-          key: 'attrDesc'
+          title: '额度结果(元)',
+          key: 'money'
         }
       ],
       customerActionColumns: [
@@ -47,7 +20,6 @@ export default {
           title: '操作',
           key: 'action',
           width: 160,
-          fixed: 'right',
           align: 'center',
           render: (h, params) => {
             return h('div', [
@@ -70,13 +42,14 @@ export default {
                   type: 'error',
                   size: 'small'
                 },
+                // style: { marginRight: '5px' },
                 on: {
                   click: () => {
                     Alertify.confirm('是否确认删除这条数据', async(ok) => {
                       if (ok) {
                         const loading = this.$Message.loading('处理中...', 0);
-                        let resp = await this.$http.post('/cfg/contract/remove', {
-                          id: params.row.id
+                        let resp = await this.$http.post('/cfg/qualificationAssess/removeTargetScope', {
+                          targetScoreNo: params.row.targetScoreNo
                         });
                         loading();
                         if (resp.success) {

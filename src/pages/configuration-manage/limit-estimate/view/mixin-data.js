@@ -2,44 +2,39 @@ export default {
   data() {
     return {
       customerColumns: [
+        // {
+        //   title: 'NO',
+        //   key: 'templateNo'
+        // },
         {
-          title: '合同模板编号',
-          key: 'contractTemplateNo'
+          title: '短信内容',
+          key: 'smsContent'
         },
         {
-          title: '合同模板名称',
-          key: 'contractTemplateName'
-        },
-        {
-          title: '属性名称',
-          key: 'fieldName'
-        },
-        {
-          title: '属性描述',
-          key: 'fieldDesc'
-        },
-        {
-          title: '属性类型',
-          key: 'fieldType',
+          title: '触发点',
+          key: 'triggerPoint',
           render: (h, params) => {
-            if (params.row.fieldType === '1') {
-              return '常量';
+            return h('span', {}, this.enumCode2Name(params.row.triggerPoint, 'smsTriggerPointEnum'));
+          }
+        },
+        {
+          title: '阿里云模板ID',
+          key: 'aliSmsId'
+        },
+        {
+          title: '是否自动触发',
+          key: 'autoTrigger',
+          render: (h, params) => {
+            if (params.row.autoTrigger === '1') {
+              return '是';
             } else {
-              return '变量';
+              return '否';
             }
           }
         },
         {
-          title: '属性默认值',
-          key: 'fieldDefaultValue'
-        },
-        {
-          title: '属性取值来源实体',
-          key: 'entityDesc'
-        },
-        {
-          title: '属性取值来源字段',
-          key: 'attrDesc'
+          title: '操作时间',
+          key: 'gmtModified'
         }
       ],
       customerActionColumns: [
@@ -47,7 +42,6 @@ export default {
           title: '操作',
           key: 'action',
           width: 160,
-          fixed: 'right',
           align: 'center',
           render: (h, params) => {
             return h('div', [
@@ -70,13 +64,15 @@ export default {
                   type: 'error',
                   size: 'small'
                 },
+                // style: { marginRight: '5px' },
                 on: {
                   click: () => {
                     Alertify.confirm('是否确认删除这条数据', async(ok) => {
                       if (ok) {
                         const loading = this.$Message.loading('处理中...', 0);
-                        let resp = await this.$http.post('/cfg/contract/remove', {
-                          id: params.row.id
+                        let resp = await this.$http.post('/cfg/smsTemplate/remove', {
+                          templateNo: params.row.templateNo
+                          // templateNo: '400642986955767808'
                         });
                         loading();
                         if (resp.success) {

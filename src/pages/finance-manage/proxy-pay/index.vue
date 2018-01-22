@@ -108,8 +108,8 @@
           return item;
         });
         this.$data.privateCustomerLoanList = resp.body.resultList;
-        this.$data.currentPage = resp.body.currentPage / 1;
-        this.$data.total = resp.body.totalNum / 1;
+        this.$data.currentPage = resp.body.currentPage;
+        this.$data.total = resp.body.totalNum;
       },
       selectRow(selection, row) {
         this.pay4Nos = [];

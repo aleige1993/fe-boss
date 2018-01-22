@@ -3,51 +3,31 @@ export default {
     return {
       customerColumns: [
         {
-          title: '合同模板编号',
-          key: 'contractTemplateNo'
-        },
-        {
-          title: '合同模板名称',
-          key: 'contractTemplateName'
-        },
-        {
-          title: '属性名称',
-          key: 'fieldName'
-        },
-        {
-          title: '属性描述',
-          key: 'fieldDesc'
-        },
-        {
-          title: '属性类型',
-          key: 'fieldType',
+          type: '序号',
+          width: 60,
+          align: 'center',
           render: (h, params) => {
-            if (params.row.fieldType === '1') {
-              return '常量';
-            } else {
-              return '变量';
-            }
+            return (this.$data.searchForm.currentPage - 1) * this.$data.searchForm.pageSize + params.index + 1;
           }
         },
         {
-          title: '属性默认值',
-          key: 'fieldDefaultValue'
+          title: '二级指标名称',
+          key: 'secondLevelTarget'
         },
         {
-          title: '属性取值来源实体',
-          key: 'entityDesc'
+          title: '一级指标',
+          key: 'firstLevelTarget'
         },
         {
-          title: '属性取值来源字段',
-          key: 'attrDesc'
+          title: '满分',
+          key: 'score'
         }
       ],
       customerActionColumns: [
         {
           title: '操作',
           key: 'action',
-          width: 160,
-          fixed: 'right',
+          width: 220,
           align: 'center',
           render: (h, params) => {
             return h('div', [
@@ -59,6 +39,7 @@ export default {
                 style: { marginRight: '5px' },
                 on: {
                   click: () => {
+                    console.log(params.row);
                     this.$data.isAdd = false;
                     this.$data.addModal = true;
                     this.$data.fromData = $.extend({}, params.row);
@@ -70,13 +51,14 @@ export default {
                   type: 'error',
                   size: 'small'
                 },
+                // style: { marginRight: '5px' },
                 on: {
                   click: () => {
                     Alertify.confirm('是否确认删除这条数据', async(ok) => {
                       if (ok) {
                         const loading = this.$Message.loading('处理中...', 0);
-                        let resp = await this.$http.post('/cfg/contract/remove', {
-                          id: params.row.id
+                        let resp = await this.$http.post('/cfg/qualificationAssess/removeTarget', {
+                          secondLevelNo: params.row.secondLevelNo
                         });
                         loading();
                         if (resp.success) {
@@ -87,7 +69,25 @@ export default {
                     });
                   }
                 }
-              }, '删除')
+              }, '删除'),
+              h('Button', {
+                props: {
+                  type: 'primary',
+                  size: 'small'
+                },
+                // style: { marginRight: '5px' },
+                on: {
+                  click: () => {
+                    this.$router.push({
+                      path: '/index/conf/limitestimate/settingitem',
+                      query: {
+                        id: params.row.secondLevelNo,
+                        name: params.row.secondLevelTarget
+                      }
+                    });
+                  }
+                }
+              }, '子选项')
             ]);
           }
         }
