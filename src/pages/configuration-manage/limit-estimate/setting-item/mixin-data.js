@@ -3,43 +3,35 @@ export default {
     return {
       customerColumns: [
         {
-          title: '合同模板编号',
-          key: 'contractTemplateNo'
+          type: 'index',
+          width: 60,
+          align: 'center'
         },
         {
-          title: '合同模板名称',
-          key: 'contractTemplateName'
-        },
-        {
-          title: '属性名称',
-          key: 'fieldName'
-        },
-        {
-          title: '属性描述',
-          key: 'fieldDesc'
-        },
-        {
-          title: '属性类型',
-          key: 'fieldType',
+          title: '二级指标名称',
+          key: 'name',
           render: (h, params) => {
-            if (params.row.fieldType === '1') {
-              return '常量';
+            return this.$data.name;
+          }
+        },
+        {
+          title: '子项名称',
+          key: 'scoreName'
+        },
+        {
+          title: '评分方案',
+          key: 'type',
+          render: (h, params) => {
+            if (params.row.type === 0) {
+              return '固定值';
             } else {
-              return '变量';
+              return '比例*满分';
             }
           }
         },
         {
-          title: '属性默认值',
-          key: 'fieldDefaultValue'
-        },
-        {
-          title: '属性取值来源实体',
-          key: 'entityDesc'
-        },
-        {
-          title: '属性取值来源字段',
-          key: 'attrDesc'
+          title: '评分值',
+          key: 'scoreRatio'
         }
       ],
       customerActionColumns: [
@@ -47,7 +39,6 @@ export default {
           title: '操作',
           key: 'action',
           width: 160,
-          fixed: 'right',
           align: 'center',
           render: (h, params) => {
             return h('div', [
@@ -70,13 +61,14 @@ export default {
                   type: 'error',
                   size: 'small'
                 },
+                // style: { marginRight: '5px' },
                 on: {
                   click: () => {
                     Alertify.confirm('是否确认删除这条数据', async(ok) => {
                       if (ok) {
                         const loading = this.$Message.loading('处理中...', 0);
-                        let resp = await this.$http.post('/cfg/contract/remove', {
-                          id: params.row.id
+                        let resp = await this.$http.post('/cfg/qualificationAssess/removeScore', {
+                          scoreNo: params.row.scoreNo
                         });
                         loading();
                         if (resp.success) {

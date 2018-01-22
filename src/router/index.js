@@ -118,8 +118,23 @@ let MyRouter = new Router({
             // 短信管理
             {
               path: 'smsmanage', name: 'smsManage', component: resolve => require(['@/pages/configuration-manage/sms-manage'], resolve),
-            }
+            },
             // 短信管理 end
+            // 额度预估模型
+            {
+              path: 'limitestimate', name: 'limitEetimate', component: resolve => require(['@/pages/configuration-manage/limit-estimate'], resolve),
+              children: [
+                // 设置
+                { path:'setting', name: 'limitEetimateSetting', component: resolve => { require(['@/pages/configuration-manage/limit-estimate/setting'], resolve) } },
+                // 设置子项
+                { path:'settingitem', name: 'limitEetimateSettingItem', component: resolve => { require(['@/pages/configuration-manage/limit-estimate/setting-item'], resolve) } },
+                // 设置区间
+                { path:'settingregion', name: 'limitEetimateSettingRegion', component: resolve => { require(['@/pages/configuration-manage/limit-estimate/setting-region'], resolve) } },
+                // 预览
+                { path:'view', name: 'limitEetimateView', component: resolve => { require(['@/pages/configuration-manage/limit-estimate/view'], resolve) } },
+              ]
+            }
+            // 额度预估模型 end
           ]
         },// 配置管理end
         // 贷款业务
