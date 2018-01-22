@@ -9,7 +9,6 @@ export default {
           memberNo
         });
         this.$data.initFormLoading = false;
-        console.log(resp);
         if (resp.success) {
           if (!resp.body) {
             this.$Notice({
