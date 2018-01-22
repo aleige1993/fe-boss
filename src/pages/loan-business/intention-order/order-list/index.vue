@@ -18,13 +18,12 @@
         </i-form-item>-->
         <i-form-item>
           <i-select style="width: 120px;" v-model="searchForm.channelNo" placeholder="来源终端">
-            <i-option value="1">Android</i-option>
-            <i-option value="2">IOS</i-option>
+            <i-option v-for="item in enumSelectData.get('BizChannelEnum')" :value="item.itemCode" :key="item.itemCode">{{item.itemName}}</i-option>
           </i-select>
         </i-form-item>
         <i-form-item>
           <i-select v-model="searchForm.orderStatus" type="text" placeholder="订单状态" style="width: 120px">
-            <i-option v-for="item in enumSelectData.get('MbOrderStatusEnum')" :value="item.itemCode">{{item.itemName}}</i-option>
+            <i-option v-for="item in enumSelectData.get('MbOrderStatusEnum')" :value="item.itemCode" :key="item.itemCode">{{item.itemName}}</i-option>
           </i-select>
         </i-form-item>
         <i-form-item>
@@ -97,7 +96,7 @@
         this.getCustomerIntentionOrderList(page);
       },
       search() {
-        this.getCustomerIntentionOrderList();
+        this.getCustomerIntentionOrderList(1);
       },
       selectRow(row, index) {
         // this.$emit('on-row-dbclick', row, index);

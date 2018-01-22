@@ -168,7 +168,7 @@ export default [
           'loanContractFileList|3': [
             {
               'contractNo': /0000[0-9]{14}/,
-              'makeContractUrl|1': '@domain',
+              'makeContractUrl': 'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1516188931280&di=67d346951ad65df6ac24344c29848c74&imgtype=0&src=http%3A%2F%2Fwww.chinadaily.com.cn%2Ftypd%2Fattachement%2Fjpg%2Fsite1%2F20100520%2F0013729ec8d80d5f025f1b.jpg',
               'contractName': 'mockjs数据',
               'makeSystem|1': ['本系统']
             }
@@ -651,7 +651,7 @@ export default [
             'loanNo': '1111',
             'endDate': '@date',
             'contractNo|+1': 100,
-            'makeContractUrl': 'test.jpg',
+            'makeContractUrl': 'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1516188931280&di=67d346951ad65df6ac24344c29848c74&imgtype=0&src=http%3A%2F%2Fwww.chinadaily.com.cn%2Ftypd%2Fattachement%2Fjpg%2Fsite1%2F20100520%2F0013729ec8d80d5f025f1b.jpg',
             'signStatus|1': ['0', '1'],
             'pkNo|+1': 100,
             'signMode|1': ['1', '2'],

@@ -196,9 +196,7 @@
         pageSize: 15,
         currentPage: 1,
         formSearch: {
-          productName: '',
-          currentPage: 1,
-          pageSize: 15
+          productName: ''
         },
         // 列表“新增按钮”的表单
         formCustom: {
@@ -297,7 +295,6 @@
       async getPrivateCustomerList(page) {
         this.$data.dataLoading = true;
         if (page) {
-          this.$data.formSearch.currentPage = page;
           this.$data.currentPage = page;
         }
         let resp = await this.$http.get('/pms/product/list', {
@@ -480,7 +477,7 @@
       noticeLilvFun() {
         this.$data.LlShowModel = false;
       },
-      // 费用配置弹窗传参
+      // 费用收取配置弹窗传参
       noticeCostFun() {
         this.$data.FyShowModal = false;
       },

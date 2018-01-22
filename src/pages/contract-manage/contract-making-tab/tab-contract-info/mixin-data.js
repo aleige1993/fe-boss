@@ -109,11 +109,27 @@ export default {
         },
         {
           title: '合同名称',
-          key: 'contractName'
-        },
-        {
-          title: '合同附件',
-          key: 'makeContractUrl'
+          key: 'contractName',
+          render: (h, params) => {
+            return h('Tooltip', {
+              props: {
+                'content': '点击浏览/下载',
+                'placement': 'bottom'
+              }
+            }, [
+              h('a', {
+                props: {
+                  href: 'params.row.makeContractUrl',
+                  target: '_blank'
+                },
+                on: {
+                  click: () => {
+                    window.open(params.row.makeContractUrl, '_blank');
+                  }
+                }
+              }, params.row.contractName)
+            ]);
+          }
         },
         {
           title: '生成方式',

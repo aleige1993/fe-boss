@@ -12,10 +12,12 @@
         <apply-info ref="applyInfo" :customerType="formData.custType" :applyBasicInfo="formData" :loanAction="'firstApprove'" :readonly="applyInfoReadonly || isFromDetail"></apply-info>
       </i-tab-pane>
       <i-tab-pane :label="'审批信息'">
-        <approve-info ref="approveInfo" :applyBasicInfo="formData" :readonly="firstApproveInfoReadonly || isFromDetail"></approve-info>
+        <approve-info ref="approveInfo" :applyBasicInfo="formData"
+                      :readonly="firstApproveInfoReadonly || isFromDetail">
+        </approve-info>
       </i-tab-pane>
-      <i-tab-pane label="人行征信报告">
-        <iframe v-if="tabIndex == 2" src="http://www.baidu.com" width="100%" :height="iframeHeight" frameborder="0"></iframe>
+      <i-tab-pane label="人行征信报告" :disabled="formData.custType === '2'">
+        <iframe v-if="tabIndex == 2" :src="creditReportURL" width="100%" :height="iframeHeight" frameborder="0"></iframe>
       </i-tab-pane>
       <!--<i-tab-pane label="芝麻信用报告">
         <iframe v-if="tabIndex == 3" src="http://www.songchedai.com" width="100%" :height="iframeHeight" frameborder="0"></iframe>
@@ -58,7 +60,8 @@
         initFormLoading: false,
         submitApproveLoading: false,
         memberNo: '1',
-        corpNo: '1'
+        corpNo: '1',
+        creditReportURL: ''
       };
     },
     computed: {

@@ -3,10 +3,9 @@
   <div id="contractMaking">
     <i-breadcrumb separator=">">
       <i-breadcrumb-item href="/">首页</i-breadcrumb-item>
-      <i-breadcrumb-item href="/index/loanbusiness">贷款业务</i-breadcrumb-item>
-      <i-breadcrumb-item v-if="this.taskNode==='6'" href="/index/loanbusiness/contract">签约管理</i-breadcrumb-item>
-      <i-breadcrumb-item v-if="this.taskNode==='7'" href="/index/loanbusiness/contract/againExamine">签约管理</i-breadcrumb-item>
-      <i-breadcrumb-item v-if="this.taskNode==='8'" href="/index/loanbusiness/contract/sigin">签约管理</i-breadcrumb-item>
+      <i-breadcrumb-item v-if="this.taskNode==='6'" href="/index/contract">合同管理</i-breadcrumb-item>
+      <i-breadcrumb-item v-if="this.taskNode==='7'" href="/index/contract/againExamine">合同管理</i-breadcrumb-item>
+      <i-breadcrumb-item v-if="this.taskNode==='8'" href="/index/contract/sigin">合同管理</i-breadcrumb-item>
 
       <i-breadcrumb-item v-if="this.taskNode==='6'">合同制作</i-breadcrumb-item>
       <i-breadcrumb-item v-if="this.taskNode==='7'">合同复核</i-breadcrumb-item>
@@ -140,7 +139,7 @@
         // 跳转到合同 制作/复核 审批详情页面
         if (this.taskNode === '6' || this.taskNode === '7') {
           this.$router.push({
-            path: '/index/loanbusiness/contract/making',
+            path: '/index/contract/making',
             query: {
               currentPage: this.$data.currentPage,
               taskNode: this.taskNode,
@@ -153,7 +152,7 @@
         // 跳转到合同 签署确认 审批详情页面
         if (this.taskNode === '8') {
           this.$router.push({
-            path: '/index/loanbusiness/contract/signDetails',
+            path: '/index/contract/signDetails',
             query: {
               currentPage: this.$data.currentPage,
               taskNode: this.taskNode,

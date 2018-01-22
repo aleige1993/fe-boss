@@ -73,7 +73,7 @@ export default {
         {
           title: '操作',
           key: 'action',
-          width: 100,
+          width: 120,
           align: 'center',
           render: (h, params) => {
             return h('div', [
@@ -83,9 +83,6 @@ export default {
                   size: 'small',
                   disabled: this.statusBool(params.row)
                   // disabled: false
-                },
-                style: {
-                  marginRight: '5px'
                 },
                 on: {
                   click: () => {

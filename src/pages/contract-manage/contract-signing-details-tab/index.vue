@@ -3,8 +3,7 @@
 <div id="contract-signing-details-tab">
   <i-breadcrumb separator=">">
     <i-breadcrumb-item href="/">首页</i-breadcrumb-item>
-    <i-breadcrumb-item href="/index/loanbusiness">贷款业务</i-breadcrumb-item>
-    <i-breadcrumb-item href="/index/loanbusiness/contract/sign">签约管理</i-breadcrumb-item>
+    <i-breadcrumb-item href="/index/contract/sign">合同管理</i-breadcrumb-item>
     <i-breadcrumb-item>合同签署确认详情</i-breadcrumb-item>
   </i-breadcrumb>
   <i-tabs v-model="tabIndex" :animated="false" type="card">
@@ -158,7 +157,6 @@
         let reps = await this.$http.post('/biz/sign/findSignConfirmInfo', {
           signNo: this.$route.query.signNo
         });
-        console.log(reps);
         if (reps.success) {
           this.$data.formData = reps.body;
         } else {
@@ -204,7 +202,7 @@
           this.$Message.success('提交成功！');
           // 初审 回到合同制作列表
           this.$router.push({
-            path: '/index/loanbusiness/contract/sign',
+            path: '/index/contract/sign',
             query: {
               currentPage: this.$route.query.currentPage
             }

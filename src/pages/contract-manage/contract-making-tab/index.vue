@@ -3,9 +3,8 @@
   <div id="contract-making-tab">
     <i-breadcrumb separator=">">
       <i-breadcrumb-item href="/">首页</i-breadcrumb-item>
-      <i-breadcrumb-item href="/index/loanbusiness">贷款业务</i-breadcrumb-item>
-      <i-breadcrumb-item v-if="$route.query.taskNode==='6'" href="/index/loanbusiness/contract">签约管理</i-breadcrumb-item>
-      <i-breadcrumb-item v-if="$route.query.taskNode==='7'" href="/index/loanbusiness/contract/againExamine">签约管理</i-breadcrumb-item>
+      <i-breadcrumb-item v-if="$route.query.taskNode==='6'" href="/index/contract">合同管理</i-breadcrumb-item>
+      <i-breadcrumb-item v-if="$route.query.taskNode==='7'" href="/index/contract/againExamine">合同管理</i-breadcrumb-item>
       <i-breadcrumb-item v-if="$route.query.taskNode==='6'" >个人业务合同制作</i-breadcrumb-item>
       <i-breadcrumb-item v-if="$route.query.taskNode==='7'" >个人业务合同复核</i-breadcrumb-item>
     </i-breadcrumb>
@@ -220,7 +219,7 @@
             this.$Message.success('提交成功！');
             // 初审 回到合同制作列表
             this.$router.push({
-              path: '/index/loanbusiness/contract',
+              path: '/index/contract',
               query: {
                 currentPage: this.$route.query.currentPage
               }
@@ -236,7 +235,7 @@
             this.$Message.success('提交成功！');
             // 复核 回到合同复核列表
             this.$router.push({
-              path: '/index/loanbusiness/contract/againExamine',
+              path: '/index/contract/againExamine',
               query: {
                 currentPage: this.$route.query.currentPage
               }

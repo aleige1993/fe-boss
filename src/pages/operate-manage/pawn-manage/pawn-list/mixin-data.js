@@ -1,7 +1,7 @@
 export default {
   data() {
     return {
-      feeListColumns: [
+      pawnColumns: [
         {
           title: '项目编号',
           key: 'loanNo',
@@ -11,14 +11,14 @@ export default {
           title: '客户名称',
           key: 'custName'
         },
-        {
+        /* {
           title: '证件类型',
           width: 90,
           key: 'certType',
           render: (h, params) => {
             return h('span', {}, this.enumCode2Name(params.row.certType, 'CertTypeEnum'));
           }
-        },
+        },*/
         {
           title: '证件号码',
           key: 'certNo',
@@ -39,35 +39,14 @@ export default {
           key: 'loanTotalAmt'
         },
         {
-          title: '签约完成时间',
-          key: 'signConfirmDate',
-          width: 110
-        },
-        {
-          title: '任务送达时间',
-          width: 110,
-          key: 'taskArriveTime'
-        },
-        {
-          title: '已耗时',
-          width: 150,
-          key: 'timeConsuming'
-        },
-        {
-          title: '处理状态',
-          width: 90,
-          key: 'status',
-          render: (h, params) => {
-            return h('span', {}, this.enumCode2Name(params.row.status, 'BizStatusEnum'));
-          }
-        },
-        {
-          title: '当前环节',
+          title: '回传天数(天)',
           width: 120,
-          key: 'taskNode',
-          render: (h, params) => {
-            return h('span', {}, this.enumCode2Name(params.row.taskNode, 'LoanBizNodeEnum'));
-          }
+          key: 'backDays'
+        },
+        {
+          title: '剩余回传天数(天)',
+          width: 140,
+          key: 'surplusBackDays'
         },
         {
           title: '操作',
@@ -79,27 +58,20 @@ export default {
               h('Button', {
                 props: {
                   type: 'primary',
-                  size: 'small',
-                  disabled: (params.row.status !== '0') && (params.row.status !== '1')
-                },
-                style: {
-                  marginRight: '5px'
+                  size: 'small'
                 },
                 on: {
                   click: async() => {
                     // 设置当前处理人
-                    let rep = await this.$http.post('/biz/payment/settingHandleUser', {
-                      paymentNo: params.row.paymentNo
-                    });
+                    let rep = await this.$http.post('/biz/payment/settingHandleUserWithPawn');
                     if (!rep.success) {
                       return;
                     }
                     this.$router.push({
-                      path: '/index/loanbusiness/loan/fee/handle',
+                      path: '/index/operate/pawn/handle',
                       query: {
                         currentPage: this.$data.currentPage,
-                        paymentNo: params.row.paymentNo,
-                        loanNo: params.row.loanNo
+                        id: params.row.id
                       }
                     });
                   }
@@ -109,7 +81,7 @@ export default {
           }
         }
       ],
-      feeListData: []
+      pawnData: []
     };
   }
 };

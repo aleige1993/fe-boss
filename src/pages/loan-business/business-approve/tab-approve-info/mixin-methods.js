@@ -172,7 +172,7 @@ export default {
       let loanNo = this.$route.query.id;
       let paymentCustNo = '';
       if (this.$data.approveData.loanApproveCreditDTO.loanMode === '1') {
-        paymentCustNo = this.applyBasicInfo.merchantNo || '110041';
+        paymentCustNo = this.applyBasicInfo.merchantNo || '';
       } else {
         paymentCustNo = this.applyBasicInfo.memberNo || this.applyBasicInfo.corpNo;
       }

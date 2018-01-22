@@ -31,19 +31,33 @@ export default {
           width: 200,
           key: 'enclosure',
           render: (h, params) => {
-            return h('div', [
-              h('Button', {
-                props: {
-                  type: 'text',
-                  icon: 'android-download'
+            if (this.isImg(params.row.contractTemplateAttach)) {
+              return h('bs-big-img', {
+                attrs: {
+                  style: 'margin:10px 0'
                 },
-                on: {
-                  click: () => {
-                    window.open(params.row.contractTemplateAttach);
-                  }
+                props: {
+                  thumbHeight: 80,
+                  fullWidth: 1000,
+                  thumb: params.row.contractTemplateAttach,
+                  full: params.row.contractTemplateAttach
                 }
-              }, '点击浏览/下载')
-            ]);
+              });
+            } else {
+              return h('div', [
+                h('Button', {
+                  props: {
+                    type: 'text',
+                    icon: 'android-download'
+                  },
+                  on: {
+                    click: () => {
+                      window.open(params.row.contractTemplateAttach);
+                    }
+                  }
+                }, '点击浏览/下载')
+              ]);
+            }
           }
         },
         {

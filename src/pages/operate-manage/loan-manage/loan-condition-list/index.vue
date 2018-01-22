@@ -3,9 +3,9 @@
   <div id="page-loan-condition-list">
     <i-breadcrumb separator=">">
       <i-breadcrumb-item href="/">首页</i-breadcrumb-item>
-      <i-breadcrumb-item href="/components/breadcrumb">贷款业务</i-breadcrumb-item>
-      <i-breadcrumb-item href="/index/loanbusiness/loan">放款管理</i-breadcrumb-item>
-      <i-breadcrumb-item>放款审批落实</i-breadcrumb-item>
+      <i-breadcrumb-item href="/index/operate">运营管理</i-breadcrumb-item>
+      <i-breadcrumb-item href="/index/operate/loan">放款管理</i-breadcrumb-item>
+      <i-breadcrumb-item>放款条件落实</i-breadcrumb-item>
     </i-breadcrumb>
     <div class="form-block-title">
       查询条件
@@ -29,7 +29,7 @@
         <i-form-item prop="startDate">
           <bs-datepicker v-model="searchForm.startDate" type="text" placeholder="申请时间"></bs-datepicker>
         </i-form-item>
-        <i-form-item prop="password">
+        <i-form-item>
           -
         </i-form-item>
         <i-form-item prop="endDate">
@@ -65,14 +65,13 @@
           'certType': '',
           'certNo': '',
           'startDate': '',
-          'endDate': '',
-          'applyEndTime': ''
+          'endDate': ''
         }
       };
     },
     mounted() {
       if (this.$route.query.currentPage) {
-        this.$data.currentPage = this.$route.query.currentPage / 1;
+        this.$data.currentPag = this.$route.query.currentPage / 1;
       }
       this.getList();
     },
@@ -83,7 +82,7 @@
           this.$data.currentPage = page;
         }
         let resp = await this.$http.post('/biz/payment/pagePaymentApplyRecord', {
-          taskNode: '11',
+          taskNode: '9',
           ...this.$data.searchForm,
           currentPage: this.$data.currentPage,
           pageSize: this.$data.pageSize
@@ -92,7 +91,7 @@
         if (resp.success && resp.body.resultList && resp.body.resultList.length !== 0) {
           this.$data.conditionListData = resp.body.resultList;
           this.$data.currentPage = resp.body.currentPage / 1;
-          this.$data.total = resp.body.totalNum / 1;
+          this.$data.total = parseFloat(resp.body.totalNum);
         } else {
           this.$data.conditionListData = [];
         }
@@ -102,7 +101,7 @@
           this.$Message.error('“开始日期”不能大于“结束日期”');
           return;
         }
-        this.getList();
+        this.getList(1);
       },
       jumpPage(page) {
         if (!this.$DateTest.testDateFun(this.$data.searchForm.startDate, this.$data.searchForm.endDate)) {

@@ -210,7 +210,7 @@ export default {
         custType: '1', // 客户类型1-个人客户2-公司客户
         taskAssignee: '', // 任务签收人
         status: '', // 状态0-未处理1-处理中2-已处理,3-草稿,9-废弃
-        apply_address: '',
+        applyAddress: '',
         longitude: '',
         latitude: '',
         merchantNo: '',

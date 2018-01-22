@@ -10,7 +10,6 @@ export default {
         },
         {
           title: '客户名称',
-          width: 170,
           key: 'custName'
         },
         {
@@ -28,7 +27,6 @@ export default {
         },
         {
           title: '产品',
-          width: 170,
           key: 'productName'
         },
         {
@@ -75,7 +73,7 @@ export default {
         {
           title: '操作',
           key: 'action',
-          minWidth: 100,
+          width: 100,
           align: 'center',
           render: (h, params) => {
             return h('div', [
@@ -98,7 +96,7 @@ export default {
                       return;
                     }
                     this.$router.push({
-                      path: '/index/loanbusiness/loan/handle',
+                      path: '/index/operate/loan/approval/handle',
                       query: {
                         currentPage: this.$data.currentPage,
                         paymentNo: params.row.paymentNo,

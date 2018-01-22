@@ -82,27 +82,42 @@ export default [
                   { name: '公司授信外审', url: '/index/loanbusiness/credit/externalapprove' },
                   { name: '公司授信审批', url: '/index/loanbusiness/credit/approve' }
                 ]
-              },
-              { name: '签约管理',
-                url: '/index/loanbusiness/contract',
+              }
+            ]
+          },
+          // 合同管理(原签约合同)
+          {
+            name: '合同管理',
+            url: '/index/contract',
+            childMenus: [
+              {
+                name: '合同管理',
+                url: '/index/contract',
                 childMenus: [
-                  { name: '合同制作', url: '/index/loanbusiness/contract' },
-                  { name: '合同复核', url: '/index/loanbusiness/contract/againExamine' },
-                  { name: '合同签署确认', url: '/index/loanbusiness/contract/sign' }
+                  { name: '合同制作', url: '/index/contract' },
+                  { name: '合同复核', url: '/index/contract/againExamine' },
+                  { name: '合同签署确认', url: '/index/contract/sign' }
                 ]
-              },
+              }
+            ]
+          },
+          // 运营管理
+          {
+            name: '运营管理',
+            url: '/index/operate',
+            childMenus: [
               { name: '放款管理',
-                url: '/index/loanbusiness/loan',
+                url: '/index/operate/loan',
                 childMenus: [
-                  { name: '放款条件落实', url: '/index/loanbusiness/loan' },
-                  { name: '放款费用落实', url: '/index/loanbusiness/loan/fee' },
-                  { name: '放款审批', url: '/index/loanbusiness/loan/approval' }
+                  { name: '放款条件落实', url: '/index/operate/loan' },
+                  { name: '放款费用落实', url: '/index/operate/loan/fee' },
+                  { name: '放款审批', url: '/index/operate/loan/approval' }
                 ]
               },
               { name: '抵押物管理',
-                url: '/index/loanbusiness/pawn',
+                url: '/index/operate/pawn',
                 childMenus: [
-                  { name: '抵押物待办列表', url: '/index/loanbusiness/pawn' }
+                  { name: '抵押物待办列表', url: '/index/operate/pawn' }
                 ]
               }
             ]
@@ -110,19 +125,19 @@ export default [
           // 配置管理
           {
             name: '配置管理',
-            url: '/index/conf',
+            url: '/index/conf/product',
             childMenus: [
               {
                 name: '产品配置',
-                url: '/index/conf/product',
+                url: '/index/conf',
                 childMenus: [
                   { name: '产品列表', url: '/index/conf/product' },
                   { name: '贷款材料配置', url: '/index/conf/product/loan' },
                   { name: '费用类型配置', url: '/index/conf/product/cost' },
                   { name: '准入规则配置', url: '/index/conf/product/rule' },
                   { name: '放款条件配置', url: '/index/conf/product/lending' },
-                  { name: '归档材料配置', url: '/index/conf/product/file' },
-                  { name: '产品匹配配置', url: '/index/conf/product/match' }
+                  { name: '归档材料配置', url: '/index/conf/product/file' }
+                  /* { name: '产品匹配配置', url: '/index/conf/product/match' }*/
                 ]
               },
               {
