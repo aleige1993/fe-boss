@@ -1,6 +1,6 @@
 <template>
   <div class="" style="position: relative">
-    <i-row v-if="!memberNo">
+    <i-row v-if="!memberNo || memberNo===''">
       <i-col span="8" offset="8">
         <i-button type="text" @click="selectPersonalModal=!selectPersonalModal" long style="margin-bottom: 30px; border: 0;background-color: #fff;">
           <div class="ivu-upload">
@@ -338,9 +338,6 @@ export default {
         let birthday = this.$data.formData.mbMemberDTO.birthday;
         return Tools.getAgeFromBirthday(birthday);
       }
-    },
-    isHasFormDataFun() {
-      return this.memberNo;
     }
   },
   components: {
@@ -351,7 +348,7 @@ export default {
     selectPersonal(row, index) {
       // debugger;
       this.initFormData(row.memberNo);
-      // this.$emit('getMember', row);
+      this.$emit('getMember', row);
       this.$data.selectPersonalModal = false;
       this.$data.isHasFromData = true;
     }

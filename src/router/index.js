@@ -177,8 +177,6 @@ let MyRouter = new Router({
             { path: '/', name: 'loanContractMakingList', component: resolve => require(['@/pages/contract-manage/contract-list'], resolve)},
             // 合同管理->个人业务合同制作
             { path: 'making', name: 'loanContractMakingTab', component: resolve => require(['@/pages/contract-manage/contract-making-tab'], resolve)},
-            // 合同管理->合同复核
-            { path: 'againExamine', name: 'againExamine', component: resolve => require(['@/pages/contract-manage/contract-again-examine'], resolve)},
             // 合同管理->合同签署确认
             { path: 'sign', name: 'loanContractSign', component: resolve => require(['@/pages/contract-manage/contract-signing'], resolve)},
             // 合同管理->合同签署确认-详情页面

@@ -40,6 +40,17 @@
         </i-select>
       </i-form-item>
       <i-form-item
+        label="收费依据"
+        :rules="{required: true, message: '请选择收费依据', trigger: 'change'}"
+        prop="productChargeBasis">
+        <i-select v-model="formInModel.productChargeBasis" placeholder="请选择">
+          <!--<i-option v-for="item in enumSelectData.get('DqxInsuranceEnum')" :key="item.itemCode" :value="item.itemCode">{{item.itemName}}</i-option>-->
+          <i-option value="1">贷款金额</i-option>
+          <i-option value="2">申请金额</i-option>
+          <i-option value="3">购车金额</i-option>
+        </i-select>
+      </i-form-item>
+      <i-form-item
         :rules="{required: true, message: '利率标准不能为空', trigger: 'blur'}"
         label="利率标准"
         prop="ratio"
@@ -94,6 +105,7 @@
           incomeType: '',  // 收取类型
           feeTypeName: '',  // 费用类型名称
           feeType: '',  // 收支方向
+          productChargeBasis: '', // 收费依据
           productName: '',  // 产品名称
           fixedAmount: '',  // 固定金额
           productNo: '',  // 产品编号
@@ -161,6 +173,7 @@
           incomeType: this.$data.formInModel.incomeType, // 收取类型
           feeTypeName,  // 费用类型名称
           feeType: this.$data.formInModel.feeType,  // 收支方向
+          productChargeBasis: this.$data.formInModel.productChargeBasis,  // 收费依据
           productName: this.childMsg.productName,  // 产品名称
           fixedAmount: this.$data.formInModel.fixedAmount,  // 固定金额
           productNo: this.childMsg.productNo,  // 产品编号
@@ -194,6 +207,7 @@
           incomeType: this.$data.formInModel.incomeType, // 收取类型
           feeTypeName,  // 费用类型名称
           feeType: this.$data.formInModel.feeType,  // 收支方向
+          productChargeBasis: this.$data.formInModel.productChargeBasis,  // 收费依据
           productName: this.childMsg.productName,  // 产品名称
           fixedAmount: this.$data.formInModel.fixedAmount,  // 固定金额
           productNo: this.childMsg.productNo,  // 产品编号

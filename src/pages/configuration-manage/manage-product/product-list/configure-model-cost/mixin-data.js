@@ -17,6 +17,13 @@ export default {
           key: 'feeTypeName'
         },
         {
+          title: '收费依据',
+          key: 'productChargeBasis'
+          /* render: (h, params) => {
+            return h('span', {}, this.enumCode2Name(params.row.productChargeBasis, 'ReceiveTypeEnum'));
+          }*/
+        },
+        {
           title: '计算方式',
           key: 'incomeType',
           render: (h, params) => {

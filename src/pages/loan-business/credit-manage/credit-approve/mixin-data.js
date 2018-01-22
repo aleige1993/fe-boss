@@ -30,7 +30,7 @@ export default {
         ],
         // 申请意见入参 -- 每个阶段的审核都有
         'creditAuditParam': {
-          'approveStatus': 'A',
+          'approveStatus': '',
           'opinion': ''
         },
         // 授信申请信息

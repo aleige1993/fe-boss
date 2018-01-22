@@ -3,20 +3,17 @@
   <div id="contract-making-tab">
     <i-breadcrumb separator=">">
       <i-breadcrumb-item href="/">首页</i-breadcrumb-item>
-      <i-breadcrumb-item v-if="$route.query.taskNode==='6'" href="/index/contract">合同管理</i-breadcrumb-item>
-      <i-breadcrumb-item v-if="$route.query.taskNode==='7'" href="/index/contract/againExamine">合同管理</i-breadcrumb-item>
-      <i-breadcrumb-item v-if="$route.query.taskNode==='6'" >个人业务合同制作</i-breadcrumb-item>
-      <i-breadcrumb-item v-if="$route.query.taskNode==='7'" >个人业务合同复核</i-breadcrumb-item>
+      <i-breadcrumb-item href="/index/contract">合同管理</i-breadcrumb-item>
+      <i-breadcrumb-item>个人业务合同制作</i-breadcrumb-item>
     </i-breadcrumb>
     <br>
     <br>
     <i-tabs v-model="tabIndex" :animated="false" type="card">
       <i-tab-pane label="合同信息">
         <tab-contract-info ref="contractInfo"
-                           @on-tabIndex-func="tabIndexFunc"
                            @on-create-contracted="isCreateContractFun"
-                           @on-radio-approveStatus="radioApproveStatus"
-                           :CreateRepayPlan="{isCapital, isRental}"></tab-contract-info>
+                           @on-radio-approveStatus="radioApproveStatus">
+        </tab-contract-info>
       </i-tab-pane>
       <i-tab-pane label="还款计划表">
         <div v-if="tabIndex===1">
@@ -26,9 +23,6 @@
           </bs-form-block>
           <!--资金方还款计划表-->
           <bs-form-block :title="'资金方还款计划表'">
-            <div class="form-top-actions" style="padding-top:0;">
-              <i-button v-if="$route.query.taskNode === '6'" @click="capitalGenerating" type="info"><i class="iconfont icon-xinzeng"></i> 生成还款计划</i-button>
-            </div>
             <i-table border :loading="capitalPlanCapitalListLoading" ref="capitalTable" :columns="repayPlanCapitalColumns" :data="repayPlanCapitalList">
             </i-table>
           </bs-form-block>
@@ -60,9 +54,6 @@
           </bs-form-block>
           <!--租金还款计划表-->
           <bs-form-block :title="'租金还款计划表'">
-            <div class="form-top-actions" style="padding-top:0;">
-              <i-button v-if="$route.query.taskNode === '6'" @click="rentGenerating" type="info"><i class="iconfont icon-xinzeng"></i> 生成还款计划</i-button>
-            </div>
             <i-table border :loading="rentPlanCapitalListLoading" ref="rentTable" :columns="repayPlanRentalColumns" :data="repayPlanRentalList">
             </i-table>
           </bs-form-block>
@@ -77,9 +68,8 @@
     </i-tabs>
     <div class="form-footer-actions">
       <i-button @click="saveSubimt" :loading="initFormLoading" type="success">
-        <span v-if="!initFormLoading"><i class="iconfont icon-tijiao"></i>
-        <span v-if="$route.query.taskNode==='7'"> 提交</span>
-        <span v-else> 提交审核</span>
+        <span v-if="!initFormLoading">
+          <i class="iconfont icon-tijiao"></i> 提交
         </span>
         <span v-else> loading...</span>
       </i-button>
@@ -137,12 +127,6 @@
       radioApproveStatus(val) {
         this.$data.approveStatus = val;
       },
-      // 切换tab
-      tabIndexFunc(num) {
-        if (num) {
-          this.$data.tabIndex = num;
-        }
-      },
       // 合同信息里 点击了“生成合同”
       isCreateContractFun() {
         this.$data.isCreateContract = true;
@@ -166,10 +150,8 @@
           // 资方还款计划列表data
           if (resp.body.repayPlanCapitalList.length !== 0) {
             this.$data.repayPlanCapitalList = resp.body.repayPlanCapitalList;
-            this.$data.isCapital = true;
           } else {
             this.$data.repayPlanCapitalList = [];
-            this.$data.isCapital = false;
           }
         }
       },
@@ -226,7 +208,7 @@
             });
           }
         }
-        if (this.$route.query.taskNode === '7') {
+        /* if (this.$route.query.taskNode === '7') {
           let resp = await this.$http.post('/biz/sign/contract/reviewApprove', {
             signNo: requestData.signNo,
             loanApprove: requestData.loanApprove
@@ -241,9 +223,9 @@
               }
             });
           }
-        }
+        }*/
       },
-      // 资金方的 生成还款计划事件
+      /* // 资金方的 生成还款计划事件
       async capitalGenerating() {
         Alertify.confirm('确定生成资金方还款计划吗？', async (ok) => {
           if (ok) {
@@ -258,8 +240,8 @@
             }
           }
         });
-      },
-      // 租金还款生成还款计划
+      },*/
+      /* // 租金还款生成还款计划
       async rentGenerating() {
         Alertify.confirm('确定生成租金方还款计划吗？', async (ok) => {
           if (ok) {
@@ -274,7 +256,7 @@
             }
           }
         });
-      },
+      },*/
       // 获取审批信息列表的data
       async examineGetlist(page) {
         this.$data.examineTableLoading = true;

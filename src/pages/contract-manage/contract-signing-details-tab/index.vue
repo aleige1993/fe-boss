@@ -55,7 +55,7 @@
         </bs-form-block>
         <!--合同信息-->
         <bs-form-block :title="'合同信息'">
-          <i-table border :loading="contractInfoListLoading" ref="contractInfoTable" :columns="contractInfoColumns" :data="formData.contractList">
+          <i-table border :loading="contractInfoListLoading" ref="contractInfoTable" :columns="contractInfoColumns" :data="formData.contractSignConfirmStatusParams">
           </i-table>
         </bs-form-block>
       </i-form>
@@ -119,14 +119,14 @@
           'custNo': '',
           'certType': '',
           'loanNo': '',
-          'contractList': [
+          'contractSignConfirmStatusParams': [
             {
               'signContractDate': '',
               'loanNo': '',
               'endDate': '',
               'contractNo': '',
               'makeContractUrl': '',
-              'signStatus': '',
+              'signConfirmStatus': '',
               'pkNo': '',
               'signMode': '',
               'signContractUrl': '',
@@ -194,7 +194,7 @@
         this.$data.initFormLoading = true;
         let resp = await this.$http.post('/biz/sign/signConfirm', {
           signNo: this.$route.query.signNo,
-          contractSignConfirmStatusParams: this.$data.formData.contractList,
+          contractSignConfirmStatusParams: this.$data.formData.contractSignConfirmStatusParams,
           loanApprove: this.$data.loanApprove
         });
         this.$data.initFormLoading = false;

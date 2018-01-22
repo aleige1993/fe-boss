@@ -75,6 +75,14 @@
           </i-col>
           <i-col span="12">
             <i-form-item
+              :rules="{required: true, message: '产品别名不能为空', trigger: 'blur'}"
+              label="产品别名"
+              prop="productAbbrName">
+              <i-input placeholder="请输入产品别名" v-model="formCustom.productAbbrName"></i-input>
+            </i-form-item>
+          </i-col>
+          <i-col span="12">
+            <i-form-item
               :rules="{required: true, message: '产品说明不能为空', trigger: 'blur'}"
               label="产品说明"
               prop="remark">
@@ -205,6 +213,7 @@
           flowName: '', // 适用流程名称
           productNo: '', // 产品编号
           productName: '',  // 产品名称
+          productAbbrName: '',  // 产品别名
           productType: '',  // 产品类型
           status: ''  // 产品状态
         }
@@ -320,6 +329,7 @@
           remark: this.$data.formCustom.remark,
           flowName: this.$data.formCustom.flowName,
           productType: this.$data.formCustom.productType,
+          productAbbrName: this.$data.formCustom.productAbbrName,
           productName: this.$data.formCustom.productName,
           status: this.$data.formCustom.status
         });
@@ -357,6 +367,7 @@
           productNo: this.$data.formCustom.productNo, // 产品编号
           productName: this.$data.formCustom.productName,  // 产品名称
           productType: this.$data.formCustom.productType,  // 产品类型
+          productAbbrName: this.$data.formCustom.productAbbrName,  // 产品别名
           status: this.$data.formCustom.status  // 产品状态
         });
         if (resModify.success) {
