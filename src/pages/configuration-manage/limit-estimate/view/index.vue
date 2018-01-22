@@ -43,9 +43,7 @@
         if (page) {
           this.$data.searchForm.currentPage = page;
         }
-        let resp = await this.$http.post('/cfg/qualificationAssess/listAllTargetWithScore', {
-          ...this.$data.searchForm
-        });
+        let resp = await this.$http.post('/cfg/qualificationAssess/listAllTargetWithScore');
         this.$data.resultList = resp.body;
       }
     },
