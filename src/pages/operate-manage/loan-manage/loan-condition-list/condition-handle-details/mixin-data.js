@@ -8,7 +8,7 @@ export default {
           width: 90,
           key: 'guaranteeType',
           render: (h, params) => {
-            return h('span', {}, this.enumCode2Name(params.row.guaranteeType, 'CustTypeEnum'));
+            return h('span', {}, this.enumCode2Name(params.row.guaranteeType, 'PawnTypeEnum'));
           }
         },
         {
@@ -39,116 +39,52 @@ export default {
           title: '抵押状态',
           width: 120,
           key: 'mortgageStatus',
-          /* render: (h, params) => {
-            return h('span', {}, this.enumCode2Name(params.row.mortgageStatus, 'MortgageStatusEnum'));
-          },*/
           render: (h, params) => {
-            return h('i-select', {
-              props: {
-                disabled: this.readonly,
-                value: params.row.mortgageStatus
-              },
-              style: {
-                width: '80px'
-              },
-              on: {
-                'on-change': (value) => {
-                  let rowData = { ...params.row };
-                  rowData.mortgageStatus = value;
-                  this.$data.carData[params.index] = rowData;
-                }
-              }
-            }, [
-              h('i-option', {
-                props: {
-                  label: '抵押',
-                  value: '1'
-                }
-              }),
-              h('i-option', {
-                props: {
-                  label: '质押',
-                  value: '2'
-                }
-              }),
-              h('i-option', {
-                props: {
-                  label: '信用',
-                  value: '3'
-                }
-              }),
-              h('i-option', {
-                props: {
-                  label: '保证',
-                  value: '4'
-                }
-              })
-            ]);
+            return h('span', {}, this.enumCode2Name(params.row.mortgageStatus, 'MortgageStatusEnum'));
           }
         },
         {
           title: 'GPS安装状态',
           width: 110,
           key: 'gpsInstallStatus',
-          /* render: (h, params) => {
-            return h('span', {}, this.enumCode2Name(params.row.gpsInstallStatus, 'GpsInstallStatusEnum'));
-          },*/
           render: (h, params) => {
-            return h('i-select', {
-              props: {
-                disabled: this.readonly,
-                value: params.row.gpsInstallStatus
-              },
-              style: {
-                width: '80px'
-              },
-              on: {
-                'on-change': (value) => {
-                  let rowData = { ...params.row };
-                  rowData.gpsInstallStatus = value;
-                  this.$data.carData[params.index] = rowData;
-                }
-              }
-            }, [
-              h('i-option', {
-                props: {
-                  label: '已安装',
-                  value: '1'
-                }
-              }),
-              h('i-option', {
-                props: {
-                  label: '未安装',
-                  value: '0'
-                }
-              })
-            ]);
+            return h('span', {}, this.enumCode2Name(params.row.gpsInstallStatus, 'GpsInstallStatusEnum'));
           }
         },
         {
           title: '操作',
           key: 'action',
-          width: 210,
+          width: 240,
           align: 'center',
           render: (h, params) => {
             return h('div', [
               h('Button', {
                 props: {
                   type: 'primary',
-                  size: 'small',
-                  disabled: params.row.mortgageStatus === '0'
+                  size: 'small'
                 },
                 style: {
                   marginRight: '5px'
                 },
                 on: {
                   click: () => {
-                    this.$data.formalitiesShowModal = true;
                     this.$data.clickRow = params.row;
-                    this.$data.formalities = params.row;
+                    // 权证回传方式为《先入库后放款》则展示办理抵押按钮
+                    if (this.$data.warrantType === '1') {
+                      this.$data.formalitiesShowModal = true;
+                      this.$data.formalities = {};
+                      this.$data.formalities = $.extend({}, params.row);
+                      console.log(this.$data.formalities);
+                      console.log(params.row);
+                    }
+                    // 权证回传方式为《先入库后放款》则展示办理抵押按钮
+                    if (this.$data.warrantType === '2') {
+                      this.$data.backDaysShowModal = true;
+                      this.$data.backDaysForm = $.extend({}, params.row);
+                    }
                   }
                 }
-              }, '办理抵押'),
+              }, this.carBtnWarrantType),
               h('Button', {
                 props: {
                   type: 'error',
@@ -357,5 +293,19 @@ export default {
       ],
       loanCarGpsDTOList: []
     };
+  },
+  computed: {
+    carBtnWarrantType: function() {
+      let btnText = '';
+      // 权证回传方式为《先入库后放款》则展示办理抵押按钮
+      if (this.$data.warrantType === '1') {
+        btnText = '办理抵押';
+      }
+      // 权证回传方式为《先放款后入库》则展示权证回传天数按钮
+      if (this.$data.warrantType === '2') {
+        btnText = '设置回传天数';
+      }
+      return btnText;
+    }
   }
 };

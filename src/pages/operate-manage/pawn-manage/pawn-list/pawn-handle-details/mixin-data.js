@@ -8,7 +8,7 @@ export default {
           width: 90,
           key: 'guaranteeType',
           render: (h, params) => {
-            return h('span', {}, this.enumCode2Name(params.row.guaranteeType, 'WarrantTypeEnum'));
+            return h('span', {}, this.enumCode2Name(params.row.guaranteeType, 'PawnTypeEnum'));
           }
         },
         {

@@ -31,6 +31,23 @@ export default [
           ]
         },
         {
+          'groupKey': 'PawnTypeEnum',
+          'items': [
+            {
+              'itemCode': '1',
+              'itemName': '抵押'
+            },
+            {
+              'itemCode': '2',
+              'itemName': '质押'
+            },
+            {
+              'itemCode': '3',
+              'itemName': '不抵押'
+            }
+          ]
+        },
+        {
           'groupKey': 'CertTypeEnum',
           'items': [
             {

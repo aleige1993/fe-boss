@@ -271,7 +271,7 @@ export default [
         'pageSize': 15,
         'resultList|3': [
           {
-            'guaranteeType|1': ['1', '2'],
+            'guaranteeType|1': ['1', '2', '3'],
             'carBrandName': '长安',
             'carModel': 'CS75',
             'carEngineNo': /[0-9A-Z]{18}/,

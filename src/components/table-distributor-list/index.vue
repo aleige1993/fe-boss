@@ -123,20 +123,24 @@
       // 冻结
       async congeal(row) {
         let statusText = '';
+        let posStatus = '';
         if (row.enableStatus === '0') { // 0=冻结；1=激活
           statusText = '激活';
+          posStatus = '1';
         }
         if (row.enableStatus === '1') { // 0=冻结；1=激活
           statusText = '冻结';
+          posStatus = '0';
         }
         Alertify.confirm('确定要' + statusText + '当前用户吗？', async (ok) => {
           if (ok) {
             const msg = this.$Message.loading('正在冻结' + statusText + '...', 0);
-            let resp = await this.$http.get('merchant/changeStatus', {
+            let resp = await this.$http.post('merchant/changeStatus', {
               merchantNo: row.merchantNo,
-              enableStatus: row.enableStatus
+              enableStatus: posStatus
             });
             msg();
+            console.log(resp);
             if (resp.success) {
               this.$Message.success(statusText + '成功');
               this.getPrivateCustomerList();

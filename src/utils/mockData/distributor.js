@@ -30,7 +30,6 @@ export default [
   },
   {
     url: '/merchant/changeStatus',
-    type: 'get',
     on: true,
     resp: Mock.mock({
       'reCode': '0000',

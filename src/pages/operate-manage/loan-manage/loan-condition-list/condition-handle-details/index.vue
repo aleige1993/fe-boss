@@ -135,8 +135,8 @@
       </div>
     </i-tabs>
     <!--办理抵质押物手续-->
-    <bs-modal v-model="formalitiesShowModal" title="办理抵质押物手续" :width="520">
-      <i-form v-if="formalitiesShowModal" ref="formalities" :model="formalities" label-position="right" :label-width="80">
+    <bs-modal v-model="formalitiesShowModal" title="办理抵质押物手续" :width="520" @on-close="formalitiesCloseModal">
+      <i-form ref="formalities" :model="formalities" label-position="right" :label-width="80">
         <i-form-item label="办理时间"
                      prop="makeDate"
                      :rules="{required: true, message: '办理时间不能为空', trigger: 'blur'}">
@@ -161,23 +161,17 @@
                      prop="mortgageStatus"
                      :rules="{required: true, message: '请选择抵押状态', trigger: 'change'}">
           <i-select v-model="formalities.mortgageStatus">
-            <i-option v-for="item in enumSelectData.get('PawnTypeEnum')" :key="item.itemCode" :value="item.itemCode">{{item.itemName}}</i-option>
+            <i-option v-for="item in enumSelectData.get('MortgageStatusEnum')" :key="item.itemCode" :value="item.itemCode">{{item.itemName}}</i-option>
           </i-select>
-        </i-form-item>
-        <i-form-item label="回传天数" v-if="formalities.mortgageStatus === '3'"
-                     prop="registerCompany"
-                     :rules="{required: true, message: '请输入回传天数'}">
-          <i-input v-model="formalities.backDays" placeholder=""></i-input>
         </i-form-item>
         <i-form-item label="备注"
                      prop="remark">
           <i-input type="textarea" :rows="2" v-model="formalities.remark" placeholder=""></i-input>
         </i-form-item>
         <i-form-item
-          label="办理文件" v-if="formalities.mortgageStatus !== '3'"
+          label="办理文件"
           prop="mortgageUrl"
           :rules="{required: true, message: '请上传办理文件', trigger: 'blur'}">
-          <input type="hidden" v-model="formalities.mortgageUrl" style="width: 100%;border: 0;">
           <i-upload
             :show-upload-list="false"
             :on-success="uploadSuccessAlities"
@@ -189,11 +183,24 @@
               <p>单击或拖动文件上传</p>
             </div>
           </i-upload>
-          <p v-if="formalities.mortgageUrl&&formalities.mortgageUrl!==''" v-text="formalities.mortgageName"></p>
-          <p v-else class="show-upload-text" v-text="formalities.mortgageName"></p>
+          <p v-text="formalities.mortgageName"></p>
+          <input type="hidden" v-model="formalities.mortgageUrl" style="width: 100%;border: 0;">
         </i-form-item>
         <i-form-item class="text-right">
           <i-button type="primary" @click="formalitiesSubmit">提交</i-button>
+        </i-form-item>
+      </i-form>
+    </bs-modal>lose
+    <!--车辆列表设置回传天数-->
+    <bs-modal v-model="backDaysShowModal" title="设置回传天数" :width="500" @on-close="backDaysCloseModal">
+      <i-form ref="backDaysForm" :model="backDaysForm" label-position="right" :label-width="80">
+        <i-form-item label="回传天数"
+                     prop="backDays"
+                     :rules="{required: true, message: '请输入回传天数'}">
+          <i-input v-model="backDaysForm.backDays" placeholder=""></i-input>
+        </i-form-item>
+        <i-form-item class="text-right">
+          <i-button type="primary" @click="backDaysFormSubmit">提交</i-button>
         </i-form-item>
       </i-form>
     </bs-modal>
@@ -206,7 +213,7 @@
     </bs-modal>
     <!--GPS安装信息新增和修改模态框-->
     <bs-modal v-model="GPSShowModal" :title="isAddGPS?'新增':'修改'" :width="520"  @on-close="formAddGPS = {}">
-      <i-form v-if="GPSShowModal" ref="formAddGPS" :model="formAddGPS" label-position="right" :label-width="90">
+      <i-form ref="formAddGPS" :model="formAddGPS" label-position="right" :label-width="90">
         <i-form-item label="GPS型号"
                      prop="gpsModel"
                      :rules="{required: true, message: 'GPS型号不能为空', trigger: 'blur'}">
@@ -249,7 +256,7 @@
     </bs-modal>
     <!--担保落实modal-->
     <bs-modal v-model="guaranteeShowModal" title="担保落实" :width="520">
-      <i-form v-if="guaranteeShowModal" ref="formagGuarantee" :model="formagGuarantee" label-position="right" :label-width="80">
+      <i-form ref="formagGuarantee" :model="formagGuarantee" label-position="right" :label-width="80">
         <i-form-item label="办理时间"
                      prop="makeDate"
                      :rules="{required: true, message: '办理时间不能为空', trigger: 'blur'}">
@@ -323,6 +330,11 @@
         GPSShowModal: false, // 显示GPS安装信息新增弹窗modal
         addGPSButtonLoading: false, // 显示GPS安装信息新增弹窗modal提交按钮的loading
         guaranteeShowModal: false, // 担保落实modal
+        backDaysShowModal: false, // 车辆回传天数弹窗
+        warrantType: '', // 权证回传方式
+        backDaysForm: {
+          backDays: ''
+        },
         formData: {
           'paymentRecordDTO': {
             'shareAmt': '',
@@ -422,6 +434,7 @@
         });
         if (reps.success) {
           this.$data.formData = reps.body;
+          this.$data.warrantType = reps.body.paymentApplyRecordDTO.warrantType;
         } else {
           this.$data.formData = {};
         }
@@ -488,7 +501,6 @@
                 this.$data.carData[ind].loanCarGpsList = [];
               }
               this.$data.carData[ind].loanCarGpsList.push(this.$data.formAddGPS);
-              // this.$data.loanCarGpsDTOList.push(this.$data.formAddGPS);
               // this.$set(carData[ind].loanCarGpsList.push(this.$data.formAddGPS);
             } else {
               let index = this.$data.formAddGPS._index; // GPS列表的索引index
@@ -514,11 +526,21 @@
           });
           return;
         }
-        // 车辆信息中须配置好“办理抵押” 通过其中的必填项“办理时间”字段判断
+        // 权证回传方式为《先入库后放款》时 车辆信息中须配置好“办理抵押” 通过其中的必填项“办理时间”字段判断
         for (let item of this.$data.carData) {
-          if (typeof item.makeDate === 'undefined' || item.makeDate === '' || item.makeDate === null) {
+          if (this.$data.warrantType === '1' && (typeof item.makeDate === 'undefined' || item.makeDate === '' || item.makeDate === null)) {
             this.$Message.error({
               content: '车辆信息中须配置好“办理抵押”！',
+              duration: 2
+            });
+            return;
+          }
+        }
+        // 权证回传方式为《先入库后放款》时 回传天数必填
+        for (let item of this.$data.carData) {
+          if (this.$data.warrantType === '2' && (typeof item.backDays === 'undefined' || item.backDays === '')) {
+            this.$Message.error({
+              content: '车辆信息中须配置好“回传天数”！',
               duration: 2
             });
             return;
@@ -546,7 +568,7 @@
           }
         });
         this.$data.initFormLoading = false;
-        /* if (rep.success) {
+        if (rep.success) {
           this.$Message.success('提交成功');
           this.$router.push({
             path: '/index/operate/loan',
@@ -554,13 +576,15 @@
               currentPage: this.$route.query.currentPage
             }
           });
-        }*/
+        }
       },
       // 所有的提交按钮
       saveSubimt() {
         this.$refs['formData'].validate(async (valid) => {
           if (valid) {
-            await this.allSubimt();
+            if (this.$AuditPrompt.auditPromptFun(this.$data.formData.approveStatus)) {
+              await this.allSubimt();
+            }
           } else {
             this.$data.tabIndex = 0;
             this.$Message.error('<span style="color: red">*</span>项不能为空');
@@ -572,12 +596,31 @@
         let ind = this.$data.clickRow._index; // 车辆列表的索引index
         this.$refs['formalities'].validate(async (valid) => {
           if (valid) {
-            this.$data.carData[ind] = {
-              ...this.$data.carData[ind],
-              ...this.$data.formalities
-            };
+            this.$data.carData[ind] = this.$data.formalities;
             this.$Message.success('提交成功');
             this.$data.formalitiesShowModal = false;
+          } else {
+            this.$Message.error('<span style="color: red">*</span>项不能为空');
+          }
+        });
+      },
+      // 办理抵质押物手续modal-关闭重置
+      formalitiesCloseModal() {
+        // this.$refs['formalities'].resetFields();
+        // this.$data.formalities = {};
+      },
+      // 车辆回传天数modal-关闭重置
+      backDaysCloseModal() {
+        this.$refs['backDaysForm'].resetFields();
+      },
+      // 车辆回传天数modal-提交按钮
+      backDaysFormSubmit() {
+        let ind = this.$data.clickRow._index; // 车辆列表的索引index
+        this.$refs['backDaysForm'].validate(async (valid) => {
+          if (valid) {
+            this.$data.carData[ind].backDays = this.$data.backDaysForm.backDays;
+            this.$Message.success('提交成功');
+            this.$data.backDaysShowModal = false;
           } else {
             this.$Message.error('<span style="color: red">*</span>项不能为空');
           }
@@ -601,9 +644,9 @@
       },
       // 办理抵质押物手续文件上传成功
       uploadSuccessAlities(res, file, fileList) {
+        alert('上传成功');
         this.$data.formalities.mortgageName = file.name;
         this.$data.formalities.mortgageUrl = res.body.url;
-        console.log(this.$data.formalities.mortgageName);
       },
       // 办理抵质押物手续文件上传失败
       uploadErrorAlities(err, file, fileList) {
