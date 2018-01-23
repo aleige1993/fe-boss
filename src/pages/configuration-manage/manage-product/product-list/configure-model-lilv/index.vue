@@ -351,11 +351,11 @@
           <i-form-item
             label="权证入库方式"
             :rules="{required: true, message: '请选择权证入库方式', trigger: 'change'}"
-            prop="productWarrantMode">
-            <i-select v-model="ProductPackageForm.productWarrantMode" placeholder="请选择">
-              <!--<i-option v-for="item in enumSelectData.get('DqxInsuranceEnum')" :key="item.itemCode" :value="item.itemCode">{{item.itemName}}</i-option>-->
-              <i-option value="1">先入库后放款</i-option>
-              <i-option value="2">先放款后入库</i-option>
+            prop="warrantType">
+            <i-select v-model="ProductPackageForm.warrantType" placeholder="请选择">
+              <i-option v-for="item in enumSelectData.get('LoanWarrantTypeEnum')" :key="item.itemCode" :value="item.itemCode">{{item.itemName}}</i-option>
+              <!--<i-option value="1">先入库后放款</i-option>-->
+              <!--<i-option value="2">先放款后入库</i-option>-->
             </i-select>
           </i-form-item>
         </i-col>
@@ -366,12 +366,12 @@
           <i-form-item
             label="收费依据"
             :rules="{required: true, message: '请选择收费依据', trigger: 'change'}"
-            prop="productChargeBasis">
-            <i-select v-model="ProductPackageForm.productChargeBasis" placeholder="请选择">
-              <!--<i-option v-for="item in enumSelectData.get('DqxInsuranceEnum')" :key="item.itemCode" :value="item.itemCode">{{item.itemName}}</i-option>-->
-              <i-option value="1">贷款金额</i-option>
-              <i-option value="2">申请金额</i-option>
-              <i-option value="3">购车金额</i-option>
+            prop="feeAccording">
+            <i-select v-model="ProductPackageForm.feeAccording" placeholder="请选择">
+              <i-option v-for="item in enumSelectData.get('LoanFeeAccordingTypeEnum')" :key="item.itemCode" :value="item.itemCode">{{item.itemName}}</i-option>
+              <!--<i-option value="1">贷款金额</i-option>-->
+              <!--<i-option value="2">申请金额</i-option>-->
+              <!--<i-option value="3">购车金额</i-option>-->
             </i-select>
           </i-form-item>
         </i-col>
@@ -536,8 +536,8 @@
           carInsurance: '', // 车辆保险费
           dqxInsurance: '', // 盗抢险
           loanPaymentType: '', // 放款方式
-          productWarrantMode: '', // 权证入库方式
-          productChargeBasis: '' // 收费依据
+          warrantType: '', // 权证入库方式
+          feeAccording: '' // 收费依据
         },
         formInModel: {  // 增删的模态框的数据表单
           bizType: '',  // 车类
