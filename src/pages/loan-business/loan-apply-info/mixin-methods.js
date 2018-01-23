@@ -52,9 +52,9 @@ export default {
      * @param CertData
      */
     getMember(CertData) {
-      // console.log(CertData);
       this.$data.member = CertData;
       if (CertData.mbMemberDTO) {
+        this.$data.memberNo = CertData.mbMemberDTO.memberNo;
         this.$data.formData.memberNo = CertData.mbMemberDTO['memberNo'];
         this.$data.formData.memberName = CertData.mbMemberDTO.name;
         this.$data.formData.mobileNo = CertData.mobile;

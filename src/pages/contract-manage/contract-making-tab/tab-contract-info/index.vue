@@ -187,38 +187,29 @@
       <i-row>
         <i-col span="4">
           <i-form-item
-            v-if="!isDetails"
             :rules="{required: true, message: '请选择合同开始日期', trigger: 'change'}"
             prop="contractInfo.startDate"
             label="合同开始日期">
-            <bs-datepicker v-model="contractInfoForm.contractInfo.startDate"></bs-datepicker>
-          </i-form-item>
-          <i-form-item
-            v-else
-            prop="startDate"
-            label="合同开始日期">
-            <span v-text="contractInfoForm.contractInfo.startDate"></span>
+            <bs-datepicker :isNowStart="t" v-model="contractInfoForm.contractInfo.startDate"></bs-datepicker>
           </i-form-item>
         </i-col>
         <i-col span="4">
-          <i-form-item
-            v-if="!isDetails"
+          <!--<i-form-item
             :rules="{required: true, message: '请选择合同结束日期', trigger: 'change'}"
             prop="contractInfo.endDate"
             label="合同结束日期">
             <bs-datepicker v-model="contractInfoForm.contractInfo.endDate"></bs-datepicker>
-          </i-form-item>
+          </i-form-item>-->
           <i-form-item
-            v-else
-            prop="endDate"
+            prop="contractInfo.endDate"
             label="合同结束日期">
-            <span v-text="contractInfoForm.contractInfo.endDate"></span>
+            <span v-text="endDate"></span>
           </i-form-item>
         </i-col>
       </i-row>
     </i-form>
     <div class="form-top-actions" style="padding-top:0;">
-      <i-button v-if="!isDetails" @click="contractGenerating" type="info" :loading="contractGeneratingLoading">
+      <i-button @click="contractGenerating" type="info" :loading="contractGeneratingLoading">
       <span v-if="!contractGeneratingLoading"><i class="iconfont icon-xinzeng"></i> 生成合同</span>
       <span v-else>loading...</span>
       </i-button>
@@ -242,7 +233,7 @@
         <i-col span="8">
           <i-form-item label="意见信息"
                        prop="opinion"
-                       :rules="{required: (loanApprove.approveStatus!=='A'), message: '意见信息不能为空', trigger: 'blur'}">
+                       :rules="{required: true, message: '意见信息不能为空', trigger: 'blur'}">
             <i-input type="textarea" v-model="loanApprove.opinion" :rows="2" placeholder=""></i-input>
           </i-form-item>
         </i-col>
@@ -254,21 +245,12 @@
 
 <script>
   import MixinData from './mixin-data';
+  import dateMonth from '@/utils/getMonthPeriods.js';
   export default {
     name: 'tabContractInfo',
     mixins: [MixinData],
-    props: {
-      CreateRepayPlan: {
-        type: Object,
-        default: {
-          isCapital: false,
-          isRental: false
-        }
-      }
-    },
     data() {
       return {
-        isDetails: false,
         carListLoading: false, // 车辆表loading
         guaPersonListLoading: false, // 担保信息表loading
         feeTakeLoading: false, // 费用收取表loading
@@ -346,13 +328,20 @@
         }
       };
     },
+    computed: {
+      endDate: function() {
+        if (this.$data.contractInfoForm.contractInfo.startDate !== '' && typeof this.$data.contractInfoForm.contractInfo.startDate !== 'undefined') {
+          let startDate = this.$data.contractInfoForm.contractInfo.startDate;
+          let getMonth = dateMonth.getMonthPeriods(new Date(startDate), 1);
+          this.$data.contractInfoForm.contractInfo.endDate = getMonth;
+          return getMonth;
+        } else {
+          this.$data.contractInfoForm.contractInfo.endDate = '';
+          return '';
+        }
+      }
+    },
     async mounted() {
-      if (this.$route.query.taskNode === '7') {
-        this.$data.isDetails = await true;
-      }
-      if (this.$route.query.taskNode === '6') {
-        this.$data.isDetails = await false;
-      }
       let loanNo = await this.$route.query.loanNo;
       let signNo = await this.$route.query.signNo;
       this.$data.contractInfoForm.loanNo = loanNo;
@@ -459,22 +448,6 @@
               return;
             }
             this.$data.contractInfoForm.loanApprove = this.$data.loanApprove;
-            // console.log(this.CreateRepayPlan); // isCapital(资金方)，isRental(租金方)，
-            if (!this.CreateRepayPlan.isCapital) {
-              this.$Message.error({
-                content: '请生成资金方还款计划',
-                duration: 2
-              });
-              this.$emit('on-tabIndex-func', 1); // 告知父元素切换tab至“还款计划表”
-              return;
-            } else if (!this.CreateRepayPlan.isRental) {
-              this.$Message.error({
-                content: '请生成租金方还款计划',
-                duration: 2
-              });
-              this.$emit('on-tabIndex-func', 2); // 告知父元素切换tab至“租金计划表”
-              return;
-            }
             await this.createContractAjax();
             // 告知父组件的 已经点击了“生成按钮”
             this.$emit('on-create-contracted');

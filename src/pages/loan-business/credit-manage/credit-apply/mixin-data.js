@@ -14,7 +14,7 @@ export default {
         ],*/
         // 申请意见入参
         'creditAuditParam': {
-          'approveStatus': 'A',
+          'approveStatus': '',
           'opinion': ''
         },
         // 授信申请信息

@@ -13,7 +13,7 @@
       </i-tab-pane>
       <i-tab-pane :label="'审批信息'">
         <approve-info ref="approveInfo" :applyBasicInfo="formData"
-                      :readonly="firstApproveInfoReadonly || isFromDetail">
+                      :readonly="firstApproveInfoReadonly || isFromDetail" :isApprove="isApprove">
         </approve-info>
       </i-tab-pane>
       <i-tab-pane label="人行征信报告" :disabled="formData.custType === '2'">
@@ -68,6 +68,10 @@
       breadCrumbName() {
         let loanNode = this.$route.query.status;
         return this.enumCode2Name(loanNode, 'LoanBizNodeEnum');
+      },
+      isApprove() {
+        let loanNode = this.$route.query.status;
+        return loanNode === '3' || loanNode === '4' || loanNode === '5';
       },
       applyInfoReadonly() {
         let loanNode = this.$route.query.status;

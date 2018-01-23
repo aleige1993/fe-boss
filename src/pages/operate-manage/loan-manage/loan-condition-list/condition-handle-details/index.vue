@@ -115,7 +115,7 @@
                 <i-form-item
                   label="意见信息"
                   prop="opinion"
-                  :rules="{required: (formData.approveStatus!=='A'), message: '意见信息不能为空', trigger: 'blur'}">
+                  :rules="{required: true, message: '意见信息不能为空', trigger: 'blur'}">
                   <i-input type="textarea" v-model="formData.opinion" :rows="2" placeholder="">
                   </i-input>
                 </i-form-item>
@@ -546,7 +546,7 @@
           }
         });
         this.$data.initFormLoading = false;
-        /*if (rep.success) {
+        /* if (rep.success) {
           this.$Message.success('提交成功');
           this.$router.push({
             path: '/index/operate/loan',

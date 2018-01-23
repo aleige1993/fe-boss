@@ -59,7 +59,6 @@ export default {
       this.$data.attachFormData.attachUrl = res.body.url;
     },
     submitAttach() {
-      console.log(this.$data.attachFormData);
       this.$data.formData.attachDTOs.push(this.$data.attachFormData);
       this.$data.addAttachModal = false;
     },

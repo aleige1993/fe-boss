@@ -13,6 +13,10 @@ export default {
           key: 'productName'
         },
         {
+          title: '产品别名',
+          key: 'productAbbrName'
+        },
+        {
           title: '产品类型',
           width: 100,
           key: 'productType',

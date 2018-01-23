@@ -9,7 +9,7 @@ export default {
           // 'creditApplyAttachParamList': resp.body.creditApplyAttachList,
           // 申请意见入参
           'creditAuditParam': {
-            'approveStatus': 'A',
+            'approveStatus': '',
             'opinion': ''
           },
           // 授信申请信息
@@ -31,7 +31,7 @@ export default {
           // 'creditApplyAttachParamList': [],
           // 申请意见入参
           'creditAuditParam': {
-            'approveStatus': 'A',
+            'approveStatus': '',
             'opinion': ''
           },
           // 授信申请信息

@@ -161,7 +161,7 @@ export default {
             ]);
           }
         },
-        /*{
+        /* {
           title: '费用项目代码',
           key: 'feeTypeCode'
         },*/
@@ -302,33 +302,6 @@ export default {
         {
           title: '资方借款利率（%）',
           key: 'loanRate'
-        },
-        {
-          title: '账户名',
-          key: 'acctName'
-        },
-        {
-          title: '开户银行',
-          key: 'openBank'
-        },
-        {
-          title: '账号',
-          key: 'acctNo',
-          render: (h, params) => {
-            return h('i-input', {
-              props: {
-                'value': params.row.acctNo,
-                readonly: this.readonly
-              },
-              on: {
-                'on-blur': (event) => {
-                  let rowData = Object.assign({}, params.row);
-                  rowData.acctNo = event.target.value;
-                  this.$data.approveData.loanCapitalDTOS[params.index] = rowData;
-                }
-              }
-            });
-          }
         }
       ],
       paymentAccountList: [], // 贷款账户下拉

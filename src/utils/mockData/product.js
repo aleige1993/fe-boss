@@ -72,6 +72,7 @@ export default [
             'incomeType|1': ['1', '2'],
             'feeType|1': ['C', 'D'],
             'ratio|1': ['0.5', '0.25'],
+            'productChargeBasis|1': ['1', '2', '3'],
             'fixedAmount|1-100': 5
           }
         ],

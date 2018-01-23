@@ -173,10 +173,7 @@
           <i-col span="18">
             <i-form-item label="结论">
               <i-radio-group v-model="formData.result">
-                <i-radio label="A">通过</i-radio>
-                <i-radio label="R">拒绝</i-radio>
-                <i-radio label="B">退回</i-radio>
-                <i-radio label="D">废弃</i-radio>
+                <i-option v-for="item in enumSelectData.get('ApproveStatusEnum')" :key="item.itemCode" :value="item.itemCode">{{item.itemName}}</i-option>
               </i-radio-group>
             </i-form-item>
           </i-col>
@@ -204,8 +201,7 @@
               :rules="{required: true, message: '担保类型不能为空'}"
               prop="guaranteeType">
               <i-select v-model="formCar.guaranteeType">
-                <i-option value="1">抵押</i-option>
-                <i-option value="2">质押</i-option>
+                <i-option v-for="item in enumSelectData.get('PawnTypeEnum')" :key="item.itemCode" :value="item.itemCode">{{item.itemName}}</i-option>
               </i-select>
             </i-form-item>
           </i-col>
