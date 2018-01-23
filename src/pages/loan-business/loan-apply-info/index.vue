@@ -173,7 +173,7 @@
           <i-col span="18">
             <i-form-item label="结论">
               <i-radio-group v-model="formData.result">
-                <i-option v-for="item in enumSelectData.get('ApproveStatusEnum')" :key="item.itemCode" :value="item.itemCode">{{item.itemName}}</i-option>
+                <i-radio v-for="item in enumSelectData.get('ApproveStatusEnum')" :label="item.itemCode" :key="item.itemCode" style="margin-right: 20px; margin-top: -5px">{{item.itemName}}</i-radio>
               </i-radio-group>
             </i-form-item>
           </i-col>
