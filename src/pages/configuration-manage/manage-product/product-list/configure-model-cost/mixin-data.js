@@ -18,10 +18,10 @@ export default {
         },
         {
           title: '收费依据',
-          key: 'productChargeBasis'
-          /* render: (h, params) => {
-            return h('span', {}, this.enumCode2Name(params.row.productChargeBasis, 'ReceiveTypeEnum'));
-          }*/
+          key: 'feeAccording',
+          render: (h, params) => {
+            return h('span', {}, this.enumCode2Name(params.row.feeAccording, 'LoanFeeAccordingTypeEnum'));
+          }
         },
         {
           title: '计算方式',
