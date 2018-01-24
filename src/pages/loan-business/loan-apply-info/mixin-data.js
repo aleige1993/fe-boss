@@ -13,6 +13,71 @@ export default {
       showAddLoanFilesModal: false, // 新增贷款材料清单
       showSelectDistributor: false,
       personalBasicInfo: {},
+      // 准入规则
+      accessRuleCol: [
+        {
+          title: '准入规则',
+          key: 'loanApproveName'
+        },
+        {
+          title: '系统筛查意见',
+          key: 'sysProcessOpinion'
+        },
+        {
+          title: '客户类型',
+          width: 100,
+          key: 'custType',
+          render: (h, params) => {
+            return this.enumCode2Name(params.row.custType, 'CustTypeEnum');
+          }
+        },
+        {
+          title: '初审意见',
+          key: 'status',
+          render: (h, params) => {
+            return h('i-select', {
+              props: {
+                disabled: this.readonly,
+                value: params.row.status
+              },
+              on: {
+                'on-change': (value) => {
+                  let rowData = { ...params.row };
+                  rowData.status = value;
+                  this.$data.loanApproveRuleDTOS[params.index] = rowData;
+                }
+              }
+            }, [
+              h('i-option', {
+                props: {
+                  label: '符合',
+                  value: '1'
+                }
+              }),
+              h('i-option', {
+                props: {
+                  label: '不符合',
+                  value: '2'
+                }
+              }),
+              h('i-option', {
+                props: {
+                  label: '无法核实',
+                  value: '3'
+                }
+              })
+            ]);
+          }
+        }
+      ],
+      'loanApproveRuleDTOS': [
+        {
+          'loanApproveCode': '1',
+          'loanApproveName': '1',
+          'sysProcessOpinion': '1',
+          'status': '1'
+        }
+      ],
       // 车辆
       isAddCar: true,
       showModalCar: false,

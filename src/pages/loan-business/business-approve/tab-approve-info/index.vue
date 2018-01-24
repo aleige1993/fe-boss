@@ -3,9 +3,7 @@
     <i-row>
       <i-col span="24">
         <i-form label-position="right" ref="busApproveForm" :model="approveData" :label-width="140">
-          <bs-form-block :title="'贷款准入规则'">
-            <i-table :columns="accessRuleCol" :data="approveData.loanApproveRuleDTOS"></i-table>
-          </bs-form-block>
+
           <bs-form-block :title="'初审信息'">
             <i-row>
               <i-col span="24">

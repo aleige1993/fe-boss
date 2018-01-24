@@ -67,6 +67,23 @@ export default {
         this.$data.formData.deptCooperationStartDate = CertData.mbMemberDTO.joinStartDate;
       }
     },
+    /**
+     * 获取贷款准入规则
+     * @param productNo
+     * @param loanNo
+     * @param custType
+     * @returns {Promise<void>}
+     */
+    async getApproveRuleList(productNo = '', loanNo = '', custType = '1') {
+      let resp = await this.$http.get('/biz/queryApproveRule', {
+        productNo,
+        custType,
+        loanNo
+      });
+      if (resp.success) {
+        this.$data.loanApproveRuleDTOS = resp.body.tmLoanApproveRuleDTOList;
+      }
+    },
     // 选择产品
     async selectProduct(row, index) {
       this.$data.formData.productNo = row.productNo;
@@ -157,6 +174,7 @@ export default {
     getApplyData() {
       return $.extend(
         this.$data.member,
+        { 'loanApproveRuleDTOS': this.$data.loanApproveRuleDTOS },
         { loanVO: this.$data.formData },
         { 'loanCarVOS': this.$data.carData },
         { 'loanGuaranteeVOS': this.$data.assureData },
