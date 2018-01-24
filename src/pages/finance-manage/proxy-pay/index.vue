@@ -30,6 +30,7 @@
         </i-form-item>
         <i-form-item prop="password">
           <i-select style="width: 120px;" v-model="searchForm.orderStat" placeholder="付款状态">
+            <i-option value="" style="height: 26px; color: #bbbec4">-请选择-</i-option>
             <i-option v-for="item in certTypeEnum" :value="item.itemCode" :key="item.itemCode">{{item.itemName}}</i-option>
           </i-select>
         </i-form-item>

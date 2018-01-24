@@ -39,8 +39,7 @@
                          prop="custKind"
                          :rules="{required: true, message: '请选择'}">
               <i-select v-model="formData.custKind" :disabled="readonly">
-                <i-option :value="'1'">新增客户</i-option>
-                <i-option :value="'2'">结清再贷</i-option>
+                <i-option v-for="item in enumSelectData.get('CustomTypeEnum')" :key="item.itemCode" :value="item.itemCode">{{item.itemName}}</i-option>
               </i-select>
             </i-form-item>
           </i-col>
@@ -92,8 +91,8 @@
           <i-col span="8">
             <i-form-item label="车辆用途" prop="carUse">
               <i-select v-model="formData.carUse" :disabled="readonly">
-                <i-option value="1">自用</i-option>
-                <i-option value="2">商用</i-option>
+                <!--车辆用途 CarUseTypeEnum 1-自用2-指定第三方自用3-商用-->
+                <i-option v-for="item in enumSelectData.get('CarUseTypeEnum')" :key="item.itemCode" :value="item.itemCode">{{item.itemName}}</i-option>
               </i-select>
             </i-form-item>
           </i-col>
@@ -104,11 +103,11 @@
             </i-form-item>
           </i-col>
           <i-col span="8">
-            <i-form-item label="渠道商" prop="merchantAbbr"
-                         :rules="{required: true, message: '请选择渠道商'}">
+            <i-form-item label="经销商" prop="merchantAbbr"
+                         :rules="{required: true, message: '请选择经销商'}">
               <input type="hidden" v-model="formData.merchantAbbr"/>
-              <i-input v-model="formData.merchantAbbr" :readonly="true" placeholder="选择渠道商">
-                <i-button v-if="!readonly" @click="showSelectDistributor=!showSelectDistributor" slot="append">选择渠道商 <Icon type="ios-more"></Icon></i-button>
+              <i-input v-model="formData.merchantAbbr" :readonly="true" placeholder="选择经销商">
+                <i-button v-if="!readonly" @click="distributorClick" slot="append">选择经销商 <Icon type="ios-more"></Icon></i-button>
               </i-input>
             </i-form-item>
           </i-col>
@@ -133,6 +132,22 @@
             <i-form-item label="纬度" prop="lat">
               <i-input v-model="formData.latitude" placeholder="" :readonly="true">
               </i-input>
+            </i-form-item>
+          </i-col>
+        </i-row>
+        <i-row>
+          <i-col span="8">
+            <i-form-item label="渠道商" prop="channelName"
+                         :rules="{required: true, message: '请选择渠道商'}">
+              <input type="hidden" v-model="formData.channelName"/>
+              <i-input v-model="formData.channelName" :readonly="true" placeholder="选择渠道商">
+                <i-button v-if="!readonly" @click="merchantClick" slot="append">选择渠道商 <Icon type="ios-more"></Icon></i-button>
+              </i-input>
+            </i-form-item>
+          </i-col>
+          <i-col span="8">
+            <i-form-item label="渠道商编号" prop="merchantNo">
+              <i-input v-model="formData.merchantNo" placeholder="" :readonly="true"></i-input>
             </i-form-item>
           </i-col>
         </i-row>
@@ -175,6 +190,18 @@
               <i-radio-group v-model="formData.result">
                 <i-radio v-for="item in enumSelectData.get('ApproveStatusEnum')" :label="item.itemCode" :key="item.itemCode" style="margin-right: 20px; margin-top: -5px">{{item.itemName}}</i-radio>
               </i-radio-group>
+            </i-form-item>
+          </i-col>
+        </i-row>
+        <i-row>
+          <i-col span="8">
+            <i-form-item
+              v-if="formData.result === 'R'"
+              label="拒绝原因"
+              prop="rejectCause">
+              <i-select v-model="formData.rejectCause">
+                <i-option v-for="item in enumSelectData.get('BizApproveRejectEnum')" :key="item.itemCode" :value="item.itemCode">{{item.itemName}}</i-option>
+              </i-select>
             </i-form-item>
           </i-col>
         </i-row>
@@ -585,7 +612,7 @@
       <table-company-customer-list v-if="showSelectCompanyGua" ref="obligeeTable" type="modal" @on-row-dbclick="selectCompanyGuaRow"></table-company-customer-list>
     </bs-modal>
     <!--选择渠道商-->
-    <bs-modal :title="'选择渠道商'" v-model="showSelectDistributor" :width="1300">
+    <bs-modal :title="isDistributor?'选择经销商':'选择渠道商'" v-model="showSelectDistributor" :width="1300">
       <table-distributor-list v-if="showSelectDistributor" ref="distributorTable" type="modal" @on-row-dbclick="selectDistributor"></table-distributor-list>
     </bs-modal>
     <!--车辆评估信息新增和编辑-->
@@ -679,6 +706,11 @@
   export default {
     name: 'loanAcceptBasicInfo',
     mixins: [MixinData, MixinMethods, carMixinData, carMixinMethods, assureMixinData, assureMixinMethods, loanMixinData, loanMixinMethods],
+    data() {
+      return {
+        isDistributor: false // 选择渠道商弹窗是否显示为“选择经销商”
+      };
+    },
     components: {
       TableCustomerList,
       TableCompanyCustomerList,
@@ -708,14 +740,20 @@
         default: 'apply' // 'preApprove'; 'firstStageApprove'; 'secondStageApprove'; 'detail'
       }
     },
-    data() {
-      return {};
-    },
     mounted() {
       this.initPage();
     },
     methods: {
-
+      // 点击的时“选择经销商”按钮
+      distributorClick() {
+        this.$data.showSelectDistributor = true;
+        this.$data.isDistributor = true;
+      },
+      // 点击的时“选择渠道商”按钮
+      merchantClick() {
+        this.$data.showSelectDistributor = true;
+        this.$data.isDistributor = false;
+      }
     },
     watch: {
       'formCar.custType'() {

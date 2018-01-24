@@ -394,7 +394,8 @@ export default {
         ],
         // 审核意见
         'loanApproveDTO': {
-          'result': 'A',
+          'result': '',
+          'rejectCause': '',
           'opinion': ''
         },
         // 放款账户

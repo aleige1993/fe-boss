@@ -237,6 +237,18 @@
               </i-col>
             </i-row>
             <i-row>
+              <i-col span="8">
+                <i-form-item
+                  v-if="approveData.loanApproveDTO.result === 'R'"
+                  label="拒绝原因"
+                  prop="rejectCause">
+                  <i-select v-model="approveData.loanApproveDTO.rejectCause">
+                    <i-option v-for="item in enumSelectData.get('BizApproveRejectEnum')" :key="item.itemCode" :value="item.itemCode">{{item.itemName}}</i-option>
+                  </i-select>
+                </i-form-item>
+              </i-col>
+            </i-row>
+            <i-row>
               <i-col span="18">
                 <i-form-item label="意见信息">
                   <i-input type="textarea" v-model="approveData.loanApproveDTO.opinion" :rows="4"></i-input>

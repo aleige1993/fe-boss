@@ -74,15 +74,19 @@ export default {
               loanApproveDTO: approveData.loanApproveDTO
             };
           }
-          let resp = await this.$http.post(submitUrl, submitData);
-          this.$data.submitApproveLoading = false;
-          loading();
-          if (resp.success) {
-            this.$Message.success('审批成功');
-            this.$router.push({
-              name: 'loanBusinessList'
-            });
-          }
+          // console.log(submitData.loanApproveDTO.result);
+          // 点击提价时给用户一个确认交互
+          await this.$AuditPrompt.auditPromptFun(submitData.loanApproveDTO.result, async () => {
+            let resp = await this.$http.post(submitUrl, submitData);
+            this.$data.submitApproveLoading = false;
+            loading();
+            if (resp.success) {
+              this.$Message.success('审批成功');
+              this.$router.push({
+                name: 'loanBusinessList'
+              });
+            }
+          });
         }
       }
     }

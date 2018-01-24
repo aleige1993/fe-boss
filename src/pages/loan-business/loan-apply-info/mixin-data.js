@@ -215,7 +215,10 @@ export default {
         latitude: '',
         merchantNo: '',
         merchantAbbr: '',
-        result: 'A', // 申请意见 通过 拒绝 退回 废弃
+        channelNo: '',
+        channelName: '',
+        rejectCause: '',
+        result: '', // 申请意见 通过 拒绝 退回 废弃
         opinin: '' // 申请意见详情
       }
     };

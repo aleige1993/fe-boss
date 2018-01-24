@@ -18,11 +18,13 @@
         </i-form-item>-->
         <i-form-item>
           <i-select style="width: 120px;" v-model="searchForm.channelNo" placeholder="来源终端">
+            <i-option value="" style="height: 26px; color: #bbbec4">-请选择-</i-option>
             <i-option v-for="item in enumSelectData.get('BizChannelEnum')" :value="item.itemCode" :key="item.itemCode">{{item.itemName}}</i-option>
           </i-select>
         </i-form-item>
         <i-form-item>
           <i-select v-model="searchForm.orderStatus" type="text" placeholder="订单状态" style="width: 120px">
+            <i-option value="" style="height: 26px; color: #bbbec4">-请选择-</i-option>
             <i-option v-for="item in enumSelectData.get('MbOrderStatusEnum')" :value="item.itemCode" :key="item.itemCode">{{item.itemName}}</i-option>
           </i-select>
         </i-form-item>

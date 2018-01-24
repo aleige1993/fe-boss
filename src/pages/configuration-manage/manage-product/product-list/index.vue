@@ -119,7 +119,7 @@
             <span v-if="!buttonFeatureLoading">提交</span>
             <span v-else>Loading...</span>
           </i-button>
-          <i-button type="ghost" style="margin-left: 8px" @click="formCancel">取消</i-button>
+          <i-button type="ghost" style="margin-left: 8px" @click="formFeatureCancel">取消</i-button>
         </i-form-item>
       </i-form>
     </pt-modal>
@@ -416,6 +416,10 @@
       // 取消
       formCancel(name) {
         this.$data.showAddModal = false;
+      },
+      // 关闭新增产品特性弹窗
+      formFeatureCancel() {
+        this.$data.showFeatureModal = false;
       },
       // 单选每一行时出触发
       radioFun(currentRow, oldCurrentRow) {

@@ -587,11 +587,11 @@
       },
       // 所有的提交按钮
       saveSubimt() {
-        this.$refs['formData'].validate(async (valid) => {
+        this.$refs['formData'].validate((valid) => {
           if (valid) {
-            if (this.$AuditPrompt.auditPromptFun(this.$data.formData.approveStatus)) {
-              await this.allSubimt();
-            }
+            this.$AuditPrompt.auditPromptFun(this.$data.formData.approveStatus, () => {
+              this.allSubimt();
+            });
           } else {
             this.$data.tabIndex = 0;
             this.$Message.error('<span style="color: red">*</span>项不能为空');
