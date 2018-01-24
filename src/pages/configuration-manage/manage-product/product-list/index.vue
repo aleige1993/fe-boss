@@ -42,20 +42,28 @@
         <i-row>
           <i-col span="12">
             <i-form-item
-              :rules="{required: true, message: '产品类别不能为空', trigger: 'change'}"
-              label="产品类别"
-              prop="productType">
-              <i-select placeholder="请选择" v-model="formCustom.productType">
-                <i-option v-for="item in enumSelectData.get('ProductTypeEnum')" :key="item.itemCode" :value="item.itemCode">{{item.itemName}}</i-option>
-              </i-select>
-            </i-form-item>
-          </i-col>
-          <i-col span="12">
-            <i-form-item
               :rules="{required: true, message: '产品名称不能为空', trigger: 'blur'}"
               label="产品名称"
               prop="productName">
               <i-input placeholder="请输入产品名称" v-model="formCustom.productName"></i-input>
+            </i-form-item>
+          </i-col>
+          <i-col span="12">
+            <i-form-item
+              :rules="{required: true, message: '产品别名不能为空', trigger: 'blur'}"
+              label="产品别名"
+              prop="productAlias">
+              <i-input placeholder="请输入产品别名" v-model="formCustom.productAlias"></i-input>
+            </i-form-item>
+          </i-col>
+          <i-col span="12">
+            <i-form-item
+              :rules="{required: true, message: '产品类型不能为空', trigger: 'change'}"
+              label="产品类型"
+              prop="productType">
+              <i-select placeholder="请选择" v-model="formCustom.productType">
+                <i-option v-for="item in enumSelectData.get('ProductTypeEnum')" :key="item.itemCode" :value="item.itemCode">{{item.itemName}}</i-option>
+              </i-select>
             </i-form-item>
           </i-col>
           <i-col span="12">
@@ -71,14 +79,6 @@
                 <i-option value="1">流程一</i-option>
                 <i-option value="2">流程二</i-option>
               </i-select>
-            </i-form-item>
-          </i-col>
-          <i-col span="12">
-            <i-form-item
-              :rules="{required: true, message: '产品别名不能为空', trigger: 'blur'}"
-              label="产品别名"
-              prop="productAbbrName">
-              <i-input placeholder="请输入产品别名" v-model="formCustom.productAbbrName"></i-input>
             </i-form-item>
           </i-col>
           <i-col span="12">
@@ -213,7 +213,7 @@
           flowName: '', // 适用流程名称
           productNo: '', // 产品编号
           productName: '',  // 产品名称
-          productAbbrName: '',  // 产品别名
+          productAlias: '',  // 产品别名
           productType: '',  // 产品类型
           status: ''  // 产品状态
         }
@@ -329,7 +329,7 @@
           remark: this.$data.formCustom.remark,
           flowName: this.$data.formCustom.flowName,
           productType: this.$data.formCustom.productType,
-          productAbbrName: this.$data.formCustom.productAbbrName,
+          productAlias: this.$data.formCustom.productAlias,
           productName: this.$data.formCustom.productName,
           status: this.$data.formCustom.status
         });
@@ -367,7 +367,7 @@
           productNo: this.$data.formCustom.productNo, // 产品编号
           productName: this.$data.formCustom.productName,  // 产品名称
           productType: this.$data.formCustom.productType,  // 产品类型
-          productAbbrName: this.$data.formCustom.productAbbrName,  // 产品别名
+          productAlias: this.$data.formCustom.productAlias,  // 产品别名
           status: this.$data.formCustom.status  // 产品状态
         });
         if (resModify.success) {

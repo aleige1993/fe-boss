@@ -14,7 +14,7 @@ export default {
         },
         {
           title: '产品别名',
-          key: 'productAbbrName'
+          key: 'productAlias'
         },
         {
           title: '产品类型',
