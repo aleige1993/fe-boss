@@ -156,6 +156,9 @@
     <!--客户信息组件-->
     <personal-info :readonly="readonly" v-if="customerType == '1'" :memberNo="memberNo" @getMember="getMember"></personal-info>
     <company-customer-info :readonly="readonly" v-if="customerType == '2'" :corpNo="memberNo" @on-select-company="selectCompany"></company-customer-info>
+    <bs-form-block :title="'贷款准入规则'">
+      <i-table :columns="accessRuleCol" :data="loanApproveRuleDTOS"></i-table>
+    </bs-form-block>
     <!--车辆信息-->
     <bs-form-block :title="'车辆信息'">
       <div class="form-top-actions" v-if="!readonly">

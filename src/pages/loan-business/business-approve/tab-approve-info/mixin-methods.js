@@ -131,8 +131,8 @@ export default {
       console.log(resp);
       if (resp.success) {
         let result = resp.body;
-        // 准入规则
-        this.$data.approveData.loanApproveRuleDTOS = result.tmLoanApproveRuleDTOList;
+        // 准入规则  (已经移到申请信息中)
+        // this.$data.approveData.loanApproveRuleDTOS = result.tmLoanApproveRuleDTOList;
         // 费用收取方案
         this.$data.approveData.loanApproveFeePlanDTOS = result.tmLoanApproveFeePlanDTOList;
         // 放款条件
