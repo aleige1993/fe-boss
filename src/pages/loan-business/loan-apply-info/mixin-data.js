@@ -23,14 +23,14 @@ export default {
           title: '系统筛查意见',
           key: 'sysProcessOpinion'
         },
-        {
+        /* {
           title: '客户类型',
           width: 100,
           key: 'custType',
           render: (h, params) => {
             return this.enumCode2Name(params.row.custType, 'CustTypeEnum');
           }
-        },
+        },*/
         {
           title: '初审意见',
           key: 'status',
@@ -47,37 +47,18 @@ export default {
                   this.$data.loanApproveRuleDTOS[params.index] = rowData;
                 }
               }
-            }, [
-              h('i-option', {
+            }, this.enumSelectData.get('ApproveRuleEnum').map((item) => {
+              return h('i-option', {
                 props: {
-                  label: '符合',
-                  value: '1'
+                  label: item.itemName,
+                  value: item.itemCode
                 }
-              }),
-              h('i-option', {
-                props: {
-                  label: '不符合',
-                  value: '2'
-                }
-              }),
-              h('i-option', {
-                props: {
-                  label: '无法核实',
-                  value: '3'
-                }
-              })
-            ]);
+              });
+            }));
           }
         }
       ],
-      'loanApproveRuleDTOS': [
-        {
-          'loanApproveCode': '1',
-          'loanApproveName': '1',
-          'sysProcessOpinion': '1',
-          'status': '1'
-        }
-      ],
+      'loanApproveRuleDTOS': [],
       // 车辆
       isAddCar: true,
       showModalCar: false,
