@@ -135,7 +135,7 @@
       </div>
     </i-tabs>
     <!--办理抵质押物手续-->
-    <bs-modal v-model="formalitiesShowModal" title="办理抵质押物手续" :width="520" @on-close="formalitiesCloseModal">
+    <bs-modal v-model="formalitiesShowModal" title="办理抵质押物手续" :width="520">
       <i-form ref="formalities" :model="formalities" label-position="right" :label-width="80">
         <i-form-item label="办理时间"
                      prop="makeDate"
@@ -192,7 +192,7 @@
       </i-form>
     </bs-modal>lose
     <!--车辆列表设置回传天数-->
-    <bs-modal v-model="backDaysShowModal" title="设置回传天数" :width="500" @on-close="backDaysCloseModal">
+    <bs-modal v-model="backDaysShowModal" title="设置回传天数" :width="500">
       <i-form ref="backDaysForm" :model="backDaysForm" label-position="right" :label-width="80">
         <i-form-item label="回传天数"
                      prop="backDays"
@@ -247,10 +247,7 @@
           <bs-datepicker v-model="formAddGPS.makeDate" type="text" placeholder="办理时间"></bs-datepicker>
         </i-form-item>
         <i-form-item class="text-right">
-          <i-button type="primary" @click="addGPSSubmit" :loading="addGPSButtonLoading">
-            <span v-if="!addGPSButtonLoading">提交</span>
-            <span v-else>Loading...</span>
-          </i-button>
+          <i-button type="primary" @click="addGPSSubmit">提交</i-button>
         </i-form-item>
       </i-form>
     </bs-modal>
@@ -328,7 +325,6 @@
         GPSinstallButtonLoading: false, // GPS安装信息modal里的提交按钮loading
         GPSinstallShowModal: false, // GPS安装信息modal
         GPSShowModal: false, // 显示GPS安装信息新增弹窗modal
-        addGPSButtonLoading: false, // 显示GPS安装信息新增弹窗modal提交按钮的loading
         guaranteeShowModal: false, // 担保落实modal
         backDaysShowModal: false, // 车辆回传天数弹窗
         warrantType: '', // 权证回传方式
@@ -491,7 +487,6 @@
       addGPSSubmit() {
         let text = this.$data.isAddGPS ? '新增' : '修改';
         let ind = this.$data.clickRow._index || 0; // 车辆列表的索引index
-        // this.$data.addGPSButtonLoading = true;
         const formName = 'formAddGPS';
         this.$refs[formName].validate(async (valid) => {
           if (valid) {
@@ -500,19 +495,31 @@
               if (!this.$data.carData[ind].loanCarGpsList) {
                 this.$data.carData[ind].loanCarGpsList = [];
               }
-              this.$data.carData[ind].loanCarGpsList.push(this.$data.formAddGPS);
-              // this.$set(carData[ind].loanCarGpsList.push(this.$data.formAddGPS);
+              let gpsList = this.$data.carData[ind].loanCarGpsList;
+              gpsList.unshift(this.$data.formAddGPS);
+              this.$set(this.$data.carData[ind], 'loanCarGpsList', gpsList);
             } else {
               let index = this.$data.formAddGPS._index; // GPS列表的索引index
-              this.$data.carData[ind].loanCarGpsList[index] = this.$data.formAddGPS;
-              // this.$data.loanCarGpsDTOList = this.$data.formAddGPS;
+              const gpsSetArray = [
+                'gpsModel',
+                'imei',
+                'gpsJoinMerchant',
+                'gpsInstallStatus',
+                'makeDate',
+                'makeUser',
+                'id|1-100',
+                'loanCarNo',
+                'loanNo'
+              ];
+              gpsSetArray.forEach((item) => {
+                this.$set(this.$data.carData[ind].loanCarGpsList[index], '' + item, this.$data.formAddGPS['' + item]);
+              });
             }
             this.$Message.success(text + 'GPS安装信息成功');
             this.$data.GPSShowModal = false;
-          }/* else {
+          } else {
             this.$Message.error('<span style="color: red">*</span>项不能为空');
-          }*/
-          // this.$data.addGPSButtonLoading = await false;
+          }
           this.$data.formAddGPS = {};
         });
       },
@@ -580,11 +587,11 @@
       },
       // 所有的提交按钮
       saveSubimt() {
-        this.$refs['formData'].validate(async (valid) => {
+        this.$refs['formData'].validate((valid) => {
           if (valid) {
-            if (this.$AuditPrompt.auditPromptFun(this.$data.formData.approveStatus)) {
-              await this.allSubimt();
-            }
+            this.$AuditPrompt.auditPromptFun(this.$data.formData.approveStatus, () => {
+              this.allSubimt();
+            });
           } else {
             this.$data.tabIndex = 0;
             this.$Message.error('<span style="color: red">*</span>项不能为空');
@@ -596,7 +603,20 @@
         let ind = this.$data.clickRow._index; // 车辆列表的索引index
         this.$refs['formalities'].validate(async (valid) => {
           if (valid) {
-            this.$data.carData[ind] = this.$data.formalities;
+            const formField = [
+              'makeDate',
+              'makeUser',
+              'backDays',
+              'warrantNo',
+              'registerCompany',
+              'mortgageStatus',
+              'mortgageName',
+              'mortgageUrl',
+              'remark'
+            ];
+            formField.forEach((item) => {
+              this.$set(this.$data.carData[ind], '' + item, this.$data.formalities['' + item]);
+            });
             this.$Message.success('提交成功');
             this.$data.formalitiesShowModal = false;
           } else {
@@ -604,21 +624,12 @@
           }
         });
       },
-      // 办理抵质押物手续modal-关闭重置
-      formalitiesCloseModal() {
-        // this.$refs['formalities'].resetFields();
-        // this.$data.formalities = {};
-      },
-      // 车辆回传天数modal-关闭重置
-      backDaysCloseModal() {
-        this.$refs['backDaysForm'].resetFields();
-      },
       // 车辆回传天数modal-提交按钮
       backDaysFormSubmit() {
         let ind = this.$data.clickRow._index; // 车辆列表的索引index
         this.$refs['backDaysForm'].validate(async (valid) => {
           if (valid) {
-            this.$data.carData[ind].backDays = this.$data.backDaysForm.backDays;
+            this.$set(this.$data.carData[ind], 'backDays', this.$data.backDaysForm['backDays']);
             this.$Message.success('提交成功');
             this.$data.backDaysShowModal = false;
           } else {
@@ -644,7 +655,6 @@
       },
       // 办理抵质押物手续文件上传成功
       uploadSuccessAlities(res, file, fileList) {
-        alert('上传成功');
         this.$data.formalities.mortgageName = file.name;
         this.$data.formalities.mortgageUrl = res.body.url;
       },

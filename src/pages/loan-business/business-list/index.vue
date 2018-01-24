@@ -18,6 +18,7 @@
         </i-form-item>
         <i-form-item prop="certType">
           <i-select style="width: 120px;" v-model="searchForm.certType" placeholder="证件类型">
+            <i-option value="" style="height: 26px; color: #bbbec4">-请选择-</i-option>
             <i-option v-for="item in enumSelectData.get('CertTypeEnum')" :key="item.itemCode" :value="item.itemCode">{{item.itemName}}</i-option>
           </i-select>
         </i-form-item>
@@ -26,6 +27,7 @@
         </i-form-item>
         <i-form-item prop="productNo">
           <i-select v-model="searchForm.productNo" type="text" placeholder="产品" style="width: 180px;">
+            <i-option value="" style="height: 26px; color: #bbbec4">-请选择-</i-option>
             <i-option v-for="product in productList" :value="product.productNo" :key="product.productNo">{{product.productName}}</i-option>
           </i-select>
         </i-form-item>
@@ -34,16 +36,19 @@
         </i-form-item>
         <i-form-item prop="loanChannel">
           <i-select style="width: 120px;" v-model="searchForm.loanChannel" placeholder="来源渠道">
+            <i-option value="" style="height: 26px; color: #bbbec4">-请选择-</i-option>
             <i-option v-for="item in enumSelectData.get('BizChannelEnum')" :key="item.itemCode" :value="item.itemCode">{{item.itemName}}</i-option>
           </i-select>
         </i-form-item>
         <i-form-item prop="loanChannel" v-if="taskNode===''">
           <i-select style="width: 120px;" v-model="searchForm.taskNode" placeholder="任务节点">
+            <i-option value="" style="height: 26px; color: #bbbec4">-请选择-</i-option>
             <i-option v-for="item in enumSelectData.get('LoanBizNodeEnum')" :key="item.itemCode" :value="item.itemCode">{{item.itemName}}</i-option>
           </i-select>
         </i-form-item>
         <i-form-item prop="loanChannel" v-if="taskNode===''">
           <i-select style="width: 120px;" v-model="searchForm.status" placeholder="状态">
+            <i-option value="" style="height: 26px; color: #bbbec4">-请选择-</i-option>
             <i-option v-for="item in enumSelectData.get('BizStatusEnum')" :key="item.itemCode" :value="item.itemCode">{{item.itemName}}</i-option>
           </i-select>
         </i-form-item>

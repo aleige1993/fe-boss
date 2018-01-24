@@ -338,15 +338,15 @@ export default {
       ],
       loanPeriodsList: [], // 贷款期限下拉菜单
       approveData: {
-        // 贷款准入规则
-        'loanApproveRuleDTOS': [
-          /* {
+        // 贷款准入规则（已经移到申请信息中）
+        /* 'loanApproveRuleDTOS': [
+           {
             'loanApproveCode': '1',
             'loanApproveName': '1',
             'sysProcessOpinion': '1',
             'status': '1'
-          }*/
-        ],
+          }
+        ],*/
         // 初审信息
         'loanApproveFirstDTOS': [
           /* {
@@ -394,7 +394,8 @@ export default {
         ],
         // 审核意见
         'loanApproveDTO': {
-          'result': 'A',
+          'result': '',
+          'rejectCause': '',
           'opinion': ''
         },
         // 放款账户

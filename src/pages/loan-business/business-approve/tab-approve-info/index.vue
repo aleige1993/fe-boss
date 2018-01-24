@@ -3,9 +3,7 @@
     <i-row>
       <i-col span="24">
         <i-form label-position="right" ref="busApproveForm" :model="approveData" :label-width="140">
-          <bs-form-block :title="'贷款准入规则'">
-            <i-table :columns="accessRuleCol" :data="approveData.loanApproveRuleDTOS"></i-table>
-          </bs-form-block>
+
           <bs-form-block :title="'初审信息'">
             <i-row>
               <i-col span="24">
@@ -233,6 +231,18 @@
                   <i-radio-group v-model="approveData.loanApproveDTO.result">
                     <i-radio v-for="item in enumSelectData.get('ApproveStatusEnum')" :label="item.itemCode" :key="item.itemCode" style="margin-right: 20px; margin-top: -5px">{{item.itemName}}</i-radio>
                   </i-radio-group>
+                </i-form-item>
+              </i-col>
+            </i-row>
+            <i-row>
+              <i-col span="8">
+                <i-form-item
+                  v-if="approveData.loanApproveDTO.result === 'R'"
+                  label="拒绝原因"
+                  prop="rejectCause">
+                  <i-select v-model="approveData.loanApproveDTO.rejectCause">
+                    <i-option v-for="item in enumSelectData.get('BizApproveRejectEnum')" :key="item.itemCode" :value="item.itemCode">{{item.itemName}}</i-option>
+                  </i-select>
                 </i-form-item>
               </i-col>
             </i-row>

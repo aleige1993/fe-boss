@@ -33,9 +33,9 @@
               </i-col>
               <i-col span="8">
                 <i-form-item label="银行卡验身手机号">
-                  <span v-if="formData.mbMemberDTO.bankVertifyMobile"
-                        :class="{'text-danger': formData.mbMemberDTO.bankVertifyMobile!=formData.mbMemberDTO.mobile}"
-                        v-text="formData.mbMemberDTO.bankVertifyMobile"></span>
+                  <span v-if="formData.mbMemberDTO.verifyMobile"
+                        :class="{'text-danger': formData.mbMemberDTO.verifyMobile!=formData.mbMemberDTO.mobile}"
+                        v-text="formData.mbMemberDTO.verifyMobile"></span>
                   <span v-else class="text-danger">暂未验身</span>
                 </i-form-item>
               </i-col>

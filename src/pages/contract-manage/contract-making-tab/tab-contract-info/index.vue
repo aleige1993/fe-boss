@@ -194,16 +194,10 @@
           </i-form-item>
         </i-col>
         <i-col span="4">
-          <!--<i-form-item
-            :rules="{required: true, message: '请选择合同结束日期', trigger: 'change'}"
-            prop="contractInfo.endDate"
-            label="合同结束日期">
-            <bs-datepicker v-model="contractInfoForm.contractInfo.endDate"></bs-datepicker>
-          </i-form-item>-->
           <i-form-item
             prop="contractInfo.endDate"
             label="合同结束日期">
-            <span v-text="endDate"></span>
+            <span v-text="contractInfoForm.contractInfo.endDate"></span>
           </i-form-item>
         </i-col>
       </i-row>
@@ -226,6 +220,18 @@
             <i-radio-group @on-change="approveStatusRadio" v-model="loanApprove.approveStatus">
               <i-radio v-for="item in enumSelectData.get('ApproveStatusEnum')" :label="item.itemCode" :key="item.itemCode" style="margin-right: 20px; margin-top: -5px">{{item.itemName}}</i-radio>
             </i-radio-group>
+          </i-form-item>
+        </i-col>
+      </i-row>
+      <i-row>
+        <i-col span="8">
+          <i-form-item
+            v-if="loanApprove.approveStatus === 'R'"
+            label="拒绝原因"
+            prop="rejectCause">
+            <i-select v-model="loanApprove.rejectCause">
+              <i-option v-for="item in enumSelectData.get('BizApproveRejectEnum')" :key="item.itemCode" :value="item.itemCode">{{item.itemName}}</i-option>
+            </i-select>
           </i-form-item>
         </i-col>
       </i-row>
@@ -284,7 +290,7 @@
               }
             ]
           },
-         /* // 租金还款计划集合
+         // 租金还款计划集合
           'repayPlanRentalList': [
             {
               'repayTotalAmt': '',
@@ -293,8 +299,8 @@
               'repayDate': '',
               'repayAmt': ''
             }
-          ],*/
-          /* // 资金方还款计划集合
+          ],
+          // 资金方还款计划集合
           'repayPlanCapitalList': [
             {
               'repayTotalAmt': '',
@@ -303,7 +309,7 @@
               'repayDate': '',
               'repayAmt': ''
             }
-          ],*/
+          ],
           // 放款账户信息
           'loanAccount': {
             'loanAcctNo': '',
@@ -319,11 +325,13 @@
           // 审批参数信息
           'loanApprove': {
             'approveStatus': '',
+            'rejectCause': '',
             'opinion': ''
           }
         },
         loanApprove: {
           'approveStatus': '',
+          'rejectCause': '',
           'opinion': ''
         }
       };

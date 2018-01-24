@@ -13,6 +13,52 @@ export default {
       showAddLoanFilesModal: false, // 新增贷款材料清单
       showSelectDistributor: false,
       personalBasicInfo: {},
+      // 准入规则
+      accessRuleCol: [
+        {
+          title: '准入规则',
+          key: 'loanApproveName'
+        },
+        {
+          title: '系统筛查意见',
+          key: 'sysProcessOpinion'
+        },
+        /* {
+          title: '客户类型',
+          width: 100,
+          key: 'custType',
+          render: (h, params) => {
+            return this.enumCode2Name(params.row.custType, 'CustTypeEnum');
+          }
+        },*/
+        {
+          title: '初审意见',
+          key: 'status',
+          render: (h, params) => {
+            return h('i-select', {
+              props: {
+                disabled: this.readonly,
+                value: params.row.status
+              },
+              on: {
+                'on-change': (value) => {
+                  let rowData = { ...params.row };
+                  rowData.status = value;
+                  this.$data.loanApproveRuleDTOS[params.index] = rowData;
+                }
+              }
+            }, this.enumSelectData.get('ApproveRuleEnum').map((item) => {
+              return h('i-option', {
+                props: {
+                  label: item.itemName,
+                  value: item.itemCode
+                }
+              });
+            }));
+          }
+        }
+      ],
+      'loanApproveRuleDTOS': [],
       // 车辆
       isAddCar: true,
       showModalCar: false,
@@ -215,7 +261,10 @@ export default {
         latitude: '',
         merchantNo: '',
         merchantAbbr: '',
-        result: 'A', // 申请意见 通过 拒绝 退回 废弃
+        channelNo: '',
+        channelName: '',
+        rejectCause: '',
+        result: '', // 申请意见 通过 拒绝 退回 废弃
         opinin: '' // 申请意见详情
       }
     };

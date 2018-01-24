@@ -1090,6 +1090,19 @@ export default [
           ]
         },
         {
+          'groupKey': 'CustomTypeEnum',
+          'items': [
+            {
+              'itemCode': '1',
+              'itemName': '新增客户'
+            },
+            {
+              'itemCode': '2',
+              'itemName': '结清再贷'
+            }
+          ]
+        },
+        {
           'groupKey': 'LoanApplyUseEnum',
           'items': [
             {

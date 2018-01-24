@@ -36,6 +36,7 @@
         </i-form-item>
         <i-form-item>
           <i-select style="width: 120px;" v-model="searchForm.creditStatus" placeholder="授信状态">
+            <i-option value="" style="height: 26px; color: #bbbec4">-请选择-</i-option>
             <i-option v-for="item in enumSelectData.get('CreditAuditStatusEnum')" :value="item.itemCode" :key="item.itemCode">{{item.itemName}}</i-option>
           </i-select>
         </i-form-item>

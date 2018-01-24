@@ -52,6 +52,7 @@ export default {
      * @param CertData
      */
     getMember(CertData) {
+      console.log(CertData);
       this.$data.member = CertData;
       if (CertData.mbMemberDTO) {
         this.$data.memberNo = CertData.mbMemberDTO.memberNo;
@@ -67,8 +68,28 @@ export default {
         this.$data.formData.deptCooperationStartDate = CertData.mbMemberDTO.joinStartDate;
       }
     },
+    /**
+     * 获取贷款准入规则
+     * @param productNo
+     * @param loanNo
+     * @param custType
+     * @returns {Promise<void>}
+     */
+    async getApproveRuleList(productNo = '', loanNo = '', custType = '1') {
+      let resp = await this.$http.post('/biz/queryApproveRule', {
+        productNo,
+        custType,
+        loanNo
+      });
+      if (resp.success) {
+        this.$data.loanApproveRuleDTOS = resp.body.tmLoanApproveRuleDTOList;
+      } else {
+        this.$data.loanApproveRuleDTOS = [];
+      }
+    },
     // 选择产品
     async selectProduct(row, index) {
+      console.log(row);
       this.$data.formData.productNo = row.productNo;
       this.$data.formData.productName = row.productName;
       this.$data.formData.productType = row.productType;
@@ -90,6 +111,8 @@ export default {
             docDetailAttachList: []
           };
         });
+        // 选择产品之后 加载准入规则数据
+        this.getApproveRuleList(this.$data.formData.productNo, '', this.customerType);
       }
     },
     /**
@@ -100,6 +123,8 @@ export default {
     selectDistributor(row, index) {
       this.$data.formData.merchantNo = row.corpNo;
       this.$data.formData.merchantAbbr = row.corpName;
+      this.$data.formData.channelNo = row.corpNo;
+      this.$data.formData.channelName = row.corpName;
       this.$data.showSelectDistributor = false;
     },
     // 验证表单信息并向外抛出数据
@@ -157,6 +182,7 @@ export default {
     getApplyData() {
       return $.extend(
         this.$data.member,
+        { 'loanApproveRuleDTOS': this.$data.loanApproveRuleDTOS },
         { loanVO: this.$data.formData },
         { 'loanCarVOS': this.$data.carData },
         { 'loanGuaranteeVOS': this.$data.assureData },
@@ -180,10 +206,12 @@ export default {
           loanNo: this.applyBasicInfo.loanNo,
           custType: this.applyBasicInfo.custType
         });
+        await this.getApproveRuleList(this.$data.formData.productNo, this.$data.formData.loanNo, this.$data.formData.custType);
         this.$data.initApplyInfoLoading = false;
         let carResp = await getLoanCarListResp;
         let guaResp = await getGuaListResp;
         let loanDocResp = await getLoanDocListResp;
+
         if (carResp.success) {
           this.$data.carData = carResp.body.resultList || [];
         }

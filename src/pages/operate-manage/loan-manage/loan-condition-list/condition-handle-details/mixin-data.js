@@ -48,7 +48,22 @@ export default {
           width: 110,
           key: 'gpsInstallStatus',
           render: (h, params) => {
-            return h('span', {}, this.enumCode2Name(params.row.gpsInstallStatus, 'GpsInstallStatusEnum'));
+            // 只要其GPS安装状态有一条时未安装 则当前行显示未安装
+            if (params.row.loanCarGpsList && params.row.loanCarGpsList.length !== 0) {
+              let gpsStatus = '';
+              let gpslist = params.row.loanCarGpsList;
+              for (let item of gpslist) {
+                if (item.gpsInstallStatus === '0') {
+                  gpsStatus = '0';
+                  break;
+                } else {
+                  gpsStatus = '1';
+                }
+              }
+              return h('span', {}, this.enumCode2Name(gpsStatus, 'GpsInstallStatusEnum'));
+            } else {
+              return h('span', {}, this.enumCode2Name(params.row.gpsInstallStatus, 'GpsInstallStatusEnum'));
+            }
           }
         },
         {
@@ -72,15 +87,12 @@ export default {
                     // 权证回传方式为《先入库后放款》则展示办理抵押按钮
                     if (this.$data.warrantType === '1') {
                       this.$data.formalitiesShowModal = true;
-                      this.$data.formalities = {};
-                      this.$data.formalities = $.extend({}, params.row);
-                      console.log(this.$data.formalities);
-                      console.log(params.row);
+                      this.$data.formalities = $.extend(true, {}, this.$data.formalities, params.row);
                     }
                     // 权证回传方式为《先入库后放款》则展示办理抵押按钮
                     if (this.$data.warrantType === '2') {
                       this.$data.backDaysShowModal = true;
-                      this.$data.backDaysForm = $.extend({}, params.row);
+                      this.$data.backDaysForm = $.extend(true, {}, this.$data.backDaysForm, params.row);
                     }
                   }
                 }
@@ -271,8 +283,7 @@ export default {
                   click: async() => {
                     this.$data.isAddGPS = false;
                     this.$data.GPSShowModal = true;
-                    this.$data.formAddGPS = {};
-                    this.$data.formAddGPS = await params.row;
+                    this.$data.formAddGPS = $.extend(true, {}, this.$data.formAddGPS, params.row);
                   }
                 }
               }, '修改'),
