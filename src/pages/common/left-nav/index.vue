@@ -49,11 +49,21 @@ export default {
       return menuList.length !== 0 ? menuList[currTopMenuIndex].name : ' ';
     }
   },
-  mounted() {}
+  mounted() {
+  },
+  methods: {
+  }
 };
 </script>
 <style lang="scss" scoped>
 #left-nav{
+  /*2018-01-25 修改：是左侧导航固定并超出时滚动*/
+  position: fixed;
+  top: 110px;
+  left: 0;
+  height: calc(100% - 110px);
+  overflow-y: auto;
+  /*end 2018-01-25 修改：是左侧导航固定并超出时滚动*/
   width: 174px;
   float: left;
   background-color: #ecf4f8;

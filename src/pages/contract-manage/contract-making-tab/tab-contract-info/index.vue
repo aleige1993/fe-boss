@@ -190,14 +190,14 @@
             :rules="{required: true, message: '请选择合同开始日期', trigger: 'change'}"
             prop="contractInfo.startDate"
             label="合同开始日期">
-            <bs-datepicker :isNowStart="t" v-model="contractInfoForm.contractInfo.startDate"></bs-datepicker>
+            <bs-datepicker :isNowStart="true" v-model="contractInfoForm.contractInfo.startDate"></bs-datepicker>
           </i-form-item>
         </i-col>
         <i-col span="4">
           <i-form-item
             prop="contractInfo.endDate"
             label="合同结束日期">
-            <span v-text="contractInfoForm.contractInfo.endDate"></span>
+            <span v-text="endDate"></span>
           </i-form-item>
         </i-col>
       </i-row>
@@ -227,6 +227,7 @@
         <i-col span="8">
           <i-form-item
             v-if="loanApprove.approveStatus === 'R'"
+            :rules="{required: true, message: '结论不能为空', trigger: 'change'}"
             label="拒绝原因"
             prop="rejectCause">
             <i-select v-model="loanApprove.rejectCause">
@@ -340,7 +341,8 @@
       endDate: function() {
         if (this.$data.contractInfoForm.contractInfo.startDate !== '' && typeof this.$data.contractInfoForm.contractInfo.startDate !== 'undefined') {
           let startDate = this.$data.contractInfoForm.contractInfo.startDate;
-          let getMonth = dateMonth.getMonthPeriods(new Date(startDate), 1);
+          let loanPeriods = this.$data.approveCredit.loanPeriods;
+          let getMonth = dateMonth.getMonthPeriods(new Date(startDate), loanPeriods);
           this.$data.contractInfoForm.contractInfo.endDate = getMonth;
           return getMonth;
         } else {

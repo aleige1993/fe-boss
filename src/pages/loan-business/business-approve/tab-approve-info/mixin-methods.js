@@ -128,7 +128,6 @@ export default {
         applyAmt: this.applyBasicInfo.applyAmt || '' // 申请金额
       });
       this.$data.initPageLoading = false;
-      console.log(resp);
       if (resp.success) {
         let result = resp.body;
         // 准入规则  (已经移到申请信息中)

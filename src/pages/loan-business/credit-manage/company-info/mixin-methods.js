@@ -2,7 +2,7 @@ import Tools from '../../utils/Tools';
 export default {
   methods: {
     submitAttach() {
-      console.log(this.$data.attachFormData);
+      // console.log(this.$data.attachFormData);
       this.$data.formData.attachDTOs.push(this.$data.attachFormData);
       this.$data.addAttachModal = false;
     },

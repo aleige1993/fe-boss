@@ -166,7 +166,6 @@
       },
       async getSourceList() {
         let resp = await this.$http.get('/cfg/contract/listField');
-        console.log(resp);
         this.sourceEntityEnum = resp.body;
       },
       async submitSuccess() {

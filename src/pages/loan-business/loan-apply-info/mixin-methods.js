@@ -52,7 +52,6 @@ export default {
      * @param CertData
      */
     getMember(CertData) {
-      console.log(CertData);
       this.$data.member = CertData;
       if (CertData.mbMemberDTO) {
         this.$data.memberNo = CertData.mbMemberDTO.memberNo;
@@ -89,7 +88,6 @@ export default {
     },
     // 选择产品
     async selectProduct(row, index) {
-      console.log(row);
       this.$data.formData.productNo = row.productNo;
       this.$data.formData.productName = row.productName;
       this.$data.formData.productType = row.productType;
