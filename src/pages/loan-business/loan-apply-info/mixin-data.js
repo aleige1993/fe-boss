@@ -203,6 +203,7 @@ export default {
         guaType: '',
         remark: '',
         guaPersonNo: '',
+        guaPersonAddr: '',
         relation: ''
       },
       // 贷款材料

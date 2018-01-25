@@ -35,17 +35,21 @@ export default {
           key: 'guaPersonMobile'
         },
         {
-          title: '担保方式',
+          title: '联系地址',
+          key: 'guaPersonAddr'
+        },
+        {
+          title: '担保方式', // GuaranteeTypeEnum
           key: 'guaType',
           render: (h, params) => {
-            return h('span', {}, params.row.guaType === '1' ? '连带责任保证' : '一般保证');
+            return h('span', {}, this.enumCode2Name(params.row.guaType, 'GuaranteeTypeEnum'));
           }
         },
         {
-          title: '与债务人关系',
+          title: '与债务人关系', // RelativeEnum
           key: 'relation',
           render: (h, params) => {
-            return h('span', {}, params.row.relation === '1' ? '亲属' : '父母');
+            return h('span', {}, this.enumCode2Name(params.row.relation, 'RelativeEnum'));
           }
         },
         {

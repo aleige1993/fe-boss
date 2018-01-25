@@ -139,7 +139,7 @@
                 </i-form-item>
               </i-col>
               <i-col span="8">
-                <i-form-item label="本地居住年限" prop="mbMemberDTO.liveYears">
+                <i-form-item label="本地居住年限" prop="mbMemberDTO.liveYears+''">
                   <span v-text="enumCode2Name('' + formData.mbMemberDTO.liveYears, 'YearsEnum')"></span>
                 </i-form-item>
               </i-col>

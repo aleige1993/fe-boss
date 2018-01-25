@@ -2,19 +2,19 @@
   <div id="page-table-demo">
     <div class="search-form-container">
       <i-form inline>
-        <i-form-item prop="user">
+        <i-form-item prop="name">
           <i-input type="text" v-model="searchForm.name" placeholder="客户姓名"></i-input>
         </i-form-item>
-        <i-form-item prop="password">
+        <i-form-item prop="certType">
           <i-select style="width: 120px;" v-model="searchForm.certType" placeholder="证件类型">
             <i-option value="" style="height: 26px; color: #bbbec4">-请选择-</i-option>
             <i-option v-for="item in certTypeEnum" :value="item.itemCode" :key="item.itemCode">{{item.itemName}}</i-option>
           </i-select>
         </i-form-item>
-        <i-form-item prop="password">
+        <i-form-item prop="certNo">
           <i-input v-model="searchForm.certNo" type="text" placeholder="证件号码"></i-input>
         </i-form-item>
-        <i-form-item prop="password">
+        <i-form-item prop="mobile">
           <i-input v-model="searchForm.mobile" type="text" placeholder="手机号码"></i-input>
         </i-form-item>
         <i-form-item>

@@ -58,10 +58,11 @@ export default {
   }
   .logo{
     float: left;
+    height: 40px;
     padding-top: 2px;
     .icon-logo1{
       font-size: 32px;
-      line-height: 2;
+      line-height: 40px;
     }
   }
   .right-actions{

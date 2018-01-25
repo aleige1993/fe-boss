@@ -190,6 +190,18 @@
             <i-row>
               <i-col span="8">
                 <i-form-item
+                  v-if="formData.approveStatus === 'R'"
+                  label="拒绝原因"
+                  prop="rejectCause">
+                  <i-select v-model="formData.rejectCause">
+                    <i-option v-for="item in enumSelectData.get('BizApproveRejectEnum')" :key="item.itemCode" :value="item.itemCode">{{item.itemName}}</i-option>
+                  </i-select>
+                </i-form-item>
+              </i-col>
+            </i-row>
+            <i-row>
+              <i-col span="8">
+                <i-form-item
                   label="意见信息"
                   prop="opinion"
                   :rules="{required: true, message: '意见信息不能为空', trigger: 'blur'}">
@@ -297,6 +309,7 @@
         feeTableLoading: false,
         formData: {
           'approveStatus': '',
+          'rejectCause': '',
           'opinion': '',
           'loanRecordDTO': {
             'shareAmt': '',
@@ -447,6 +460,7 @@
           paymentNo: this.$route.query.paymentNo,
           loanApproveParam: {
             approveStatus: this.$data.formData.approveStatus,
+            rejectCause: this.$data.formData.rejectCause,
             opinion: this.$data.formData.opinion
           }
         });

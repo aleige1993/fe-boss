@@ -20,14 +20,17 @@ export default {
       this.$data.formAssure.guaPersonMobile = row.mobile;
       this.$data.formAssure.guaPersonNo = row.memberNo;
       this.$data.formAssure.guaPersonName = row.name;
+      this.$data.formAssure.guaPersonAddr = row.nowAddr;
       this.$data.showSelectGua = false;
     },
     selectCompanyGuaRow(row, index) {
+      // console.log(row);
       this.$data.formAssure.guaPersonCertNo = row.creditCode;
-      this.$data.formAssure.guaPersonCertType = '3';
+      this.$data.formAssure.guaPersonCertType = row.legalPersonCerttype;
       this.$data.formAssure.guaPersonMobile = row.telephone;
       this.$data.formAssure.guaPersonNo = row.corpNo;
       this.$data.formAssure.guaPersonName = row.corpName;
+      this.$data.formAssure.guaPersonAddr = row.bizProvinceName + row.bizDistrictName + row.bizCityName;
       this.$data.showSelectCompanyGua = false;
     },
     /**
@@ -39,7 +42,8 @@ export default {
       this.$data.formData.memberNo = company.corpNo;
       this.$data.formData.memberName = company.corpName;
       this.$data.formData.mobileNo = company.telephone;
-      this.$data.formData.certType = '';
+      this.$data.formData.certType = company.legalPersonCerttype;
+      this.$data.formData.certNo = company.creditCode;
       this.$data.formData.certNo = company.creditCode;
       this.$data.formData.custManagerNo = company.custMgrNo;
       this.$data.formData.custManagerName = company.custMgrName;
@@ -57,7 +61,7 @@ export default {
         this.$data.memberNo = CertData.mbMemberDTO.memberNo;
         this.$data.formData.memberNo = CertData.mbMemberDTO['memberNo'];
         this.$data.formData.memberName = CertData.mbMemberDTO.name;
-        this.$data.formData.mobileNo = CertData.mobile;
+        this.$data.formData.mobileNo = CertData.mbMemberDTO.mobile;
         this.$data.formData.certType = CertData.mbMemberDTO.certType;
         this.$data.formData.certNo = CertData.mbMemberDTO.certNo;
         this.$data.formData.custManagerNo = CertData.mbMemberDTO.custMgrNo;
@@ -121,7 +125,7 @@ export default {
     selectDistributor(row, index) {
       this.$data.formData.merchantNo = row.corpNo;
       this.$data.formData.merchantAbbr = row.corpName;
-      this.$data.formData.channelNo = row.corpNo;
+      this.$data.formData.channelNo = row.merchantNo;
       this.$data.formData.channelName = row.corpName;
       this.$data.showSelectDistributor = false;
     },
