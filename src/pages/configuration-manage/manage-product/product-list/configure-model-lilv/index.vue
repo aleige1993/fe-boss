@@ -360,22 +360,22 @@
           </i-form-item>
         </i-col>
       </i-row>
-      <i-row :gutter="16">
-        <!--收费依据-->
-        <i-col span="8">
-          <i-form-item
-            label="收费依据"
-            :rules="{required: true, message: '请选择收费依据', trigger: 'change'}"
-            prop="feeAccording">
-            <i-select v-model="ProductPackageForm.feeAccording" placeholder="请选择">
-              <i-option v-for="item in enumSelectData.get('LoanFeeAccordingTypeEnum')" :key="item.itemCode" :value="item.itemCode">{{item.itemName}}</i-option>
-              <!--<i-option value="1">贷款金额</i-option>-->
-              <!--<i-option value="2">申请金额</i-option>-->
-              <!--<i-option value="3">购车金额</i-option>-->
-            </i-select>
-          </i-form-item>
-        </i-col>
-      </i-row>
+      <!--<i-row :gutter="16">-->
+        <!--&lt;!&ndash;收费依据&ndash;&gt;-->
+        <!--<i-col span="8">-->
+          <!--<i-form-item-->
+            <!--label="收费依据"-->
+            <!--:rules="{required: true, message: '请选择收费依据', trigger: 'change'}"-->
+            <!--prop="feeAccording">-->
+            <!--<i-select v-model="ProductPackageForm.feeAccording" placeholder="请选择">-->
+              <!--<i-option v-for="item in enumSelectData.get('LoanFeeAccordingTypeEnum')" :key="item.itemCode" :value="item.itemCode">{{item.itemName}}</i-option>-->
+              <!--&lt;!&ndash;<i-option value="1">贷款金额</i-option>&ndash;&gt;-->
+              <!--&lt;!&ndash;<i-option value="2">申请金额</i-option>&ndash;&gt;-->
+              <!--&lt;!&ndash;<i-option value="3">购车金额</i-option>&ndash;&gt;-->
+            <!--</i-select>-->
+          <!--</i-form-item>-->
+        <!--</i-col>-->
+      <!--</i-row>-->
       <div class="form-top-actions">
         <i-button @click="addModal" type="info"><i class="iconfont icon-xinzeng"></i> 新增</i-button>
       </div>
@@ -536,8 +536,8 @@
           carInsurance: '', // 车辆保险费
           dqxInsurance: '', // 盗抢险
           loanPaymentType: '', // 放款方式
-          warrantType: '', // 权证入库方式
-          feeAccording: '' // 收费依据
+          warrantType: '' // 权证入库方式
+//          feeAccording: '' // 收费依据
         },
         formInModel: {  // 增删的模态框的数据表单
           bizType: '',  // 车类

@@ -18,7 +18,7 @@
         <i-form-item label="标题" prop="title" :rules="{required: true, message: '标题不能为空', trigger: 'blur'}">
           <i-input v-model="fromData.title" placeholder="" ></i-input>
         </i-form-item>
-        <i-form-item label="链接" prop="linkUrl" :rules="{required: true, message: '链接不能为空', trigger: 'blur'}">
+        <i-form-item label="链接" prop="linkUrl">
           <i-input v-model="fromData.linkUrl" placeholder=""></i-input>
         </i-form-item>
         <i-form-item label="选择图片" prop="bannerUrl" :rules="{required: true, message: '请选择图片', trigger: 'blur'}">
@@ -145,7 +145,12 @@
         this.$data.buttonLoading = true;
         let url = this.$data.isAdd ? 'cfg/banner/add' : 'cfg/banner/modify';
         let resp = await this.$http.post(url, {
-          ...this.$data.fromData
+          'id': this.$data.fromData.id,
+          'title': this.$data.fromData.title,
+          'bannerUrl': this.$data.fromData.bannerUrl,
+          'linkUrl': this.$data.fromData.linkUrl,
+          'index': this.$data.fromData.index,
+          'activeStatus': this.$data.fromData.activeStatus
         });
         this.$data.buttonLoading = false;
         this.$data.addModal = false;
