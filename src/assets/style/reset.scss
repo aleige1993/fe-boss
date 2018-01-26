@@ -113,6 +113,31 @@ h1,h2,h3,h4,h5,h6 {
 // (iView)全局控制table的宽度最小为1200px
 .ivu-table-wrapper {
   min-width: 1118px;
+  /*
+  * 修改webkit内核的浏览器滚动条
+  */
+  & .ivu-table-body {
+    &::-webkit-scrollbar {
+      width: 6px;
+      height: 10px;
+    }
+    &::-webkit-scrollbar-button {
+      display: none;
+    }
+    &::-webkit-scrollbar-track {
+      display: none;
+    }
+    &::-webkit-scrollbar-thumb {
+      background: #c5dcef;
+      border-radius: 5px;
+      &:hover {
+        background: #add1f0;
+      }
+    }
+  }
+  /*
+  * end 修改webkit内核的浏览器滚动条
+  */
 }
 // (iView)对于模态框内的table不做最小宽度控制
 .pt-modal-dialog .ivu-table-wrapper {

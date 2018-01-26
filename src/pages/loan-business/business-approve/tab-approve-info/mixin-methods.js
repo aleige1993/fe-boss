@@ -102,6 +102,7 @@ export default {
       if (paymentConditionResp.success) {
         this.$data.approveData.loanPaymentConditionDTOS = paymentConditionResp.body.resultList;
       }
+      console.log(approveCreditResp);
       if (approveCreditResp.success) {
         this.$data.approveData.loanApproveCreditDTO = approveCreditResp.body;
       }
@@ -130,14 +131,25 @@ export default {
       this.$data.initPageLoading = false;
       if (resp.success) {
         let result = resp.body;
+        // console.log(JSON.stringify(result));
         // 准入规则  (已经移到申请信息中)
         // this.$data.approveData.loanApproveRuleDTOS = result.tmLoanApproveRuleDTOList;
         // 费用收取方案
         this.$data.approveData.loanApproveFeePlanDTOS = result.tmLoanApproveFeePlanDTOList;
+        // 费用收取方案 转换字段--实际费用金额
+        this.$data.approveData.loanApproveFeePlanDTOS.map((item) => {
+          let feeAmt = item.feeAmt;
+          item.feeActualAmt = feeAmt;
+        });
         // 放款条件
         this.$data.approveData.loanPaymentConditionDTOS = result.loanPaymentConditionDTOList;
         // 资方
         this.$data.approveData.loanCapitalDTOS = result.loanProductCapitalDTOList;
+        // 资方 转换字段--放款比例
+        this.$data.approveData.loanCapitalDTOS.map((item) => {
+          let loanRatio = item.paymentPercent;
+          item.loanRatio = loanRatio;
+        });
         // 用信方案
         this.$data.approveData.loanApproveCreditDTO = {
           'loanPeriods': result.loanPeriods,
@@ -187,9 +199,12 @@ export default {
         this.$data.approveData.loanPaymentAccountDTOS.acctName = resp.body.paymentAccountName;
         this.$data.approveData.loanPaymentAccountDTOS.acctNo = resp.body.paymentAcctNo;
         this.$data.approveData.loanPaymentAccountDTOS.bankName = resp.body.paymentBankName;
+        this.$data.approveData.loanPaymentAccountDTOS.openBankName = resp.body.paymentBankName;
+        this.$data.approveData.loanRePaymentAccountDTOS.acctName = resp.body.repaymentAccountName;
         this.$data.approveData.loanRePaymentAccountDTOS.acctName = resp.body.repaymentAccountName;
         this.$data.approveData.loanRePaymentAccountDTOS.acctNo = resp.body.repaymentAcctNo;
         this.$data.approveData.loanRePaymentAccountDTOS.bankName = resp.body.repaymentBankName;
+        this.$data.approveData.loanRePaymentAccountDTOS.openBankName = resp.body.repaymentBankName;
         this.$data.paymentAccountList = resp.body.paymentAccountList;
         this.$data.repaymentAccountList = resp.body.repaymentAccountList;
       }

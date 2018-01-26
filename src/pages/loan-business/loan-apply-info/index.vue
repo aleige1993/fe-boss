@@ -137,8 +137,7 @@
         </i-row>
         <i-row>
           <i-col span="8">
-            <i-form-item label="渠道商" prop="channelName"
-                         :rules="{required: true, message: '请选择渠道商'}">
+            <i-form-item label="渠道商" prop="channelName">
               <input type="hidden" v-model="formData.channelName"/>
               <i-input v-model="formData.channelName" :readonly="true" placeholder="选择渠道商">
                 <i-button v-if="!readonly" @click="merchantClick" slot="append">选择渠道商 <Icon type="ios-more"></Icon></i-button>

@@ -54,7 +54,7 @@ export default {
     },
     // 居住地址联动
     selectNowDistance(distance) {
-      this.$data.formData.mbMemberDTO.nowProvinceName = distance.provinceCode;
+      this.$data.formData.mbMemberDTO.nowProvinceCode = distance.provinceCode;
       this.$data.formData.mbMemberDTO.nowProvinceName = distance.provinceName;
       this.$data.formData.mbMemberDTO.nowDistrictCode = distance.districtCode;
       this.$data.formData.mbMemberDTO.nowDistrictName = distance.districtName;

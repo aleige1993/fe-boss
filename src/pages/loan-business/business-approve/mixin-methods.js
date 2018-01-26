@@ -78,15 +78,23 @@ export default {
           // 点击提价时给用户一个确认交互
           await this.$AuditPrompt.auditPromptFun(submitData.loanApproveDTO.result, async () => {
             let resp = await this.$http.post(submitUrl, submitData);
-            this.$data.submitApproveLoading = false;
-            loading();
-            if (resp.success) {
+            if (resp.success && resp.reMsg !== '失败') {
               this.$Message.success('审批成功');
               this.$router.push({
                 name: 'loanBusinessList'
               });
+            } else {
+              resp.body && resp.body.forEach((item) => {
+                this.$Notice.error({
+                  title: '错误提示',
+                  duration: 2,
+                  desc: '' + item
+                });
+              });
             }
           });
+          this.$data.submitApproveLoading = false;
+          loading();
         }
       }
     }

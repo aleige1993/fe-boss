@@ -574,6 +574,7 @@ export default [
           'districtCode': '1',
           'cityCode': '1',
           'companyName': '1',
+          'companyNo': '1',
           'roadAddr': '1',
           'unitType': '1',
           'joinDate': '1',

@@ -57,13 +57,39 @@ export default {
 </script>
 <style lang="scss" scoped>
 #left-nav{
-  /*2018-01-25 修改：是左侧导航固定并超出时滚动*/
+  /*
+  * 2018-01-25 修改：是左侧导航固定并超出时滚动
+  */
   position: fixed;
   top: 110px;
   left: 0;
   height: calc(100% - 110px);
   overflow-y: auto;
-  /*end 2018-01-25 修改：是左侧导航固定并超出时滚动*/
+  /*
+  * end 2018-01-25 修改：是左侧导航固定并超出时滚动
+  */
+  /*
+  * 修改webkit内核的浏览器滚动条
+  */
+  &::-webkit-scrollbar {
+    width: 6px;
+  }
+  &::-webkit-scrollbar-button {
+    display: none;
+  }
+  &::-webkit-scrollbar-track {
+    display: none;
+  }
+  &::-webkit-scrollbar-thumb {
+    background: #c5dcef;
+    border-radius: 3px;
+    &:hover {
+      background: #add1f0;
+    }
+  }
+  /*
+  * end 修改webkit内核的浏览器滚动条
+  */
   width: 174px;
   float: left;
   background-color: #ecf4f8;

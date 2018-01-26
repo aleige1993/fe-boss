@@ -458,10 +458,13 @@ export default {
       this.$data.showSelectEmployer = false;
     },
     selectCompanyCustomer(row, index) {
+      // console.log(row);
       let companyName = row.corpName;
+      let companyCode = row.corpNo;
       let companyType = row.corpType;
       let industryType = row.industryType;
       this.formData.mbMemberWorkDTO.companyName = companyName;
+      this.formData.mbMemberWorkDTO.companyCode = companyCode;
       this.$data.showSelectCompany = false;
       this.formData.mbMemberWorkDTO.unitType = companyType;
       this.formData.mbMemberWorkDTO.industryType = industryType;
