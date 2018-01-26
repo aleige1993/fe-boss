@@ -39,6 +39,7 @@ export default {
      */
     selectCompany(company) {
       // console.log(company);
+      this.$data.formData.address = company.bizProvinceName + company.bizDistrictName + company.bizCityName + company.bizRoadAddr;
       this.$data.formData.memberNo = company.corpNo;
       this.$data.formData.memberName = company.corpName;
       this.$data.formData.mobileNo = company.telephone;
@@ -56,9 +57,12 @@ export default {
      * @param CertData
      */
     getMember(CertData) {
+      // console.log(CertData);
       this.$data.member = CertData;
       if (CertData.mbMemberDTO) {
         this.$data.memberNo = CertData.mbMemberDTO.memberNo;
+        // 联系地址
+        this.$data.formData.address = CertData.mbMemberDTO.nowProvinceName + CertData.mbMemberDTO.nowDistrictName + CertData.mbMemberDTO.nowCityName + CertData.mbMemberDTO.nowRoadAddr;
         this.$data.formData.memberNo = CertData.mbMemberDTO['memberNo'];
         this.$data.formData.memberName = CertData.mbMemberDTO.name;
         this.$data.formData.mobileNo = CertData.mbMemberDTO.mobile;
