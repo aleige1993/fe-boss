@@ -456,23 +456,25 @@
       },
       // 提交的ajax
       async allSubimt() {
-        let rep = await this.$http.post('/biz/payment/paymentApprove', {
-          paymentNo: this.$route.query.paymentNo,
-          loanApproveParam: {
-            approveStatus: this.$data.formData.approveStatus,
-            rejectCause: this.$data.formData.rejectCause,
-            opinion: this.$data.formData.opinion
-          }
-        });
-        if (rep.success) {
-          this.$Message.success('提交成功');
-          this.$router.push({
-            path: '/index/operate/loan/approval',
-            query: {
-              currentPage: this.$route.query.currentPage
+        this.$AuditPrompt.auditPromptFun(this.$data.formData.approveStatus, async () => {
+          let rep = await this.$http.post('/biz/payment/paymentApprove', {
+            paymentNo: this.$route.query.paymentNo,
+            loanApproveParam: {
+              approveStatus: this.$data.formData.approveStatus,
+              rejectCause: this.$data.formData.rejectCause,
+              opinion: this.$data.formData.opinion
             }
           });
-        }
+          if (rep.success) {
+            this.$Message.success('提交成功');
+            this.$router.push({
+              path: '/index/operate/loan/approval',
+              query: {
+                currentPage: this.$route.query.currentPage
+              }
+            });
+          }
+        });
       },
       // 所有的提交按钮
       saveSubimt() {

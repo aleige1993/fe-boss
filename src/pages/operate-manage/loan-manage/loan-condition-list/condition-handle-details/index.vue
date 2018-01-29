@@ -149,6 +149,16 @@
     <!--办理抵质押物手续-->
     <bs-modal v-model="formalitiesShowModal" title="办理抵质押物手续" :width="520">
       <i-form ref="formalities" :model="formalities" label-position="right" :label-width="80">
+        <!--<i-form-item label="抵押状态"
+                     prop="mortgageStatus"
+                     :rules="{required: true, message: '请选择抵押状态', trigger: 'change'}">
+          <i-select v-model="formalities.mortgageStatus">
+            <i-option v-for="item in enumSelectData.get('MortgageStatusEnum')" :key="item.itemCode" :value="item.itemCode">{{item.itemName}}</i-option>
+          </i-select>
+        </i-form-item>-->
+        <i-form-item label="抵押状态">
+          <span v-text="enumCode2Name('1', 'MortgageStatusEnum')"></span>
+        </i-form-item>
         <i-form-item label="办理时间"
                      prop="makeDate"
                      :rules="{required: true, message: '办理时间不能为空', trigger: 'blur'}">
@@ -168,13 +178,6 @@
                      prop="registerCompany"
                      :rules="{required: true, message: '登记机关不能为空', trigger: 'blur'}">
           <i-input v-model="formalities.registerCompany" placeholder=""></i-input>
-        </i-form-item>
-        <i-form-item label="抵押状态"
-                     prop="mortgageStatus"
-                     :rules="{required: true, message: '请选择抵押状态', trigger: 'change'}">
-          <i-select v-model="formalities.mortgageStatus">
-            <i-option v-for="item in enumSelectData.get('MortgageStatusEnum')" :key="item.itemCode" :value="item.itemCode">{{item.itemName}}</i-option>
-          </i-select>
         </i-form-item>
         <i-form-item label="备注"
                      prop="remark">
@@ -433,6 +436,15 @@
       this.assureGtelist(); // 执行获取担保信息列表的data
       this.conditionGetlist(); // 执行获取放款条件列表的data
       this.getFindPaymentApplyRecordInfo(); // 获取放款条件详情
+
+      // 权证回传方式为《先入库后放款》则展示办理抵押按钮,且办理抵押时抵押状态为“已抵押”
+      if (this.$data.warrantType === '1') {
+        this.$data.formalities.mortgageStatus = '1';
+      }
+      // 权证回传方式为《先放款后入库》则展示权证回传天数按钮,且办理抵押时抵押状态为“未抵押”
+      if (this.$data.warrantType === '2') {
+        this.$data.formalities.mortgageStatus = '0';
+      }
     },
     methods: {
       // 获取放款条件详情
@@ -575,37 +587,64 @@
             });
             return;
           }
-        }
-        this.$data.initFormLoading = true;
-        let rep = await this.$http.post('/biz/payment/paymentCondition', {
-          paymentNo: this.$route.query.paymentNo,
-          paymentConditionSubmitParams: this.$data.conditionData, // 放款条件表集合
-          paymentGuaranteeSubmitParams: this.$data.assureData, // 担保信息表集合
-          loanCarList: this.$data.carData, // 车辆信息表集合
-          loanApproveParam: {
-            approveStatus: this.$data.formData.approveStatus,
-            rejectCause: this.$data.formData.rejectCause,
-            opinion: this.$data.formData.opinion
+          // 放款条件列表中 备注和落实状态的必填性验证
+          if (this.$data.conditionData && this.$data.conditionData.length === 0) {
+            this.$Message.error({
+              content: '放款条件中没有数据！',
+              duration: 2
+            });
+            return;
           }
-        });
-        this.$data.initFormLoading = false;
-        if (rep.success) {
-          this.$Message.success('提交成功');
-          this.$router.push({
-            path: '/index/operate/loan',
-            query: {
-              currentPage: this.$route.query.currentPage
+          let conditionArray = this.$data.conditionData;
+          if (conditionArray && conditionArray.length > 0) {
+            for (let item of conditionArray) {
+              if (!item.remark || item.remark === '') {
+                this.$Message.error({
+                  content: '放款条件中的“备注”不能为空！',
+                  duration: 2
+                });
+                return;
+              }
+              if (!item.status || item.status === '') {
+                this.$Message.error({
+                  content: '放款条件中的“落实状态”不能为空！',
+                  duration: 2
+                });
+                return;
+              }
+            }
+          }
+        }
+        this.$AuditPrompt.auditPromptFun(this.$data.formData.approveStatus, async () => {
+          this.$data.initFormLoading = true;
+          let rep = await this.$http.post('/biz/payment/paymentCondition', {
+            paymentNo: this.$route.query.paymentNo,
+            paymentConditionSubmitParams: this.$data.conditionData, // 放款条件表集合
+            paymentGuaranteeSubmitParams: this.$data.assureData, // 担保信息表集合
+            loanCarList: this.$data.carData, // 车辆信息表集合
+            loanApproveParam: {
+              approveStatus: this.$data.formData.approveStatus,
+              rejectCause: this.$data.formData.rejectCause,
+              opinion: this.$data.formData.opinion
             }
           });
-        }
+          this.$data.initFormLoading = false;
+          if (rep.success) {
+            this.$Message.success('提交成功');
+            this.$router.push({
+              path: '/index/operate/loan',
+              query: {
+                currentPage: this.$route.query.currentPage
+              }
+            });
+          }
+        });
       },
       // 所有的提交按钮
       saveSubimt() {
         this.$refs['formData'].validate((valid) => {
           if (valid) {
-            this.$AuditPrompt.auditPromptFun(this.$data.formData.approveStatus, () => {
-              this.allSubimt();
-            });
+            this.allSubimt();
           } else {
             this.$data.tabIndex = 0;
             this.$Message.error('<span style="color: red">*</span>项不能为空');
@@ -643,6 +682,8 @@
         let ind = this.$data.clickRow._index; // 车辆列表的索引index
         this.$refs['backDaysForm'].validate(async (valid) => {
           if (valid) {
+            // 当权证回传方式为《先放款后入库》则展示权证回传天数按钮,且抵押状态为“未抵押”
+            this.$set(this.$data.carData[ind], 'mortgageStatus', '0');
             this.$set(this.$data.carData[ind], 'backDays', this.$data.backDaysForm['backDays']);
             this.$Message.success('提交成功');
             this.$data.backDaysShowModal = false;

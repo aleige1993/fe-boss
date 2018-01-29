@@ -72,6 +72,19 @@
           </i-row>
           <i-row>
             <i-col span="8">
+              <i-form-item
+                v-if="loanApprove.approveStatus === 'R'"
+                :rules="{required: true, message: '拒绝原因不能为空', trigger: 'change'}"
+                label="拒绝原因"
+                prop="rejectCause">
+                <i-select v-model="loanApprove.rejectCause">
+                  <i-option v-for="item in enumSelectData.get('BizApproveRejectEnum')" :key="item.itemCode" :value="item.itemCode">{{item.itemName}}</i-option>
+                </i-select>
+              </i-form-item>
+            </i-col>
+          </i-row>
+          <i-row>
+            <i-col span="8">
               <i-form-item label="意见信息" prop="opinion" :rules="{required: true, message: '意见信息不能为空', trigger: 'blur'}">
                 <i-input type="textarea" v-model="loanApprove.opinion" :rows="2" placeholder="">
                 </i-input>
@@ -143,6 +156,7 @@
         },
         loanApprove: {
           'approveStatus': '',
+          'rejectCause': '',
           'opinion': ''
         }
       };
@@ -159,6 +173,7 @@
         });
         if (reps.success) {
           this.$data.formData = reps.body;
+          this.$data.formData.contractSignConfirmStatusParams = reps.body.contractList;
         } else {
           this.$data.formData = {};
         }

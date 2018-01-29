@@ -352,25 +352,35 @@
       },
       // 提交的ajax
       async allSubimt() {
-        let rep = await this.$http.post('/biz/payment/paymentFee', {
-          paymentNo: this.$route.query.paymentNo,
-          paymentFeePlanLuoShiParamList: this.$data.feeData, // 费用收取列表集合
-          paymentConditionSubmitParams: this.$data.conditionData, // 放款条件表集合
-          loanApproveParam: {
-            approveStatus: this.$data.formData.approveStatus,
-            rejectCause: this.$data.formData.rejectCause,
-            opinion: this.$data.formData.opinion
-          }
-        });
-        if (rep.success) {
-          this.$Message.success('提交成功');
-          this.$router.push({
-            path: '/index/operate/loan/fee',
-            query: {
-              currentPage: this.$route.query.currentPage
+        this.$AuditPrompt.auditPromptFun(this.$data.formData.approveStatus, async () => {
+          let rep = await this.$http.post('/biz/payment/paymentFee', {
+            paymentNo: this.$route.query.paymentNo,
+            paymentFeePlanLuoShiParamList: this.$data.feeData, // 费用收取列表集合
+            paymentConditionSubmitParams: this.$data.conditionData, // 放款条件表集合
+            loanApproveParam: {
+              approveStatus: this.$data.formData.approveStatus,
+              rejectCause: this.$data.formData.rejectCause,
+              opinion: this.$data.formData.opinion
             }
           });
-        }
+          console.log(rep);
+          if (rep.success) {
+            this.$Message.success('提交成功');
+            this.$router.push({
+              path: '/index/operate/loan/fee',
+              query: {
+                currentPage: this.$route.query.currentPage
+              }
+            });
+          } else {
+            /* let errText = rep.reMsg.slice(1, rep.reMsg.length - 1);
+            this.$Notice.error({
+              title: '错误提示：',
+              desc: errText,
+              duration: 2
+            });*/
+          }
+        });
       },
       // 所有的提交按钮
       saveSubimt() {
