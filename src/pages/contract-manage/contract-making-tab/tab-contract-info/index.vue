@@ -227,7 +227,7 @@
         <i-col span="8">
           <i-form-item
             v-if="loanApprove.approveStatus === 'R'"
-            :rules="{required: true, message: '结论不能为空', trigger: 'change'}"
+            :rules="{required: true, message: '拒绝原因不能为空', trigger: 'change'}"
             label="拒绝原因"
             prop="rejectCause">
             <i-select v-model="loanApprove.rejectCause">

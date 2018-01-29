@@ -17,6 +17,9 @@
         </approve-info>
       </i-tab-pane>
       <i-tab-pane label="人行征信报告" :disabled="formData.custType === '2'">
+        <i-radio v-model="isHasCheckCreditReport">   已查看征信报告</i-radio>
+        <br>
+        <br>
         <iframe v-if="tabIndex == 2" :src="creditReportURL" width="100%" :height="iframeHeight" frameborder="0"></iframe>
       </i-tab-pane>
       <!--<i-tab-pane label="芝麻信用报告">
@@ -55,6 +58,7 @@
     mixins: [MixinData, MixinMethods],
     data() {
       return {
+        isHasCheckCreditReport: false, // 是否征信报告
         iframeHeight: 460,
         tabIndex: 0,
         initFormLoading: false,

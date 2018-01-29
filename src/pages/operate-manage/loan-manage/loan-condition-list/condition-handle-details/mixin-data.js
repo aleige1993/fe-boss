@@ -55,9 +55,11 @@ export default {
               for (let item of gpslist) {
                 if (item.gpsInstallStatus === '0') {
                   gpsStatus = '0';
+                  this.$set(this.$data.carData[params.index], 'gpsInstallStatus', '0');
                   break;
                 } else {
                   gpsStatus = '1';
+                  this.$set(this.$data.carData[params.index], 'gpsInstallStatus', '1');
                 }
               }
               return h('span', {}, this.enumCode2Name(gpsStatus, 'GpsInstallStatusEnum'));

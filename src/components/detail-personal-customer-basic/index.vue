@@ -45,29 +45,29 @@
               <i-col span="8">
                 <i-form-item label="社保" prop="mbMemberDTO.isSocialSecurity"><!--枚举：HaveNoEnum-->
                   <span v-text="
-                  enumCode2Name(formData.mbMemberDTO.isSocialSecurity, 'HaveNoEnum') === '' ?
-                  '' : enumCode2Name(formData.mbMemberDTO.isSocialSecurity, 'HaveNoEnum') + '社保'">
+                  enumCode2Name('' + formData.mbMemberDTO.isSocialSecurity, 'HaveNoEnum') === '' ?
+                  '' : enumCode2Name('' + formData.mbMemberDTO.isSocialSecurity, 'HaveNoEnum') + '社保'">
                   </span>
                 </i-form-item>
               </i-col>
               <i-col span="8">
                 <i-form-item label="公积金" prop="mbMemberDTO.isPublicReserveFunds"><!--枚举：HaveNoEnum-->
                   <span v-text="
-                  enumCode2Name(formData.mbMemberDTO.isPublicReserveFunds, 'HaveNoEnum') === '' ?
-                  '' : enumCode2Name(formData.mbMemberDTO.isPublicReserveFunds, 'HaveNoEnum') + '公积金'">
+                  enumCode2Name('' + formData.mbMemberDTO.isPublicReserveFunds, 'HaveNoEnum') === '' ?
+                  '' : enumCode2Name('' + formData.mbMemberDTO.isPublicReserveFunds, 'HaveNoEnum') + '公积金'">
                   </span>
                 </i-form-item>
               </i-col>
               <i-col span="8">
                 <i-form-item label="信用记录" prop="mbMemberDTO.creditType"><!--枚举：CreditTypeEnum-->
-                  <span v-text="enumCode2Name(formData.mbMemberDTO.creditType, 'CreditTypeEnum')"></span>
+                  <span v-text="enumCode2Name('' + formData.mbMemberDTO.creditType, 'CreditTypeEnum')"></span>
                 </i-form-item>
               </i-col>
             </i-row>
             <i-row>
               <i-col span="8">
                 <i-form-item label="证件类型" prop="mbMemberDTO.certType"><!--枚举：CertTypeEnum-->
-                  <span v-text="enumCode2Name(formData.mbMemberDTO.certType, 'CertTypeEnum')"></span>
+                  <span v-text="enumCode2Name('' + formData.mbMemberDTO.certType, 'CertTypeEnum')"></span>
                 </i-form-item>
               </i-col>
               <i-col span="8">
@@ -101,24 +101,24 @@
             <i-row>
               <i-col span="8">
                 <i-form-item label="婚姻状况" prop="mbMemberDTO.maritalStatus">
-                  <span v-text="enumCode2Name(formData.mbMemberDTO.maritalStatus, 'MaritalStatusEnum')"></span>
+                  <span v-text="enumCode2Name('' + formData.mbMemberDTO.maritalStatus, 'MaritalStatusEnum')"></span>
                 </i-form-item>
               </i-col>
               <i-col span="8">
                 <i-form-item label="教育程度" prop="mbMemberDTO.education"><!--EducationEnum-->
-                  <span v-text="enumCode2Name(formData.mbMemberDTO.education, 'EducationEnum')"></span>
+                  <span v-text="enumCode2Name('' + formData.mbMemberDTO.education, 'EducationEnum')"></span>
                 </i-form-item>
               </i-col>
               <i-col span="8">
                 <i-form-item label="职业类型" prop="mbMemberDTO.workType">
-                  <span v-text="enumCode2Name(formData.mbMemberDTO.workType, 'WorkTypeEnum')"></span>
+                  <span v-text="enumCode2Name('' + formData.mbMemberDTO.workType, 'WorkTypeEnum')"></span>
                 </i-form-item>
               </i-col>
             </i-row>
             <i-row>
               <i-col span="8">
                 <i-form-item label="工资收入" prop="mbMemberDTO.monthRevenue"><!--MonthRevenueEnum-->
-                  <span v-text="enumCode2Name(formData.mbMemberDTO.monthRevenue, 'MonthRevenueEnum')"></span>
+                  <span v-text="enumCode2Name('' + formData.mbMemberDTO.monthRevenue, 'MonthRevenueEnum')"></span>
                 </i-form-item>
               </i-col>
               <i-col span="8">
@@ -128,24 +128,24 @@
               </i-col>
               <i-col span="8">
                 <i-form-item label="是否本地人" prop="mbMemberDTO.isNative"><!--YesNoEnum-->
-                  <span v-text="enumCode2Name(formData.mbMemberDTO.isNative, 'YesNoEnum')"></span>
+                  <span v-text="enumCode2Name('' + formData.mbMemberDTO.isNative, 'YesNoEnum')"></span>
                 </i-form-item>
               </i-col>
             </i-row>
             <i-row>
               <i-col span="8">
                 <i-form-item label="本地有否房产" prop="mbMemberDTO.isLocalHouse">
-                  <span v-text="enumCode2Name(formData.mbMemberDTO.isLocalHouse, 'YesNoEnum')"></span>
+                  <span v-text="enumCode2Name('' + formData.mbMemberDTO.isLocalHouse, 'YesNoEnum')"></span>
                 </i-form-item>
               </i-col>
               <i-col span="8">
-                <i-form-item label="本地居住年限" prop="mbMemberDTO.liveYears+''">
+                <i-form-item label="本地居住年限" prop="mbMemberDTO.liveYears">
                   <span v-text="enumCode2Name('' + formData.mbMemberDTO.liveYears, 'YearsEnum')"></span>
                 </i-form-item>
               </i-col>
               <i-col span="8">
                 <i-form-item label="住房情况" prop="mbMemberDTO.liveType">
-                  <span v-text="enumCode2Name(formData.mbMemberDTO.liveType, 'LiveTypeEnum')"></span>
+                  <span v-text="enumCode2Name('' + formData.mbMemberDTO.liveType, 'LiveTypeEnum')"></span>
                 </i-form-item>
               </i-col>
             </i-row>
@@ -224,20 +224,20 @@
               <i-col span="8">
                 <i-form-item label="单位性质"
                              prop="mbMemberWorkDTO.unitType">
-                  <span v-text="enumCode2Name(formData.mbMemberWorkDTO.unitType, 'UnitTypeEnum')"></span>
+                  <span v-text="enumCode2Name('' + formData.mbMemberWorkDTO.unitType, 'UnitTypeEnum')"></span>
                 </i-form-item>
               </i-col>
               <i-col span="8">
                 <i-form-item label="行业类别"
                              prop="mbMemberWorkDTO.industryType">
-                  <span v-text="enumCode2Name(formData.mbMemberWorkDTO.industryType, 'UnitTypeEnum')"></span>
+                  <span v-text="enumCode2Name('' + formData.mbMemberWorkDTO.industryType, 'UnitTypeEnum')"></span>
                 </i-form-item>
               </i-col>
             </i-row>
             <i-row>
               <i-col span="8">
                 <i-form-item label="职务" prop="mbMemberWorkDTO.duty">
-                  <span v-text="enumCode2Name(formData.mbMemberWorkDTO.duty, 'DutyEnum')"></span>
+                  <span v-text="enumCode2Name('' + formData.mbMemberWorkDTO.duty, 'DutyEnum')"></span>
                 </i-form-item>
               </i-col>
               <i-col span="8">

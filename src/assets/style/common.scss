@@ -103,9 +103,9 @@
 }
 // 从左到右的渐变
 @mixin gradient-bg{
-  background: -moz-linear-gradient(left, #2b90f8, rgba(33, 166, 243, 1));
-  background:         linear-gradient(left, #2b90f8, rgba(33, 166, 243, 1));
   background: -webkit-gradient(linear, 0 0, right bottom, from(#2b90f8), to(rgba(33, 166, 243, 1)));
+  background: -moz-linear-gradient(left, #2b90f8, #21A6F3);
+  background: linear-gradient(left, #2b90f8, rgba(33, 166, 243, 1));
 }
 // 外边距
 .mt10{

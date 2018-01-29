@@ -88,15 +88,24 @@
             <i-table :columns="creditPlanColumns" :data="approveData.creditPlanList"></i-table>
           </bs-form-block>
           <!--审核意见-->
-          <bs-form-block title="审核意见" >
+          <bs-form-block title="审核意见">
             <i-row>
               <i-col span="8">
                 <i-form-item label="结论">
                   <i-radio-group v-model="approveData.creditAuditParam.approveStatus">
-                    <i-radio label="A">通过</i-radio>
-                    <i-radio label="R">拒绝</i-radio>
-                    <i-radio label="B">退回</i-radio>
+                    <i-radio v-for="item in enumSelectData.get('ApproveStatusEnum')" :label="item.itemCode" :key="item.itemCode" style="margin-right: 20px; margin-top: -5px">{{item.itemName}}</i-radio>
                   </i-radio-group>
+                </i-form-item>
+              </i-col>
+            </i-row>
+            <i-row>
+              <i-col span="8">
+                <i-form-item
+                  v-if="approveData.creditAuditParam.approveStatus === 'R'"
+                  label="拒绝原因">
+                  <i-select v-model="approveData.creditAuditParam.rejectCause">
+                    <i-option v-for="item in enumSelectData.get('BizApproveRejectEnum')" :key="item.itemCode" :value="item.itemCode">{{item.itemName}}</i-option>
+                  </i-select>
                 </i-form-item>
               </i-col>
             </i-row>

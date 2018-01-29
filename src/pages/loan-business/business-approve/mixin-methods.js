@@ -67,7 +67,17 @@ export default {
           });
           let submitData = {};
           if (loanNode === '3') {
-            submitData = $.extend({ opeType: '2' }, applyData, approveData);
+            if (!this.$data.isHasCheckCreditReport) {
+              this.$data.tabIndex = 2;
+              this.$Message.error({
+                content: '请确认已查看征信报告！',
+                duration: 2
+              });
+              this.$data.submitApproveLoading = false;
+              loading();
+              return;
+            }
+            submitData = $.extend({ opeType: '2', hasCheckCreditReport: '1' }, applyData, approveData);
           } else {
             submitData = {
               loanNo: applyData.loanVO.loanNo,
@@ -76,6 +86,28 @@ export default {
           }
           // console.log(submitData.loanApproveDTO.result);
           // 点击提价时给用户一个确认交互
+          if (submitData.loanApproveDTO.result === '' || submitData.loanApproveDTO.opinion === '') {
+            this.$Message.error({
+              content: '请完善审核意见信息！',
+              duration: 2
+            });
+            this.$data.tabIndex = 1;
+            this.$data.submitApproveLoading = false;
+            loading();
+            return;
+          } else if (
+            submitData.loanApproveDTO.result === 'R' &&
+            (!submitData.loanApproveDTO.rejectCause || submitData.loanApproveDTO.rejectCause === '')
+          ) {
+            this.$Message.error({
+              content: '请选择拒绝原因！',
+              duration: 2
+            });
+            this.$data.tabIndex = 1;
+            this.$data.submitApproveLoading = false;
+            loading();
+            return;
+          }
           await this.$AuditPrompt.auditPromptFun(submitData.loanApproveDTO.result, async () => {
             let resp = await this.$http.post(submitUrl, submitData);
             if (resp.success && resp.reMsg !== '失败') {
@@ -83,14 +115,6 @@ export default {
               this.$router.push({
                 name: 'loanBusinessList'
               });
-            } else {
-             /* resp.body && resp.body.forEach((item) => {
-                this.$Notice.error({
-                  title: '错误提示',
-                  duration: 2,
-                  desc: '' + item
-                });
-              });*/
             }
           });
           this.$data.submitApproveLoading = false;
