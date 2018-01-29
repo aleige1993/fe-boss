@@ -374,12 +374,12 @@
         }
       };
     },
-    mounted() {
+    async mounted() {
+      await this.getFindPaymentApplyRecordInfo(); // 获取放款条件详情
       this.carGetlist(); // 执行获取车辆信息列表的data
       this.assureGtelist(); // 执行获取担保信息列表的data
       this.conditionGetlist(); // 执行获取放款条件列表的data
       this.feeGetlist(); // 执行获取费用收取落实列表的data
-      this.getFindPaymentApplyRecordInfo(); // 获取放款条件详情
     },
     methods: {
       // 获取放款条件详情
@@ -423,8 +423,12 @@
       // 获取放款条件列表的data
       async conditionGetlist() {
         this.$data.conditionLoading = true;
+        let productNo = this.$data.formData.paymentApplyRecordDTO.productNo;
+        let custType = this.$data.formData.paymentApplyRecordDTO.custType;
         let reps = await this.$http.post('biz/getPaymentCondition', {
-          loanNo: this.$route.query.loanNo
+          loanNo: this.$route.query.loanNo,
+          productNo,
+          custType
         });
         this.$data.conditionLoading = false;
         if (reps.success) {

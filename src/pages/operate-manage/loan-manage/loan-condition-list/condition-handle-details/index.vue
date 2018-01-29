@@ -432,11 +432,11 @@
         }
       };
     },
-    mounted() {
+    async mounted() {
+      await this.getFindPaymentApplyRecordInfo(); // 获取放款条件详情
       this.carGetlist(); // 执行获取车辆信息列表的data
       this.assureGtelist(); // 执行获取担保信息列表的data
       this.conditionGetlist(); // 执行获取放款条件列表的data
-      this.getFindPaymentApplyRecordInfo(); // 获取放款条件详情
 
       // 权证回传方式为《先入库后放款》则展示办理抵押按钮,且办理抵押时抵押状态为“已抵押”
       if (this.$data.warrantType === '1') {
@@ -494,8 +494,12 @@
       // 获取放款条件列表的data
       async conditionGetlist() {
         this.$data.conditionLoading = true;
+        let productNo = this.$data.formData.paymentApplyRecordDTO.productNo;
+        let custType = this.$data.formData.paymentApplyRecordDTO.custType;
         let reps = await this.$http.post('biz/getPaymentCondition', {
-          loanNo: this.$route.query.loanNo
+          loanNo: this.$route.query.loanNo,
+          productNo,
+          custType
         });
         this.$data.conditionLoading = false;
         if (reps.success && reps.body.length !== 0) {
