@@ -46,7 +46,7 @@
           <!--车辆价格-->
           <i-col span="8">
             <i-form-item label="车辆价格" prop="carBuyAmt">
-              <i-input v-model="formData.carBuyAmt+''" :readonly="readonly" placeholder="">
+              <i-input v-model="formData.carBuyAmt" :readonly="readonly" placeholder="">
                 <span slot="append">元</span>
               </i-input>
             </i-form-item>
@@ -55,7 +55,7 @@
           <i-col span="8">
             <i-form-item label="申请金额" prop="applyAmt"
                          :rules="{required: true, message: '请输入申请金额'}">
-              <i-input v-model="formData.applyAmt+''" :readonly="readonly" placeholder="">
+              <i-input v-model="formData.applyAmt" :readonly="readonly" placeholder="">
                 <span slot="append">元</span>
               </i-input>
             </i-form-item>
@@ -72,7 +72,7 @@
           <i-col span="8">
             <i-form-item label="申请期限" prop="applyPeriods"
                          :rules="{required: true, message: '请输入申请期限'}">
-              <i-input v-model="formData.applyPeriods+''" :readonly="readonly" placeholder="">
+              <i-input v-model="formData.applyPeriods" :readonly="readonly" placeholder="">
                 <span slot="append">月</span>
               </i-input>
             </i-form-item>
@@ -80,7 +80,7 @@
           <!--首付或保证金意向-->
           <i-col span="8">
             <i-form-item label="首付或保证金意向" prop="depositOrDownPayment">
-              <i-input v-model="formData.depositOrDownPayment+''" :readonly="readonly" placeholder="">
+              <i-input v-model="formData.depositOrDownPayment" :readonly="readonly" placeholder="">
                 <span slot="append">元</span>
               </i-input>
             </i-form-item>
@@ -364,21 +364,21 @@
           <!--过户次数-->
           <i-col span="8">
             <i-form-item label="过户次数" prop="carTransferCount">
-              <i-input v-model="formCar.carTransferCount+''" placeholder="">
+              <i-input v-model="formCar.carTransferCount" placeholder="">
               </i-input>
             </i-form-item>
           </i-col>
           <!--抵押次数-->
           <i-col span="8">
             <i-form-item label="抵押次数" prop="carGuaCount">
-              <i-input v-model="formCar.carGuaCount+''" placeholder="">
+              <i-input v-model="formCar.carGuaCount" placeholder="">
               </i-input>
             </i-form-item>
           </i-col>
           <!--行驶里程-->
           <i-col span="8">
             <i-form-item label="行驶里程" prop="carMileage">
-              <i-input v-model="formCar.carMileage+''" placeholder="">
+              <i-input v-model="formCar.carMileage" placeholder="">
                 <span slot="append">KM</span>
               </i-input>
             </i-form-item>
@@ -455,7 +455,7 @@
           <!--厂商指导价-->
           <i-col span="8">
             <i-form-item label="厂商指导价" prop="carGuidePrice">
-              <i-input v-model="formCar.carGuidePrice+''" placeholder="">
+              <i-input v-model="formCar.carGuidePrice" placeholder="">
                 <span slot="append">元</span>
               </i-input>
             </i-form-item>
@@ -463,7 +463,7 @@
           <!--车辆购买价格-->
           <i-col span="8">
             <i-form-item label="车辆购买价格" prop="carBuyPrice">
-              <i-input v-model="formCar.carBuyPrice+''" placeholder="">
+              <i-input v-model="formCar.carBuyPrice" placeholder="">
                 <span slot="append">元</span>
               </i-input>
             </i-form-item>
@@ -471,7 +471,7 @@
           <!--车辆价值-->
           <i-col span="8">
             <i-form-item label="车辆价值" prop="carEvaluatePrice">
-              <i-input v-model="formCar.carEvaluatePrice+''" placeholder="">
+              <i-input v-model="formCar.carEvaluatePrice" placeholder="">
                 <span slot="append">元</span>
               </i-input>
             </i-form-item>
