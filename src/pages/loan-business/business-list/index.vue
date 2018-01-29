@@ -52,15 +52,17 @@
             <i-option v-for="item in enumSelectData.get('BizStatusEnum')" :key="item.itemCode" :value="item.itemCode">{{item.itemName}}</i-option>
           </i-select>
         </i-form-item>
-        <i-form-item prop="applyStartTime">
-          <bs-datepicker v-model="searchForm.applyStartTime" type="text" placeholder="申请时间"></bs-datepicker>
-        </i-form-item>
-        <i-form-item>
-          -
-        </i-form-item>
-        <i-form-item prop="applyEndTime">
-          <bs-datepicker v-model="searchForm.applyEndTime" type="text" placeholder="申请时间"></bs-datepicker>
-        </i-form-item>
+        <div style="display: inline-block">
+          <i-form-item prop="applyStartTime">
+            <bs-datepicker v-model="searchForm.applyStartTime" type="text" placeholder="申请时间"></bs-datepicker>
+          </i-form-item>
+          <i-form-item>
+            -
+          </i-form-item>
+          <i-form-item prop="applyEndTime">
+            <bs-datepicker v-model="searchForm.applyEndTime" type="text" placeholder="申请时间"></bs-datepicker>
+          </i-form-item>
+        </div>
         <i-form-item>
           <i-button @click="search" type="primary"><i-icon type="ios-search-strong"></i-icon> 搜索</i-button>
         </i-form-item>

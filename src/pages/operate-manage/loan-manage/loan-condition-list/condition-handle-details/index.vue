@@ -667,6 +667,8 @@
               'mortgageUrl',
               'remark'
             ];
+            // 当权证回传方式为《先入库后放款》则抵押状态为“已抵押”
+            this.$data.formalities.mortgageStatus = '1';
             formField.forEach((item) => {
               this.$set(this.$data.carData[ind], '' + item, this.$data.formalities['' + item]);
             });

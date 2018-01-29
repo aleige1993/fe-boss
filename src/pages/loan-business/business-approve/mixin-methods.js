@@ -84,13 +84,13 @@ export default {
                 name: 'loanBusinessList'
               });
             } else {
-              resp.body && resp.body.forEach((item) => {
+             /* resp.body && resp.body.forEach((item) => {
                 this.$Notice.error({
                   title: '错误提示',
                   duration: 2,
                   desc: '' + item
                 });
-              });
+              });*/
             }
           });
           this.$data.submitApproveLoading = false;
