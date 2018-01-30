@@ -14,7 +14,10 @@ export default {
         },
         {
           title: '状态',
-          key: 'status'
+          key: 'status',
+          render: (h, params) => {
+            return h('span', {}, params.row.status === '1' ? '正常' : '停用');
+          }
         }
       ],
       columnsFeatureActionColumns: [

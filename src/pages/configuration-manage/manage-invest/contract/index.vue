@@ -37,6 +37,14 @@
             <i-option v-for="item in enumSelectData.get('ContractTypeEnum')" :key="item.itemCode" :value="item.itemCode">{{item.itemName}}</i-option>
           </i-select>
         </i-form-item>
+        <i-form-item
+          label="签订方式"
+          :rules="{required: true, message: '签订方式不能为空', trigger: 'change'}"
+          prop="signType">
+          <i-select v-model="formContract.signType">
+            <i-option v-for="item in enumSelectData.get('SignTypeEnum')" :key="item.itemCode" :value="item.itemCode">{{item.itemName}}</i-option>
+          </i-select>
+        </i-form-item>
         <i-form-item label="云贷签约平台模板ID" prop="yundaiContractId">
           <i-input v-model="formContract.yundaiContractId" placeholder="非必填项">
           </i-input>
@@ -101,6 +109,7 @@
           contractTemplateName: '', // 合同名称
           contractSource: '', // 合同属主
           contractType: '', // 合同类型
+          signType: '', // 签订方式
           yundaiContractId: '', // 云贷签约平台模板ID
           contractTemplateAttach: '' // 合同附件
         }
@@ -140,6 +149,7 @@
           contractTemplateName: this.$data.formContract.contractTemplateName,
           contractSource: this.$data.formContract.contractSource,
           contractType: this.$data.formContract.contractType,
+          signType: this.$data.formContract.signType,
           contractTemplateAttach: this.$data.formContract.contractTemplateAttach,
           contractTemplateNo: this.$data.formContract.contractTemplateNo,
           yundaiContractId: this.$data.formContract.yundaiContractId

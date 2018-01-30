@@ -69,6 +69,7 @@ export default {
           if (loanNode === '3') {
             if (!this.$data.isHasCheckCreditReport) {
               this.$data.tabIndex = 2;
+              $('html, body')[0].scrollTop = 0; // 滚动条滚动到顶部
               this.$Message.error({
                 content: '请确认已查看征信报告！',
                 duration: 2
@@ -104,6 +105,7 @@ export default {
               duration: 2
             });
             this.$data.tabIndex = 1;
+            $('html, body')[0].scrollTop = $('body')[0].clientHeight; // 滚动条滚动到底部
             this.$data.submitApproveLoading = false;
             loading();
             return;

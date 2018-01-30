@@ -150,13 +150,6 @@
     <!--办理抵质押物手续-->
     <bs-modal v-model="formalitiesShowModal" title="办理抵质押物手续" :width="520">
       <i-form ref="formalities" :model="formalities" label-position="right" :label-width="80">
-        <!--<i-form-item label="抵押状态"
-                     prop="mortgageStatus"
-                     :rules="{required: true, message: '请选择抵押状态', trigger: 'change'}">
-          <i-select v-model="formalities.mortgageStatus">
-            <i-option v-for="item in enumSelectData.get('MortgageStatusEnum')" :key="item.itemCode" :value="item.itemCode">{{item.itemName}}</i-option>
-          </i-select>
-        </i-form-item>-->
         <i-form-item label="抵押状态">
           <span v-text="enumCode2Name('1', 'MortgageStatusEnum')"></span>
         </i-form-item>

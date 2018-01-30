@@ -210,6 +210,7 @@ export default {
         });
         let getLoanDocListResp = this.$http.post('/biz/listDocDetailByLoanNo', {
           loanNo: this.applyBasicInfo.loanNo,
+          productNo: this.applyBasicInfo.productNo,
           custType: this.applyBasicInfo.custType
         });
         await this.getApproveRuleList(this.$data.formData.productNo, this.$data.formData.loanNo, this.$data.formData.custType);

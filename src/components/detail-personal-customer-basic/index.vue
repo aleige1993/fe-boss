@@ -117,7 +117,7 @@
             </i-row>
             <i-row>
               <i-col span="8">
-                <i-form-item label="工资收入" prop="mbMemberDTO.monthRevenue"><!--MonthRevenueEnum-->
+                <i-form-item label="工资收入" prop="mbMemberDTO.monthRevenue">
                   <span v-text="enumCode2Name('' + formData.mbMemberDTO.monthRevenue, 'MonthRevenueEnum')"></span>
                 </i-form-item>
               </i-col>
@@ -254,7 +254,8 @@
             <i-row>
               <i-col span="8">
                 <i-form-item label="月收入" prop="mbMemberWorkDTO.monthRevenue">
-                  <span v-text="enumCode2Name('' + formData.mbMemberWorkDTO.monthRevenue, 'MonthRevenueEnum')"></span>
+                  <span if="formData.mbMemberWorkDTO.monthRevenue" v-text="formData.mbMemberWorkDTO.monthRevenue+'元'"></span>
+                  <!--<span v-text="enumCode2Name('' + formData.mbMemberWorkDTO.monthRevenue, 'MonthRevenueEnum')"></span>-->
                 </i-form-item>
               </i-col>
               <i-col span="8">
