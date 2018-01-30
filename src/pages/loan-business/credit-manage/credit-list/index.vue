@@ -99,6 +99,7 @@
         this.$data.dataLoading = true;
         if (page) {
           this.$data.searchForm.currentPage = page;
+          this.$data.currentPage = page;
         }
         this.$data.searchForm.creditStatus = this.creditStatus || '';
         let resp = await this.$http.post('/credit/apply/page', this.$data.searchForm);

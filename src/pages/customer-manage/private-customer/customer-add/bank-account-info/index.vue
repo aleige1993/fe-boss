@@ -66,6 +66,7 @@
           openBankCode: '',
           openBankName: '',
           bankMobile: '',
+          certNo: '',
           remark: ''
         }
       };
@@ -100,6 +101,13 @@
             }
             this.$data.submitLoading = true;
             this.$data.formData.memberNo = this.memberNo;
+            // 获取客户证件号码
+            let getCertNo = await this.$http.post('/member/find', { memberNo: this.memberNo });
+            if (getCertNo.success) {
+              this.$data.formData.certNo = getCertNo.body.mbMemberDTO.certNo;
+            } else {
+              this.$data.formData.certNo = '';
+            }
             let resp = await this.$http.post(url, this.$data.formData);
             this.$data.submitLoading = false;
             if (resp.reCode === '0000') {

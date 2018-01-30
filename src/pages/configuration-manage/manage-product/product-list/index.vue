@@ -30,6 +30,7 @@
       <i-button @click="RuleClick" type="ghost"><i class="iconfont icon-shenhe"></i> 准入规则配置</i-button>
       <i-button @click="FileClick" type="ghost"><i class="iconfont icon-shenhe"></i> 归档材料配置</i-button>
       <i-button @click="ContractClick" type="ghost"><i class="iconfont icon-shenhe"></i> 合同模板配置</i-button>
+      <i-button @click="SetCityClick" type="ghost"><i class="iconfont icon-shenhe"></i> 投放城市配置</i-button>
       <i-button v-show="isClickRow" @click="handleClearCurrentRow" type="text"><i-icon type="android-cancel" class="button-cancel"></i-icon> 取消当前选中状态</i-button>
     </div>
     <i-table highlight-row border :loading="dataLoading" ref="proTable" :columns="resultColumns" :data="data1" @on-current-change="radioFun" @on-row-dblclick="selectRow"></i-table>
@@ -149,7 +150,11 @@
     </pt-modal>
     <!--合同模板配置弹窗-->
     <pt-modal :title="'[ '+clickRow.productName+' ]合同模板配置'" v-model="ContractShowModal" :width="1200">
-      <conf-model-contract @notice-file="noticeContractFun" :child-msg="clickRow" v-if="ContractShowModal"></conf-model-contract>
+      <conf-model-contract @notice-contract="noticeContractFun" :child-msg="clickRow" v-if="ContractShowModal"></conf-model-contract>
+    </pt-modal>
+    <!--投放城市配置弹窗-->
+    <pt-modal :title="'[ '+clickRow.productName+' ]投放城市配置'" v-model="SetCityShowModal" :width="1200">
+      <conf-model-city @notice-city="noticeCityFun" :child-msg="clickRow" v-if="SetCityShowModal"></conf-model-city>
     </pt-modal>
   </div>
 </template>
@@ -165,6 +170,7 @@
   import ConfModelRule from './configure-model-rule'; //  准入规则配置
   import ConfModelFile from './configure-model-file'; //  归档材料配置
   import ConfModelContract from './configure-model-contract'; //  合同模板配置
+  import ConfModelCity from './configure-model-city'; //  合同模板配置
   export default {
     name: 'prolist',
     mixins: [MixinData, MixinDataFeature],
@@ -176,7 +182,8 @@
       'conf-model-lending': ConfModelLending,
       'conf-model-rule': ConfModelRule,
       'conf-model-file': ConfModelFile,
-      'conf-model-contract': ConfModelContract
+      'conf-model-contract': ConfModelContract,
+      'conf-model-city': ConfModelCity
     },
     data() {
       return {
@@ -199,6 +206,7 @@
         RuleShowModal: false,         // 准入规则配置弹窗
         FileShowModal: false,         // 归档材料配置弹窗
         ContractShowModal: false,         // 合同模板配置弹窗
+        SetCityShowModal: false,         // 投放城市配置弹窗
         clickRow: {},
         total: 0,
         pageSize: 15,
@@ -488,6 +496,12 @@
           this.$data.ContractShowModal = true;
         }
       },
+      // 打开投放城市配置弹窗
+      SetCityClick() {
+        if (this.clickRowedFun()) {
+          this.$data.SetCityShowModal = true;
+        }
+      },
       // 利率配置弹窗传参
       noticeLilvFun() {
         this.$data.LlShowModel = false;
@@ -514,6 +528,10 @@
       },
       // 合同模板弹窗传参
       noticeContractFun() {
+        this.$data.ContractShowModal = false;
+      },
+      // 投放城市弹窗传参
+      noticeCityFun() {
         this.$data.ContractShowModal = false;
       }
     }

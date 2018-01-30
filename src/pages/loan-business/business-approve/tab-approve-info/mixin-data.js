@@ -161,10 +161,6 @@ export default {
             ]);
           }
         },
-        /* {
-          title: '费用项目代码',
-          key: 'feeTypeCode'
-        },*/
         {
           title: '费用项目',
           key: 'feeName'
@@ -204,10 +200,6 @@ export default {
             ]);
           }
         },
-        /* {
-          title: '计算方式',
-          key: 'feeCountType'
-        },*/
         {
           title: '比例%',
           key: 'feePercent'
@@ -418,12 +410,12 @@ export default {
         },
         // 放款条件
         loanPaymentConditionDTOS: [
-          {
+          /* {
             'paymentConNo': '', // 放款条件编号
             'paymentConName': '', // 放款条件项目名称
             'paymentConContent': '', // 放款条件项目内容
             'status': '' // 放款条件是否落实：1是；0-否
-          }
+          }*/
         ],
         loanCapitalDTOS: [
           /* {

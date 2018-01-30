@@ -627,7 +627,7 @@
     </bs-modal>
     <!--车辆评估信息新增和编辑-->
     <bs-modal :title="isAddCarEval ? '添加车辆评估' : '修改车辆评估'" v-model="showCarEvalFormModal" :width="500">
-      <i-form ref="formCarEval" :model="formCarEval" label-position="right" :label-width="120">
+      <i-form v-if="showCarEvalFormModal" ref="formCarEval" :model="formCarEval" label-position="right" :label-width="120">
         <i-row>
           <i-col span="24">
             <i-form-item label="第三方评估商名称" prop="evalProviderName"
@@ -690,6 +690,10 @@
         </i-row>
       </i-form>
     </bs-modal>
+    <!--上传/查看车辆图片-->
+    <bs-modal :title="'上传/查看车辆图片'" v-model="seeCarPictureModal" :width="1200">
+
+    </bs-modal>
     <i-spin fix v-if="initApplyInfoLoading"></i-spin>
   </div>
 </template>
@@ -717,7 +721,8 @@
     mixins: [MixinData, MixinMethods, carMixinData, carMixinMethods, assureMixinData, assureMixinMethods, loanMixinData, loanMixinMethods],
     data() {
       return {
-        isDistributor: false // 选择渠道商弹窗是否显示为“选择经销商”
+        isDistributor: false, // 选择渠道商弹窗是否显示为“选择经销商”
+        seeCarPictureModal: false // 上传/查看车辆图片弹窗
       };
     },
     components: {

@@ -16,7 +16,7 @@
     <slot name="topAction"></slot>
     <i-table border :loading="dataLoading" ref="selection" @on-row-dblclick="selectRow" :columns="resultCompanyCustomerColumns" :data="companyCustomerData"></i-table>
     <div class="page-container">
-      <i-page @on-change="jumpPage" :total="total" size="small" show-elevator show-total></i-page>
+      <i-page @on-change="jumpPage" :page-size="pageSize" :current="currentPage" :total="total" size="small" show-elevator show-total></i-page>
     </div>
   </div>
 </template>
@@ -29,11 +29,12 @@ export default {
     return {
       dataLoading: false,
       total: 0,
+      currentPage: 1,
+      pageSize: 15,
       searchForm: {
         corpName: '',
-        creditCode: '',
-        currentPage: 1,
-        pageSize: 15
+        creditCode: ''
+
       }
     };
   },
@@ -55,12 +56,16 @@ export default {
     async getCompanyCustomerList(page) {
       this.$data.dataLoading = true;
       if (page) {
-        this.$data.searchForm.currentPage = page;
+        this.$data.currentPage = page;
       }
       if (this.type === 'modal') {
         this.$data.searchForm.status = '1';
       }
-      let resp = await this.$http.post('/corp/listCorp', this.$data.searchForm);
+      let resp = await this.$http.post('/corp/listCorp', {
+        ...this.$data.searchForm,
+        currentPage: this.$data.currentPage,
+        pageSize: this.$data.pageSize
+      });
       this.$data.dataLoading = false;
       this.$data.companyCustomerData = resp.body.resultList;
       this.$data.currentPage = resp.body.currentPage / 1;

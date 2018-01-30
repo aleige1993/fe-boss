@@ -46,10 +46,25 @@ export default {
         {
           title: '操作',
           key: 'action',
-          width: 150,
+          width: 260,
           align: 'center',
           render: (h, params) => {
             return h('div', [
+              h('Button', {
+                props: {
+                  type: 'success',
+                  size: 'small',
+                  disabled: this.readonly
+                },
+                style: {
+                  marginRight: '5px'
+                },
+                on: {
+                  click: () => {
+                    this.setListCar(Object.assign({}, params.row));
+                  }
+                }
+              }, '上传/查看车辆图片'),
               h('Button', {
                 props: {
                   type: 'primary',

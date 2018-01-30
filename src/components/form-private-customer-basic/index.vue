@@ -260,7 +260,7 @@
               <i-col span="8">
                 <i-form-item label="单位名称"
                              prop="mbMemberWorkDTO.companyName"
-                             :rules="{required: true, message: '请选择单位', trigger: 'blur'}">
+                             :rules="{required: true, message: '请选择单位', trigger: 'change'}">
                   <i-input :readonly="true" v-model="formData.mbMemberWorkDTO.companyName">
                     <i-button v-if="!isFromDetail" type="primary" @click="showSelectCompany=!showSelectCompany" slot="append">选择公司 <Icon type="ios-more"></Icon></i-button>
                   </i-input>
