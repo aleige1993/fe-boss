@@ -98,6 +98,7 @@
           let json = {};
           json['loanDocCode'] = item.loanDocCode;
           json['loanDocName'] = item.loanDocName;
+          json['custType'] = item.custType;
           return json;
         });
         this.$data.loanDocCode = _dataArray;
