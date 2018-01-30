@@ -101,9 +101,10 @@
           this.$data.searchForm.currentPage = page;
         }
         let resp = await this.$http.post('/pay/payment', this.$data.searchForm);
+        console.log(JSON.stringify(resp));
         this.$data.dataLoading = false;
         resp.body.resultList.map(item => {
-          if (!(item.state === '-1' || item.state === '3')) {
+          if (!(item.state === '-1' || item.state === '3') || item.flag === '1') {
             item._disabled = true;
           }
           return item;

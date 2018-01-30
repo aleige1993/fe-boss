@@ -78,6 +78,16 @@ export default {
           width: 120
         },
         {
+          title: '支付渠道',
+          key: 'flag',
+          width: 80,
+          fixed: 'right',
+          align: 'center',
+          render: (h, params) => {
+            return params.row.flag === '0' ? '宝付' : '云贷';
+          }
+        },
+        {
           title: '付款状态',
           key: 'state',
           width: 100,
@@ -110,7 +120,7 @@ export default {
           fixed: 'right',
           align: 'center',
           render: (h, params) => {
-            if (params.row.state === '-1' || params.row.state === '3') {
+            if ((params.row.state === '-1' || params.row.state === '3') && params.row.flag === '0') {
               return h('div', [
                 h('Button', {
                   props: {
