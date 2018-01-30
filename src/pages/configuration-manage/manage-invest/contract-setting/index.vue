@@ -164,12 +164,13 @@
         if (page) {
           this.$data.searchForm.currentPage = page;
         }
+//        console.log(this.$data.searchForm.currentPage);
         let resp = await this.$http.post('/cfg/contract/list', {
           templateNo: this.$data.contractTemplateNo,
           currentPage: this.$data.searchForm.currentPage,
           pageSize: this.$data.searchForm.pageSize
         });
-        console.log(JSON.stringify(resp));
+//        console.log(JSON.stringify(resp));
         this.$data.dataLoading = false;
         this.$data.privateCustomerLoanList = resp.body.resultList;
         this.$data.currentPage = resp.body.currentPage;
