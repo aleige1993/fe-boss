@@ -32,22 +32,22 @@
           <i-input v-model="fromData.fieldDesc" placeholder=""></i-input>
         </i-form-item>
         <i-form-item label="属性类型" prop="fieldType" :rules="{required: true, message: '请选择属性类型', trigger: 'blur'}">
-          <i-select v-model="fromData.fieldType" @on-change="selectFieldType">
+          <i-select v-model="fromData.fieldType">
             <i-option v-for="item in settingTypeEnum" :key="item.itemCode" :value="item.itemCode">{{item.itemName}}
             </i-option>
           </i-select>
         </i-form-item>
-        <i-form-item label="属性默认值" prop="fieldDefaultValue">
-          <i-input v-model="fromData.fieldDefaultValue" placeholder="" :readonly="defaultValueReadonly"></i-input>
+        <i-form-item v-show="fromData.fieldType === '1'" label="属性默认值" prop="fieldDefaultValue">
+          <i-input v-model="fromData.fieldDefaultValue" placeholder=""></i-input>
         </i-form-item>
-        <i-form-item label="属性取值来源实体" prop="fieldSourceEntity" :rules="{required: true, message: '请选择属性取值来源实体', trigger: 'blur'}">
+        <i-form-item v-show="fromData.fieldType === '2'" label="属性取值来源实体" prop="fieldSourceEntity">
           <i-select v-model="fromData.fieldSourceEntity" @on-change="selectFieldSourceEntity">
             <i-option v-for="item in sourceEntityEnum" :key="item.entityId" :value="item.entityId">{{item.entityName}}
             </i-option>
           </i-select>
         </i-form-item>
-        <i-form-item label="属性取值来源字段" prop="fieldSourceAttr">
-          <i-select v-model="fromData.fieldSourceAttr">
+        <i-form-item v-show="fromData.fieldType === '2'" label="属性取值来源字段" prop="fieldSourceAttr">
+          <i-select v-model="fromData.fieldSourceAttr" @on-change="selectFieldSourceAttr">
             <i-option v-for="item in sourceAttrEnum" :key="item.fieldId" :value="item.fieldId">{{item.fieldName}}
             </i-option>
           </i-select>
@@ -89,10 +89,11 @@
           currentPage: 1,
           pageSize: 15
         },
-        fromData: {},
+        fromData: {
+          fieldType: ''
+        },
         contractTemplateNo: this.$route.query.id, // 合同编码
         contractTemplateName: this.$route.query.name, // 合同名称
-        defaultValueReadonly: false, // 默认值是否只读
         settingTypeEnum: [], // 属性类型枚举
         sourceEntityEnum: [], // 属性取值来源实体
         sourceAttrEnum: [] // 属性取值来源字段
@@ -129,27 +130,34 @@
         this.$refs['fromData'].resetFields();
         this.$data.isAdd = true;
         this.$data.addModal = true;
-        this.$data.defaultValueReadonly = false;
         this.$data.fromData.contractTemplateNo = this.$data.contractTemplateNo;
         this.$data.fromData.contractTemplateName = this.$data.contractTemplateName;
       },
-      selectFieldType() {
-        if (this.$data.fromData.fieldType === '1') {
-          this.$data.defaultValueReadonly = false;
-        } else {
-          this.$data.defaultValueReadonly = true;
-          this.$data.fromData.fieldDefaultValue = null;
-        }
-      },
+//      selectFieldType() {
+//        if (this.$data.fromData.fieldType === '1') {
+//          this.$data.defaultValueReadonly = false;
+//        } else {
+//          this.$data.defaultValueReadonly = true;
+//          this.$data.fromData.fieldDefaultValue = null;
+//        }
+//      },
       selectFieldSourceEntity() {
         let sourceArray = [];
         this.$data.sourceEntityEnum.map(item => {
           if (item.entityId === this.$data.fromData.fieldSourceEntity) {
+            this.$data.fromData.entityDesc = item.entityName;
             sourceArray = item.fieldList;
           }
           return sourceArray;
         });
         this.$data.sourceAttrEnum = sourceArray;
+      },
+      selectFieldSourceAttr() {
+        this.$data.sourceAttrEnum.map(item => {
+          if (item.fieldId === this.$data.fromData.fieldSourceAttr) {
+            this.$data.fromData.attrDesc = item.fieldName;
+          }
+        });
       },
       async getProxyPayList(page) {
         this.$data.dataLoading = true;
@@ -157,8 +165,11 @@
           this.$data.searchForm.currentPage = page;
         }
         let resp = await this.$http.post('/cfg/contract/list', {
-          templateNo: this.$data.contractTemplateNo
+          templateNo: this.$data.contractTemplateNo,
+          currentPage: this.$data.searchForm.currentPage,
+          pageSize: this.$data.searchForm.pageSize
         });
+        console.log(JSON.stringify(resp));
         this.$data.dataLoading = false;
         this.$data.privateCustomerLoanList = resp.body.resultList;
         this.$data.currentPage = resp.body.currentPage;
@@ -167,13 +178,13 @@
       async getSourceList() {
         let resp = await this.$http.get('/cfg/contract/listField');
         this.sourceEntityEnum = resp.body;
+//        console.log(JSON.stringify(this.sourceEntityEnum));
       },
       async submitSuccess() {
+//        console.log(this.$data.fromData.entityDesc, this.$data.fromData.attrDesc);
         this.$data.buttonLoading = true;
         let url = this.$data.isAdd ? '/cfg/contract/add' : '/cfg/contract/modify';
-        let resp = await this.$http.post(url, {
-          ...this.$data.fromData
-        });
+        let resp = await this.$http.post(url, this.$data.fromData);
         this.$data.buttonLoading = false;
         this.$data.addModal = false;
         if (resp.success) {
