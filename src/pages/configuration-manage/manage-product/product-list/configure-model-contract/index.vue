@@ -21,22 +21,6 @@
             <i-button @click="showSelectContractTemplate=!showSelectContractTemplate" slot="append">选择合同模板 <Icon type="ios-more"></Icon></i-button>
           </i-input>
         </i-form-item>
-        <i-form-item label="合同类型" prop="contractType">
-          <i-select v-model="formCustom.contractType">
-            <i-option v-for="item in enumSelectData.get('ContractTypeEnum')" :key="item.itemCode" :value="item.itemCode">{{item.itemName}}</i-option>
-          </i-select>
-        </i-form-item>
-        <i-form-item label="签订方式" prop="signType">
-          <i-select v-model="formCustom.signType">
-            <i-option v-for="item in enumSelectData.get('SignTypeEnum')" :key="item.itemCode" :value="item.itemCode">{{item.itemName}}</i-option>
-          </i-select>
-        </i-form-item>
-        <i-form-item label="适用类型" prop="applicableType">
-          <i-select v-model="formCustom.applicableType">
-            <i-option value="1">云易行</i-option>
-            <i-option value="2">海乐行</i-option>
-          </i-select>
-        </i-form-item>
         <i-form-item class="text-right">
           <i-button type="primary" @click="addSuBmit" :loading="buttonLoading">
             <span v-if="!buttonLoading">提交</span>
@@ -74,11 +58,8 @@
         formCustom: {
           productNo: '',
           productName: '',
-          contractType: '',
           contractTemplateName: '',
-          contractTemplateNo: '',
-          signType: '',
-          applicableType: ''
+          contractTemplateNo: ''
         },
         columns1: [
           {
@@ -89,27 +70,6 @@
           {
             title: '合同名称',
             key: 'contractTemplateName'
-          },
-          {
-            title: '合同类型',
-            key: 'contractType',
-            render: (h, params) => {
-              return h('span', {}, this.enumCode2Name(params.row.contractType, 'ContractTypeEnum'));
-            }
-          },
-          {
-            title: '适用类型',
-            key: 'applicableType',
-            render: (h, params) => {
-              return h('span', {}, this.applicableTypeSelect(params.row.applicableType));
-            }
-          },
-          {
-            title: '签订方式',
-            key: 'signType',
-            render: (h, params) => {
-              return h('span', {}, this.enumCode2Name(params.row.signType, 'SignTypeEnum'));
-            }
           },
           {
             title: '操作',
@@ -141,16 +101,6 @@
       this.getPrivateCustomerList();
     },
     methods: {
-      // 适用类型枚举
-      applicableTypeSelect(code) {
-        let text = '';
-        if (code === '1') {
-          text = '云易行';
-        } else if (code === '2') {
-          text = '海乐行';
-        }
-        return text;
-      },
       // 查询列表数据
       async getPrivateCustomerList() {
         this.$data.formCustom.dataLoading = true;
@@ -171,10 +121,7 @@
           productNo: this.childMsg.productNo,
           productName: this.childMsg.productName,
           contractTemplateNo: this.$data.formCustom.contractTemplateNo,
-          contractTemplateName: this.$data.formCustom.contractTemplateName,
-          contractType: this.$data.formCustom.contractType,
-          signType: this.$data.formCustom.signType,
-          applicableType: this.$data.formCustom.applicableType
+          contractTemplateName: this.$data.formCustom.contractTemplateName
         });
         this.$data.buttonLoading = false; // 关闭按钮的loading状态
         this.$data.showAddModal = false;

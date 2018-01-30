@@ -27,6 +27,13 @@ export default {
           }
         },
         {
+          title: '签订方式',
+          key: 'signType',
+          render: (h, params) => {
+            return h('span', {}, this.enumCode2Name(params.row.signType, 'SignTypeEnum'));
+          }
+        },
+        {
           title: '模板附件',
           width: 200,
           key: 'enclosure',

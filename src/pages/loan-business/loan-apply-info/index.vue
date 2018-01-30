@@ -223,7 +223,7 @@
     </bs-modal>
     <!--车辆信息的新增修改模态框-->
     <bs-modal :title="isAddCar ? '新增' : '编辑'" v-model="showModalCar" :width="1200">
-      <i-form ref="formCar" :model="formCar" label-position="right" :label-width="140">
+      <i-form v-if="showModalCar" ref="formCar" :model="formCar" label-position="right" :label-width="140">
         <i-row>
           <i-col span="8">
             <i-form-item
@@ -280,9 +280,10 @@
           <!--车辆品牌-->
           <i-col span="24">
             <i-form-item
-              label="车辆品牌" >
+              label="车辆品牌"
+              prop="carModel">
               <!--:rules="{required: true, message: '车辆品牌不能为空'}"
-              prop="carBrandCode"-->
+              -->
               <input type="hidden" v-model="formCar.carModel">
               <bs-carpicker :currBrand="formCar.carBrandName"
                             :currSeries="formCar.carTypeName"
@@ -295,7 +296,7 @@
         <i-row>
           <!--车辆颜色-->
           <i-col span="8">
-            <i-form-item label="车辆颜色">
+            <i-form-item label="车辆颜色" prop="carColor">
               <i-select v-model="formCar.carColor">
                 <i-option v-for="item in enumSelectData.get('CarColorEnum')" :key="item.itemCode" :value="item.itemCode">{{item.itemName}}</i-option>
               </i-select>
@@ -446,8 +447,7 @@
           <!--发票价格-->
           <i-col span="8">
             <i-form-item label="发票价格" prop="billAmt">
-              <i-input v-model="formCar.billAmt" placeholder="">
-              </i-input>
+              <i-input v-model="formCar.billAmt" placeholder=""></i-input>
             </i-form-item>
           </i-col>
         </i-row>
@@ -493,7 +493,7 @@
     </bs-modal>
     <!--担保信息的新增修改模态框-->
     <bs-modal :title="isAddAssure ? '新增' : '编辑'" v-model="showModalAssure" :width="800">
-      <i-form ref="formAssure" :model="formAssure" label-position="right" :label-width="120">
+      <i-form v-if="showModalAssure" ref="formAssure" :model="formAssure" label-position="right" :label-width="120">
         <i-row>
           <i-col span="12">
             <i-form-item label="担保人类型" prop="guaPersonType"
@@ -573,7 +573,7 @@
     </bs-modal>
     <!--贷款材料的新增修改模态框-->
     <bs-modal :title="isAddLoan ? '新增' : '编辑'" v-model="showModalLoan">
-      <i-form ref="formLoan" :model="formLoan" label-position="right" :label-width="100">
+      <i-form v-if="showModalLoan" ref="formLoan" :model="formLoan" label-position="right" :label-width="100">
         <i-form-item label="贷款材料名称" prop="loanDocName">
           <i-input v-model="formLoan.loanDocName" placeholder="">
           </i-input>
@@ -688,7 +688,6 @@
             </i-form-item>
           </i-col>
         </i-row>
-
       </i-form>
     </bs-modal>
     <i-spin fix v-if="initApplyInfoLoading"></i-spin>

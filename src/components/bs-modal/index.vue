@@ -120,8 +120,9 @@ export default {
       color: #fff;
       position: absolute;
       right: 10px;
-      top: 3px;
+      top: 50%;
       font-size: 18px;
+      margin-top: -9px;
       cursor: pointer;
       font-weight: 500;
       transition: all .5s;

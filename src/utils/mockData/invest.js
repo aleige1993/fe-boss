@@ -109,6 +109,7 @@ export default [
             'contractTemplateName': 'mockjs',
             'contractType|1': ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12'],
             'contractSource|1': ['1', '2'],
+            'signType|1': ['1', '2'],
             'enclosure|1': ['附件1', '附件2'],
             'yundaiContractId|1': ['签约平台模板ID01', '签约平台模板ID02', '签约平台模板ID03'],
             'enclosure': /[a-z][A-Z][0-9]{3}\.pdf/,

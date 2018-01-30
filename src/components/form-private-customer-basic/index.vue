@@ -485,6 +485,8 @@ export default {
         });
         this.$data.initFormLoading = false;
         this.$data.formData = resp.body;
+        this.$data.formData.mbMemberDTO.workYears = this.$data.formData.mbMemberDTO.workYears + '';
+        this.$data.formData.mbMemberDTO.liveYears = this.$data.formData.mbMemberDTO.liveYears + '';
         // this.$refs['censusDispicker'].initData();
         this.$emit('on-submit-success', resp.body);
       } catch (e) {

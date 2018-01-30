@@ -22,9 +22,6 @@
         <br>
         <iframe v-if="tabIndex == 2" :src="creditReportURL" width="100%" :height="iframeHeight" frameborder="0"></iframe>
       </i-tab-pane>
-      <!--<i-tab-pane label="芝麻信用报告">
-        <iframe v-if="tabIndex == 3" src="http://www.songchedai.com" width="100%" :height="iframeHeight" frameborder="0"></iframe>
-      </i-tab-pane>-->
       <i-tab-pane label="大数据信息">
         <tab-big-data v-if="tabIndex == 3"></tab-big-data>
       </i-tab-pane>
