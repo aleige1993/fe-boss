@@ -713,6 +713,7 @@
         let resModify = await this.$http.post('/pms/productRate/modify', {
           productNo: this.childMsg.productNo, // 产品编号
           packageNo: this.$data.ProductPackageForm.packageNo, // 套餐编号
+          packageRateNo: this.formInModel.packageRateNo,
           bizType: this.formInModel.bizType, // 车类
           loanPeriods: this.formInModel.loanPeriods, // 贷款期限
           loanNominalRate: this.formInModel.loanNominalRate, // 贷款名义利率

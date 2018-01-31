@@ -61,6 +61,8 @@
       },
       // 上传之前对上传的文件进行验证 必须为图片格式
       beforeUpload(file) {
+        console.log(file);
+        alert('测试：' + file);
         if (!this.isImg(file.url)) {
           this.$Message.error('请上传图片格式的文件！');
           return false;

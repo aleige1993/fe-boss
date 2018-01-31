@@ -65,11 +65,11 @@
           {
             title: '省',
             width: 200,
-            key: 'cityTemplateNo'
+            key: 'provinceName'
           },
           {
             title: '市',
-            key: 'cityTemplateName'
+            key: 'cityName'
           },
           {
             title: '操作',
@@ -122,7 +122,9 @@
           if (valid) {
             this.$data.buttonLoading = true;
             let resAdd = await this.$http.post('/pms/product/bindProductCity', {
-              ...this.$data.formData,
+              productName: this.childMsg.productName,
+              productNo: this.childMsg.productNo,
+              productAlias: this.childMsg.productAlias,
               pmsProductCityDTOS: { ...this.$data.pmsProductCityDTOS }
             });
             this.$data.buttonLoading = false; // 关闭按钮的loading状态
@@ -139,7 +141,10 @@
       addModal() {
         this.$data.showAddModal = true;
         this.$data.formData = {};
+        this.$data.pmsProductCityDTOS = {};
         this.$data.formData.productName = this.childMsg.productName;
+        this.$data.formData.productNo = this.childMsg.productNo;
+        this.$data.formData.productAlias = this.childMsg.productAlias;
       },
       // 删除数据的请求
       async remove(row) {
@@ -148,7 +153,9 @@
             const loadingMsg = this.$Message.loading('删除中...', 0);
             let respDel = await this.$http.post('/pms/product/removeProductCity ', {
               productNo: this.childMsg.productNo,
+              provinceName: row.provinceName,
               provinceCode: row.provinceCode,
+              cityName: row.cityName,
               cityCode: row.cityCode
             });
             loadingMsg();
