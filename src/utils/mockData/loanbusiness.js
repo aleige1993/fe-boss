@@ -1,6 +1,61 @@
 import Mock from 'mockjs';
 
 export default [
+  // 初审列表
+  {
+    url: '/biz/listLoanBizByCon',
+    on: true,
+    resp: Mock.mock({
+      'body': {
+        'currentPage': 1,
+        'pageSize': 999999,
+        'totalNum': 15,
+        'resultList|15': [
+          {
+            'address': 'mockjs',
+            'applyAddress': '重庆市渝中区嘉陵江滨江路58号靠近化龙桥海洋公园',
+            'applyAmt|1000-10000': 1000,
+            'applyPeriods|1-99': 1,
+            'applyTime': '@date',
+            'carBuyAmt|1000-10000': 1000,
+            'carType|1': ['1', '2'],
+            'carUse|1': ['1', '2', '3'],
+            'certNo': /^[1-9]\d{5}(18|19|([23]\d))\d{2}((0[1-9])|(10|11|12))(([0-2][1-9])|10|20|30|31)\d{3}[0-9Xx]$/,
+            'certType|1': ['1', '2'],
+            'channelNo': '111',
+            'custKind': '111',
+            'custType|1': ['1', '2'],
+            'depositOrDownPayment|1-99': 1,
+            'guaMethod|1-99': 1,
+            'id|1-99': 1,
+            'latitude|1-99': 1,
+            'loanChannel|1-99': 1,
+            'loanNo': '1111',
+            'longitude|1-99': 1,
+            'memberName': '@name',
+            'memberNo': /[0-9]{15}/,
+            'merchantAbbr': '海尔云贷',
+            'merchantNo': /[0-9]{15}/,
+            'mobileNo': '18623551111',
+            'orderNo': /[0-9]{15}/,
+            'productName': 'mockjs',
+            'productNo': /[0-9]{15}/,
+            'productType|1': ['1', '2'],
+            'sex|1': ['1', '2'],
+            'status|1': ['3', '4', '5'],
+            'taskArriveTime': '@date',
+            'taskAssignee': '1',
+            'taskAssigneeName': 'admin',
+            'taskNode|1': ['3', '4', '5'],
+            'timeConsuming': /[1-9]{1,2}小时[1-9]{1,2}分[1-9]{1,2}秒/
+          }
+        ]
+      },
+      'reCode': '0000',
+      'reMsg': '成功',
+      'success': true
+    })
+  },
   // 个人业务登记-个人信息-车辆列表
   {
     url: '/loanCarList',

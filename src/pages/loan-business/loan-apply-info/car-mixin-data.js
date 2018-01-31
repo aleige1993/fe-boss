@@ -61,7 +61,7 @@ export default {
                 },
                 on: {
                   click: () => {
-                    this.setListCar(Object.assign({}, params.row));
+                    this.$data.seeCarPictureModal = true;
                   }
                 }
               }, '上传/查看车辆图片'),

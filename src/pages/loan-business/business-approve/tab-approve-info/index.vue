@@ -170,15 +170,15 @@
                 </i-form-item>
                 <i-form-item v-else label="账号" prop="loanPaymentAccountDTOS.bankName"
                              :rules="{required: true, message: '请选择放款账户账号'}">
-                  <input type="hidden" v-model="approveData.loanPaymentAccountDTOS.bankName">
+                  <input type="hidden" v-model="approveData.loanPaymentAccountDTOS.openBankName">
                   <i-select :disabled="readonly" @on-change="paymentAccountChange" :label-in-value="true">
-                    <i-option v-for="item in paymentAccountList"  :key="item.bankName" :value="item.bankName">{{item.acctNo}}</i-option>
+                    <i-option v-for="item in paymentAccountList" :key="item.openBankName" :value="item.openBankName">{{item.acctNo}}</i-option>
                   </i-select>
                 </i-form-item>
               </i-col>
               <i-col span="8">
                 <i-form-item label="开户银行">
-                  <i-input :readonly="true" v-model="approveData.loanPaymentAccountDTOS.bankName"></i-input>
+                  <i-input :readonly="true" v-model="approveData.loanPaymentAccountDTOS.openBankName"></i-input>
                 </i-form-item>
               </i-col>
             </i-row>
@@ -200,7 +200,7 @@
                              :rules="{required: true, message: '请选择还款账户账号'}">
                   <input type="hidden" v-model="approveData.loanRePaymentAccountDTOS.bankName">
                   <i-select :disabled="readonly" @on-change="repaymentAccountChange" :label-in-value="true" >
-                    <i-option v-for="item in repaymentAccountList" :key="item.openBankName" :value="item.bankName">{{item.acctNo}}</i-option>
+                    <i-option v-for="item in repaymentAccountList" :key="item.bankName" :value="item.bankName">{{item.acctNo}}</i-option>
                   </i-select>
                 </i-form-item>
               </i-col>
@@ -369,9 +369,9 @@
       getPageInitData() {
         // 如果是一级审批或者二级审批，用业务编号初始化页面数据获取订单申请和审批信息，
         // 如果是初审，用产品和申请期限初始化有关产品的基础信息
-        this.getProductApproveInfo(this.applyBasicInfo.loanNo, this.applyBasicInfo.productNo, this.applyBasicInfo.applyPeriods);
+        this.getProductApproveInfo(this.applyBasicInfo.loanNo, this.applyBasicInfo.productNo, this.applyBasicInfo.applyPeriods, this.applyBasicInfo.carBuyAmt);
         this.getFirstApproveList(this.applyBasicInfo.loanNo);
-        this.getLoanPeriodByProductNo(this.applyBasicInfo.productNo);
+        this.getLoanPeriodByProductNo(this.applyBasicInfo.productNo, this.applyBasicInfo.carType);
         this.getBankList(this.applyBasicInfo.loanNo);
       }
     },

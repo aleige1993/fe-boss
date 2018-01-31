@@ -26,7 +26,7 @@
           <i-col span="8">
             <i-form-item label="车类"
                          prop="carType"
-                         :rules="{required: true, message: '请选择',trigger: 'change'}">
+                         :rules="{required: true, message: '请选择', trigger: 'change'}">
               <i-select v-model="formData.carType" :disabled="loanAction!='apply'">
                 <i-option v-for="item in enumSelectData.get('BizTypeEnum')" :key="item.itemCode" :value="item.itemCode">{{item.itemName}}</i-option>
               </i-select>
@@ -223,7 +223,7 @@
     </bs-modal>
     <!--车辆信息的新增修改模态框-->
     <bs-modal :title="isAddCar ? '新增' : '编辑'" v-model="showModalCar" :width="1200">
-      <i-form v-if="showModalCar" ref="formCar" :model="formCar" label-position="right" :label-width="140">
+      <i-form ref="formCar" :model="formCar" label-position="right" :label-width="140">
         <i-row>
           <i-col span="8">
             <i-form-item
@@ -692,7 +692,11 @@
     </bs-modal>
     <!--上传/查看车辆图片-->
     <bs-modal :title="'上传/查看车辆图片'" v-model="seeCarPictureModal" :width="1200">
-
+      <car-picture-list :data="CarPicListData" @on-data-remove="carDataRomove"  @on-data-add="carDataAdd"></car-picture-list>
+      <!--<loan-file-list v-for="(item, index) in loanData" :key="index" :readonly="readonly"
+                      :group-index="index" v-model="item.status" :title="item.loanDocName" :data="item.docDetailAttachList"
+                      @on-group-remove="deleteloanFileGroup">
+      </loan-file-list>-->
     </bs-modal>
     <i-spin fix v-if="initApplyInfoLoading"></i-spin>
   </div>
@@ -700,6 +704,7 @@
 
 <script>
   import LoanFileList from '../loan-file-list/index.vue';
+  import CarPictureList from '../car-picture-list/index.vue';
   import TableCustomerList from '@/components/table-customer-list'; // 选择客户列表
   import TableCompanyCustomerList from '@/components/table-company-customer-list'; // 选择客户列表
   import GetProductModal from '@/pages/configuration-manage/manage-product/product-list'; // 选择产品
@@ -721,6 +726,12 @@
     mixins: [MixinData, MixinMethods, carMixinData, carMixinMethods, assureMixinData, assureMixinMethods, loanMixinData, loanMixinMethods],
     data() {
       return {
+        CarPicListData: [
+          {
+            attachName: 'kobe.jpg',
+            attachUrl: 'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1517397396406&di=274f88b8a708f4cd0c4c2ad71cc874c9&imgtype=0&src=http%3A%2F%2Fimg.mp.itc.cn%2Fupload%2F20160414%2F4a178ec67ab64bbfa61f804c16cc629b_th.jpg'
+          }
+        ],
         isDistributor: false, // 选择渠道商弹窗是否显示为“选择经销商”
         seeCarPictureModal: false // 上传/查看车辆图片弹窗
       };
@@ -734,6 +745,7 @@
       'bs-modal': BsModal,
       'bs-carpicker': BsCarpicker,
       LoanFileList,
+      CarPictureList,
       TableDistributorList
     },
     props: {
@@ -758,6 +770,15 @@
       this.initPage();
     },
     methods: {
+      // 删除车辆图片
+      carDataRomove(index) {
+        console.log('index:' + index);
+        this.$data.CarPicListData.splice(index, 1);
+      },
+      // 添加车辆图片
+      carDataAdd(dataList) {
+        this.$data.CarPicListData.push(dataList);
+      },
       // 点击的时“选择经销商”按钮
       distributorClick() {
         this.$data.showSelectDistributor = true;

@@ -8,18 +8,19 @@
     <br>
     <br>
     <bs-modal :title="'新增'" v-model="showAddModal">
-      <i-form ref="formCustom" :model="formCustom" label-position="right" :label-width="100" style="padding-bottom:0;">
-        <i-form-item label="产品名称" prop="productName">
-          <p>{{formCustom.productName}}</p>
+      <i-form ref="pmsProductCityDTOS" :model="pmsProductCityDTOS" label-position="right" :label-width="100" style="padding-bottom:0;">
+        <i-form-item label="产品名称">
+          <p>{{formData.productName}}</p>
         </i-form-item>
         <i-form-item
           label="投放城市"
           :rules="{required: true, message: '请选择投放城市', trigger: 'change'}"
-          prop="districtCode">
-          <input type="hidden" v-model="formCustom.districtCode">
-          <bs-dispicker-two :filterCQ="true" :currProvinceCode="formCustom.provinceCode"
-                        :currDistrictCode="formCustom.districtCode"
-                        @on-change="selectNowDistance"></bs-dispicker-two>
+          prop="cityCode">
+          <input type="hidden" v-model="pmsProductCityDTOS.cityCode">
+          <bs-dispicker-two :filterCQ="true"
+                            :currProvinceCode="pmsProductCityDTOS.provinceCode"
+                            :currDistrictCode="pmsProductCityDTOS.cityCode"
+                            @on-change="selectNowDistance"></bs-dispicker-two>
         </i-form-item>
         <i-form-item class="text-right">
           <i-button type="primary" @click="addSuBmit" :loading="buttonLoading">
@@ -49,13 +50,16 @@
       return {
         showAddModal: false,
         buttonLoading: false,
-        formCustom: {
+        formData: {
+          productNo: '',
+          productName: '',
+          productAlias: ''
+        },
+        pmsProductCityDTOS: {
           provinceCode: '',
           provinceName: '',
-          districtCode: '',
-          districtName: '',
-          productNo: '',
-          productName: ''
+          cityCode: '',
+          cityName: ''
         },
         columns1: [
           {
@@ -93,15 +97,16 @@
       };
     },
     mounted() {
-      this.$data.formCustom.productName = this.childMsg.productName;
-      this.$data.formCustom.productNo = this.childMsg.productNo;
+      this.$data.formData.productName = this.childMsg.productName;
+      this.$data.formData.productNo = this.childMsg.productNo;
+      this.$data.formData.productAlias = this.childMsg.productAlias;
       this.getPrivateCustomerList();
     },
     methods: {
       // 查询列表数据
       async getPrivateCustomerList() {
-       /* this.$data.dataLoading = true;
-        let resp = await this.$http.post('/pms/capital/listCityTemplateCfg', {
+        this.$data.dataLoading = true;
+        let resp = await this.$http.get('/pms/product/productCityList', {
           productNo: this.childMsg.productNo
         });
         this.$data.dataLoading = false;
@@ -109,15 +114,16 @@
           this.$data.data1 = resp.body.resultList;
         } else {
           this.$data.data1 = [];
-        }*/
+        }
       },
       // 新增的保存请求方法
       addSuBmit() {
-        this.$refs['formCustom'].validate(async (valid) => {
+        this.$refs['pmsProductCityDTOS'].validate(async (valid) => {
           if (valid) {
             this.$data.buttonLoading = true;
-            let resAdd = await this.$http.post('/', {
-              ...this.$data.formCustom
+            let resAdd = await this.$http.post('/pms/product/bindProductCity', {
+              ...this.$data.formData,
+              pmsProductCityDTOS: { ...this.$data.pmsProductCityDTOS }
             });
             this.$data.buttonLoading = false; // 关闭按钮的loading状态
             this.$data.showAddModal = false;
@@ -132,17 +138,18 @@
       },
       addModal() {
         this.$data.showAddModal = true;
-        this.$data.formCustom = {};
-        this.$data.formCustom.productName = this.childMsg.productName;
+        this.$data.formData = {};
+        this.$data.formData.productName = this.childMsg.productName;
       },
       // 删除数据的请求
       async remove(row) {
         Alertify.confirm('确定要删除吗？', async (ok) => {
           if (ok) {
             const loadingMsg = this.$Message.loading('删除中...', 0);
-            let respDel = await this.$http.post('/', {
-              productNo: row.productNo,
-              cityTemplateNo: row.cityTemplateNo
+            let respDel = await this.$http.post('/pms/product/removeProductCity ', {
+              productNo: this.childMsg.productNo,
+              provinceCode: row.provinceCode,
+              cityCode: row.cityCode
             });
             loadingMsg();
             if (respDel.success) {
@@ -157,10 +164,10 @@
       },
       // 城市两级联动
       selectNowDistance(city) {
-        this.$data.formCustom.provinceCode = city.provinceCode;
-        this.$data.formCustom.provinceName = city.provinceName;
-        this.$data.formCustom.districtCode = city.districtCode;
-        this.$data.formCustom.districtName = city.districtName;
+        this.$data.pmsProductCityDTOS.provinceCode = city.provinceCode;
+        this.$data.pmsProductCityDTOS.provinceName = city.provinceName;
+        this.$data.pmsProductCityDTOS.cityCode = city.districtCode;
+        this.$data.pmsProductCityDTOS.cityName = city.districtName;
       }
     }
   };

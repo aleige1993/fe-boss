@@ -17,10 +17,11 @@
         </approve-info>
       </i-tab-pane>
       <i-tab-pane label="人行征信报告" :disabled="formData.custType === '2'">
-        <i-radio v-model="isHasCheckCreditReport">   已查看征信报告</i-radio>
+        <i-checkbox v-if="showCreditCheckbox" v-model="isHasCheckCreditReport">&nbsp;&nbsp;已查看征信报告</i-checkbox>
+        <div v-if="isCreditEerror" style="color: red; padding: 20px 0">暂无征信查询结果！</div>
         <br>
         <br>
-        <iframe v-if="tabIndex == 2" :src="creditReportURL" width="100%" :height="iframeHeight" frameborder="0"></iframe>
+        <iframe style="border:1px solid #f5f5f5" v-if="tabIndex == 2" :src="creditReportURL" width="100%" :height="iframeHeight" frameborder="0"></iframe>
       </i-tab-pane>
       <i-tab-pane label="大数据信息">
         <tab-big-data v-if="tabIndex == 3"></tab-big-data>
@@ -56,6 +57,8 @@
     data() {
       return {
         isHasCheckCreditReport: false, // 是否征信报告
+        showCreditCheckbox: true, // 显示 已查看征信报告按钮
+        isCreditEerror: false, // 暂无征信查询结果 时显示
         iframeHeight: 460,
         tabIndex: 0,
         initFormLoading: false,

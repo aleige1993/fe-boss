@@ -80,7 +80,7 @@ export default {
       this.$data.approveData.loanApproveCreditDTO.productName = row.productName;
       // this.$data.formData.productType = row.productType;
       this.$data.showSelectProduct = false;
-      this.getLoanPeriodByProductNo(row.productNo);
+      this.getLoanPeriodByProductNo(row.productNo, row.carType);
     },
     /**
      * 一级审批和二级审批状态 -- 获取初审信息    ---这个接口暂时废弃
@@ -119,12 +119,13 @@ export default {
     /**
      * 初审状态 -- 根据申请编号和产品编号，产品期数获取审批初始化信息
     */
-    async getProductApproveInfo(loanNo, productNo, productPeriods) {
+    async getProductApproveInfo(loanNo, productNo, productPeriods, carBuyAmt) {
       this.$data.initPageLoading = true;
       let resp = await this.$http.post('/biz/queryApproveProductCredit', {
         productNo,
         loanNo,
         productPeriods,
+        carBuyAmt,
         custType: this.applyBasicInfo.custType || '', // 客户类型
         applyAmt: this.applyBasicInfo.applyAmt || '' // 申请金额
       });
@@ -169,7 +170,7 @@ export default {
           'riskControlContent': result.riskControlContent,
           'remark': result.riskControlContent,
           'repaymentMode': result.repaymentMode,
-          'loanMode': result.repaymentMode,
+          'loanMode': result.loanMode,
           'carSaleAmt': result.carSaleAmt || '0'
         };
       }
@@ -214,8 +215,8 @@ export default {
      * @param productNo
      * @returns {Promise.<void>}
      */
-    async getLoanPeriodByProductNo(productNo) {
-      let resp = await this.$http.get('/pms/product/findProductByProNo', { productNo });
+    async getLoanPeriodByProductNo(productNo, carType) {
+      let resp = await this.$http.get('/pms/product/findProductByProNo', { productNo, carType });
       if (resp.success) {
         this.$data.loanPeriodsList = resp.body;
       }

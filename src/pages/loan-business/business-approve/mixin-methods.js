@@ -27,7 +27,11 @@ export default {
           loanNo
         });
         if (resp.success) {
+          this.$data.showCreditCheckbox = true;
           this.$data.creditReportURL = resp.body.creditFinalURL;
+        } else {
+          this.$data.showCreditCheckbox = false;
+          this.$data.isCreditEerror = true; // 显示 “暂无征信查询结果” 的提示语
         }
       }
     },
@@ -67,7 +71,7 @@ export default {
           });
           let submitData = {};
           if (loanNode === '3') {
-            if (!this.$data.isHasCheckCreditReport) {
+            if (this.$data.showCreditCheckbox && !this.$data.isHasCheckCreditReport) {
               this.$data.tabIndex = 2;
               $('html, body')[0].scrollTop = 0; // 滚动条滚动到顶部
               this.$Message.error({
@@ -95,6 +99,7 @@ export default {
             this.$data.tabIndex = 1;
             this.$data.submitApproveLoading = false;
             loading();
+            $('html, body')[0].scrollTop = $('body')[0].clientHeight; // 滚动条滚动到底部
             return;
           } else if (
             submitData.loanApproveDTO.result === 'R' &&

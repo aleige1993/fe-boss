@@ -1,38 +1,24 @@
 <template>
   <div class="loan-file-list">
-    <h4 class="list-title">
-      {{title}}
-      <a v-if="!readonly" href="javascript:;" class="text-danger" @click.prevent="deleteGroup" >
-        <i-icon type="close-circled"></i-icon>
-      </a>
-    </h4>
     <div class="list-files clearfix">
-      <div style="margin-bottom: 30px;">
-        <span class="pull-left">
-          {{title}}是否缺少：
-          <i-radio-group v-model="status" style="margin-left: 10px;">
-            <i-radio label="1">缺少</i-radio>
-            <i-radio label="0">不缺少</i-radio>
-          </i-radio-group>
-        </span>
-      </div>
       <template v-for="(item, index) in data">
-        <template v-if="isImg(item.attachUrl)">
+        <template>
           <bs-big-img  style="float: left" :thumbWidth="128" :thumbHeight="128" :fullWidth="1280"
                        :thumb="item.attachUrl"
                        :full="item.attachUrl">
             <span class="icon-remove" slot="icon-remove" @click.stop="deleteFile"><i-icon type="close"></i-icon></span>
           </bs-big-img>
         </template>
-        <template v-else>
+        <!--<template v-else>
           <bs-file-item style="float: left" :type="getFileSuffix(item.attachUrl)" :fileUrl="item.attachUrl" :fileName="item.attachName">
             <span class="icon-remove" slot="icon-remove" @click.stop="deleteFile(item, index)"><i-icon type="close"></i-icon></span>
           </bs-file-item>
-        </template>
+        </template>-->
       </template>
-      <i-upload v-if="!readonly" style="display: inline-block; float: left; width:128px; margin-left: 5px; position: relative" :show-upload-list="false"
+      <i-upload style="display: inline-block; float: left; width:128px; margin-left: 5px; position: relative" :show-upload-list="false"
                 multiple type="drag"
                 :on-progress="uploading"
+                :before-upload="beforeUpload"
                 :on-success="uploadFileSuccess"
                 :action="$config.HTTPBASEURL+'/common/upload'">
         <div style="width: 126px;height:128px;line-height: 150px; text-align: center; border: 1px dashed #2196f3; color: #2196f3">
@@ -53,58 +39,42 @@
       };
     },
     props: {
-      title: {
-        type: String,
-        default: '',
-        required: false
-      },
       data: {
         type: Array,
         required: false,
         default: function() {
           return [];
         }
-      },
-      groupIndex: {
-        type: Number,
-        required: false,
-        default: 0
-      },
-      status: {
-        type: String,
-        default: '1',
-        required: false
-      },
-      readonly: {
-        type: Boolean,
-        required: false,
-        default: false
-      },
-      value: String // 1 已落实 0 未落实
+      }
     },
     methods: {
-      deleteGroup() {
-        Alertify.confirm('确定要删除当前组以及下面的所有文件吗？', ok => {
-          if (ok) {
-            this.$emit('on-group-remove', this.groupIndex);
-          }
-        });
-      },
       deleteFile(file, index) {
         Alertify.confirm('确定要删除当前文件吗？', ok => {
           if (ok) {
-            this.data.splice(index, 1);
+            // this.data.splice(index, 1);
+            this.$emit('on-data-remove', index);
           }
         });
       },
       uploading() {
         this.$data.isUploading = true;
       },
+      // 上传之前对上传的文件进行验证 必须为图片格式
+      beforeUpload(file) {
+        if (!this.isImg(file.url)) {
+          this.$Message.error('请上传图片格式的文件！');
+          return false;
+        }
+      },
       uploadFileSuccess(res) {
         this.$data.isUploading = false;
         if (res.success) {
           let file = res.body;
-          this.data.push({
+          /*this.data.push({
+            attachName: file.fileName,
+            attachUrl: file.url
+          });*/
+          this.$emit('on-data-add', {
             attachName: file.fileName,
             attachUrl: file.url
           });
@@ -123,12 +93,6 @@
       }
     },
     mounted() {
-      this.$data.status = this.value;
-    },
-    watch: {
-      status(newVal, oldVal) {
-        this.$emit('input', newVal);
-      }
     }
   };
 </script>
