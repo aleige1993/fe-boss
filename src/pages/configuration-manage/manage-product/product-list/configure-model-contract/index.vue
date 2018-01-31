@@ -103,7 +103,7 @@
     methods: {
       // 查询列表数据
       async getPrivateCustomerList() {
-        this.$data.formCustom.dataLoading = true;
+        this.$data.dataLoading = true;
         let resp = await this.$http.post('/pms/capital/listContractTemplateCfg', {
           productNo: this.childMsg.productNo
         });

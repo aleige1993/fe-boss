@@ -107,46 +107,50 @@
             <i-row>
               <i-col span="8">
                 <i-form-item label="放款金额">
-                  <span v-text="formData.loanAmt"></span>
+                  <span v-text="formData.paymentRecordDTO.loanAmt"></span>
+                  <span v-if="formData.paymentRecordDTO.loanAmt!==''">元</span>
                 </i-form-item>
               </i-col>
               <i-col span="8">
                 <i-form-item label="资金方利率">
-                  <span v-text="formData.capitalYearRate"></span>
+                  <span v-text="formData.paymentRecordDTO.loanAmt"></span>
+                  <span v-if="formData.paymentRecordDTO.loanAmt!==''">元</span>
                 </i-form-item>
               </i-col>
             </i-row>
             <i-row>
               <i-col span="8">
                 <i-form-item label="应收分润金额">
-                  <span v-text="formData.profitAmt"></span>
+                  <span v-text="formData.paymentRecordDTO.shareAmt"></span>
+                  <span v-if="formData.paymentRecordDTO.shareAmt!==''">元</span>
                 </i-form-item>
               </i-col>
               <i-col span="8">
                 <i-form-item label="颂车利率">
-                  <span v-text="formData.songcheRate"></span>
+                  <span v-text="formData.paymentRecordDTO.scRate"></span>
+                  <span v-if="formData.paymentRecordDTO.scRate!==''">%/年</span>
                 </i-form-item>
               </i-col>
               <i-col span="8">
                 <i-form-item label="预计放款日期">
-                  <span v-text="formData.estimateLoanDate"></span>
+                  <span v-text="formData.paymentRecordDTO.expectLoanDate"></span>
                 </i-form-item>
               </i-col>
             </i-row>
             <i-row>
               <i-col span="8">
                 <i-form-item label="账户名">
-                  <span v-text="formData.loanAcctName"></span>
+                  <span v-text="formData.loanAccountDTO.loanAcctName"></span>
                 </i-form-item>
               </i-col>
               <i-col span="8">
                 <i-form-item label="账号">
-                  <span v-text="formData.loanAcctNo"></span>
+                  <span v-text="formData.loanAccountDTO.loanAcctNo"></span>
                 </i-form-item>
               </i-col>
               <i-col span="8">
                 <i-form-item label="开户银行">
-                  <span v-text="formData.loanOpenBankName"></span>
+                  <span v-text="formData.loanAccountDTO.loanOpenBankName"></span>
                 </i-form-item>
               </i-col>
             </i-row>
@@ -156,17 +160,17 @@
               <i-row>
                 <i-col span="8">
                   <i-form-item label="账户名">
-                    <span v-text="formData.repayAcctName"></span>
+                    <span v-text="formData.repayAccountDTO.repayAcctName"></span>
                   </i-form-item>
                 </i-col>
                 <i-col span="8">
                   <i-form-item label="账号">
-                    <span v-text="formData.repayAcctNo"></span>
+                    <span v-text="formData.repayAccountDTO.repayAcctName"></span>
                   </i-form-item>
                 </i-col>
                 <i-col span="8">
                   <i-form-item label="开户银行">
-                    <span v-text="formData.repayOpenBankName"></span>
+                    <span v-text="formData.repayAccountDTO.repayOpenBankName"></span>
                   </i-form-item>
                 </i-col>
               </i-row>
@@ -311,7 +315,7 @@
           'approveStatus': '',
           'rejectCause': '',
           'opinion': '',
-          'loanRecordDTO': {
+          'paymentRecordDTO': {
             'shareAmt': '',
             'scRate': '',
             'capitalRate': '',
@@ -386,7 +390,7 @@
       async getFindPaymentApplyRecordInfo() {
         let reps = await this.$http.post('/biz/payment/findPaymentApplyRecordInfo', {
           paymentNo: this.$route.query.paymentNo,
-          isFktjxq: '1' // 当为放款条件落实则传1，其余全部传0
+          isFktjxq: '0' // 当为放款条件落实则传1，其余全部传0
         });
         if (reps.success) {
           this.$data.formData = reps.body;
