@@ -12,6 +12,15 @@
         <i-form-item label="产品名称" prop="productName">
           <p>{{formCustom.productName}}</p>
         </i-form-item>
+        <i-form-item
+          label="投放城市"
+          :rules="{required: true, message: '请选择投放城市', trigger: 'change'}"
+          prop="districtCode">
+          <input type="hidden" v-model="formCustom.districtCode">
+          <bs-dispicker-two :filterCQ="true" :currProvinceCode="formCustom.provinceCode"
+                        :currDistrictCode="formCustom.districtCode"
+                        @on-change="selectNowDistance"></bs-dispicker-two>
+        </i-form-item>
         <i-form-item class="text-right">
           <i-button type="primary" @click="addSuBmit" :loading="buttonLoading">
             <span v-if="!buttonLoading">提交</span>
@@ -25,10 +34,12 @@
 </template>
 
 <script>
+  import BsDispickerTwo from '@/components/bs-dispicker-two';
   import BSModal from '@/components/bs-modal';
   export default {
     name: 'configureModelCity',
     components: {
+      BsDispickerTwo,
       'bs-modal': BSModal
     },
     props: {
@@ -39,6 +50,10 @@
         showAddModal: false,
         buttonLoading: false,
         formCustom: {
+          provinceCode: '',
+          provinceName: '',
+          districtCode: '',
+          districtName: '',
           productNo: '',
           productName: ''
         },
@@ -79,12 +94,13 @@
     },
     mounted() {
       this.$data.formCustom.productName = this.childMsg.productName;
+      this.$data.formCustom.productNo = this.childMsg.productNo;
       this.getPrivateCustomerList();
     },
     methods: {
       // 查询列表数据
       async getPrivateCustomerList() {
-       /* this.$data.formCustom.dataLoading = true;
+       /* this.$data.dataLoading = true;
         let resp = await this.$http.post('/pms/capital/listCityTemplateCfg', {
           productNo: this.childMsg.productNo
         });
@@ -96,20 +112,23 @@
         }*/
       },
       // 新增的保存请求方法
-      async addSuBmit() {
-        this.$data.buttonLoading = true;
-        let resAdd = await this.$http.post('/pms/capital/saveCityTemplateCfg', {
-          productNo: this.childMsg.productNo,
-          productName: this.childMsg.productName,
-          cityTemplateNo: this.$data.formCustom.cityTemplateNo,
-          cityTemplateName: this.$data.formCustom.cityTemplateName
+      addSuBmit() {
+        this.$refs['formCustom'].validate(async (valid) => {
+          if (valid) {
+            this.$data.buttonLoading = true;
+            let resAdd = await this.$http.post('/', {
+              ...this.$data.formCustom
+            });
+            this.$data.buttonLoading = false; // 关闭按钮的loading状态
+            this.$data.showAddModal = false;
+            if (resAdd.success) {
+              this.$Message.success('新增成功');
+              this.getPrivateCustomerList();
+            }
+          } else {
+            this.$Message.error('"<span style="color: red">*</span>"必填项不能为空');
+          }
         });
-        this.$data.buttonLoading = false; // 关闭按钮的loading状态
-        this.$data.showAddModal = false;
-        if (resAdd.success) {
-          this.$Message.success('新增成功');
-          this.getPrivateCustomerList();
-        }
       },
       addModal() {
         this.$data.showAddModal = true;
@@ -121,7 +140,7 @@
         Alertify.confirm('确定要删除吗？', async (ok) => {
           if (ok) {
             const loadingMsg = this.$Message.loading('删除中...', 0);
-            let respDel = await this.$http.post('/pms/capital/deleteCityTemplateCfg', {
+            let respDel = await this.$http.post('/', {
               productNo: row.productNo,
               cityTemplateNo: row.cityTemplateNo
             });
@@ -135,6 +154,13 @@
       },
       formCancel() {
         this.$data.showAddModal = false;
+      },
+      // 城市两级联动
+      selectNowDistance(city) {
+        this.$data.formCustom.provinceCode = city.provinceCode;
+        this.$data.formCustom.provinceName = city.provinceName;
+        this.$data.formCustom.districtCode = city.districtCode;
+        this.$data.formCustom.districtName = city.districtName;
       }
     }
   };
