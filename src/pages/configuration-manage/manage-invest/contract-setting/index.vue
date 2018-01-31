@@ -183,6 +183,14 @@
       },
       async submitSuccess() {
 //        console.log(this.$data.fromData.entityDesc, this.$data.fromData.attrDesc);
+        if (this.$data.fromData.fieldType === '1') {
+          this.$data.fromData.fieldSourceEntity = '';
+          this.$data.fromData.fieldSourceAttr = '';
+          this.$data.fromData.entityDesc = '';
+          this.$data.fromData.attrDesc = '';
+        } else {
+          this.$data.fromData.fieldDefaultValue = '';
+        }
         this.$data.buttonLoading = true;
         let url = this.$data.isAdd ? '/cfg/contract/add' : '/cfg/contract/modify';
         let resp = await this.$http.post(url, this.$data.fromData);
