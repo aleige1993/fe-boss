@@ -2,15 +2,48 @@
   <div id="conf-model-lilv">
     <i-form ref="ProductPackageForm" :model="ProductPackageForm" label-position="right" :label-width="120">
       <i-row :gutter="16">
-        <!--个人单笔额度-->
+        <!--套餐名称-->
         <i-col span="8">
           <i-form-item
-            :rules="{required: true, message: '个人单笔额度', trigger: 'blur'}"
-            label="个人单笔额度"
-            prop="personalSingleCarLimit">
-            <i-input placeholder="个人单笔额度" v-model="ProductPackageForm.personalSingleCarLimit">
+            :rules="{required: true, message: '套餐名称不能为空！', trigger: 'blur'}"
+            label="套餐名称"
+            prop="packageName">
+            <i-input placeholder="" v-model="ProductPackageForm.packageName"></i-input>
+          </i-form-item>
+        </i-col>
+        <!--个人单车最低额度-->
+        <i-col span="8">
+          <i-form-item
+            :rules="{required: true, message: '个人单笔额度不能为空！', trigger: 'blur'}"
+            label="个人单车最低额度"
+            prop="personalSingleCarMinLimit">
+            <i-input placeholder="" v-model="ProductPackageForm.personalSingleCarMinLimit">
               <span slot="append">元</span>
             </i-input>
+          </i-form-item>
+        </i-col>
+        <!--个人单车最高额度-->
+        <i-col span="8">
+          <i-form-item
+            :rules="{required: true, message: '个人单笔额度不能为空！', trigger: 'blur'}"
+            label="个人单车最高额度"
+            prop="personalSingleCarMaxLimit">
+            <i-input placeholder="" v-model="ProductPackageForm.personalSingleCarMaxLimit">
+              <span slot="append">元</span>
+            </i-input>
+          </i-form-item>
+        </i-col>
+      </i-row>
+      <i-row :gutter="16">
+        <!--车类-->
+        <i-col span="8">
+          <i-form-item
+            label="车类"
+            :rules="{required: true, message: '请选择车类', trigger: 'change'}"
+            prop="bizType">
+            <i-select v-model="ProductPackageForm.bizType" placeholder="请选择">
+              <i-option v-for="item in enumSelectData.get('BizTypeEnum')" :key="item.itemCode" :value="item.itemCode">{{item.itemName}}</i-option>
+            </i-select>
           </i-form-item>
         </i-col>
         <!--个人单户额度-->
@@ -19,7 +52,7 @@
             :rules="{required: true, message: '个人单户额度不能为空', trigger: 'blur'}"
             label="个人单户额度"
             prop="personalSingleDoorLimit">
-            <i-input type="text" placeholder="个人单户额度" v-model="ProductPackageForm.personalSingleDoorLimit">
+            <i-input type="text" placeholder="" v-model="ProductPackageForm.personalSingleDoorLimit">
               <span slot="append">元</span>
             </i-input>
           </i-form-item>
@@ -30,7 +63,7 @@
             :rules="{required: true, message: '企业单笔额度不能为空', trigger: 'blur'}"
             label="企业单笔额度"
             prop="companySingleCarLimit">
-            <i-input  type="text" placeholder="企业单笔额度" v-model="ProductPackageForm.companySingleCarLimit">
+            <i-input  type="text" placeholder="" v-model="ProductPackageForm.companySingleCarLimit">
               <span slot="append">元</span>
             </i-input>
           </i-form-item>
@@ -43,7 +76,7 @@
             :rules="{required: true, message: '企业单户额度不能为空', trigger: 'blur'}"
             label="企业单户额度"
             prop="companySingleDoorLimit">
-            <i-input  type="text" placeholder="企业单户额度" v-model="ProductPackageForm.companySingleDoorLimit">
+            <i-input  type="text" placeholder="" v-model="ProductPackageForm.companySingleDoorLimit">
               <span slot="append">元</span>
             </i-input>
           </i-form-item>
@@ -96,19 +129,6 @@
         <i-col span="8">
           <i-form-item label="年模型" prop="yearModel">
             <i-select v-model="ProductPackageForm.yearModel" placeholder="请选择">
-              <!--{
-                'groupKey': 'YearModelEnum',
-                'items': [
-                  {
-                    'itemCode': '1',
-                    'itemName': '按360天计算'
-                  },
-                  {
-                    'itemCode': '2',
-                    'itemName': '按365天计算'
-                  }
-                ]
-              }-->
               <i-option v-for="item in enumSelectData.get('YearModelEnum')" :key="item.itemCode" :value="item.itemCode">{{item.itemName}}</i-option>
             </i-select>
           </i-form-item>
@@ -123,21 +143,6 @@
             <i-row>
               <i-col span="12"  style="padding: 0 5px 0 0">
                 <i-select v-model="ProductPackageForm.loanDayMode" placeholder="请选择">
-                  <!--
-                  {
-                    'groupKey': 'RepaymentRuleEnum',
-                    'items': [
-                      {
-                        'itemCode': '1',
-                        'itemName': '对日还款'
-                      },
-                      {
-                        'itemCode': '2',
-                        'itemName': '指定日还款'
-                      }
-                    ]
-                  }
-                  -->
                   <i-option v-for="item in enumSelectData.get('RepaymentRuleEnum')" :key="item.itemCode" :value="item.itemCode">{{item.itemName}}</i-option>
                 </i-select>
               </i-col>
@@ -155,21 +160,6 @@
             label="逾期计算方式"
             prop="overdueCountMode">
             <i-select v-model="ProductPackageForm.overdueCountMode" placeholder="请选择">
-              <!--
-              {
-                'groupKey': 'OverdueTypeEnum',
-                'items': [
-                  {
-                    'itemCode': '1',
-                    'itemName': '按合同金额收取'
-                  },
-                  {
-                    'itemCode': '2',
-                    'itemName': '按应还未还金额收取'
-                  }
-                ]
-              }
-              -->
               <i-option v-for="item in enumSelectData.get('OverdueTypeEnum')" :key="item.itemCode" :value="item.itemCode">{{item.itemName}}</i-option>
             </i-select>
           </i-form-item>
@@ -179,7 +169,7 @@
           <i-form-item
             label="逾期利率"
             prop="dayOverduePenaltyRatio">
-            <i-input  type="text" placeholder="逾期利率" v-model="ProductPackageForm.dayOverduePenaltyRatio">
+            <i-input  type="text" placeholder="" v-model="ProductPackageForm.dayOverduePenaltyRatio">
               <span slot="append">%/元</span>
             </i-input>
           </i-form-item>
@@ -191,7 +181,7 @@
           <i-form-item
             label="逾期管理费"
             prop="dayOverdueManageFee">
-            <i-input  type="text" placeholder="逾期管理费" v-model="ProductPackageForm.dayOverdueManageFee">
+            <i-input  type="text" placeholder="" v-model="ProductPackageForm.dayOverdueManageFee">
               <span slot="append">元/天</span>
             </i-input>
           </i-form-item>
@@ -201,7 +191,7 @@
           <i-form-item
             label="逾期宽限天数"
             prop="overdueExtendDays">
-            <i-input  type="text" placeholder="逾期宽限天数" v-model="ProductPackageForm.overdueExtendDays">
+            <i-input  type="text" placeholder="" v-model="ProductPackageForm.overdueExtendDays">
               <span slot="append">天</span>
             </i-input>
           </i-form-item>
@@ -223,7 +213,7 @@
           <i-form-item
             label="罚息利率"
             prop="penaltyDayRatio">
-            <i-input  type="text" placeholder="罚息利率" v-model="ProductPackageForm.penaltyDayRatio">
+            <i-input  type="text" placeholder="" v-model="ProductPackageForm.penaltyDayRatio">
               <span slot="append">%/元</span>
             </i-input>
           </i-form-item>
@@ -354,28 +344,10 @@
             prop="warrantType">
             <i-select v-model="ProductPackageForm.warrantType" placeholder="请选择">
               <i-option v-for="item in enumSelectData.get('LoanWarrantTypeEnum')" :key="item.itemCode" :value="item.itemCode">{{item.itemName}}</i-option>
-              <!--<i-option value="1">先入库后放款</i-option>-->
-              <!--<i-option value="2">先放款后入库</i-option>-->
             </i-select>
           </i-form-item>
         </i-col>
       </i-row>
-      <!--<i-row :gutter="16">-->
-        <!--&lt;!&ndash;收费依据&ndash;&gt;-->
-        <!--<i-col span="8">-->
-          <!--<i-form-item-->
-            <!--label="收费依据"-->
-            <!--:rules="{required: true, message: '请选择收费依据', trigger: 'change'}"-->
-            <!--prop="feeAccording">-->
-            <!--<i-select v-model="ProductPackageForm.feeAccording" placeholder="请选择">-->
-              <!--<i-option v-for="item in enumSelectData.get('LoanFeeAccordingTypeEnum')" :key="item.itemCode" :value="item.itemCode">{{item.itemName}}</i-option>-->
-              <!--&lt;!&ndash;<i-option value="1">贷款金额</i-option>&ndash;&gt;-->
-              <!--&lt;!&ndash;<i-option value="2">申请金额</i-option>&ndash;&gt;-->
-              <!--&lt;!&ndash;<i-option value="3">购车金额</i-option>&ndash;&gt;-->
-            <!--</i-select>-->
-          <!--</i-form-item>-->
-        <!--</i-col>-->
-      <!--</i-row>-->
       <div class="form-top-actions">
         <i-button @click="addModal" type="info"><i class="iconfont icon-xinzeng"></i> 新增</i-button>
       </div>
@@ -408,12 +380,12 @@
           </i-select>
         </i-form-item>
         <i-form-item label="名义利率" prop="loanNominalRate">
-          <i-input placeholder="名义利率" v-model="formInModel.loanNominalRate">
+          <i-input placeholder="" v-model="formInModel.loanNominalRate">
             <span slot="append">%/年</span>
           </i-input>
         </i-form-item>
         <i-form-item label="实际利率" prop="loanRealRate">
-          <i-input placeholder="实际利率" v-model="formInModel.loanRealRate">
+          <i-input placeholder="" v-model="formInModel.loanRealRate">
             <span slot="append">%/年</span>
           </i-input>
         </i-form-item>
@@ -450,12 +422,12 @@
           </i-input>
         </i-form-item>
         <i-form-item label="名义利率" prop="nominalRate">
-          <i-input placeholder="名义利率" v-model="rateForm.nominalRate">
+          <i-input placeholder="" v-model="rateForm.nominalRate">
             <span slot="append">%/年</span>
           </i-input>
         </i-form-item>
         <i-form-item label="实际利率" prop="realRate">
-          <i-input placeholder="实际利率" v-model="rateForm.realRate">
+          <i-input placeholder="" v-model="rateForm.realRate">
             <span slot="append">%/年</span>
           </i-input>
         </i-form-item>
@@ -484,7 +456,12 @@
       BsModal
     },
     props: {
-      childMsg: Object
+      childMsg: Object,
+      isParentAdd: {
+        type: Boolean,
+        default: true,
+        required: true
+      }
     },
     data() {
       return {
@@ -508,7 +485,10 @@
         zfClickRow: {}, // 点击模态框里tabel的一行时
         ProductPackageForm: { // 当前的模态框的数据表单
           packageNo: '', // 套餐编号
-          personalSingleCarLimit: null, // 个人单笔额度
+          packageName: '', // 套餐名称
+          personalSingleCarMinLimit: '',
+          personalSingleCarMaxLimit: '',
+          bizType: '',
           personalSingleDoorLimit: '',  // 个人单户额度
           companySingleCarLimit: '',  // 企业单笔额度
           companySingleDoorLimit: '', // 企业单户额度
@@ -537,7 +517,6 @@
           dqxInsurance: '', // 盗抢险
           loanPaymentType: '', // 放款方式
           warrantType: '' // 权证入库方式
-//          feeAccording: '' // 收费依据
         },
         formInModel: {  // 增删的模态框的数据表单
           bizType: '',  // 车类
@@ -548,9 +527,12 @@
         }
       };
     },
-    mounted() {
-      this.getFormList();  // 获取表单数据
-      this.getPrivateCustomerList();  // 获取模态框列表数据
+    async mounted() {
+      this.$data.ProductPackageForm.packageNo = this.childMsg.packageNo;
+      if (!this.isParentAdd) {
+        await this.getFormList();  // 获取表单数据
+        this.getPrivateCustomerList();  // 获取模态框列表数据
+      }
     },
     methods: {
       /******************************************************************************************/
@@ -652,11 +634,25 @@
       // 获取表单数据
       async getFormList() {
         let productNo = this.childMsg.productNo;
-        let resp = await this.$http.get('/pms/productPackage/list', {
-          productNo
-        });
+        let urlStr = '';
+        let dataObj = {};
+        let ind = 0;
+        // 新增情况
+        if (this.isParentAdd) {
+          urlStr = '/pms/productPackage/list';
+          ind = this.childMsg._index;
+          dataObj = { productNo };
+        } else {
+          urlStr = '/pms/productPackage/edit';
+          dataObj = {
+            productNo,
+            productPackageNo: this.childMsg.packageNo
+          };
+          ind = 0;
+        }
+        let resp = await this.$http.get(urlStr, dataObj);
         if (resp.success && resp.body.length !== 0) {
-          let dataObject = resp.body[0];
+          let dataObject = resp.body[ind];
           for (let item in dataObject) {
             dataObject[item] = dataObject[item].toString();
           }
@@ -752,16 +748,15 @@
           ...this.$data.ProductPackageForm
         };
         let resAdd = await this.$http.post('/pms/productPackage/save', DataObj);
+        this.$data.btnLoading = false;
         if (resAdd.success) {
-          this.$data.btnLoading = false;
           this.$Message.success('套餐信息配置成功');
           this.getFormList();  // 获取表单数据
         }
       },
       // 新增模态框的保存按钮点击事件
       formSubmit() {
-        let formName = 'ProductPackageForm';
-        this.$refs[formName].validate((valid) => {
+        this.$refs['ProductPackageForm'].validate((valid) => {
           if (valid) {
             this.formDataAdd();
           } else {

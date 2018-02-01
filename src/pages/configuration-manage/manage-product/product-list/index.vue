@@ -23,7 +23,7 @@
     </div>
     <div class="form-top-actions" slot="topAction" v-if="!isModal">
       <i-button @click="addModal" type="info"><i class="iconfont icon-xinzeng"></i> 新增产品</i-button>
-      <i-button @click="lilvClick" type="ghost"><i class="iconfont icon-shenhe"></i> 利率方案配置</i-button>
+      <i-button @click="PackageClick" type="ghost"><i class="iconfont icon-shenhe"></i> 套餐方案配置</i-button>
       <i-button @click="feiyClick" type="ghost"><i class="iconfont icon-shenhe"></i> 费用收取配置</i-button>
       <i-button @click="loanClick" type="ghost"><i class="iconfont icon-shenhe"></i> 贷款材料配置</i-button>
       <i-button @click="lendingClick" type="ghost"><i class="iconfont icon-shenhe"></i> 放款条件配置</i-button>
@@ -38,10 +38,10 @@
       <i-page :total="total" :page-size="pageSize" :current="currentPage" @on-change="jumpPage" size="small" show-elevator show-total></i-page>
     </div>
     <!--新增产品弹窗-->
-    <pt-modal :title="isAdd ? '新增' : '修改'" v-model="showAddModal" :width="1000">
-      <i-form v-if="showAddModal" ref="formCustom" :model="formCustom" label-position="right" :label-width="100">
+    <pt-modal :title="isAdd ? '新增' : '修改'" v-model="showAddModal" :width="1200">
+      <i-form v-if="showAddModal" ref="formCustom" :model="formCustom" label-position="right" :label-width="120">
         <i-row>
-          <i-col span="12">
+          <i-col span="8">
             <i-form-item
               :rules="{required: true, message: '产品名称不能为空', trigger: 'blur'}"
               label="产品名称"
@@ -49,7 +49,7 @@
               <i-input placeholder="请输入产品名称" v-model="formCustom.productName"></i-input>
             </i-form-item>
           </i-col>
-          <i-col span="12">
+          <i-col span="8">
             <i-form-item
               :rules="{required: true, message: '产品别名不能为空', trigger: 'blur'}"
               label="产品别名"
@@ -57,7 +57,7 @@
               <i-input placeholder="请输入产品别名" v-model="formCustom.productAlias"></i-input>
             </i-form-item>
           </i-col>
-          <i-col span="12">
+          <i-col span="8">
             <i-form-item
               :rules="{required: true, message: '产品类型不能为空', trigger: 'change'}"
               label="产品类型"
@@ -67,26 +67,57 @@
               </i-select>
             </i-form-item>
           </i-col>
-          <i-col span="12">
-            <i-form-item label="状态" prop="status">
+        </i-row>
+        <i-row>
+          <i-col span="8">
+            <i-form-item
+              label="状态"
+              :rules="{required: true, message: '请选择状态', trigger: 'change'}"
+              prop="status">
               <i-select v-model="formCustom.status">
                 <i-option v-for="item in enumSelectData.get('ProductStatusEnum')" :key="item.itemCode" :value="item.itemCode">{{item.itemName}}</i-option>
               </i-select>
             </i-form-item>
           </i-col>
-          <i-col span="12">
-            <i-form-item label="是否在APP显示" prop="appShowFlag">
-              <i-select v-model="formCustom.appShowFlag">
-                <i-option v-for="item in enumSelectData.get('YesNoEnum')" :key="item.itemCode" :value="item.itemCode">{{item.itemName}}</i-option>
+          <i-col span="8">
+            <i-form-item
+              label="用款形式"
+              :rules="{required: true, message: '请选择用款形式', trigger: 'change'}"
+              prop="loanType">
+              <i-select v-model="formCustom.loanType">
+                <i-option value="1">贷款买车</i-option>
+                <i-option value="2">有车贷款</i-option>
               </i-select>
             </i-form-item>
           </i-col>
-          <i-col span="12">
+          <i-col span="8">
+            <i-form-item
+              label="支持最高额度"
+              :rules="{required: true, message: '支持最高额度不能为空', trigger: 'blur'}"
+              prop="maxLimit">
+              <i-input placeholder="请输入支持最高额度" v-model="formCustom.maxLimit">
+                <span slot="append">元</span>
+              </i-input>
+            </i-form-item>
+          </i-col>
+        </i-row>
+        <i-row>
+          <i-col span="8">
             <i-form-item
               :rules="{required: true, message: '产品说明不能为空', trigger: 'blur'}"
               label="产品说明"
               prop="remark">
               <i-input v-model="formCustom.remark" type="textarea" :autosize="{minRows: 2,maxRows: 5}" placeholder="请输入产品说明..."></i-input>
+            </i-form-item>
+          </i-col>
+          <i-col span="8">
+            <i-form-item
+              label="是否在APP显示"
+              :rules="{required: true, message: '请选择是否在APP显示', trigger: 'change'}"
+              prop="appShowFlag">
+              <i-select v-model="formCustom.appShowFlag">
+                <i-option v-for="item in enumSelectData.get('YesNoEnum')" :key="item.itemCode" :value="item.itemCode">{{item.itemName}}</i-option>
+              </i-select>
             </i-form-item>
           </i-col>
         </i-row>
@@ -123,9 +154,9 @@
         </i-form-item>
       </i-form>
     </pt-modal>
-    <!--利率方案配置弹窗-->
-    <pt-modal :title="'[ '+clickRow.productName+' ]利率方案配置'" v-model="LlShowModel" :width="1200">
-      <conf-model-lilv  @notice-lilv="noticeLilvFun" :child-msg="clickRow" v-if="LlShowModel"></conf-model-lilv>
+    <!--套餐配置弹窗-->
+    <pt-modal :title="'[ '+clickRow.productName+' ]套餐方案配置'" v-model="TcShowModel" :width="1200">
+      <conf-model-package  @notice-lilv="noticePackageFun" :child-msg="clickRow" v-if="TcShowModel"></conf-model-package>
     </pt-modal>
     <!--费用收取配置弹窗-->
     <pt-modal :title="'[ '+clickRow.productName+' ]费用收取配置'" v-model="FyShowModal" :width="1200">
@@ -162,7 +193,7 @@
   import PTModal from '@/components/bs-modal';
   import MixinData from './mixin-data';
   import MixinDataFeature from './mixin-data-feature';
-  import ConfModelLilv from './configure-model-lilv'; //  利率方案配置
+  import ConfModelPackage from './configure-model-package'; //  套餐方案配置
   import ConfModelFy from './configure-model-cost'; //  费用收取配置
   import ConfModelLoan from './configure-model-loan'; //  贷款材料配置
   import ConfModelLending from './configure-model-lending'; // 放款条件配置
@@ -175,7 +206,7 @@
     mixins: [MixinData, MixinDataFeature],
     components: {
       'pt-modal': PTModal,
-      'conf-model-lilv': ConfModelLilv,
+      'conf-model-package': ConfModelPackage,
       'conf-model-fy': ConfModelFy,
       'conf-model-loan': ConfModelLoan,
       'conf-model-lending': ConfModelLending,
@@ -198,7 +229,7 @@
         buttonLoading: false,
         showAddModal: false,
         isClickRow: false,        // 是否已经选择了某一行
-        LlShowModel: false,           // 利率方案配置弹窗
+        TcShowModel: false,            // 套餐配置弹窗
         FyShowModal: false,           // 费用收取配置弹窗
         LoanShowModal: false,         // 贷款材料配置弹窗
         LendingShowModal: false,         // 放款条件配置弹窗
@@ -222,6 +253,8 @@
           productName: '',  // 产品名称
           productAlias: '',  // 产品别名
           productType: '',  // 产品类型
+          loanType: '',
+          maxLimit: '',
           status: ''  // 产品状态
         }
       };
@@ -338,6 +371,8 @@
           productType: this.$data.formCustom.productType,
           productAlias: this.$data.formCustom.productAlias,
           productName: this.$data.formCustom.productName,
+          loanType: this.$data.formCustom.loanType,
+          maxLimit: this.$data.formCustom.maxLimit,
           status: this.$data.formCustom.status
         });
         this.$data.buttonLoading = false; // 关闭按钮的loading状态
@@ -375,6 +410,8 @@
           productName: this.$data.formCustom.productName,  // 产品名称
           productType: this.$data.formCustom.productType,  // 产品类型
           productAlias: this.$data.formCustom.productAlias,  // 产品别名
+          loanType: this.$data.formCustom.loanType,
+          maxLimit: this.$data.formCustom.maxLimit,
           status: this.$data.formCustom.status  // 产品状态
         });
         if (resModify.success) {
@@ -453,10 +490,10 @@
         }
         return true;
       },
-      // 打开利率配置弹窗
-      lilvClick() {
+      // 打开套餐方案配置弹窗
+      PackageClick() {
         if (this.clickRowedFun()) {
-          this.$data.LlShowModel = true;
+          this.$data.TcShowModel = true;
         }
       },
       // 打开费用配置弹窗
@@ -501,9 +538,9 @@
           this.$data.SetCityShowModal = true;
         }
       },
-      // 利率配置弹窗传参
-      noticeLilvFun() {
-        this.$data.LlShowModel = false;
+      // 套餐配置弹窗传参
+      noticePackageFun() {
+        this.$data.TcShowModel = false;
       },
       // 费用收取配置弹窗传参
       noticeCostFun() {
