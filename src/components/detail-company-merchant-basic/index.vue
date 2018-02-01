@@ -44,7 +44,7 @@
             <i-row>
               <i-col span="8">
                 <i-form-item label="行业类型" prop="baseDTO.industryType">
-                  <span v-text="enumCode2Name(formData.baseDTO.industryType, 'UnitTypeEnum')"></span>
+                  <span v-text="enumCode2Name(formData.baseDTO.industryType, 'IndustryTypeEnum')"></span>
                 </i-form-item>
               </i-col>
               <i-col span="8">

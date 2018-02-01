@@ -136,6 +136,7 @@
           </i-col>
         </i-row>
         <i-row>
+          <!--选择渠道商-->
           <i-col span="8">
             <i-form-item label="渠道商" prop="channelName">
               <input type="hidden" v-model="formData.channelName"/>
@@ -144,9 +145,20 @@
               </i-input>
             </i-form-item>
           </i-col>
+          <!--渠道商编号-->
           <i-col span="8">
             <i-form-item label="渠道商编号" prop="channelNo">
               <i-input v-model="formData.channelNo" placeholder="" :readonly="true"></i-input>
+            </i-form-item>
+          </i-col>
+        </i-row>
+        <i-row v-if="formData.provinceName">
+          <i-col>
+            <i-form-item label="投放城市">
+              <span>
+                {{formData.provinceName}}
+                {{formData.cityName}}
+              </span>
             </i-form-item>
           </i-col>
         </i-row>
@@ -164,6 +176,7 @@
         <i-button @click="openModalCar" type="info"><i class="iconfont icon-xinzeng"></i>&nbsp;新增</i-button>
       </div>
       <i-table :loading="carDataLoading" border ref="selection" :columns="carColumns" :data="carData"></i-table>
+      <div v-for="item in carData">{{item.loanCarPicVOList}}<br></div>
     </bs-form-block>
     <!--担保信息-->
     <bs-form-block :title="'担保信息'">
@@ -691,12 +704,8 @@
       </i-form>
     </bs-modal>
     <!--上传/查看车辆图片-->
-    <bs-modal :title="'上传/查看车辆图片'" v-model="seeCarPictureModal" :width="1200">
-      <car-picture-list :data="CarPicListData" @on-data-remove="carDataRomove"  @on-data-add="carDataAdd"></car-picture-list>
-      <!--<loan-file-list v-for="(item, index) in loanData" :key="index" :readonly="readonly"
-                      :group-index="index" v-model="item.status" :title="item.loanDocName" :data="item.docDetailAttachList"
-                      @on-group-remove="deleteloanFileGroup">
-      </loan-file-list>-->
+    <bs-modal :title="'上传/查看车辆图片'" v-model="seeCarPictureModal" :width="1200" @on-close="emptyCarRowPic">
+      <car-picture-list v-if="seeCarPictureModal" :data="loanCarPicVOListModalData" @on-data-remove="carDataRomove"  @on-data-add="carDataAdd"></car-picture-list>
     </bs-modal>
     <i-spin fix v-if="initApplyInfoLoading"></i-spin>
   </div>
@@ -726,12 +735,8 @@
     mixins: [MixinData, MixinMethods, carMixinData, carMixinMethods, assureMixinData, assureMixinMethods, loanMixinData, loanMixinMethods],
     data() {
       return {
-        CarPicListData: [
-          {
-            attachName: 'kobe.jpg',
-            attachUrl: 'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1517397396406&di=274f88b8a708f4cd0c4c2ad71cc874c9&imgtype=0&src=http%3A%2F%2Fimg.mp.itc.cn%2Fupload%2F20160414%2F4a178ec67ab64bbfa61f804c16cc629b_th.jpg'
-          }
-        ],
+        loanCarPicVOListModalData: [],
+        carListRowData: {}, // 点击“查看/上传车辆图片”按钮时当前行的车辆数据
         isDistributor: false, // 选择渠道商弹窗是否显示为“选择经销商”
         seeCarPictureModal: false // 上传/查看车辆图片弹窗
       };
@@ -770,14 +775,27 @@
       this.initPage();
     },
     methods: {
+      // 模态框关闭后清楚组件内车辆图片数据
+      emptyCarRowPic() {
+        this.$data.loanCarPicVOListModalData = [];
+      },
       // 删除车辆图片
       carDataRomove(index) {
-        console.log('index:' + index);
-        this.$data.CarPicListData.splice(index, 1);
+        let ind = this.carListRowData._index;
+        this.$data.carData[ind].loanCarPicVOList.splice(index, 1);
       },
       // 添加车辆图片
       carDataAdd(dataList) {
-        this.$data.CarPicListData.push(dataList);
+        let ind = this.carListRowData._index;
+        if (!this.$data.carData[ind].loanCarPicVOList) {
+          this.$data.carData[ind].loanCarPicVOList = [];
+        }
+        this.$data.carData[ind].loanCarPicVOList && this.$data.carData[ind].loanCarPicVOList.push({
+          'loanCarNo': this.$data.carListRowData.loanCarNo,
+          'loanNo': this.$data.carListRowData.loanNo,
+          'carPicName': dataList.carPicName,
+          'carPicUrl': dataList.carPicUrl
+        });
       },
       // 点击的时“选择经销商”按钮
       distributorClick() {

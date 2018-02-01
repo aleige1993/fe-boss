@@ -230,7 +230,7 @@
               <i-col span="8">
                 <i-form-item label="行业类别"
                              prop="mbMemberWorkDTO.industryType">
-                  <span v-text="enumCode2Name('' + formData.mbMemberWorkDTO.industryType, 'UnitTypeEnum')"></span>
+                  <span v-text="enumCode2Name('' + formData.mbMemberWorkDTO.industryType, 'IndustryTypeEnum')"></span>
                 </i-form-item>
               </i-col>
             </i-row>

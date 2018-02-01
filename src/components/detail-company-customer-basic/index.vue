@@ -58,7 +58,7 @@
               <i-col span="8">
                 <i-form-item label="行业类型">
                   <!--<span v-text="formData.baseDTO.industryType"></span>-->
-                  {{enumCode2Name(formData.baseDTO.industryType, 'UnitTypeEnum')}}
+                  {{enumCode2Name(formData.baseDTO.industryType, 'IndustryTypeEnum')}}
                 </i-form-item>
               </i-col>
               <i-col span="8">

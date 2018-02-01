@@ -61,6 +61,11 @@ export default {
                 },
                 on: {
                   click: () => {
+                    this.$data.carListRowData = params.row;
+                    if (!params.row.loanCarPicVOList) {
+                      params.row.loanCarPicVOList = [];
+                    }
+                    this.$data.loanCarPicVOListModalData = $.extend({}, params.row).loanCarPicVOList;
                     this.$data.seeCarPictureModal = true;
                   }
                 }

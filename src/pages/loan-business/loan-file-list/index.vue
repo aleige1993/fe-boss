@@ -21,7 +21,7 @@
           <bs-big-img  style="float: left" :thumbWidth="128" :thumbHeight="128" :fullWidth="1280"
                        :thumb="item.attachUrl"
                        :full="item.attachUrl">
-            <span class="icon-remove" slot="icon-remove" @click.stop="deleteFile"><i-icon type="close"></i-icon></span>
+            <span class="icon-remove" slot="icon-remove" @click.stop="deleteFile(item, index)"><i-icon type="close"></i-icon></span>
           </bs-big-img>
         </template>
         <template v-else>

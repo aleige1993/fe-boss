@@ -75,10 +75,9 @@
             </i-form-item>
           </i-col>
           <i-col span="12">
-            <i-form-item label="适用流程" prop="flowName">
-              <i-select v-model="formCustom.flowName">
-                <i-option value="1">流程一</i-option>
-                <i-option value="2">流程二</i-option>
+            <i-form-item label="是否在APP显示" prop="appShowFlag">
+              <i-select v-model="formCustom.appShowFlag">
+                <i-option v-for="item in enumSelectData.get('YesNoEnum')" :key="item.itemCode" :value="item.itemCode">{{item.itemName}}</i-option>
               </i-select>
             </i-form-item>
           </i-col>
@@ -218,7 +217,7 @@
         formCustom: {
           flowCode: '', // 适用流程编号
           remark: '', // 备注
-          flowName: '', // 适用流程名称
+          appShowFlag: '', // 是否在APP显示
           productNo: '', // 产品编号
           productName: '',  // 产品名称
           productAlias: '',  // 产品别名
@@ -335,7 +334,7 @@
         let resAdd = await this.$http.post('/pms/product/save', {
           flowCode: this.$data.formCustom.flowCode,
           remark: this.$data.formCustom.remark,
-          flowName: this.$data.formCustom.flowName,
+          appShowFlag: this.$data.formCustom.appShowFlag,
           productType: this.$data.formCustom.productType,
           productAlias: this.$data.formCustom.productAlias,
           productName: this.$data.formCustom.productName,
@@ -371,7 +370,7 @@
         let resModify = await this.$http.post('/pms/product/modify', {
           flowCode: this.$data.formCustom.flowCode, // 适用流程编号
           remark: this.$data.formCustom.remark, // 备注
-          flowName: this.$data.formCustom.flowName, // 适用流程名称
+          appShowFlag: this.$data.formCustom.appShowFlag, // 是否在APP显示
           productNo: this.$data.formCustom.productNo, // 产品编号
           productName: this.$data.formCustom.productName,  // 产品名称
           productType: this.$data.formCustom.productType,  // 产品类型

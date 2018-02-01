@@ -25,7 +25,18 @@ Vue.mixin({
       if (fileUrl) {
         suffix = fileUrl.substring(fileUrl.lastIndexOf('.') + 1);
       }
-      return suffix === 'png' || suffix === 'jpg' || suffix === 'gif' || suffix === 'jpeg' || suffix === 'bmp' || suffix === 'pic';
+      return suffix === 'png' ||
+        suffix === 'jpg' ||
+        suffix === 'gif' ||
+        suffix === 'jpeg' ||
+        suffix === 'bmp' ||
+        suffix === 'pic' ||
+        suffix === 'PNG' ||
+        suffix === 'JPG' ||
+        suffix === 'GIF' ||
+        suffix === 'JPEG' ||
+        suffix === 'BMP' ||
+        suffix === 'PIC';
     }
   }
 });

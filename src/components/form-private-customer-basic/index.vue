@@ -271,7 +271,7 @@
                              prop="mbMemberWorkDTO.unitType"
                              :rules="{required: true, message: '请选择单位性质', trigger: 'blur'}">
                   <input v-model="formData.mbMemberWorkDTO.unitType" type="hidden"/>
-                  <i-input :readonly="true" :value="enumCode2Name(formData.mbMemberWorkDTO.unitType, 'UnitTypeEnum')" placeholder="自动带入"></i-input>
+                  <i-input :readonly="true" :value="enumCode2Name(formData.mbMemberWorkDTO.unitType, 'IndustryTypeEnum')" placeholder="自动带入"></i-input>
                 </i-form-item>
               </i-col>
               <i-col span="8">
