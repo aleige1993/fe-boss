@@ -197,27 +197,27 @@
           </i-form-item>
         </i-col>
         <!--罚息计算方式-->
-        <i-col span="8">
-          <i-form-item
-            label="罚息计算方式"
-            prop="penaltyCountMode">
-            <i-select v-model="ProductPackageForm.penaltyCountMode" placeholder="请选择">
-              <i-option v-for="item in enumSelectData.get('OverdueTypeEnum')" :key="item.itemCode" :value="item.itemCode">{{item.itemName}}</i-option>
-            </i-select>
-          </i-form-item>
-        </i-col>
+        <!--<i-col span="8">-->
+          <!--<i-form-item-->
+            <!--label="罚息计算方式"-->
+            <!--prop="penaltyCountMode">-->
+            <!--<i-select v-model="ProductPackageForm.penaltyCountMode" placeholder="请选择">-->
+              <!--<i-option v-for="item in enumSelectData.get('OverdueTypeEnum')" :key="item.itemCode" :value="item.itemCode">{{item.itemName}}</i-option>-->
+            <!--</i-select>-->
+          <!--</i-form-item>-->
+        <!--</i-col>-->
       </i-row>
       <i-row :gutter="16">
         <!--罚息利率-->
-        <i-col span="8">
-          <i-form-item
-            label="罚息利率"
-            prop="penaltyDayRatio">
-            <i-input  type="text" placeholder="" v-model="ProductPackageForm.penaltyDayRatio">
-              <span slot="append">%/元</span>
-            </i-input>
-          </i-form-item>
-        </i-col>
+        <!--<i-col span="8">-->
+          <!--<i-form-item-->
+            <!--label="罚息利率"-->
+            <!--prop="penaltyDayRatio">-->
+            <!--<i-input  type="text" placeholder="" v-model="ProductPackageForm.penaltyDayRatio">-->
+              <!--<span slot="append">%/元</span>-->
+            <!--</i-input>-->
+          <!--</i-form-item>-->
+        <!--</i-col>-->
         <!--是否允许提前还款-->
         <i-col span="8">
           <i-form-item
@@ -364,9 +364,15 @@
     </i-form>
     <bs-modal :title="isAdd ? '新增' : '修改'" v-model="showAdd" :width="520">
       <i-form ref="formInModel" :model="formInModel" label-position="left" :label-width="100">
-        <i-form-item label="车类" prop="bizType">
-          <i-select v-model="formInModel.bizType" placeholder="请选择">
-            <i-option v-for="item in enumSelectData.get('BizTypeEnum')" :key="item.itemCode" :value="item.itemCode">{{item.itemName}}</i-option>
+        <!--<i-form-item label="车类" prop="bizType">-->
+          <!--<i-select v-model="formInModel.bizType" placeholder="请选择">-->
+            <!--<i-option v-for="item in enumSelectData.get('BizTypeEnum')" :key="item.itemCode" :value="item.itemCode">{{item.itemName}}</i-option>-->
+          <!--</i-select>-->
+        <!--</i-form-item>-->
+        <i-form-item label="客户等级" prop="custLevel">
+          <i-select v-model="formInModel.custLevel" placeholder="请选择">
+            <i-option value="A">A</i-option>
+            <i-option value="B">B</i-option>
           </i-select>
         </i-form-item>
         <i-form-item label="期限" prop="loanPeriods">
@@ -440,6 +446,84 @@
         </i-form-item>
       </i-form>
     </bs-modal>
+
+    <!--费用收取配置-->
+    <bs-modal title="新增" v-model="showCostModel" :width="1200">
+      <div class="form-top-actions">
+        <i-button @click="addCostModal" type="info"><i class="iconfont icon-xinzeng"></i> 新增</i-button>
+      </div>
+      <i-table :loading="costDataLoading" border ref="FyTable" :columns="costcolumns" :data="costdata"></i-table>
+    </bs-modal>
+    <bs-modal title="新增" v-model="showCostAdd" :width="520">
+      <i-form ref="formCostModel" :model="formCostModel" label-position="left" :label-width="100">
+        <i-form-item
+          :rules="{required: true, message: '费用类型不能为空', trigger: 'change'}"
+          label="费用类型"
+          prop="feeTypeNo">
+          <i-select v-model="formCostModel.feeTypeNo" placeholder="请选择" @on-change="feeTypeCodeChange">
+            <i-option v-for="item in costTypeSelect" :key="item.feeTypeNo" :value="item.feeTypeNo">{{item.feeTypeName}}</i-option>
+          </i-select>
+        </i-form-item>
+        <i-form-item
+          :rules="{required: true, message: '费用类型代码不能为空', trigger: 'blur'}"
+          label="费用类型代码"
+          prop="feeTypeCode">
+          <i-input :readonly="true" placeholder="费用类型代码" v-model="formCostModel.feeTypeCode"></i-input>
+        </i-form-item>
+        <i-form-item
+          :rules="{required: true, message: '计算方式不能为空', trigger: 'change'}"
+          label="计算方式"
+          prop="incomeType">
+          <i-select transfer v-model="formCostModel.incomeType" placeholder="请选择" @on-change="selpro">
+            <i-option v-for="item in enumSelectData.get('ReceiveTypeEnum')" :key="item.itemCode" :value="item.itemCode">{{item.itemName}}</i-option>
+          </i-select>
+        </i-form-item>
+        <i-form-item
+          :rules="{required: true, message: '收支方向不能为空', trigger: 'change'}"
+          label="收支方向"
+          prop="feeType">
+          <i-select v-model="formCostModel.feeType" placeholder="请选择">
+            <i-option v-for="item in enumSelectData.get('FeeTypeEnum')" :key="item.itemCode" :value="item.itemCode">{{item.itemName}}</i-option>
+          </i-select>
+        </i-form-item>
+        <i-form-item
+          label="收费依据"
+          :rules="{required: true, message: '请选择收费依据', trigger: 'change'}"
+          prop="feeAccording">
+          <i-select v-model="formCostModel.feeAccording" placeholder="请选择">
+            <i-option v-for="item in enumSelectData.get('LoanFeeAccordingTypeEnum')" :key="item.itemCode" :value="item.itemCode">{{item.itemName}}</i-option>
+            <!--<i-option value="1">贷款金额</i-option>-->
+            <!--<i-option value="2">申请金额</i-option>-->
+            <!--<i-option value="3">购车金额</i-option>-->
+          </i-select>
+        </i-form-item>
+        <i-form-item
+          :rules="{required: true, message: '利率标准不能为空', trigger: 'blur'}"
+          label="利率标准"
+          prop="ratio"
+          v-if="formCostModel.incomeType === '1'">
+          <i-input placeholder="利率标准" v-model="formCostModel.ratio">
+            <span slot="append">%</span>
+          </i-input>
+        </i-form-item>
+        <i-form-item
+          :rules="{required: true, message: '固定金额不能为空', trigger: 'blur'}"
+          label="固定金额"
+          prop="fixedAmount"
+          v-if="formCostModel.incomeType === '2'">
+          <i-input placeholder="固定金额" v-model="formCostModel.fixedAmount">
+            <span slot="append">元</span>
+          </i-input>
+        </i-form-item>
+        <i-form-item class="text-right">
+          <i-button type="primary" @click="formInSubmitCost" :loading="buttonLoading">
+            <span v-if="!buttonLoading">提交</span>
+            <span v-else>Loading...</span>
+          </i-button>
+          <i-button type="ghost" style="margin-left: 8px" @click="formInCancelCost">取消</i-button>
+        </i-form-item>
+      </i-form>
+    </bs-modal>
   </div>
 </template>
 
@@ -448,9 +532,11 @@
   import TableInvestList from '@/components/table-invest-list'; // 选择资方
   import MixinData from './mixin-data';
   import BsModal from '@/components/bs-modal';
+  import CostMinData from './cost-mixin-data';
+  import CostMinMethod from './cost-mixin-method';
   export default {
     name: 'confModeLilv',
-    mixins: [MixinData, MixinDataZFLV],
+    mixins: [MixinData, MixinDataZFLV, CostMinData, CostMinMethod],
     components: {
       TableInvestList,
       BsModal
@@ -503,8 +589,8 @@
           dayOverduePenaltyRatio: '', // 逾期利率
           dayOverdueManageFee: '',  // 逾期管理费
           overdueExtendDays: '',  // 逾期宽限天数
-          penaltyCountMode: '', // 罚息计算方式
-          penaltyDayRatio: '',  // 罚息利率
+//          penaltyCountMode: '', // 罚息计算方式
+//          penaltyDayRatio: '',  // 罚息利率
           isUpRepay: '',  // 是否允许提前还款
           upRepayPenaltyCountMode: '',  // 提前还款违约金计算方式
           upRepayPenaltyRatio: '',  // 提前还款违约金比例
@@ -519,12 +605,16 @@
           warrantType: '' // 权证入库方式
         },
         formInModel: {  // 增删的模态框的数据表单
-          bizType: '',  // 车类
+//          bizType: '',  // 车类
+          custLevel: '', // 客户等级
           loanPeriods: '',  // 贷款期限
           interestType: '',  // 利率模式
           loanNominalRate: '',  // 贷款名义利率
           loanRealRate: ''  // 贷款实际利率
-        }
+        },
+        // 费用收取列表
+        costdata: [],
+        packageRateNo: ''
       };
     },
     async mounted() {
@@ -651,6 +741,7 @@
           ind = 0;
         }
         let resp = await this.$http.get(urlStr, dataObj);
+//        console.log(JSON.stringify(resp));
         if (resp.success && resp.body.length !== 0) {
           let dataObject = resp.body[ind];
           for (let item in dataObject) {
@@ -667,6 +758,7 @@
         let resp = await this.$http.get('/pms/productRate/list', {
           productNo
         });
+//        console.log(JSON.stringify(resp));
         this.$data.dataLoading = false;
         if (resp.success && resp.body.resultList.length !== 0) {
           let formData = resp.body.resultList;
@@ -710,7 +802,8 @@
           productNo: this.childMsg.productNo, // 产品编号
           packageNo: this.$data.ProductPackageForm.packageNo, // 套餐编号
           packageRateNo: this.formInModel.packageRateNo,
-          bizType: this.formInModel.bizType, // 车类
+//          bizType: this.formInModel.bizType, // 车类
+          custLevel: this.formInModel.custLevel, // 客户等级
           loanPeriods: this.formInModel.loanPeriods, // 贷款期限
           loanNominalRate: this.formInModel.loanNominalRate, // 贷款名义利率
           loanRealRate: this.formInModel.loanRealRate // 贷款实际利率

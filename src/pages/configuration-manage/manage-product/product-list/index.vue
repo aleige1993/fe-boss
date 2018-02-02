@@ -24,7 +24,7 @@
     <div class="form-top-actions" slot="topAction" v-if="!isModal">
       <i-button @click="addModal" type="info"><i class="iconfont icon-xinzeng"></i> 新增产品</i-button>
       <i-button @click="PackageClick" type="ghost"><i class="iconfont icon-shenhe"></i> 套餐方案配置</i-button>
-      <i-button @click="feiyClick" type="ghost"><i class="iconfont icon-shenhe"></i> 费用收取配置</i-button>
+      <!--<i-button @click="feiyClick" type="ghost"><i class="iconfont icon-shenhe"></i> 费用收取配置</i-button>-->
       <i-button @click="loanClick" type="ghost"><i class="iconfont icon-shenhe"></i> 贷款材料配置</i-button>
       <i-button @click="lendingClick" type="ghost"><i class="iconfont icon-shenhe"></i> 放款条件配置</i-button>
       <i-button @click="RuleClick" type="ghost"><i class="iconfont icon-shenhe"></i> 准入规则配置</i-button>
@@ -159,9 +159,9 @@
       <conf-model-package  @notice-lilv="noticePackageFun" :child-msg="clickRow" v-if="TcShowModel"></conf-model-package>
     </pt-modal>
     <!--费用收取配置弹窗-->
-    <pt-modal :title="'[ '+clickRow.productName+' ]费用收取配置'" v-model="FyShowModal" :width="1200">
-      <conf-model-fy  @notice-cost="noticeCostFun" :child-msg="clickRow" v-if="FyShowModal"></conf-model-fy>
-    </pt-modal>
+    <!--<pt-modal :title="'[ '+clickRow.productName+' ]费用收取配置'" v-model="FyShowModal" :width="1200">-->
+      <!--<conf-model-fy  @notice-cost="noticeCostFun" :child-msg="clickRow" v-if="FyShowModal"></conf-model-fy>-->
+    <!--</pt-modal>-->
     <!--贷款材料配置弹窗-->
     <pt-modal :title="'[ '+clickRow.productName+' ]贷款材料配置'" v-model="LoanShowModal" :width="1200">
       <conf-model-loan @notice-loan="noticeLoanFun" :child-msg="clickRow" v-if="LoanShowModal"></conf-model-loan>
@@ -194,7 +194,7 @@
   import MixinData from './mixin-data';
   import MixinDataFeature from './mixin-data-feature';
   import ConfModelPackage from './configure-model-package'; //  套餐方案配置
-  import ConfModelFy from './configure-model-cost'; //  费用收取配置
+//  import ConfModelFy from './configure-model-cost'; //  费用收取配置
   import ConfModelLoan from './configure-model-loan'; //  贷款材料配置
   import ConfModelLending from './configure-model-lending'; // 放款条件配置
   import ConfModelRule from './configure-model-rule'; //  准入规则配置
@@ -207,7 +207,7 @@
     components: {
       'pt-modal': PTModal,
       'conf-model-package': ConfModelPackage,
-      'conf-model-fy': ConfModelFy,
+//      'conf-model-fy': ConfModelFy,
       'conf-model-loan': ConfModelLoan,
       'conf-model-lending': ConfModelLending,
       'conf-model-rule': ConfModelRule,
