@@ -5,6 +5,9 @@
       <i-button @click="addModal" type="info"><i class="iconfont icon-xinzeng"></i> 新增</i-button>
     </div>
     <i-table :loading="dataLoading" border ref="ContractTable" :columns="columns1" :data="data1"></i-table>
+    <div class="page-container">
+      <i-page :current="currentPage" :total="total" size="small" show-elevator show-total @on-change="jumpPage" :page-size="pageSize"></i-page>
+    </div>
     <br>
     <br>
     <!--/////////////////////////////////////////////////////////////////////////////////////-->
@@ -61,6 +64,9 @@
     },
     data() {
       return {
+        currentPage: 1,
+        total: 0,
+        pageSize: 10,
         ShowModal: false,
         buttonLoading: false,
         btnLoading: false,
@@ -84,15 +90,22 @@
       async getPrivateCustomerList() {
         this.$data.dataLoading = true;
         let resp = await this.$http.post('/pms/capital/listContractTemplateCfg', {
+          currentPage: this.$data.currentPage,
+          pageSize: this.$data.pageSize,
           productNo: this.getRowData.productNo,
           capitalNo: this.getRowData.capitalNo
         });
         this.$data.dataLoading = false;
         if (resp.body.resultList.length !== 0) {
           this.$data.data1 = resp.body.resultList;
+          this.$data.total = resp.body.totalNum / 1;
+          this.$data.currentPage = resp.body.currentPage / 1;
         } else {
           this.$data.data1 = [];
         }
+      },
+      jumpPage(page) {
+        this.getPrivateCustomerList(page);
       },
       // 打开弹窗
       addModal() {

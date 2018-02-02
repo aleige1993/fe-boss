@@ -271,7 +271,7 @@
                              prop="mbMemberWorkDTO.unitType"
                              :rules="{required: true, message: '请选择单位性质', trigger: 'blur'}">
                   <input v-model="formData.mbMemberWorkDTO.unitType" type="hidden"/>
-                  <i-input :readonly="true" :value="enumCode2Name(formData.mbMemberWorkDTO.unitType, 'IndustryTypeEnum')" placeholder="自动带入"></i-input>
+                  <i-input :readonly="true" :value="enumCode2Name(formData.mbMemberWorkDTO.unitType, 'UnitTypeEnum')" placeholder="自动带入"></i-input>
                 </i-form-item>
               </i-col>
               <i-col span="8">
@@ -279,7 +279,7 @@
                              prop="mbMemberWorkDTO.industryType"
                              :rules="{required: true, message: ' ', trigger: 'blur'}">
                   <input  v-model="formData.mbMemberWorkDTO.industryType" type="hidden" />
-                  <i-input :readonly="true" :value="enumCode2Name(formData.mbMemberWorkDTO.industryType, 'UnitTypeEnum')" placeholder="自动带入"></i-input>
+                  <i-input :readonly="true" :value="enumCode2Name(formData.mbMemberWorkDTO.industryType, 'IndustryTypeEnum')" placeholder="自动带入"></i-input>
                 </i-form-item>
               </i-col>
             </i-row>
@@ -306,7 +306,7 @@
               <i-col span="8">
                 <i-form-item label="月收入">
                   <i-input :readonly="isFromDetail" v-model="formData.mbMemberWorkDTO.monthRevenue">
-                    <span slot="append">元</span>
+                    <span v-if="formData.mbMemberWorkDTO.monthRevenue" slot="append">元</span>
                   </i-input>
                 </i-form-item>
               </i-col>

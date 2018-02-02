@@ -260,6 +260,8 @@ export default {
         applyAddress: '',
         longitude: '',
         latitude: '',
+        custLevel: '',
+        loandType: '',
         merchantNo: '',
         merchantAbbr: '',
         channelNo: '',

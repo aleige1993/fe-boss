@@ -102,7 +102,6 @@ export default {
       if (paymentConditionResp.success) {
         this.$data.approveData.loanPaymentConditionDTOS = paymentConditionResp.body.resultList;
       }
-      console.log(approveCreditResp);
       if (approveCreditResp.success) {
         this.$data.approveData.loanApproveCreditDTO = approveCreditResp.body;
       }
@@ -119,13 +118,16 @@ export default {
     /**
      * 初审状态 -- 根据申请编号和产品编号，产品期数获取审批初始化信息
     */
-    async getProductApproveInfo(loanNo, productNo, productPeriods, carBuyAmt) {
+    // ReqDataObj={ loanNo, productNo, productPeriods, carBuyAmt, custLevel, carType }
+    async getProductApproveInfo(ReqDataObj) {
       this.$data.initPageLoading = true;
       let resp = await this.$http.post('/biz/queryApproveProductCredit', {
-        productNo,
-        loanNo,
-        productPeriods,
-        carBuyAmt,
+        productNo: ReqDataObj.productNo,
+        loanNo: ReqDataObj.loanNo,
+        productPeriods: ReqDataObj.productPeriods,
+        carBuyAmt: ReqDataObj.carBuyAmt,
+        custLevel: ReqDataObj.custLevel,
+        carType: ReqDataObj.carType,
         custType: this.applyBasicInfo.custType || '', // 客户类型
         applyAmt: this.applyBasicInfo.applyAmt || '' // 申请金额
       });
@@ -164,7 +166,7 @@ export default {
           'approveLimitAmt': result.approveLimitAmt,
           'dqxInsurance': result.dqxInsurance,
           'loanApplyUse': result.loanApplyUse,
-          productNo,
+          'productNo': ReqDataObj.productNo,
           'loanRealUse': result.loanRealUse,
           'operatingMode': result.operatingMode,
           'riskControlContent': result.riskControlContent,

@@ -6,11 +6,11 @@
           <bs-big-img  style="float: left" :thumbWidth="128" :thumbHeight="128" :fullWidth="1280"
                        :thumb="item.carPicUrl"
                        :full="item.carPicUrl">
-            <span class="icon-remove" slot="icon-remove" @click.stop="deleteFile(item, index)"><i-icon type="close"></i-icon></span>
+            <span v-if="!isDetails" class="icon-remove" slot="icon-remove" @click.stop="deleteFile(item, index)"><i-icon type="close"></i-icon></span>
           </bs-big-img>
         </template>
       </template>
-      <i-upload style="display: inline-block; float: left; width:128px; margin-left: 5px; position: relative" :show-upload-list="false"
+      <i-upload v-if="!isDetails" style="display: inline-block; float: left; width:128px; margin-left: 5px; position: relative" :show-upload-list="false"
                 multiple type="drag"
                 :format="['jpg','jpeg','png','gif','bmp','jpeg','pic']"
                 :on-progress="uploading"
@@ -41,10 +41,15 @@
     props: {
       data: {
         type: Array,
-        required: false,
+        required: true,
         default: function() {
           return [];
         }
+      },
+      isDetails: {
+        type: Boolean,
+        required: false,
+        default: false
       }
     },
     watch: {

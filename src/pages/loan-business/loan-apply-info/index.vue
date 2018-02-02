@@ -151,6 +151,28 @@
               <i-input v-model="formData.channelNo" placeholder="" :readonly="true"></i-input>
             </i-form-item>
           </i-col>
+          <!--客户等级-->
+          <i-col span="8">
+            <i-form-item label="客户等级" prop="custLevel">
+              <i-select v-model="formData.custLevel"  @on-change="custLevelSelectChange">
+                <i-option value="A">A</i-option>
+                <i-option value="B">B</i-option>
+              </i-select>
+            </i-form-item>
+          </i-col>
+        </i-row>
+        <i-row>
+          <i-col span="8">
+            <i-form-item
+              label="用款形式"
+              :rules="{required: true, message: '请选择用款形式', trigger: 'change'}"
+              prop="loandType">
+              <i-select v-model="formData.loandType" :disabled="true">
+                <i-option value="1">贷款买车</i-option>
+                <i-option value="2">有车贷款</i-option>
+              </i-select>
+            </i-form-item>
+          </i-col>
         </i-row>
         <i-row v-if="formData.provinceName">
           <i-col>
@@ -176,7 +198,6 @@
         <i-button @click="openModalCar" type="info"><i class="iconfont icon-xinzeng"></i>&nbsp;新增</i-button>
       </div>
       <i-table :loading="carDataLoading" border ref="selection" :columns="carColumns" :data="carData"></i-table>
-      <div v-for="item in carData">{{item.loanCarPicVOList}}<br></div>
     </bs-form-block>
     <!--担保信息-->
     <bs-form-block :title="'担保信息'">
@@ -704,8 +725,8 @@
       </i-form>
     </bs-modal>
     <!--上传/查看车辆图片-->
-    <bs-modal :title="'上传/查看车辆图片'" v-model="seeCarPictureModal" :width="1200" @on-close="emptyCarRowPic">
-      <car-picture-list v-if="seeCarPictureModal" :data="loanCarPicVOListModalData" @on-data-remove="carDataRomove"  @on-data-add="carDataAdd"></car-picture-list>
+    <bs-modal :title="readonly?'查看车辆图片':'上传/查看车辆图片'" v-model="seeCarPictureModal" :width="1200" @on-close="emptyCarRowPic">
+      <car-picture-list v-if="seeCarPictureModal" :data="loanCarPicVOListModalData" @on-data-remove="carDataRomove"  @on-data-add="carDataAdd" :isDetails="readonly"></car-picture-list>
     </bs-modal>
     <i-spin fix v-if="initApplyInfoLoading"></i-spin>
   </div>
@@ -775,6 +796,10 @@
       this.initPage();
     },
     methods: {
+      // 更改了用户等级后，需要重新加载用信方案(重新调用接口-queryApproveProductCredit)
+      custLevelSelectChange(val) {
+        this.$emit('on-approve-info');
+      },
       // 模态框关闭后清楚组件内车辆图片数据
       emptyCarRowPic() {
         this.$data.loanCarPicVOListModalData = [];

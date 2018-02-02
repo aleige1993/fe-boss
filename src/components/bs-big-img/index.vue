@@ -128,7 +128,7 @@
     padding: 0;
     background: none;
     border: none;
-    cursor: pointer;
+    cursor: zoom-in;
   }
   .image-dialog-close {
     position: absolute;

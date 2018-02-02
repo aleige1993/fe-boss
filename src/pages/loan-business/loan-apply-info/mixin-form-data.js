@@ -37,6 +37,8 @@ export default {
       'status': '',
       'longitude': '',
       'latitude': '',
+      'custLevel': '',
+      'loandType': '',
       'apply_address': ''
     },
     'applyCarInfo': [

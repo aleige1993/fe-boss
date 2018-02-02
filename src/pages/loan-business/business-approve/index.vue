@@ -9,7 +9,7 @@
 
     <i-tabs v-model="tabIndex" type="card" :animated="false" style="padding-bottom: 46px;">
       <i-tab-pane :label="'基本信息'">
-        <apply-info ref="applyInfo" :customerType="formData.custType" :applyBasicInfo="formData" :loanAction="'firstApprove'" :readonly="applyInfoReadonly || isFromDetail"></apply-info>
+        <apply-info ref="applyInfo" :customerType="formData.custType" :applyBasicInfo="formData" :loanAction="'firstApprove'" :readonly="applyInfoReadonly || isFromDetail" @on-approve-info="approveInfoRefresh"></apply-info>
       </i-tab-pane>
       <i-tab-pane :label="'审批信息'">
         <approve-info ref="approveInfo" :applyBasicInfo="formData"
@@ -54,6 +54,18 @@
   export default {
     name: 'loanBusinessApprove',
     mixins: [MixinData, MixinMethods],
+    components: {
+      personalInfo,
+      companyCustomerInfo,
+      TableCompanyCustomerList,
+      BsModal,
+      'bs-carpicker': BsCarPicker,
+      'table-customer-list': PrivateCustomerList,
+      'apply-info': TabApplyBasicInfo,
+      'approve-info': TabApproveInfo,
+      'approve-history': TabApproveHistory,
+      'tab-big-data': TabBigData
+    },
     data() {
       return {
         isHasCheckCreditReport: false, // 是否征信报告
@@ -96,19 +108,13 @@
         required: false
       }
     },
-    components: {
-      personalInfo,
-      companyCustomerInfo,
-      TableCompanyCustomerList,
-      BsModal,
-      'bs-carpicker': BsCarPicker,
-      'table-customer-list': PrivateCustomerList,
-      'apply-info': TabApplyBasicInfo,
-      'approve-info': TabApproveInfo,
-      'approve-history': TabApproveHistory,
-      'tab-big-data': TabBigData
-    },
     methods: {
+      // 经过“基本信息”组件通知父组件 去执行“审核信息”组件中的方法
+      approveInfoRefresh() {
+        console.log('经过“基本信息”组件通知父组件 去执行“审核信息”组件中的方法');
+        // this.$refs.approveInfo.getPageInitData();
+        this.$refs.approveInfo.custLevelEmitFun();
+      },
       // 选择权利人
       selectObligeeRow(row, index) {
         // console.log(row);

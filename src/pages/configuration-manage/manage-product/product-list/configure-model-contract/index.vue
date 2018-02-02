@@ -5,6 +5,9 @@
       <i-button @click="addModal" type="info"><i class="iconfont icon-xinzeng"></i> 新增</i-button>
     </div>
     <i-table border ref="zfTable" :columns="columns1" :data="data1"></i-table>
+    <div class="page-container">
+      <i-page :current="currentPage" :total="total" size="small" show-elevator show-total @on-change="jumpPage" :page-size="pageSize"></i-page>
+    </div>
     <br>
     <br>
     <bs-modal :title="'新增'" v-model="showAddModal">
@@ -52,6 +55,9 @@
     },
     data() {
       return {
+        currentPage: 1,
+        total: 0,
+        pageSize: 10,
         showAddModal: false,
         buttonLoading: false,
         showSelectContractTemplate: false,
@@ -102,17 +108,27 @@
     },
     methods: {
       // 查询列表数据
-      async getPrivateCustomerList() {
+      async getPrivateCustomerList(page) {
         this.$data.dataLoading = true;
+        if (page) {
+          this.$data.currentPage = page / 1;
+        }
         let resp = await this.$http.post('/pms/capital/listContractTemplateCfg', {
+          currentPage: this.$data.currentPage,
+          pageSize: this.$data.pageSize,
           productNo: this.childMsg.productNo
         });
         this.$data.dataLoading = false;
         if (resp.success && resp.body.resultList.length !== 0) {
           this.$data.data1 = resp.body.resultList;
+          this.$data.total = resp.body.totalNum / 1;
+          this.$data.currentPage = resp.body.currentPage / 1;
         } else {
           this.$data.data1 = [];
         }
+      },
+      jumpPage(page) {
+        this.getPrivateCustomerList(page);
       },
       // 新增的保存请求方法
       async addSuBmit() {

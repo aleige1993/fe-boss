@@ -208,55 +208,7 @@
             });
           }
         }
-        /* if (this.$route.query.taskNode === '7') {
-          let resp = await this.$http.post('/biz/sign/contract/reviewApprove', {
-            signNo: requestData.signNo,
-            loanApprove: requestData.loanApprove
-          });
-          if (resp.success) {
-            this.$Message.success('提交成功！');
-            // 复核 回到合同复核列表
-            this.$router.push({
-              path: '/index/contract/againExamine',
-              query: {
-                currentPage: this.$route.query.currentPage
-              }
-            });
-          }
-        }*/
       },
-      /* // 资金方的 生成还款计划事件
-      async capitalGenerating() {
-        Alertify.confirm('确定生成资金方还款计划吗？', async (ok) => {
-          if (ok) {
-            const msg = this.$Message.loading('正在生成资金方还款计划...', 0);
-            let resp = await this.$http.post('/biz/sign/contract/createRepayPlanCapital', {
-              loanNo: this.$data.loanNo
-            });
-            msg();
-            if (resp.success) {
-              this.$Message.success('生成资金方还款计划成功！');
-              this.getRepayPlanCapitalList(); // 获取资方列表data
-            }
-          }
-        });
-      },*/
-      /* // 租金还款生成还款计划
-      async rentGenerating() {
-        Alertify.confirm('确定生成租金方还款计划吗？', async (ok) => {
-          if (ok) {
-            const msg = this.$Message.loading('正在生成租金方还款计划...', 0);
-            let resp = await this.$http.post('/biz/sign/contract/createRepayPlanRental', {
-              loanNo: this.$data.loanNo
-            });
-            msg();
-            if (resp.success) {
-              this.$Message.success('生成租金方还款计划成功！');
-              this.getRepayPlanRentalList(); // 获取租金还款计划列表data
-            }
-          }
-        });
-      },*/
       // 获取审批信息列表的data
       async examineGetlist(page) {
         this.$data.examineTableLoading = true;

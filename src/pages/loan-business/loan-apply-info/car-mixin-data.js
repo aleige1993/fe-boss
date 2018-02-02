@@ -53,8 +53,7 @@ export default {
               h('Button', {
                 props: {
                   type: 'success',
-                  size: 'small',
-                  disabled: this.readonly
+                  size: 'small'
                 },
                 style: {
                   marginRight: '5px'
@@ -69,7 +68,7 @@ export default {
                     this.$data.seeCarPictureModal = true;
                   }
                 }
-              }, '上传/查看车辆图片'),
+              }, this.readonly ? '查看车辆图片' : '上传/查看车辆图片'),
               h('Button', {
                 props: {
                   type: 'primary',

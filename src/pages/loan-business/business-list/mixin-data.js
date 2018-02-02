@@ -6,7 +6,7 @@ export default {
         {
           title: '项目编号',
           key: 'loanNo',
-          width: 200
+          width: 130
         },
         {
           title: '客户类型',
@@ -30,7 +30,7 @@ export default {
         },
         {
           title: '证件类型',
-          width: 120,
+          width: 90,
           key: 'certType',
           render: (h, params) => {
             if (params.row.custType === '1') {
@@ -48,7 +48,7 @@ export default {
         {
           title: '渠道商名称',
           key: 'merchantAbbr',
-          width: 120
+          width: 200
         },
         {
           title: '产品',
@@ -58,22 +58,22 @@ export default {
         {
           title: '期数',
           key: 'applyPeriods',
-          width: 200
+          width: 70
         },
         {
           title: '申请金额（元）',
           key: 'applyAmt',
-          width: 200
+          width: 130
         },
         {
           title: '申请时间',
           key: 'applyTime',
-          width: 200
+          width: 160
         },
         {
           title: '渠道业务编号',
           key: 'orderNo',
-          width: 200
+          width: 130
         },
         {
           title: '来源渠道',
@@ -87,12 +87,12 @@ export default {
         {
           title: '任务送达时间',
           key: 'taskArriveTime',
-          width: 192
+          width: 160
         },
         {
           title: '已耗时',
           key: 'timeConsuming',
-          width: 192
+          width: 140
         },
         {
           title: '当前环节-状态',

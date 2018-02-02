@@ -2,6 +2,7 @@
 
 #### props
 
+- isDetails : 仅为查看时不做上传 类型：Boolean  是否必须： 否
 - data : 文件列表 类型：Array  是否必须： 是
 * data结构规范如下：
 [
