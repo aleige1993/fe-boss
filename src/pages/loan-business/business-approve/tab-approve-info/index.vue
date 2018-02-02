@@ -382,7 +382,7 @@
           ReqDataObj
         );
       },
-      getPageInitData() {
+      async getPageInitData() {
         // 如果是一级审批或者二级审批，用业务编号初始化页面数据获取订单申请和审批信息，
         // 如果是初审，用产品和申请期限初始化有关产品的基础信息
         let ReqDataObj = {
@@ -393,11 +393,11 @@
           custLevel: this.applyBasicInfo.custLevel, // 客户等级A,B
           carType: this.applyBasicInfo.carType // 车类
         };
-        this.getProductApproveInfo(
+        await this.getProductApproveInfo(
           ReqDataObj
         );
         this.getFirstApproveList(this.applyBasicInfo.loanNo);
-        this.getLoanPeriodByProductNo(this.applyBasicInfo.productPackageNo, this.applyBasicInfo.custLevel);
+        this.getLoanPeriodByProductNo(this.$data.productPackageNo, this.applyBasicInfo.custLevel);
         this.getBankList(this.applyBasicInfo.loanNo);
       }
     },

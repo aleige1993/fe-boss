@@ -75,12 +75,13 @@ export default {
      * @param index
      */
     selectProduct(row, index) {
-      // console.log(row);
+      console.log(row);
       this.$data.approveData.loanApproveCreditDTO.productNo = row.productNo;
       this.$data.approveData.loanApproveCreditDTO.productName = row.productName;
+      this.$data.approveData.loanApproveCreditDTO.productPackageNo = row.productPackageNo;
       // this.$data.formData.productType = row.productType;
       this.$data.showSelectProduct = false;
-      this.getLoanPeriodByProductNo(row.productNo, row.carType);
+      this.getLoanPeriodByProductNo(row.productPackageNo, row.custLevel);
     },
     /**
      * 一级审批和二级审批状态 -- 获取初审信息    ---这个接口暂时废弃
@@ -153,8 +154,11 @@ export default {
           let loanRatio = item.paymentPercent;
           item.loanRatio = loanRatio;
         });
+        // 产品套餐编号
+        this.$data.productPackageNo = result.productPackageNo;
         // 用信方案
         this.$data.approveData.loanApproveCreditDTO = {
+          'productPackageNo': result.productPackageNo, // 产品套餐编号
           'loanPeriods': result.loanPeriods,
           'loanRealRate': result.loanRealRate,
           'capitalNo': '',
@@ -218,7 +222,10 @@ export default {
      * @returns {Promise.<void>}
      */
     async getLoanPeriodByProductNo(productPackageNo, custLevel) {
-      let resp = await this.$http.get('/pms/product/findProductByProNo', { productPackageNo, custLevel });
+      let resp = await this.$http.get('/pms/product/findProductByProNo', {
+        productPackageNo,
+        custLevel
+      });
       if (resp.success) {
         this.$data.loanPeriodsList = resp.body;
       }
