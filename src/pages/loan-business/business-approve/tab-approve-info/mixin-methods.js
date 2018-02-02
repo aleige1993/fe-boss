@@ -217,8 +217,8 @@ export default {
      * @param productNo
      * @returns {Promise.<void>}
      */
-    async getLoanPeriodByProductNo(productNo, carType) {
-      let resp = await this.$http.get('/pms/product/findProductByProNo', { productNo, carType });
+    async getLoanPeriodByProductNo(productPackageNo, custLevel) {
+      let resp = await this.$http.get('/pms/product/findProductByProNo', { productPackageNo, custLevel });
       if (resp.success) {
         this.$data.loanPeriodsList = resp.body;
       }

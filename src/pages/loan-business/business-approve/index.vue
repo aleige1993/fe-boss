@@ -110,10 +110,9 @@
     },
     methods: {
       // 经过“基本信息”组件通知父组件 去执行“审核信息”组件中的方法
-      approveInfoRefresh() {
-        console.log('经过“基本信息”组件通知父组件 去执行“审核信息”组件中的方法');
+      approveInfoRefresh(NewCustLevel) {
         // this.$refs.approveInfo.getPageInitData();
-        this.$refs.approveInfo.custLevelEmitFun();
+        this.$refs.approveInfo.custLevelEmitFun(NewCustLevel);
       },
       // 选择权利人
       selectObligeeRow(row, index) {

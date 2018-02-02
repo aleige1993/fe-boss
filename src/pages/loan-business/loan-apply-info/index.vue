@@ -798,7 +798,7 @@
     methods: {
       // 更改了用户等级后，需要重新加载用信方案(重新调用接口-queryApproveProductCredit)
       custLevelSelectChange(val) {
-        this.$emit('on-approve-info');
+        this.$emit('on-approve-info', val);
       },
       // 模态框关闭后清楚组件内车辆图片数据
       emptyCarRowPic() {
