@@ -99,29 +99,7 @@ let MyRouter = new Router({
                 { path:'contractsetting', name: 'contractSetting', component: resolve => { require(['@/pages/configuration-manage/manage-invest/contract-setting'], resolve) } },
               ]
             },// 配置管理-资方管理end
-            // 车型管理
-            {
-              path: 'carmodelmanage', name: 'carModelManage', component: resolve => require(['@/pages/configuration-manage/carmodel-manage'], resolve),
-              children: [
-                // 品牌管理
-                { path:'brand', name: 'carModelBrand', component: resolve => { require(['@/pages/configuration-manage/carmodel-manage/brand-manage'], resolve) } },
-                // 推荐品牌管理
-                { path:'topbrand', name: 'carModelTopBrand', component: resolve => { require(['@/pages/configuration-manage/carmodel-manage/topbrand-manage'], resolve) } },
-                // 车型管理
-                { path:'model', name: 'carModel', component: resolve => { require(['@/pages/configuration-manage/carmodel-manage/model-manage'], resolve) } },
-              ]
-            },
-            // 车型管理 end
-            // banner管理
-            {
-              path: 'bannermanage', name: 'bannerManage', component: resolve => require(['@/pages/configuration-manage/banner-manage'], resolve),
-            },
-            // banner管理 end
-            // 短信管理
-            {
-              path: 'smsmanage', name: 'smsManage', component: resolve => require(['@/pages/configuration-manage/sms-manage'], resolve),
-            },
-            // 短信管理 end
+
             // 额度预估模型
             {
               path: 'limitestimate', name: 'limitEetimate', component: resolve => require(['@/pages/configuration-manage/limit-estimate'], resolve),
@@ -135,8 +113,41 @@ let MyRouter = new Router({
                 // 预览
                 { path:'view', name: 'limitEetimateView', component: resolve => { require(['@/pages/configuration-manage/limit-estimate/view'], resolve) } },
               ]
-            }
+            },
             // 额度预估模型 end
+
+            // 车型管理
+            {
+              path: 'carmodelmanage', name: 'carModelManage', component: resolve => require(['@/pages/configuration-manage/carmodel-manage'], resolve),
+              children: [
+                // 品牌管理
+                { path:'brand', name: 'carModelBrand', component: resolve => { require(['@/pages/configuration-manage/carmodel-manage/brand-manage'], resolve) } },
+                // 推荐品牌管理
+                { path:'topbrand', name: 'carModelTopBrand', component: resolve => { require(['@/pages/configuration-manage/carmodel-manage/topbrand-manage'], resolve) } },
+                // 车型管理
+                { path:'model', name: 'carModel', component: resolve => { require(['@/pages/configuration-manage/carmodel-manage/model-manage'], resolve) } },
+              ]
+            },
+            // 车型管理 end
+
+            // banner管理
+            {
+              path: 'bannermanage', name: 'bannerManage', component: resolve => require(['@/pages/configuration-manage/banner-manage'], resolve),
+            },
+            // banner管理 end
+
+            // 短信管理
+            {
+              path: 'smsmanage', name: 'smsManage', component: resolve => require(['@/pages/configuration-manage/sms-manage'], resolve),
+            },
+            // 短信管理 end
+
+            // 支持银行
+            {
+              path: 'supportbank', name: 'supportBank', component: resolve => require(['@/pages/configuration-manage/support-bank'], resolve),
+            },
+            // 支持银行 end
+
           ]
         },// 配置管理end
         // 贷款业务
