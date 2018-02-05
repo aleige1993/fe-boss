@@ -12,7 +12,10 @@ export default {
         },
         {
           title: '车类',
-          key: 'bizType'
+          key: 'bizType',
+          render: (h, params) => {
+            return h('span', {}, this.enumCode2Name(params.row.bizType, 'BizTypeEnum'));
+          }
         },
         {
           title: '个人单车最低额度',
