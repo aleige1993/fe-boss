@@ -38,7 +38,7 @@ export default {
     },
     // 选择法人代表
     selectRulerRow(row, index) {
-      console.log(row);
+      // console.log(row);
       this.$data.formData.baseDTO.legalPersonNo = row.memberNo;
       this.$data.formData.baseDTO.legalPerson = row.name;
       this.$data.formData.baseDTO.legalPersonSex = row.sex;

@@ -8,7 +8,7 @@ export default {
           width: 100,
           key: 'custType',
           render: (h, params) => {
-            return h('span', {}, params.row.obligeeType === '1' ? '个人' : '企业');
+            return this.enumCode2Name(params.row.custType, 'CustTypeEnum');
           }
         },
         {

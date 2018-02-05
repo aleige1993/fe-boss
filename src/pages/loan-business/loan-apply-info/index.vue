@@ -97,13 +97,23 @@
             </i-form-item>
           </i-col>
           <i-col span="8">
-            <i-form-item class="required" label="贷款实际用途" prop="loanUse"
+            <i-form-item label="贷款实际用途" prop="loanUse"
                          :rules="{required: true, message: '请输入贷款实际用途'}">
               <i-input :readonly="readonly" v-model="formData.loanUse"></i-input>
             </i-form-item>
           </i-col>
-          <i-col span="8">
-            <i-form-item label="经销商" prop="merchantAbbr"
+          <i-col span="8" v-if="formData.loandType!=='1'">
+            <i-form-item label="经销商" prop="merchantAbbr">
+              <input type="hidden" v-model="formData.merchantAbbr"/>
+              <i-input v-model="formData.merchantAbbr" :readonly="true" placeholder="选择经销商">
+                <i-button v-if="!readonly" @click="distributorClick" slot="append">选择经销商 <Icon type="ios-more"></Icon></i-button>
+              </i-input>
+            </i-form-item>
+          </i-col>
+          <i-col span="8" v-else>
+            <i-form-item label="经销商"
+                         class="required"
+                         prop="merchantAbbr"
                          :rules="{required: true, message: '请选择经销商'}">
               <input type="hidden" v-model="formData.merchantAbbr"/>
               <i-input v-model="formData.merchantAbbr" :readonly="true" placeholder="选择经销商">
@@ -167,10 +177,12 @@
               label="用款形式"
               :rules="{required: true, message: '请选择用款形式', trigger: 'change'}"
               prop="loandType">
-              <i-select v-model="formData.loandType">
-                <i-option value="1">贷款买车</i-option>
-                <i-option value="2">有车贷款</i-option>
-              </i-select>
+              <i-tooltip content='当选择"贷款买车"时，经销商必选' placement="top">
+                <i-select v-model="formData.loandType">
+                  <i-option value="1">贷款买车</i-option>
+                  <i-option value="2">有车贷款</i-option>
+                </i-select>
+              </i-tooltip>
             </i-form-item>
           </i-col>
         </i-row>
@@ -511,14 +523,21 @@
             </i-form-item>
           </i-col>
         </i-row>
-        <i-row v-if="formData.carType == '2' && loanAction !== 'apply'">
+        <!--车辆评估-->
+        <!--<i-row v-if="formData.carType == '2' && loanAction !== 'apply'">-->
+        <i-row v-if="formData.carType == '2'">
           <i-col span="24">
-            <div class="form-top-actions">
+            <!--此处暂时不做添加按钮，2018.02.05的需求更改。但添加修改的交互方法未删-->
+            <!--<div class="form-top-actions">
               <i-button type="primary" @click="showAddCarEvalModal">添加车辆评估信息</i-button>
-            </div>
-            <i-table :columns="carEvalColumns" :data="formCar.carEvalVOList"></i-table>
+            </div>-->
+            <br>
+            <br>
+            <i-table :columns="carEvalColumns" :data="formCar.loanCarEvalDTOList"></i-table>
           </i-col>
         </i-row>
+        <br>
+        <br>
         <i-form-item class="text-right">
           <i-button type="primary" @click="carSuBmit">提交</i-button>
         </i-form-item>
@@ -756,6 +775,7 @@
     mixins: [MixinData, MixinMethods, carMixinData, carMixinMethods, assureMixinData, assureMixinMethods, loanMixinData, loanMixinMethods],
     data() {
       return {
+        carInfoDataIndex: 0, // 车辆信息表的单机的当前索引
         loanCarPicVOListModalData: [],
         carListRowData: {}, // 点击“查看/上传车辆图片”按钮时当前行的车辆数据
         isDistributor: false, // 选择渠道商弹窗是否显示为“选择经销商”
@@ -834,8 +854,9 @@
       }
     },
     watch: {
-      'formCar.custType'() {
+      'formCar.custType': function() {
         this.$data.formCar.carOwnerName = '';
+        this.$data.formCar.carOwnerNo = '';
       }
     }
   };

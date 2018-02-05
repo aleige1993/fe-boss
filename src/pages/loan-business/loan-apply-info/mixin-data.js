@@ -73,20 +73,37 @@ export default {
           key: 'evalProviderName'
         },
         {
+          title: '车况',
+          width: 120,
+          key: 'evalGrade',
+          render: (h, params) => {
+            // console.log(this.$store.getters.enumSelectData.get('CarConditionEnum'));
+            return h('span', {}, this.enumCode2Name(params.row.evalGrade, 'CarConditionEnum'));
+          }
+        },
+        {
+          title: '车型',
+          key: 'carModel'
+        },
+        {
+          title: '车商收购价(万元)',
+          key: 'merchantBuyAmt'
+        },
+        {
+          title: '车商售卖价(万元)',
+          key: 'merchantSaleAmt'
+        },
+        {
+          title: '个人交易价(万元)',
+          key: 'individualSaleAmt'
+        }
+        /* {
           title: '抵押估价',
           key: 'guarantyAmt'
         },
         {
           title: '质押估价',
           key: 'pledgeAmt'
-        },
-        {
-          title: '车商收购价',
-          key: 'merchantBuyAmt'
-        },
-        {
-          title: '个人交易价',
-          key: 'individualSaleAmt'
         },
         {
           title: '评估方式',
@@ -126,7 +143,7 @@ export default {
                   click: () => {
                     Alertify.confirm('确定要删除当前评估信息吗？', ok => {
                       if (ok) {
-                        this.$data.formCar.carEvalVOList.splice(params.index, 1);
+                        this.$data.formCar.loanCarEvalDTOList.splice(params.index, 1);
                       }
                     });
                     this.remove(params.index);
@@ -135,7 +152,7 @@ export default {
               }, '删除')
             ]);
           }
-        }
+        }*/
       ],
       formCar: {
         carOutputStand: '',
@@ -175,7 +192,7 @@ export default {
         carMileage: '',
         carModel: '',
         billCorpName: '',
-        carEvalVOList: [] // 车辆评估信息
+        loanCarEvalDTOList: [] // 车辆评估信息
       },
       formCarEval: {
         'loanCarNo': '', // 抵押车辆编号

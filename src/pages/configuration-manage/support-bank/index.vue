@@ -158,7 +158,6 @@
       },
       // 上传成功
       uploadSuccess(res, file, fileList) {
-        console.log(res);
         this.$data.fromData.bannerLogo = res.body.url;
       },
       // 上传失败

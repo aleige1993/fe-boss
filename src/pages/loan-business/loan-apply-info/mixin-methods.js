@@ -127,10 +127,15 @@ export default {
      * @param index
      */
     selectDistributor(row, index) {
-      this.$data.formData.merchantNo = row.corpNo;
-      this.$data.formData.merchantAbbr = row.corpName;
-      this.$data.formData.channelNo = row.merchantNo;
-      this.$data.formData.channelName = row.corpName;
+      // 选择的是经销商时：
+      if (this.$data.isDistributor) {
+        this.$data.formData.merchantNo = row.corpNo;
+        this.$data.formData.merchantAbbr = row.corpName;
+      } else {
+        // 选择的是渠道商时：
+        this.$data.formData.channelNo = row.merchantNo;
+        this.$data.formData.channelName = row.corpName;
+      }
       this.$data.showSelectDistributor = false;
     },
     // 验证表单信息并向外抛出数据

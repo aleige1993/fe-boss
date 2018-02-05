@@ -300,14 +300,14 @@ export default {
       repaymentAccountList: [], // 还款账户下拉
       // 贷款期限和利率
       loanPeriodsColumns: [
-        {
+        /* {
           title: '车类',
           width: 200,
           key: 'bizType',
           render: (h, params) => {
             return h('span', {}, this.enumCode2Name(params.row.bizType, 'BizTypeEnum'));
           }
-        },
+        },*/
         {
           title: '贷款期限(月)',
           key: 'loanPeriods'

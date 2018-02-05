@@ -75,7 +75,6 @@ export default {
      * @param index
      */
     selectProduct(row, index) {
-      console.log(row);
       this.$data.approveData.loanApproveCreditDTO.productNo = row.productNo;
       this.$data.approveData.loanApproveCreditDTO.productName = row.productName;
       this.$data.approveData.loanApproveCreditDTO.productPackageNo = row.productPackageNo;
@@ -217,8 +216,8 @@ export default {
       }
     },
     /**
-     * 根据产品NO获取贷款期限
-     * @param productNo
+     * 根据产品套餐编号和客户等级获取贷款期限
+     * @param productPackageNo,custLevel
      * @returns {Promise.<void>}
      */
     async getLoanPeriodByProductNo(productPackageNo, custLevel) {
@@ -226,6 +225,7 @@ export default {
         productPackageNo,
         custLevel
       });
+      // console.log(resp);
       if (resp.success) {
         this.$data.loanPeriodsList = resp.body;
       }

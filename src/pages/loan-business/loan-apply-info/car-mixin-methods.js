@@ -56,6 +56,7 @@ export default {
     setListCar(row) {
       this.$data.isAddCar = false;
       this.$data.showModalCar = true;
+      this.$data.carInfoDataIndex = row._index;
       this.$data.formCar = row;
     },
     // 删除
@@ -78,9 +79,9 @@ export default {
       this.$refs['formCarEval'].validate(valid => {
         if (valid) {
           if (this.$data.isAddCarEval) {
-            this.$data.formCar.carEvalVOList.push(this.$data.formCarEval);
+            this.$data.formCar.loanCarEvalDTOList.push(this.$data.formCarEval);
           } else {
-            this.$set(this.$data.formCar.carEvalVOList, this.$data.modifyCarEvalRowIndex, this.$data.formCarEval);
+            this.$set(this.$data.formCar.loanCarEvalDTOList, this.$data.modifyCarEvalRowIndex, this.$data.formCarEval);
           }
           this.$data.showCarEvalFormModal = false;
         }

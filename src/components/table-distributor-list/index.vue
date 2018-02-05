@@ -140,7 +140,6 @@
               enableStatus: posStatus
             });
             msg();
-            console.log(resp);
             if (resp.success) {
               this.$Message.success(statusText + '成功');
               this.getPrivateCustomerList();
