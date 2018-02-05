@@ -75,6 +75,7 @@ export default {
      * @param index
      */
     selectProduct(row, index) {
+      console.log(row);
       this.$data.approveData.loanApproveCreditDTO.productNo = row.productNo;
       this.$data.approveData.loanApproveCreditDTO.productName = row.productName;
       this.$data.approveData.loanApproveCreditDTO.productPackageNo = row.productPackageNo;

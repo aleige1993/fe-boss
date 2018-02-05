@@ -177,12 +177,10 @@
               label="用款形式"
               :rules="{required: true, message: '请选择用款形式', trigger: 'change'}"
               prop="loandType">
-              <i-tooltip content='当选择"贷款买车"时，经销商必选' placement="top">
-                <i-select v-model="formData.loandType">
-                  <i-option value="1">贷款买车</i-option>
-                  <i-option value="2">有车贷款</i-option>
-                </i-select>
-              </i-tooltip>
+              <i-select v-model="formData.loandType">
+                <i-option value="1">贷款买车</i-option>
+                <i-option value="2">有车贷款</i-option>
+              </i-select>
             </i-form-item>
           </i-col>
         </i-row>
