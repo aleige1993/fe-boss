@@ -153,6 +153,10 @@
               </i-col>
             </i-row>
           </bs-form-block>
+          <!--资金方信息-->
+          <bs-form-block :title="'资金方信息'">
+            <i-table :columns="loanFundPartyCol" :data="approveData.loanCapitalDTOS"></i-table>
+          </bs-form-block>
           <bs-form-block :title="'费用收取方案'">
             <i-table ref="feeMethodsTable" :columns="feeMethodCol" :data="approveData.loanApproveFeePlanDTOS"></i-table>
             <i-row style="margin-top: 10px;">
@@ -231,10 +235,6 @@
               <i-button type="primary" @click="conditionForm = {} ; addConditionModal = !addConditionModal">添加放款条件</i-button>
             </div>
             <i-table :columns="loanPaymentConditionCol" :data="approveData.loanPaymentConditionDTOS"></i-table>
-          </bs-form-block>
-          <!--资金方信息-->
-          <bs-form-block :title="'资金方信息'">
-            <i-table :columns="loanFundPartyCol" :data="approveData.loanCapitalDTOS"></i-table>
           </bs-form-block>
           <!--审核意见-->
           <bs-form-block title="审核意见" v-if="!isFromDetail">
