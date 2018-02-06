@@ -150,18 +150,24 @@ export default {
         // 资方
         this.$data.approveData.loanCapitalDTOS = result.loanProductCapitalDTOList;
         // 资方 转换字段--放款比例
+        let loanRateSum = 0;
         this.$data.approveData.loanCapitalDTOS.map((item) => {
           let loanRatio = item.paymentPercent;
           item.loanRatio = loanRatio;
+          loanRateSum += parseFloat(item.loanRate);
         });
+        this.$data.loanRateSumProuductRate = loanRateSum;
         // 产品套餐编号
         this.$data.productPackageNo = result.productPackageNo;
         // 用信方案
         this.$data.approveData.loanApproveCreditDTO = {
           'productPackageNo': result.productPackageNo, // 产品套餐编号
+          'productPackageName': result.productPackageName,
           'loanPeriods': result.loanPeriods,
           'loanRealRate': result.loanRealRate,
           'capitalNo': '',
+          // 产品利率=定收利率+资金方信息的资方借款利率 （loanProductRate产品利率仅作展示用）
+          'loanProductRate': this.$data.loanRateSumProuductRate + (this.$data.approveData.loanApproveCreditDTO.loanRealRate / 1),
           'loanNominalRate': result.loanNominalRate || '12',
           'productName': result.productName,
           'capitalName': '',
