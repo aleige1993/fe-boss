@@ -158,7 +158,7 @@
     <pt-modal :title="'[ '+clickRow.productName+' ]套餐方案配置'" v-model="TcShowModel" :width="1200">
       <conf-model-package  @notice-lilv="noticePackageFun" :child-msg="clickRow" v-if="TcShowModel"></conf-model-package>
     </pt-modal>
-    <!--费用收取配置弹窗-->
+    <!--费用收取配置弹窗 移入套餐方案配置中（修改于 肖洒）-->
     <!--<pt-modal :title="'[ '+clickRow.productName+' ]费用收取配置'" v-model="FyShowModal" :width="1200">-->
       <!--<conf-model-fy  @notice-cost="noticeCostFun" :child-msg="clickRow" v-if="FyShowModal"></conf-model-fy>-->
     <!--</pt-modal>-->
