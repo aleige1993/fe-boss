@@ -130,10 +130,11 @@ export default {
                 },
                 style: { marginRight: '5px' },
                 on: {
-                  click: async() => {
-                    this.$data.applyApproveLoading = true;
+                  click: async(e) => {
+                    // console.log(e);
+                    // this.$data.applyApproveLoading = true;
                     let resp = await this.$http.post('/biz/holdUpLoanBizByLoanNo', { loanNo: params.row.loanNo });
-                    this.$data.applyApproveLoading = false;
+                    // this.$data.applyApproveLoading = false;
                     if (resp.success) {
                       this.$router.push({
                         path: '/index/loanbusiness/doapprove',

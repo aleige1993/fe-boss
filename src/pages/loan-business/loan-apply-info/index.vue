@@ -111,8 +111,7 @@
             </i-form-item>
           </i-col>
           <i-col span="8" v-else>
-            <i-form-item label="经销商"
-                         class="required"
+            <i-form-item label="经销商2"
                          prop="merchantAbbr"
                          :rules="{required: true, message: '请选择经销商'}">
               <input type="hidden" v-model="formData.merchantAbbr"/>

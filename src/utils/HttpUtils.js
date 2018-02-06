@@ -48,7 +48,7 @@ class Http {
       method: 'POST'
     }).then(res => {
       if (res.data.reCode === '0004' || res.data.reCode === 'BS0004') {
-        toastr.error('登录超时');
+        Vue.prototype.$Notice.error('登录超时');
         MyRouter.push(
           {
             path: '/login',
@@ -99,7 +99,7 @@ class Http {
     }).then(res => {
       // console.log(res);
       if (res.data.reCode === '0004' || res.data.reCode === 'BS0004') {
-        toastr.error('登录超时');
+        Vue.prototype.$Notice.error('登录超时');
         MyRouter.push(
           {
             path: '/login',
