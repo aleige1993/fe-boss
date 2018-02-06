@@ -32,11 +32,11 @@ export default {
      */
     hasFinanceAmtInvalid(dataList) {
       let invalid = false;
-      dataList.forEach((item, index) => {
+      for (let item of dataList) {
         if (item.calcAmt === '') {
           invalid = true;
         }
-      });
+      }
       return invalid;
     },
     /**
@@ -55,18 +55,22 @@ export default {
           title: '错误提示',
           desc: '请先至少选择一条费用收取方案'
         });
-      } else if (this.hasFinanceAmtInvalid(selectData)) {
+        return;
+      }
+      if (this.hasFinanceAmtInvalid(selectData)) {
         this.$Notice.error({
           title: '错误提示',
           desc: '请先填写所选项的应收金额'
         });
-      } else {
-        this.$data.countFinanceLoading = true;
-        let resp = await this.$http.post('/biz/countFinancingAmt', this.$data.countFinanceList);
-        this.$data.countFinanceLoading = false;
-        if (resp.success) {
-          this.$data.approveData.loanApproveCreditDTO.carSaleAmt = resp.body.financingAmt;
-        }
+        return;
+      }
+      this.$data.countFinanceLoading = true;
+      let resp = await this.$http.post('/biz/countFinancingAmt', {
+        countFinancingAmtReqVOS: selectData
+      });
+      this.$data.countFinanceLoading = false;
+      if (resp.success) {
+        this.$data.approveData.loanApproveCreditDTO.carSaleAmt = resp.body.financingAmt;
       }
     },
     /**
@@ -75,7 +79,7 @@ export default {
      * @param index
      */
     selectProduct(row, index) {
-      console.log(row);
+      // console.log(row);
       this.$data.approveData.loanApproveCreditDTO.productNo = row.productNo;
       this.$data.approveData.loanApproveCreditDTO.productName = row.productName;
       this.$data.approveData.loanApproveCreditDTO.productPackageNo = row.productPackageNo;

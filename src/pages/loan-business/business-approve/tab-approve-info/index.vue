@@ -163,7 +163,7 @@
               <i-col span="24">
                 <i-form-item label="可融资金额">
                   <i-input style="width: 120px" :readonly="true" v-model="approveData.loanApproveCreditDTO.carSaleAmt"></i-input>
-                  <i-poptip trigger="hover" title="提示标题" content="提示内容提示内容提示内容提示内容提示内容提示内容提示内容提示内容提示内容提示内容提示内容">
+                  <i-poptip trigger="hover" title="计算方法" content='由选中行的"应收金额"之间的加减运算(当前行的"计算方式")得出'>
                     <i-button type="primary" @click="countFinanceAmount" :loading="countFinanceLoading" size="large">
                       <span v-if="countFinanceLoading">正在计算...</span>
                       <span v-else>计算可融资金额</span>

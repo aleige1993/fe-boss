@@ -131,6 +131,7 @@ export default {
         },
         {
           title: '计算方式',
+          key: 'calcSign',
           width: 120,
           render: (h, params) => {
             return h('i-select', {
@@ -140,9 +141,10 @@ export default {
               },
               on: {
                 'on-change': (value) => {
-                  let rowData = { ...params.row };
+                  this.$set(this.$data.approveData.loanApproveFeePlanDTOS[params.index], 'calcSign', value);
+                  /* let rowData = { ...params.row };
                   rowData.calcSign = value;
-                  this.$data.approveData.loanApproveFeePlanDTOS[params.index] = rowData;
+                  this.$data.approveData.loanApproveFeePlanDTOS[params.index] = rowData;*/
                 }
               }
             }, [
@@ -179,9 +181,7 @@ export default {
               },
               on: {
                 'on-change': (value) => {
-                  let rowData = { ...params.row };
-                  rowData.feeTakeType = value;
-                  this.$data.approveData.loanApproveFeePlanDTOS[params.index] = rowData;
+                  this.$set(this.$data.approveData.loanApproveFeePlanDTOS[params.index], 'feeTakeType', value);
                 }
               }
             }, [
@@ -214,12 +214,12 @@ export default {
           render: (h, params) => {
             return h('i-input', {
               props: {
-                'v-model': params.row.feeActualAmt,
+                'value': params.row.feeActualAmt,
                 disabled: this.readonly
               },
               on: {
                 'on-blur': (event) => {
-                  let rowData = Object.assign({}, params.row);
+                  let rowData = $.extend({}, params.row);
                   rowData.feeActualAmt = event.target.value;
                   this.$data.approveData.loanApproveFeePlanDTOS[params.index] = rowData;
                 }
@@ -248,7 +248,6 @@ export default {
         }
       ],
       countFinanceLoading: false,
-      countFinanceList: [],
       financingAmt: '',
       // 放款条件
       loanPaymentConditionCol: [
