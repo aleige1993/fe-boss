@@ -95,7 +95,7 @@
               label="支持最高额度"
               :rules="{required: true, message: '支持最高额度不能为空', trigger: 'blur'}"
               prop="maxLimit">
-              <i-input placeholder="请输入支持最高额度" v-model="formCustom.maxLimit">
+              <i-input type="text" placeholder="请输入支持最高额度" v-model="formCustom.maxLimit">
                 <span slot="append">元</span>
               </i-input>
             </i-form-item>
@@ -393,11 +393,11 @@
         this.$data.formCustom = {};
         this.$data.showAddModal = true;
       },
-      async setList(row) {
+      setList(row) {
         this.isAdd = false;
         this.$data.showAddModal = true;
-        this.formCustom = await row;
-        this.$data.clickRow = await row;
+        this.formCustom = row;
+        this.$data.clickRow = row;
         this.getProductTagList(); // 修改时加载产品特性列表
       },
       // 修改情况下的提交数据
