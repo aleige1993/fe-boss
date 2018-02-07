@@ -157,10 +157,13 @@ export default {
         this.$data.approveData.loanCapitalDTOS = result.loanProductCapitalDTOList;
         // 资方 转换字段--放款比例
         let loanRateSum = 0;
-        this.$data.approveData.loanCapitalDTOS.map((item) => {
-          item.loanRatio = item.paymentPercent;
-          loanRateSum += parseFloat(item.loanRate);
-        });
+        let tmLoanCapitalDTOS = result.loanProductCapitalDTOList;
+        if (tmLoanCapitalDTOS && tmLoanCapitalDTOS.length > 0) {
+          this.$data.approveData.loanCapitalDTOS.map((item) => {
+            item.loanRatio = item.paymentPercent;
+            loanRateSum += parseFloat(item.loanRate);
+          });
+        }
         this.$data.loanRateSumProuductRate = loanRateSum;
         // 产品套餐编号
         this.$data.productPackageNo = result.productPackageNo;
