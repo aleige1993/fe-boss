@@ -45,17 +45,17 @@ export default {
         {
           title: '银行卡预留手机号',
           key: 'mobile',
-          width: 120
+          width: 140
         },
         {
           title: '扣款发起时间',
           key: 'receiveTime',
-          width: 120
+          width: 160
         },
         {
           title: '扣款完成时间',
           key: 'succTime',
-          width: 120
+          width: 160
         },
         {
           title: '扣款成功金额',

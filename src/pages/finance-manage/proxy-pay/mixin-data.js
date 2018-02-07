@@ -15,7 +15,7 @@ export default {
         {
           title: '支付流水号',
           key: 'transNo',
-          width: 140
+          width: 240
         },
         {
           title: '代付金额',
@@ -35,7 +35,7 @@ export default {
         {
           title: '收款人开户银行',
           key: 'toAccDept',
-          width: 140
+          width: 180
         },
         {
           title: '收款人开户行省名',
@@ -50,32 +50,32 @@ export default {
         {
           title: '收款人开户行机构名',
           key: 'toAccDept',
-          width: 140
+          width: 180
         },
         {
           title: '收款人身份证号',
           key: 'transCardId',
-          width: 200
+          width: 160
         },
         {
           title: '银行卡预留手机号',
           key: 'transMobile',
-          width: 120
+          width: 140
         },
         {
           title: '预计付款时间',
           key: 'expectTime',
-          width: 120
+          width: 160
         },
         {
           title: '付款发起时间',
           key: 'actualTime',
-          width: 120
+          width: 160
         },
         {
           title: '付款完成时间',
           key: 'transEndtime',
-          width: 120
+          width: 160
         },
         {
           title: '支付渠道',
