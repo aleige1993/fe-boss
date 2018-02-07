@@ -14,8 +14,8 @@ export default {
         },
         {
           title: '支付流水号',
-          key: 'transSerialNo',
-          width: 140
+          key: 'transId',
+          width: 240
         },
         {
           title: '代扣金额',
