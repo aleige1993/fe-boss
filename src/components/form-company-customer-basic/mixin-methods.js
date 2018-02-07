@@ -10,19 +10,19 @@ export default {
     selectRegDistance(distance) {
       this.$data.formData.baseDTO.regProvinceCode = distance.provinceCode;
       this.$data.formData.baseDTO.regProvinceName = distance.provinceName;
-      this.$data.formData.baseDTO.regDistrictCode = distance.districtCode;
-      this.$data.formData.baseDTO.regDistrictName = distance.districtName;
       this.$data.formData.baseDTO.regCityCode = distance.cityCode;
       this.$data.formData.baseDTO.regCityName = distance.cityName;
+      this.$data.formData.baseDTO.regDistrictCode = distance.districtCode;
+      this.$data.formData.baseDTO.regDistrictName = distance.districtName;
     },
     // 选择营业地址
     selectBizDistance(distance) {
       this.$data.formData.baseDTO.bizProvinceCode = distance.provinceCode;
       this.$data.formData.baseDTO.bizProvinceName = distance.provinceName;
-      this.$data.formData.baseDTO.bizDistrictCode = distance.districtCode;
-      this.$data.formData.baseDTO.bizDistrictName = distance.districtName;
       this.$data.formData.baseDTO.bizCityCode = distance.cityCode;
       this.$data.formData.baseDTO.bizCityName = distance.cityName;
+      this.$data.formData.baseDTO.bizDistrictCode = distance.districtCode;
+      this.$data.formData.baseDTO.bizDistrictName = distance.districtName;
     },
     // 选择业务拓展部门
     selectDep(id, row, data) {
