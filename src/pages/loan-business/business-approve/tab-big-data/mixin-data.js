@@ -1,6 +1,31 @@
 export default {
   data() {
     return {
+      emergencyColumns: [
+        {
+          title: '关系',
+          key: 'relative',
+          render: (h, params) => {
+            return this.enumCode2Name(params.row.relative, 'RelativeEnum');
+          }
+        },
+        {
+          title: '联系人姓名',
+          key: 'contactsName'
+        },
+        {
+          title: '电话',
+          key: 'contactsMobile'
+        },
+        {
+          title: '联系人类型',
+          key: 'contactType',
+          render: (h, params) => {
+            return this.enumCode2Name(params.row.contactType, 'ContactTypeEnum');
+          }
+        }
+      ],
+      emergencyDatas: [],
       contactBookColumns: [
         {
           title: '联系人姓名',

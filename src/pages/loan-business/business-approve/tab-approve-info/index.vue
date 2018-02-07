@@ -52,7 +52,7 @@
               <i-col span="8">
                 <i-form-item label="审批额度" prop="loanApproveCreditDTO.approveLimitAmt"
                              :rules="{required: true, message: '请输入审批额度'}">
-                  <i-input :readonly="isApprove||readonly" v-model="approveData.loanApproveCreditDTO.approveLimitAmt">
+                  <i-input :readonly="readonly" v-model="approveData.loanApproveCreditDTO.approveLimitAmt">
                     <span slot="append">元</span>
                   </i-input>
                 </i-form-item>
@@ -95,7 +95,7 @@
               <i-col span="8">
                 <i-form-item label="产品利率" prop="loanApproveCreditDTO.loanProductRate"
                              :rules="{required: true, message: '请输入产品利率'}">
-                  <i-input :readonly="true" v-model="approveData.loanApproveCreditDTO.loanProductRate">
+                  <i-input :readonly="true" v-model="isNaN(approveData.loanApproveCreditDTO.loanProductRate)?'请输入定收利率':approveData.loanApproveCreditDTO.loanProductRate">
                     <span slot="append">%</span>
                   </i-input>
                 </i-form-item>

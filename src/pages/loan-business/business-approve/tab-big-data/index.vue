@@ -13,6 +13,9 @@
     <i-tabs v-model="tabIndex" :animated="false">
       <!--<i-tab-pane label="业务往来"></i-tab-pane>
       <i-tab-pane label="作为第三方保证"></i-tab-pane>-->
+      <i-tab-pane label="紧急联系人">
+        <i-table :loading="loadingContactBook" :columns="emergencyColumns" :data="emergencyDatas"></i-table>
+      </i-tab-pane>
       <i-tab-pane label="电话本联系人">
         <i-table :loading="loadingContactBook" :columns="contactBookColumns" :data="contactBookDatas"></i-table>
         <div class="page-container">
@@ -26,7 +29,7 @@
         </div>
       </i-tab-pane>
       <i-tab-pane label="呼出记录">
-        <i-table :loading="loadingContactBook" :columns="callInColumns" :total="callOutTotal" :data="callInDatas"></i-table>
+        <i-table :loading="loadingContactBook" :columns="callInColumns" :total="callOutTotal" :data="callOutDatas"></i-table>
         <div class="page-container">
           <Page @on-change="callOutPageChange" :total="callOutTotal" :page-size="15" size="small" show-total></Page>
         </div>
@@ -45,6 +48,9 @@
       return {
         tabIndex: 0,
         loadingContactBook: false,
+        contactBookTotal: 0,
+        callOutTotal: 0,
+        callInTotal: 0,
         searchForm: {
           phoneNo: '',
           currentPage: 1
@@ -52,6 +58,7 @@
       };
     },
     mounted() {
+      this.getEmergencyContact();
       this.getContactBooks();
       this.getCallInList();
       this.getCallOutList();
