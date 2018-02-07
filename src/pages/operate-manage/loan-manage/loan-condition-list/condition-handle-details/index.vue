@@ -200,6 +200,28 @@
         </i-form-item>
       </i-form>
     </bs-modal>
+    <!--完善车辆信息弹窗-->
+    <bs-modal v-model="setCarDataShowModal" title="完善车辆信息" :width="500">
+      <i-form ref="setCarDataForm" :model="setCarDataForm" label-position="right" :label-width="80">
+        <i-form-item label="车牌号"
+                     prop="carPlateNo">
+          <i-input v-model="setCarDataForm.carPlateNo" placeholder=""></i-input>
+        </i-form-item>
+        <i-form-item label="发动机号"
+                     prop="carEngineNo"
+                     :rules="{required: true, message: '请输入发动机号'}">
+          <i-input v-model="setCarDataForm.carEngineNo" placeholder=""></i-input>
+        </i-form-item>
+        <i-form-item label="车架号"
+                     prop="carFrameNo"
+                     :rules="{required: true, message: '请输入车架号'}">
+          <i-input v-model="setCarDataForm.carFrameNo" placeholder=""></i-input>
+        </i-form-item>
+        <i-form-item class="text-right">
+          <i-button type="primary" @click="setCarDataSubmit">提交</i-button>
+        </i-form-item>
+      </i-form>
+    </bs-modal>
     <!--车辆列表设置回传天数-->
     <bs-modal v-model="backDaysShowModal" title="设置回传天数" :width="500">
       <i-form ref="backDaysForm" :model="backDaysForm" label-position="right" :label-width="80">
@@ -331,6 +353,7 @@
         conditionLoading: false, // 放款条件loading
         initFormLoading: false, // 提交按钮loading
         formalitiesShowModal: false, // 办理抵质押物手续modal
+        setCarDataShowModal: false, // 完善车辆信息modal
         GPSinstallButtonLoading: false, // GPS安装信息modal里的提交按钮loading
         GPSinstallShowModal: false, // GPS安装信息modal
         GPSShowModal: false, // 显示GPS安装信息新增弹窗modal
@@ -389,6 +412,12 @@
             'repayAcctNo': '',
             'repayBankName': ''
           }
+        },
+        // 完善车辆信息
+        setCarDataForm: {
+          'carPlateNo': '',
+          'carEngineNo': '',
+          'carFrameNo': ''
         },
         // 办理抵质押物手续
         formalities: {
@@ -645,6 +674,26 @@
             this.allSubimt();
           } else {
             this.$data.tabIndex = 0;
+            this.$Message.error('<span style="color: red">*</span>项不能为空');
+          }
+        });
+      },
+      // 完善车辆信息弹窗的提交按钮
+      setCarDataSubmit() {
+        let ind = this.$data.clickRow._index; // 车辆列表的索引index
+        this.$refs['setCarDataForm'].validate(async (valid) => {
+          if (valid) {
+            const formField = [
+              'carPlateNo',
+              'carEngineNo',
+              'carFrameNo'
+            ];
+            formField.forEach((item) => {
+              this.$set(this.$data.carData[ind], '' + item, this.$data.setCarDataForm['' + item]);
+            });
+            this.$Message.success('提交成功');
+            this.$data.setCarDataShowModal = false;
+          } else {
             this.$Message.error('<span style="color: red">*</span>项不能为空');
           }
         });
