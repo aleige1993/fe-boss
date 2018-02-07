@@ -199,7 +199,7 @@
           <i-button type="primary" @click="formalitiesSubmit">提交</i-button>
         </i-form-item>
       </i-form>
-    </bs-modal>lose
+    </bs-modal>
     <!--车辆列表设置回传天数-->
     <bs-modal v-model="backDaysShowModal" title="设置回传天数" :width="500">
       <i-form ref="backDaysForm" :model="backDaysForm" label-position="right" :label-width="80">

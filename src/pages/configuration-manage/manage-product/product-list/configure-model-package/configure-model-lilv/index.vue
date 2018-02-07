@@ -709,11 +709,6 @@
           this.setSubmitZFLV();
         }
       },
-      formCancelZFLV() {
-        this.$data.ZFLVshowAddModal = false;
-        this.$data.rateForm = {};
-        this.this.zfClickRow = {};
-      },
       /****************************************************************************************/
       // 选择资方 将数据传给子组件
       async selectCapital(row, index) {
@@ -741,7 +736,7 @@
           ind = 0;
         }
         let resp = await this.$http.get(urlStr, dataObj);
-//        console.log(JSON.stringify(resp));
+        // console.log(JSON.stringify(resp));
         if (resp.success && resp.body.length !== 0) {
           let dataObject = resp.body[ind];
           for (let item in dataObject) {
