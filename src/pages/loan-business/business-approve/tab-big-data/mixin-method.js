@@ -19,7 +19,7 @@ export default {
         'memberNo': this.applyBasicInfo.memberNo,
         'custType': this.customerType,
         'currentPage': page || this.$data.searchForm.currentPage,
-        'phoneNo': page || this.$data.searchForm.phoneNo,
+        'phoneNo': this.$data.searchForm.phoneNo,
         'pageSize': 15
       });
       this.$data.loadingContactBook = false;

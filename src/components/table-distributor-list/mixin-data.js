@@ -17,7 +17,7 @@ export default {
         },
         {
           title: '渠道商简称',
-          width: 80,
+          width: 150,
           key: 'merchantAbbr'
         },
         {
@@ -100,6 +100,7 @@ export default {
           title: '操作',
           width: 230,
           align: 'center',
+          fixed: 'right',
           key: 'action',
           render: (h, params) => {
             return h('div', [

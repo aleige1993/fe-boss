@@ -29,13 +29,13 @@
           </i-select>
         </i-form-item>
         <i-form-item>
-          <bs-datepicker v-model="searchForm.applyStartTime" type="text" placeholder="下单时间"></bs-datepicker>
+          <bs-datepicker v-model="searchForm.applyTimeStart" type="text" placeholder="下单时间"></bs-datepicker>
         </i-form-item>
         <i-form-item>
           -
         </i-form-item>
         <i-form-item>
-          <bs-datepicker v-model="searchForm.applyEndTime" type="text" placeholder="下单时间"></bs-datepicker>
+          <bs-datepicker v-model="searchForm.applyTimeEnd" type="text" placeholder="下单时间"></bs-datepicker>
         </i-form-item>
         <i-form-item>
           <i-button @click="search" type="primary"><i-icon type="ios-search-strong"></i-icon> 搜索</i-button>
@@ -67,8 +67,8 @@
           pageSize: 15,
           'channelNo': '', // 渠道编号（1：Android；2：苹果；3：微信；4：其他）
           'orderStatus': '', // 订单状态
-          'applyStartTime': '',
-          'applyEndTime': ''
+          'applyTimeStart': '',
+          'applyTimeEnd': ''
         }
       };
     },
