@@ -71,10 +71,27 @@ export default {
         {
           title: '操作',
           key: 'action',
-          width: 240,
+          width: 340,
           align: 'center',
           render: (h, params) => {
             return h('div', [
+              h('Button', {
+                props: {
+                  type: 'success',
+                  size: 'small'
+                },
+                style: {
+                  marginRight: '5px'
+                },
+                on: {
+                  click: async() => {
+                    this.$data.setCarDataShowModal = true;
+                    this.$data.clickRow = {};
+                    this.$data.clickRow = $.extend({}, params.row);
+                    this.$data.setCarDataForm = $.extend({}, params.row);
+                  }
+                }
+              }, '完善车辆信息'),
               h('Button', {
                 props: {
                   type: 'primary',
@@ -308,7 +325,7 @@ export default {
     };
   },
   computed: {
-    carBtnWarrantType: function() {
+    carBtnWarrantType() {
       let btnText = '';
       // 权证回传方式为《先入库后放款》则展示办理抵押按钮
       if (this.$data.warrantType === '1') {
