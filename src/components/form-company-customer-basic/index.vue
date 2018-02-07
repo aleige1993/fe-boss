@@ -103,7 +103,8 @@
                                 :currDistrict="''+formData.baseDTO.regDistrictName"
                                 :currCity="''+formData.baseDTO.regCityName"
                                 :readonly="isFromDetail"
-                                @on-change="selectRegDistance"></bs-dispicker>
+                                @on-change="selectRegDistance">
+                  </bs-dispicker>
                   <i-input :readonly="isFromDetail" v-model="formData.baseDTO.regRoadAddr" placeholder="街道信息" style="width: 220px;"></i-input>
                 </i-form-item>
               </i-col>
@@ -121,7 +122,8 @@
                                 :currDistrict="formData.baseDTO.bizDistrictName"
                                 :currCity="formData.baseDTO.bizCityName"
                                 :readonly="isFromDetail"
-                                @on-change="selectBizDistance"></bs-dispicker>
+                                @on-change="selectBizDistance">
+                  </bs-dispicker>
                   <i-input :readonly="isFromDetail" v-model="formData.baseDTO.bizRoadAddr" placeholder="街道信息" style="width: 220px;"></i-input>
                 </i-form-item>
               </i-col>

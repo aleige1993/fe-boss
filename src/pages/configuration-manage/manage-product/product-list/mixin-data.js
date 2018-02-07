@@ -63,7 +63,10 @@ export default {
                 },
                 on: {
                   click: () => {
-                    params.row.maxLimit = params.row.maxLimit.toString();
+                    let maxLimit = params.row.maxLimit;
+                    if (params.row.maxLimit) {
+                      params.row.maxLimit = maxLimit.toString();
+                    }
                     this.setList($.extend({}, params.row));
                   }
                 }
