@@ -143,12 +143,14 @@ export default {
         // 准入规则  (已经移到申请信息中)
         // this.$data.approveData.loanApproveRuleDTOS = result.tmLoanApproveRuleDTOList;
         // 费用收取方案
-        this.$data.approveData.loanApproveFeePlanDTOS = result.tmLoanApproveFeePlanDTOList;
+        let tmLoanApproveFeePlanDTOList = result.tmLoanApproveFeePlanDTOList;
         // 费用收取方案 转换字段--实际费用金额
-        this.$data.approveData.loanApproveFeePlanDTOS.map((item) => {
-          let feeAmt = item.feeAmt;
-          item.feeActualAmt = feeAmt;
-        });
+        if (tmLoanApproveFeePlanDTOList && tmLoanApproveFeePlanDTOList.length > 0) {
+          this.$data.approveData.loanApproveFeePlanDTOS = tmLoanApproveFeePlanDTOList.map((item) => {
+            item.feeActualAmt = item.feeAmt;
+            return item;
+          });
+        }
         // 放款条件
         this.$data.approveData.loanPaymentConditionDTOS = result.loanPaymentConditionDTOList;
         // 资方
@@ -156,8 +158,7 @@ export default {
         // 资方 转换字段--放款比例
         let loanRateSum = 0;
         this.$data.approveData.loanCapitalDTOS.map((item) => {
-          let loanRatio = item.paymentPercent;
-          item.loanRatio = loanRatio;
+          item.loanRatio = item.paymentPercent;
           loanRateSum += parseFloat(item.loanRate);
         });
         this.$data.loanRateSumProuductRate = loanRateSum;

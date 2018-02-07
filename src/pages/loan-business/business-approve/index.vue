@@ -23,7 +23,7 @@
         <br>
         <iframe style="border:1px solid #f5f5f5" v-if="tabIndex == 2" :src="creditReportURL" width="100%" :height="iframeHeight" frameborder="0"></iframe>
       </i-tab-pane>
-      <i-tab-pane label="数据风控报告">
+      <i-tab-pane label="联系人信息">
         <tab-big-data :customerType="formData.custType" :applyBasicInfo="formData" v-if="tabIndex == 3"></tab-big-data>
       </i-tab-pane>
       <i-tab-pane :label="'审核历史意见'">
