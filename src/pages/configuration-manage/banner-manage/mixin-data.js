@@ -64,6 +64,7 @@ export default {
                 style: { marginRight: '5px' },
                 on: {
                   click: () => {
+                    params.row.index = params.row.index.toString();
                     this.$data.isAdd = false;
                     this.$data.addModal = true;
                     this.$data.fromData = $.extend({}, params.row);
