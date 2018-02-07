@@ -749,9 +749,9 @@
       // 获取模态框列表数据
       async getPrivateCustomerList() {
         this.$data.dataLoading = true;
-        let productNo = this.childMsg.productNo;
         let resp = await this.$http.get('/pms/productRate/list', {
-          productNo
+          productNo: this.childMsg.productNo,
+          packageNo: this.$data.ProductPackageForm.packageNo // 套餐编号
         });
 //        console.log(JSON.stringify(resp));
         this.$data.dataLoading = false;
