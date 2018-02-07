@@ -3,11 +3,11 @@
     <i-select :placeholder="currProvince" :disabled="readonly"  :label-in-value="true" v-model="distanceData.provinceCode"  @on-change="provinceChange" style="width: 150px">
       <i-option v-for="item in provinceDropList" :value="item.regionCode" :key="item.regionCode">{{item.regionName}}</i-option>
     </i-select>
-    <i-select :placeholder="currDistrict" :="readonly" :label-in-value="true" v-model="distanceData.districtCode" @on-change="districtChange" style="width: 150px">
-      <i-option v-for="item in districtDropList" :value="item.regionCode" :key="item.regionCode">{{item.regionName}}</i-option>
-    </i-select>
     <i-select :placeholder="currCity" :disabled="readonly" :label-in-value="true" @on-change="cityChange" v-model="distanceData.cityCode" style="width: 150px">
       <i-option v-for="item in cityDropList" :value="item.regionCode" :key="item.regionCode">{{item.regionName}}</i-option>
+    </i-select>
+    <i-select :placeholder="currDistrict" :="readonly" :label-in-value="true" v-model="distanceData.districtCode" @on-change="districtChange" style="width: 150px">
+      <i-option v-for="item in districtDropList" :value="item.regionCode" :key="item.regionCode">{{item.regionName}}</i-option>
     </i-select>
   </span>
 </template>
@@ -22,10 +22,10 @@
         distanceData: {
           provinceCode: '',
           provinceName: '',
-          districtCode: '',
-          districtName: '',
           cityCode: '',
-          cityName: ''
+          cityName: '',
+          districtCode: '',
+          districtName: ''
         }
       };
     },
@@ -63,20 +63,20 @@
         this.$data.distanceData.provinceName = val.label;
         let resp = await this.getAddressDropList(val.value);
         if (resp.success) {
-          this.$data.districtDropList = resp.body;
+          this.$data.cityDropList = resp.body;
         }
         this.$emit('on-change', { ...this.$data.distanceData });
       },
-      async districtChange(val) {
-        this.$data.distanceData.districtName = val.label;
+      async cityChange(val) {
+        this.$data.distanceData.cityName = val.label;
         let resp = await this.getAddressDropList(val.value);
         if (resp.success) {
-          this.$data.cityDropList = resp.body;
+          this.$data.districtDropList = resp.body;
         }
         this.$emit('on-change', Object.assign({}, this.$data.distanceData));
       },
-      cityChange(val) {
-        this.$data.distanceData.cityName = val.label;
+      districtChange(val) {
+        this.$data.distanceData.districtName = val.label;
         this.$emit('on-change', { ...this.$data.distanceData });
       },
       async initData() {

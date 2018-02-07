@@ -47,28 +47,28 @@ export default {
     selectCensusDistance(distance) {
       this.$data.formData.mbMemberDTO.censusProvinceCode = distance.provinceCode;
       this.$data.formData.mbMemberDTO.censusProvinceName = distance.provinceName;
-      this.$data.formData.mbMemberDTO.censusDistrictCode = distance.districtCode;
-      this.$data.formData.mbMemberDTO.censusDistrictName = distance.districtName;
       this.$data.formData.mbMemberDTO.censusCityCode = distance.cityCode;
       this.$data.formData.mbMemberDTO.censusCityName = distance.cityName;
+      this.$data.formData.mbMemberDTO.censusDistrictCode = distance.districtCode;
+      this.$data.formData.mbMemberDTO.censusDistrictName = distance.districtName;
     },
     // 居住地址联动
     selectNowDistance(distance) {
       this.$data.formData.mbMemberDTO.nowProvinceCode = distance.provinceCode;
       this.$data.formData.mbMemberDTO.nowProvinceName = distance.provinceName;
-      this.$data.formData.mbMemberDTO.nowDistrictCode = distance.districtCode;
-      this.$data.formData.mbMemberDTO.nowDistrictName = distance.districtName;
       this.$data.formData.mbMemberDTO.nowCityCode = distance.cityCode;
       this.$data.formData.mbMemberDTO.nowCityName = distance.cityName;
+      this.$data.formData.mbMemberDTO.nowDistrictCode = distance.districtCode;
+      this.$data.formData.mbMemberDTO.nowDistrictName = distance.districtName;
     },
     // 公司地址联动
     selectCompanyDistance(distance) {
       this.$data.formData.mbMemberWorkDTO.provinceCode = distance.provinceCode;
       this.$data.formData.mbMemberWorkDTO.provinceName = distance.provinceName;
-      this.$data.formData.mbMemberWorkDTO.districtCode = distance.districtCode;
-      this.$data.formData.mbMemberWorkDTO.districtName = distance.districtName;
       this.$data.formData.mbMemberWorkDTO.cityCode = distance.cityCode;
       this.$data.formData.mbMemberWorkDTO.cityName = distance.cityName;
+      this.$data.formData.mbMemberWorkDTO.districtCode = distance.districtCode;
+      this.$data.formData.mbMemberWorkDTO.districtName = distance.districtName;
     },
     // 保存信息
     async saveBasicCustomerInfo(data) {

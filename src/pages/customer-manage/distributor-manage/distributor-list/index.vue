@@ -18,6 +18,20 @@
     <!--新增修改模态框-->
     <bs-modal :title="isAdd ? '新增' : '修改'" v-model="showAddModal" :width="600">
       <i-form v-if="showAddModal" ref="formAdd" :model="formAdd" label-position="right" :label-width="120" style="padding: 30px 0;">
+        <!--选择上级渠道商-->
+        <i-row>
+          <i-col>
+            <i-form-item
+              label="上级渠道商"
+              :rules="{required: true, message: '请选择上级渠道商', trigger: 'change'}"
+              prop="pid">
+              <input type="hidden" v-model="formAdd.pid">
+              <i-input v-model="formAdd.corpNamePid" :readonly="true" placeholder="选择上级渠道商">
+                <i-button @click="showSelectMerchant=!showSelectMerchant" slot="append">选择上级渠道商 <Icon type="ios-more"></Icon></i-button>
+              </i-input>
+            </i-form-item>
+          </i-col>
+        </i-row>
         <i-row>
           <!--客户名称-->
           <i-col>
@@ -110,9 +124,14 @@
     <bs-modal :title="'选择公司'" v-model="showSelectCompany" :width="1200">
       <table-company-customer-list v-if="showSelectCompany" ref="companyTable" type="modal" @on-row-dbclick="selectCompanyRow"></table-company-customer-list>
     </bs-modal>
+    <!-- 选择上级渠道商 -->
+    <bs-modal :width="880" v-model="showSelectMerchant" title="选择上级渠道商">
+      <tree-merchant v-if="showSelectMerchant" @on-row-dblclick="selectMerchant" :columns="treeMerchantColumns" :data="treeMerchantData"></tree-merchant>
+    </bs-modal>
   </div>
 </template>
 <script>
+  import TreeMerchant from '@/components/bs-tree-grid'; // 选择上级渠道商
   import TableCompanyCustomerList from '@/components/table-company-customer-list';
   import tableDistributorList from '@/components/table-distributor-list';
   import BsModal from '@/components/bs-modal';
@@ -122,6 +141,22 @@
       return {
         showAddModal: false,
         buttonLoading: false,
+        showSelectMerchant: false,
+        treeMerchantData: [],
+        treeMerchantColumns: [
+          {
+            headerText: '',
+            headerAlign: 'center',
+            dataAlign: 'center',
+            width: '20'
+          },
+          {
+            headerText: '上级渠道商（双击选择）',
+            dataField: 'label',
+            headerAlign: 'center',
+            handler: ''
+          }
+        ],
         formSearch: {
           corpName: ''
         },
@@ -131,6 +166,8 @@
           'isEnablePlatform': '',
           'custMgrNo': '',
           'custMgrName': '',
+          'pid': '',
+          'corpNamePid': '',
           'corpNo': '',
           'corpName': '',
           'suCreditCode': '',
@@ -168,8 +205,12 @@
     },
     components: {
       BsModal,
+      TreeMerchant,
       tableDistributorList,
       TableCompanyCustomerList
+    },
+    mounted() {
+      this.getMerchantPidData();
     },
     methods: {
       // 选择客户
@@ -239,6 +280,19 @@
         this.$refs.tableDistributorList.handleClearCurrentRow();
         this.$data.isClickRow = false;
         this.$data.clickRow = {};
+      },
+      selectMerchant(id, index, treeData) {
+        this.$data.formAdd.corpNamePid = treeData.corpName;
+        this.$data.formAdd.Pid = treeData.id;
+        this.$data.showSelectMerchant = false;
+      },
+      // 获取上级渠道商树形结构数据
+      async getMerchantPidData() {
+        let resp = await this.$http.get('/merchant/tree');
+        console.log(resp.body);
+        if (resp.success) {
+          this.$data.treeMerchantData = resp.body;
+        }
       },
       openAddDistributorModal() {
         this.$data.isAdd = true;
