@@ -281,7 +281,7 @@
                      :rules="{required: true, message: '请输入描述信息'}">
           <i-input type="textarea" :rows="4" v-model="firstApproveForm.approveDesc"></i-input>
         </i-form-item>
-        <i-form-item label="查询结果bbb" prop="resultPath"
+        <i-form-item label="查询结果" prop="resultPath"
                      :rules="{required: true, message: '请上传凭证'}">
           <input type="hidden" v-model="firstApproveForm.resultPath"/>
           <i-upload :show-upload-list="false"
