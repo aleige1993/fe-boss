@@ -32,6 +32,32 @@ export default {
         {
           title: '车架号',
           key: 'carFrameNo'
+        },
+        {
+          title: '操作',
+          key: 'action',
+          width: 120,
+          align: 'center',
+          render: (h, params) => {
+            return h('div', [
+              h('Button', {
+                props: {
+                  type: 'primary',
+                  size: 'small'
+                },
+                style: {
+                  marginRight: '5px'
+                },
+                on: {
+                  click: async() => {
+                    this.$data.setCarDataShowModal = true;
+                    this.$data.clickRowIndex = params.index;
+                    this.$data.setCarDataForm = $.extend({}, params.row);
+                  }
+                }
+              }, '完善车辆信息')
+            ]);
+          }
         }
       ],
       carData: [],

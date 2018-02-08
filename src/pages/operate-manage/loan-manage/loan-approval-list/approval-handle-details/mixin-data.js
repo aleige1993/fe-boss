@@ -53,6 +53,21 @@ export default {
             return h('div', [
               h('Button', {
                 props: {
+                  type: 'success',
+                  size: 'small'
+                },
+                style: {
+                  marginRight: '5px'
+                },
+                on: {
+                  click: async() => {
+                    this.$data.detailsCarDataShowModal = true;
+                    this.$data.detailsCarDataForm = $.extend({}, params.row);
+                  }
+                }
+              }, '查看车辆信息'),
+              h('Button', {
+                props: {
                   type: 'primary',
                   size: 'small'
                 },

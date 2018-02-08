@@ -1,5 +1,5 @@
 <template>
-  <span>
+  <span class="select-show-input">
     <i-select filterable :placeholder="currBrand" :disabled="readonly"  :label-in-value="true" v-model="carData.brandNo"  @on-change="brandChange" style="width: 150px">
       <i-option-group v-for="(item, index) in brandDropList" :key="index" :label="item.groupName">
         <i-option v-for="brand in item.groupList"  :value="brand.brandNo" :key="brand.brandNo">{{brand.brandName}}</i-option>
@@ -102,6 +102,5 @@
     }
   };
 </script>
-<style>
-
+<style lang="scss" scoped="">
 </style>
