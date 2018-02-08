@@ -117,7 +117,7 @@
       </i-form>
     </bs-modal>
     <bs-modal v-model="selectProductModal" :width="1200" title="选择产品">
-      <table-product-list @on-row-dbclick="selectProduct"></table-product-list>
+      <table-product-list @on-row-dbclick="selectProduct" type="model"></table-product-list>
     </bs-modal>
   </div>
 </template>

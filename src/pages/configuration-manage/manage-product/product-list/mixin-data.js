@@ -56,7 +56,8 @@ export default {
               h('Button', {
                 props: {
                   type: 'primary',
-                  size: 'small'
+                  size: 'small',
+                  disabled: this.type !== 'page'
                 },
                 style: {
                   marginRight: '5px'
@@ -75,7 +76,7 @@ export default {
                 props: {
                   type: 'error',
                   size: 'small',
-                  disabled: params.row.status !== '3'
+                  disabled: params.row.status !== '3' || this.type !== 'page'
                 },
                 on: {
                   click: () => {
