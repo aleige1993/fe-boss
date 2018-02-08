@@ -8,7 +8,7 @@ export default {
           key: 'merchantNo'
         },
         {
-          title: '渠道商类型',
+          title: '渠道商属性',
           width: 80,
           key: 'merchantType',
           render: (h, params) => {

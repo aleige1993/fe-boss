@@ -9,9 +9,9 @@
     <table-distributor-list :type="'page'" ref="tableDistributorList" @on-radio-fun="radioFun" @on-cancel-clickRow="isClickRow = false" @on-set-row="setRow" @on-row-dbclick="selectRow">
       <div class="form-top-actions" slot="topAction">
         <i-button type="info" @click="openAddDistributorModal"><i class="iconfont icon-xinzeng"></i> 新增</i-button>
-        <i-button type="info" @click="openCarModal"><i class="iconfont icon-xinzeng"></i> 车型管理</i-button>
-        <i-button type="info" @click="openQuotaModal"><i class="iconfont icon-xinzeng"></i> 额度管理</i-button>
-        <i-button type="info" @click="openOperatorModal"><i class="iconfont icon-xinzeng"></i> 操作员管理</i-button>
+        <i-button type="ghost" @click="openCarModal"><i class="iconfont icon-shenhe"></i> 车型管理</i-button>
+        <i-button type="ghost" @click="openQuotaModal"><i class="iconfont icon-shenhe"></i> 额度管理</i-button>
+        <i-button type="ghost" @click="openOperatorModal"><i class="iconfont icon-shenhe"></i> 操作员管理</i-button>
         <i-button v-show="isClickRow" @click="handleClearCurrentRow" type="text"><i-icon type="android-cancel" class="button-cancel"></i-icon> 取消当前选中状态</i-button>
       </div>
     </table-distributor-list>
@@ -24,8 +24,7 @@
             <i-form-item
               label="上级渠道商"
               :rules="{required: true, message: '请选择上级渠道商', trigger: 'change'}"
-              prop="pid">
-              <input type="hidden" v-model="formAdd.pid">
+              prop="corpNamePid">
               <i-input v-model="formAdd.corpNamePid" :readonly="true" placeholder="选择上级渠道商">
                 <i-button @click="showSelectMerchant=!showSelectMerchant" slot="append">选择上级渠道商 <Icon type="ios-more"></Icon></i-button>
               </i-input>
@@ -66,13 +65,13 @@
             </i-form-item>
           </i-col>
         </i-row>
-        <!--渠道商类型-->
+        <!--渠道商属性-->
         <i-row>
           <i-col>
             <i-form-item
-              label="渠道商类型"
+              label="渠道商属性"
               prop="merchantType"
-              :rules="{required: true, message: '请选择渠道商类型', trigger: 'change'}">
+              :rules="{required: true, message: '请选择渠道商属性', trigger: 'change'}">
               <i-select v-model="formAdd.merchantType">
                 <i-option v-for="item in enumSelectData.get('MerchantTypeEnum')" :key="item.itemCode" :value="item.itemCode">{{item.itemName}}</i-option>
               </i-select>
@@ -84,7 +83,7 @@
             <i-form-item
               label="渠道商简称"
               prop="merchantAbbr"
-              :rules="{required: true, message: '请选择渠道商类型', trigger: 'blur'}">
+              :rules="{required: true, message: '请选择渠道商简称', trigger: 'blur'}">
               <i-input v-model="formAdd.merchantAbbr" placeholder=""></i-input>
             </i-form-item>
           </i-col>
