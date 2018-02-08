@@ -19,7 +19,6 @@
     props: {
       childMsg: Object
     },
-    loanRuleNoArray: [],
     data() {
       return {
         dataLoading: false,
@@ -48,7 +47,8 @@
             }
           }
         ],
-        data1: []
+        data1: [],
+        loanRuleNoArray: []
       };
     },
     mounted() {
@@ -69,6 +69,11 @@
           let _data = resp.body.resultList.map(item => {
             if (item.isSelected === 1) {
               item._checked = true;
+              this.$data.loanRuleNoArray.push({
+                loanRuleNo: item.loanRuleNo,
+                loanRule: item.loanRule,
+                custType: item.custType
+              });
             }
             return item;
           });
@@ -100,6 +105,7 @@
           let json = {};
           json['loanRuleNo'] = item.loanRuleNo;
           json['loanRule'] = item.loanRule;
+          json['custType'] = item.custType;
           return json;
         });
         this.$data.loanRuleNoArray = _dataArray;

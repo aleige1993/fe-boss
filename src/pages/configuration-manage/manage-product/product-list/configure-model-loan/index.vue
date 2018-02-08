@@ -19,7 +19,6 @@
     props: {
       childMsg: Object
     },
-    loanDocCode: [],
     data() {
       return {
         dataLoading: false,
@@ -47,7 +46,8 @@
             }
           }
         ],
-        data1: []
+        data1: [],
+        loanDocCode: []
       };
     },
     mounted() {
@@ -67,6 +67,11 @@
           let _data = resp.body.map(item => {
             if (item.isSelectd === 1 || item.isSelectd === '1') {
               item._checked = true;
+              this.$data.loanDocCode.push({
+                loanDocCode: item.loanDocCode,
+                loanDocName: item.loanDocName,
+                custType: item.custType
+              });
             }
             return item;
           });
