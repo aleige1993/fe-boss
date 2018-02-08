@@ -507,7 +507,7 @@
           <i-col span="8">
             <i-form-item label="车辆购买价格" prop="carBuyPrice">
               <i-input v-model="formCar.carBuyPrice" placeholder="">
-                <span slot="append">元</span>
+                <span slot="append">万元</span>
               </i-input>
             </i-form-item>
           </i-col>

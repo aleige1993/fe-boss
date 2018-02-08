@@ -1,6 +1,6 @@
 <template>
   <div id="page-product">
-    <i-breadcrumb separator="&gt;" v-if="!isModal">
+    <i-breadcrumb separator="&gt;" v-if="type==='page'">
       <i-breadcrumb-item href="/">首页</i-breadcrumb-item>
       <i-breadcrumb-item href="/index/conf">配置管理</i-breadcrumb-item>
       <i-breadcrumb-item>产品列表</i-breadcrumb-item>
@@ -21,7 +21,7 @@
         </i-form-item>
       </i-form>
     </div>
-    <div class="form-top-actions" slot="topAction" v-if="!isModal">
+    <div class="form-top-actions" slot="topAction" v-if="type==='page'">
       <i-button @click="addModal" type="info"><i class="iconfont icon-xinzeng"></i> 新增产品</i-button>
       <i-button @click="PackageClick" type="ghost"><i class="iconfont icon-shenhe"></i> 套餐方案配置</i-button>
       <!--<i-button @click="feiyClick" type="ghost"><i class="iconfont icon-shenhe"></i> 费用收取配置</i-button>-->
@@ -271,9 +271,11 @@
       }
     },
     props: {
-      type: String,
-      default: 'page',
-      required: false
+      type: {
+        type: String,
+        default: 'page',
+        required: false
+      }
     },
     mounted() {
       this.getPrivateCustomerList();
