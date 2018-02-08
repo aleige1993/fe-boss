@@ -20,7 +20,6 @@
     props: {
       childMsg: Object
     },
-    finishedDocCode: [],
     data() {
       return {
         buttonLoading: false,
@@ -47,7 +46,8 @@
             }
           }
         ],
-        data1: []
+        data1: [],
+        finishedDocCode: []
       };
     },
     mounted() {
@@ -66,6 +66,11 @@
           let _data = resp.body.map(item => {
             if (item.isSelected === 1) {
               item._checked = true;
+              this.finishedDocCode.push({
+                finishedDocCode: item.finishedDocCode,
+                finishedDocName: item.finishedDocName,
+                custType: item.custType
+              });
             }
             return item;
           });
@@ -97,6 +102,7 @@
           let json = {};
           json['finishedDocCode'] = item.finishedDocCode;
           json['finishedDocName'] = item.finishedDocName;
+          json['custType'] = item.custType;
           return json;
         });
         this.$data.finishedDocCode = _dataArray;

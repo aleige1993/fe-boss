@@ -53,9 +53,11 @@ export default {
       });
     },
     // 编辑
-    setListCar(row) {
+    async setListCar(row) {
+      console.log(row);
       this.$data.isAddCar = false;
       this.$data.showModalCar = true;
+      await bsWait(500);
       this.$data.carInfoDataIndex = row._index;
       this.$data.formCar = row;
     },

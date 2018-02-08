@@ -80,7 +80,7 @@ export default {
                 },
                 on: {
                   click: () => {
-                    this.setListCar(Object.assign({}, params.row));
+                    this.setListCar($.extend({}, params.row));
                   }
                 }
               }, '编辑'),

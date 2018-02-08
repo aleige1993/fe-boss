@@ -16,7 +16,6 @@
 <script>
   export default {
     name: 'configureModelRule',
-    approveRuleCode: [],
     props: {
       childMsg: Object
     },
@@ -48,7 +47,8 @@
             }
           }
         ],
-        data1: []
+        data1: [],
+        approveRuleCode: []
       };
     },
     mounted() {
@@ -67,6 +67,11 @@
           let _data = resp.body.map(item => {
             if (item.isSelected === 1) {
               item._checked = true;
+              this.$data.approveRuleCode.push({
+                approveRuleCode: item.approveRuleCode,
+                approveRuleName: item.approveRuleName,
+                custType: item.custType
+              });
             }
             return item;
           });
@@ -98,6 +103,7 @@
           let json = {};
           json['approveRuleCode'] = item.approveRuleCode;
           json['approveRuleName'] = item.approveRuleName;
+          json['custType'] = item.custType;
           return json;
         });
         this.$data.approveRuleCode = _dataArray;
