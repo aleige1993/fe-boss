@@ -52,7 +52,11 @@ export default {
         }
       });
     },
-    // 编辑
+    /**
+     * 编辑车辆信息
+     * @param row
+     * @returns {Promise<void>}
+     */
     async setListCar(row) {
       console.log(row);
       this.$data.isAddCar = false;
