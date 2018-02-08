@@ -450,7 +450,7 @@
           <i-col span="8">
             <i-form-item label="有无事故" prop="carIsFault">
               <i-select v-model="formCar.carIsFault">
-                <i-option v-for="item in enumSelectData.get('YesNoEnum')" :key="item.itemCode" :value="item.itemCode">{{item.itemName}}</i-option>
+                <i-option v-for="item in enumSelectData.get('HaveNoEnum')" :key="item.itemCode" :value="item.itemCode">{{item.itemName}}</i-option>
               </i-select>
             </i-form-item>
           </i-col>
@@ -851,9 +851,11 @@
       }
     },
     watch: {
-      'formCar.custType': function() {
-        this.$data.formCar.carOwnerName = '';
-        this.$data.formCar.carOwnerNo = '';
+      'formCar.custType': function(newVal, oldVal) {
+        if (oldVal !== '') {
+          this.$data.formCar.carOwnerName = '';
+          this.$data.formCar.carOwnerNo = '';
+        }
       }
     }
   };

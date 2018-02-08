@@ -58,10 +58,9 @@ export default {
      * @returns {Promise<void>}
      */
     async setListCar(row) {
-      console.log(row);
       this.$data.isAddCar = false;
       this.$data.showModalCar = true;
-      await bsWait(500);
+      await this.$refs['formCar'].resetFields();
       this.$data.carInfoDataIndex = row._index;
       this.$data.formCar = row;
     },

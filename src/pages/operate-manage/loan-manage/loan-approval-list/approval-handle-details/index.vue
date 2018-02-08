@@ -259,6 +259,216 @@
     <bs-modal v-model="GPSinstallShowModal" title="GPS安装信息详情" :width="1200">
       <i-table v-if="GPSinstallShowModal" border ref="examineTable" :columns="loanCarGpsDTOColumns" :data="loanCarGpsDTOList"></i-table>
     </bs-modal>
+    <!--车辆信息弹窗-->
+    <bs-modal v-model="detailsCarDataShowModal" title="车辆信息" :width="1200">
+      <i-form v-if="detailsCarDataShowModal" ref="detailsCarDataForm" :model="detailsCarDataForm" label-position="right" :label-width="120">
+        <i-row>
+          <i-col span="8">
+            <i-form-item
+              label="担保类型"
+              prop="guaranteeType">
+              <span v-text="enumCode2Name(detailsCarDataForm.guaranteeType, 'PawnTypeEnum')"></span>
+            </i-form-item>
+          </i-col>
+          <i-col span="8">
+            <i-form-item
+              label="权利人类型"
+              prop="custType">
+              <span v-text="enumCode2Name(detailsCarDataForm.custType, 'CustTypeEnum')"></span>
+            </i-form-item>
+          </i-col>
+          <!--权利人-->
+          <i-col span="8" v-if="detailsCarDataForm.custType=='1' || detailsCarDataForm.custType=='2'">
+            <i-form-item
+              label="权利人"
+              prop="carOwnerNo">
+              <span v-text="detailsCarDataForm.carOwnerName"></span>
+            </i-form-item>
+          </i-col>
+        </i-row>
+        <i-row>
+          <i-col span="8">
+            <i-form-item label="车牌号" prop="carPlateNo">
+              <span v-text="detailsCarDataForm.carPlateNo"></span>
+            </i-form-item>
+          </i-col>
+          <i-col span="8">
+            <i-form-item label="是否临时车牌" prop="isTmpPlate">
+              <span v-text="enumCode2Name(detailsCarDataForm.isTmpPlate, 'YesNoEnum')"></span>
+            </i-form-item>
+          </i-col>
+        </i-row>
+        <i-row>
+          <!--车辆品牌-->
+          <i-col span="24">
+            <i-form-item
+              label="车辆品牌"
+              prop="carModel">
+              <span v-text="detailsCarDataForm.carBrandName+detailsCarDataForm.carTypeName+detailsCarDataForm.carModel"></span>
+            </i-form-item>
+          </i-col>
+        </i-row>
+        <i-row>
+          <!--车辆颜色-->
+          <i-col span="8">
+            <i-form-item label="车辆颜色" prop="carColor">
+              <span v-text="enumCode2Name(detailsCarDataForm.carColor, 'CarColorEnum')"></span>
+            </i-form-item>
+          </i-col>
+          <!--排量-->
+          <i-col span="8">
+            <i-form-item label="排量" prop="carOutputVolume">
+              <span v-text="detailsCarDataForm.carOutputVolume"></span>
+            </i-form-item>
+          </i-col>
+          <!--排放标准-->
+          <i-col span="8">
+            <i-form-item label="排放标准" prop="carOutputStand">
+              <span v-text="detailsCarDataForm.carOutputStand"></span>
+            </i-form-item>
+          </i-col>
+        </i-row>
+        <i-row>
+          <!--生产厂商-->
+          <i-col span="8">
+            <i-form-item label="生产厂商" prop="carVendor">
+              <span v-text="detailsCarDataForm.carVendor"></span>
+            </i-form-item>
+          </i-col>
+          <!--发动机号-->
+          <i-col span="8">
+            <i-form-item label="发动机号" prop="carEngineNo">
+              <span v-text="detailsCarDataForm.carEngineNo"></span>
+            </i-form-item>
+          </i-col>
+          <!--车架号-->
+          <i-col span="8">
+            <i-form-item label="车架号" prop="carFrameNo">
+              <span v-text="detailsCarDataForm.carFrameNo"></span>
+            </i-form-item>
+          </i-col>
+        </i-row>
+        <i-row>
+          <!--出厂日期-->
+          <i-col span="8">
+            <i-form-item label="出厂日期" prop="carBirthday">
+              <span v-text="detailsCarDataForm.carBirthday"></span>
+            </i-form-item>
+          </i-col>
+          <!--上牌城市-->
+          <i-col span="8">
+            <i-form-item label="上牌城市" prop="carOnCity">
+              <span v-text="detailsCarDataForm.carOnCity"></span>
+            </i-form-item>
+          </i-col>
+          <!--上牌时间-->
+          <i-col span="8">
+            <i-form-item label="上牌时间" prop="carOnDate">
+              <span v-text="detailsCarDataForm.carOnDate"></span>
+            </i-form-item>
+          </i-col>
+        </i-row>
+        <i-row>
+          <!--过户次数-->
+          <i-col span="8">
+            <i-form-item label="过户次数" prop="carTransferCount">
+              <span v-text="detailsCarDataForm.carTransferCount"></span>
+            </i-form-item>
+          </i-col>
+          <!--抵押次数-->
+          <i-col span="8">
+            <i-form-item label="抵押次数" prop="carGuaCount">
+              <span v-text="detailsCarDataForm.carGuaCount"></span>
+            </i-form-item>
+          </i-col>
+          <!--行驶里程-->
+          <i-col span="8">
+            <i-form-item label="行驶里程" prop="carMileage">
+              <span v-text="(detailsCarDataForm.carMileage&&detailsCarDataForm.carMileage!=='')?detailsCarDataForm.carMileage+'KM':detailsCarDataForm.carMileage"></span>
+            </i-form-item>
+          </i-col>
+        </i-row>
+        <i-row>
+          <!--合格证号-->
+          <i-col span="8">
+            <i-form-item label="合格证号" prop="carCertNo">
+              <span v-text="detailsCarDataForm.carCertNo"></span>
+            </i-form-item>
+          </i-col>
+          <!--车辆状况-->
+          <i-col span="8">
+            <i-form-item
+              label="车辆状况"
+              prop="carStatus">
+              <span v-text="enumCode2Name(detailsCarDataForm.carStatus, 'CarConditionEnum')"></span>
+            </i-form-item>
+          </i-col>
+          <!--有无事故-->
+          <i-col span="8">
+            <i-form-item label="有无事故" prop="carIsFault">
+              <span v-text="enumCode2Name(detailsCarDataForm.carIsFault, 'HaveNoEnum')"></span>
+            </i-form-item>
+          </i-col>
+        </i-row>
+        <i-row>
+          <!--机动车登记证书号-->
+          <i-col span="8">
+            <i-form-item label="机动车登记证书号" prop="carRegNo">
+              <span v-text="detailsCarDataForm.carRegNo"></span>
+            </i-form-item>
+          </i-col>
+          <!--是否挂靠-->
+          <i-col span="8">
+            <i-form-item label="是否挂靠" prop="carIsAnchored">
+              <span v-text="enumCode2Name(detailsCarDataForm.carIsAnchored, 'YesNoEnum')"></span>
+            </i-form-item>
+          </i-col>
+        </i-row>
+        <i-row>
+          <!--发票开具单位-->
+          <i-col span="8">
+            <i-form-item label="发票开具单位" prop="billCorpName">
+              <span v-text="detailsCarDataForm.billCorpName"></span>
+            </i-form-item>
+          </i-col>
+          <!--发票号-->
+          <i-col span="8">
+            <i-form-item label="发票编号" prop="billNo">
+              <span v-text="detailsCarDataForm.billNo"></span>
+            </i-form-item>
+          </i-col>
+          <!--发票价格-->
+          <i-col span="8">
+            <i-form-item label="发票价格" prop="billAmt">
+              <span v-text="detailsCarDataForm.billAmt"></span>
+            </i-form-item>
+          </i-col>
+        </i-row>
+        <i-row>
+          <!--厂商指导价-->
+          <i-col span="8">
+            <i-form-item label="厂商指导价" prop="carGuidePrice">
+              <span v-text="(detailsCarDataForm.billAmt&&detailsCarDataForm.billAmt!=='')&&(detailsCarDataForm.billAmt+'元')"></span>
+            </i-form-item>
+          </i-col>
+          <!--车辆购买价格-->
+          <i-col span="8">
+            <i-form-item label="车辆购买价格" prop="carBuyPrice">
+              <span v-text="(detailsCarDataForm.carBuyPrice&&detailsCarDataForm.carBuyPrice!=='')&&(detailsCarDataForm.carBuyPrice+'元')"></span>
+            </i-form-item>
+          </i-col>
+          <!--车辆价值-->
+          <i-col span="8">
+            <i-form-item label="车辆价值" prop="carEvaluatePrice">
+              <span v-text="(detailsCarDataForm.carEvaluatePrice&&detailsCarDataForm.carEvaluatePrice!=='')&&(detailsCarDataForm.carEvaluatePrice+'元')"></span>
+            </i-form-item>
+          </i-col>
+        </i-row>
+        <i-form-item class="text-right">
+          <i-button type="primary" @click="setCarDataSubmit">提交</i-button>
+        </i-form-item>
+      </i-form>
+    </bs-modal>
     <!--担保落实modal-->
     <bs-modal v-model="guaranteeShowModal" title="担保落实详情" :width="520">
       <i-form v-if="guaranteeShowModal" ref="formagGuarantee" :model="formagGuarantee" label-position="right" :label-width="80">
@@ -307,6 +517,7 @@
         formalitiesShowModal: false, // 办理抵质押物手续modal
         GPSinstallButtonLoading: false, // GPS安装信息modal里的提交按钮loading
         GPSinstallShowModal: false, // GPS安装信息modal
+        detailsCarDataShowModal: false, // GPS安装信息modal
         addGPSButtonLoading: false, // 显示GPS安装信息新增弹窗modal提交按钮的loading
         guaranteeShowModal: false, // 担保落实modal
         // 费用收取落实
@@ -371,6 +582,46 @@
           'registerCompany': '',
           'mortgageStatus': '',
           'remark': ''
+        },
+        // 完善车辆信息
+        detailsCarDataForm: {
+          carOutputStand: '',
+          loanNo: '',
+          carGuaCount: '',
+          remark: '',
+          carBuyPrice: '',
+          carEngineNo: '',
+          carRegNo: '',
+          carCertNo: '',
+          carColor: '',
+          carOnCity: '',
+          carOwnerNo: '',
+          carGuidePrice: '',
+          billNo: '',
+          carTypeName: '',
+          carOwnerName: '',
+          carIsFault: '',
+          carStatus: '',
+          carPlateNo: '',
+          carBirthday: '',
+          carTransferCount: '',
+          carIsAnchored: '',
+          carBrandCode: '',
+          carOnDate: '',
+          carVendor: '',
+          carBrandName: '',
+          billAmt: '',
+          carEvaluatePrice: '',
+          guaranteeType: '',
+          isTmpPlate: '',
+          carOutputVolume: '',
+          custType: '',
+          carTypeCode: '',
+          carIsPubPlate: '',
+          carFrameNo: '',
+          carMileage: '',
+          carModel: '',
+          billCorpName: ''
         },
         formagGuarantee: {
           'uploadFileName': '',

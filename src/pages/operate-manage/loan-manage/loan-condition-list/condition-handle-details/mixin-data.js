@@ -85,13 +85,13 @@ export default {
                 },
                 on: {
                   click: async() => {
-                    this.$data.setCarDataShowModal = true;
+                    this.$data.detailsCarDataShowModal = true;
                     this.$data.clickRow = {};
                     this.$data.clickRow = $.extend({}, params.row);
-                    this.$data.setCarDataForm = $.extend({}, params.row);
+                    this.$data.detailsCarDataForm = $.extend({}, params.row);
                   }
                 }
-              }, '完善车辆信息'),
+              }, '查看车辆信息'),
               h('Button', {
                 props: {
                   type: 'primary',
