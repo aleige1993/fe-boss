@@ -5,66 +5,50 @@ export default {
       customerColumns: [
         {
           title: '客户编号',
-          key: 'corpNo',
-          width: 200
+          key: 'corpNo'
         },
         {
           title: '客户名称',
-          key: 'corpName',
-          width: 140
+          key: 'corpName'
         },
         {
           title: '统一社会信用代码',
-          width: 140,
           key: 'creditCode'
         },
         {
           title: '授信总额度（元）',
-          key: 'totalLimitAmt',
-          width: 140
+          key: 'totalLimitAmt'
         },
         {
           title: '当前可用额度（元）',
-          key: 'currentLimitAmt',
-          width: 140
+          key: 'currentLimitAmt'
         },
-        /* {
-          title: '单笔最大额度（元）',
-          key: 'singleLimitAmt',
-          width: 140
-        },*/
         {
           title: '授信起始日期',
-          key: 'startDate',
-          width: 200
+          key: 'startDate'
         },
         {
           title: '授信结束日期',
-          key: 'endDate',
-          width: 200
+          key: 'endDate'
         },
         {
           title: '额度释放方式',
           key: 'creditLimitReleaseMode',
-          width: 140,
           render: (h, params) => {
             return h('span', {}, this.enumCode2Name(params.row.creditLimitReleaseMode, 'CreditFreedTypeEnum'));
           }
         },
         {
           title: '当前处理人',
-          key: 'handleUserName',
-          width: 200
+          key: 'handleUserName'
         },
         {
           title: '当前环节',
-          key: 'taskName',
-          width: 200
+          key: 'taskName'
         },
         {
           title: '授信状态',
           key: 'creditStatus',
-          fixed: 'right',
           align: 'center',
           width: 100,
           render: (h, params) => {
@@ -76,11 +60,9 @@ export default {
         {
           title: '操作',
           key: 'action',
-          width: 400,
-          fixed: 'right',
           align: 'center',
           render: (h, params) => {
-            let statusText = this.enumCode2Name(params.row.creditStatus, 'CreditAuditStatusEnum');
+            let statusText = '处理';// this.enumCode2Name(params.row.creditStatus, 'CreditAuditStatusEnum');
             return h('div', [
               // 撤回申请
               h('Button', {
@@ -90,7 +72,7 @@ export default {
                   disabled: params.row.creditStatus !== CreditConst.APPLY_CODE && params.row.creditStatus !== CreditConst.FIRST_APPROVE_PENDDING_CODE,
                   class: { 'hide': params.row.creditStatus !== CreditConst.APPLY_CODE && params.row.creditStatus !== CreditConst.FIRST_APPROVE_PENDDING_CODE }
                 },
-                style: { marginRight: '5px' },
+                style: { marginTop: '5px' },
                 on: {
                   click: async() => {
                     Alertify.confirm('确定要撤销当前申请吗？', async(ok) => {
@@ -115,7 +97,7 @@ export default {
                   type: 'success',
                   size: 'small'
                 },
-                style: { marginRight: '5px' },
+                style: { marginTop: '5px' },
                 on: {
                   click: () => {
                     // console.log(params.row);
@@ -162,7 +144,7 @@ export default {
                   params.row.creditStatus !== '7' &&
                   params.row.creditStatus !== '8'
                 },
-                style: { marginRight: '5px' },
+                style: { marginTop: '5px' },
                 on: {
                   click: async() => {
                     this.$data.applyApproveLoading = true;
@@ -197,7 +179,7 @@ export default {
                   params.row.creditStatus !== '98' &&
                   params.row.creditStatus !== '99'
                 },
-                style: { marginRight: '5px' },
+                style: { marginTop: '5px' },
                 on: {
                   click: () => {
                     Alertify.confirm('确定删除当前授信申请吗？', async(ok) => {

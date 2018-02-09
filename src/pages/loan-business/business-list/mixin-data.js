@@ -5,30 +5,24 @@ export default {
       customerColumns: [
         {
           title: '项目编号',
-          key: 'loanNo',
-          width: 130
+          key: 'loanNo'
         },
-        {
+        /* {
           title: '客户类型',
           width: 100,
           key: 'custType',
           render: (h, params) => {
-            if (params.row.custType === '1') {
-              return '个人客户';
-            } else {
-              return '公司客户';
-            }
+            return this.enumCode2Name(params.row.custType, 'CertTypeEnum')
           }
-        },
+        },*/
         {
           title: '客户名称',
           key: 'memberName',
-          width: 200,
           render: (h, params) => {
             return params.row.memberName;
           }
         },
-        {
+        /* {
           title: '证件类型',
           width: 90,
           key: 'certType',
@@ -44,42 +38,39 @@ export default {
           title: '证件号码',
           key: 'certNo',
           width: 200
-        },
+        },*/
         {
           title: '渠道商名称',
-          key: 'merchantAbbr',
-          width: 200
+          key: 'merchantAbbr'
         },
         {
           title: '产品',
-          key: 'productName',
-          width: 200
+          key: 'productName'
         },
         {
           title: '期数',
           key: 'applyPeriods',
-          width: 70
+          align: 'center',
+          width: 80
         },
         {
           title: '申请金额（元）',
-          key: 'applyAmt',
-          width: 130
+          key: 'applyAmt'
         },
         {
           title: '申请时间',
           key: 'applyTime',
-          width: 160
+          width: 110
         },
-        {
+        /* {
           title: '渠道业务编号',
           key: 'orderNo',
           width: 130
-        },
+        },*/
         {
           title: '来源渠道',
           key: 'loanChannel',
           align: 'center',
-          width: 120,
           render: (h, params) => {
             return this.enumCode2Name(params.row.loanChannel, 'BizChannelEnum');
           }
@@ -87,17 +78,17 @@ export default {
         {
           title: '任务送达时间',
           key: 'taskArriveTime',
-          width: 160
+          align: 'center',
+          width: 110
         },
         {
           title: '已耗时',
           key: 'timeConsuming',
-          width: 140
+          width: 100
         },
         {
           title: '当前环节-状态',
           key: 'taskNode',
-          fixed: 'right',
           width: 120,
           render: (h, params) => {
             return h('span', {}, this.enumCode2Name(params.row.taskNode, 'LoanBizNodeEnum') + '-' + this.enumCode2Name(params.row.status, 'BizStatusEnum'));
@@ -113,8 +104,7 @@ export default {
         {
           title: '操作',
           key: 'action',
-          width: 200,
-          fixed: 'right',
+          // width: 150,
           align: 'center',
           render: (h, params) => {
             let statusText = '审批'; // this.enumCode2Name(params.row.taskNode, 'LoanBizNodeEnum');
@@ -128,7 +118,7 @@ export default {
                     params.row.status === '9' || params.row.status === '4' || this.taskNode === '',
                   class: { 'hide': params.row.status === '9' }
                 },
-                style: { marginRight: '5px' },
+                style: { marginBottom: '5px' },
                 on: {
                   click: async(e) => {
                     // console.log(e);
@@ -158,7 +148,7 @@ export default {
                   size: 'small',
                   disabled: params.row.taskNode !== '2' || params.row.status !== '0'
                 },
-                style: { marginRight: '5px' },
+                style: { marginBottom: '5px' },
                 on: {
                   click: async() => {
                     Alertify.confirm('确定要撤回吗？', async(ok) => {
@@ -180,7 +170,7 @@ export default {
                   type: 'success',
                   size: 'small'
                 },
-                style: { marginRight: '5px' },
+                style: { marginBottom: '5px' },
                 on: {
                   click: () => {
                     // console.log(params.row);
@@ -201,7 +191,7 @@ export default {
                   size: 'small',
                   disabled: params.row.taskNode !== '1' || params.row.status === '9'
                 },
-                style: { marginRight: '5px' },
+                style: { marginBottom: '5px' },
                 on: {
                   click: async() => {
                     let resp = await this.$http.post('/biz/holdUpLoanBizByLoanNo', { loanNo: params.row.loanNo });
@@ -228,7 +218,7 @@ export default {
                   size: 'small',
                   disabled: params.row.taskNode !== '1' || params.row.status !== '9'
                 },
-                style: { marginRight: '5px' },
+                style: { marginBottom: '5px' },
                 on: {
                   click: () => {
                     Alertify.confirm('确定删除当前客户吗？', async(ok) => {

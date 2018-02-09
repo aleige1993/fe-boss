@@ -9,6 +9,7 @@ Vue.use(Router);
 let MyRouter = new Router({
   routes: [
     { path: '*', component: PageNotFound },
+    { path: '/', name: 'login', component: resolve => { require(['@/pages/page-login'], resolve) } },
     { path: '/login', name: 'login', component: resolve => { require(['@/pages/page-login'], resolve) } },
     { path: '/home', name: 'home', component: resolve => { require(['@/pages/page-home'], resolve)} },
     { path: '/errors', name: 'errors', component: Errors },

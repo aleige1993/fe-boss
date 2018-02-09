@@ -371,7 +371,8 @@ export default {
           'remark': '',
           'repaymentMode': '',
           'loanMode': '1',
-          carSaleAmt: '' // 可融资金额
+          'carSaleAmt': '', // 可融资金额
+          'isNeedGps': '' // 是否安装GPS
         },
         // 费用收取方案
         'loanApproveFeePlanDTOS': [

@@ -105,7 +105,8 @@
               <i-col span="8">
                 <i-form-item label="运营模式" prop="loanApproveCreditDTO.operatingMode"
                              :rules="{required: true, message: '请选择运营模式'}">
-                  <i-select :disabled="isApprove||readonly" v-model="approveData.loanApproveCreditDTO.operatingMode">
+                  <!--:disabled="isApprove||readonly"-->
+                  <i-select  v-model="approveData.loanApproveCreditDTO.operatingMode">
                     <i-option v-for="item in enumSelectData.get('OperatingModeEnum')" :key="item.itemCode" :value="item.itemCode">{{item.itemName}}</i-option>
                   </i-select>
                 </i-form-item>
@@ -130,12 +131,6 @@
             </i-row>
             <i-row>
               <i-col span="8">
-                <i-form-item label="风控措施" prop="loanApproveCreditDTO.riskControlContent"
-                             :rules="{required: true, message: '请输入风控措施'}">
-                  <i-input :readonly="readonly" type="textarea" :rows="4" v-model="approveData.loanApproveCreditDTO.riskControlContent"></i-input>
-                </i-form-item>
-              </i-col>
-              <i-col span="8">
                 <i-form-item label="盗抢险" prop="loanApproveCreditDTO.dqxInsurance"
                              :rules="{required: true, message: '请选择盗抢险' }">
                   <i-select :disabled="isApprove||readonly" v-model="approveData.loanApproveCreditDTO.dqxInsurance">
@@ -149,6 +144,22 @@
                   <i-select :disabled="readonly" v-model="approveData.loanApproveCreditDTO.loanApplyUse">
                     <i-option v-for="item in enumSelectData.get('LoanApplyUseEnum')" :key="item.itemCode" :value="item.itemCode">{{item.itemName}}</i-option>
                   </i-select>
+                </i-form-item>
+              </i-col>
+              <i-col span="8">
+                <i-form-item label="是否安装GPS" prop="loanApproveCreditDTO.isNeedGps"
+                             :rules="{required: true, message: '请选择是否安装GPS'}">
+                  <i-select :disabled="readonly" v-model="approveData.loanApproveCreditDTO.isNeedGps">
+                    <i-option v-for="item in enumSelectData.get('YesNoEnum')" :key="item.itemCode" :value="item.itemCode">{{item.itemName}}</i-option>
+                  </i-select>
+                </i-form-item>
+              </i-col>
+            </i-row>
+            <i-row>
+              <i-col span="16">
+                <i-form-item label="风控措施" prop="loanApproveCreditDTO.riskControlContent"
+                             :rules="{required: true, message: '请输入风控措施'}">
+                  <i-input :readonly="readonly" type="textarea" :rows="4" v-model="approveData.loanApproveCreditDTO.riskControlContent"></i-input>
                 </i-form-item>
               </i-col>
             </i-row>
@@ -188,9 +199,9 @@
                 </i-form-item>
                 <i-form-item v-else label="账号" prop="loanPaymentAccountDTOS.openBankName"
                              :rules="{required: true, message: '请选择放款账户账号'}">
-                  <input type="hidden" v-model="approveData.loanPaymentAccountDTOS.openBankName">
+                  <input type="hidden" v-model="approveData.loanPaymentAccountDTOS.bankName">
                   <i-select :disabled="readonly" @on-change="paymentAccountChange" :label-in-value="true">
-                    <i-option v-for="item in paymentAccountList" :key="item.openBankName" :value="item.openBankName">{{item.acctNo}}</i-option>
+                    <i-option v-for="item in paymentAccountList" :key="item.bankName" :value="item.bankName">{{item.acctNo}}</i-option>
                   </i-select>
                 </i-form-item>
               </i-col>

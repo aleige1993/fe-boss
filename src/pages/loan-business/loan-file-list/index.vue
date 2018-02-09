@@ -10,10 +10,11 @@
       <div style="margin-bottom: 30px;">
         <span class="pull-left">
           {{title}}是否缺少：
-          <i-radio-group v-model="status" style="margin-left: 10px;">
+          <i-radio-group v-model="status" style="margin-left: 10px; display: inline-block">
             <i-radio label="1">缺少</i-radio>
             <i-radio label="0">不缺少</i-radio>
           </i-radio-group>
+          <i-input style="width: 200px" v-if="status === '1'" v-model="remark"></i-input>
         </span>
       </div>
       <template v-for="(item, index) in data">
@@ -54,6 +55,11 @@
     },
     props: {
       title: {
+        type: String,
+        default: '',
+        required: false
+      },
+      remark: {
         type: String,
         default: '',
         required: false
