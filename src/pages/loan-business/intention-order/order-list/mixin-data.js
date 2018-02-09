@@ -20,7 +20,10 @@ export default {
         },*/
         {
           title: '车类',
-          key: 'seriesName'
+          key: 'productType',
+          render: (h, params) => {
+            return this.enumCode2Name(params.row.productType, 'BizTypeEnum');
+          }
         },
         {
           title: '车辆型号',

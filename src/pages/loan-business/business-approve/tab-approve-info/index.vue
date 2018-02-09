@@ -130,12 +130,6 @@
             </i-row>
             <i-row>
               <i-col span="8">
-                <i-form-item label="风控措施" prop="loanApproveCreditDTO.riskControlContent"
-                             :rules="{required: true, message: '请输入风控措施'}">
-                  <i-input :readonly="readonly" type="textarea" :rows="4" v-model="approveData.loanApproveCreditDTO.riskControlContent"></i-input>
-                </i-form-item>
-              </i-col>
-              <i-col span="8">
                 <i-form-item label="盗抢险" prop="loanApproveCreditDTO.dqxInsurance"
                              :rules="{required: true, message: '请选择盗抢险' }">
                   <i-select :disabled="isApprove||readonly" v-model="approveData.loanApproveCreditDTO.dqxInsurance">
@@ -149,6 +143,22 @@
                   <i-select :disabled="readonly" v-model="approveData.loanApproveCreditDTO.loanApplyUse">
                     <i-option v-for="item in enumSelectData.get('LoanApplyUseEnum')" :key="item.itemCode" :value="item.itemCode">{{item.itemName}}</i-option>
                   </i-select>
+                </i-form-item>
+              </i-col>
+              <i-col span="8">
+                <i-form-item label="是否安装GPS" prop="loanApproveCreditDTO.isNeedGps"
+                             :rules="{required: true, message: '请选择是否安装GPS'}">
+                  <i-select :disabled="readonly" v-model="approveData.loanApproveCreditDTO.isNeedGps">
+                    <i-option v-for="item in enumSelectData.get('YesNoEnum')" :key="item.itemCode" :value="item.itemCode">{{item.itemName}}</i-option>
+                  </i-select>
+                </i-form-item>
+              </i-col>
+            </i-row>
+            <i-row>
+              <i-col span="16">
+                <i-form-item label="风控措施" prop="loanApproveCreditDTO.riskControlContent"
+                             :rules="{required: true, message: '请输入风控措施'}">
+                  <i-input :readonly="readonly" type="textarea" :rows="4" v-model="approveData.loanApproveCreditDTO.riskControlContent"></i-input>
                 </i-form-item>
               </i-col>
             </i-row>
