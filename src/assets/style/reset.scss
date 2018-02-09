@@ -143,3 +143,6 @@ h1,h2,h3,h4,h5,h6 {
 .pt-modal-dialog .ivu-table-wrapper {
   min-width: 0px;
 }
+// 在查看详情的表单中（i-form）添加lass="input-label-color"，使其label字体颜色改变
+.input-label-color.ivu-form .ivu-form-item-label{
+  color: #999;}

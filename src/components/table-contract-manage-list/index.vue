@@ -1,13 +1,13 @@
 <template>
-  <!--合同制作-->
+  <!--待制作合同列表-->
   <div id="contractMaking">
     <i-breadcrumb separator=">">
       <i-breadcrumb-item href="/">首页</i-breadcrumb-item>
       <i-breadcrumb-item v-if="this.taskNode==='6'" href="/index/contract">合同管理</i-breadcrumb-item>
       <i-breadcrumb-item v-if="this.taskNode==='8'" href="/index/contract/sigin">合同管理</i-breadcrumb-item>
 
-      <i-breadcrumb-item v-if="this.taskNode==='6'">合同制作</i-breadcrumb-item>
-      <i-breadcrumb-item v-if="this.taskNode==='8'">合同签署确认</i-breadcrumb-item>
+      <i-breadcrumb-item v-if="this.taskNode==='6'">待制作合同列表</i-breadcrumb-item>
+      <i-breadcrumb-item v-if="this.taskNode==='8'">{{succeed?'已签署合同列表':'待签署合同列表'}}</i-breadcrumb-item>
     </i-breadcrumb>
     <i-row>
       <i-col span="24">
@@ -63,6 +63,7 @@
         pageSize: 15,
         total: 0,
         dataLoading: false,
+        statusData: '0;1',
         clickRow: {},
         formSearch: {
           loanNo: '',
@@ -77,16 +78,40 @@
     props: {
       taskNode: {
         type: String,
+        required: true,
         default: '6'
+      },
+      status: {
+        type: String,
+        required: true,
+        default: '0;1'
+      },
+      succeed: {
+        type: Boolean,
+        required: false,
+        default: false
+      }
+    },
+    watch: {
+      'succeed'() {
+        this.initFun();
       }
     },
     mounted() {
-      if (this.$route.query.currentPage) {
-        this.$data.currentPage = this.$route.query.currentPage / 1;
-      }
-      this.getList();
+      this.initFun();
     },
     methods: {
+      async initFun() {
+        if (this.$route.query.currentPage) {
+          this.$data.currentPage = this.$route.query.currentPage / 1;
+        }
+        if (this.succeed) {
+          this.$data.statusData = '2';
+        } else {
+          this.$data.statusData = this.status;
+        }
+        await this.getList();
+      },
       // 设置当前处理人
       async settingHandleUser(row) {
         let resp = await this.$http.post('/biz/sign/settingHandleUser', {
@@ -105,6 +130,7 @@
           this.$data.currentPage = page;
         }
         let resp = await this.$http.post('/biz/sign/page', {
+          status: this.$data.statusData,
           taskNode: this.taskNode,
           currentPage: this.$data.currentPage,
           pageSize: this.$data.pageSize,
@@ -156,7 +182,8 @@
               currentPage: this.$data.currentPage,
               taskNode: this.taskNode,
               loanNo: row.loanNo, // 项目编号（业务申请编号）
-              signNo: row.signNo // 签约编号
+              signNo: row.signNo, // 签约编号
+              isDetails: this.succeed
             }
           });
         }

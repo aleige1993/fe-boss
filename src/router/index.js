@@ -199,14 +199,16 @@ let MyRouter = new Router({
         // 合同管理
         { path: 'contract', name: 'loanContractManage', component: resolve => require(['@/pages/contract-manage'], resolve),
           children: [
-            // 合同管理->合同制作列表
+            // 合同管理->待制作合同列表
             { path: '/', name: 'loanContractMakingList', component: resolve => require(['@/pages/contract-manage/contract-list'], resolve)},
             // 合同管理->个人业务合同制作
             { path: 'making', name: 'loanContractMakingTab', component: resolve => require(['@/pages/contract-manage/contract-making-tab'], resolve)},
-            // 合同管理->合同签署确认
+            // 合同管理->待签署合同列表
             { path: 'sign', name: 'loanContractSign', component: resolve => require(['@/pages/contract-manage/contract-signing'], resolve)},
-            // 合同管理->合同签署确认-详情页面
+            // 合同管理->待签署合同列表-详情页面 / 查看合同详情
             { path: 'signDetails', name: 'loanContractSignDetails', component: resolve => require(['@/pages/contract-manage/contract-signing-details-tab'], resolve)},
+            // 合同管理->已签署合同列表
+            { path: 'signSucceed', name: 'loanContractSignSucceed', props: { succeed: true }, component: resolve => require(['@/pages/contract-manage/contract-signing'], resolve)}
           ]
         },
         // 合同管理 end
@@ -241,6 +243,10 @@ let MyRouter = new Router({
                 { path: '/', name: 'loanConditionList', component: resolve => require(['@/pages/operate-manage/loan-manage/loan-condition-list'], resolve)},
                 // 运营管理-放款管理-放款条件落实-办理详情
                 { path: 'handle', name: 'conditionHandleDetails', component: resolve => require(['@/pages/operate-manage/loan-manage/loan-condition-list/condition-handle-details'], resolve)},
+                // 运营管理-放款管理-GPS安装落实
+                { path: 'GPS', name: 'loanGPSList', component: resolve => require(['@/pages/operate-manage/loan-manage/loan-GPS-list'], resolve)},
+                // 运营管理-放款管理-GPS安装落实-办理详情
+                { path: 'GPS/handle', name: 'GPSHandleDetails', component: resolve => require(['@/pages/operate-manage/loan-manage/loan-GPS-list/GPS-handle-details'], resolve)},
                 // 运营管理-放款管理-放款费用落实
                 { path: 'fee', name: 'loanFeeList', component: resolve => require(['@/pages/operate-manage/loan-manage/loan-fee-list'], resolve)},
                 // 运营管理-放款管理-放款费用落实-办理详情

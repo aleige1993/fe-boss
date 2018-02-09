@@ -33,6 +33,7 @@ export default {
           render: (h, params) => {
             return h('i-select', {
               props: {
+                'disabled': this.$data.isDetails,
                 'value': params.row.signConfirmStatus
               },
               on: {
@@ -77,7 +78,7 @@ export default {
         {
           title: '操作',
           align: 'center',
-          width: '200',
+          width: '300',
           render: (h, params) => {
             return h('div', [
               h('Button', {
@@ -87,10 +88,20 @@ export default {
                 },
                 on: {
                   click: () => {
-                    window.open(params.row.signContractUrl, '_blank');
+                    this.$data.seePictureModal = true;
+                    this.$data.contractRowIndex = params.index;
+                    if (params.row.loanContractAttachmentList) {
+                      this.$data.loanPicVOListModalData = params.row.loanContractAttachmentList.map((item) => {
+                        item.PicUrl = item.attachmentUrl;
+                        item.PicName = item.attachmentName;
+                        return item;
+                      });
+                    } else {
+                      this.$data.loanPicVOListModalData = [];
+                    }
                   }
                 }
-              }, '预览 / 下载'),
+              }, this.$data.isDetails ? '查看合同图片' : '上传/查看合同图片'),
               h('Button', {
                 props: {
                   type: 'success',

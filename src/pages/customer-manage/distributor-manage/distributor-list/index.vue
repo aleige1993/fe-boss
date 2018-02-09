@@ -37,7 +37,7 @@
             <i-form-item
               v-if="isAdd"
               label="客户名称"
-              :rules="{required: true, message: '客户名称不能为空', trigger: 'blur'}"
+              :rules="{required: true, message: '客户名称不能为空', trigger: 'change'}"
               prop="corpName">
               <input type="hidden" v-model="formAdd.corpNo"/>
               <i-input v-model="formAdd.corpName" :readonly="true" placeholder="选择客户">
@@ -151,7 +151,7 @@
           },
           {
             headerText: '上级渠道商（双击选择）',
-            dataField: 'label',
+            dataField: 'corpName',
             headerAlign: 'center',
             handler: ''
           }

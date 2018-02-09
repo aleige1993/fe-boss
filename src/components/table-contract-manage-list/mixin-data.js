@@ -3,14 +3,7 @@ export default {
     return {
       columns1: [
         {
-          title: '签约编号',
-          minWidth: 90,
-          align: 'center',
-          key: 'signNo'
-        },
-        {
           title: '项目编号',
-          minWidth: 90,
           key: 'loanNo'
         },
         {
@@ -19,7 +12,6 @@ export default {
         },
         {
           title: '证件类型',
-          width: 80,
           key: 'certType',
           render: (h, params) => {
             return h('span', {}, this.enumCode2Name(params.row.certType, 'CertTypeEnum'));
@@ -27,7 +19,6 @@ export default {
         },
         {
           title: '证件号码',
-          minWidth: 90,
           key: 'certNo'
         },
         {
@@ -36,27 +27,22 @@ export default {
         },
         {
           title: '期数',
-          width: 70,
           key: 'periods'
         },
         {
           title: '融资金额（元）',
-          width: 100,
           key: 'loanAmt'
         },
         {
           title: '任务送达时间',
-          width: 110,
           key: 'taskArriveTime'
         },
         {
           title: '已耗时',
-          width: 90,
           key: 'timeConsuming'
         },
         {
           title: '当前环节',
-          width: 100,
           key: 'taskNode',
           render: (h, params) => {
             return h('span', {}, this.enumCode2Name(params.row.taskNode, 'LoanBizNodeEnum'));
@@ -64,7 +50,6 @@ export default {
         },
         {
           title: '当前状态',
-          width: 100,
           key: 'signStatus',
           render: (h, params) => {
             return h('span', {}, this.enumCode2Name(params.row.signStatus, 'BizStatusEnum'));
@@ -87,8 +72,10 @@ export default {
                 on: {
                   click: () => {
                     // 设置当前处理人
-                    if (!this.settingHandleUser(params.row)) {
-                      return;
+                    if (!this.succeed) {
+                      if (!this.settingHandleUser(params.row)) {
+                        return;
+                      }
                     }
                     this.openMakingModal($.extend({}, params.row));
                   }
@@ -108,12 +95,10 @@ export default {
       if (this.taskNode === '6') {
         retBool = (row.taskNode !== '6' || ((row.signStatus !== '0') && (row.signStatus !== '1')));
       }
-      // 合同复核列表时
-      if (this.taskNode === '7') {
-        retBool = (row.taskNode !== '7' || ((row.signStatus !== '0') && (row.signStatus !== '1')));
-      }
       // 合同签署确认列表时
-      if (this.taskNode === '8') {
+      if (this.taskNode === '8' && this.succeed) {
+        retBool = (row.taskNode !== '8');
+      } else if (this.taskNode === '8') {
         retBool = (row.taskNode !== '8' || ((row.signStatus !== '0') && (row.signStatus !== '1')));
       }
       return retBool;
@@ -122,10 +107,9 @@ export default {
       if (this.taskNode === '6') {
         return '合同制作';
       }
-      if (this.taskNode === '7') {
-        return '合同复核';
-      }
-      if (this.taskNode === '8') {
+      if (this.taskNode === '8' && this.succeed) {
+        return '查看合同';
+      } else if (this.taskNode === '8') {
         return '合同签署确认';
       }
     }

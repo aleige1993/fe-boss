@@ -180,7 +180,7 @@
                   label="结论" prop="approveStatus"
                   :rules="{required: true, message: '结论不能为空', trigger: 'change'}">
                   <i-radio-group v-model="formData.approveStatus">
-                    <i-radio v-for="item in enumSelectData.get('ApproveStatusEnum')" :label="item.itemCode" :key="item.itemCode" style="margin-right: 20px; margin-top: -5px">{{item.itemName}}</i-radio>
+                    <i-radio v-if="item.itemCode!=='B'" v-for="item in enumSelectData.get('ApproveStatusEnum')" :label="item.itemCode" :key="item.itemCode" style="margin-right: 20px; margin-top: -5px">{{item.itemName}}</i-radio>
                   </i-radio-group>
                 </i-form-item>
               </i-col>
