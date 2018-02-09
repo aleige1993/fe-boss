@@ -1,11 +1,11 @@
 export default {
   data() {
     return {
-      feeListColumns: [
+      // 放款条件落实
+      GPSListColumns: [
         {
           title: '项目编号',
-          key: 'loanNo',
-          width: 170
+          key: 'loanNo'
         },
         {
           title: '客户名称',
@@ -13,7 +13,6 @@ export default {
         },
         {
           title: '证件类型',
-          width: 90,
           key: 'certType',
           render: (h, params) => {
             return h('span', {}, this.enumCode2Name(params.row.certType, 'CertTypeEnum'));
@@ -21,8 +20,7 @@ export default {
         },
         {
           title: '证件号码',
-          key: 'certNo',
-          width: 170
+          key: 'certNo'
         },
         {
           title: '产品',
@@ -30,27 +28,22 @@ export default {
         },
         {
           title: '期数',
-          key: 'totalPeriods',
-          width: 70
+          key: 'totalPeriods'
         },
         {
           title: '贷款金额(元)',
-          width: 120,
           key: 'loanTotalAmt'
         },
         {
           title: '任务送达时间',
-          width: 110,
           key: 'taskArriveTime'
         },
         {
           title: '已耗时',
-          width: 150,
           key: 'timeConsuming'
         },
         {
           title: '处理状态',
-          width: 90,
           key: 'status',
           render: (h, params) => {
             return h('span', {}, this.enumCode2Name(params.row.status, 'BizStatusEnum'));
@@ -58,7 +51,6 @@ export default {
         },
         {
           title: '当前环节',
-          width: 120,
           key: 'taskNode',
           render: (h, params) => {
             return h('span', {}, this.enumCode2Name(params.row.taskNode, 'LoanBizNodeEnum'));
@@ -90,7 +82,7 @@ export default {
                       return;
                     }
                     this.$router.push({
-                      path: '/index/operate/loan/fee/handle',
+                      path: '/index/operate/loan/GPS/handle',
                       query: {
                         currentPage: this.$data.currentPage,
                         paymentNo: params.row.paymentNo,
@@ -104,7 +96,7 @@ export default {
           }
         }
       ],
-      feeListData: []
+      GPSListData: []
     };
   }
 };

@@ -94,8 +94,9 @@ export default [
                 name: '合同管理',
                 url: '/index/contract',
                 childMenus: [
-                  { name: '合同制作', url: '/index/contract' },
-                  { name: '合同签署确认', url: '/index/contract/sign' }
+                  { name: '待制作合同列表', url: '/index/contract' },
+                  { name: '待签署合同确认', url: '/index/contract/sign' },
+                  { name: '已签署合同列表', url: '/index/contract/signSucceed' }
                 ]
               }
             ]

@@ -3,8 +3,8 @@
 <div id="contract-signing-details-tab">
   <i-breadcrumb separator=">">
     <i-breadcrumb-item href="/">首页</i-breadcrumb-item>
-    <i-breadcrumb-item href="/index/contract/sign">合同管理</i-breadcrumb-item>
-    <i-breadcrumb-item>合同签署确认详情</i-breadcrumb-item>
+    <i-breadcrumb-item href="/index/contract">合同管理</i-breadcrumb-item>
+    <i-breadcrumb-item>{{isDetails?'合同详情':'合同签署确认详情'}}</i-breadcrumb-item>
   </i-breadcrumb>
   <i-tabs v-model="tabIndex" :animated="false" type="card">
     <i-tab-pane label="签约确认信息">
@@ -55,17 +55,17 @@
         </bs-form-block>
         <!--合同信息-->
         <bs-form-block :title="'合同信息'">
-          <i-table border :loading="contractInfoListLoading" ref="contractInfoTable" :columns="contractInfoColumns" :data="formData.contractSignConfirmStatusParams">
+          <i-table border :loading="contractInfoListLoading" ref="contractInfoTable" :columns="contractInfoColumns" :data="formData.loanContractAttachmentList">
           </i-table>
         </bs-form-block>
       </i-form>
-      <bs-form-block :title="'审核意见'">
+      <bs-form-block v-if="!isDetails" :title="'审核意见'">
         <i-form ref="loanApprove" :model="loanApprove" label-position="right" :label-width="100">
           <i-row>
             <i-col span="8">
               <i-form-item label="结论" prop="approveStatus" :rules="{required: true, message: '结论不能为空', trigger: 'change'}">
                 <i-radio-group v-model="loanApprove.approveStatus">
-                  <i-radio v-for="item in enumSelectData.get('ApproveStatusEnum')" :label="item.itemCode" :key="item.itemCode" style="margin-right: 20px; margin-top: -5px">{{item.itemName}}</i-radio>
+                  <i-radio v-if="item.itemCode!=='B'" v-for="item in enumSelectData.get('ApproveStatusEnum')" :label="item.itemCode" :key="item.itemCode" style="margin-right: 20px; margin-top: -5px">{{item.itemName}}</i-radio>
                 </i-radio-group>
               </i-form-item>
             </i-col>
@@ -103,36 +103,56 @@
       </div>
     </i-tab-pane>
     <div class="form-footer-actions">
-      <i-button @click="saveSubimt" :loading="initFormLoading" type="success">
+      <i-button v-if="!isDetails" @click="saveSubimt" :loading="initFormLoading" type="success">
         <span v-if="!initFormLoading"><i class="iconfont icon-tijiao"></i> 提交</span>
         <span v-else> loading...</span>
       </i-button>
+      <i-button v-else @click="goBackBtnFun" type="success"><Icon type="chevron-left"></Icon> 返回</i-button>
     </div>
   </i-tabs>
+  <!--上传/查看车辆图片-->
+  <bs-modal :title="isDetails?'查看合同图片':'上传/查看合同图片'" v-model="seePictureModal" :width="1200" @on-close="emptyRowPic">
+    <upload-picture-list v-if="seePictureModal" :picAryData="loanPicVOListModalData" @on-data-remove="picDataRomove"  @on-data-add="picDataAdd" :isDetails="isDetails"></upload-picture-list>
+  </bs-modal>
 </div>
 </template>
 
 <script>
   import MixinData from './mixin-data';
   import examineMixinData from './examine-mixin-data';
+  import BsModal from '@/components/bs-modal';
+  import UploadPictureList from '@/components/Upload-picture-list';
   export default {
     name: 'contractSigningDetailsTab',
     mixins: [MixinData, examineMixinData],
+    components: {
+      'bs-modal': BsModal,
+      UploadPictureList
+    },
     data() {
       return {
         tabIndex: 0,
+        loanPicVOListModalData: [
+          {
+            'attachmentUrl': '',
+            'attachmentName': ''
+          }
+        ],
+        seePictureModal: false,
+        isDetails: false,
         currentPageExamine: 1,
         pageSizeExamine: 15,
         totalExamine: 0,
         examineTableLoading: false,
         contractInfoListLoading: false,
         initFormLoading: false,
+        contractRowIndex: 0,
         formData: {
           'certNo': '',
           'custNo': '',
           'certType': '',
           'loanNo': '',
-          'contractSignConfirmStatusParams': [
+          'loanContractAttachmentList': [
             {
               'signContractDate': '',
               'loanNo': '',
@@ -162,10 +182,31 @@
       };
     },
     async mounted() {
+      this.$data.isDetails = this.$route.query.isDetails || (this.$route.query.isDetails === 'true');
       await this.getFindSignConfirmInfo(); // 获取合同签约确认详情
       this.examineGetlist(); // 获取审批历史信息列表data
     },
     methods: {
+      // 模态框关闭后清楚组件内车辆图片数据
+      emptyRowPic() {
+        this.$data.loanPicVOListModalData = [];
+      },
+      // 删除车辆图片
+      picDataRomove(index) {
+        let ind = this.$data.contractRowIndex;
+        this.$data.loanContractAttachmentList[ind].loanContractAttachmentList.splice(index, 1);
+      },
+      // 添加车辆图片
+      picDataAdd(dataList) {
+        let ind = this.$data.contractRowIndex;
+        if (!this.$data.loanContractAttachmentList[ind].loanContractAttachmentList) {
+          this.$data.loanContractAttachmentList[ind].loanContractAttachmentList = [];
+        }
+        this.$data.loanContractAttachmentList[ind].loanContractAttachmentList.push({
+          'carPicName': dataList.PicName,
+          'carPicUrl': dataList.PicUrl
+        });
+      },
       // 获取合同签约确认详情
       async getFindSignConfirmInfo() {
         let reps = await this.$http.post('/biz/sign/findSignConfirmInfo', {
@@ -173,7 +214,7 @@
         });
         if (reps.success) {
           this.$data.formData = reps.body;
-          this.$data.formData.contractSignConfirmStatusParams = reps.body.contractList;
+          this.$data.formData.loanContractAttachmentList = reps.body.contractList;
         } else {
           this.$data.formData = {};
         }
@@ -209,7 +250,7 @@
         this.$data.initFormLoading = true;
         let resp = await this.$http.post('/biz/sign/signConfirm', {
           signNo: this.$route.query.signNo,
-          contractSignConfirmStatusParams: this.$data.formData.contractSignConfirmStatusParams,
+          loanContractAttachmentList: this.$data.formData.loanContractAttachmentList,
           loanApprove: this.$data.loanApprove
         });
         this.$data.initFormLoading = false;
@@ -230,6 +271,15 @@
             this.saveAjax();
           } else {
             this.$Message.error('"<span style="color: red">*</span>"必填项不能为空');
+          }
+        });
+      },
+      goBackBtnFun() {
+        // 初审 回到已签署合同列表
+        this.$router.push({
+          path: '/index/contract/signSucceed',
+          query: {
+            currentPage: this.$route.query.currentPage
           }
         });
       }

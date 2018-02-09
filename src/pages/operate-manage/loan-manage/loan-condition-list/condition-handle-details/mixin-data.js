@@ -71,7 +71,7 @@ export default {
         {
           title: '操作',
           key: 'action',
-          width: 340,
+          width: 240,
           align: 'center',
           render: (h, params) => {
             return h('div', [
@@ -115,21 +115,7 @@ export default {
                     }
                   }
                 }
-              }, this.carBtnWarrantType),
-              h('Button', {
-                props: {
-                  type: 'error',
-                  size: 'small'
-                },
-                on: {
-                  click: async() => {
-                    this.$data.GPSinstallShowModal = true;
-                    this.$data.clickRow = {};
-                    this.$data.clickRow = params.row;
-                    this.$data.loanCarGpsDTOList = this.$data.carData[params.index].loanCarGpsList || [];
-                  }
-                }
-              }, 'GPS安装落实')
+              }, this.carBtnWarrantType)
             ]);
           }
         }
@@ -250,78 +236,7 @@ export default {
           }
         }
       ],
-      conditionData: [],
-      // GPS安装信息
-      loanCarGpsDTOColumns: [
-        {
-          title: 'GPS型号',
-          width: 150,
-          key: 'gpsModel'
-        },
-        {
-          title: 'IMEI',
-          key: 'imei'
-        },
-        {
-          title: 'GPS合作商',
-          key: 'gpsJoinMerchant'
-        },
-        {
-          title: '安装状态',
-          width: 100,
-          key: 'gpsInstallStatus',
-          render: (h, params) => {
-            return h('span', {}, this.enumCode2Name(params.row.gpsInstallStatus, 'GpsInstallStatusEnum'));
-          }
-        },
-        {
-          title: '办理人',
-          key: 'makeUser'
-        },
-        {
-          title: '办理时间',
-          width: 200,
-          key: 'makeDate'
-        },
-        {
-          title: '操作',
-          key: 'action',
-          width: 150,
-          align: 'center',
-          render: (h, params) => {
-            return h('div', [
-              h('Button', {
-                props: {
-                  type: 'primary',
-                  size: 'small'
-                },
-                style: {
-                  marginRight: '5px'
-                },
-                on: {
-                  click: async() => {
-                    this.$data.isAddGPS = false;
-                    this.$data.GPSShowModal = true;
-                    this.$data.formAddGPS = $.extend(true, {}, this.$data.formAddGPS, params.row);
-                  }
-                }
-              }, '修改'),
-              h('Button', {
-                props: {
-                  type: 'error',
-                  size: 'small'
-                },
-                on: {
-                  click: () => {
-                    this.$data.loanCarGpsDTOList.splice(params.index, 1);
-                  }
-                }
-              }, '删除')
-            ]);
-          }
-        }
-      ],
-      loanCarGpsDTOList: []
+      conditionData: []
     };
   },
   computed: {

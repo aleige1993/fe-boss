@@ -186,7 +186,7 @@
                   label="结论" prop="approveStatus"
                   :rules="{required: true, message: '结论不能为空', trigger: 'change'}">
                   <i-radio-group v-model="formData.approveStatus">
-                    <i-radio v-for="item in enumSelectData.get('ApproveStatusEnum')" :label="item.itemCode" :key="item.itemCode" style="margin-right: 20px; margin-top: -5px">{{item.itemName}}</i-radio>
+                    <i-radio v-if="item.itemCode!=='B'" v-for="item in enumSelectData.get('ApproveStatusEnum')" :label="item.itemCode" :key="item.itemCode" style="margin-right: 20px; margin-top: -5px">{{item.itemName}}</i-radio>
                   </i-radio-group>
                 </i-form-item>
               </i-col>
@@ -229,7 +229,7 @@
     </i-tabs>
     <!--办理抵质押物手续-->
     <bs-modal v-model="formalitiesShowModal" title="抵押详情" :width="520">
-      <i-form v-if="formalitiesShowModal" ref="formalities" :model="formalities" label-position="right" :label-width="80">
+      <i-form v-if="formalitiesShowModal" ref="formalities" :model="formalities" label-position="right" :label-width="80" class="input-label-color">
         <i-form-item label="办理时间">
           <span v-text="formalities.makeDate"></span>
         </i-form-item>
@@ -249,8 +249,8 @@
           <span v-text="formalities.remark"></span>
         </i-form-item>
         <i-form-item label="办理文件">
-          <Tooltip content="点击浏览/下载" placement="bottom">
-            <a :href="formalities.makeUrl" target="_blank">{{formalities.makeName}}</a>
+          <Tooltip content="点击浏览/下载" placement="top">
+            <a :href="formalities.mortgageUrl" target="_blank">{{formalities.mortgageName}}</a>
           </Tooltip>
         </i-form-item>
       </i-form>
@@ -261,7 +261,7 @@
     </bs-modal>
     <!--车辆信息弹窗-->
     <bs-modal v-model="detailsCarDataShowModal" title="车辆信息" :width="1200">
-      <i-form v-if="detailsCarDataShowModal" ref="detailsCarDataForm" :model="detailsCarDataForm" label-position="right" :label-width="120">
+      <i-form v-if="detailsCarDataShowModal" ref="detailsCarDataForm" :model="detailsCarDataForm" label-position="right" :label-width="120" class="input-label-color">
         <i-row>
           <i-col span="8">
             <i-form-item
@@ -471,7 +471,7 @@
     </bs-modal>
     <!--担保落实modal-->
     <bs-modal v-model="guaranteeShowModal" title="担保落实详情" :width="520">
-      <i-form v-if="guaranteeShowModal" ref="formagGuarantee" :model="formagGuarantee" label-position="right" :label-width="80">
+      <i-form v-if="guaranteeShowModal" ref="formagGuarantee" :model="formagGuarantee" label-position="right" :label-width="80" class="input-label-color">
         <i-form-item label="办理时间">
           <span v-text="formagGuarantee.makeDate"></span>
         </i-form-item>
@@ -574,8 +574,8 @@
         },
         // 办理抵质押物手续
         formalities: {
-          'makeName': '',
-          'makeUrl': '',
+          'mortgageName': '',
+          'mortgageUrl': '',
           'makeDate': '',
           'makeUser': '',
           'warrantNo': '',

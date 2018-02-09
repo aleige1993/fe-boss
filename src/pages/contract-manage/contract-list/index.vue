@@ -1,11 +1,11 @@
 <template>
-  <!--合同制作-->
+  <!--待制作合同列表-->
   <div id="pageContractMake">
     <!--
-    taskNode:6==>合同制作
-    taskNode:8==>合同签署确认
+    taskNode:6==>待制作合同列表
+    taskNode:8==>待签署合同列表
     -->
-    <page-contract-list :taskNode="'6'"></page-contract-list>
+    <page-contract-list :taskNode="'6'" :status="'0;1'"></page-contract-list>
   </div>
 </template>
 <script>

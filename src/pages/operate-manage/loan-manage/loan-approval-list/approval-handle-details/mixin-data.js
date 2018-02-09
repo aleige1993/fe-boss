@@ -47,6 +47,7 @@ export default {
         },
         {
           title: '操作',
+          width: 340,
           key: 'action',
           align: 'center',
           render: (h, params) => {

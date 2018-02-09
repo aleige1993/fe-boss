@@ -35,10 +35,6 @@ export default {
           key: 'loanTotalAmt'
         },
         {
-          title: '签约完成时间',
-          key: 'signConfirmDate'
-        },
-        {
           title: '任务送达时间',
           key: 'taskArriveTime'
         },
