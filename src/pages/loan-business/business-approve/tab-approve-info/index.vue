@@ -105,7 +105,8 @@
               <i-col span="8">
                 <i-form-item label="运营模式" prop="loanApproveCreditDTO.operatingMode"
                              :rules="{required: true, message: '请选择运营模式'}">
-                  <i-select :disabled="isApprove||readonly" v-model="approveData.loanApproveCreditDTO.operatingMode">
+                  <!--:disabled="isApprove||readonly"-->
+                  <i-select  v-model="approveData.loanApproveCreditDTO.operatingMode">
                     <i-option v-for="item in enumSelectData.get('OperatingModeEnum')" :key="item.itemCode" :value="item.itemCode">{{item.itemName}}</i-option>
                   </i-select>
                 </i-form-item>
@@ -198,9 +199,9 @@
                 </i-form-item>
                 <i-form-item v-else label="账号" prop="loanPaymentAccountDTOS.openBankName"
                              :rules="{required: true, message: '请选择放款账户账号'}">
-                  <input type="hidden" v-model="approveData.loanPaymentAccountDTOS.openBankName">
+                  <input type="hidden" v-model="approveData.loanPaymentAccountDTOS.bankName">
                   <i-select :disabled="readonly" @on-change="paymentAccountChange" :label-in-value="true">
-                    <i-option v-for="item in paymentAccountList" :key="item.openBankName" :value="item.openBankName">{{item.acctNo}}</i-option>
+                    <i-option v-for="item in paymentAccountList" :key="item.bankName" :value="item.bankName">{{item.acctNo}}</i-option>
                   </i-select>
                 </i-form-item>
               </i-col>
