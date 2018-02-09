@@ -1,23 +1,23 @@
 <template>
   <div class="loan-file-list">
     <h4 class="list-title">
-      {{title}}
+      {{fileList.loanDocName}}
       <a v-if="!readonly" href="javascript:;" class="text-danger" @click.prevent="deleteGroup" >
         <i-icon type="close-circled"></i-icon>
       </a>
     </h4>
     <div class="list-files clearfix">
-      <div style="margin-bottom: 30px;">
-        <span class="pull-left">
-          {{title}}是否缺少：
-          <i-radio-group v-model="status" style="margin-left: 10px; display: inline-block">
+      <div style="margin-bottom: 30px;" class="clearfix">
+        <span class="pull-left" style="display: inline-block; height: 32px;line-height: 32px;">
+          {{fileList.loanDocName}}是否缺少：
+          <i-radio-group v-model="fileList.status" style="margin-left: 10px; position: relative; top: -4px">
             <i-radio label="1">缺少</i-radio>
             <i-radio label="0">不缺少</i-radio>
           </i-radio-group>
-          <i-input style="width: 200px" v-if="status === '1'" v-model="remark"></i-input>
         </span>
+        <i-input style="width: 200px" class="pull-left" v-if="fileList.status === '1'" v-model="fileList.remark"></i-input>
       </div>
-      <template v-for="(item, index) in data">
+      <template v-for="(item, index) in fileList.docDetailAttachList">
         <template v-if="isImg(item.attachUrl)">
           <bs-big-img  style="float: left" :thumbWidth="128" :thumbHeight="128" :fullWidth="1280"
                        :thumb="item.attachUrl"
@@ -50,43 +50,22 @@
     name: 'loanFileList',
     data() {
       return {
-        isUploading: false
+        isUploading: false,
+        fileList: []
       };
     },
     props: {
-      title: {
-        type: String,
-        default: '',
-        required: false
-      },
-      remark: {
-        type: String,
-        default: '',
-        required: false
-      },
-      data: {
-        type: Array,
-        required: false,
-        default: function() {
-          return [];
-        }
-      },
-      groupIndex: {
-        type: Number,
-        required: false,
-        default: 0
-      },
-      status: {
-        type: String,
-        default: '1',
-        required: false
-      },
       readonly: {
         type: Boolean,
         required: false,
         default: false
       },
-      value: String // 1 已落实 0 未落实
+      // value: String // 1 已落实 0 未落实
+      value: {
+        type: Object,
+        required: false,
+        default: {}
+      }
     },
     methods: {
       deleteGroup() {
@@ -129,15 +108,24 @@
       }
     },
     mounted() {
-      this.$data.status = this.value;
+      this.$data.fileList = this.value;
     },
     watch: {
-      status(newVal, oldVal) {
+      fileList(newVal, oldVal) {
         this.$emit('input', newVal);
+      },
+      value: {
+        deep: true,
+        handle(newVal) {
+          this.$data.fileList = newVal;
+        }
       }
     }
   };
 </script>
+/**
+*bug
+/
 <style lang="scss" scoped>
   .loan-file-list{
     border: 1px solid #ccc;

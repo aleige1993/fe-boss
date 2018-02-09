@@ -222,7 +222,7 @@
       </div>
       <!--<i-table :loading="loanDataLoading" border ref="selection" :columns="loanColumns" :data="loanData"></i-table>-->
       <loan-file-list v-for="(item, index) in loanData" :key="index" :readonly="readonly"
-                      :group-index="index" v-model="item.status" :remark="item.remark" :title="item.loanDocName" :data="item.docDetailAttachList"
+                      :group-index="index" v-model="loanData[index]"
                       @on-group-remove="deleteloanFileGroup">
       </loan-file-list>
     </bs-form-block>
