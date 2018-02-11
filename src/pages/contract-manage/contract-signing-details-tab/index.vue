@@ -55,7 +55,7 @@
         </bs-form-block>
         <!--合同信息-->
         <bs-form-block :title="'合同信息'">
-          <i-table border :loading="contractInfoListLoading" ref="contractInfoTable" :columns="contractInfoColumns" :data="formData.loanContractAttachmentList">
+          <i-table border :loading="contractInfoListLoading" ref="contractInfoTable" :columns="contractInfoColumns" :data="formData.contractList">
           </i-table>
         </bs-form-block>
       </i-form>
@@ -112,7 +112,7 @@
   </i-tabs>
   <!--上传/查看车辆图片-->
   <bs-modal :title="isDetails?'查看合同图片':'上传/查看合同图片'" v-model="seePictureModal" :width="1200" @on-close="emptyRowPic">
-    <upload-picture-list v-if="seePictureModal" :picAryData="loanPicVOListModalData" @on-data-remove="picDataRomove"  @on-data-add="picDataAdd" :isDetails="isDetails"></upload-picture-list>
+    <contract-picture-list v-if="seePictureModal" :details="isDetails||isDetails==='true'" :picData="loanPicVOListModalData" @on-data-remove="picDataRomove"  @on-data-add="picDataAdd"></contract-picture-list>
   </bs-modal>
 </div>
 </template>
@@ -121,13 +121,13 @@
   import MixinData from './mixin-data';
   import examineMixinData from './examine-mixin-data';
   import BsModal from '@/components/bs-modal';
-  import UploadPictureList from '@/components/Upload-picture-list';
+  import ContractPictureList from '@/components/contract-picture-list';
   export default {
     name: 'contractSigningDetailsTab',
     mixins: [MixinData, examineMixinData],
     components: {
       'bs-modal': BsModal,
-      UploadPictureList
+      ContractPictureList
     },
     data() {
       return {
@@ -152,7 +152,7 @@
           'custNo': '',
           'certType': '',
           'loanNo': '',
-          'loanContractAttachmentList': [
+          'contractList': [
             {
               'signContractDate': '',
               'loanNo': '',
@@ -182,7 +182,11 @@
       };
     },
     async mounted() {
-      this.$data.isDetails = this.$route.query.isDetails || (this.$route.query.isDetails === 'true');
+      if (this.$route.query.isDetails === 'true' || (this.$route.query.isDetails)) {
+        this.$data.isDetails = true;
+      } else {
+        this.$data.isDetails = false;
+      }
       await this.getFindSignConfirmInfo(); // 获取合同签约确认详情
       this.examineGetlist(); // 获取审批历史信息列表data
     },
@@ -194,17 +198,17 @@
       // 删除车辆图片
       picDataRomove(index) {
         let ind = this.$data.contractRowIndex;
-        this.$data.loanContractAttachmentList[ind].loanContractAttachmentList.splice(index, 1);
+        this.$data.formData.contractList[ind].loanContractAttachmentList.splice(index, 1);
       },
       // 添加车辆图片
       picDataAdd(dataList) {
         let ind = this.$data.contractRowIndex;
-        if (!this.$data.loanContractAttachmentList[ind].loanContractAttachmentList) {
-          this.$data.loanContractAttachmentList[ind].loanContractAttachmentList = [];
+        if (!this.$data.formData.contractList[ind].loanContractAttachmentList) {
+          this.$data.formData.contractList[ind].loanContractAttachmentList = [];
         }
-        this.$data.loanContractAttachmentList[ind].loanContractAttachmentList.push({
-          'carPicName': dataList.PicName,
-          'carPicUrl': dataList.PicUrl
+        this.$data.formData.contractList[ind].loanContractAttachmentList.push({
+          'attachmentName': dataList.attachmentName,
+          'attachmentUrl': dataList.attachmentUrl
         });
       },
       // 获取合同签约确认详情
@@ -214,7 +218,7 @@
         });
         if (reps.success) {
           this.$data.formData = reps.body;
-          this.$data.formData.loanContractAttachmentList = reps.body.contractList;
+          this.$data.formData.contractList = reps.body.contractList;
         } else {
           this.$data.formData = {};
         }
@@ -250,7 +254,7 @@
         this.$data.initFormLoading = true;
         let resp = await this.$http.post('/biz/sign/signConfirm', {
           signNo: this.$route.query.signNo,
-          loanContractAttachmentList: this.$data.formData.loanContractAttachmentList,
+          contractSignConfirmStatusParams: this.$data.formData.contractList,
           loanApprove: this.$data.loanApprove
         });
         this.$data.initFormLoading = false;

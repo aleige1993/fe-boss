@@ -307,9 +307,8 @@
         <i-col span="24">
           <i-form-item
             label="车辆品牌"
-            prop="carModel">
-            <!--:rules="{required: true, message: '车辆品牌不能为空'}"
-            -->
+            prop="carModel"
+            :rules="{required: true, message: '车辆品牌不能为空'}">
             <input type="hidden" v-model="setCarDataForm.carModel">
             <bs-carpicker :currBrand="setCarDataForm.carBrandName"
                           :currSeries="setCarDataForm.carTypeName"
@@ -322,7 +321,7 @@
       <i-row>
         <!--车辆颜色-->
         <i-col span="8">
-          <i-form-item label="车辆颜色" prop="carColor">
+          <i-form-item label="车辆颜色" prop="carColor" :rules="{required: true, message: '请选择车辆颜色', trigger: 'change'}">
             <i-select v-model="setCarDataForm.carColor">
               <i-option v-for="item in enumSelectData.get('CarColorEnum')" :key="item.itemCode" :value="item.itemCode">{{item.itemName}}</i-option>
             </i-select>
@@ -346,7 +345,7 @@
       <i-row>
         <!--生产厂商-->
         <i-col span="8">
-          <i-form-item label="生产厂商" prop="carVendor">
+          <i-form-item label="生产厂商" prop="carVendor" :rules="{required: true, message: '请输入生产厂商'}">
             <i-input v-model="setCarDataForm.carVendor" placeholder="">
             </i-input>
           </i-form-item>
@@ -488,7 +487,7 @@
         </i-col>
         <!--车辆购买价格-->
         <i-col span="8">
-          <i-form-item label="车辆购买价格" prop="carBuyPrice">
+          <i-form-item label="车辆购买价格" prop="carBuyPrice" :rules="{required: true, message: '请输入生产厂商', trigger: 'blur'}">
             <i-input v-model="setCarDataForm.carBuyPrice" placeholder="">
               <span slot="append">元</span>
             </i-input>
@@ -694,14 +693,19 @@
       this.getFeeTakeList(); // 查询费用收取方案列表data
     },
     methods: {
-      // 完善车辆信息弹窗的提交按钮
+      // 完善车辆信息弹窗的提交按钮 /biz/sign/update/loanCar
       setCarDataSubmit() {
         let ind = this.$data.clickRowIndex; // 车辆列表的索引index
         this.$refs['setCarDataForm'].validate(async (valid) => {
           if (valid) {
-            this.$set(this.$data.carData, ind, this.$data.setCarDataForm);
-            this.$Message.success('提交成功');
+            let reps = await this.$http.post('/biz/sign/update/loanCar', {
+              ...this.$data.setCarDataForm
+            });
             this.$data.setCarDataShowModal = false;
+            if (reps.success) {
+              this.$set(this.$data.carData, ind, this.$data.setCarDataForm);
+              this.$Message.success('提交成功');
+            }
           } else {
             this.$Message.error('<span style="color: red">*</span>项不能为空');
           }

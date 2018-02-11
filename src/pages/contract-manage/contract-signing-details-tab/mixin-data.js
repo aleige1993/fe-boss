@@ -33,7 +33,7 @@ export default {
           render: (h, params) => {
             return h('i-select', {
               props: {
-                'disabled': this.$data.isDetails,
+                // 'disabled': this.$data.isDetails,
                 'value': params.row.signConfirmStatus
               },
               on: {

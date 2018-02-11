@@ -1,11 +1,11 @@
 <template>
   <div class="pic-file-list">
     <div class="list-files clearfix">
-      <template v-for="(item, index) in picAryData">
+      <template v-for="(item, index) in picData">
         <template>
           <bs-big-img  style="float: left" :thumbWidth="128" :thumbHeight="128" :fullWidth="1280"
-                       :thumb="item.PicUrl"
-                       :full="item.PicUrl">
+                       :thumb="item.attachmentUrl"
+                       :full="item.attachmentUrl">
             <span v-if="!isDetails" class="icon-remove" slot="icon-remove" @click.stop="deleteFile(item, index)"><i-icon type="close"></i-icon></span>
           </bs-big-img>
         </template>
@@ -35,34 +35,36 @@
     name: 'picFileList',
     data() {
       return {
+        isDetails: false,
         isUploading: false
       };
     },
     props: {
-      picAryData: {
+      picData: {
         type: Array,
         required: true,
         default: function() {
           return [];
         }
       },
-      isDetails: {
+      details: {
         type: Boolean,
         required: false,
         default: false
       }
     },
-    watch: {
-      data(newVal, oldVal) {
-      }
-    },
     mounted() {
+      if (this.details || this.details === 'true') {
+        this.$data.isDetails = true;
+      } else {
+        this.$data.isDetails = false;
+      }
     },
     methods: {
       deleteFile(file, index) {
         Alertify.confirm('确定要删除当前文件吗？', ok => {
           if (ok) {
-            this.data.splice(index, 1);
+            this.picData.splice(index, 1);
             this.$emit('on-data-remove', index);
           }
         });
@@ -83,12 +85,12 @@
         if (res.success) {
           let file = res.body;
           this.$emit('on-data-add', {
-            PicName: file.fileName,
-            PicUrl: file.url
+            attachmentName: file.fileName,
+            attachmentUrl: file.url
           });
-          this.data.push({
-            PicName: file.fileName,
-            PicUrl: file.url
+          this.picData.push({
+            attachmentName: file.fileName,
+            attachmentUrl: file.url
           });
         }
       },
