@@ -7,15 +7,15 @@
       </a>
     </h4>
     <div class="list-files clearfix">
-      <div style="margin-bottom: 30px;" class="clearfix">
+      <div style="margin-bottom: 10px; overflow: hidden" class="clearfix">
         <span class="pull-left" style="display: inline-block; height: 32px;line-height: 32px;">
           {{fileList.loanDocName}}是否缺少：
           <i-radio-group v-model="fileList.status" style="margin-left: 10px; position: relative; top: -4px">
             <i-radio label="1">缺少</i-radio>
-            <i-radio label="0">不缺少</i-radio>
+            <i-radio label="0">完整</i-radio>
           </i-radio-group>
         </span>
-        <i-input style="width: 300px;margin-left: 10px;" class="pull-left" v-if="fileList.status === '1'" v-model="fileList.remark"></i-input>
+        <i-input style="width: 300px;margin-left: 10px;" placeholder="缺少材料说明" class="pull-left" v-if="fileList.status === '1'" v-model="fileList.remark"></i-input>
       </div>
       <template v-for="(item, index) in fileList.docDetailAttachList">
         <template v-if="isImg(item.attachUrl)">

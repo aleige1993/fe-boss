@@ -3,10 +3,10 @@
     <i-breadcrumb separator=">">
       <i-breadcrumb-item href="/">首页</i-breadcrumb-item>
       <i-breadcrumb-item href="/index/loanbusiness">贷款业务</i-breadcrumb-item>
-      <i-breadcrumb-item>业务初审</i-breadcrumb-item>
+      <i-breadcrumb-item>{{breadcrumbName}}</i-breadcrumb-item>
     </i-breadcrumb>
     <div class="form-block-title">
-      业务列表
+      {{breadcrumbName}}
     </div>
     <div class="search-form-container">
       <i-form inline :model="searchForm" ref="loanSearchForm">
@@ -132,6 +132,11 @@
       'type': {
         type: String,
         default: 'page',
+        required: false
+      },
+      'breadcrumbName': {
+        type: String,
+        default: '业务查询',
         required: false
       }
     },

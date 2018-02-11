@@ -111,7 +111,7 @@
             </i-form-item>
           </i-col>
           <i-col span="8" v-else>
-            <i-form-item label="经销商2"
+            <i-form-item label="经销商"
                          prop="merchantAbbr"
                          :rules="{required: true, message: '请选择经销商'}">
               <input type="hidden" v-model="formData.merchantAbbr"/>
@@ -163,7 +163,7 @@
           <!--客户等级-->
           <i-col span="8">
             <i-form-item label="客户等级" prop="custLevel">
-              <i-select v-model="formData.custLevel"  @on-change="custLevelSelectChange">
+              <i-select :disabled="readonly" v-model="formData.custLevel"  @on-change="custLevelSelectChange">
                 <i-option value="A">A</i-option>
                 <i-option value="B">B</i-option>
               </i-select>
@@ -176,7 +176,7 @@
               label="用款形式"
               :rules="{required: true, message: '请选择用款形式', trigger: 'change'}"
               prop="loandType">
-              <i-select v-model="formData.loandType">
+              <i-select :disabled="readonly" v-model="formData.loandType">
                 <i-option value="1">贷款买车</i-option>
                 <i-option value="2">有车贷款</i-option>
               </i-select>
@@ -507,7 +507,7 @@
           <i-col span="8">
             <i-form-item label="车辆购买价格" prop="carBuyPrice">
               <i-input v-model="formCar.carBuyPrice" placeholder="">
-                <span slot="append">万元</span>
+                <span slot="append">元</span>
               </i-input>
             </i-form-item>
           </i-col>
