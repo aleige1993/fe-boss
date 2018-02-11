@@ -6,7 +6,7 @@
     <i-table :loading="dataLoading" :columns="bankAccountColumns" :data="bankAccountDatas"></i-table>
     <!--添加联系人模态框-->
     <pt-modal title="添加银行账户" v-model="addBankModal">
-      <i-form ref="bankForm" :model="formData" label-position="left" :label-width="90">
+      <i-form ref="bankForm" :model="formData" label-position="left" :label-width="120">
         <i-form-item label="账户名" prop="acctName"
           :rules="{required: true, message: '账户名不能为空', trigger: 'blur'}">
           <i-input v-model="formData.acctName" placeholder=""></i-input>
@@ -15,9 +15,9 @@
           :rules="{required: true, message: '账号不能为空', trigger: 'blur'}">
           <i-input v-model="formData.acctNo" placeholder=""></i-input>
         </i-form-item>
-        <i-form-item label="银行名称" prop="bankCode"
+        <i-form-item label="银行名称" prop="bankNo"
           :rules="{required: true, message: '银行名称不能为空', trigger: 'blur'}">
-          <i-select @on-change="selectBank" :label-in-value="true" v-model="formData.bankCode" placeholder="">
+          <i-select @on-change="selectBank" :label-in-value="true" v-model="formData.bankNo" placeholder="">
             <i-option v-for="item in bankList" :key="item.bankCode" :value="item.bankCode">{{item.bankName}}</i-option>
           </i-select>
         </i-form-item>
@@ -28,6 +28,21 @@
         <i-form-item label="开户行号" prop="openBankNo"
         :rules="{required: true, message: '开户行号不能为空', trigger: 'blur'}">
           <i-input v-model="formData.openBankNo" placeholder=""></i-input>
+        </i-form-item>
+        <i-form-item label="开户行所在省" prop="openBankProvince"
+                     :rules="{required: true, message: '请选择开户行所在省'}">
+          <input v-model="formData.openBankProvince" type="hidden"/>
+          <i-select :placeholder="formData.openBankProvince" :label-in-value="true" @on-change="provinceChange">
+            <i-option v-for="item in provinceDropList" :value="item.regionCode" :key="item.regionCode">{{item.regionName}}</i-option>
+          </i-select>
+
+        </i-form-item>
+        <i-form-item label="开户行所在市" prop="openBankCity"
+                     :rules="{required: true, message: '请选择开户行所在市'}">
+          <input v-model="formData.openBankCity" type="hidden"/>
+          <i-select :placeholder="formData.openBankCity" :label-in-value="true" @on-change="cityChange">
+            <i-option v-for="item in cityDropList" :value="item.regionCode" :key="item.regionCode">{{item.regionName}}</i-option>
+          </i-select>
         </i-form-item>
         <!--<i-form-item label="预留手机号" prop="bankMobile"
           :rules="{required: true, message: '预留手机号不能为空', trigger: 'blur'}">
@@ -59,16 +74,20 @@
         submitLoading: false,
         dataLoading: false,
         bankList: [],
+        provinceDropList: [],
+        cityDropList: [],
         formData: {
           'corpNo': '',
           'corpName': '',
           'acctName': '',
           'acctNo': '',
-          'bankCode': '',
+          'bankNo': '',
           'bankName': '',
           'openBankName': '',
           'openBankNo': '',
           'openBankClearingNo': '',
+          'openBankProvince': '',
+          'openBankCity': '',
           'remark': ''
         }
       };
@@ -110,6 +129,13 @@
           }
         });
       },
+      // 获取地址下拉联动
+      getAddressDropList(code = '') {
+        let data = {
+          regionCode: code
+        };
+        return this.$http.post('/common/region/list', data, false);
+      },
       async getCustomerBankList() {
         this.$data.dataLoading = true;
         let resp = await this.$http.post('/corp/listCorpAcct', {
@@ -125,14 +151,28 @@
       async getBankList() {
         let resp = await this.$http.post('/common/support/bank/list');
         this.$data.bankList = resp.body;
+      },
+      async provinceChange(val) {
+        this.$data.formData.openBankProvince = val.label;
+        let resp = await this.getAddressDropList(val.value);
+        if (resp.success) {
+          this.$data.cityDropList = resp.body;
+        }
+      },
+      cityChange(val) {
+        this.$data.formData.openBankCity = val.label;
       }
     },
     components: {
       'pt-modal': PTModal
     },
-    mounted() {
+    async mounted() {
       this.getCustomerBankList();
       this.getBankList();
+      let resp = await this.getAddressDropList();
+      if (resp.success) {
+        this.$data.provinceDropList = resp.body;
+      }
     }
   };
 </script>

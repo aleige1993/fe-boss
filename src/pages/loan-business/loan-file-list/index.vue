@@ -15,7 +15,7 @@
             <i-radio label="0">不缺少</i-radio>
           </i-radio-group>
         </span>
-        <i-input style="width: 200px" class="pull-left" v-if="fileList.status === '1'" v-model="fileList.remark"></i-input>
+        <i-input style="width: 300px;margin-left: 10px;" class="pull-left" v-if="fileList.status === '1'" v-model="fileList.remark"></i-input>
       </div>
       <template v-for="(item, index) in fileList.docDetailAttachList">
         <template v-if="isImg(item.attachUrl)">
