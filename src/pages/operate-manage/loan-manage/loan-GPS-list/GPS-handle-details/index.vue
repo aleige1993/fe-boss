@@ -575,7 +575,6 @@
     async mounted() {
       await this.getFindPaymentApplyRecordInfo(); // 获取放款条件详情
       this.carGetlist(); // 执行获取车辆信息列表的data
-      this.conditionGetlist(); // 执行获取放款条件列表的data
     },
     methods: {
       /**
@@ -634,23 +633,6 @@
           this.$data.carData = reps.body.resultList;
         } else {
           this.$data.carData = [];
-        }
-      },
-      // 获取放款条件列表的data
-      async conditionGetlist() {
-        this.$data.conditionLoading = true;
-        let productNo = this.$data.formData.paymentApplyRecordDTO.productNo;
-        let custType = this.$data.formData.paymentApplyRecordDTO.custType;
-        let reps = await this.$http.post('biz/getPaymentCondition', {
-          loanNo: this.$route.query.loanNo,
-          productNo,
-          custType
-        });
-        this.$data.conditionLoading = false;
-        if (reps.success && reps.body.length !== 0) {
-          this.$data.conditionData = reps.body;
-        } else {
-          this.$data.conditionData = [];
         }
       },
       // GPS安装弹窗-打开新增弹窗
@@ -717,40 +699,11 @@
             });
             return;
           }
-          // 放款条件列表中 备注和落实状态的必填性验证
-          if (this.$data.conditionData && this.$data.conditionData.length === 0) {
-            this.$Message.error({
-              content: '放款条件中没有数据！',
-              duration: 2
-            });
-            return;
-          }
-          let conditionArray = this.$data.conditionData;
-          if (conditionArray && conditionArray.length > 0) {
-            for (let item of conditionArray) {
-              if (!item.remark || item.remark === '') {
-                this.$Message.error({
-                  content: '放款条件中的“备注”不能为空！',
-                  duration: 2
-                });
-                return;
-              }
-              if (!item.status || item.status === '') {
-                this.$Message.error({
-                  content: '放款条件中的“落实状态”不能为空！',
-                  duration: 2
-                });
-                return;
-              }
-            }
-          }
         }
         this.$AuditPrompt.auditPromptFun(this.$data.formData.approveStatus, async () => {
           this.$data.initFormLoading = true;
-          let rep = await this.$http.post('/biz/payment/paymentCondition', {
+          let rep = await this.$http.post('/biz/payment/paymentGpsInstall', {
             paymentNo: this.$route.query.paymentNo,
-            paymentConditionSubmitParams: this.$data.conditionData, // 放款条件表集合
-            paymentGuaranteeSubmitParams: this.$data.assureData, // 担保信息表集合
             loanCarList: this.$data.carData, // 车辆信息表集合
             loanApproveParam: {
               approveStatus: this.$data.formData.approveStatus,
