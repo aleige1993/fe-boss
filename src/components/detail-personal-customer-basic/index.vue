@@ -213,7 +213,7 @@
             </i-row>
           </bs-form-block>
           <!--工作信息-->
-          <bs-form-block :title="'工作信息'" v-if="showDetail">
+          <bs-form-block v-if="showDetail && formData.mbMemberDTO.workType !== '2'" :title="'工作信息'">
             <i-row>
               <i-col span="8">
                 <i-form-item label="单位名称"

@@ -84,6 +84,7 @@ module.exports = {
     radialIndicator: false,
     bsWait: false,
     Alertify: false,
-    Pace: false
+    Pace: false,
+    ActiveXObject: false
   }
 };

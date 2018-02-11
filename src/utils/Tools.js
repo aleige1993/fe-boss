@@ -1,4 +1,8 @@
 export default {
+  /**
+   * 生成一个唯一标识字符串
+   * @returns {string}
+   */
   generateUUID() {
     let d = new Date().getTime();
     let uuid = 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
@@ -8,7 +12,11 @@ export default {
     });
     return uuid;
   },
-  /* 根据出生日期算出年龄 */
+  /**
+   * 根据出生日期算出年龄
+   * @param strBirthday
+   * @returns {*}
+   */
   getAgeFromBirthday(strBirthday) {
     if (!strBirthday || strBirthday === '') {
       return '';
@@ -48,6 +56,11 @@ export default {
     }
     return returnAge; // 返回周岁年龄
   },
+  /**
+   * 获取文件后缀名
+   * @param fileUrl
+   * @returns {string}
+   */
   getFileSuffix(fileUrl) {
     if (fileUrl) {
       return fileUrl.substring(fileUrl.lastIndexOf('.') + 1);
@@ -55,10 +68,19 @@ export default {
       return '';
     }
   },
+  /**
+   * 根据文件名判断文件是不是图片
+   * @param fileUrl
+   * @returns {boolean}
+   */
   isImg(fileUrl) {
     let suffix = this.getFileSuffix(fileUrl);
     return suffix === 'png' || suffix === 'jpg' || suffix === 'gif' || suffix === 'jpeg' || suffix === 'bmp' || suffix === 'pic';
   },
+  /**
+   * 打开新窗口
+   * @param url
+   */
   openWin(url) {
     // let url = 'Add.aspx'; // 转向网页的地址;
     let name = '颂车贷BOSS'; // 网页名称，可为空;
@@ -72,5 +94,36 @@ export default {
       'height=' + iHeight + ',,innerHeight=' + iHeight + ',width=' + iWidth + ',innerWidth=' + iWidth + ',top=' + iTop + ',left=' + iLeft + ',' +
       'status=no,toolbar=no,menubar=no,location=no,resizable=no,scrollbars=0,titlebar=no');
     // window.open("AddScfj.aspx", "newWindows", 'height=100,width=400,top=0,left=0,toolbar=no,menubar=no,scrollbars=no, resizable=no,location=no, status=no');
+  },
+  requestFullScreen(element) {
+    // 判断各种浏览器，找到正确的方法
+    let requestMethod = element.requestFullScreen || // W3C
+      element.webkitRequestFullScreen ||    // Chrome等
+      element.mozRequestFullScreen || // FireFox
+      element.msRequestFullScreen; // IE11
+    if (requestMethod) {
+      requestMethod.call(element);
+    } else if (typeof window.ActiveXObject !== 'undefined') { // for Internet Explorer
+      let wscript = new ActiveXObject('WScript.Shell');
+      if (wscript !== null) {
+        wscript.SendKeys('{F11}');
+      }
+    }
+  },
+  // 退出全屏 判断浏览器种类
+  exitFull() {
+    // 判断各种浏览器，找到正确的方法
+    let exitMethod = document.exitFullscreen || // W3C
+      document.mozCancelFullScreen ||    // Chrome等
+      document.webkitExitFullscreen || // FireFox
+      document.webkitExitFullscreen; // IE11
+    if (exitMethod) {
+      exitMethod.call(document);
+    } else if (typeof window.ActiveXObject !== 'undefined') { // for Internet Explorer
+      let wscript = new ActiveXObject('WScript.Shell');
+      if (wscript !== null) {
+        wscript.SendKeys('{F11}');
+      }
+    }
   }
 };
