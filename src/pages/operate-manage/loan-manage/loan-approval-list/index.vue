@@ -85,6 +85,7 @@
         }
         let resp = await this.$http.post('/biz/payment/pagePaymentApplyRecord', {
           taskNode: '11',
+          status: '0;1',
           ...this.$data.searchForm,
           currentPage: this.$data.currentPage,
           pageSize: this.$data.pageSize

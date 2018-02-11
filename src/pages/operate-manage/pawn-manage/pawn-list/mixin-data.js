@@ -11,19 +11,6 @@ export default {
           title: '客户名称',
           key: 'custName'
         },
-        /* {
-          title: '证件类型',
-          width: 90,
-          key: 'certType',
-          render: (h, params) => {
-            return h('span', {}, this.enumCode2Name(params.row.certType, 'CertTypeEnum'));
-          }
-        },*/
-        {
-          title: '证件号码',
-          key: 'certNo',
-          width: 170
-        },
         {
           title: '产品',
           key: 'productName'

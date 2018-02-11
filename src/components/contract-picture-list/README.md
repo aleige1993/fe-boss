@@ -1,18 +1,18 @@
-### BOSS后台管理系统模态框VUE组件 -- l列表中按钮添加图片的组件
+### BOSS后台管理系统模态框VUE组件 -- 合同管理中合同列表中按钮添加图片的组件
 
 #### props
 
-- isDetails : 仅为查看时不做上传 类型：Boolean  是否必须： 否
-- picAryData : 文件列表 类型：Array  是否必须： 是
+- details : 仅为查看时不做上传 类型：Boolean  是否必须： 否
+- picData : 文件列表 类型：Array  是否必须： 是
 * data结构规范如下：
 [
   {
-    PicName: '',
-    PicUrl: ''
+    attachmentName: '',
+    attachmentUrl: ''
   },
   {
-    PicName: '',
-    PicUrl: ''
+    attachmentName: '',
+    attachmentUrl: ''
   }
 ]
 
@@ -28,7 +28,7 @@ import BsModal from '@/components/bs-modal';
 <bs-modal :title="'上传/查看车辆图片'" v-model="seePictureModal" :width="1200" @on-close="emptyRowPic">
       <car-picture-list
         v-if="seePictureModal"
-        :picAryData="loanPicVOListModalData"
+        :picData="loanPicVOListModalData"
         @on-data-remove="picDataRomove"
         @on-data-add="picDataRomove">
       </car-picture-list>

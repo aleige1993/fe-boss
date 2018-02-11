@@ -50,6 +50,7 @@ export default {
                 },
                 on: {
                   click: async() => {
+                    console.log(params.row);
                     this.$data.setCarDataShowModal = true;
                     this.$data.clickRowIndex = params.index;
                     this.$data.setCarDataForm = $.extend({}, params.row);

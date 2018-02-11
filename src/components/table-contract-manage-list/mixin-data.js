@@ -11,17 +11,6 @@ export default {
           key: 'custName'
         },
         {
-          title: '证件类型',
-          key: 'certType',
-          render: (h, params) => {
-            return h('span', {}, this.enumCode2Name(params.row.certType, 'CertTypeEnum'));
-          }
-        },
-        {
-          title: '证件号码',
-          key: 'certNo'
-        },
-        {
           title: '产品',
           key: 'productName'
         },
@@ -30,7 +19,7 @@ export default {
           key: 'periods'
         },
         {
-          title: '融资金额（元）',
+          title: '贷款金额（元）',
           key: 'loanAmt'
         },
         {
