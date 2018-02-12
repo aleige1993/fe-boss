@@ -660,7 +660,7 @@
       };
     },
     computed: {
-      endDate: function() {
+      endDate() {
         if (this.$data.contractInfoForm.contractInfo.startDate !== '' && typeof this.$data.contractInfoForm.contractInfo.startDate !== 'undefined') {
           let startDate = this.$data.contractInfoForm.contractInfo.startDate;
           let loanPeriods = this.$data.approveCredit.loanPeriods;
@@ -674,7 +674,7 @@
       }
     },
     watch: {
-      'setCarDataForm.custType': function(newVal, oldVal) {
+      'setCarDataForm.custType'(newVal, oldVal) {
         if (oldVal !== '') {
           this.$data.setCarDataForm.carOwnerName = '';
           this.$data.setCarDataForm.carOwnerNo = '';

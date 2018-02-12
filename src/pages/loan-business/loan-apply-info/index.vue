@@ -851,7 +851,7 @@
       }
     },
     watch: {
-      'formCar.custType': function(newVal, oldVal) {
+      'formCar.custType'(newVal, oldVal) {
         if (oldVal !== '') {
           this.$data.formCar.carOwnerName = '';
           this.$data.formCar.carOwnerNo = '';

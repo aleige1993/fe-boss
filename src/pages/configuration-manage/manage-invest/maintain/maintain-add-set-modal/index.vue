@@ -182,7 +182,7 @@
       };
     },
     watch: {
-      tabIndex: function(val, oldVal) {
+      tabIndex(val, oldVal) {
         if (val === 1) {
           this.getTabsAjax();
         }
