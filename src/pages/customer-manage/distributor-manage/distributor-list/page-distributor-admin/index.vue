@@ -15,21 +15,45 @@
       <i-page :current="currentPage" :total="total" size="small" show-elevator show-total @on-change="jumpPage" :page-size="pageSize"></i-page>
     </div>
     <!--操作员新增-->
-    <bs-modal :title="'操作员新增'" :width="600" v-model="showAddModal">
+    <bs-modal :title="isAdd?'操作员新增':'操作员修改'" :width="600" v-model="showAddModal">
       <i-form v-if="showAddModal" ref="formAdmin" :model="formAdmin" label-position="right" :label-width="120">
-        <i-form-item
-          label="登录账号"
-          :rules="{required: true, message: '登录账号不能为空', trigger: 'blur'}"
-          prop="operatorCode">
-          <i-input v-model="formAdmin.operatorCode">
+        <!--<i-form-item label="渠道商" prop="merchantName">
+          <input type="hidden" v-model="formAdmin.merchantName"/>
+          <i-input v-model="formAdmin.merchantName" :readonly="true" placeholder="选择渠道商">
+            <i-button @click="merchantClick" slot="append">选择渠道商 <Icon type="ios-more"></Icon></i-button>
           </i-input>
+        </i-form-item>-->
+        <i-form-item
+          label="手机号"
+          :rules="{required: true, message: '手机号不能为空', trigger: 'blur'}"
+          prop="userMobile">
+          <i-input v-model="formAdmin.userMobile"></i-input>
         </i-form-item>
         <i-form-item
-          label="操作员类型"
-          :rules="{required: true, message: '请选择操作员类型', trigger: 'change'}"
-          prop="operatorType">
-          <i-select v-model="formAdmin.operatorType">
-            <i-option v-for="item in enumSelectData.get('OperatorTypeEnum')" :key="item.itemCode" :value="item.itemCode">{{item.itemName}}</i-option>
+          label="身份证号码"
+          :rules="{required: true, message: '身份证号码不能为空', trigger: 'blur'}"
+          prop="idCardNo">
+          <i-input v-model="formAdmin.idCardNo"></i-input>
+        </i-form-item>
+        <i-form-item
+          label="用户名称"
+          prop="userName">
+          <i-input v-model="formAdmin.userName"></i-input>
+        </i-form-item>
+        <i-form-item
+          label="启停状态"
+          :rules="{required: true, message: '请选择启停状态', trigger: 'change'}"
+          prop="useStatus">
+          <i-select v-model="formAdmin.useStatus">
+            <i-option v-for="item in enumSelectData.get('EnableStatusEnum')" :key="item.itemCode" :value="item.itemCode">{{item.itemName}}</i-option>
+          </i-select>
+        </i-form-item>
+        <i-form-item
+          label="操作员等级"
+          :rules="{required: true, message: '请选择操作员等级', trigger: 'change'}"
+          prop="userLevel">
+          <i-select v-model="formAdmin.userLevel">
+            <i-option v-for="item in enumSelectData.get('MerchantOperatorLevelEnum')" :key="item.itemCode" :value="item.itemCode">{{item.itemName}}</i-option>
           </i-select>
         </i-form-item>
         <i-form-item class="text-right">
@@ -41,32 +65,43 @@
         </i-form-item>
       </i-form>
     </bs-modal>
+    <!--选择渠道商-->
+    <bs-modal :title="'选择渠道商'" v-model="showSelectDistributor" :width="1300">
+      <table-distributor-list v-if="showSelectDistributor" ref="distributorTable" type="modal" :status="''" @on-row-dbclick="selectDistributor"></table-distributor-list>
+    </bs-modal>
   </div>
 </template>
 
 <script>
   import MixinData from './mixin-data';
   import BsModal from '@/components/bs-modal';
+  import TableDistributorList from '@/components/table-distributor-list/index.vue';
   export default {
     name: '',
     mixins: [MixinData],
     components: {
-      BsModal
+      BsModal,
+      TableDistributorList
     },
     data() {
       return {
+        isAdd: false,
         dataLoading: false,
         buttonLoading: false,
         showAddModal: false,
+        showSelectDistributor: false,
         currentPage: 1,
         total: 0,
         pageSize: 15,
         formAdmin: {
-          operatorCode: '',
+          userMobile: '',
+          idCardNo: '',
+          useStatus: '',
+          qrCodeUrl: '',
+          userNo: '',
+          userLevel: '',
           operatorPassword: '',
-          operatorType: '',
-          merchantNo: '',
-          operatorStatus: ''
+          operatorType: ''
         }
       };
     },
@@ -74,9 +109,46 @@
       this.getList();
     },
     methods: {
+      // 删除渠道商
+      adminRomove(row) {
+        Alertify.confirm('确定要删除吗？', async(ok) => {
+          if (ok) {
+            const loadingMsg = this.$Message.loading('删除中...', 0);
+            let resp = await this.$http.post('/merchant/operator/delete', {
+              merchantNo: this.$route.query.merchantNo,
+              userNo: row.userNo
+            });
+            loadingMsg();
+            if (resp.success) {
+              this.$Message.success('删除成功');
+              this.getList();
+            }
+          }
+        });
+      },
+      /**
+       * 选择渠道商
+       * @param row
+       * @param index
+       */
+      selectDistributor(row, index) {
+        this.$data.formAdmin.merchantNo = row.merchantNo;
+        this.$data.formAdmin.merchantName = row.corpName;
+        this.$data.showSelectDistributor = false;
+      },
+      // 点击的时“选择渠道商”按钮
+      merchantClick() {
+        this.$data.showSelectDistributor = true;
+      },
       addModal() {
+        this.$data.isAdd = true;
         this.$data.showAddModal = true;
         this.$data.formAdmin = {};
+      },
+      adminSet(row) {
+        this.$data.isAdd = false;
+        this.$data.showAddModal = true;
+        this.$data.formAdmin = row;
       },
       async getList(page) {
         this.$data.dataLoading = true;
@@ -101,15 +173,17 @@
       // 新增
       async addSuccess() {
         this.$data.buttonLoading = true;
+        let _text = '';
+        _text = this.$data.isAdd ? '新增' : '修改';
         let resp = await this.$http.post('/merchant/operator/add', {
           merchantNo: this.$route.query.merchantNo,
-          operatorStatus: '1', // 0冻结，1激活
+          useStatus: '1', // 0冻结，1激活
           ...this.$data.formAdmin
         });
         this.$data.buttonLoading = false;
         this.$data.showAddModal = false;
         if (resp.success) {
-          this.$Message.success('新增成功');
+          this.$Message.success(_text + '成功');
           this.getList();
         }
       },

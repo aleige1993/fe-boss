@@ -278,10 +278,10 @@
             :rules="{required: true, message: '请选择权利人'}"
             prop="carOwnerNo">
             <input type="hidden" v-model="setCarDataForm.carOwnerNo"/>
-            <i-input v-if="setCarDataForm.custType=='1'" v-model="setCarDataForm.carOwnerName" :readonly="true" placeholder="选择权利人">
+            <i-input v-if="setCarDataForm.custType=='1'" v-model="setCarDataForm.carOwnerName" readonly placeholder="选择权利人">
               <i-button @click="showSelectObligee=!showSelectObligee" slot="append">选择权利人 <Icon type="ios-more"></Icon></i-button>
             </i-input>
-            <i-input v-if="setCarDataForm.custType=='2'" v-model="setCarDataForm.carOwnerName" :readonly="true" placeholder="选择企业权利人">
+            <i-input v-if="setCarDataForm.custType=='2'" v-model="setCarDataForm.carOwnerName" readonly placeholder="选择企业权利人">
               <i-button @click="showSelectCompanyOwner=!showSelectCompanyOwner" slot="append">选择企业权利人 <Icon type="ios-more"></Icon></i-button>
             </i-input>
           </i-form-item>
@@ -487,7 +487,7 @@
         </i-col>
         <!--车辆购买价格-->
         <i-col span="8">
-          <i-form-item label="车辆购买价格" prop="carBuyPrice" :rules="{required: true, message: '请输入生产厂商', trigger: 'blur'}">
+          <i-form-item label="车辆购买价格" prop="carBuyPrice" :rules="{required: true, message: '请输入车辆购买价格', trigger: 'blur'}">
             <i-input v-model="setCarDataForm.carBuyPrice" placeholder="">
               <span slot="append">元</span>
             </i-input>

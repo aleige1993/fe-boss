@@ -41,9 +41,16 @@
       };
     },
     props: {
-      type: String,
-      default: 'page',
-      required: false
+      type: {
+        type: String,
+        default: 'page',
+        required: false
+      },
+      status: {
+        type: String,
+        default: 'allStatus',
+        required: false
+      }
     },
     computed: {
       resultColumns() {
@@ -57,6 +64,7 @@
       }
     },
     mounted() {
+      console.log(this.status);
       this.getPrivateCustomerList();
     },
     methods: {
@@ -73,9 +81,17 @@
         // 当组件以modal形式显示的时候 传merchantStatus值为2（显示授信通过的数据）
         let merchantStatusCode = '';
         if (this.type === 'page') {
-          merchantStatusCode = '';
+          if (this.status !== 'allStatus') {
+            merchantStatusCode = this.status;
+          } else {
+            merchantStatusCode = '';
+          }
         } else if (this.type === 'modal') {
-          merchantStatusCode = '2';
+          if (this.status !== 'allStatus') {
+            merchantStatusCode = this.status;
+          } else {
+            merchantStatusCode = '2';
+          }
         }
         let resp = await this.$http.post('merchant/listMerchant', {
           corpName: this.$data.formSearch.corpName, // 公司名称，模糊查询
