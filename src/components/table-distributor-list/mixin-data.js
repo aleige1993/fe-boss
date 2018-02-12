@@ -1,4 +1,8 @@
+import BsTooltip from '@/components/bs-tooltip';
 export default {
+  components: {
+    BsTooltip
+  },
   data() {
     return {
       distributorColumns: [
@@ -26,9 +30,14 @@ export default {
           key: 'corpNo'
         },
         {
-          title: '公司名称',
+          title: '客户名称',
           width: 150,
           key: 'corpName'
+        },
+        {
+          title: '上级渠道商名称',
+          width: 150,
+          key: 'pcorpName'
         },
         {
           title: '统一社会信用代码',
@@ -92,6 +101,75 @@ export default {
           key: 'enableStatus',
           render: (h, params) => {
             return h('span', {}, this.enumCode2Name(params.row.enableStatus, 'EnableStatusEnum'));
+          }
+        },
+        {
+          title: '二维码',
+          width: 130,
+          key: 'qrCodeUrl',
+          render: (h, params) => {
+            return h('div', [
+              h('bs-big-img', {
+                props: {
+                  thumbWidth: 90,
+                  thumbHeight: 90,
+                  // fullWidth: 500,
+                  thumb: params.row.qrCodeUrl,
+                  full: params.row.qrCodeUrl
+                },
+                style: {
+                  'paddingTop': '10px'
+                }
+              }),
+              h('br', {}),
+              h('a', {
+                props: {
+                  display: 'block',
+                  href: 'params.row.qrCodeUrl',
+                  target: '_blank'
+                },
+                style: {
+                  'textDecoration': 'underline'
+                },
+                on: {
+                  click: () => {
+                    window.open(params.row.qrCodeUrl, '_blank');
+                  }
+                }
+              }, '预览/下载二维码')
+            ]);
+          }
+        },
+        {
+          title: '渠道商服务地区', // 数组集合
+          width: 200,
+          key: 'merchantAreaInfo',
+          render: (h, params) => {
+            let areaAry = params.row.merchantAreaInfo;
+            let cityNames = '';
+            if (areaAry && (areaAry.length > 0)) {
+              for (let item of areaAry) {
+                cityNames += (item.provinceName + item.districtName + '; ');
+              }
+              // 当城市名多于100字时 用...代替
+              let showCityNames = '';
+              if (cityNames.length > 100) {
+                showCityNames = cityNames.substring(0, cityNames.slice(0, 100).lastIndexOf(';')) + '...';
+                return h(BsTooltip, {
+                  props: {
+                    showText: showCityNames + '',
+                    tipText: cityNames.toString().substring(0, cityNames.lastIndexOf(';')),
+                    placement: 'left',
+                    width: '200',
+                    wordBreak: 'break-all',
+                    whiteSpace: 'normal'
+                  }
+                });
+              } else {
+                showCityNames = cityNames.substring(0, cityNames.lastIndexOf(';'));
+                return h('p', {}, showCityNames);
+              }
+            }
           }
         }
       ],

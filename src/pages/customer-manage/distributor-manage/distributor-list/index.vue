@@ -110,8 +110,8 @@
             <i-form-item
               label="上级渠道商"
               :rules="{required: true, message: '请选择上级渠道商', trigger: 'change'}"
-              prop="corpNamePid">
-              <i-input v-model="formAdd.corpNamePid" :readonly="true" placeholder="选择上级渠道商">
+              prop="pcorpName">
+              <i-input v-model="formAdd.pcorpName" :readonly="true" placeholder="选择上级渠道商">
                 <i-button @click="showSelectMerchant=!showSelectMerchant" slot="append">选择上级渠道商 <Icon type="ios-more"></Icon></i-button>
               </i-input>
             </i-form-item>
@@ -257,7 +257,7 @@
           'pid': '',
           'channelType': '',
           'customerType': '',
-          'corpNamePid': '',
+          'pcorpName': '',
           'corpNo': '',
           'corpName': '',
           'suCreditCode': '',
@@ -376,6 +376,14 @@
       areaFormAddSuBmit() {
         this.$refs['areaForm'].validate(async (valid) => {
           if (valid) {
+            let isExist = this.$data.formAdd.merchantAreaInfo.some((item, index, filterCityAry) => {
+              return (item.provinceName === this.$data.areaForm.provinceName) &&
+                (item.districtName === this.$data.areaForm.districtName);
+            });
+            if (isExist) {
+              this.$Message.error('地区已存在！');
+              return;
+            }
             this.$data.formAdd.merchantAreaInfo.unshift({
               ...this.$data.areaForm
             });
@@ -473,7 +481,7 @@
         this.$data.clickRow = {};
       },
       selectMerchant(id, index, treeData) {
-        this.$data.formAdd.corpNamePid = treeData.corpName;
+        this.$data.formAdd.pcorpName = treeData.corpName;
         this.$data.formAdd.Pid = treeData.id;
         this.$data.showSelectMerchant = false;
       },

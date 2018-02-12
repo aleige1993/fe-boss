@@ -66,6 +66,9 @@ export default {
                   href: 'params.row.signContractUrl',
                   target: '_blank'
                 },
+                style: {
+                  'textDecoration': 'underline'
+                },
                 on: {
                   click: () => {
                     window.open(params.row.signContractUrl, '_blank');

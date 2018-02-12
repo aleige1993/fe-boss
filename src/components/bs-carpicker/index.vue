@@ -51,7 +51,7 @@
         required: false,
         type: String
       },
-      readonly: {
+      space: {
         default: false,
         required: false,
         type: Boolean

@@ -100,6 +100,7 @@ export default [
             'merchantStatus|1': ['0', '1', '2', '5'], // 渠道商状态
             'enableStatus|1': ['0', '1'], // 渠道商状态 激活/冻结
             'custMgrName': '11111111', // 客户经理编号
+            'qrCodeUrl': 'http://10.164.1.115:8080/#/',
             'merchantAreaInfo|5': [
               {
                 'provinceName': '重庆市',
