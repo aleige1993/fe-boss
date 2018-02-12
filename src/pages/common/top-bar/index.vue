@@ -44,8 +44,8 @@ export default {
       }
     },
     fullScreen() {
-      let app = document.getElementsByTagName('body');
-      Tools.requestFullScreen(app[0]);
+      let app = document.getElementById('app');
+      Tools.requestFullScreen(app);
     }
   }
 };

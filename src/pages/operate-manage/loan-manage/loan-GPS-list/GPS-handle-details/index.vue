@@ -565,7 +565,7 @@
       };
     },
     watch: {
-      'detailsCarDataForm.custType': function(newVal, oldVal) {
+      'detailsCarDataForm.custType'(newVal, oldVal) {
         if (oldVal !== '') {
           this.$data.detailsCarDataForm.carOwnerName = '';
           this.$data.detailsCarDataForm.carOwnerNo = '';
