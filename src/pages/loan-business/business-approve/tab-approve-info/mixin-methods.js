@@ -191,7 +191,8 @@ export default {
           'remark': result.riskControlContent,
           'repaymentMode': result.repaymentMode,
           'loanMode': result.loanMode,
-          'carSaleAmt': result.carSaleAmt || '0'
+          'carSaleAmt': result.carSaleAmt || '0',
+          'isNeedGps': result.isNeedGps
         };
       }
     },
