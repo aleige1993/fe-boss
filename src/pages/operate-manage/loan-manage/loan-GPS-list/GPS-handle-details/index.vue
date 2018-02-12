@@ -4,7 +4,7 @@
     <i-breadcrumb separator=">">
       <i-breadcrumb-item href="/">首页</i-breadcrumb-item>
       <i-breadcrumb-item href="/index/operate">运营管理</i-breadcrumb-item>
-      <i-breadcrumb-item href="/index/operate/loan">放款条件落实列表</i-breadcrumb-item>
+      <i-breadcrumb-item href="/index/operate/loan">GPS安装落实</i-breadcrumb-item>
       <i-breadcrumb-item>办理详情</i-breadcrumb-item>
     </i-breadcrumb>
     <br>
@@ -346,9 +346,6 @@
             </i-form-item>
           </i-col>
         </i-row>
-        <!--<i-form-item class="text-right">
-          <i-button type="primary" @click="setCarDataSubmit">提交</i-button>
-        </i-form-item>-->
       </i-form>
     </bs-modal>
     <!--GPS安装信息-->
@@ -644,8 +641,7 @@
       addGPSSubmit() {
         let text = this.$data.isAddGPS ? '新增' : '修改';
         let ind = this.$data.clickRow._index || 0; // 车辆列表的索引index
-        const formName = 'formAddGPS';
-        this.$refs[formName].validate(async (valid) => {
+        this.$refs['formAddGPS'].validate(async (valid) => {
           if (valid) {
             if (this.$data.isAddGPS) {
               // 插入新数据unshift
@@ -715,7 +711,7 @@
           if (rep.success) {
             this.$Message.success('提交成功');
             this.$router.push({
-              path: '/index/operate/loan',
+              path: '/index/operate/loan/GPS',
               query: {
                 currentPage: this.$route.query.currentPage
               }

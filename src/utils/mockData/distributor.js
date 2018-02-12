@@ -99,7 +99,21 @@ export default [
             'isDisplayInApp|1': ['0', '1'], // 是否在APP中显示
             'merchantStatus|1': ['0', '1', '2', '5'], // 渠道商状态
             'enableStatus|1': ['0', '1'], // 渠道商状态 激活/冻结
-            'custMgrName': '11111111' // 客户经理编号
+            'custMgrName': '11111111', // 客户经理编号
+            'merchantAreaInfo|5': [
+              {
+                'provinceName': '重庆市',
+                'provinceCode': '500000',
+                'districtName': '重庆市城区',
+                'districtCode': '500100'
+              },
+              {
+                'provinceName': '@province',
+                'provinceCode|500000-900000': 500000,
+                'districtName': '@province',
+                'districtCode|500000-900000': 500000
+              }
+            ]
           }
         ],
         'startIndex': 0,

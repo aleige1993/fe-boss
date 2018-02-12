@@ -16,10 +16,10 @@
       </div>
     </table-distributor-list>
     <!--新增修改模态框-->
-    <bs-modal :title="isAdd ? '新增' : '修改'" v-model="showAddModal" :width="600">
+    <bs-modal :title="isAdd ? '新增' : '修改'" v-model="showAddModal" :width="1000">
       <i-form v-if="showAddModal" ref="formAdd" :model="formAdd" label-position="right" :label-width="120" style="padding: 30px 0;">
-        <i-row>
-          <i-col span="24">
+        <i-row :gutter="16">
+          <i-col span="12">
             <i-form-item
               label="渠道商类型"
               :rules="{required: true, message: '请选择渠道商类型', trigger: 'change'}"
@@ -29,9 +29,21 @@
               </i-select>
             </i-form-item>
           </i-col>
+          <i-col span="12" v-if="formAdd.channelType==='1'">
+            <i-form-item
+              label="渠道商车商类型"
+              prop="merchantType"
+              :rules="{required: true, message: '请选择渠道商车商类型', trigger: 'change'}">
+              <i-select v-model="formAdd.merchantType" :disabled="formAdd.channelType==='2'||formAdd.channelType==='3'">
+                <i-option v-for="item in enumSelectData.get('MerchantTypeEnum')" :key="item.itemCode" :value="item.itemCode">{{item.itemName}}</i-option>
+              </i-select>
+            </i-form-item>
+          </i-col>
+        </i-row>
+        <i-row :gutter="16">
           <i-col span="24" v-if="formAdd.channelType==='1'||formAdd.channelType==='3'">
             <i-row>
-              <i-col span="24">
+              <i-col span="12">
                 <i-form-item
                   label="客户类型"
                   prop="customerType">
@@ -39,7 +51,7 @@
                 </i-form-item>
               </i-col>
 
-              <i-col span="24">
+              <i-col span="12">
                 <i-form-item
                   label="客户名称"
                   :rules="{required: true, message: '客户名称不能为空', trigger: 'change'}"
@@ -55,53 +67,46 @@
               </i-col>
             </i-row>
           </i-col>
+        </i-row>
+        <i-row :gutter="16">
           <i-col v-if="formAdd.channelType==='2'">
-            <i-col span="24">
-              <i-form-item
-                label="客户类型"
-                prop="customerType"
-                :rules="{required: true, message: '请选择客户类型', trigger: 'change'}">
-                <i-select v-model="formAdd.customerType">
-                  <i-option v-for="item in enumSelectData.get('CustTypeEnum')" :key="item.itemCode" :value="item.itemCode">{{item.itemName}}</i-option>
-                </i-select>
-              </i-form-item>
-            </i-col>
-            <i-col span="24" v-if="formAdd.customerType==='1'||formAdd.customerType==='2'">
-              <i-form-item
-                label="客户名称"
-                :rules="{required: true, message: '客户名称不能为空', trigger: 'change'}"
-                prop="corpName">
-                <input type="hidden" v-model="formAdd.corpName"/>
-                <div v-show="formAdd.customerType==='1'">
-                  <i-input v-model="formAdd.corpName" :readonly="true" placeholder="选择个人客户">
-                    <i-button @click="showSelectObligee=!showSelectObligee" slot="append">选择个人客户 <Icon type="ios-more"></Icon></i-button>
-                  </i-input>
-                </div>
-                <div v-show="formAdd.customerType==='2'">
-                  <i-input v-model="formAdd.corpName" :readonly="true" placeholder="选择公司客户">
-                    <i-button @click="showSelectCompanyOwner=!showSelectCompanyOwner" slot="append">选择公司客户 <Icon type="ios-more"></Icon></i-button>
-                  </i-input>
-                  <p class="formAddClass" v-if="formAdd.creditCode===''">“社会征信统一代码”不存在，不能提交！</p>
-                  <p class="formAddClass" v-if="formAdd.legalPerson===''">“法定代表人”不存在，不能提交！</p>
-                  <p class="formAddClass" v-if="formAdd.telephone===''">“公司电话”不存在，不能提交！</p>
-                </div>
-              </i-form-item>
-            </i-col>
-
+            <i-row>
+              <i-col span="12">
+                <i-form-item
+                  label="客户类型"
+                  prop="customerType"
+                  :rules="{required: true, message: '请选择客户类型', trigger: 'change'}">
+                  <i-select v-model="formAdd.customerType">
+                    <i-option v-for="item in enumSelectData.get('CustTypeEnum')" :key="item.itemCode" :value="item.itemCode">{{item.itemName}}</i-option>
+                  </i-select>
+                </i-form-item>
+              </i-col>
+              <i-col span="12" v-if="formAdd.customerType==='1'||formAdd.customerType==='2'">
+                <i-form-item
+                  label="客户名称"
+                  :rules="{required: true, message: '客户名称不能为空', trigger: 'change'}"
+                  prop="corpName">
+                  <input type="hidden" v-model="formAdd.corpName"/>
+                  <div v-show="formAdd.customerType==='1'">
+                    <i-input v-model="formAdd.corpName" :readonly="true" placeholder="选择个人客户">
+                      <i-button @click="showSelectObligee=!showSelectObligee" slot="append">选择个人客户 <Icon type="ios-more"></Icon></i-button>
+                    </i-input>
+                  </div>
+                  <div v-show="formAdd.customerType==='2'">
+                    <i-input v-model="formAdd.corpName" :readonly="true" placeholder="选择公司客户">
+                      <i-button @click="showSelectCompanyOwner=!showSelectCompanyOwner" slot="append">选择公司客户 <Icon type="ios-more"></Icon></i-button>
+                    </i-input>
+                    <p class="formAddClass" v-if="formAdd.creditCode===''">“社会征信统一代码”不存在，不能提交！</p>
+                    <p class="formAddClass" v-if="formAdd.legalPerson===''">“法定代表人”不存在，不能提交！</p>
+                    <p class="formAddClass" v-if="formAdd.telephone===''">“公司电话”不存在，不能提交！</p>
+                  </div>
+                </i-form-item>
+              </i-col>
+            </i-row>
           </i-col>
-
-          <i-col span="24" v-if="formAdd.channelType==='1'">
-            <i-form-item
-              label="渠道商车商类型"
-              prop="merchantType"
-              :rules="{required: true, message: '请选择渠道商车商类型', trigger: 'change'}">
-              <i-select v-model="formAdd.merchantType" :disabled="formAdd.channelType==='2'||formAdd.channelType==='3'">
-                <i-option v-for="item in enumSelectData.get('MerchantTypeEnum')" :key="item.itemCode" :value="item.itemCode">{{item.itemName}}</i-option>
-              </i-select>
-            </i-form-item>
-          </i-col>
-
-          <i-col span="24">
+        </i-row>
+        <i-row :gutter="16">
+          <i-col span="12">
             <i-form-item
               label="上级渠道商"
               :rules="{required: true, message: '请选择上级渠道商', trigger: 'change'}"
@@ -111,17 +116,19 @@
               </i-input>
             </i-form-item>
           </i-col>
-          <i-col span="24">
+          <i-col span="12">
             <i-form-item
-              label="是否开通商户平台"
-              :rules="{required: true, message: '请选择是否开通商户平台', trigger: 'change'}"
+              label="是否允许补件"
+              :rules="{required: true, message: '请选择是否允许补件', trigger: 'change'}"
               prop="isEnablePlatform">
               <i-select v-model="formAdd.isEnablePlatform">
                 <i-option v-for="item in enumSelectData.get('YesNoEnum')" :key="item.itemCode" :value="item.itemCode">{{item.itemName}}</i-option>
               </i-select>
             </i-form-item>
           </i-col>
-          <i-col span="24">
+        </i-row>
+        <i-row :gutter="16">
+          <i-col span="12">
             <i-form-item
               label="渠道商简称"
               prop="merchantAbbr"
@@ -129,7 +136,7 @@
               <i-input v-model="formAdd.merchantAbbr" placeholder=""></i-input>
             </i-form-item>
           </i-col>
-          <i-col span="24">
+          <i-col span="12">
             <i-form-item
               label="是否在app中显示"
               :rules="{required: true, message: '请选择是否在app中显示', trigger: 'change'}"
@@ -139,6 +146,8 @@
               </i-select>
             </i-form-item>
           </i-col>
+        </i-row>
+        <i-row :gutter="16">
           <i-col span="24">
             <bs-form-block :title="'渠道商服务地区'">
               <div class="form-top-actions">
@@ -147,6 +156,8 @@
               <i-table border ref="areaTable" :columns="areaColumns" :data="formAdd.merchantAreaInfo"></i-table>
             </bs-form-block>
           </i-col>
+          <br>
+          <br>
           <i-col span="24">
             <i-form-item class="text-right">
               <i-button type="primary"
@@ -165,8 +176,8 @@
       </i-form>
     </bs-modal>
 
-    <bs-modal :title="'新增'" v-model="showAreaAddModal">
-      <i-form ref="areaForm" :model="areaForm" label-position="right" :label-width="100" style="padding-bottom:0;">
+    <bs-modal :title="'新增'" v-model="showAreaAddModal" :width="520">
+      <i-form v-if="showAreaAddModal" ref="areaForm" :model="areaForm" label-position="right" :label-width="120" style="padding-bottom:0;">
         <i-form-item
           label="渠道商服务地区"
           :rules="{required: true, message: '请选择渠道商服务地区', trigger: 'change'}"
@@ -289,7 +300,7 @@
           },
           {
             title: '市',
-            key: 'cityName'
+            key: 'districtName'
           },
           {
             title: '操作',
@@ -393,6 +404,14 @@
       },
       // 新增
       async submitSuccess() {
+        if (this.$data.formAdd.merchantAreaInfo.length === 0) {
+          this.$Notice.error({
+            title: '错误提示',
+            desc: '请添加渠道商服务地区！',
+            duration: 2
+          });
+          return;
+        }
         this.$data.buttonLoading = true;
         if (this.$data.formAdd.channelType === '1' || this.$data.formAdd.channelType === '3') {
           this.$data.formAdd.customerType = '2';
