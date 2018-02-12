@@ -164,7 +164,10 @@
           this.$data.searchForm.taskNode = this.taskNode;
           this.$data.searchForm.status = this.status;
         }
-        let resp = await this.$http.post(requestUrl, this.$data.searchForm);
+        let resp = await this.$http.post(requestUrl, {
+          taskNode: '0;1',
+          ...this.$data.searchForm
+        });
         this.$data.dataLoading = false;
         if (resp.success) {
           this.$data.privateCustomerLoanList = resp.body.resultList;
