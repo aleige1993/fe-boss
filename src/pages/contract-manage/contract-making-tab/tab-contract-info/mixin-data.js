@@ -19,7 +19,10 @@ export default {
         },
         {
           title: '颜色',
-          key: 'carColor'
+          key: 'carColor',
+          render: (h, params) => {
+            this.enumCode2Name(params.row.carColor, 'CarColorEnum');
+          }
         },
         {
           title: '车牌号',
@@ -118,7 +121,10 @@ export default {
         },
         {
           title: '计算方式',
-          key: 'feeTakeType'
+          key: 'feeTakeType',
+          render: (h, params) => {
+            return this.enumCode2Name(params.row.feeTakeType, 'FeeTakeTypeEnum');
+          }
         },
         {
           title: '应收金额（元）',
