@@ -214,6 +214,28 @@ export default {
               }, '处理'),
               h('Button', {
                 props: {
+                  type: 'primary',
+                  size: 'small',
+                  disabled: params.row.taskNode !== '0' || params.row.status === '9'
+                },
+                style: { marginBottom: '5px' },
+                on: {
+                  click: async() => {
+                    let resp = await this.$http.post('/biz/gainLoanBizByLoanNo', { loanNo: params.row.loanNo });
+                    if (resp.success) {
+                      this.$Message.success('领取任务成功');
+                      this.getPrivateCustomerLoanList();
+                    } else {
+                      this.$Notice.error({
+                        title: '错误信息',
+                        desc: '领取任务出错'
+                      });
+                    }
+                  }
+                }
+              }, '领取任务'),
+              h('Button', {
+                props: {
                   type: 'error',
                   size: 'small',
                   disabled: params.row.taskNode !== '1' || params.row.status !== '9'

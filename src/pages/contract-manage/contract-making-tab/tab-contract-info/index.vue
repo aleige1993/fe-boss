@@ -100,7 +100,7 @@
       <i-row>
         <i-col span="8">
           <i-form-item label="利率模式">
-            <span v-text="approveCredit.interestType"></span>
+            <span v-text="enumCode2Name(approveCredit.interestType, 'InterestTypeEnum')"></span>
           </i-form-item>
         </i-col>
         <i-col span="8">
@@ -117,12 +117,12 @@
       <i-row>
         <i-col span="8">
           <i-form-item label="车辆保险费">
-            <span v-text="approveCredit.carInsurance"></span>
+            <span v-text="enumCode2Name(approveCredit.carInsurance, 'CarInsuranceEnum')"></span>
           </i-form-item>
         </i-col>
         <i-col span="8">
           <i-form-item label="盗抢险">
-            <span v-text="approveCredit.dqxInsurance"></span>
+            <span v-text="enumCode2Name(approveCredit.dqxInsurance, 'DqxInsuranceEnum')"></span>
           </i-form-item>
         </i-col>
         <i-col span="8">
@@ -218,7 +218,7 @@
         <i-col span="8">
           <i-form-item label="结论" prop="approveStatus" :rules="{required: true, message: '结论不能为空', trigger: 'change'}">
             <i-radio-group @on-change="approveStatusRadio" v-model="loanApprove.approveStatus">
-              <i-radio v-if="item.itemCode!=='B'" v-for="item in enumSelectData.get('ApproveStatusEnum')" :label="item.itemCode" :key="item.itemCode" style="margin-right: 20px; margin-top: -5px">{{item.itemName}}</i-radio>
+              <i-radio v-for="item in enumSelectData.get('ApproveStatusEnum')" :label="item.itemCode" :key="item.itemCode" style="margin-right: 20px; margin-top: -5px">{{item.itemName}}</i-radio>
             </i-radio-group>
           </i-form-item>
         </i-col>
