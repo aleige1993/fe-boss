@@ -433,6 +433,8 @@
           let text = this.$data.isAdd ? '新增成功' : '修改成功';
           this.$Message.success(text);
           this.$refs.tableDistributorList.getPrivateCustomerList();
+          // 更新节点树
+          this.getMerchantPidData();
         }
       },
       // 修改
