@@ -175,7 +175,8 @@
         this.$data.buttonLoading = true;
         let _text = '';
         _text = this.$data.isAdd ? '新增' : '修改';
-        let resp = await this.$http.post('/merchant/operator/add', {
+        let _url = this.$data.isAdd ? '/merchant/operator/add' : '/merchant/operator/update';
+        let resp = await this.$http.post(_url, {
           merchantNo: this.$route.query.merchantNo,
           useStatus: '1', // 0冻结，1激活
           ...this.$data.formAdmin

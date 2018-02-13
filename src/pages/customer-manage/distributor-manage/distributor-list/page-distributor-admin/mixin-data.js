@@ -123,7 +123,7 @@ export default {
                     Alertify.confirm(`确定要${text}当前用户吗？`, async(ok) => {
                       if (ok) {
                         const msg = this.$Message.loading(`正在${text}`, 0);
-                        let resp = await this.$http.get('/merchant/operator/status', {
+                        let resp = await this.$http.post('/merchant/operator/status', {
                           merchantNo: params.row.merchantNo,
                           userNo: params.row.userNo,
                           useStatus
