@@ -123,10 +123,10 @@ export default {
           key: 'feeName'
         },
         {
-          title: '计算方式',
+          title: '收取方式',
           key: 'feeTakeType',
           render: (h, params) => {
-            return this.enumCode2Name(params.row.feeTakeType, 'FeeTakeTypeEnum');
+            return this.enumCode2Name(params.row.feeTakeType, 'ServiceFeeTypeEnum');
           }
         },
         {

@@ -97,7 +97,7 @@ export default {
                     Alertify.confirm('确定要重置密码吗？', async(ok) => {
                       if (ok) {
                         const msg = this.$Message.loading('正在重置密码', 0);
-                        let resp = await this.$http.get('/merchant/operator/resetPsw', {
+                        let resp = await this.$http.post('/merchant/operator/resetPsw', {
                           merchantNo: params.row.merchantNo,
                           userNo: params.row.userNo
                         });
