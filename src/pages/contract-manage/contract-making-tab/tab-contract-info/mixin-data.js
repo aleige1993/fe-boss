@@ -21,7 +21,7 @@ export default {
           title: '颜色',
           key: 'carColor',
           render: (h, params) => {
-            this.enumCode2Name(params.row.carColor, 'CarColorEnum');
+            return this.enumCode2Name(params.row.carColor, 'CarColorEnum');
           }
         },
         {
@@ -53,7 +53,6 @@ export default {
                 },
                 on: {
                   click: () => {
-                    console.log(params.row);
                     this.$data.setCarDataShowModal = true;
                     this.$data.clickRowIndex = params.index;
                     this.$data.setCarDataForm = $.extend({}, params.row);
