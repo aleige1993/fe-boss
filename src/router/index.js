@@ -171,8 +171,7 @@ let MyRouter = new Router({
             { path: 'credit', name: 'loanBusinessCredit', component: resolve => require(['@/pages/loan-business/credit-manage'], resolve),
               children: [
                 // 贷款业务-授信管理-授信查询列表
-                { path: '/', name: 'loanBusinessCreditList', component: resolve =
-                > require(['@/pages/loan-business/credit-manage/credit-list'], resolve)},
+                { path: '/', name: 'loanBusinessCreditList', component: resolve => require(['@/pages/loan-business/credit-manage/credit-list'], resolve)},
                 // 贷款业务-授信管理-授信申请
                 { path: 'apply', name: 'loanBusinessCreditApply', component: resolve => require(['@/pages/loan-business/credit-manage/credit-apply'], resolve)},
                 // { path: 'update', name: 'loanBusinessCreditApply', component: resolve => require(['@/pages/loan-business/credit-manage/credit-apply'], resolve)},
