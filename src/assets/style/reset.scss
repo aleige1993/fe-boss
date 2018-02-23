@@ -97,6 +97,9 @@ h1,h2,h3,h4,h5,h6 {
   button{
     margin-right: 5px;
   }
+  button:last-of-type{
+    margin-right: 0px;
+  }
 }
 .ivu-select-disabled .ivu-select-selection{
   color: #666;
