@@ -92,7 +92,7 @@ export default {
                   click: async() => {
                     this.$data.GPSinstallShowModal = true;
                     this.$data.clickRow = await params.row;
-                    this.$data.loanCarGpsDTOList = this.$data.carData[params.index].loanCarGpsDTOList;
+                    this.$data.loanCarGpsList = this.$data.carData[params.index].loanCarGpsList;
                   }
                 }
               }, 'GPS安装详情')
@@ -279,7 +279,7 @@ export default {
           key: 'makeDate'
         }
       ],
-      loanCarGpsDTOList: []
+      loanCarGpsList: []
     };
   }
 };

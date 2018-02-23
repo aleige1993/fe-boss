@@ -106,9 +106,24 @@ h1,h2,h3,h4,h5,h6 {
   font-size: 12px;
   line-height: 16px;
 }
-// 地址联动。当地址会有自动带入值得情况时，改变placeholder属性的字体颜色
+// 地址联动。当地址有默认值时，改变placeholder属性的字体颜色
 .select-show-input .ivu-select-single .ivu-select-selection .ivu-select-placeholder {
   color: #495060;
+}
+// 车型联动。当车型有默认值时，改变placeholder属性的字体颜色
+.select-show-input {
+  & .ivu-select-single input[placeholder]::-webkit-input-placeholder {
+    color: #495060;
+  }
+  & .ivu-select-single input[placeholder]::-moz-placeholder {
+    color: #495060;
+  }
+  & .ivu-select-single input[placeholder]:-moz-placeholder {
+    color: #495060;
+  }
+  & .ivu-select-single input[placeholder]:-ms-input-placeholder {
+    color: #495060;
+  }
 }
 // (iView)全局控制table的宽度最小为1200px
 .ivu-table-wrapper {
@@ -146,3 +161,25 @@ h1,h2,h3,h4,h5,h6 {
 // 在查看详情的表单中（i-form）添加lass="input-label-color"，使其label字体颜色改变
 .input-label-color.ivu-form .ivu-form-item-label{
   color: #999;}
+/*
+ * 添加class=“scrollBarStyle” 修改webkit内核的浏览器滚动条
+ */
+.scrollBarStyle {
+  &::-webkit-scrollbar {
+    width: 6px;
+    height: 10px;
+  }
+  &::-webkit-scrollbar-button {
+    display: none;
+  }
+  &::-webkit-scrollbar-track {
+    display: none;
+  }
+  &::-webkit-scrollbar-thumb {
+    background: #c5dcef;
+    border-radius: 5px;
+    &:hover {
+      background: #add1f0;
+    }
+  }
+}
