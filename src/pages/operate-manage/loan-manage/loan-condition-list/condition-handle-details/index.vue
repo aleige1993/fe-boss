@@ -644,12 +644,12 @@
       this.assureGtelist(); // 执行获取担保信息列表的data
       this.conditionGetlist(); // 执行获取放款条件列表的data
 
-      // 权证回传方式为《先入库后放款》则展示办理抵押按钮,且办理抵押时抵押状态为“已抵押”
-      if (this.$data.warrantType === '1') {
+      // 权证回传方式为《先入库后抵押》则展示办理抵押按钮,且办理抵押时抵押状态为“已抵押”
+      if (this.$data.warrantType === '2') {
         this.$data.formalities.mortgageStatus = '1';
       }
-      // 权证回传方式为《先放款后入库》则展示权证回传天数按钮,且办理抵押时抵押状态为“未抵押”
-      if (this.$data.warrantType === '2') {
+      // 权证回传方式为《先抵押后入库》则展示权证回传天数按钮,且办理抵押时抵押状态为“未抵押”
+      if (this.$data.warrantType === '1') {
         this.$data.formalities.mortgageStatus = '0';
       }
     },
@@ -755,9 +755,9 @@
           });
           return;
         }
-        // 权证回传方式为《先入库后放款》时 车辆信息中须配置好“办理抵押” 通过其中的必填项“办理时间”字段判断
+        // 权证回传方式为《先入库后抵押》时 车辆信息中须配置好“办理抵押” 通过其中的必填项“办理时间”字段判断
         for (let item of this.$data.carData) {
-          if (this.$data.warrantType === '1' && (typeof item.makeDate === 'undefined' || item.makeDate === '' || item.makeDate === null)) {
+          if (this.$data.warrantType === '2' && (typeof item.makeDate === 'undefined' || item.makeDate === '' || item.makeDate === null)) {
             this.$Message.error({
               content: '车辆信息中须配置好“办理抵押”！',
               duration: 2
@@ -765,9 +765,9 @@
             return;
           }
         }
-        // 权证回传方式为《先入库后放款》时 回传天数必填
+        // 权证回传方式为《先入库后抵押》时 回传天数必填
         for (let item of this.$data.carData) {
-          if (this.$data.warrantType === '2' && (typeof item.backDays === 'undefined' || item.backDays === '')) {
+          if (this.$data.warrantType === '1' && (typeof item.backDays === 'undefined' || item.backDays === '')) {
             this.$Message.error({
               content: '车辆信息中须配置好“回传天数”！',
               duration: 2
@@ -867,8 +867,8 @@
               'mortgageUrl',
               'remark'
             ];
-            // 当权证回传方式为《先入库后放款》则抵押状态为“已抵押”
-            this.$data.formalities.mortgageStatus = '1';
+            // 当权证回传方式为《先入库后抵押》则抵押状态为“已抵押”
+            this.$data.formalities.mortgageStatus = '0';
             formField.forEach((item) => {
               this.$set(this.$data.carData[ind], '' + item, this.$data.formalities['' + item]);
             });
@@ -884,7 +884,7 @@
         let ind = this.$data.clickRow._index; // 车辆列表的索引index
         this.$refs['backDaysForm'].validate(async (valid) => {
           if (valid) {
-            // 当权证回传方式为《先放款后入库》则展示权证回传天数按钮,且抵押状态为“未抵押”
+            // 当权证回传方式为《先抵押后入库》则展示权证回传天数按钮,且抵押状态为“未抵押”
             this.$set(this.$data.carData[ind], 'mortgageStatus', '0');
             this.$set(this.$data.carData[ind], 'backDays', this.$data.backDaysForm['backDays']);
             this.$Message.success('提交成功');

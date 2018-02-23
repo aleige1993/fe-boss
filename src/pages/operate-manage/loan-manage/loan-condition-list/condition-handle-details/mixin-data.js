@@ -103,13 +103,13 @@ export default {
                 on: {
                   click: () => {
                     this.$data.clickRow = params.row;
-                    // 权证回传方式为《先入库后放款》则展示办理抵押按钮
-                    if (this.$data.warrantType === '1') {
+                    // 权证回传方式为《先入库后抵押》则展示办理抵押按钮
+                    if (this.$data.warrantType === '2') {
                       this.$data.formalitiesShowModal = true;
                       this.$data.formalities = $.extend(true, {}, this.$data.formalities, params.row);
                     }
-                    // 权证回传方式为《先入库后放款》则展示办理抵押按钮
-                    if (this.$data.warrantType === '2') {
+                    // 权证回传方式为《先抵押后入库》则展示办理抵押按钮
+                    if (this.$data.warrantType === '1') {
                       this.$data.backDaysShowModal = true;
                       this.$data.backDaysForm = $.extend(true, {}, this.$data.backDaysForm, params.row);
                     }
@@ -242,12 +242,12 @@ export default {
   computed: {
     carBtnWarrantType() {
       let btnText = '';
-      // 权证回传方式为《先入库后放款》则展示办理抵押按钮
-      if (this.$data.warrantType === '1') {
+      // 权证回传方式为《先入库后抵押》则展示办理抵押按钮
+      if (this.$data.warrantType === '2') {
         btnText = '办理抵押';
       }
-      // 权证回传方式为《先放款后入库》则展示权证回传天数按钮
-      if (this.$data.warrantType === '2') {
+      // 权证回传方式为《先抵押后入库》则展示权证回传天数按钮
+      if (this.$data.warrantType === '1') {
         btnText = '设置回传天数';
       }
       return btnText;

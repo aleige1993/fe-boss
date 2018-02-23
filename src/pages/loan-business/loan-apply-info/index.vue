@@ -672,7 +672,7 @@
       <table-company-customer-list v-if="showSelectCompanyGua" ref="obligeeTable" type="modal" @on-row-dbclick="selectCompanyGuaRow"></table-company-customer-list>
     </bs-modal>
     <!--选择渠道商-->
-    <bs-modal :title="isDistributor?'选择经销商':'选择渠道商'" v-model="showSelectDistributor" :width="1300">
+    <bs-modal :title="isDistributor?'选择经销商':'选择渠道商'" v-model="showSelectDistributor" :width="1200">
       <table-distributor-list v-if="showSelectDistributor" ref="distributorTable" type="modal" @on-row-dbclick="selectDistributor"></table-distributor-list>
     </bs-modal>
     <!--车辆评估信息新增和编辑-->

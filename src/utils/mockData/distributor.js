@@ -218,5 +218,35 @@ export default [
       'reMsg': '成功',
       'success': true
     })
+  },
+  // 渠道商角色管理列表
+  {
+    url: '/roleListMockjs',
+    on: true,
+    resp: Mock.mock({
+      'body': {
+        'currentPage': 1,
+        'isMore': 0,
+        'pageSize': 4,
+        'resultList|10': [
+          {
+            'merchantName': 'mockjs',
+            'merchantNo': '123123123',
+            'coleName': '123121231233123',
+            'coleNo': '123121231233123',
+            'authorityName': '11111123',
+            'authorityNo': '11111123',
+            'CreateDate': '@date',
+            'SetDate': '@date'
+          }
+        ],
+        'startIndex': 0,
+        'totalNum': 10,
+        'totalPage': 2
+      },
+      'reCode': '0000',
+      'reMsg': '成功',
+      'success': true
+    })
   }
 ];
