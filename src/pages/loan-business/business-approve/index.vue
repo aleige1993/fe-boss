@@ -11,7 +11,7 @@
       <i-tab-pane :label="'基本信息'">
         <apply-info ref="applyInfo" :customerType="formData.custType" :applyBasicInfo="formData" :loanAction="'firstApprove'" :readonly="applyInfoReadonly || isFromDetail" @on-approve-info="approveInfoRefresh"></apply-info>
       </i-tab-pane>
-      <i-tab-pane :label="'审批信息'">
+      <i-tab-pane :label="'审批信息'" v-if="taskNode !== '1' && taskNode !== '0'">
         <approve-info ref="approveInfo" :applyBasicInfo="formData"
                       :readonly="firstApproveInfoReadonly || isFromDetail" :isApprove="isApprove">
         </approve-info>
@@ -81,9 +81,11 @@
       };
     },
     computed: {
+      taskNode() {
+        return this.$route.query.status;
+      },
       breadCrumbName() {
-        let loanNode = this.$route.query.status;
-        return this.enumCode2Name(loanNode, 'LoanBizNodeEnum');
+        return this.enumCode2Name(this.taskNode, 'LoanBizNodeEnum');
       },
       isApprove() {
         let loanNode = this.$route.query.status;

@@ -55,6 +55,11 @@
         default: false,
         required: false,
         type: Boolean
+      },
+      readonly: {
+        default: false,
+        required: false,
+        type: Boolean
       }
     },
     methods: {
