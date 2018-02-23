@@ -257,7 +257,7 @@
     </bs-modal>
     <!--GPS安装信息-->
     <bs-modal v-model="GPSinstallShowModal" title="GPS安装信息详情" :width="1200">
-      <i-table v-if="GPSinstallShowModal" border ref="examineTable" :columns="loanCarGpsDTOColumns" :data="loanCarGpsDTOList"></i-table>
+      <i-table v-if="GPSinstallShowModal" border ref="examineTable" :columns="loanCarGpsDTOColumns" :data="loanCarGpsList"></i-table>
     </bs-modal>
     <!--车辆信息弹窗-->
     <bs-modal v-model="detailsCarDataShowModal" title="车辆信息" :width="1200">
@@ -464,9 +464,9 @@
             </i-form-item>
           </i-col>
         </i-row>
-        <i-form-item class="text-right">
+        <!--<i-form-item class="text-right">
           <i-button type="primary" @click="setCarDataSubmit">提交</i-button>
-        </i-form-item>
+        </i-form-item>-->
       </i-form>
     </bs-modal>
     <!--担保落实modal-->

@@ -278,10 +278,10 @@
             :rules="{required: true, message: '请选择权利人'}"
             prop="carOwnerNo">
             <input type="hidden" v-model="setCarDataForm.carOwnerNo"/>
-            <i-input v-if="setCarDataForm.custType=='1'" v-model="setCarDataForm.carOwnerName" readonly placeholder="选择权利人">
+            <i-input v-if="setCarDataForm.custType=='1'" v-model="setCarDataForm.carOwnerName" :readonly="true" placeholder="选择权利人">
               <i-button @click="showSelectObligee=!showSelectObligee" slot="append">选择权利人 <Icon type="ios-more"></Icon></i-button>
             </i-input>
-            <i-input v-if="setCarDataForm.custType=='2'" v-model="setCarDataForm.carOwnerName" readonly placeholder="选择企业权利人">
+            <i-input v-if="setCarDataForm.custType=='2'" v-model="setCarDataForm.carOwnerName" :readonly="true" placeholder="选择企业权利人">
               <i-button @click="showSelectCompanyOwner=!showSelectCompanyOwner" slot="append">选择企业权利人 <Icon type="ios-more"></Icon></i-button>
             </i-input>
           </i-form-item>

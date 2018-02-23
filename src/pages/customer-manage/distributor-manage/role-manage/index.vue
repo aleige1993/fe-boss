@@ -41,7 +41,7 @@
         label="权限列表"
         prop="authorityName">
         <input type="hidden" v-model="formData.authorityName">
-        <Tree class="scrollBarStyle" :data="data2" show-checkbox ref="authorityTree" @on-check-change="authorityCheck" style="max-height: 480px;overflow-y: auto; background: #fafafa"></Tree>
+        <Tree class="scrollBarStyle" :data="data2" show-checkbox ref="authorityTree" @on-check-change="authorityCheck" style="max-height: 480px;overflow-y: auto; background: #fafafa; padding: 0 5px;"></Tree>
       </i-form-item>
       <div class="text-right">
         <i-button @click="saveAddSubimt" :loading="authorityFormLoading" type="success">

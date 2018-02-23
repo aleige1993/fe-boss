@@ -102,7 +102,7 @@ export default {
                     this.$data.GPSinstallShowModal = true;
                     this.$data.clickRow = {};
                     this.$data.clickRow = params.row;
-                    this.$data.loanCarGpsDTOList = this.$data.carData[params.index].loanCarGpsList || [];
+                    this.$data.loanCarGpsList = this.$data.carData[params.index].loanCarGpsList || [];
                   }
                 }
               }, 'GPS安装落实')
@@ -173,7 +173,7 @@ export default {
                 },
                 on: {
                   click: () => {
-                    this.$data.loanCarGpsDTOList.splice(params.index, 1);
+                    this.$data.loanCarGpsList.splice(params.index, 1);
                   }
                 }
               }, '删除')
@@ -181,7 +181,7 @@ export default {
           }
         }
       ],
-      loanCarGpsDTOList: []
+      loanCarGpsList: []
     };
   }
 };

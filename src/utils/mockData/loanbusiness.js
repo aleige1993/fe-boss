@@ -337,7 +337,7 @@ export default [
             'carColor|1': ['月光白', '钛金色', '尊贵黑', '绿色', '水晶银灰', '弥红色'],
             'carPlateNo|1': /渝[ABCD]{1} [0-9A-Z]{5}/,
             'carFrameNo|1': /[0-9A-Z]{18}/,
-            'loanCarGpsDTOList|3': [
+            'loanCarGpsList|3': [
               {
                 'gpsModel': /GPS型号[0-9A-Z]{4}/, // gps型号
                 'imei': /IMEI[0-9A-Z]{4}/, // IMEI
