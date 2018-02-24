@@ -66,7 +66,8 @@ export default {
       }
       this.$data.countFinanceLoading = true;
       let resp = await this.$http.post('/biz/countFinancingAmt', {
-        countFinancingAmtReqVOS: selectData
+        countFinancingAmtReqVOS: selectData,
+        carBuyAmt: this.applyBasicInfo.carBuyAmt
       });
       this.$data.countFinanceLoading = false;
       if (resp.success) {
@@ -146,10 +147,7 @@ export default {
         let tmLoanApproveFeePlanDTOList = result.tmLoanApproveFeePlanDTOList;
         // 费用收取方案 转换字段--实际费用金额
         if (tmLoanApproveFeePlanDTOList && tmLoanApproveFeePlanDTOList.length > 0) {
-          this.$data.approveData.loanApproveFeePlanDTOS = tmLoanApproveFeePlanDTOList.map((item) => {
-            item.feeActualAmt = item.feeAmt;
-            return item;
-          });
+          this.$data.approveData.loanApproveFeePlanDTOS = tmLoanApproveFeePlanDTOList;
         }
         // 放款条件
         this.$data.approveData.loanPaymentConditionDTOS = result.loanPaymentConditionDTOList;
