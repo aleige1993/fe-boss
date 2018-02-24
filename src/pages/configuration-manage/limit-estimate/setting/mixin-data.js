@@ -39,7 +39,7 @@ export default {
                 style: { marginRight: '5px' },
                 on: {
                   click: () => {
-                    params.row.score = params.row.score.toString();
+                    params.row.score = params.row.score + '';
                     this.$data.isAdd = false;
                     this.$data.addModal = true;
                     this.$data.fromData = $.extend({}, params.row);
