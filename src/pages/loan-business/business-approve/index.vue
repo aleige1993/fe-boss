@@ -8,26 +8,26 @@
     <div class="form-top-actions"></div>
 
     <i-tabs v-model="tabIndex" type="card" :animated="false" style="padding-bottom: 46px;">
-      <i-tab-pane :label="'基本信息'">
+      <i-tab-pane :label="'基本信息'" name="tabBasicInfo">
         <apply-info ref="applyInfo" :customerType="formData.custType" :applyBasicInfo="formData" :loanAction="'firstApprove'" :readonly="applyInfoReadonly || isFromDetail" @on-approve-info="approveInfoRefresh"></apply-info>
       </i-tab-pane>
-      <i-tab-pane :label="'审批信息'" v-if="taskNode !== '1' && taskNode !== '0'">
+      <i-tab-pane :label="'审批信息'" name="tabApproveInfo" v-if="taskNode !== '1' && taskNode !== '0'">
         <approve-info ref="approveInfo" :applyBasicInfo="formData"
                       :readonly="firstApproveInfoReadonly || isFromDetail" :isApprove="isApprove">
         </approve-info>
       </i-tab-pane>
-      <i-tab-pane label="人行征信报告" :disabled="formData.custType === '2'">
+      <i-tab-pane label="人行征信报告" name="tabCreditInfo" v-if="taskNode !== '1' && taskNode !== '0'" :disabled="formData.custType === '2'">
         <i-checkbox v-if="showCreditCheckbox" v-model="isHasCheckCreditReport">&nbsp;&nbsp;已查看征信报告</i-checkbox>
         <div v-if="isCreditEerror" style="color: red; padding: 20px 0">暂无征信查询结果！</div>
         <br>
         <br>
         <iframe style="border:1px solid #f5f5f5" v-if="tabIndex == 2" :src="creditReportURL" width="100%" :height="iframeHeight" frameborder="0"></iframe>
       </i-tab-pane>
-      <i-tab-pane label="联系人信息">
-        <tab-big-data :customerType="formData.custType" :applyBasicInfo="formData" v-if="tabIndex == 3"></tab-big-data>
+      <i-tab-pane label="联系人信息" name="tabContactInfo">
+        <tab-big-data :customerType="formData.custType" :applyBasicInfo="formData" v-if="tabIndex === 'tabContactInfo'"></tab-big-data>
       </i-tab-pane>
-      <i-tab-pane :label="'审核历史意见'">
-        <approve-history v-if="tabIndex == 4"></approve-history>
+      <i-tab-pane  name="tabApproveHistory":label="'审核历史意见'">
+        <approve-history v-if="tabIndex === 'tabApproveHistory'"></approve-history>
       </i-tab-pane>
     </i-tabs>
     <div v-if="!isFromDetail" class="form-footer-actions">

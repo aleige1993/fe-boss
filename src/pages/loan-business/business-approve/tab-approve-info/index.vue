@@ -87,7 +87,7 @@
               <i-col span="8">
                 <i-form-item label="定收利率" prop="loanApproveCreditDTO.loanRealRate"
                              :rules="{required: true, message: '请输入定收利率'}">
-                  <i-input v-model="approveData.loanApproveCreditDTO.loanRealRate" @on-blur="loanRealRateVerification">
+                  <i-input :disabled="isApprove||readonly" v-model="approveData.loanApproveCreditDTO.loanRealRate" @on-blur="loanRealRateVerification">
                     <span slot="append">%/年</span>
                   </i-input>
                 </i-form-item>
@@ -106,7 +106,7 @@
                 <i-form-item label="运营模式" prop="loanApproveCreditDTO.operatingMode"
                              :rules="{required: true, message: '请选择运营模式'}">
                   <!--:disabled="isApprove||readonly"-->
-                  <i-select  v-model="approveData.loanApproveCreditDTO.operatingMode">
+                  <i-select :disabled="isApprove||readonly" v-model="approveData.loanApproveCreditDTO.operatingMode">
                     <i-option v-for="item in enumSelectData.get('OperatingModeEnum')" :key="item.itemCode" :value="item.itemCode">{{item.itemName}}</i-option>
                   </i-select>
                 </i-form-item>

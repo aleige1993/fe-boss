@@ -37,6 +37,10 @@
           </i-select>
 
         </i-form-item>
+        <i-form-item label="清算行行号" prop="openBankClearingNo"
+                     :rules="{required: true, message: '请输入清算行行号'}">
+          <i-input type="text" v-model="formData.openBankClearingNo" placeholder=""></i-input>
+        </i-form-item>
         <i-form-item label="开户行所在市" prop="openBankCity"
                      :rules="{required: true, message: '请选择开户行所在市'}">
           <input v-model="formData.openBankCity" type="hidden"/>
