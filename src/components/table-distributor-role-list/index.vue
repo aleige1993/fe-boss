@@ -55,7 +55,6 @@
       }
     },
     mounted() {
-      console.log(this.type);
       this.getPrivateCustomerList();
     },
     methods: {

@@ -671,6 +671,7 @@
         let resModify = await this.$http.post('/pms/productRate/fundRateModify', {
           fundRateNo,
           packageRateNo: this.zfClickRow.packageRateNo,
+          capitalNo: this.$data.rateForm.capitalNo,
           capitalName: this.$data.rateForm.capitalName, // 出资方
           nominalRate: this.$data.rateForm.nominalRate, // 名义利率
           realRate: this.$data.rateForm.realRate // 名义利率
