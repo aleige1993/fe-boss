@@ -708,6 +708,7 @@
             }
           } else {
             this.$Message.error('<span style="color: red">*</span>项不能为空');
+            this.$data.setCarDataShowModal = true;
           }
         });
       },

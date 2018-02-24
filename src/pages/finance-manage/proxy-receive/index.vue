@@ -115,7 +115,7 @@
       selectRow(selection, row) {
         this.receiveNos = [];
         selection.map(item => {
-          this.receiveNos.push(item.receiveNo.toString());
+          this.receiveNos.push(item.receiveNo + '');
         });
       },
       massPayment() {

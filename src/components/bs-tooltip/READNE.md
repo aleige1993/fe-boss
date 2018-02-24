@@ -25,7 +25,7 @@
 - js:
 
 ```
-import tableDistributorList from '@/components/table-distributor-list';
+import BsTooltip from '@/components/bs-tooltip';
 export default {
   render: (h, params) => {
     return h(BsTooltip, {
