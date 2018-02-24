@@ -740,7 +740,7 @@
         if (resp.success && resp.body.length !== 0) {
           let dataObject = resp.body[ind];
           for (let item in dataObject) {
-            dataObject[item] = dataObject[item].toString();
+            dataObject[item] = dataObject[item] + '';
           }
           this.$data.ProductPackageForm = dataObject;
         } else {
