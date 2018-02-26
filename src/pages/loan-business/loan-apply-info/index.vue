@@ -570,11 +570,16 @@
           </i-col>
         </i-row>
         <i-row>
-          <i-col span="12">
+          <!--<i-col span="12">
             <i-form-item label="证件类型" prop="guaPersonType">
               <i-select :disabled="true" v-model="formAssure.guaPersonCertType">
                 <i-option v-for="item in enumSelectData.get('CertTypeEnum')" :key="item.itemCode" :value="item.itemCode">{{item.itemName}}</i-option>
               </i-select>
+            </i-form-item>
+          </i-col>-->
+          <i-col span="12">
+            <i-form-item label="联系电话" prop="guaPersonMobile">
+              <i-input :readonly="true" v-model="formAssure.guaPersonMobile"></i-input>
             </i-form-item>
           </i-col>
           <i-col span="12">
@@ -596,13 +601,6 @@
               <i-select v-model="formAssure.relation">
                 <i-option v-for="item in enumSelectData.get('RelativeEnum')" :key="item.itemCode" :value="item.itemCode">{{item.itemName}}</i-option>
               </i-select>
-            </i-form-item>
-          </i-col>
-        </i-row>
-        <i-row>
-          <i-col span="12">
-            <i-form-item label="联系电话" prop="guaPersonMobile">
-              <i-input :readonly="true" v-model="formAssure.guaPersonMobile"></i-input>
             </i-form-item>
           </i-col>
         </i-row>
