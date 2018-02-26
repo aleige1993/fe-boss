@@ -29,16 +29,16 @@ export default {
         },
         {
           title: '签署状态',
-          key: 'signConfirmStatus',
+          key: 'signStatus',
           render: (h, params) => {
             return h('i-select', {
               props: {
                 // 'disabled': this.$data.isDetails,
-                'value': params.row.signConfirmStatus
+                'value': params.row.signStatus
               },
               on: {
                 'on-change': (val) => {
-                  this.$data.formData.contractList[params.index].signConfirmStatus = val;
+                  this.$data.formData.contractList[params.index].signStatus = val;
                 }
               }
             }, this.enumSelectData.get('ContractSignStatusEnum').map((item) => {
