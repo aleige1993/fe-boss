@@ -68,7 +68,7 @@ export default {
           let submitData = {};
           if (loanNode === '3') {
             if (this.$data.showCreditCheckbox && !this.$data.isHasCheckCreditReport) {
-              this.$data.tabIndex = 2;
+              this.$data.tabIndex = 'tabCreditInfo';
               $('html, body')[0].scrollTop = 0; // 滚动条滚动到顶部
               this.$Message.error({
                 content: '请确认已查看征信报告！',
@@ -91,7 +91,7 @@ export default {
               content: '请完善审核意见信息！',
               duration: 2
             });
-            this.$data.tabIndex = 1;
+            this.$data.tabIndex = 'tabApproveInfo';
             this.$data.submitApproveLoading = false;
             $('html, body')[0].scrollTop = $('body')[0].clientHeight; // 滚动条滚动到底部
             return;
@@ -103,7 +103,7 @@ export default {
               content: '请选择拒绝原因！',
               duration: 2
             });
-            this.$data.tabIndex = 1;
+            this.$data.tabIndex = 'tabApproveInfo';
             $('html, body')[0].scrollTop = $('body')[0].clientHeight; // 滚动条滚动到底部
             this.$data.submitApproveLoading = false;
             return;

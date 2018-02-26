@@ -21,7 +21,7 @@
         <div v-if="isCreditEerror" style="color: red; padding: 20px 0">暂无征信查询结果！</div>
         <br>
         <br>
-        <iframe style="border:1px solid #f5f5f5" v-if="tabIndex == 2" :src="creditReportURL" width="100%" :height="iframeHeight" frameborder="0"></iframe>
+        <iframe style="border:1px solid #f5f5f5" v-if="tabIndex == 'tabCreditInfo'" :src="creditReportURL" width="100%" :height="iframeHeight" frameborder="0"></iframe>
       </i-tab-pane>
       <i-tab-pane label="联系人信息" name="tabContactInfo">
         <tab-big-data :customerType="formData.custType" :applyBasicInfo="formData" v-if="tabIndex === 'tabContactInfo'"></tab-big-data>
