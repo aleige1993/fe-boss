@@ -42,12 +42,12 @@ let MyRouter = new Router({
             { path: 'distributor', name: 'distributor', component: resolve => require(['@/pages/customer-manage/distributor-manage'], resolve),
               children: [
                 { path:'/', name: 'distributorList', component: resolve => require(['@/pages/customer-manage/distributor-manage/distributor-list'], resolve)},
-                // 首页 > 渠道商管理 > 渠道商角色管理
+                // 首页 > 渠道商管理 > 渠道商列表
                 { path:'/', name: 'distributorList', component: resolve => require(['@/pages/customer-manage/distributor-manage/distributor-list'], resolve)},
-                // 首页 > 渠道商管理 > 渠道商列表 > 新增授信额度信息
-                { path: 'role', name: 'roleManage', component: resolve => require(['@/pages/customer-manage/distributor-manage/role-manage'], resolve)},
+                // 首页 > 渠道商管理 > 渠道商列表 > 授信额度信息
+                { path: 'quota', name: 'quotaDistributor', component: resolve => require(['@/pages/customer-manage/distributor-manage/distributor-list/page-distributor-quota'], resolve)},
                 // 首页 > 渠道商管理 > 渠道商列表 > 渠道操作员管理
-                { path: 'admin', name: 'quotaDistributor', component: resolve => require(['@/pages/customer-manage/distributor-manage/distributor-list/page-distributor-admin'], resolve)},
+                { path: 'admin', name: 'adminDistributor', component: resolve => require(['@/pages/customer-manage/distributor-manage/distributor-list/page-distributor-admin'], resolve)},
                 // 首页 > 渠道商管理 > 渠道商列表 > 渠道商详情
                 { path: 'details', name: 'detailsDistributor', component: resolve => require(['@/pages/customer-manage/distributor-manage/distributor-list/page-distributor-details'], resolve)},
                 // 首页 > 渠道商管理 > 渠道商列表 > 车型管理
@@ -57,7 +57,9 @@ let MyRouter = new Router({
                 // 首页 > 渠道商管理 > 渠道商授信审核 > 审核
                 { path: 'credit/examine', name: 'examineDistributor', component: resolve => require(['@/pages/customer-manage/distributor-manage/distributor-credit-list/distributor-credit-examine'], resolve)},
                 // 首页 > 渠道商管理 > 渠道商授信审核 > 审核 > 审核历史意见信息
-                { path: 'credit/examine/history', name: 'examineDistributor', component: resolve => require(['@/pages/customer-manage/distributor-manage/distributor-credit-list/table-examine-history'], resolve)}
+                { path: 'credit/examine/history', name: 'examineDistributor', component: resolve => require(['@/pages/customer-manage/distributor-manage/distributor-credit-list/table-examine-history'], resolve)},
+                // 首页 > 渠道商管理 > 渠道商角色管理
+                { path: 'role', name: 'roleManage', component: resolve => require(['@/pages/customer-manage/distributor-manage/role-manage'], resolve)}
               ]
             },
             // 黑名单管理

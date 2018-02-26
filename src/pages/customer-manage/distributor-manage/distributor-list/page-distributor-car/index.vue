@@ -159,11 +159,11 @@
         }
       },
       setList(row) {
-        row.guidancePrice = row.guidancePrice.toString();
-        row.sellingPrice = row.guidancePrice.toString();
+        row.guidancePrice = row.guidancePrice + '';
+        row.sellingPrice = row.sellingPrice + '';
         this.isAdd = false;
         this.$data.showAddModal = true;
-        this.formCustom = row;
+        this.$data.formCustom = row;
       },
       // 修改情况下的提交数据
       async setSubmit() {

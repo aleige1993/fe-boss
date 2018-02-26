@@ -60,7 +60,7 @@
           label="授信起始日期"
           prop="creditStartDate">
           <input type="hidden" v-model="formQuota.creditStartDate">
-          <bs-datepicker v-model="formQuota.creditStartDate"></bs-datepicker>
+          <bs-datepicker :isNowStart="true" v-model="formQuota.creditStartDate"></bs-datepicker>
         </i-form-item>
         <!--授信到期日期-->
         <i-form-item
@@ -68,7 +68,7 @@
           label="授信到期日期"
           prop="creditStartDate">
           <input type="hidden" v-model="formQuota.creditEndDate">
-          <bs-datepicker v-model="formQuota.creditEndDate"></bs-datepicker>
+          <bs-datepicker :isNowStart="true" v-model="formQuota.creditEndDate"></bs-datepicker>
         </i-form-item>
         <!--额度释放方式-->
         <i-form-item

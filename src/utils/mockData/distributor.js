@@ -221,7 +221,7 @@ export default [
   },
   // 渠道商角色管理列表
   {
-    url: '/roleListMockjs',
+    url: '/merchant/role/pageQueryRoleAndModule',
     on: true,
     resp: Mock.mock({
       'body': {

@@ -3,11 +3,11 @@ export default {
     return {
       distributorColumns: [
         {
-          title: '授信总额度',
+          title: '授信总额度(元)',
           key: 'creditTotalLimit'
         },
         {
-          title: '单笔最大额度',
+          title: '单笔最大额度(元)',
           key: 'singleUsableLimit'
         },
         {

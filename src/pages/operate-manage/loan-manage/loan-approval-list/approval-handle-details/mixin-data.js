@@ -187,7 +187,7 @@ export default {
           key: 'feePercent'
         },
         {
-          title: '固定金额（元）',
+          title: '费用金额（元）',
           key: 'feeAmt'
         },
         {

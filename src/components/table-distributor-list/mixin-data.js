@@ -55,7 +55,7 @@ export default {
           key: 'regDate'
         },
         {
-          title: '注册资金',
+          title: '注册资金(元)',
           width: 120,
           key: 'regCapital'
         },
@@ -65,17 +65,17 @@ export default {
           key: 'telephone'
         },
         {
-          title: '授信总额度',
+          title: '授信总额度(元)',
           width: 120,
           key: 'creditTotalLimit'
         },
         {
-          title: '可用额度',
+          title: '可用额度(元)',
           width: 120,
           key: 'currentUsableLimit'
         },
         {
-          title: '单笔最大可用额度',
+          title: '单笔最大可用额度(元)',
           width: 120,
           key: 'singleUsableLimit'
         },

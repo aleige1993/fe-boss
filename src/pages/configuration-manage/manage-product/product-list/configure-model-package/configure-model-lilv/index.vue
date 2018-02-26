@@ -348,12 +348,14 @@
           </i-form-item>
         </i-col>
       </i-row>
-      <div class="form-top-actions">
-        <i-button @click="addModal" type="info"><i class="iconfont icon-xinzeng"></i> 新增</i-button>
+      <div v-if="!isParentAdd">
+        <div class="form-top-actions">
+          <i-button @click="addModal" type="info"><i class="iconfont icon-xinzeng"></i> 新增</i-button>
+        </div>
+        <i-table border ref="lilvTable" :columns="columns1" :data="data1" :loading="dataLoading"></i-table>
+        <br>
+        <br>
       </div>
-      <i-table border ref="lilvTable" :columns="columns1" :data="data1" :loading="dataLoading"></i-table>
-      <br>
-      <br>
       <i-form-item class="text-right">
         <i-button type="primary" @click="formSubmit" :loading="btnLoading">
           <span v-if="!btnLoading">提交</span>
@@ -741,7 +743,7 @@
         if (resp.success && resp.body.length !== 0) {
           let dataObject = resp.body[ind];
           for (let item in dataObject) {
-            dataObject[item] = dataObject[item] + '';
+            (dataObject[item] !== null) ? (dataObject[item] = dataObject[item] + '') : (dataObject[item] = '');
           }
           this.$data.ProductPackageForm = dataObject;
         } else {
@@ -776,7 +778,6 @@
         this.$data.showAdd = false;
         this.getPrivateCustomerList();  // 获取模态框列表数据
         if (resAdd.success) {
-          this.$data.showAdd = false;
           this.$Message.success('新增成功');
           this.getPrivateCustomerList();
         }
@@ -840,7 +841,8 @@
         this.$data.btnLoading = false;
         if (resAdd.success) {
           this.$Message.success('套餐信息配置成功');
-          this.getFormList();  // 获取表单数据
+          this.formCancel();
+          // this.getFormList();  // 获取表单数据
         }
       },
       // 新增模态框的保存按钮点击事件
