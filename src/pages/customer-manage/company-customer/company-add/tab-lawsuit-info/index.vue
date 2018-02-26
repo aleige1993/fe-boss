@@ -1,7 +1,7 @@
 <template>
   <div id="add-customer-owe-company">
     <div class="form-top-actions" style="padding-top: 0" v-if="!isFromDetail">
-      <i-button type="primary" @click="addModal=!addModal"><i class="iconfont icon-xinzeng"></i> 新增</i-button>
+      <i-button type="primary" @click="openAddLawsuit"><i class="iconfont icon-xinzeng"></i> 新增</i-button>
     </div>
     <i-table :loading="loadingData" :columns="cusomerLawsuitColumns" :data="cusomerLawsuitDatas"></i-table>
     <!--添加联系人模态框-->
@@ -72,6 +72,10 @@
         });
         this.$data.loadingData = false;
         this.$data.cusomerLawsuitDatas = resp.body.resultList;
+      },
+      openAddLawsuit() {
+        this.$refs['formAdd'].resetFields();
+        this.$data.addModal = true;
       },
       submitForm() {
         this.$refs['formAdd'].validate(async (valid) => {

@@ -1,5 +1,8 @@
 <template>
   <div id="personal-basic" style="position: relative">
+    <!--客户信息组件-->
+    <personal-info :readonly="readonly" v-if="customerType == '1'" :memberNo="memberNo" @getMember="getMember"></personal-info>
+    <company-customer-info :readonly="readonly" v-if="customerType == '2'" :corpNo="memberNo" @on-select-company="selectCompany"></company-customer-info>
     <i-form ref="formData" :model="formData" label-position="right" :label-width="160">
       <!--申请信息-->
       <bs-form-block :title="'申请信息'">
@@ -195,9 +198,6 @@
         </i-row>
       </bs-form-block>
     </i-form>
-    <!--客户信息组件-->
-    <personal-info :readonly="readonly" v-if="customerType == '1'" :memberNo="memberNo" @getMember="getMember"></personal-info>
-    <company-customer-info :readonly="readonly" v-if="customerType == '2'" :corpNo="memberNo" @on-select-company="selectCompany"></company-customer-info>
     <bs-form-block :title="'贷款准入规则'">
       <i-table :columns="accessRuleCol" :data="loanApproveRuleDTOS"></i-table>
     </bs-form-block>
@@ -857,6 +857,9 @@
           this.$data.formCar.carOwnerName = '';
           this.$data.formCar.carOwnerNo = '';
         }
+      },
+      'customerType'() {
+        this.initPage();
       }
     }
   };

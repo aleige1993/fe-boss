@@ -305,11 +305,7 @@
     </bs-modal>
     <!--选择法人模态框-->
     <bs-modal title="选择法人代表" v-model="selectRulerModal" :width="1200">
-      <table-customer-list ref="addCustomerSpouseModalTable" type="modal" @on-row-dbclick="selectRulerRow">
-        <div class="form-top-actions" slot="topAction">
-          <i-button type="info" @click="addCustomerModal=!addCustomerModal"><i class="iconfont icon-xinzeng"></i> 新增</i-button>
-        </div>
-      </table-customer-list>
+      <table-customer-list ref="addCustomerSpouseModalTable" type="modal" @on-row-dbclick="selectRulerRow"></table-customer-list>
     </bs-modal>
     <i-spin size="large" fix v-if="initFormLoading"></i-spin>
   </div>
@@ -373,7 +369,7 @@ export default {
         this.initFormData(_id);
       } else {
         // 如果是添加，重置所有数据
-        this.$data.formData = $.extend({}, this.$data.formDataInit);
+        this.$refs['formCompanyCustomerBasicInfo'].resetFields();
       }
     }
   },

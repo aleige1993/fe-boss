@@ -80,7 +80,6 @@
           let _dataTemp = vmApplyInfo.getApplyData();
           _dataTemp.loanVO.status = '3';
           _dataTemp.opeType = '1';
-          _dataTemp.loanVO.result = 'A';
           this.saveLoanBiz(_dataTemp);
         }
       },
@@ -91,7 +90,6 @@
           let _dataTemp = vmApplyInfo.getApplyData();
           _dataTemp.loanVO.status = '2';
           _dataTemp.opeType = '2';
-          _dataTemp.loanVO.result = 'A';
           this.saveLoanBiz(_dataTemp);
         }
       },

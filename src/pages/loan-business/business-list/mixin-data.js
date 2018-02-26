@@ -121,7 +121,6 @@ export default {
                 style: { marginBottom: '5px' },
                 on: {
                   click: async(e) => {
-                    // console.log(e);
                     // this.$data.applyApproveLoading = true;
                     let resp = await this.$http.post('/biz/holdUpLoanBizByLoanNo', { loanNo: params.row.loanNo });
                     // this.$data.applyApproveLoading = false;
@@ -146,7 +145,7 @@ export default {
                 props: {
                   type: 'primary',
                   size: 'small',
-                  disabled: params.row.taskNode !== '2' || params.row.status !== '0'
+                  disabled: this.taskNode === '' || params.row.taskNode !== '2' || params.row.status !== '0'
                 },
                 style: { marginBottom: '5px' },
                 on: {
@@ -189,7 +188,7 @@ export default {
                 props: {
                   type: 'warning',
                   size: 'small',
-                  disabled: params.row.taskNode !== '1' || params.row.status === '9'
+                  disabled: this.taskNode === '' || params.row.taskNode !== '1' || params.row.status === '9'
                 },
                 style: { marginBottom: '5px' },
                 on: {
@@ -216,7 +215,7 @@ export default {
                 props: {
                   type: 'primary',
                   size: 'small',
-                  disabled: params.row.taskNode !== '0' || params.row.status === '9'
+                  disabled: this.taskNode === '' || params.row.taskNode !== '0' || params.row.status === '9'
                 },
                 style: { marginBottom: '5px' },
                 on: {
@@ -238,7 +237,7 @@ export default {
                 props: {
                   type: 'error',
                   size: 'small',
-                  disabled: params.row.taskNode !== '1' || params.row.status !== '9'
+                  disabled: this.taskNode === '' || params.row.taskNode !== '1' || params.row.status !== '9'
                 },
                 style: { marginBottom: '5px' },
                 on: {
