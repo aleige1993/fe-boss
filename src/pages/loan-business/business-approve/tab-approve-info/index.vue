@@ -172,7 +172,8 @@
             <i-table ref="feeMethodsTable" :columns="feeMethodCol" :data="approveData.loanApproveFeePlanDTOS"></i-table>
             <i-row style="margin-top: 10px;">
               <i-col span="24">
-                <i-form-item label="可融资金额">
+                <i-form-item label="可融资金额" prop="loanApproveCreditDTO.carSaleAmt"
+                             :rules="{required: true, message: '请先计算可融资金额'}">
                   <i-input style="width: 120px" :readonly="true" v-model="approveData.loanApproveCreditDTO.carSaleAmt"></i-input>
                   <i-poptip trigger="hover" title="计算方法" content='由选中行的"应收金额"之间的加减运算(当前行的"计算方式")得出'>
                     <i-button type="primary" @click="countFinanceAmount" :loading="countFinanceLoading" size="large">
@@ -251,7 +252,8 @@
           <bs-form-block title="审核意见" v-if="!isFromDetail">
             <i-row>
               <i-col span="18">
-                <i-form-item label="结论" :rules="{required: true, message: '结论不能为空', trigger: 'change'}">
+                <i-form-item label="结论" prop="loanApproveDTO.result" :rules="{required: true, message: '请选择你的结论', trigger: 'change'}">
+                  <input type="hidden" v-model="approveData.loanApproveDTO.result"/>
                   <i-radio-group v-model="approveData.loanApproveDTO.result">
                     <i-radio v-for="item in enumSelectData.get('ApproveStatusEnum')" :label="item.itemCode" :key="item.itemCode" style="margin-right: 20px; margin-top: -5px">{{item.itemName}}</i-radio>
                   </i-radio-group>
@@ -262,6 +264,7 @@
               <i-col span="8">
                 <i-form-item
                   v-if="approveData.loanApproveDTO.result === 'R'"
+                  prop="loanApproveDTO.rejectCause" :rules="{required: true, message: '请选择你的拒绝理由', trigger: 'change'}"
                   label="拒绝原因">
                   <i-select v-model="approveData.loanApproveDTO.rejectCause">
                     <i-option v-for="item in enumSelectData.get('BizApproveRejectEnum')" :key="item.itemCode" :value="item.itemCode">{{item.itemName}}</i-option>
@@ -271,7 +274,7 @@
             </i-row>
             <i-row>
               <i-col span="18">
-                <i-form-item label="意见信息" :rules="{required: true, message: '意见信息不能为空', trigger: 'blur'}">
+                <i-form-item label="意见信息" prop="loanApproveDTO.opinion" :rules="{required: true, message: '意见信息不能为空'}">
                   <i-input type="textarea" v-model="approveData.loanApproveDTO.opinion" :rows="4"></i-input>
                 </i-form-item>
               </i-col>
