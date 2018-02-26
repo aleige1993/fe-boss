@@ -3,28 +3,23 @@ export default {
     return {
       roleColumns: [
         {
-          title: '渠道商名称',
-          key: 'merchantName'
-        },
-        {
-          title: '渠道商编号',
-          key: 'merchantNo'
-        },
-        {
-          title: '角色名称',
-          key: 'coleName'
-        },
-        {
           title: '角色编号',
           key: 'roleId'
         },
         {
-          title: '权限名称',
-          key: 'authorityName'
+          title: '角色名称',
+          key: 'roleName'
         },
         {
-          title: '权限编号',
-          key: 'authorityNo'
+          title: '权限名称',
+          key: 'moduleList',
+          render: (h, params) => {
+            let showText = '';
+            params.row.moduleList.forEach((item) => {
+              showText += (item.moduleName + '; ');
+            });
+            return h('span', {}, showText);
+          }
         },
         {
           title: '创建日期',

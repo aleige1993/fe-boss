@@ -54,11 +54,6 @@
           this.$data.data1 = [];
         }
       },
-      // 新增的保存请求方法
-      async addSuBmit() {
-        this.$data.buttonLoading = true;
-        this.$data.buttonLoading = false; // 关闭按钮的loading状态
-      },
       // 打开新增窗口
       addModal() {
         this.$data.isAdd = true;

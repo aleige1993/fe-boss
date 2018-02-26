@@ -16,11 +16,11 @@ export default {
           key: 'creditCode'
         },
         {
-          title: '授信总额度（元）',
+          title: '授信总额度(元)',
           key: 'totalLimitAmt'
         },
         {
-          title: '当前可用额度（元）',
+          title: '当前可用额度(元)',
           key: 'currentLimitAmt'
         },
         {

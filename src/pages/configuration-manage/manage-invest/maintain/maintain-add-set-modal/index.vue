@@ -1,8 +1,8 @@
 <template>
 <div id="maintain-add-set-modal">
   <i-tabs v-model="tabIndex" type="card" :animated="false">
-    <i-tab-pane :label="'基本信息'">
-      <i-form v-if="tabIndex===0" ref="formMaintain" :model="formMaintain" label-position="right" :label-width="120">
+    <i-tab-pane name="jiBen" :label="'基本信息'">
+      <i-form v-if="tabIndex==='jiBen'" ref="formMaintain" :model="formMaintain" label-position="right" :label-width="120">
         <i-row :gutter="16">
           <!--资方名称-->
           <i-col span="8">
@@ -109,21 +109,31 @@
           </i-col>
         </i-row>
         <div class="text-right">
-          <i-button type="primary" @click="formSubmit" :loading="buttonLoading">
+          <Tooltip v-if="!isAddSubMint" content="提交基本信息成功之后才可以编辑'合作协议'" placement="top">
+            <i-button type="primary" @click="formSubmit" :loading="buttonLoading">
+              <span v-if="!buttonLoading">提交基本信息</span>
+              <span v-else>loading...</span>
+            </i-button>
+          </Tooltip>
+          <i-button v-else type="primary" @click="formSubmit" :loading="buttonLoading">
             <span v-if="!buttonLoading">提交基本信息</span>
             <span v-else>loading...</span>
           </i-button>
+          <i-button @click="backModalFun">返回</i-button>
         </div>
       </i-form>
     </i-tab-pane>
-    <i-tab-pane :label="isAddSubMint ? '合作协议' : '合作协议(请先提交基本信息...)'" :disabled="!isAddSubMint">
-      <div v-if="tabIndex===1">
+    <i-tab-pane name="heZuo" :label="isAddSubMint ? '合作协议' : '合作协议(请先提交基本信息...)'" :disabled="!isAddSubMint">
+      <div v-if="tabIndex==='heZuo'">
         <div class="form-top-actions">
           <i-button @click="openShowModal" type="info"><i class="iconfont icon-xinzeng"></i> 新增</i-button>
         </div>
         <i-table border ref="proTable" :columns="columns1" :data="data1" :loading="dataloading"></i-table>
         <br>
         <br>
+      </div>
+      <div class="text-right">
+        <i-button @click="backModalFun">返回</i-button>
       </div>
     </i-tab-pane>
   </i-tabs>
@@ -152,7 +162,7 @@
     },
     data() {
       return {
-        tabIndex: 0,
+        tabIndex: 'jiBen',
         ShowInModal: false,
         dataloading: false,
         buttonLoading: false,
@@ -183,7 +193,7 @@
     },
     watch: {
       tabIndex(val, oldVal) {
-        if (val === 1) {
+        if (val === 'heZuo') {
           this.getTabsAjax();
         }
       }
@@ -239,7 +249,7 @@
         let resSet = await this.$http.post('/pms/capital/accBaseInfoSave', this.$data.formMaintain);
         this.$data.buttonLoading = false; // 关闭按钮的loading状态
         if (resSet.success) {
-          this.$Message.success('修改成功', 2000);
+          this.$Message.success('修改基本信息成功', 2000);
           this.$data.formMaintain.capitalNo = resSet.body.capitalNo;
         }
         await bsWait(200);
@@ -250,12 +260,13 @@
         let resAdd = await this.$http.post('/pms/capital/accBaseInfoSave', this.$data.formMaintain);
         this.$data.buttonLoading = false; // 关闭按钮的loading状态
         if (resAdd.success) {
-          this.$Message.success('新增成功', 2000);
+          this.$Message.success('新增基本信息成功', 2000);
           this.$data.formMaintain.capitalNo = resAdd.body.capitalNo;
           this.childMsg.capitalNo = resAdd.body.capitalNo;
         }
         await bsWait(200);
         this.$data.isAddSubMint = true;
+        this.$data.tabIndex = 'heZuo';
       },
       // 提交
       formSubmit() {
@@ -277,6 +288,10 @@
             this.$Message.error('"<span style="color: red">*</span>"必填项不能为空');
           }
         });
+      },
+      // 关闭新增/修改窗口
+      backModalFun() {
+        this.$emit('model-addSet');// 通知其父组件执行自定义事件“model-addSet”
       },
       // 关闭合同协议的模态框
       closeModel() {

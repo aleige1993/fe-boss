@@ -72,10 +72,17 @@
       // 查询列表数据
       async getPrivateCustomerList() {
         this.$data.dataLoading = true;
-        let resp = await this.$http.post('/roleListMockjs', {
+        let resp = await this.$http.post('/merchant/role/listRoleAndModule', {
+          roleName: this.$data.formSearch.roleName,
+          currentPage: this.$data.currentPage,
+          pageSize: this.$data.pageSize
         });
         this.$data.dataLoading = false;
+        console.log(resp);
         if (resp.success) {
+          this.$data.currentPage = resp.body.currentPage / 1;
+          this.$data.pageSize = resp.body.pageSize / 1;
+          this.$data.total = resp.body.totalNum / 1;
           this.$data.roleList = resp.body.resultList;
         }
       }

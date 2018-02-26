@@ -37,10 +37,9 @@
         </i-col>
       </i-row>
       <i-form-item
-        :rules="{required: true, message: '请选择权限', trigger: 'blur'}"
+        class="required"
         label="权限列表"
-        prop="authorityName">
-        <input type="hidden" v-model="formData.authorityName">
+        prop="moduleList">
         <Tree class="scrollBarStyle" :data="formData.moduleList" show-checkbox ref="authorityTree" @on-check-change="authorityCheck" style="max-height: 480px;overflow-y: auto; background: #fafafa; padding: 0 5px;"></Tree>
       </i-form-item>
       <div class="text-right">
@@ -76,9 +75,11 @@
         showSelectDistributor: false,
         authorityFormLoading: false,
         formData: {
+          roleId: '',
           roleName: '',
           moduleList: []
-        }
+        },
+        moduleListCheck: [] // 勾选的权限
       };
     },
     mounted() {
@@ -94,16 +95,51 @@
         let resp = await this.$http.post('/merchant/module/getTree', { roleId: id });
         if (resp.success) {
           this.$data.formData.moduleList = resp.body;
+          this.authorityCheck();
         } else {
           this.$data.formData.moduleList = [];
         }
       },
+      async addSubimtFun() {
+        let reps = await this.$http.post('/merchant/role/addRoleAndModule', {
+          roleName: this.$data.formData.roleName,
+          moduleList: this.$data.moduleListCheck
+        });
+        this.$data.showAddModal = false;
+        if (reps.success) {
+          this.$refs.tableRoleList.getPrivateCustomerList(); // 刷新列表
+        }
+      },
+      async setSubimtFun() {
+        let reps = await this.$http.post('/merchant/role/updateRoleAndModule', {
+          roleId: this.$data.formData.roleId,
+          roleName: this.$data.formData.roleName,
+          moduleList: this.$data.moduleListCheck
+        });
+        this.$data.showAddModal = false;
+        if (reps.success) {
+          this.$refs.tableRoleList.getPrivateCustomerList(); // 刷新列表
+        }
+      },
       saveAddSubimt() {
-        this.$refs['formData'].validate((valid) => {
+        this.$data.authorityFormLoading = true;
+        this.$refs['formData'].validate(async (valid) => {
+          await this.authorityCheck();
+          if (this.$data.moduleListCheck.length === 0) {
+            this.$Message.error('请勾选权限列表');
+            this.$data.authorityFormLoading = false;
+            return;
+          }
           if (valid) {
+            if (this.$data.isAdd) {
+              this.addSubimtFun();
+            } else {
+              this.setSubimtFun();
+            }
           } else {
             this.$Message.error('<span style="color: red">*</span>项不能为空');
           }
+          this.$data.authorityFormLoading = false;
         });
       },
       openAddRoleModal() {
@@ -139,10 +175,11 @@
         let checkRoleList = this.$refs.authorityTree.getCheckedNodes();
         let RoleList = await checkRoleList.map((item) => {
           return {
-            menuId: item.menuId,
+            moduleId: item.moduleId,
             parentId: item.parentId
           };
         });
+        this.$data.moduleListCheck = RoleList;
         return { moduleList: RoleList };
       }
     }

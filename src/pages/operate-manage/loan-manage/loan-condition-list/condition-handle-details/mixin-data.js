@@ -5,7 +5,6 @@ export default {
       carColumns: [
         {
           title: '担保类型',
-          width: 90,
           key: 'guaranteeType',
           render: (h, params) => {
             return h('span', {}, this.enumCode2Name(params.row.guaranteeType, 'PawnTypeEnum'));
@@ -22,22 +21,18 @@ export default {
         },
         {
           title: '车牌号',
-          width: 120,
           key: 'carPlateNo'
         },
         {
           title: '发动机号',
-          width: 180,
           key: 'carEngineNo'
         },
         {
           title: '车架号',
-          width: 180,
           key: 'carFrameNo'
         },
         {
           title: '抵押状态',
-          width: 120,
           key: 'mortgageStatus',
           render: (h, params) => {
             return h('span', {}, this.enumCode2Name(params.row.mortgageStatus, 'MortgageStatusEnum'));
@@ -45,7 +40,6 @@ export default {
         },
         {
           title: 'GPS安装状态',
-          width: 110,
           key: 'gpsInstallStatus',
           render: (h, params) => {
             // 只要其GPS安装状态有一条时未安装 则当前行显示未安装
