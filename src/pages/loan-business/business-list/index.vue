@@ -195,10 +195,10 @@
     },
     watch: {
       'taskNode'() {
-        this.getPrivateCustomerLoanList();
         this.$refs['loanSearchForm'].resetFields();
         this.$data.searchForm.taskNode = this.taskNode;
         this.$data.searchForm.status = this.status;
+        this.getPrivateCustomerLoanList();
       }
     },
     mounted() {

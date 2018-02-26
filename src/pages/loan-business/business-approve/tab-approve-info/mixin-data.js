@@ -215,7 +215,7 @@ export default {
             return h('i-input', {
               props: {
                 'value': params.row.feeActualAmt,
-                disabled: this.readonly
+                readonly: this.readonly
               },
               on: {
                 'on-blur': (event) => {
