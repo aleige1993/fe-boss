@@ -15,7 +15,7 @@
   <!--新增修改渠道商角色-->
   <bs-modal :title="isAdd ? '新增' : '修改'" v-model="showAddModal" :width="800">
     <i-form v-if="showAddModal" ref="formData" :model="formData" label-position="right" :label-width="100" style="padding: 30px 0;">
-      <i-row>
+      <!--<i-row>
         <i-col span="12">
           <i-form-item label="渠道商名称" prop="merchantName">
             <input type="hidden" v-model="formData.merchantName"/>
@@ -25,14 +25,14 @@
             <p style="color:#FF6600;margin-top: -8px;">不填写，代表为所有渠道商创建角色和分配权限</p>
           </i-form-item>
         </i-col>
-      </i-row>
+      </i-row>-->
       <i-row>
         <i-col span="12">
           <i-form-item
             :rules="{required: true, message: '角色名称不能为空', trigger: 'blur'}"
             label="角色名称"
-            prop="coleName">
-            <i-input v-model="formData.coleName" placeholder=""></i-input>
+            prop="roleName">
+            <i-input v-model="formData.roleName" placeholder=""></i-input>
           </i-form-item>
         </i-col>
       </i-row>
@@ -41,7 +41,7 @@
         label="权限列表"
         prop="authorityName">
         <input type="hidden" v-model="formData.authorityName">
-        <Tree class="scrollBarStyle" :data="data2" show-checkbox ref="authorityTree" @on-check-change="authorityCheck" style="max-height: 480px;overflow-y: auto; background: #fafafa; padding: 0 5px;"></Tree>
+        <Tree class="scrollBarStyle" :data="formData.moduleList" show-checkbox ref="authorityTree" @on-check-change="authorityCheck" style="max-height: 480px;overflow-y: auto; background: #fafafa; padding: 0 5px;"></Tree>
       </i-form-item>
       <div class="text-right">
         <i-button @click="saveAddSubimt" :loading="authorityFormLoading" type="success">
@@ -75,43 +75,29 @@
         showAddModal: false,
         showSelectDistributor: false,
         authorityFormLoading: false,
-        data2: [
-          {
-            title: 'parent 1',
-            expand: true,
-            children: [
-              {
-                title: 'parent 1-1',
-                expand: true,
-                children: [
-                  {
-                    title: 'leaf 1-1-1'
-                  },
-                  {
-                    title: 'leaf 1-1-2'
-                  }
-                ]
-              },
-              {
-                title: 'parent 1-2',
-                expand: true,
-                children: [
-                  {
-                    title: 'leaf 1-2-1'
-                  },
-                  {
-                    title: 'leaf 1-2-1'
-                  }
-                ]
-              }
-            ]
-          }
-        ],
         formData: {
+          roleName: '',
+          moduleList: []
         }
       };
     },
+    mounted() {
+    },
     methods: {
+      /**
+       * 获取渠道商权限列表
+       * @param id
+       * @returns {Promise.<void>}
+       */
+      async getTree(id) {
+        (typeof id === 'undefined') && (id = '');
+        let resp = await this.$http.post('/merchant/module/getTree', { roleId: id });
+        if (resp.success) {
+          this.$data.formData.moduleList = resp.body;
+        } else {
+          this.$data.formData.moduleList = [];
+        }
+      },
       saveAddSubimt() {
         this.$refs['formData'].validate((valid) => {
           if (valid) {
@@ -123,12 +109,14 @@
       openAddRoleModal() {
         this.$data.isAdd = true;
         this.$data.showAddModal = true;
+        this.getTree();
       },
       // 修改
       setRow(row) {
         this.$data.isAdd = false;
         this.$data.showAddModal = true;
         this.$data.formData = row;
+        this.getTree(row.roleId);
       },
       // 双击时的回调
       selectRow(row, index) {},
@@ -143,8 +131,19 @@
         this.$data.formData.merchantName = row.corpName;
         this.$data.showSelectDistributor = false;
       },
-      authorityCheck() {
-        console.log(this.$refs.authorityTree.getCheckedNodes()); // 获取被勾选的节点
+      /**
+       * 权限列表勾选的集合
+       * @returns {Promise.<{moduleList: *}>}
+       */
+      async authorityCheck() {
+        let checkRoleList = this.$refs.authorityTree.getCheckedNodes();
+        let RoleList = await checkRoleList.map((item) => {
+          return {
+            menuId: item.menuId,
+            parentId: item.parentId
+          };
+        });
+        return { moduleList: RoleList };
       }
     }
   };

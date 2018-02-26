@@ -16,7 +16,7 @@ export default {
         },
         {
           title: '角色编号',
-          key: 'coleNo'
+          key: 'roleId'
         },
         {
           title: '权限名称',

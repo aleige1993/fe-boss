@@ -754,8 +754,11 @@
           signNo: this.$data.contractInfoForm.signNo
         });
         if (resp.success) {
+          (resp.body.contractInfo === null) && (resp.body.contractInfo = {});
+          (resp.body.loanAccount === null) && (resp.body.loanAccount = {});
+          (resp.body.repayAccount === null) && (resp.body.repayAccount = {});
           this.$data.contractInfoForm = resp.body;
-          if (resp.body.contractInfo.loanContractFileList.length !== 0) {
+          if (resp.body.contractInfo.loanContractFileList && (resp.body.contractInfo.loanContractFileList.length !== 0)) {
             this.$data.contractInfoForm.contractInfo.loanContractFileList = resp.body.contractInfo.loanContractFileList;
           } else {
             this.$data.contractInfoForm.contractInfo.loanContractFileList = [];
