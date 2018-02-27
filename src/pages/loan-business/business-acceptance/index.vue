@@ -90,6 +90,10 @@
           let _dataTemp = vmApplyInfo.getApplyData();
           _dataTemp.loanVO.status = '2';
           _dataTemp.opeType = '2';
+          // 验证审核意见
+          if (!this.$refs.personalInfo.validateResultTest()) {
+            return;
+          }
           this.saveLoanBiz(_dataTemp);
         }
       },

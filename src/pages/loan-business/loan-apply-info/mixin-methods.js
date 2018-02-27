@@ -187,6 +187,28 @@ export default {
       return _valid;
     },
     /**
+     * 表单审核意见验证
+     */
+    validateResultTest() {
+      let _valid = true;
+      if (this.$data.formData.result === '') {
+        this.$Message.error('审核意见中请选择"结论"');
+        _valid = false;
+        return _valid;
+      } else if (this.$data.formData.result === 'R') {
+        if ((this.$data.formData.rejectCause === '') || (typeof this.$data.formData.rejectCause === 'undefined')) {
+          this.$Message.error('审核意见中请选择"拒绝原因"');
+          _valid = false;
+          return _valid;
+        }
+      }
+      if ((this.$data.formData.opinion === '') || (typeof this.$data.formData.opinion === 'undefined')) {
+        this.$Message.error('审核意见中请填写"意见信息"');
+        _valid = false;
+        return _valid;
+      }
+    },
+    /**
      * 获取申请数据
      * @returns {void|*|Function}
      */
