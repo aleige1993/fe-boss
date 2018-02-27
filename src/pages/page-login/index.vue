@@ -18,13 +18,13 @@
               <div class="login-row">
                 <label for="username">用户名</label>
                 <div class="login-input">
-                  <input id="username" placeholder="用户名" v-model="loginForm.loginName"></input>
+                  <input id="username" placeholder="用户名" v-model="loginForm.loginName"/>
                 </div>
               </div>
               <div class="login-row">
                 <label for="pwd">密码</label>
                 <div class="login-input">
-                  <input id="pwd" placeholder="密码" v-model="loginForm.loginPwd"></input>
+                  <input type="password" id="pwd" placeholder="密码" v-model="loginForm.loginPwd"/>
                 </div>
               </div>
               <!--<div class="login-row">
@@ -43,9 +43,9 @@
                   <span v-else>Loading...</span>
                 </i-button>
               </div>
-              <div class="login-row text-center" style="padding-top: 10px;">
+              <!--<div class="login-row text-center" style="padding-top: 10px;">
                 <a href="#">忘记密码？</a>
-              </div>
+              </div>-->
             </form>
           </div>
         </div>

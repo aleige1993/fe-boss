@@ -35,11 +35,6 @@
           <i-select :placeholder="formData.openBankProvince" :label-in-value="true" @on-change="provinceChange">
             <i-option v-for="item in provinceDropList" :value="item.regionCode" :key="item.regionCode">{{item.regionName}}</i-option>
           </i-select>
-
-        </i-form-item>
-        <i-form-item label="清算行行号" prop="openBankClearingNo"
-                     :rules="{required: true, message: '请输入清算行行号'}">
-          <i-input type="text" v-model="formData.openBankClearingNo" placeholder=""></i-input>
         </i-form-item>
         <i-form-item label="开户行所在市" prop="openBankCity"
                      :rules="{required: true, message: '请选择开户行所在市'}">
@@ -47,6 +42,10 @@
           <i-select :placeholder="formData.openBankCity" :label-in-value="true" @on-change="cityChange">
             <i-option v-for="item in cityDropList" :value="item.regionCode" :key="item.regionCode">{{item.regionName}}</i-option>
           </i-select>
+        </i-form-item>
+        <i-form-item label="清算行行号" prop="openBankClearingNo"
+                     :rules="{required: true, message: '请输入清算行行号'}">
+          <i-input type="text" v-model="formData.openBankClearingNo" placeholder=""></i-input>
         </i-form-item>
         <!--<i-form-item label="预留手机号" prop="bankMobile"
           :rules="{required: true, message: '预留手机号不能为空', trigger: 'blur'}">

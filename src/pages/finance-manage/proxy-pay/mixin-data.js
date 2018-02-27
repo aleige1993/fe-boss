@@ -130,7 +130,11 @@ export default {
                   // style: { marginRight: '5px' },
                   on: {
                     click: () => {
-                      this.submit(params.row.payForNo.split(','));
+                      Alertify.confirm('是否确认付款', ok => {
+                        if (ok) {
+                          this.submit(params.row.payForNo.split(','));
+                        }
+                      });
                     }
                   }
                 }, '付款')
