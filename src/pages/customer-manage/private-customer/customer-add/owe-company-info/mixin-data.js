@@ -39,7 +39,7 @@ export default {
           key: 'action',
           render: (h, params) => {
             return h('div', [
-              h('Button', {
+              /* h('Button', {
                 props: {
                   type: 'primary',
                   size: 'small',
@@ -50,11 +50,11 @@ export default {
                 },
                 on: {
                   click: () => {
-                    this.$data.formData = params.row;
+                    this.$data.formData = $.extend({}, params.row);
                     this.$data.addBankModal = true;
                   }
                 }
-              }, '编辑'),
+              }, '编辑'),*/
               h('Button', {
                 props: {
                   type: 'error',

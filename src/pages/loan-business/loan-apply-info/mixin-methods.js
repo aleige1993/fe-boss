@@ -201,7 +201,7 @@ export default {
       );
     },
     async initPage() {
-      await bsWait(800);
+      await bsWait(400);
       if (this.applyBasicInfo) {
         this.$data.formData = $.extend({}, this.applyBasicInfo);
         this.$data.memberNo = this.applyBasicInfo.memberNo;
@@ -233,6 +233,8 @@ export default {
         if (loanDocResp.success) {
           this.$data.loanData = loanDocResp.body.resultList || [];
         }
+      } else {
+        this.$refs['formData'].resetFields();
       }
     }
   }

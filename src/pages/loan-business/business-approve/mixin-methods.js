@@ -93,6 +93,7 @@ export default {
             });
             this.$data.tabIndex = 'tabApproveInfo';
             this.$data.submitApproveLoading = false;
+
             $('html, body')[0].scrollTop = $('body')[0].clientHeight; // 滚动条滚动到底部
             return;
           } else if (

@@ -121,7 +121,7 @@ export default {
                 },
                 on: {
                   click: () => {
-                    let status = params.row.status === '1' ? '2' : '1';
+                    // let status = params.row.status === '1' ? '2' : '1';
                     let text = params.row.status === '1' ? '冻结' : '激活';
                     Alertify.confirm(`确定要${text}当前用户吗？`, async(ok) => {
                       if (ok) {
@@ -139,7 +139,7 @@ export default {
                     });
                   }
                 }
-              }, this.status === '1' ? '冻结' : '激活') // status 1激活  2冻结  3草稿
+              }, params.row.status === '1' ? '冻结' : '激活') // status 1激活  2冻结  3草稿
             ]);
           }
         }

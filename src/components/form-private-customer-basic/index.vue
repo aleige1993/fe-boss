@@ -516,6 +516,7 @@ export default {
       this.initPageData();
     } else {
       // 如果不是编辑，清空表单
+      this.$refs['formAddCustomer'].resetFields();
     }
   }
 };
