@@ -41,6 +41,15 @@
           <i-input v-model="formAdmin.userName"></i-input>
         </i-form-item>
         <i-form-item
+          label="角色名称"
+          :rules="{required: true, message: '请选择角色', trigger: 'change'}"
+          prop="roleId">
+          <input type="hidden" v-model="formAdmin.roleName">
+          <i-select v-model="formAdmin.roleId" :label-in-value="true" @on-change="roleSelect">
+            <i-option v-for="item in roleList" :key="item.roleId" :value="item.roleId">{{item.roleName}}</i-option>
+          </i-select>
+        </i-form-item>
+        <i-form-item
           label="启停状态"
           :rules="{required: true, message: '请选择启停状态', trigger: 'change'}"
           prop="useStatus">
@@ -93,10 +102,13 @@
         currentPage: 1,
         total: 0,
         pageSize: 15,
+        roleList: [],
         formAdmin: {
           userMobile: '',
           idCardNo: '',
           useStatus: '',
+          roleName: '',
+          roleId: '',
           qrCodeUrl: '',
           userNo: '',
           userLevel: '',
@@ -106,9 +118,26 @@
       };
     },
     mounted() {
+      this.getRoleList();
       this.getList();
     },
     methods: {
+      roleSelect(val) {
+        this.$data.formAdmin.roleName = val.label;
+        this.$data.formAdmin.roleId = val.value;
+      },
+      async getRoleList() {
+        let reps = await this.$http.post('/merchant/role/getList');
+        if (reps.success && (reps.body.length !== 0)) {
+          reps.body.map((item) => {
+            item.roleId = item.roleId + '';
+            return item;
+          });
+          this.$data.roleList = reps.body;
+        } else {
+          this.$data.roleList = [];
+        }
+      },
       // 删除渠道商
       adminRomove(row) {
         Alertify.confirm('确定要删除吗？', async(ok) => {
@@ -148,6 +177,7 @@
       adminSet(row) {
         this.$data.isAdd = false;
         this.$data.showAddModal = true;
+        row.roleId = row.roleId + '';
         this.$data.formAdmin = row;
       },
       async getList(page) {

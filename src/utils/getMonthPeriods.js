@@ -12,7 +12,7 @@ export default {
     function monthDay(year, month) {
       month = parseInt(month, 10);
       let d = new Date(year, month, 0); // 这个是都可以兼容的
-      let date = new Date(year + '/' + month + '/0'); // IE浏览器可以获取天数，谷歌浏览器会返回NaN
+      // let date = new Date(year + '/' + month + '/0'); // IE浏览器可以获取天数，谷歌浏览器会返回NaN
       return d.getDate();
     };
     function getNextMonth(date, length) {
@@ -23,7 +23,7 @@ export default {
       let nm = 0; // 目标月份
       nm = mm + length;
       let nd = 0; // 目标天数
-      if (monthDay(yy, nm + 1) < dd) {
+      if (monthDay(yy, nm + 1) <= dd) {
         nd = monthDay(yy, nm + 1);
       } else {
         nd = dd - 1;

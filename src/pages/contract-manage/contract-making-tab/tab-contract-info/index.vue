@@ -661,7 +661,11 @@
     },
     computed: {
       endDate() {
-        if (this.$data.contractInfoForm.contractInfo.startDate !== '' && typeof this.$data.contractInfoForm.contractInfo.startDate !== 'undefined') {
+        if (
+          (this.$data.contractInfoForm.contractInfo.startDate !== '') &&
+          (typeof this.$data.contractInfoForm.contractInfo.startDate !== 'undefined') &&
+          (this.$data.contractInfoForm.contractInfo.startDate !== null)
+        ) {
           let startDate = this.$data.contractInfoForm.contractInfo.startDate;
           let loanPeriods = this.$data.approveCredit.loanPeriods;
           let getMonth = dateMonth.getMonthPeriods(new Date(startDate), loanPeriods);

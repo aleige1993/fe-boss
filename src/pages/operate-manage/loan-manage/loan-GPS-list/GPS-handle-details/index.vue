@@ -356,8 +356,8 @@
       <i-table v-if="GPSinstallShowModal" border ref="examineTable" :columns="loanCarGpsDTOColumns" :data="loanCarGpsList"></i-table>
     </bs-modal>
     <!--GPS安装信息新增和修改模态框-->
-    <bs-modal v-model="GPSShowModal" :title="isAddGPS?'新增':'修改'" :width="520"  @on-close="formAddGPS = {}">
-      <i-form ref="formAddGPS" :model="formAddGPS" label-position="right" :label-width="90">
+    <bs-modal v-model="GPSShowModal" :title="isAddGPS?'新增':'修改'" :width="520" @on-close="formAddGPS = {}">
+      <i-form v-if="GPSShowModal" ref="formAddGPS" :model="formAddGPS" label-position="right" :label-width="90">
         <i-form-item label="GPS型号"
                      prop="gpsModel"
                      :rules="{required: true, message: 'GPS型号不能为空', trigger: 'blur'}">
@@ -636,6 +636,7 @@
       addGPSModal() {
         this.$data.isAddGPS = true;
         this.$data.GPSShowModal = true;
+        this.$data.formAddGPS = {};
       },
       // GPS安装弹窗-新增修改弹窗-提交按钮
       addGPSSubmit() {
@@ -673,7 +674,6 @@
           } else {
             this.$Message.error('<span style="color: red">*</span>项不能为空');
           }
-          this.$data.formAddGPS = {};
         });
       },
 
