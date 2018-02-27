@@ -26,7 +26,7 @@ export default {
       if (monthDay(yy, nm + 1) <= dd) {
         nd = monthDay(yy, nm + 1);
       } else {
-        nd = dd - 1;
+        nd = dd;
       }
 
       date.setDate(1);
