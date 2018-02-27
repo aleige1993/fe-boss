@@ -116,7 +116,7 @@
       },
       value: {
         deep: true,
-        handle(newVal) {
+        handler(newVal, oldVal) {
           this.$data.fileList = newVal;
         }
       }

@@ -1,11 +1,11 @@
 <template>
   <div id="">
     <div class="search-form-container">
-      <i-form inline>
-        <i-form-item prop="user">
+      <i-form inline ref="companySearchForm" :model="searchForm">
+        <i-form-item prop="corpName">
           <i-input v-model="searchForm.corpName" type="text" placeholder="公司名称"></i-input>
         </i-form-item>
-        <i-form-item prop="password">
+        <i-form-item prop="creditCode">
           <i-input v-model="searchForm.creditCode" type="text" placeholder="统一社会信用代码"></i-input>
         </i-form-item>
         <i-form-item>
@@ -34,7 +34,6 @@ export default {
       searchForm: {
         corpName: '',
         creditCode: ''
-
       }
     };
   },
@@ -82,6 +81,7 @@ export default {
     }
   },
   mounted() {
+    this.$refs['companySearchForm'].resetFields();
     this.getCompanyCustomerList();
   }
 };

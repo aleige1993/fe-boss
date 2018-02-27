@@ -742,6 +742,9 @@
     <!--上传/查看车辆图片-->
     <bs-modal :title="readonly?'查看车辆图片':'上传/查看车辆图片'" v-model="seeCarPictureModal" :width="1200" @on-close="emptyCarRowPic">
       <car-picture-list v-if="seeCarPictureModal" :data="loanCarPicVOListModalData" @on-data-remove="carDataRomove"  @on-data-add="carDataAdd" :isDetails="readonly"></car-picture-list>
+      <div class="form-top-actions text-center">
+        <i-button type="primary" @click="seeCarPictureModal = false" style="width: 120px;">确定</i-button>
+      </div>
     </bs-modal>
     <i-spin fix v-if="initApplyInfoLoading"></i-spin>
   </div>
