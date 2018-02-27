@@ -131,11 +131,11 @@
                   <span v-if="formData.paymentRecordDTO.scRate!==''">%/年</span>
                 </i-form-item>
               </i-col>
-              <i-col span="8">
+              <!--<i-col span="8">
                 <i-form-item label="预计放款日期">
                   <span v-text="formData.paymentRecordDTO.expectLoanDate"></span>
                 </i-form-item>
-              </i-col>
+              </i-col>-->
             </i-row>
             <i-row>
               <i-col span="8">

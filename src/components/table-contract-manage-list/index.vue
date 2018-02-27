@@ -19,8 +19,8 @@
             <i-form-item prop="loanNo" style="margin-right:20px;">
               <i-input type="text" placeholder="项目编号" v-model="formSearch.loanNo"></i-input>
             </i-form-item>
-            <i-form-item prop="corpName" style="margin-right:20px;">
-              <i-input type="text" placeholder="客户名称" v-model="formSearch.corpName"></i-input>
+            <i-form-item prop="custName" style="margin-right:20px;">
+              <i-input type="text" placeholder="客户名称" v-model="formSearch.custName"></i-input>
             </i-form-item>
             <i-form-item prop="certType" style="margin-right:20px;">
               <i-select v-model="formSearch.certType" style="width:150px" placeholder="证件类型">
@@ -67,7 +67,7 @@
         clickRow: {},
         formSearch: {
           loanNo: '',
-          corpName: '',
+          custName: '',
           certType: '',
           certNo: '',
           startDate: '',

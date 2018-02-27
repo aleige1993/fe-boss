@@ -105,22 +105,23 @@ export default {
         },
         {
           title: '二维码',
-          width: 130,
+          width: 100,
           key: 'qrCodeUrl',
           render: (h, params) => {
             return h('div', [
               h('bs-big-img', {
                 props: {
-                  thumbWidth: 90,
-                  thumbHeight: 90,
+                  thumbWidth: 50,
+                  thumbHeight: 50,
                   // fullWidth: 500,
                   thumb: params.row.qrCodeUrl,
                   full: params.row.qrCodeUrl
                 },
                 style: {
-                  'paddingTop': '10px'
+                  'paddingTop': '10px',
+                  'paddingBottom': '10px'
                 }
-              }),
+              })/* ,
               h('br', {}),
               h('a', {
                 props: {
@@ -136,7 +137,7 @@ export default {
                     window.open(params.row.qrCodeUrl, '_blank');
                   }
                 }
-              }, '预览/下载二维码')
+              }, '预览/下载二维码')*/
             ]);
           }
         },
