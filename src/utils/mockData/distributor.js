@@ -221,7 +221,7 @@ export default [
   },
   // 渠道商角色管理列表
   {
-    url: '/merchant/role/pageQueryRoleAndModule',
+    url: '/merchant/role/listRoleAndModule',
     on: true,
     resp: Mock.mock({
       'body': {
@@ -232,12 +232,15 @@ export default [
           {
             'merchantName': 'mockjs',
             'merchantNo': '123123123',
-            'coleName': '123121231233123',
-            'coleNo': '123121231233123',
-            'authorityName': '11111123',
-            'authorityNo': '11111123',
-            'CreateDate': '@date',
-            'SetDate': '@date'
+            'roleName': '123121231233123',
+            'roleNo': '123121231233123',
+            'gmtCreate': '@date',
+            'gmtModified': '@date',
+            'moduleList|3': [
+              {
+                'moduleName|1': ['001', '002', '003']
+              }
+            ]
           }
         ],
         'startIndex': 0,

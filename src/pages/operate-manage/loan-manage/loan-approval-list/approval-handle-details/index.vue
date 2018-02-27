@@ -165,7 +165,7 @@
                 </i-col>
                 <i-col span="8">
                   <i-form-item label="账号">
-                    <span v-text="formData.repayAccountDTO.repayAcctName"></span>
+                    <span v-text="formData.repayAccountDTO.repayAcctNo"></span>
                   </i-form-item>
                 </i-col>
                 <i-col span="8">
@@ -486,7 +486,7 @@
         </i-form-item>
         <i-form-item label="办理文件">
           <Tooltip content="点击浏览/下载" placement="bottom">
-            <a :href="formalities.makeUrl" target="_blank">{{formagGuarantee.makeName}}</a>
+            <a :href="formagGuarantee.makeUrl" target="_blank">{{formagGuarantee.makeName}}</a>
           </Tooltip>
         </i-form-item>
       </i-form>

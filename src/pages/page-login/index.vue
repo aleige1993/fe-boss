@@ -27,13 +27,13 @@
                   <input id="pwd" placeholder="密码" v-model="loginForm.loginPwd"></input>
                 </div>
               </div>
-              <div class="login-row">
+              <!--<div class="login-row">
                 <label>验证码</label>
                 <div class="login-input">
                   <input placeholder="验证码" style="width: 232px;"></input>
                   <img class="verify-code" src="./img/code.png" alt="">
                 </div>
-              </div>
+              </div>-->
               <div class="login-row" style="padding-top: 10px;">
                 <span class="text-danger" v-if="errorInfo"><Icon type="close-circled"></Icon> {{errorInfo}}</span>
               </div>

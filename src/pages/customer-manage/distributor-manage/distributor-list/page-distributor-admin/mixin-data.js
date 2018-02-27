@@ -19,6 +19,10 @@ export default {
           key: 'userName'
         },
         {
+          title: '角色名称',
+          key: 'roleName'
+        },
+        {
           title: '操作员等级',
           key: 'userLevel',
           render: (h, params) => {
