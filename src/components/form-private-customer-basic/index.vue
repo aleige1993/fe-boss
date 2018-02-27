@@ -285,7 +285,8 @@
             </i-row>
             <i-row>
               <i-col span="8">
-                <i-form-item label="职务">
+                <i-form-item label="职务" prop="mbMemberWorkDTO.duty"
+                             :rules="{required: true, message: '请选择职务', trigger: 'change'}">
                   <i-select :disabled="isFromDetail" v-model="formData.mbMemberWorkDTO.duty">
                     <i-option v-for="item in enumSelectData.get('DutyEnum')" :key="item.itemCode" :value="item.itemCode">{{item.itemName}}</i-option>
                   </i-select>
