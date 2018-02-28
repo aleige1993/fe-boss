@@ -5,9 +5,9 @@
     </div>
     <div class="right-actions">
       <ul v-if="isLogin">
-        <li>
+        <!--<li>
           <a href="javascript:;" @click="fullScreen"><Icon type="arrow-expand"></Icon></a>
-        </li>
+        </li>-->
         <li><a href="javascript:;"><img class="top-avatar" src="./img/potrat.png" alt=""/>{{loginInfo.loginName}}</a></li>
         <!-- <li><a href="#"><i class="iconfont icon-xiugaimima"></i> <span>修改密码</span></a></li> -->
         <li><a href="javascript:;" @click.prevent="logout"><i class="iconfont icon-xiugaimima"></i> <span>退出登录</span></a></li>

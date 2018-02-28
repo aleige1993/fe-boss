@@ -202,7 +202,7 @@
                              :rules="{required: true, message: '请选择放款账户账号'}">
                   <input type="hidden" v-model="approveData.loanPaymentAccountDTOS.bankName">
                   <i-select :disabled="readonly" @on-change="paymentAccountChange" :label-in-value="true">
-                    <i-option v-for="item in paymentAccountList" :key="item.bankName" :value="item.bankName">{{item.acctNo}}</i-option>
+                    <i-option v-for="item in paymentAccountList" :key="item.acctNo" :value="item.acctNo">{{item.acctNo}}</i-option>
                   </i-select>
                 </i-form-item>
               </i-col>
@@ -230,7 +230,7 @@
                              :rules="{required: true, message: '请选择还款账户账号'}">
                   <input type="hidden" v-model="approveData.loanRePaymentAccountDTOS.bankName">
                   <i-select :disabled="readonly" @on-change="repaymentAccountChange" :label-in-value="true" >
-                    <i-option v-for="item in repaymentAccountList" :key="item.bankName" :value="item.bankName">{{item.acctNo}}</i-option>
+                    <i-option v-for="item in repaymentAccountList" :key="item.acctNo" :value="item.acctNo">{{item.acctNo}}</i-option>
                   </i-select>
                 </i-form-item>
               </i-col>

@@ -19,10 +19,10 @@ export default {
           title: '授信总额度(元)',
           key: 'totalLimitAmt'
         },
-        {
+        /* {
           title: '当前可用额度(元)',
           key: 'currentLimitAmt'
-        },
+        },*/
         {
           title: '授信起始日期',
           key: 'startDate'
@@ -79,7 +79,7 @@ export default {
                       if (ok) {
                         const msg = this.$Message.loading('正在撤销授信申请', 0);
                         let resp = await this.$http.post('/credit/cancel', {
-                          creditLimitNo: params.row.creditLimitNo
+                          creditLimitApplyNo: params.row.creditLimitApplyNo
                         });
                         msg();
                         if (resp.success) {

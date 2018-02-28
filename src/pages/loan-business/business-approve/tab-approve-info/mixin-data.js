@@ -218,8 +218,8 @@ export default {
                 readonly: this.readonly
               },
               on: {
-                'on-blur': (event) => {
-                  let rowData = $.extend({}, params.row);
+                'on-keyup': (event) => {
+                  let rowData = Object.assign({}, this.$data.approveData.loanApproveFeePlanDTOS[params.index]);
                   rowData.feeActualAmt = event.target.value;
                   this.$data.approveData.loanApproveFeePlanDTOS[params.index] = rowData;
                 }
@@ -237,8 +237,8 @@ export default {
                 readonly: this.readonly
               },
               on: {
-                'on-blur': (event) => {
-                  let rowData = Object.assign({}, params.row);
+                'on-keyup': (event) => {
+                  let rowData = Object.assign({}, this.$data.approveData.loanApproveFeePlanDTOS[params.index]);
                   rowData.remark = event.target.value;
                   this.$data.approveData.loanApproveFeePlanDTOS[params.index] = rowData;
                 }

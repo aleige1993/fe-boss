@@ -162,17 +162,21 @@
         this.$refs['creditRateForm'].validate(valid => {
           if (valid) {
             this.$data.addCreditPlanRateModal = false;
-            this.$data.creditPlan.creditPlanRateList.push(this.$data.creditRateForm);
-            this.$refs['creditRateForm'].resetFields();
+            this.$data.creditPlan.creditPlanRateList.push($.extend({}, this.$data.creditRateForm));
+            setTimeout(() => {
+              this.$refs['creditRateForm'].resetFields();
+            }, 500);
           }
         });
       },
       submitCreditReady() {
         this.$refs['creditReadyForm'].validate(valid => {
           if (valid) {
+            this.$data.creditPlan.creditLoanReadyList.push($.extend({}, this.$data.readyForm));
             this.$data.addCreditLoanReadyModal = false;
-            this.$data.creditPlan.creditLoanReadyList.push(this.$data.readyForm);
-            this.$refs['creditReadyForm'].resetFields();
+            setTimeout(() => {
+              this.$refs['creditReadyForm'].resetFields();
+            }, 500);
           }
         });
       },
