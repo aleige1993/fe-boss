@@ -313,7 +313,7 @@ let ary = [
           {
             'id': '0',
             'title': 'banner1',
-            'bannerUrl': 'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1515227477986&di=a464eeec9012dd3320b9f4fc1ca83c97&imgtype=0&src=http%3A%2F%2Fimg.zcool.cn%2Fcommunity%2F015589585b6435a8012060c8e37040.png%40900w_1l_2o_100sh.jpg',
+            'bannerUrl': '',
             'linkUrl': 'https://image.baidu.com/search/',
             'index': '0',
             'activeStatus': '0',
@@ -325,7 +325,7 @@ let ary = [
           {
             'id': '0',
             'title': 'banner1',
-            'bannerUrl': 'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1515227477986&di=a464eeec9012dd3320b9f4fc1ca83c97&imgtype=0&src=http%3A%2F%2Fimg.zcool.cn%2Fcommunity%2F015589585b6435a8012060c8e37040.png%40900w_1l_2o_100sh.jpg',
+            'bannerUrl': '',
             'linkUrl': 'https://image.baidu.com/search/',
             'index': '0',
             'activeStatus': '1',

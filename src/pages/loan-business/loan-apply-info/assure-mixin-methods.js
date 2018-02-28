@@ -5,7 +5,7 @@ export default {
       this.$data.assureDataLoading = true;
       let resp = await this.$http.post('/loanAssureList', {});
       this.$data.assureDataLoading = false;
-      if (resp.success && resp.body.resultList.length !== 0) {
+      if (resp.success) {
         this.$data.assureData = resp.body.resultList;
       } else {
         this.$data.assureData = [];

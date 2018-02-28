@@ -12,7 +12,7 @@ export default {
           key: 'merchantNo'
         },
         {
-          title: '渠道商属性',
+          title: '经销商类型',
           width: 80,
           key: 'merchantType',
           render: (h, params) => {

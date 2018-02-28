@@ -90,10 +90,10 @@
           pageSize: this.$data.pageSize
         });
         this.$data.dataLoading = false;
-        if (resp.success && resp.body.resultList && resp.body.resultList.length !== 0) {
+        if (resp.success && resp.body.resultList) {
           this.$data.GPSListData = resp.body.resultList;
           this.$data.currentPage = resp.body.currentPage / 1;
-          this.$data.total = parseFloat(resp.body.totalNum);
+          this.$data.total = resp.body.totalNum / 1;
         } else {
           this.$data.GPSListData = [];
         }

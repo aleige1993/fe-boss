@@ -96,7 +96,7 @@
           capitalNo: this.getRowData.capitalNo
         });
         this.$data.dataLoading = false;
-        if (resp.body.resultList.length !== 0) {
+        if (resp.success) {
           this.$data.data1 = resp.body.resultList;
           this.$data.total = resp.body.totalNum / 1;
           this.$data.currentPage = resp.body.currentPage / 1;

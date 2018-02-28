@@ -236,13 +236,9 @@
         });
         this.$data.examineTableLoading = false;
         if (reps.success) {
-          if (reps.body.resultList.length !== 0) {
-            this.$data.examineData = reps.body.resultList;
-            this.$data.currentPageExamine = reps.body.currentPage / 1;
-            this.$data.totalExamine = reps.body.totalNum / 1;
-          } else {
-            this.$data.examineData = [];
-          }
+          this.$data.examineData = reps.body.resultList;
+          this.$data.currentPageExamine = reps.body.currentPage / 1;
+          this.$data.totalExamine = reps.body.totalNum / 1;
         } else {
           this.$data.examineData = [];
         }

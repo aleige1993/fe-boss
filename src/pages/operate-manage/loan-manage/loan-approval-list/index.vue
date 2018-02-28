@@ -91,7 +91,7 @@
           pageSize: this.$data.pageSize
         });
         this.$data.dataLoading = false;
-        if (resp.success && resp.body.resultList && resp.body.resultList.length !== 0) {
+        if (resp.success && resp.body.resultList) {
           this.$data.conditionListData = resp.body.resultList;
           this.$data.currentPage = resp.body.currentPage / 1;
           this.$data.total = resp.body.totalNum / 1;
@@ -104,7 +104,7 @@
           this.$Message.error('“开始日期”不能大于“结束日期”');
           return;
         }
-        this.getList();
+        this.getList(1);
       },
       jumpPage(page) {
         if (!this.$DateTest.testDateFun(this.$data.searchForm.startDate, this.$data.searchForm.endDate)) {

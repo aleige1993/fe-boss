@@ -99,7 +99,7 @@
         this.getProxyPayList(page);
       },
       search() {
-        this.getProxyPayList();
+        this.getProxyPayList(1);
       },
       add() {
         this.$data.isAdd = true;

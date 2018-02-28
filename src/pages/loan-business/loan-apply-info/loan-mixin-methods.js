@@ -4,10 +4,9 @@ export default {
     async getLoanList() {
       this.$data.loanDataLoading = true;
       let resp = await this.$http.post('/loan-loanList', {});
-      if (resp.success && resp.body.resultList.length !== 0) {
+      if (resp.success) {
         this.$data.loanData = resp.body.resultList;
       } else {
-        this.$Message.warning('车辆信息无数据');
         this.$data.loanData = [];
       }
       this.$data.loanDataLoading = false;

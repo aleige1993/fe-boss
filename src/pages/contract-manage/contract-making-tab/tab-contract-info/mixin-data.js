@@ -56,10 +56,14 @@ export default {
                     this.$data.setCarDataShowModal = true;
                     this.$data.clickRowIndex = params.index;
                     this.$data.setCarDataForm = $.extend({}, params.row);
-                    this.$data.setCarDataForm.billAmt && (this.$data.setCarDataForm.billAmt = this.$data.setCarDataForm.billAmt + '');
-                    this.$data.setCarDataForm.carBuyPrice && (this.$data.setCarDataForm.carBuyPrice = this.$data.setCarDataForm.carBuyPrice + '');
-                    this.$data.setCarDataForm.carGuidePrice && (this.$data.setCarDataForm.carGuidePrice = this.$data.setCarDataForm.carGuidePrice + '');
-                    this.$data.setCarDataForm.carEvaluatePrice && (this.$data.setCarDataForm.carEvaluatePrice = this.$data.setCarDataForm.carEvaluatePrice + '');
+                    this.$data.setCarDataForm.billAmt &&
+                    (this.$data.setCarDataForm.billAmt = this.$data.setCarDataForm.billAmt + '');
+                    this.$data.setCarDataForm.carBuyPrice &&
+                    (this.$data.setCarDataForm.carBuyPrice = this.$data.setCarDataForm.carBuyPrice + '');
+                    this.$data.setCarDataForm.carGuidePrice &&
+                    (this.$data.setCarDataForm.carGuidePrice = this.$data.setCarDataForm.carGuidePrice + '');
+                    this.$data.setCarDataForm.carEvaluatePrice &&
+                    (this.$data.setCarDataForm.carEvaluatePrice = this.$data.setCarDataForm.carEvaluatePrice + '');
                   }
                 }
               }, '完善车辆信息')

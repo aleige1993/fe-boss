@@ -35,7 +35,6 @@ export default {
           title: '抵押状态',
           key: 'mortgageStatus',
           render: (h, params) => {
-            console.log('抵押状态：' + params.row.mortgageStatus);
             return h('span', {}, this.enumCode2Name(params.row.mortgageStatus, 'MortgageStatusEnum'));
           }
         },

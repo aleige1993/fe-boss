@@ -87,7 +87,7 @@
         this.getPrivateCustomerList(page);
       },
       search() {
-        this.getPrivateCustomerList();
+        this.getPrivateCustomerList(1);
       },
       selectRow(row, index) {
         this.$emit('on-row-dbclick', row, index);

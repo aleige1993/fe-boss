@@ -31,9 +31,9 @@
           </i-col>
           <i-col span="12" v-if="formAdd.channelType==='1'">
             <i-form-item
-              label="渠道商车商类型"
+              label="经销商类型"
               prop="merchantType"
-              :rules="{required: true, message: '请选择渠道商车商类型', trigger: 'change'}">
+              :rules="{required: true, message: '请选择经销商类型', trigger: 'change'}">
               <i-select v-model="formAdd.merchantType" :disabled="formAdd.channelType==='2'||formAdd.channelType==='3'">
                 <i-option v-for="item in enumSelectData.get('MerchantTypeEnum')" :key="item.itemCode" :value="item.itemCode">{{item.itemName}}</i-option>
               </i-select>
@@ -339,6 +339,16 @@
         if (oldVal !== '') {
           this.$data.formAdd.corpName = '';
           this.$data.formAdd.corpNo = '';
+        }
+      },
+      'formAdd.channelType'(newVal, oldVal) {
+        if (newVal === '2') {
+          this.$data.formAdd.merchantType = '';
+          this.$data.formAdd.corpName = '';
+          this.$data.formAdd.corpNo = '';
+        }
+        if (newVal === '3') {
+          this.$data.formAdd.merchantType = '';
         }
       }
     },

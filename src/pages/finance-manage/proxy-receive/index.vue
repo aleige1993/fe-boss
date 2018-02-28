@@ -93,7 +93,7 @@
         this.getProxyPayList(page);
       },
       search() {
-        this.getProxyPayList();
+        this.getProxyPayList(1);
       },
       async getProxyPayList(page) {
         this.$data.dataLoading = true;

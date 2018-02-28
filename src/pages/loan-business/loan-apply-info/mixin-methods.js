@@ -62,7 +62,11 @@ export default {
       if (CertData.mbMemberDTO) {
         this.$data.memberNo = CertData.mbMemberDTO.memberNo;
         // 联系地址
-        this.$data.formData.address = CertData.mbMemberDTO.nowProvinceName + CertData.mbMemberDTO.nowDistrictName + CertData.mbMemberDTO.nowCityName + CertData.mbMemberDTO.nowRoadAddr;
+        this.$data.formData.address =
+          CertData.mbMemberDTO.nowProvinceName +
+          CertData.mbMemberDTO.nowDistrictName +
+          CertData.mbMemberDTO.nowCityName +
+          CertData.mbMemberDTO.nowRoadAddr;
         this.$data.formData.memberNo = CertData.mbMemberDTO['memberNo'];
         this.$data.formData.memberName = CertData.mbMemberDTO.name;
         this.$data.formData.mobileNo = CertData.mbMemberDTO.mobile;

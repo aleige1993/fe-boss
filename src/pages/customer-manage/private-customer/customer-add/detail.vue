@@ -79,7 +79,7 @@
     },
     watch: {
       '$route'(to, from) {
-        console.log(this.$forceUpdate);
+        // console.log(this.$forceUpdate);
       }
     },
     components: {

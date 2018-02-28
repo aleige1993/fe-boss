@@ -72,8 +72,8 @@
           ...this.$data.formAgreement
         };
         let res = await this.$http.post('/pms/capital/cooperationSave', dataObject);
+        this.$data.buttonLoading = false;
         if (res.success) {
-          this.$data.buttonLoading = false; // 关闭按钮的loading状态
           this.$Message.success('新增成功', 2000);
         }
         await bsWait(200);

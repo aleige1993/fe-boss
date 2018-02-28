@@ -31,7 +31,13 @@ export default {
       }
     },
     gotoCompany() {
-      Tools.openWin(`#/index/customer/companycustomer/modify?noaction=true&id=${this.$data.formData.baseDTO.corpNo}&name=${this.$data.formData.baseDTO.corpName}&from=detail`);
+      Tools.openWin(
+        `#/index/customer/companycustomer/modify?
+        noaction=true&
+        id=${this.$data.formData.baseDTO.corpNo}&
+        name=${this.$data.formData.baseDTO.corpName}&
+        from=detail`
+      );
     }
   }
 };

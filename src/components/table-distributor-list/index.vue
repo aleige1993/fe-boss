@@ -102,7 +102,7 @@
         // 告诉父组件取消了点选行状态
         this.$emit('on-cancel-clickRow'); //  this.$data.isClickRow = false;
         this.$data.dataLoading = false;
-        if (resp.success && resp.body.resultList.length !== 0) {
+        if (resp.success) {
           this.$data.distributorList = resp.body.resultList;
           this.$data.currentPage = resp.body.currentPage;
           this.$data.total = resp.body.totalNum / 1;

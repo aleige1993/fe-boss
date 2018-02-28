@@ -60,7 +60,7 @@
         this.getEmployerList(page);
       },
       search() {
-        this.getEmployerList();
+        this.getEmployerList(1);
       },
       selectRow(row, index) {
         this.$emit('on-row-dbclick', row, index);

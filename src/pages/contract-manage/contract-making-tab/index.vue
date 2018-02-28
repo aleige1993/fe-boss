@@ -125,7 +125,7 @@
     methods: {
       // 子级通知父级，合同时间已变更。更新“还款计划表”和租金计划表
       createRepayPlanFun(startDate) {
-        if (this.createRepayPlanCapitalFun(startDate) && this.createRepayPlanRentalFun(startDate)) {
+        if ((startDate !== '') && this.createRepayPlanCapitalFun(startDate) && this.createRepayPlanRentalFun(startDate)) {
           this.$data.isClickTab = true;
         } else {
           this.$data.isClickTab = false;
@@ -274,7 +274,7 @@
           pageSize: this.$data.pageSizeExamine
         });
         this.$data.examineTableLoading = false;
-        if (reps.success && reps.body.resultList.length !== 0) {
+        if (reps.success) {
           this.$data.examineData = reps.body.resultList;
           this.$data.currentPageExamine = reps.body.currentPage / 1;
           this.$data.totalExamine = reps.body.totalNum / 1;
