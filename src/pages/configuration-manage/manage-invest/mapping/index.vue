@@ -184,7 +184,7 @@
           capitalName: this.$data.formSearch.capitalName
         });
         this.$data.dataLoading = false;
-        if (resp.success && resp.body.resultList.length !== 0) {
+        if (resp.success) {
           this.$data.data1 = resp.body.resultList;
           this.$data.currentPage = resp.body.currentPage / 1;
           this.$data.total = resp.body.totalNum / 1;
@@ -236,7 +236,7 @@
         Alertify.confirm('确定要删除吗？', async (ok) => {
           if (ok) {
             const loadingMsg = this.$Message.loading('删除中...', 0);
-            let respDel = await this.$http.get('/pms/capital/deleteCapitalMapcfg', {
+            let respDel = await this.$http.post('/pms/capital/deleteCapitalMapcfg', {
               productNo: row.productNo,
               capitalNo: row.capitalNo
             });
@@ -252,6 +252,8 @@
                 goCurrentPage = this.$data.currentPage - 1;
               }
               this.getPrivateCustomerList(goCurrentPage);
+            } else {
+              this.$Message.error('删除失败！');
             }
           }
         });

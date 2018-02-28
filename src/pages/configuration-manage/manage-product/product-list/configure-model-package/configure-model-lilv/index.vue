@@ -635,7 +635,7 @@
           packageRateNo: this.zfClickRow.packageRateNo
         });
         this.$data.ZFLVdataLoading = false;
-        if (resp.success && resp.body.length !== 0) {
+        if (resp.success) {
           this.$data.dataZFLV = resp.body;
         } else {
           this.$data.dataZFLV = [];
@@ -756,9 +756,9 @@
           productNo: this.childMsg.productNo,
           packageNo: this.$data.ProductPackageForm.packageNo // 套餐编号
         });
-//        console.log(JSON.stringify(resp));
+        // console.log(JSON.stringify(resp));
         this.$data.dataLoading = false;
-        if (resp.success && resp.body.resultList.length !== 0) {
+        if (resp.success) {
           let formData = resp.body.resultList;
           this.$data.data1 = formData;
         } else {

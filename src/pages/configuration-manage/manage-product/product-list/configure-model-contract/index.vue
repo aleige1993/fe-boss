@@ -119,7 +119,7 @@
           productNo: this.childMsg.productNo
         });
         this.$data.dataLoading = false;
-        if (resp.success && resp.body.resultList.length !== 0) {
+        if (resp.success) {
           this.$data.data1 = resp.body.resultList;
           this.$data.total = resp.body.totalNum / 1;
           this.$data.currentPage = resp.body.currentPage / 1;

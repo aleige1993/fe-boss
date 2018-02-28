@@ -242,11 +242,7 @@
         });
         this.$data.carDataLoading = false;
         if (reps.success) {
-          if (reps.body.resultList.length !== 0) {
-            this.$data.carData = reps.body.resultList;
-          } else {
-            this.$data.carData = [];
-          }
+          this.$data.carData = reps.body.resultList;
         } else {
           this.$data.carData = [];
         }

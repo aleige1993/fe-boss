@@ -63,7 +63,7 @@ export default {
         currentPage: 1,
         pageSize: 99999
       });
-      if (SelectResp.success && SelectResp.body.resultList.length !== 0) {
+      if (SelectResp.success) {
         this.$data.costTypeSelect = SelectResp.body.resultList;
       } else {
         this.$data.costTypeSelect = [];

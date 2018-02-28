@@ -791,7 +791,7 @@
           loanNo: this.$data.contractInfoForm.loanNo
         });
         this.$data.feeTakeLoading = false;
-        if (resp.success && resp.body.length !== 0) {
+        if (resp.success) {
           this.$data.feeTakeData = resp.body;
         } else {
           this.$data.feeTakeData = [];
@@ -806,7 +806,7 @@
           loanNo: this.$data.contractInfoForm.loanNo
         });
         this.$data.carListLoading = false;
-        if (resp.success && resp.body.resultList.length !== 0) {
+        if (resp.success) {
           this.$data.carData = resp.body.resultList;
         } else {
           this.$data.carData = [];
@@ -820,11 +820,9 @@
         });
         this.$data.guaPersonListLoading = false;
         if (resp.success) {
-          if (resp.body.resultList.length !== 0) {
-            this.$data.guaPersonData = resp.body.resultList;
-          } else {
-            this.$data.guaPersonData = [];
-          }
+          this.$data.guaPersonData = resp.body.resultList;
+        } else {
+          this.$data.guaPersonData = [];
         }
       },
       // 生成合同ajax

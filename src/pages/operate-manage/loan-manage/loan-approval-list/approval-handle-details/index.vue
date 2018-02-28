@@ -656,7 +656,7 @@
           loanNo: this.$route.query.loanNo
         });
         this.$data.carDataLoading = false;
-        if (reps.success && reps.body.resultList.length !== 0) {
+        if (reps.success) {
           this.$data.carData = reps.body.resultList;
         } else {
           this.$data.carData = [];
@@ -669,7 +669,7 @@
           loanNo: this.$route.query.loanNo
         });
         this.$data.assureDataLoading = false;
-        if (reps.success && reps.body.resultList.length !== 0) {
+        if (reps.success) {
           this.$data.assureData = reps.body.resultList;
         } else {
           this.$data.assureData = [];
@@ -687,11 +687,7 @@
         });
         this.$data.conditionLoading = false;
         if (reps.success) {
-          if (reps.body.length !== 0) {
-            this.$data.conditionData = reps.body;
-          } else {
-            this.$data.conditionData = [];
-          }
+          this.$data.conditionData = reps.body;
         } else {
           this.$data.conditionData = [];
         }

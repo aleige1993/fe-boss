@@ -4,7 +4,6 @@
 </template>
 
 <script>
-  import BSModal from '@/components/bs-modal';
   export default {
     name: 'manage-invest',
     data: () => ({})

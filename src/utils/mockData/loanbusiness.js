@@ -223,7 +223,7 @@ export default [
           'loanContractFileList|3': [
             {
               'contractNo': /0000[0-9]{14}/,
-              'makeContractUrl': 'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1516188931280&di=67d346951ad65df6ac24344c29848c74&imgtype=0&src=http%3A%2F%2Fwww.chinadaily.com.cn%2Ftypd%2Fattachement%2Fjpg%2Fsite1%2F20100520%2F0013729ec8d80d5f025f1b.jpg',
+              'makeContractUrl': '',
               'contractName': 'mockjs数据',
               'makeSystem|1': ['本系统']
             }
@@ -351,7 +351,7 @@ export default [
               }
             ],
             'makeName': '办理文件名.jpg',
-            'makeUrl': 'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1514905175804&di=3aaae824c3b82cd0fa906d7cb46316d1&imgtype=0&src=http%3A%2F%2Fimg.mp.itc.cn%2Fupload%2F20170714%2Fc6d3a406ce44421cbdd2e5796a486f3a_th.jpg',
+            'makeUrl': '@image(\'200x100\', \'#4A7BF7\', \'Hello\')',
             'makeDate': '@date',
             'makeUser': 'mockjs',
             'warrantNo': '0000001',
@@ -505,7 +505,7 @@ export default [
         'resultList|3': [
           {
             'makeName': '办理抵押图片.jpg',
-            'makeUrl': 'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1514905175804&di=3aaae824c3b82cd0fa906d7cb46316d1&imgtype=0&src=http%3A%2F%2Fimg.mp.itc.cn%2Fupload%2F20170714%2Fc6d3a406ce44421cbdd2e5796a486f3a_th.jpg',
+            'makeUrl': '@image(\'200x100\', \'#4A7BF7\', \'Hello\')',
             'makeUser': 'mockjs',
             'remark': /备注: [0-9a-zA-z]{10}/,
             'makeDate': '@date',
@@ -706,11 +706,11 @@ export default [
             'loanNo': '1111',
             'endDate': '@date',
             'contractNo|+1': 100,
-            'makeContractUrl': 'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1516188931280&di=67d346951ad65df6ac24344c29848c74&imgtype=0&src=http%3A%2F%2Fwww.chinadaily.com.cn%2Ftypd%2Fattachement%2Fjpg%2Fsite1%2F20100520%2F0013729ec8d80d5f025f1b.jpg',
+            'makeContractUrl': '@image(\'200x100\', \'#4A7BF7\', \'Hello\')',
             'signStatus|1': ['0', '1'],
             'pkNo|+1': 100,
             'signMode|1': ['1', '2'],
-            'signContractUrl': 'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1515508790506&di=1f690cac26e72801436b7659c07a51d5&imgtype=0&src=http%3A%2F%2Fa.hiphotos.baidu.com%2Fzhidao%2Fpic%2Fitem%2F562c11dfa9ec8a13abf43d9df403918fa1ecc0e5.jpg',
+            'signContractUrl': '@image(\'200x100\', \'#4A7BF7\', \'Hello\')',
             'contractName': 'mockjs',
             'makeSystem|1': ['1', '2'],
             'onlineSignStatus|1': ['1', '2', '3'],

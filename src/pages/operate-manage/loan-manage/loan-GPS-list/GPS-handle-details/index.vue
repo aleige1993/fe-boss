@@ -626,7 +626,7 @@
           loanNo: this.$route.query.loanNo
         });
         this.$data.carDataLoading = false;
-        if (reps.success && reps.body.resultList.length !== 0) {
+        if (reps.success) {
           this.$data.carData = reps.body.resultList;
         } else {
           this.$data.carData = [];

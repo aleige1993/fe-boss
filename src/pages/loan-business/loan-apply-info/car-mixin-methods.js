@@ -12,7 +12,7 @@ export default {
     async getCarList() {
       this.$data.carDataLoading = true;
       let resp = await this.$http.post('/loanCarList', {});
-      if (resp.success && resp.body.resultList.length !== 0) {
+      if (resp.success) {
         this.$data.carData = resp.body.resultList;
       } else {
         this.$data.carData = [];

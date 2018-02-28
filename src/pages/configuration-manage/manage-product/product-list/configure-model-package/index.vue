@@ -48,7 +48,7 @@
           productNo
         });
         this.$data.dataLoading = false;
-        if (resp.success && resp.body.length !== 0) {
+        if (resp.success) {
           this.$data.data1 = resp.body;
         } else {
           this.$data.data1 = [];

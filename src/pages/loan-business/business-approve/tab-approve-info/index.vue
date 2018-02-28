@@ -451,7 +451,9 @@
       'applyBasicInfo'(newVal, oldVal) {
         if (newVal && newVal.loanNo) {
           this.getPageInitData();
-          this.$data.approveData.loanApproveCreditDTO.loanProductRate = (this.$data.approveData.loanApproveCreditDTO.loanRealRate / 1) + this.$data.loanRateSumProuductRate;
+          this.$data.approveData.loanApproveCreditDTO.loanProductRate =
+            (this.$data.approveData.loanApproveCreditDTO.loanRealRate / 1) +
+            this.$data.loanRateSumProuductRate;
         }
       },
       'approveData.loanApproveCreditDTO.loanRealRate'(newVal, oldVal) {

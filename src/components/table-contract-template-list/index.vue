@@ -81,7 +81,7 @@
           // contractSource: this.contractSource // 1:资金方，2:产品
         });
         this.$data.dataLoading = false;
-        if (resp.success && resp.body.resultList.length !== 0) {
+        if (resp.success) {
           this.$data.data1 = resp.body.resultList;
           this.$data.currentPage = resp.body.currentPage / 1;
           this.$data.total = resp.body.totalNum / 1;

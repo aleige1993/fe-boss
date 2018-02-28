@@ -331,7 +331,7 @@
           custType
         });
         this.$data.conditionLoading = false;
-        if (reps.success && reps.body.length !== 0) {
+        if (reps.success) {
           this.$data.conditionData = reps.body;
         } else {
           this.$data.conditionData = [];
@@ -345,11 +345,7 @@
         });
         this.$data.feeTableLoading = false;
         if (reps.success) {
-          if (reps.body.length !== 0) {
-            this.$data.feeData = reps.body;
-          } else {
-            this.$data.feeData = [];
-          }
+          this.$data.feeData = reps.body;
         } else {
           this.$data.feeData = [];
         }
@@ -367,7 +363,6 @@
               opinion: this.$data.formData.opinion
             }
           });
-          console.log(rep);
           if (rep.success) {
             this.$Message.success('提交成功');
             this.$router.push({

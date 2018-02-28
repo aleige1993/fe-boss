@@ -78,7 +78,7 @@
           pageSize: this.$data.pageSize
         });
         this.$data.dataLoading = false;
-        if (resp.success && (resp.body.resultList.length !== 0)) {
+        if (resp.success) {
           this.$data.pawnData = resp.body.resultList;
           this.$data.currentPage = resp.body.currentPage / 1;
           this.$data.total = resp.body.totalNum / 1;

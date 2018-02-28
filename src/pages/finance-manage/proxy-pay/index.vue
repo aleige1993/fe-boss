@@ -101,7 +101,7 @@
           this.$data.searchForm.currentPage = page;
         }
         let resp = await this.$http.post('/pay/payment', this.$data.searchForm);
-        console.log(JSON.stringify(resp));
+        // console.log(JSON.stringify(resp));
         this.$data.dataLoading = false;
         resp.body.resultList.map(item => {
           if (!(item.state === '-1' || item.state === '3') || item.flag === '1') {
@@ -130,11 +130,9 @@
         }
       },
       async submit(idArray) {
-        console.log(idArray);
         let resp = await this.$http.post('/pay/apply/payment', {
           pay4Nos: idArray
         });
-        console.log(resp);
         if (resp.reCode === '0000') {
           this.$Message.success('付款成功');
           this.getProxyPayList();

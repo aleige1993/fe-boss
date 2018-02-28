@@ -78,7 +78,6 @@
           pageSize: this.$data.pageSize
         });
         this.$data.dataLoading = false;
-        console.log(resp);
         if (resp.success) {
           this.$data.currentPage = resp.body.currentPage / 1;
           this.$data.pageSize = resp.body.pageSize / 1;

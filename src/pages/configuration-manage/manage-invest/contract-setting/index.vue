@@ -164,13 +164,13 @@
         if (page) {
           this.$data.searchForm.currentPage = page;
         }
-//        console.log(this.$data.searchForm.currentPage);
+        // console.log(this.$data.searchForm.currentPage);
         let resp = await this.$http.post('/cfg/contract/list', {
           templateNo: this.$data.contractTemplateNo,
           currentPage: this.$data.searchForm.currentPage,
           pageSize: this.$data.searchForm.pageSize
         });
-//        console.log(JSON.stringify(resp));
+        // console.log(JSON.stringify(resp));
         this.$data.dataLoading = false;
         this.$data.privateCustomerLoanList = resp.body.resultList;
         this.$data.currentPage = resp.body.currentPage;
@@ -179,10 +179,10 @@
       async getSourceList() {
         let resp = await this.$http.get('/cfg/contract/listField');
         this.sourceEntityEnum = resp.body;
-//        console.log(JSON.stringify(this.sourceEntityEnum));
+        // console.log(JSON.stringify(this.sourceEntityEnum));
       },
       async submitSuccess() {
-//        console.log(this.$data.fromData.entityDesc, this.$data.fromData.attrDesc);
+        // console.log(this.$data.fromData.entityDesc, this.$data.fromData.attrDesc);
         if (this.$data.fromData.fieldType === '1') {
           this.$data.fromData.fieldSourceEntity = '';
           this.$data.fromData.fieldSourceAttr = '';

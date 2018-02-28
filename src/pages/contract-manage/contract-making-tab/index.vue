@@ -274,7 +274,7 @@
           pageSize: this.$data.pageSizeExamine
         });
         this.$data.examineTableLoading = false;
-        if (reps.success && reps.body.resultList.length !== 0) {
+        if (reps.success) {
           this.$data.examineData = reps.body.resultList;
           this.$data.currentPageExamine = reps.body.currentPage / 1;
           this.$data.totalExamine = reps.body.totalNum / 1;

@@ -1,5 +1,4 @@
 import Vue from 'vue';
-import Tools from '../utils/Tools';
 Vue.mixin({
   computed: {
     enumSelectData() {

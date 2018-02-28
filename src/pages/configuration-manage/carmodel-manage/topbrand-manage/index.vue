@@ -166,8 +166,8 @@
         let data = {};
         if (this.$data.isAdd) {
           data.recommBrands = [{
-            brandNo: brandNo,
-            recommOrder: recommOrder
+            brandNo,
+            recommOrder
           }];
         } else {
           data = {
