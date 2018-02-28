@@ -207,6 +207,7 @@ export default {
         _valid = false;
         return _valid;
       }
+      return _valid;
     },
     /**
      * 获取申请数据
