@@ -87,7 +87,7 @@
               <i-col span="8">
                 <i-form-item label="定收利率" prop="loanApproveCreditDTO.loanRealRate"
                              :rules="{required: true, message: '请输入定收利率'}">
-                  <i-input :disabled="isApprove||readonly" v-model="approveData.loanApproveCreditDTO.loanRealRate" @on-blur="loanRealRateVerification">
+                  <i-input :readonly="readonly" v-model="approveData.loanApproveCreditDTO.loanRealRate" @on-blur="loanRealRateVerification">
                     <span slot="append">%/年</span>
                   </i-input>
                 </i-form-item>
@@ -106,7 +106,7 @@
                 <i-form-item label="运营模式" prop="loanApproveCreditDTO.operatingMode"
                              :rules="{required: true, message: '请选择运营模式'}">
                   <!--:disabled="isApprove||readonly"-->
-                  <i-select :disabled="isApprove||readonly" v-model="approveData.loanApproveCreditDTO.operatingMode">
+                  <i-select :disabled="readonly" v-model="approveData.loanApproveCreditDTO.operatingMode">
                     <i-option v-for="item in enumSelectData.get('OperatingModeEnum')" :key="item.itemCode" :value="item.itemCode">{{item.itemName}}</i-option>
                   </i-select>
                 </i-form-item>
@@ -114,7 +114,7 @@
               <i-col span="8">
                 <i-form-item label="放款方式" prop="loanApproveCreditDTO.loanMode"
                              :rules="{required: true, message: '请输入放款方式'}">
-                  <i-select :disabled="isApprove||readonly" @on-change="getBankList" v-model="approveData.loanApproveCreditDTO.loanMode">
+                  <i-select :disabled="readonly" @on-change="getBankList" v-model="approveData.loanApproveCreditDTO.loanMode">
                     <i-option v-for="item in enumSelectData.get('LoanModeEnum')" :key="item.itemCode" :value="item.itemCode">{{item.itemName}}</i-option>
                   </i-select>
                 </i-form-item>
@@ -123,7 +123,7 @@
                 <i-form-item label="车辆保险费" prop="loanApproveCreditDTO.carInsurance"
                              :rules="{required: true, message: '请选择车辆保险费'}">
                   <!--<i-input :readonly="true"  v-model="approveData.loanApproveCreditDTO.carInsurance"></i-input>-->
-                  <i-select :disabled="isApprove||readonly" v-model="approveData.loanApproveCreditDTO.carInsurance" placeholder="请选择">
+                  <i-select :disabled="readonly" v-model="approveData.loanApproveCreditDTO.carInsurance" placeholder="请选择">
                     <i-option v-for="item in enumSelectData.get('CarInsuranceEnum')" :key="item.itemCode" :value="item.itemCode">{{item.itemName}}</i-option>
                   </i-select>
                 </i-form-item>
@@ -133,7 +133,7 @@
               <i-col span="8">
                 <i-form-item label="盗抢险" prop="loanApproveCreditDTO.dqxInsurance"
                              :rules="{required: true, message: '请选择盗抢险' }">
-                  <i-select :disabled="isApprove||readonly" v-model="approveData.loanApproveCreditDTO.dqxInsurance">
+                  <i-select :disabled="readonly" v-model="approveData.loanApproveCreditDTO.dqxInsurance">
                     <i-option v-for="item in enumSelectData.get('CarInsuranceEnum')" :key="item.itemCode" :value="item.itemCode">{{item.itemName}}</i-option>
                   </i-select>
                 </i-form-item>

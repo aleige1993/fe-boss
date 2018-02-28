@@ -10,7 +10,7 @@ export default {
           let resp = await this.$http.post('/member/isExists', { certNo: this.$data.formData.mbMemberDTO.certNo });
           this.$data.checkingCertNo = false;
           if (resp.success) {
-            if (resp.body.exists === 'true') {
+            if (resp.body.exists) {
               Alertify.alert('您输入的证件号已经存在，请换一个证件再试');
             }
           }

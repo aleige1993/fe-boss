@@ -54,7 +54,7 @@
     </bs-modal>
     <!-- 选择企业的弹窗 -->
     <bs-modal title="选择企业" :width="1200" v-model="slectOweCompanyModal">
-      <table-company-customer-list ref="tableCompanyCustomer" type="modal" @on-row-dbclick="selectCompany">
+      <table-company-customer-list v-if="slectOweCompanyModal" ref="tableCompanyCustomer" type="modal" @on-row-dbclick="selectCompany">
         <div class="form-top-actions" slot="topAction">
           <i-button type="info" @click="addCompanyCustomerModal=!addCompanyCustomerModal"><i class="iconfont icon-xinzeng"></i> 新增</i-button>
         </div>

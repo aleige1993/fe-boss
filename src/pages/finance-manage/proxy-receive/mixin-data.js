@@ -99,7 +99,11 @@ export default {
                   // style: { marginRight: '5px' },
                   on: {
                     click: () => {
-                      this.submit(params.row.receiveNo.toString().split(','));
+                      Alertify.confirm('是否确认扣款', ok => {
+                        if (ok) {
+                          this.submit(params.row.receiveNo.toString().split(','));
+                        }
+                      });
                     }
                   }
                 }, '扣款')

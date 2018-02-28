@@ -219,17 +219,21 @@ export default {
                 },
                 style: { marginBottom: '5px' },
                 on: {
-                  click: async() => {
-                    let resp = await this.$http.post('/biz/gainLoanBizByLoanNo', { loanNo: params.row.loanNo });
-                    if (resp.success) {
-                      this.$Message.success('领取任务成功');
-                      this.getPrivateCustomerLoanList();
-                    } else {
-                      this.$Notice.error({
-                        title: '错误信息',
-                        desc: '领取任务出错'
-                      });
-                    }
+                  click: () => {
+                    Alertify.confirm('您确定要领取任务？', async ok => {
+                      if (ok) {
+                        let resp = await this.$http.post('/biz/gainLoanBizByLoanNo', { loanNo: params.row.loanNo });
+                        if (resp.success) {
+                          this.$Message.success('领取任务成功');
+                          this.getPrivateCustomerLoanList();
+                        } else {
+                          this.$Notice.error({
+                            title: '错误信息',
+                            desc: '领取任务出错'
+                          });
+                        }
+                      }
+                    });
                   }
                 }
               }, '领取任务'),

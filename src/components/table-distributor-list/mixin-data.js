@@ -55,7 +55,7 @@ export default {
           key: 'regDate'
         },
         {
-          title: '注册资金(元)',
+          title: '注册资金(万元)',
           width: 120,
           key: 'regCapital'
         },

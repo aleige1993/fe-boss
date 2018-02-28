@@ -6,6 +6,22 @@ export default {
         this.$data.depData = resp.body.children;
       }
     },
+    /**
+     * 验证统一社会信用代码是否已经存在
+     */
+    verifyCreditCode() {
+      if (this.$data.checkoutCertNoTimer) {
+        this.$data.checkoutCertNoTimer = null;
+      }
+      this.$data.checkoutCertNoTimer = setTimeout(async() => {
+        let resp = await this.$http.post('/corp/isRepeatCreditCode', { creditCode: this.$data.formData.baseDTO.creditCode });
+        if (resp.success) {
+          if (resp.body) {
+            Alertify.alert('您输入的社会信用代码已经存在，请换一个再试');
+          }
+        }
+      }, 500);
+    },
     // 选择注册地址
     selectRegDistance(distance) {
       this.$data.formData.baseDTO.regProvinceCode = distance.provinceCode;

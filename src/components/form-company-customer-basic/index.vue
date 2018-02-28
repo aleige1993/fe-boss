@@ -21,7 +21,7 @@
               </i-col>
               <i-col span="8">
                 <i-form-item prop="baseDTO.creditCode" label="统一社会信用代码">
-                  <i-input :readonly="isFromDetail" v-model="formData.baseDTO.creditCode" placeholder="失去焦点自动查重"></i-input>
+                  <i-input :readonly="isFromDetail" @on-blur="verifyCreditCode" v-model="formData.baseDTO.creditCode" placeholder="失去焦点自动查重"></i-input>
                 </i-form-item>
               </i-col>
             </i-row>
@@ -329,6 +329,7 @@ export default {
       initFormLoading: false,
       loadingAttachFile: false,
       selectRulerModal: false,
+      checkoutCertNoTimer: null,
       attachFormData: {
         attachName: '',
         attachUrl: ''
