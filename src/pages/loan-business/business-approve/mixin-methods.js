@@ -63,8 +63,6 @@ export default {
           approveInfoValid = vmApproveInfo.validate();
         }
         if (approveInfoValid) {
-          // approveData = vmApproveInfo.getApproveData();
-          this.$data.submitApproveLoading = true;
           let submitData = {};
           if (loanNode === '3') {
             if (this.$data.showCreditCheckbox && !this.$data.isHasCheckCreditReport) {
@@ -74,7 +72,6 @@ export default {
                 content: '请确认已查看征信报告！',
                 duration: 2
               });
-              this.$data.submitApproveLoading = false;
               return;
             }
             submitData = $.extend({ opeType: '2', hasCheckCreditReport: '1' }, applyData, approveData);
@@ -84,7 +81,6 @@ export default {
               loanApproveDTO: approveData.loanApproveDTO
             };
           }
-          // console.log(submitData.loanApproveDTO.result);
           // 点击提价时给用户一个确认交互
           if (submitData.loanApproveDTO.result === '' || submitData.loanApproveDTO.opinion === '') {
             this.$Message.error({
@@ -92,32 +88,21 @@ export default {
               duration: 2
             });
             this.$data.tabIndex = 'tabApproveInfo';
-            this.$data.submitApproveLoading = false;
-
             $('html, body')[0].scrollTop = $('body')[0].clientHeight; // 滚动条滚动到底部
             return;
-          } else if (
-            submitData.loanApproveDTO.result === 'R' &&
-            (!submitData.loanApproveDTO.rejectCause || submitData.loanApproveDTO.rejectCause === '')
-          ) {
+          } else if (submitData.loanApproveDTO.result === 'R' && (!submitData.loanApproveDTO.rejectCause || submitData.loanApproveDTO.rejectCause === '')) {
             this.$Message.error({
               content: '请选择拒绝原因！',
               duration: 2
             });
             this.$data.tabIndex = 'tabApproveInfo';
             $('html, body')[0].scrollTop = $('body')[0].clientHeight; // 滚动条滚动到底部
-            this.$data.submitApproveLoading = false;
             return;
           }
           await this.$AuditPrompt.auditPromptFun(submitData.loanApproveDTO.result, async () => {
-            const loading = this.$Message.loading({
-              content: '正在提交审批...',
-              duration: 0
-            });
             this.$data.submitApproveLoading = true;
             let resp = await this.$http.post(submitUrl, submitData);
             this.$data.submitApproveLoading = false;
-            loading();
             if (resp.success && resp.reMsg !== '失败') {
               this.$Message.success('审批成功');
               this.$router.push({

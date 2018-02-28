@@ -30,7 +30,6 @@
   </div>
 </template>
 <script>
-  import Tools from '../../../utils/Tools';
   export default {
     name: 'carFileList',
     data() {

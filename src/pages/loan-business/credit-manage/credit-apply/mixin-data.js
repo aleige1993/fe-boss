@@ -1,5 +1,3 @@
-import Tools from '../../../../utils/Tools';
-
 export default {
   data() {
     return {

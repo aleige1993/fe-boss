@@ -1,7 +1,6 @@
 /*
  * Created by HuiyangLi on 2017/01/23.
  */
-import Vue from 'vue';
 import store from '@/store';
 export default {
   // 封装：“审核意见”中有“结论”时，确认弹框交互

@@ -45,7 +45,6 @@
   </div>
 </template>
 <script>
-  import Tools from '../../../utils/Tools';
   export default {
     name: 'loanFileList',
     data() {
@@ -123,9 +122,6 @@
     }
   };
 </script>
-/**
-*bug
-/
 <style lang="scss" scoped>
   .loan-file-list{
     border: 1px solid #ccc;

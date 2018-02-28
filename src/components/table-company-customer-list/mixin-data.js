@@ -126,7 +126,7 @@ export default {
                     Alertify.confirm(`确定要${text}当前用户吗？`, async(ok) => {
                       if (ok) {
                         const msg = this.$Message.loading(`正在${text}`, 0);
-                        let resp = await this.$http.post('/updateCorpStatus', {
+                        let resp = await this.$http.post('/corp/updateCorpStatus', {
                           corpNo: params.row.corpNo,
                           status
                         });
