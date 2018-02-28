@@ -18,6 +18,7 @@
         <!--合同模板-->
         <i-form-item
           label="合同模板"
+          :rules="{required: true, message: '请选择合同模板', trigger: 'change'}"
           prop="contractTemplateName">
           <input type="hidden" v-model="formCustom.contractTemplateName"/>
           <i-input v-model="formCustom.contractTemplateName" :readonly="true" placeholder="选择合同模板">
@@ -131,20 +132,26 @@
         this.getPrivateCustomerList(page);
       },
       // 新增的保存请求方法
-      async addSuBmit() {
-        this.$data.buttonLoading = true;
-        let resAdd = await this.$http.post('/pms/capital/saveContractTemplateCfg', {
-          productNo: this.childMsg.productNo,
-          productName: this.childMsg.productName,
-          contractTemplateNo: this.$data.formCustom.contractTemplateNo,
-          contractTemplateName: this.$data.formCustom.contractTemplateName
+      addSuBmit() {
+        this.$refs['formCustom'].validate(async (valid) => {
+          if (valid) {
+            this.$data.buttonLoading = true;
+            let resAdd = await this.$http.post('/pms/capital/saveContractTemplateCfg', {
+              productNo: this.childMsg.productNo,
+              productName: this.childMsg.productName,
+              contractTemplateNo: this.$data.formCustom.contractTemplateNo,
+              contractTemplateName: this.$data.formCustom.contractTemplateName
+            });
+            this.$data.buttonLoading = false; // 关闭按钮的loading状态
+            this.$data.showAddModal = false;
+            if (resAdd.success) {
+              this.$Message.success('新增成功');
+              this.getPrivateCustomerList();
+            }
+          } else {
+            this.$Message.error('<span style="color: red">*</span>项不能为空');
+          }
         });
-        this.$data.buttonLoading = false; // 关闭按钮的loading状态
-        this.$data.showAddModal = false;
-        if (resAdd.success) {
-          this.$Message.success('新增成功');
-          this.getPrivateCustomerList();
-        }
       },
       addModal() {
         this.$data.showAddModal = true;

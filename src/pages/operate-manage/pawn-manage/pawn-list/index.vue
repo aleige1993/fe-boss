@@ -87,7 +87,7 @@
         }
       },
       search() {
-        this.getList();
+        this.getList(1);
       },
       jumpPage(page) {
         this.getList(page);

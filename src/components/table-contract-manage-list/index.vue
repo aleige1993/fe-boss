@@ -157,7 +157,7 @@
           this.$Message.error('“开始日期”不能大于“结束日期”');
           return;
         }
-        this.getList();
+        this.getList(1);
       },
       // 打开合同制作模态框
       openMakingModal(row) {

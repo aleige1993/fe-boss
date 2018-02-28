@@ -120,7 +120,7 @@
           this.$Message.error('“开始日期”不能大于“结束日期”');
           return;
         }
-        this.getCompanyCreditList();
+        this.getCompanyCreditList(1);
       },
       selectRow(row, index) {
         this.$emit('on-row-dbclick', row, index);

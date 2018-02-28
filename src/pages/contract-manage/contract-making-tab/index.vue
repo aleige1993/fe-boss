@@ -125,7 +125,7 @@
     methods: {
       // 子级通知父级，合同时间已变更。更新“还款计划表”和租金计划表
       createRepayPlanFun(startDate) {
-        if (this.createRepayPlanCapitalFun(startDate) && this.createRepayPlanRentalFun(startDate)) {
+        if ((startDate !== '') && this.createRepayPlanCapitalFun(startDate) && this.createRepayPlanRentalFun(startDate)) {
           this.$data.isClickTab = true;
         } else {
           this.$data.isClickTab = false;
