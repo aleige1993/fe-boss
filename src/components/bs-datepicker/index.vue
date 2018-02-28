@@ -40,6 +40,7 @@ export default {
   methods: {
     valueChange(val) {
       this.$emit('input', val);
+      this.$emit('on-change', val);
     }
   }
 };

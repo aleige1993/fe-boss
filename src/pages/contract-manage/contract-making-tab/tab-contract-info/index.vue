@@ -190,7 +190,9 @@
             :rules="{required: true, message: '请选择合同开始日期', trigger: 'change'}"
             prop="contractInfo.startDate"
             label="合同开始日期">
-            <bs-datepicker :isNowStart="true" v-model="contractInfoForm.contractInfo.startDate"></bs-datepicker>
+            <Poptip trigger="hover" title="提示" content="选择合同开始时间，即刷新“还款计划表”和“租金计划表”">
+              <bs-datepicker :isNowStart="true" v-model="contractInfoForm.contractInfo.startDate" @on-change="changeData"></bs-datepicker>
+            </Poptip>
           </i-form-item>
         </i-col>
         <i-col span="4">
@@ -697,6 +699,10 @@
       this.getFeeTakeList(); // 查询费用收取方案列表data
     },
     methods: {
+      // 合同开始时间变更的回调
+      changeData(val) {
+        this.$emit('on-create-repay-plan', val);
+      },
       // 完善车辆信息弹窗的提交按钮 /biz/sign/update/loanCar
       setCarDataSubmit() {
         let ind = this.$data.clickRowIndex; // 车辆列表的索引index
@@ -878,5 +884,4 @@
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style lang="scss" scoped>
-
 </style>

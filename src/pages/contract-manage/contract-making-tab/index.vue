@@ -9,14 +9,15 @@
     <br>
     <br>
     <i-tabs v-model="tabIndex" :animated="false" type="card">
-      <i-tab-pane label="合同信息">
+      <i-tab-pane label="合同信息" name="tabInfo">
         <tab-contract-info ref="contractInfo"
+                           @on-create-repay-plan="createRepayPlanFun"
                            @on-create-contracted="isCreateContractFun"
                            @on-radio-approveStatus="radioApproveStatus">
         </tab-contract-info>
       </i-tab-pane>
-      <i-tab-pane label="还款计划表">
-        <div v-if="tabIndex===1">
+      <i-tab-pane :disabled="!isClickTab" :label="isClickTab?'还款计划表':'还款计划表(选择合同开始时间后即可查看)'" name="tabHK">
+        <div v-if="tabIndex==='tabHK'">
           <!--资金方信息-->
           <bs-form-block :title="'资金方信息'">
             <i-table border :loading="loanCapitalListLoading" ref="proTable" :columns="loanCapitalColumns" :data="loanCapitalData"></i-table>
@@ -28,8 +29,8 @@
           </bs-form-block>
         </div>
       </i-tab-pane>
-      <i-tab-pane label="租金计划表">
-        <div v-if="tabIndex===2">
+      <i-tab-pane :disabled="!isClickTab" :label="isClickTab?'租金计划表':'租金计划表(选择合同开始时间后即可查看)'" name="tabZJ">
+        <div v-if="tabIndex==='tabZJ'">
           <!--海乐行账户信息-->
           <bs-form-block :title="'海乐行账户信息'">
             <i-form ref="formApproval" :model="formApproval" inline label-position="right" :label-width="100">
@@ -59,8 +60,8 @@
           </bs-form-block>
         </div>
       </i-tab-pane>
-      <i-tab-pane label="审批历史信息">
-        <i-table v-if="tabIndex===3" :loading="examineTableLoading" border ref="examineTable" :columns="examineColumns" :data="examineData"></i-table>
+      <i-tab-pane label="审批历史信息" name="tabSP">
+        <i-table v-if="tabIndex==='tabZJ'" :loading="examineTableLoading" border ref="examineTable" :columns="examineColumns" :data="examineData"></i-table>
         <div class="page-container">
           <i-page @on-change="jumpPageExamine" :total="totalExamine" :page-size="pageSizeExamine" size="small" show-elevator show-total></i-page>
         </div>
@@ -95,12 +96,13 @@
     },
     data() {
       return {
+        isClickTab: false, // 资金方还款计划表和租金方还款计划表tab是否可点击
         approveStatus: '',
         loanNo: '',
         isCapital: false, // 资金方是否生成了计划表
         isRental: false, // 租金方是否生成了计划表
         isCreateContract: false,
-        tabIndex: 0,
+        tabIndex: 'tabInfo',
         initFormLoading: false,
         currentPageExamine: 1,
         pageSizeExamine: 15,
@@ -118,11 +120,61 @@
     },
     async mounted() {
       this.$data.loanNo = await this.$route.query.loanNo;
-      this.getRepayPlanCapitalList(); // 获取资方列表data
-      this.getRepayPlanRentalList(); // 获取租金还款计划列表data
       this.examineGetlist(); // 获取审批历史信息列表data
     },
     methods: {
+      // 子级通知父级，合同时间已变更。更新“还款计划表”和租金计划表
+      createRepayPlanFun(startDate) {
+        if (this.createRepayPlanCapitalFun(startDate) && this.createRepayPlanRentalFun(startDate)) {
+          this.$data.isClickTab = true;
+        } else {
+          this.$data.isClickTab = false;
+        }
+      },
+      // 生成资方还款计划表
+      async createRepayPlanCapitalFun(startDate) {
+        let repsReturn = false;
+        let reps = await this.$http.post('/biz/sign/contract/createRepayPlanCapital', {
+          signNo: this.$route.query.signNo,
+          contractStartDate: startDate
+        });
+        if (reps.success) {
+          // 获取资方列表data
+          this.getRepayPlanCapitalList();
+          this.$Notice.success({
+            title: '已刷新“还款计划表”'
+          });
+          repsReturn = true;
+        } else {
+          this.$Notice.error({
+            title: '“还款计划表”刷新失败！'
+          });
+          repsReturn = false;
+        }
+        return repsReturn;
+      },
+      // 生成资方还款计划表
+      async createRepayPlanRentalFun(startDate) {
+        let repsReturn = false;
+        let reps = await this.$http.post('/biz/sign/contract/createRepayPlanRental', {
+          signNo: this.$route.query.signNo,
+          contractStartDate: startDate
+        });
+        if (reps.success) {
+          // 获取租金还款计划列表data
+          this.getRepayPlanRentalList();
+          this.$Notice.success({
+            title: '已刷新“租金计划表”'
+          });
+          repsReturn = true;
+        } else {
+          this.$Notice.error({
+            title: '“租金计划表”刷新失败！'
+          });
+          repsReturn = false;
+        }
+        return repsReturn;
+      },
       // 通过子组件的告知 得到结论状态
       radioApproveStatus(val) {
         this.$data.approveStatus = val;
@@ -193,7 +245,7 @@
           // 初审时 审核意见的结论是“同意”的情况下才判断是否已点击“生成合同”
           if (!this.$data.isCreateContract && this.$data.approveStatus === 'A') {
             this.$Message.warning('请生成合同！');
-            this.$data.tabIndex = 0;
+            this.$data.tabIndex = 'tabInfo';
             return;
           }
           let resp = await this.$http.post('/biz/sign/contract/fristApprove', { ...requestData });

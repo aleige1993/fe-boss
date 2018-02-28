@@ -5,7 +5,11 @@
 - v-model： 数据双向绑定
 - isNowStart : 显示只能选择当日之后的日期 类型：Boolean  是否必须： 否
 
+#### 回掉
+
+- on-change: 数据反生变化时,返回当前数据
+
 #### 范例
 ```
-  <bs-datepicker :isNowStart="true" v-model="startDate"></bs-datepicker>
+  <bs-datepicker :isNowStart="true" v-model="startDate" @on-change=“changeData”></bs-datepicker>
 ```
