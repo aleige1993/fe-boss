@@ -200,8 +200,7 @@
                 </i-form-item>
                 <i-form-item v-else label="账号" prop="loanPaymentAccountDTOS.openBankName"
                              :rules="{required: true, message: '请选择放款账户账号'}">
-                  <input type="hidden" v-model="approveData.loanPaymentAccountDTOS.bankName">
-                  <i-select :disabled="readonly" @on-change="paymentAccountChange" :label-in-value="true">
+                  <i-select :disabled="readonly" :value="approveData.loanPaymentAccountDTOS.acctNo" @on-change="paymentAccountChange" :label-in-value="true">
                     <i-option v-for="item in paymentAccountList" :key="item.acctNo" :value="item.acctNo">{{item.acctNo}}</i-option>
                   </i-select>
                 </i-form-item>
@@ -219,20 +218,20 @@
               <i-col span="8">
                 <i-form-item label="账户名" prop="loanRePaymentAccountDTOS.acctName"
                              :rules="{required: true, message: '请选择账户名'}">
-                  <i-input :readonly="true" v-model="approveData.loanRePaymentAccountDTOS.acctName"></i-input>
+                  <i-input :readonly="true" :value="approveData.loanRePaymentAccountDTOS.acctName"></i-input>
                 </i-form-item>
               </i-col>
               <i-col span="8">
                 <i-form-item v-if="readonly">
                   <i-input type="text" :readonly="true" v-model="approveData.loanRePaymentAccountDTOS.acctNo"></i-input>
                 </i-form-item>
-                <i-form-item v-else label="账号" prop="loanRePaymentAccountDTOS.bankName"
+                <i-form-item v-else label="账号" prop="loanRePaymentAccountDTOS.acctNo"
                              :rules="{required: true, message: '请选择还款账户账号'}">
-                  <input type="hidden" v-model="approveData.loanRePaymentAccountDTOS.bankName">
-                  <i-select :disabled="readonly" @on-change="repaymentAccountChange" :label-in-value="true" >
+                  <i-select :disabled="readonly" v-model="approveData.loanRePaymentAccountDTOS.acctNo" @on-change="repaymentAccountChange" :label-in-value="true" >
                     <i-option v-for="item in repaymentAccountList" :key="item.acctNo" :value="item.acctNo">{{item.acctNo}}</i-option>
                   </i-select>
                 </i-form-item>
+                <input type="hidden" v-model="approveData.loanRePaymentAccountDTOS.bankName"/>
               </i-col>
               <i-col span="8">
                 <i-form-item label="开户银行">
@@ -441,11 +440,7 @@
       }
     },
     mounted() {
-      // setTimeout(() => {
-      //   if (this.applyBasicInfo && this.applyBasicInfo.loanNo) {
-      //     this.getPageInitData();
-      //   }
-      // }, 500);
+      // TODO
     },
     watch: {
       'applyBasicInfo'(newVal, oldVal) {

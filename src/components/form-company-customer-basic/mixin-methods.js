@@ -75,8 +75,12 @@ export default {
       this.$data.attachFormData.attachUrl = res.body.url;
     },
     submitAttach() {
-      this.$data.formData.attachDTOs.push(this.$data.attachFormData);
-      this.$data.addAttachModal = false;
+      this.$refs['formCompanyCustomerAttach'].validate(valid => {
+        if (valid) {
+          this.$data.formData.attachDTOs.push(this.$data.attachFormData);
+          this.$data.addAttachModal = false;
+        }
+      });
     },
     // 初始化页面
     async initFormData(corpNo) {

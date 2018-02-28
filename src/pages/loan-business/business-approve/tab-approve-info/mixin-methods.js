@@ -252,17 +252,21 @@ export default {
       let filterAry = this.$data.paymentAccountList.filter(item => {
         return item.acctNo === val.label;
       });
-      this.$data.approveData.loanPaymentAccountDTOS.acctNo = filterAry[0].acctNo;
-      this.$data.approveData.loanPaymentAccountDTOS.bankName = filterAry[0].bankName;
-      this.$data.approveData.loanPaymentAccountDTOS.bankCode = filterAry[0].bankCode;
+      if (filterAry.length > 0) {
+        this.$data.approveData.loanPaymentAccountDTOS.acctNo = filterAry[0].acctNo;
+        this.$data.approveData.loanPaymentAccountDTOS.bankName = filterAry[0].bankName;
+        this.$data.approveData.loanPaymentAccountDTOS.bankCode = filterAry[0].bankCode;
+      }
     },
     repaymentAccountChange(val) {
       let filterAry = this.$data.repaymentAccountList.filter(item => {
         return item.acctNo === val.label;
       });
-      this.$data.approveData.loanRePaymentAccountDTOS.acctNo = filterAry[0].acctNo;
-      this.$data.approveData.loanRePaymentAccountDTOS.bankName = filterAry[0].bankName;
-      this.$data.approveData.loanRePaymentAccountDTOS.bankCode = filterAry[0].bankCode;
+      if (filterAry.length > 0) {
+        this.$data.approveData.loanRePaymentAccountDTOS.acctNo = filterAry[0].acctNo;
+        this.$data.approveData.loanRePaymentAccountDTOS.bankName = filterAry[0].bankName;
+        this.$data.approveData.loanRePaymentAccountDTOS.bankCode = filterAry[0].bankCode;
+      }
     },
     /**
      * 选择利率方案
