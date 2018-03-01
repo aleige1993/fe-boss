@@ -8,7 +8,10 @@ export default {
         },
         {
           title: '权限类型',
-          key: 'moduleType'
+          key: 'moduleType',
+          render: (h, params) => {
+            return h('span', {}, this.enumCode2Name(params.row.moduleType, 'ModuleTypeEnum'));
+          }
         },
         {
           title: '链接地址',

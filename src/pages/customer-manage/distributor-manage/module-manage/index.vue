@@ -45,7 +45,7 @@
             <i-form-item
               label="链接地址"
               prop="moduleUrl">
-              <i-input v-model="formData.moduleUrl" placeholder=""></i-input>
+              <i-input v-model="formData.moduleUrl" placeholder="如: /index"></i-input>
             </i-form-item>
           </i-col>
         </i-row>
