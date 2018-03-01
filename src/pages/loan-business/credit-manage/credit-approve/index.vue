@@ -95,7 +95,7 @@
           <bs-form-block title="审核意见">
             <i-row>
               <i-col span="8">
-                <i-form-item label="结论" :rules="{required: true, message: '结论不能为空', trigger: 'change'}">
+                <i-form-item label="结论" prop="creditAuditParam.approveStatus" :rules="{required: true, message: '结论不能为空', trigger: 'change'}">
                   <i-radio-group v-model="approveData.creditAuditParam.approveStatus">
                     <i-radio v-for="item in enumSelectData.get('ApproveStatusEnum')" :label="item.itemCode" :key="item.itemCode" style="margin-right: 20px; margin-top: -5px">{{item.itemName}}</i-radio>
                   </i-radio-group>
@@ -104,7 +104,7 @@
             </i-row>
             <i-row>
               <i-col span="8">
-                <i-form-item
+                <i-form-item prop="creditAuditParam.rejectCause" :rules="{required: true, message: '请选择拒绝原因'}"
                   v-if="approveData.creditAuditParam.approveStatus === 'R'"
                   label="拒绝原因">
                   <i-select v-model="approveData.creditAuditParam.rejectCause">
@@ -115,7 +115,7 @@
             </i-row>
             <i-row>
               <i-col span="24">
-                <i-form-item label="意见信息" :rules="{required: true, message: '意见信息不能为空', trigger: 'blur'}">
+                <i-form-item label="意见信息" prop="creditAuditParam.opinion" :rules="{required: true, message: '意见信息不能为空', trigger: 'blur'}">
                   <i-input type="textarea" v-model="approveData.creditAuditParam.opinion" :rows="4"></i-input>
                 </i-form-item>
               </i-col>

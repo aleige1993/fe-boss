@@ -21,11 +21,13 @@
             <i-option v-for="item in bankList" :key="item.bankCode" :value="item.bankCode">{{item.bankName}}</i-option>
           </i-select>
         </i-form-item>
-        <i-form-item label="开户行" prop="openBankCode">
-          <i-input v-model="formData.openBankCode" placeholder=""></i-input>
-        </i-form-item>
-        <i-form-item label="开户行号" prop="openBankName">
+        <i-form-item label="开户行" prop="openBankName"
+                     :rules="{required: true, message: '开户行不能为空'}">
           <i-input v-model="formData.openBankName" placeholder=""></i-input>
+        </i-form-item>
+        <i-form-item label="开户行号" prop="openBankCode"
+                     :rules="{required: true, message: '开户行号不能为空'}">
+          <i-input v-model="formData.openBankCode" placeholder=""></i-input>
         </i-form-item>
         <i-form-item label="预留手机号" prop="bankMobile"
           :rules="{required: true, message: '预留手机号不能为空', trigger: 'blur'}">
@@ -115,10 +117,6 @@
               this.$data.addBankModal = false;
               this.getCustomerBankList();
             }
-          } else {
-            this.$Notice.error({
-              title: '错误提示', desc: '清完善银行信息!'
-            });
           }
         });
       },
