@@ -260,7 +260,7 @@
             </i-button>
           </i-row>
           <div v-if="type==='page'&&!isFromDetail" class="form-footer-actions">
-            <i-button @click="saveCompanyCustomerBasic" :loading="initFormLoading" type="primary">
+            <i-button v-if="!corpNo" @click="saveCompanyCustomerBasic" :loading="initFormLoading" type="primary">
               <span v-if="!initFormLoading"><i class="iconfont icon-tijiao"></i> 保存草稿</span>
               <span v-else> 处理中</span>
             </i-button>

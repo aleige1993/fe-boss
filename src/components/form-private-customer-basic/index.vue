@@ -373,7 +373,7 @@
             </i-col>
           </i-row>
           <div class="form-footer-actions" v-if="!isFromDetail&&type!=='modal'">
-            <i-button type="primary" @click="saveBasicInfo"><i class="iconfont icon-tijiao"></i> 保存草稿</i-button>
+            <i-button type="primary" v-if="!id" @click="saveBasicInfo"><i class="iconfont icon-tijiao"></i> 保存草稿</i-button>
             <i-button type="success" @click="submitBasicInfo"><i class="iconfont icon-tijiao"></i> 保存</i-button>
           </div>
         </i-form>
