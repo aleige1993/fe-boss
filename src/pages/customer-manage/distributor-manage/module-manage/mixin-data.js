@@ -22,12 +22,13 @@ export default {
           key: 'modulePname'
         },
         {
-          title: '备注',
-          key: 'remark'
+          title: '排序',
+          width: 70,
+          key: 'sort'
         },
         {
-          title: '排序',
-          key: 'sort'
+          title: '备注',
+          key: 'remark'
         },
         {
           title: '操作',
