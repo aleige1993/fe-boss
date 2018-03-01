@@ -10,7 +10,7 @@
     <i-tabs v-model="tabIndex" type="card" :animated="false">
       <i-tab-pane label="申请信息">
         <company-customer-basic-info :readonly="true" :corpNo="approveData.creditApplyParam.corpNo"></company-customer-basic-info>
-        <i-form label-position="right" :label-width="140">
+        <i-form label-position="right" ref="formCreditApply" :model="approveData" :label-width="140">
           <!--初审信息-->
           <bs-form-block title="初审信息">
             <i-row>
@@ -37,14 +37,16 @@
           <bs-form-block title="授信方案" v-if="creditStatus==='5'||creditStatus==='6'">
             <i-row>
               <i-col span="8">
-                <i-form-item label="授信总额度">
+                <i-form-item label="授信总额度" prop="creditLimitParam.totalLimitAmt"
+                  :rules="{required: true, message: '请输入授信总额度'}">
                   <i-input :readonly="creditStatus!=='5'&&creditStatus!=='6'" v-model="approveData.creditLimitParam.totalLimitAmt">
                     <span slot="append">元</span>
                   </i-input>
                 </i-form-item>
               </i-col>
               <i-col span="8">
-                <i-form-item label="额度释放方式">
+                <i-form-item label="额度释放方式" prop="creditLimitParam.creditLimitReleaseMode"
+                             :rules="{required: true, message: '请选择额度释放方式'}">
                   <i-select :disabled="creditStatus!=='5'&&creditStatus!=='6'" v-model="approveData.creditLimitParam.creditLimitReleaseMode">
                     <i-option v-for="item in enumSelectData.get('CreditFreedTypeEnum')" :key="item.itemCode" :value="item.itemCode">{{item.itemName}}</i-option>
                   </i-select>
@@ -68,12 +70,14 @@
             </i-row>
             <i-row>
               <i-col span="8">
-                <i-form-item label="授信起始日期">
+                <i-form-item label="授信起始日期" prop="creditLimitParam.startDate"
+                             :rules="{required: true, message: '请选择授信起始日期'}">
                   <bs-datepicker :readonly="creditStatus!=='5'&&creditStatus!=='6'" v-model="approveData.creditLimitParam.startDate"></bs-datepicker>
                 </i-form-item>
               </i-col>
               <i-col span="8">
-                <i-form-item label="授信到期日期">
+                <i-form-item label="授信到期日期" prop="creditLimitParam.endDate"
+                             :rules="{required: true, message: '请选择授信到期日期'}">
                   <bs-datepicker :readonly="creditStatus!=='5'&&creditStatus!=='6'" v-model="approveData.creditLimitParam.endDate"></bs-datepicker>
                 </i-form-item>
               </i-col>

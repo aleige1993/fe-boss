@@ -102,6 +102,7 @@
                   {{formData.baseDTO.regProvinceName}}
                   {{formData.baseDTO.regDistrictName}}
                   {{formData.baseDTO.regCityName}}
+                  {{formData.baseDTO.regRoadAddr}}
                 </i-form-item>
               </i-col>
             </i-row>
@@ -111,6 +112,7 @@
                   {{formData.baseDTO.bizProvinceName}}
                   {{formData.baseDTO.bizDistrictName}}
                   {{formData.baseDTO.bizCityName}}
+                  {{formData.baseDTO.bizRoadAddr}}
                 </i-form-item>
               </i-col>
             </i-row>
