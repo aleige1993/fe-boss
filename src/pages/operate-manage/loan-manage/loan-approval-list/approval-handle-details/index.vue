@@ -113,8 +113,7 @@
               </i-col>
               <i-col span="8">
                 <i-form-item label="资金方利率">
-                  <span v-text="formData.paymentRecordDTO.loanAmt"></span>
-                  <span v-if="formData.paymentRecordDTO.loanAmt!==''">元</span>
+                  <span v-text="formData.paymentRecordDTO.capitalRate"></span>
                 </i-form-item>
               </i-col>
             </i-row>

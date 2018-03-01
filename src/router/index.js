@@ -59,7 +59,9 @@ let MyRouter = new Router({
                 // 首页 > 渠道商管理 > 渠道商授信审核 > 审核 > 审核历史意见信息
                 { path: 'credit/examine/history', name: 'examineDistributor', component: resolve => require(['@/pages/customer-manage/distributor-manage/distributor-credit-list/table-examine-history'], resolve)},
                 // 首页 > 渠道商管理 > 渠道商角色管理
-                { path: 'role', name: 'roleManage', component: resolve => require(['@/pages/customer-manage/distributor-manage/role-manage'], resolve)}
+                { path: 'role', name: 'roleManage', component: resolve => require(['@/pages/customer-manage/distributor-manage/role-manage'], resolve)},
+                // 首页 > 渠道商管理 > 渠道商权限管理
+                { path: 'module', name: 'moduleManage', component: resolve => require(['@/pages/customer-manage/distributor-manage/module-manage'], resolve)}
               ]
             },
             // 黑名单管理
