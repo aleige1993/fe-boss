@@ -549,7 +549,7 @@
           <i-col span="12">
             <i-form-item label="担保人类型" prop="guaPersonType"
                          :rules="{required: true, message: '请选择担保人类型'}">
-              <i-select v-model="formAssure.guaPersonType">
+              <i-select v-model="formAssure.guaPersonType" @on-change="loanApplyAssureChanged">
                 <i-option v-for="item in enumSelectData.get('CustTypeEnum')" :key="item.itemCode" :value="item.itemCode">{{item.itemName}}</i-option>
               </i-select>
             </i-form-item>
@@ -570,21 +570,14 @@
           </i-col>
         </i-row>
         <i-row>
-          <!--<i-col span="12">
-            <i-form-item label="证件类型" prop="guaPersonType">
-              <i-select :disabled="true" v-model="formAssure.guaPersonCertType">
-                <i-option v-for="item in enumSelectData.get('CertTypeEnum')" :key="item.itemCode" :value="item.itemCode">{{item.itemName}}</i-option>
-              </i-select>
-            </i-form-item>
-          </i-col>-->
           <i-col span="12">
             <i-form-item label="联系电话" prop="guaPersonMobile">
               <i-input :readonly="true" v-model="formAssure.guaPersonMobile"></i-input>
             </i-form-item>
           </i-col>
           <i-col span="12">
-            <i-form-item label="证件号码" prop="guaPersonName">
-              <i-input :readonly="true" v-model="formAssure.guaPersonCertNo" placeholder=""></i-input>
+            <i-form-item label="证件号码" prop="guaPersonCertNo">
+              <i-input :readonly="true" v-model="formAssure.guaPersonCertNo"></i-input>
             </i-form-item>
           </i-col>
         </i-row>

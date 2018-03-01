@@ -125,10 +125,42 @@ export default {
       }
     },
     submitCreditApply() {
-      if (this.$data.approveData.creditAuditParam.approveStatus === 'A') {
+      let approveStatus = this.$data.approveData.creditAuditParam.approveStatus;
+      if (approveStatus === 'A') {
         this.$refs['formCreditApply'].validate(async valid => {
           if (valid) {
             this.saveCreditApproveInfo();
+          }
+        });
+      } else if (approveStatus === 'R') {
+        this.$refs['formCreditApply'].validateField('creditAuditParam.rejectCause', (a) => {
+          if (a) {
+            this.$Notice.error({
+              title: '错误信息',
+              desc: '请选择拒绝理由'
+            });
+          } else {
+            this.$refs['formCreditApply'].validateField('creditAuditParam.opinion', (a) => {
+              if (!a) {
+                this.saveCreditApproveInfo();
+              } else {
+                this.$Notice.error({
+                  title: '错误信息',
+                  desc: '请输入意见信息'
+                });
+              }
+            });
+          }
+        });
+      } else {
+        this.$refs['formCreditApply'].validateField('creditAuditParam.opinion', (a) => {
+          if (!a) {
+            this.saveCreditApproveInfo();
+          } else {
+            this.$Notice.error({
+              title: '错误信息',
+              desc: '请输入意见信息'
+            });
           }
         });
       }

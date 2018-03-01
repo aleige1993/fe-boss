@@ -11,6 +11,14 @@ export default {
         this.$data.assureData = [];
       }
     },
+    /**
+     * 选择担保人类型
+     */
+    loanApplyAssureChanged(value) {
+      alert(value);
+      this.$refs['formAssure'].resetFields();
+      this.$data.formAssure.guaPersonType = value;
+    },
     // 打开担保信息新增修改模态框
     openModalAssure() {
       this.$data.isAddAssure = true;
