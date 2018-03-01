@@ -107,6 +107,7 @@
         });
         this.$data.showAddModal = false;
         if (reps.success) {
+          this.$Message.success('新增成功');
           this.$refs.tableRoleList.getPrivateCustomerList(); // 刷新列表
         }
       },
@@ -118,6 +119,7 @@
         });
         this.$data.showAddModal = false;
         if (reps.success) {
+          this.$Message.success('修改成功');
           this.$refs.tableRoleList.getPrivateCustomerList(); // 刷新列表
         }
       },

@@ -108,7 +108,6 @@
               <i-col span="8">
                 <i-form-item label="资金方利率">
                   <span v-text="formData.paymentRecordDTO.capitalRate"></span>
-                  <span v-if="formData.paymentRecordDTO.capitalRate!==''">%/年</span>
                 </i-form-item>
               </i-col>
             </i-row>

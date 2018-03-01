@@ -12,9 +12,9 @@ export default {
         {
           title: '计算方式',
           width: 200,
-          key: 'feeTakeType',
+          key: 'feeCountType',
           render: (h, params) => {
-            return h('span', {}, this.enumCode2Name(params.row.feeTakeType, 'ReceiveTypeEnum'));
+            return h('span', {}, this.enumCode2Name(params.row.feeCountType, 'ReceiveTypeEnum'));
           }
         },
         {

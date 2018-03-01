@@ -41,7 +41,8 @@ export default [
                 childMenus: [
                   { name: '渠道商列表', url: '/index/customer/distributor' },
                   { name: '渠道商授信审核', url: '/index/customer/distributor/credit' },
-                  { name: '渠道商角色管理', url: '/index/customer/distributor/role' }
+                  { name: '渠道商角色管理', url: '/index/customer/distributor/role' },
+                  { name: '渠道商权限管理', url: '/index/customer/distributor/module' }
                 ]
               }
             ]

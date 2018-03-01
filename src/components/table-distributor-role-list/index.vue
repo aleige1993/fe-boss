@@ -64,13 +64,16 @@
       },
       // 模糊查询
       searchSubmit() {
-        this.getPrivateCustomerList();
+        this.getPrivateCustomerList(1);
       },
       jumpPage(page) {
         this.getPrivateCustomerList(page);
       },
       // 查询列表数据
-      async getPrivateCustomerList() {
+      async getPrivateCustomerList(page) {
+        if (page) {
+          this.$data.currentPage = page;
+        }
         this.$data.dataLoading = true;
         let resp = await this.$http.post('/merchant/role/listRoleAndModule', {
           roleName: this.$data.formSearch.roleName,
