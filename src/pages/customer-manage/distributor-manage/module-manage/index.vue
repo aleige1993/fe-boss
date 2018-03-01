@@ -11,6 +11,9 @@
         <i-form-item prop="moduleName">
           <i-input style="width: 240px;" type="text" placeholder="权限名称" v-model="formSearch.moduleName"></i-input>
         </i-form-item>
+        <i-form-item prop="modulePname">
+          <i-input style="width: 240px;" type="text" placeholder="上级权限名称" v-model="formSearch.modulePname"></i-input>
+        </i-form-item>
         <i-form-item prop="moduleType">
           <i-select v-model="formSearch.moduleType">
             <i-option value="" style="height: 26px; color: #bbbec4">-请选择-</i-option>
@@ -140,6 +143,7 @@
         treeModuleData: [],
         formSearch: {
           moduleName: '',
+          modulePname: '',
           moduleType: ''
         },
         formData: {
