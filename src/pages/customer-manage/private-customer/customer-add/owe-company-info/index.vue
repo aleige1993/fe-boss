@@ -36,14 +36,16 @@
         </i-form-item>
         <i-form-item label="注册资金" prop="regCapital"
                      :rules="{required: true, message: '请输入注册资金'}">
-          <i-input v-model="formData.regCapital" placeholder=""></i-input>
+          <i-input v-model="formData.regCapital" placeholder="">
+            <span slot="append">万元</span>
+          </i-input>
         </i-form-item>
-        <i-form-item label="经营地址" prop="mail">
+        <i-form-item label="经营地址" prop="bizAddr">
           <i-input :readonly="true" v-model="formData.bizAddr" placeholder=""></i-input>
         </i-form-item>
-        <i-form-item label="备注" prop="mail">
+        <!--<i-form-item label="备注" prop="mail">
           <i-input type="textarea" :rows="4" v-model="formData.remark" placeholder=""></i-input>
-        </i-form-item>
+        </i-form-item>-->
         <i-form-item label="">
           <i-button @click="submitForm" :loading="submitLoading" type="primary" size="large" style="width: 80px;">
             <span v-if="submitLoading">保存中...</span>

@@ -8,7 +8,10 @@ export default {
         },
         {
           title: '股东类别',
-          key: 'partnerType'
+          key: 'partnerType',
+          render: (h, params) => {
+            return this.enumCode2Name(params.row.partnerType, 'CustTypeEnum');
+          }
         },
         {
           title: '出资额（元）',
@@ -16,7 +19,10 @@ export default {
         },
         {
           title: '出资方式',
-          key: 'investType'
+          key: 'investType',
+          render: (h, params) => {
+            return params.row.investType === '1' ? '现金' : '技术入股';
+          }
         },
         {
           title: '持股比例（%）',

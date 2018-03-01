@@ -77,7 +77,7 @@
       deleteFile(file, index) {
         Alertify.confirm('确定要删除当前文件吗？', ok => {
           if (ok) {
-            this.data.splice(index, 1);
+            this.$data.fileList.docDetailAttachList.splice(index, 1);
           }
         });
       },
@@ -88,7 +88,7 @@
         this.$data.isUploading = false;
         if (res.success) {
           let file = res.body;
-          this.data.push({
+          this.$data.fileList.docDetailAttachList.push({
             attachName: file.fileName,
             attachUrl: file.url
           });

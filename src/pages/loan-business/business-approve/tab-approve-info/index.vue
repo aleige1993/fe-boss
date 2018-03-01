@@ -343,6 +343,7 @@
   </div>
 </template>
 <script>
+  import Tools from '@/utils/Tools';
   import MixinData from './mixin-data';
   import MixinMethods from './mixin-methods';
   import BsModel from '@/components/bs-modal';
@@ -452,7 +453,7 @@
         }
       },
       'approveData.loanApproveCreditDTO.loanRealRate'(newVal, oldVal) {
-        this.$data.approveData.loanApproveCreditDTO.loanProductRate = (newVal / 1) + this.$data.loanRateSumProuductRate;
+        this.$data.approveData.loanApproveCreditDTO.loanProductRate = Tools.addNum(this.$data.loanRateSumProuductRate, newVal);
       }
     },
     components: {

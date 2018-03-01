@@ -115,18 +115,23 @@ export default {
         this.$data.approveData.creditPlanList.push(creditPlan);
       }
     },
+    async saveCreditApproveInfo() {
+      this.$data.submitApplyLoading = true;
+      let resp = await this.$http.post(this.submitUrl, this.$data.approveData);
+      this.$data.submitApplyLoading = false;
+      if (resp.success) {
+        this.$Message.success('提交成功');
+        this.$router.push('/index/loanbusiness/credit');
+      }
+    },
     submitCreditApply() {
-      this.$refs['formCreditApply'].validate(async valid => {
-        if (valid) {
-          this.$data.submitApplyLoading = true;
-          let resp = await this.$http.post(this.submitUrl, this.$data.approveData);
-          this.$data.submitApplyLoading = false;
-          if (resp.success) {
-            this.$Message.success('提交成功');
-            this.$router.push('/index/loanbusiness/credit');
+      if (this.$data.approveData.creditAuditParam.approveStatus === 'A') {
+        this.$refs['formCreditApply'].validate(async valid => {
+          if (valid) {
+            this.saveCreditApproveInfo();
           }
-        }
-      });
+        });
+      }
     }
   }
 };

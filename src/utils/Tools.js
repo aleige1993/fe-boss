@@ -125,5 +125,28 @@ export default {
         wscript.SendKeys('{F11}');
       }
     }
+  },
+  /**
+   * 数字相加，包括浮点数相加，不会丢失精度
+   * @param num1
+   * @param num2
+   * @returns {number}
+   */
+  addNum(num1, num2) {
+    let sq1;
+    let sq2;
+    let m;
+    try {
+      sq1 = num1.toString().split('.')[1].length;
+    } catch (e) {
+      sq1 = 0;
+    }
+    try {
+      sq2 = num2.toString().split('.')[1].length;
+    } catch (e) {
+      sq2 = 0;
+    }
+    m = Math.pow(10, Math.max(sq1, sq2));
+    return (num1 * m + num2 * m) / m;
   }
 };

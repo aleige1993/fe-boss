@@ -8,7 +8,7 @@
     <pt-modal title="添加股东信息" v-model="addShareholerModal">
       <i-form ref="formShareHoler" :model="formData" label-position="left" :label-width="80">
         <i-form-item label="股东姓名" prop="partnerName"
-                     :rules="{required: true, message: '请选择股东类别'}">
+                     :rules="{required: true, message: '请输入股东姓名'}">
           <i-input placeholder="" v-model="formData.partnerName"></i-input>
         </i-form-item>
         <i-form-item label="股东类别" prop="partnerType"
