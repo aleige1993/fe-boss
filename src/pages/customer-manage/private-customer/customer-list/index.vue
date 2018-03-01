@@ -11,7 +11,7 @@
     <table-customer-list type="page" @on-row-dbclick="selectSpouseRow">
       <div class="form-top-actions" slot="topAction">
         <i-button type="info" @click="goToAdd"><i class="iconfont icon-xinzeng"></i> 新增</i-button>
-        <i-button type="error"><i class="iconfont icon-shanchu"></i> 加入黑名单</i-button>
+        <!--<i-button type="error"><i class="iconfont icon-shanchu"></i> 加入黑名单</i-button>-->
       </div>
     </table-customer-list>
     <pt-modal title="添加客户" v-model="showAddModal" :width="600" :zIndex="200">
