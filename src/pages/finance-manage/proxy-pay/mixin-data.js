@@ -9,7 +9,7 @@ export default {
         },
         {
           title: '项目编号',
-          key: 'payForNo',
+          key: 'projectNo',
           width: 140
         },
         {
@@ -34,7 +34,7 @@ export default {
         },
         {
           title: '收款人开户银行',
-          key: 'toAccDept',
+          key: 'toBankName',
           width: 180
         },
         {

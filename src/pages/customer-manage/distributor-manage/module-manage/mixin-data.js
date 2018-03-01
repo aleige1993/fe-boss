@@ -3,20 +3,15 @@ export default {
     return {
       moduleColumns: [
         {
-          title: '权限id',
-          key: 'moduleId'
-        },
-        {
-          title: '排序',
-          key: 'sort'
-        },
-        {
           title: '权限名称',
           key: 'moduleName'
         },
         {
           title: '权限类型',
-          key: 'moduleType'
+          key: 'moduleType',
+          render: (h, params) => {
+            return h('span', {}, this.enumCode2Name(params.row.moduleType, 'ModuleTypeEnum'));
+          }
         },
         {
           title: '链接地址',
@@ -25,6 +20,11 @@ export default {
         {
           title: '上级权限',
           key: 'modulePname'
+        },
+        {
+          title: '排序',
+          width: 70,
+          key: 'sort'
         },
         {
           title: '备注',
@@ -43,7 +43,7 @@ export default {
                 },
                 on: {
                   click: () => {
-                    let rowData = $.extend({}, params.row);
+                    this.setRow($.extend({}, params.row));
                   }
                 }
               }, '修改'),
