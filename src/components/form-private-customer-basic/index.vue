@@ -513,7 +513,7 @@ export default {
     this.$data.isFromDetail = (pageFrom === 'detail');
     this.getDepList();
     // 如果有id，初始化页面数据
-    if (this.id) {
+    if (this.id && this.type === 'page') {
       this.initPageData();
     } else {
       // 如果不是编辑，清空表单

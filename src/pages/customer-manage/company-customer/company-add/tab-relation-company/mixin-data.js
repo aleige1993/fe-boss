@@ -16,7 +16,10 @@ export default {
         },
         {
           title: '关系',
-          key: 'relation'
+          key: 'relation',
+          render: (h, params) => {
+            return this.enumCode2Name(params.row.relation, 'HaveCompanyRelativeEnum');
+          }
         },
         {
           title: '联系人',

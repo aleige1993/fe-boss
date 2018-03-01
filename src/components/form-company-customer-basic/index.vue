@@ -148,7 +148,7 @@
               </i-col>
               <i-col span="8">
                 <i-form-item label="性别"  prop="baseDTO.legalPersonSex">
-                  <i-select :disabled="isFromDetail" v-model="formData.baseDTO.legalPersonSex">
+                  <i-select :disabled="true" v-model="formData.baseDTO.legalPersonSex">
                     <i-option v-for="item in enumSelectData.get('SexEnum')" :key="item.itemCode" :value="item.itemCode">{{item.itemName}}</i-option>
                   </i-select>
                 </i-form-item>
@@ -162,14 +162,14 @@
             <i-row>
               <i-col span="8">
                 <i-form-item label="证件类型" prop="baseDTO.legalPersonCerttype">
-                  <i-select :disabled="isFromDetail" v-model="formData.baseDTO.legalPersonCerttype">
+                  <i-select :disabled="true" v-model="formData.baseDTO.legalPersonCerttype">
                     <i-option v-for="item in enumSelectData.get('CertTypeEnum')" :key="item.itemCode" :value="item.itemCode">{{item.itemName}}</i-option>
                   </i-select>
                 </i-form-item>
               </i-col>
               <i-col span="8">
                 <i-form-item label="证件号码" prop="baseDTO.legalPersonCertno">
-                  <i-input :readonly="isFromDetail" v-model="formData.baseDTO.legalPersonCertno"></i-input>
+                  <i-input :readonly="true" v-model="formData.baseDTO.legalPersonCertno"></i-input>
                 </i-form-item>
               </i-col>
               <i-col span="8">
@@ -366,7 +366,7 @@ export default {
   methods: {
     resetFormByStatus() {
       let _id = this.$route.query.id;
-      if (_id) {
+      if (_id && this.type === 'page') {
         // 如果是编辑或者详情初始化表单
         this.initFormData(_id);
       } else {

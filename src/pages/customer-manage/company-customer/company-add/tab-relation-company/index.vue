@@ -39,7 +39,7 @@
         <i-form-item label="注册资金" prop="regCapital"
                      :rules="{required: true, message: '请输入注册资金'}">
           <i-input v-model="formData.regCapital" placeholder="">
-            <span slot="append">元</span>
+            <span slot="append">万元</span>
           </i-input>
         </i-form-item>
         <i-form-item label="经营地址" prop="bizAddress"
