@@ -12,7 +12,10 @@
           <i-input style="width: 240px;" type="text" placeholder="权限名称" v-model="formSearch.moduleName"></i-input>
         </i-form-item>
         <i-form-item prop="moduleType">
-          <i-input style="width: 240px;" type="text" placeholder="权限类型" v-model="formSearch.moduleType"></i-input>
+          <i-select v-model="formSearch.moduleType">
+            <i-option value="" style="height: 26px; color: #bbbec4">-请选择-</i-option>
+            <i-option v-for="item in enumSelectData.get('ModuleTypeEnum')" :key="item.itemCode" :value="item.itemCode">{{item.itemName}}</i-option>
+          </i-select>
         </i-form-item>
         <i-form-item>
           <i-button @click="searchSubmit" type="primary"><i-icon type="ios-search-strong"></i-icon> 搜索</i-button>
@@ -52,7 +55,9 @@
               :rules="{required: true, message: '权限类型不能为空', trigger: 'blur'}"
               label="权限类型"
               prop="moduleType">
-              <i-input v-model="formData.moduleType" placeholder=""></i-input>
+              <i-select v-model="formData.moduleType">
+               <i-option v-for="item in enumSelectData.get('ModuleTypeEnum')" :key="item.itemCode" :value="item.itemCode">{{item.itemName}}</i-option>
+              </i-select>
             </i-form-item>
           </i-col>
           <i-col span="12">
@@ -64,20 +69,24 @@
           </i-col>
         </i-row>
         <i-row>
-          <i-col span="24">
+          <i-col span="12">
             <i-form-item
               label="备注"
               prop="remark">
               <i-input type="textarea" :rows="3" v-model="formData.remark" placeholder=""></i-input>
             </i-form-item>
           </i-col>
+          <i-col span="12">
+            <i-form-item
+              label="上级权限"
+              :rules="{required: true, message: '请选择上级权限', trigger: 'change'}"
+              prop="modulePname">
+              <i-input v-model="formData.modulePname" :readonly="true" placeholder="选择上级权限">
+                <i-button @click="showSelectModule=!showSelectModule" slot="append">选择上级权限 <Icon type="ios-more"></Icon></i-button>
+              </i-input>
+            </i-form-item>
+          </i-col>
         </i-row>
-        <i-form-item
-          class="required"
-          label="权限列表"
-          prop="moduleList">
-          <Tree class="scrollBarStyle" :data="moduleList" :multiple="false" show-checkbox ref="authorityTree" @on-check-change="authorityCheck" style="max-height: 480px;overflow-y: auto; background: #fafafa; padding: 0 5px;"></Tree>
-        </i-form-item>
         <div class="text-right">
           <i-button @click="saveAddSubimt" :loading="addFormLoading" type="success">
             <span v-if="!addFormLoading"><i class="iconfont icon-tijiao"></i> 提交</span>
@@ -86,16 +95,22 @@
         </div>
       </i-form>
     </bs-modal>
+    <!-- 选择上级权限-->
+    <bs-modal :width="880" v-model="showSelectModule" title="选择上级权限">
+      <tree-module v-if="showSelectModule" @on-row-dblclick="selectModule" :columns="treeModuleColumns" :data="treeModuleData"></tree-module>
+    </bs-modal>
   </div>
 </template>
 
 <script>
+  import TreeModule from '@/components/bs-tree-grid'; // 选择上级渠道商
   import BsModal from '@/components/bs-modal';
   import MixinData from './mixin-data';
   export default {
     name: 'merchantModuleList',
     mixins: [MixinData],
     components: {
+      TreeModule,
       BsModal
     },
     data() {
@@ -103,14 +118,30 @@
         isAdd: true,
         dataLoading: false,
         showAddModal: false,
+        addFormLoading: false,
+        showSelectModule: false,
         total: 0,
         pageSize: 15,
         currentPage: 1,
+        treeModuleColumns: [
+          {
+            headerText: '',
+            headerAlign: 'center',
+            dataAlign: 'center',
+            width: '20'
+          },
+          {
+            headerText: '上级权限（双击选择）',
+            dataField: 'title',
+            headerAlign: 'center',
+            handler: ''
+          }
+        ],
+        treeModuleData: [],
         formSearch: {
           moduleName: '',
           moduleType: ''
         },
-        moduleListCheck: [], // 勾选的权限
         formData: {
           moduleId: '',
           moduleName: '',
@@ -126,21 +157,25 @@
     },
     mounted() {
       this.getModuleList();
+      this.getModuleTreeData(); // 获取权限树形结构数据
     },
     methods: {
+      selectModule(id, index, treeData) {
+        this.$data.formData.modulePname = treeData.title;
+        this.$data.formData.modulePid = treeData.moduleId;
+        this.$data.showSelectModule = false;
+      },
       /**
-       * 获取渠道商权限列表
+       * 获取权限树形结构数据
        * @param id
        * @returns {Promise.<void>}
        */
-      async getTree(id) {
-        (typeof id === 'undefined') && (id = '');
-        let resp = await this.$http.post('/merchant/module/getMenuTree', { moduleId: id });
+      async getModuleTreeData() {
+        let resp = await this.$http.post('/merchant/module/getMenuTree');
         if (resp.success) {
-          this.$data.moduleList = resp.body;
-          this.authorityCheck();
+          this.$data.treeModuleData = resp.body;
         } else {
-          this.$data.moduleList = [];
+          this.$data.treeModuleData = [];
         }
       },
       // 查询列表数据
@@ -172,14 +207,12 @@
         this.$data.isAdd = true;
         this.$data.showAddModal = true;
         this.$data.formData = {};
-        this.getTree();
       },
       // 修改
       setRow(row) {
         this.$data.isAdd = false;
         this.$data.showAddModal = true;
         this.$data.formData = row;
-        this.getTree(row.moduleId);
       },
       // 新增保存ajax
       async addSubimtFun() {
@@ -207,12 +240,6 @@
       saveAddSubimt() {
         this.$data.addFormLoading = true;
         this.$refs['formData'].validate(async (valid) => {
-          await this.authorityCheck();
-          if (this.$data.moduleListCheck.length === 0) {
-            this.$Message.error('请勾选上级权限');
-            this.$data.addFormLoading = false;
-            return;
-          }
           if (valid) {
             if (this.$data.isAdd) {
               this.addSubimtFun();
@@ -224,21 +251,6 @@
           }
           this.$data.addFormLoading = false;
         });
-      },
-      /**
-       * 权限列表勾选的集合
-       * @returns {Promise.<{moduleList: *}>}
-       */
-      async authorityCheck() {
-        let checkRoleList = this.$refs.authorityTree.getCheckedNodes();
-        let RoleList = await checkRoleList.map((item) => {
-          return {
-            moduleId: item.moduleId,
-            parentId: item.parentId
-          };
-        });
-        this.$data.moduleListCheck = RoleList;
-        return { moduleList: RoleList };
       }
     }
   };

@@ -3,14 +3,6 @@ export default {
     return {
       moduleColumns: [
         {
-          title: '权限id',
-          key: 'moduleId'
-        },
-        {
-          title: '排序',
-          key: 'sort'
-        },
-        {
           title: '权限名称',
           key: 'moduleName'
         },
@@ -31,6 +23,10 @@ export default {
           key: 'remark'
         },
         {
+          title: '排序',
+          key: 'sort'
+        },
+        {
           title: '操作',
           width: 150,
           align: 'center',
@@ -43,7 +39,7 @@ export default {
                 },
                 on: {
                   click: () => {
-                    let rowData = $.extend({}, params.row);
+                    this.setRow($.extend({}, params.row));
                   }
                 }
               }, '修改'),
