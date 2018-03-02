@@ -2,7 +2,7 @@
   <section>
     <i-breadcrumb separator=">">
       <i-breadcrumb-item href="/">首页</i-breadcrumb-item>
-      <i-breadcrumb-item href="/index/loanbusiness">贷款业务</i-breadcrumb-item>
+      <i-breadcrumb-item href="/index/loanbusiness/toLeftNav">贷款业务</i-breadcrumb-item>
       <i-breadcrumb-item>客户意向订单详情</i-breadcrumb-item>
     </i-breadcrumb>
     <div class="form-top-actions"></div>

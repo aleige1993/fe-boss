@@ -23,8 +23,8 @@ let MyRouter = new Router({
         // 客户管理
         { path: 'customer', name: 'customer', component: resolve => require(['@/pages/customer-manage'],resolve),
           children: [
-            { path: '/', name: 'toLeftNav', component: resolve => require(['@/components/to-left-nav'], resolve)},
-            { path: 'privateCustomer', name: 'privateCustomer', component: resolve => require(['@/pages/customer-manage/private-customer'],resolve),
+            { path: 'toLeftNav', name: 'toLeftNav', component: resolve => require(['@/components/to-left-nav'], resolve)},
+            { path: '/', name: 'privateCustomer', component: resolve => require(['@/pages/customer-manage/private-customer'],resolve),
               children: [
                 { path: '/', component: resolve => require(['@/pages/customer-manage/private-customer/customer-list'],resolve), meta: {keepAlive: false} },
                 { path: 'add', name: 'addPrivateCustomer', component: resolve => require(['@/pages/customer-manage/private-customer/customer-add'],resolve), meta: {keepAlive: false} },
@@ -72,7 +72,9 @@ let MyRouter = new Router({
         // 配置管理
         { path: 'conf', name: 'ConfigurationManage', component: resolve => { require(['@/pages/configuration-manage'], resolve) },
           children: [
-            { path: '/', name: 'toLeftNav', component: resolve => require(['@/components/to-left-nav'], resolve)},
+            { path: 'toLeftNav', name: 'toLeftNav', component: resolve => require(['@/components/to-left-nav'], resolve)},
+            // 配置管理-产品配置(设置其为根路径)
+            { path: '/', name: 'confProduct', props: { aaa: 'bbb' }, component: resolve => { require(['@/pages/configuration-manage/manage-product/product-list/index.vue'], resolve) } },
             // 配置管理-产品配置
             { path: 'product', name: 'Product', component: resolve => { require(['@/pages/configuration-manage/manage-product'], resolve) },
               children: [
@@ -161,9 +163,9 @@ let MyRouter = new Router({
         {
           path: 'loanbusiness', name: 'loanBusiness', component: resolve => require(['@/pages/loan-business'], resolve),
           children: [
-            { path: '/', name: 'toLeftNav', component: resolve => require(['@/components/to-left-nav'], resolve)},
+            { path: 'toLeftNav', name: 'toLeftNav', component: resolve => require(['@/components/to-left-nav'], resolve)},
             // 贷款业务-业务审批
-            { path: 'loanList', name: 'loanBusinessList',  props: { 'taskNode': '', breadcrumbName: '所有订单列表'}, component: resolve => require(['@/pages/loan-business/business-list'], resolve)},
+            { path: '/', name: 'loanBusinessList',  props: { 'taskNode': '', breadcrumbName: '所有订单列表'}, component: resolve => require(['@/pages/loan-business/business-list'], resolve)},
             { path: 'mypending', name: 'loanBusinessMyPendingList',  props: { 'taskNode': '0;1', status: '0;1;3', breadcrumbName: '待提交订单列表'}, component: resolve => require(['@/pages/loan-business/business-list'], resolve)},
             { path: 'firstapprove', name: 'loanBusinessFirstApproveList', props: { 'taskNode': '3', breadcrumbName: '业务初审'}, component: resolve => require(['@/pages/loan-business/business-list'], resolve)},
             { path: 'firststageapprove', name: 'loanBusinessFirstStageApproveList', props: { 'taskNode': '4', breadcrumbName: '业务一级审批'}, component: resolve => require(['@/pages/loan-business/business-list'], resolve)},
@@ -207,9 +209,9 @@ let MyRouter = new Router({
         // 合同管理
         { path: 'contract', name: 'loanContractManage', component: resolve => require(['@/pages/contract-manage'], resolve),
           children: [
-            { path: '/', name: 'toLeftNav', component: resolve => require(['@/components/to-left-nav'], resolve)},
+            { path: 'toLeftNav', name: 'toLeftNav', component: resolve => require(['@/components/to-left-nav'], resolve)},
             // 合同管理->待制作合同列表
-            { path: 'list', name: 'loanContractMakingList', component: resolve => require(['@/pages/contract-manage/contract-list'], resolve)},
+            { path: '/', name: 'loanContractMakingList', component: resolve => require(['@/pages/contract-manage/contract-list'], resolve)},
             // 合同管理->个人业务合同制作
             { path: 'making', name: 'loanContractMakingTab', component: resolve => require(['@/pages/contract-manage/contract-making-tab'], resolve)},
             // 合同管理->待签署合同列表
@@ -226,7 +228,7 @@ let MyRouter = new Router({
         {
           path: 'financemanage', name: 'financeManage', component: resolve => require(['@/pages/finance-manage'], resolve),
           children: [
-            { path: '/', name: 'toLeftNav', component: resolve => require(['@/components/to-left-nav'], resolve)},
+            { path: 'toLeftNav', name: 'toLeftNav', component: resolve => require(['@/components/to-left-nav'], resolve)},
             // 代付管理
             { path: 'proxypay', name: 'financeProxypay', component: resolve => require(['@/pages/finance-manage/proxy-pay'], resolve)},
             // 代收管理
@@ -245,7 +247,8 @@ let MyRouter = new Router({
         {
           path: 'operate', name: 'financeManage', component: resolve => require(['@/pages/operate-manage'], resolve),
           children: [
-            { path: '/', name: 'toLeftNav', component: resolve => require(['@/components/to-left-nav'], resolve)},
+            { path: 'toLeftNav', name: 'toLeftNav', component: resolve => require(['@/components/to-left-nav'], resolve)},
+            { path: '/', name: 'loanManage', component: resolve => require(['@/pages/operate-manage/loan-manage/loan-condition-list'], resolve) },
             // 运营管理-放款管理
             { path: 'loan', name: 'loanManage', component: resolve => require(['@/pages/operate-manage/loan-manage'], resolve),
               children: [

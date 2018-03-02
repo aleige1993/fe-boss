@@ -3,7 +3,7 @@
   <div id="page-lending">
     <i-breadcrumb separator="&gt;">
       <i-breadcrumb-item href="/">首页</i-breadcrumb-item>
-      <i-breadcrumb-item href="/index/conf">配置管理</i-breadcrumb-item>
+      <i-breadcrumb-item href="/index/conf/toLeftNav">配置管理</i-breadcrumb-item>
       <i-breadcrumb-item href="/index/conf/product">产品配置</i-breadcrumb-item>
       <i-breadcrumb-item>放款条件配置</i-breadcrumb-item>
     </i-breadcrumb>

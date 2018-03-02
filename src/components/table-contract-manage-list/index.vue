@@ -3,7 +3,7 @@
   <div id="contractMaking">
     <i-breadcrumb separator=">">
       <i-breadcrumb-item href="/">首页</i-breadcrumb-item>
-      <i-breadcrumb-item v-if="this.taskNode==='6'" href="/index/contract">合同管理</i-breadcrumb-item>
+      <i-breadcrumb-item v-if="this.taskNode==='6'" href="/index/contract/toLeftNav">合同管理</i-breadcrumb-item>
       <i-breadcrumb-item v-if="this.taskNode==='8'" href="/index/contract/sigin">合同管理</i-breadcrumb-item>
 
       <i-breadcrumb-item v-if="this.taskNode==='6'">待制作合同列表</i-breadcrumb-item>
