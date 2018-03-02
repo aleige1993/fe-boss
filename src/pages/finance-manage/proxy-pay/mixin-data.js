@@ -55,7 +55,7 @@ export default {
         {
           title: '收款人身份证号',
           key: 'transCardId',
-          width: 160
+          width: 170
         },
         {
           title: '银行卡预留手机号',
