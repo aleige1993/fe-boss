@@ -2,7 +2,7 @@
   <div id="">
     <i-breadcrumb separator=">">
       <i-breadcrumb-item href="/">首页</i-breadcrumb-item>
-      <i-breadcrumb-item href="/index/loanbusiness/toLeftNav">贷款业务</i-breadcrumb-item>
+      <i-breadcrumb-item href="/index/loanbusiness/toleftnav">贷款业务</i-breadcrumb-item>
       <i-breadcrumb-item>{{breadCrumbName}}</i-breadcrumb-item>
     </i-breadcrumb>
     <div class="form-top-actions"></div>

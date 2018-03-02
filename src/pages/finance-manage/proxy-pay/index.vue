@@ -2,7 +2,7 @@
   <div id="page-table-demo">
     <i-breadcrumb separator=">">
       <i-breadcrumb-item href="/">首页</i-breadcrumb-item>
-      <i-breadcrumb-item href="/index/financemanage/toLeftNav">财务管理</i-breadcrumb-item>
+      <i-breadcrumb-item href="/index/financemanage/toleftnav">财务管理</i-breadcrumb-item>
       <i-breadcrumb-item>代付管理</i-breadcrumb-item>
     </i-breadcrumb>
     <div class="search-form-container">
@@ -11,13 +11,13 @@
           <i-input type="text" v-model="searchForm.projectNo" placeholder="项目编号"></i-input>
         </i-form-item>
         <i-form-item prop="password">
-          <i-input v-model="searchForm.toAccName" type="text" placeholder="收款人名称"></i-input>
+          <i-input v-model="searchForm.toAccName" type="text" placeholder="收款人姓名"></i-input>
         </i-form-item>
         <i-form-item prop="password">
           <i-input v-model="searchForm.transCardId" type="text" placeholder="证件号码"></i-input>
         </i-form-item>
         <i-form-item prop="password">
-          预计放款时间
+          预计付款时间
         </i-form-item>
         <i-form-item prop="password">
           <bs-datepicker v-model="searchForm.btime" type="text" placeholder="查询时间"></bs-datepicker>
@@ -29,7 +29,7 @@
           <bs-datepicker v-model="searchForm.etime" type="text" placeholder="查询时间"></bs-datepicker>
         </i-form-item>
         <i-form-item prop="password">
-          <i-select style="width: 120px;" v-model="searchForm.orderStat" placeholder="付款状态">
+          <i-select style="width: 120px;" v-model="searchForm.state" placeholder="付款状态">
             <i-option value="" style="height: 26px; color: #bbbec4">-请选择-</i-option>
             <i-option v-for="item in certTypeEnum" :value="item.itemCode" :key="item.itemCode">{{item.itemName}}</i-option>
           </i-select>

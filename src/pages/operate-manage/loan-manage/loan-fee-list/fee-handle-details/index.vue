@@ -3,7 +3,7 @@
   <div id="fee-loan-handle-details">
     <i-breadcrumb separator=">">
       <i-breadcrumb-item href="/">首页</i-breadcrumb-item>
-      <i-breadcrumb-item href="/index/operate/toLeftNav">运营管理</i-breadcrumb-item>
+      <i-breadcrumb-item href="/index/operate/toleftnav">运营管理</i-breadcrumb-item>
       <i-breadcrumb-item href="/index/operate/loan/fee">放款费用落实列表</i-breadcrumb-item>
       <i-breadcrumb-item>放款费用落实详情</i-breadcrumb-item>
     </i-breadcrumb>

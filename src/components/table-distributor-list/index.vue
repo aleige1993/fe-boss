@@ -104,7 +104,7 @@
         this.$data.dataLoading = false;
         if (resp.success) {
           this.$data.distributorList = resp.body.resultList;
-          this.$data.currentPage = resp.body.currentPage;
+          this.$data.currentPage = resp.body.currentPage / 1;
           this.$data.total = resp.body.totalNum / 1;
         } else {
           this.$data.distributorList = [];

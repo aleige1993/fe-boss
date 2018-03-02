@@ -1,6 +1,6 @@
 <template>
 <!--点击一级菜单之后的公用页面（除首页外）-->
-  <div id="toLeftNavImange">
+  <div id="toleftnavImange">
     <dl>
       <dt>
         <img src="./to-left-nav.gif" alt=">请点选左边菜单～">
@@ -12,14 +12,14 @@
 
 <script>
   export default {
-    name: 'toLeftNavImange',
+    name: 'toleftnavImange',
     data: () => ({})
   };
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style lang="scss" scoped>
-#toLeftNavImange {
+#toleftnavImange {
   position: absolute;
   top: 90px;
   bottom: 0;

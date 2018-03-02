@@ -75,10 +75,10 @@ export default {
         {
           title: '车况',
           width: 120,
-          key: 'evalGrade',
+          key: 'carStatus',
           render: (h, params) => {
             // console.log(this.$store.getters.enumSelectData.get('CarConditionEnum'));
-            return h('span', {}, this.enumCode2Name(params.row.evalGrade, 'CarConditionEnum'));
+            return h('span', {}, this.enumCode2Name(params.row.carStatus, 'CarConditionEnum'));
           }
         },
         {

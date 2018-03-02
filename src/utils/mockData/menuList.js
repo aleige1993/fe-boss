@@ -10,7 +10,7 @@ export default [
           // 客户档案
           {
             name: '客户档案',
-            url: '/index/customer/toLeftNav',
+            url: '/index/customer/toleftnav',
             childMenus: [
               {
                 name: '个人客户管理',
@@ -50,7 +50,7 @@ export default [
           // 贷款业务
           {
             name: '贷款业务',
-            url: '/index/loanbusiness/toLeftNav',
+            url: '/index/loanbusiness/toleftnav',
             childMenus: [
               {
                 name: '业务受理',
@@ -90,7 +90,7 @@ export default [
           // 合同管理(原签约合同)
           {
             name: '合同管理',
-            url: '/index/contract/toLeftNav',
+            url: '/index/contract/toleftnav',
             childMenus: [
               {
                 name: '合同管理',
@@ -106,7 +106,7 @@ export default [
           // 运营管理
           {
             name: '运营管理',
-            url: '/index/operate/toLeftNav',
+            url: '/index/operate/toleftnav',
             childMenus: [
               { name: '放款管理',
                 url: '/index/operate/loan',
@@ -127,7 +127,7 @@ export default [
           // 配置管理
           {
             name: '配置管理',
-            url: '/index/conf/toLeftNav',
+            url: '/index/conf/toleftnav',
             childMenus: [
               {
                 name: '产品配置',
