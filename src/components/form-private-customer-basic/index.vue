@@ -57,7 +57,7 @@
               <i-col span="8">
                 <i-form-item label="证件号码" prop="mbMemberDTO.certNo"
                   :rules="{required: true, message: '证件号码不能为空', trigger: 'blur'}">
-                  <i-input :readonly="isFromDetail" @on-blur="verifyCertNo" v-model.lazy="formData.mbMemberDTO.certNo"></i-input>
+                  <i-input :readonly="isFromDetail" v-model.lazy="formData.mbMemberDTO.certNo"></i-input>
                 </i-form-item>
               </i-col>
               <i-col span="8">
