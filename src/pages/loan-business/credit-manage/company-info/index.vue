@@ -85,8 +85,8 @@
               <i-col span="18">
                 <i-form-item label="注册地址">
                   {{formData.baseDTO.regProvinceName}}
-                  {{formData.baseDTO.regDistrictName}}
                   {{formData.baseDTO.regCityName}}
+                  {{formData.baseDTO.regDistrictName}}
                 </i-form-item>
               </i-col>
             </i-row>
@@ -94,8 +94,8 @@
               <i-col span="18">
                 <i-form-item label="营业地址">
                   {{formData.baseDTO.bizProvinceName}}
-                  {{formData.baseDTO.bizDistrictName}}
                   {{formData.baseDTO.bizCityName}}
+                  {{formData.baseDTO.bizDistrictName}}
                 </i-form-item>
               </i-col>
             </i-row>

@@ -87,8 +87,8 @@
                 <i-form-item label="注册地址" prop="baseDTO.regRoadAddr">
                   <span>
                     {{formData.baseDTO.regProvinceName}}
-                    {{formData.baseDTO.regDistrictName}}
                     {{formData.baseDTO.regCityName}}
+                    {{formData.baseDTO.regDistrictName}}
                   </span>
                   <span v-text="formData.baseDTO.regRoadAddr" style="width: 220px;"></span>
                 </i-form-item>
@@ -99,8 +99,8 @@
                 <i-form-item label="营业地址" prop="baseDTO.bizRoadAddr">
                   <span>
                     {{formData.baseDTO.bizProvinceName}}
-                    {{formData.baseDTO.bizDistrictName}}
                     {{formData.baseDTO.bizCityName}}
+                    {{formData.baseDTO.bizDistrictName}}
                   </span>
                   <span v-text="formData.baseDTO.bizRoadAddr" style="width: 220px;"></span>
                 </i-form-item>
