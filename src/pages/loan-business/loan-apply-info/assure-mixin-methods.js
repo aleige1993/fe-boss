@@ -15,7 +15,6 @@ export default {
      * 选择担保人类型
      */
     loanApplyAssureChanged(value) {
-      alert(value);
       this.$refs['formAssure'].resetFields();
       this.$data.formAssure.guaPersonType = value;
     },
