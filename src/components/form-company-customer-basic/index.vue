@@ -95,8 +95,8 @@
               <i-col span="18">
                 <i-form-item v-if="isFromDetail" label="注册地址">
                   {{formData.baseDTO.regProvinceName}}
-                  {{formData.baseDTO.regDistrictName}}
                   {{formData.baseDTO.regCityName}}
+                  {{formData.baseDTO.regDistrictName}}
                 </i-form-item>
                 <i-form-item v-else label="注册地址" prop="baseDTO.regCityCode">
                   <input type="hidden" v-model="formData.baseDTO.regCityCode"/>
@@ -114,8 +114,8 @@
               <i-col span="18">
                 <i-form-item v-if="isFromDetail" label="营业地址">
                   {{formData.baseDTO.bizProvinceName}}
-                  {{formData.baseDTO.bizDistrictName}}
                   {{formData.baseDTO.bizCityName}}
+                  {{formData.baseDTO.bizDistrictName}}
                 </i-form-item>
                 <i-form-item v-else label="营业地址" prop="baseDTO.bizCityCode">
                   <input type="hidden" v-model="formData.baseDTO.bizCityCode"/>
