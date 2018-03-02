@@ -97,6 +97,7 @@
                   {{formData.baseDTO.regProvinceName}}
                   {{formData.baseDTO.regCityName}}
                   {{formData.baseDTO.regDistrictName}}
+                  {{formData.baseDTO.regRoadAddr}}
                 </i-form-item>
                 <i-form-item v-else label="注册地址" prop="baseDTO.regCityCode">
                   <input type="hidden" v-model="formData.baseDTO.regCityCode"/>
@@ -116,6 +117,7 @@
                   {{formData.baseDTO.bizProvinceName}}
                   {{formData.baseDTO.bizCityName}}
                   {{formData.baseDTO.bizDistrictName}}
+                  {{formData.baseDTO.bizRoadAddr}}
                 </i-form-item>
                 <i-form-item v-else label="营业地址" prop="baseDTO.bizCityCode">
                   <input type="hidden" v-model="formData.baseDTO.bizCityCode"/>
