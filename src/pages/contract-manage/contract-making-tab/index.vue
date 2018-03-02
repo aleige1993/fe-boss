@@ -253,7 +253,7 @@
             this.$Message.success('提交成功！');
             // 初审 回到合同制作列表
             this.$router.push({
-              path: '/index/contract',
+              path: '/index/contract/list',
               query: {
                 currentPage: this.$route.query.currentPage
               }

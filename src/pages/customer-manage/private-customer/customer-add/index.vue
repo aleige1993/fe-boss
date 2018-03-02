@@ -3,7 +3,7 @@
     <i-breadcrumb separator=">">
       <i-breadcrumb-item href="/">首页</i-breadcrumb-item>
       <i-breadcrumb-item href="/index/customer">客户档案</i-breadcrumb-item>
-      <i-breadcrumb-item href="/index/customer">个人客户管理</i-breadcrumb-item>
+      <i-breadcrumb-item href="/index/customer/privateCustomer">个人客户管理</i-breadcrumb-item>
       <i-breadcrumb-item>客户添加</i-breadcrumb-item>
     </i-breadcrumb>
     <div class="form-top-actions"></div>

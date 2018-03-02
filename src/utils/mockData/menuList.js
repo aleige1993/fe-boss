@@ -14,9 +14,9 @@ export default [
             childMenus: [
               {
                 name: '个人客户管理',
-                url: '/index/customer',
+                url: '/index/customer/privateCustomer',
                 childMenus: [
-                  { name: '个人客户列表', url: '/index/customer' },
+                  { name: '个人客户列表', url: '/index/customer/privateCustomer' },
                   { name: '个人客户添加', url: '/index/customer/add' }
                 ]
               },
@@ -65,7 +65,7 @@ export default [
                 name: '业务审批',
                 url: '/index/loanbusiness',
                 childMenus: [
-                  { name: '业务初审', url: '/index/loanbusiness' }
+                  { name: '业务初审', url: '/index/loanbusiness/firststageapprove' }
                 ]
               },
               /* {
@@ -96,7 +96,7 @@ export default [
                 name: '合同管理',
                 url: '/index/contract',
                 childMenus: [
-                  { name: '待制作合同列表', url: '/index/contract' },
+                  { name: '待制作合同列表', url: '/index/contract/list' },
                   { name: '待签署合同确认', url: '/index/contract/sign' },
                   { name: '已签署合同列表', url: '/index/contract/signSucceed' }
                 ]
@@ -127,11 +127,11 @@ export default [
           // 配置管理
           {
             name: '配置管理',
-            url: '/index/conf/product',
+            url: '/index/conf',
             childMenus: [
               {
                 name: '产品配置',
-                url: '/index/conf',
+                url: '/index/conf/product',
                 childMenus: [
                   { name: '产品列表', url: '/index/conf/product' },
                   { name: '贷款材料配置', url: '/index/conf/product/loan' },
