@@ -3,7 +3,7 @@
   <div id="page-file">
     <i-breadcrumb separator="&gt;">
       <i-breadcrumb-item href="/">首页</i-breadcrumb-item>
-      <i-breadcrumb-item href="/index/conf">配置管理</i-breadcrumb-item>
+      <i-breadcrumb-item href="/index/conf/toLeftNav">配置管理</i-breadcrumb-item>
       <i-breadcrumb-item href="/index/conf/product">产品配置</i-breadcrumb-item>
       <i-breadcrumb-item>归档材料配置</i-breadcrumb-item>
     </i-breadcrumb>
@@ -16,10 +16,10 @@
     </div>
     <pt-modal :title="isAdd ? '新增' : '修改'" v-model="showAddModal">
       <i-form  ref="formCustom" :model="formCustom" label-position="left" :label-width="100">
-        <i-form-item label="归档材料名称" prop="finishedDocName">
+        <i-form-item label="归档材料名称" prop="finishedDocName" :rules="{required: true, message: '归档材料名称不能为空', trigger: 'blur'}">
           <i-input v-model="formCustom.finishedDocName" type="textarea" :autosize="{minRows: 2,maxRows: 5}" placeholder="请输入归档材料名称..."></i-input>
         </i-form-item>
-        <i-form-item label="客户类型" prop="approveRuleName">
+        <i-form-item label="客户类型" prop="custType" :rules="{required: true, message: '请选择客户类型', trigger: 'change'}">
           <i-select v-model="formCustom.custType" placeholder="请选择客户类型">
             <i-option v-for="item in enumSelectData.get('CustTypeEnum')" :value="item.itemCode" :key="item.itemCode">{{item.itemName}}</i-option>
           </i-select>
@@ -143,13 +143,17 @@
       },
       // 新增模态框的保存按钮点击事件
       formSubmit() {
-        this.$data.buttonLoading = true;
-        // 如果是新增
-        if (this.isAdd) {
-          this.addSuBmit();
-        } else {
-          this.setSubmit();
-        }
+        this.$refs['formCustom'].validate((valid) => {
+          if (valid) {
+            this.$data.buttonLoading = true;
+            // 如果是新增
+            if (this.isAdd) {
+              this.addSuBmit();
+            } else {
+              this.setSubmit();
+            }
+          }
+        });
       },
       handleCancel() {
         this.$data.showAddModal = false;

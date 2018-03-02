@@ -15,7 +15,7 @@
           <i-input style="width: 240px;" type="text" placeholder="上级权限名称" v-model="formSearch.modulePname"></i-input>
         </i-form-item>
         <i-form-item prop="moduleType">
-          <i-select v-model="formSearch.moduleType">
+          <i-select v-model="formSearch.moduleType" placeholder="权限类型">
             <i-option value="" style="height: 26px; color: #bbbec4">-请选择-</i-option>
             <i-option v-for="item in enumSelectData.get('ModuleTypeEnum')" :key="item.itemCode" :value="item.itemCode">{{item.itemName}}</i-option>
           </i-select>
@@ -175,7 +175,7 @@
        * @returns {Promise.<void>}
        */
       async getModuleTreeData() {
-        let resp = await this.$http.post('/merchant/module/getMenuTree');
+        let resp = await this.$http.post('/merchant/module/getMenuTree', {});
         if (resp.success) {
           this.$data.treeModuleData = resp.body;
         } else {

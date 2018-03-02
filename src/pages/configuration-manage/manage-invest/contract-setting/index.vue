@@ -2,7 +2,7 @@
   <div id="page-table">
     <i-breadcrumb separator=">">
       <i-breadcrumb-item href="/">首页</i-breadcrumb-item>
-      <i-breadcrumb-item href="/index/conf">配置管理</i-breadcrumb-item>
+      <i-breadcrumb-item href="/index/conf/toLeftNav">配置管理</i-breadcrumb-item>
       <i-breadcrumb-item href="/index/conf/invest">资方管理</i-breadcrumb-item>
       <i-breadcrumb-item href="/index/conf/invest/contract">合同模板维护</i-breadcrumb-item>
       <i-breadcrumb-item>参数配置</i-breadcrumb-item>

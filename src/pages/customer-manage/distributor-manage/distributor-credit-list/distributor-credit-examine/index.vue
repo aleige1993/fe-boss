@@ -205,9 +205,11 @@
       submitFun() {
         this.$refs['approveDto'].validate((valid) => {
           if (valid) {
-            if (!this.$DateTest.testDateFun(this.$data.formQuota.creditStartDate, this.$data.formQuota.creditEndDate)) {
-              this.$Message.error('“授信起始日期”不能大于“授信到期日期”');
-              return;
+            if (this.$data.approveDto.auditOpinion === 'A') {
+              if (!this.$DateTest.testDateFun(this.$data.formQuota.creditStartDate, this.$data.formQuota.creditEndDate)) {
+                this.$Message.error('“授信起始日期”不能大于“授信到期日期”');
+                return;
+              }
             }
             this.submiting();
           } else {

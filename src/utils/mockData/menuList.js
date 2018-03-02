@@ -10,7 +10,7 @@ export default [
           // 客户档案
           {
             name: '客户档案',
-            url: '/index/customer',
+            url: '/index/customer/toLeftNav',
             childMenus: [
               {
                 name: '个人客户管理',
@@ -50,7 +50,7 @@ export default [
           // 贷款业务
           {
             name: '贷款业务',
-            url: '/index/loanbusiness',
+            url: '/index/loanbusiness/toLeftNav',
             childMenus: [
               {
                 name: '业务受理',
@@ -65,7 +65,7 @@ export default [
                 name: '业务审批',
                 url: '/index/loanbusiness',
                 childMenus: [
-                  { name: '业务初审', url: '/index/loanbusiness' }
+                  { name: '业务初审', url: '/index/loanbusiness/firststageapprove' }
                 ]
               },
               /* {
@@ -90,13 +90,13 @@ export default [
           // 合同管理(原签约合同)
           {
             name: '合同管理',
-            url: '/index/contract',
+            url: '/index/contract/toLeftNav',
             childMenus: [
               {
                 name: '合同管理',
                 url: '/index/contract',
                 childMenus: [
-                  { name: '待制作合同列表', url: '/index/contract' },
+                  { name: '待制作合同列表', url: '/index/contract/list' },
                   { name: '待签署合同确认', url: '/index/contract/sign' },
                   { name: '已签署合同列表', url: '/index/contract/signSucceed' }
                 ]
@@ -106,7 +106,7 @@ export default [
           // 运营管理
           {
             name: '运营管理',
-            url: '/index/operate',
+            url: '/index/operate/toLeftNav',
             childMenus: [
               { name: '放款管理',
                 url: '/index/operate/loan',
@@ -127,11 +127,11 @@ export default [
           // 配置管理
           {
             name: '配置管理',
-            url: '/index/conf/product',
+            url: '/index/conf/toLeftNav',
             childMenus: [
               {
                 name: '产品配置',
-                url: '/index/conf',
+                url: '/index/conf/product',
                 childMenus: [
                   { name: '产品列表', url: '/index/conf/product' },
                   { name: '贷款材料配置', url: '/index/conf/product/loan' },

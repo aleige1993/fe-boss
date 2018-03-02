@@ -2,7 +2,7 @@
   <div id="customer-intention-order-list">
     <i-breadcrumb separator=">">
       <i-breadcrumb-item href="/">首页</i-breadcrumb-item>
-      <i-breadcrumb-item href="/index/loanbusiness">贷款业务</i-breadcrumb-item>
+      <i-breadcrumb-item href="/index/loanbusiness/toLeftNav">贷款业务</i-breadcrumb-item>
       <i-breadcrumb-item>APP订单列表</i-breadcrumb-item>
     </i-breadcrumb>
     <div class="form-block-title">

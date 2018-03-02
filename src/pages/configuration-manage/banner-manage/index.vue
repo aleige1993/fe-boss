@@ -2,7 +2,7 @@
   <div id="page-table-demo">
     <i-breadcrumb separator=">">
       <i-breadcrumb-item href="">首页</i-breadcrumb-item>
-      <i-breadcrumb-item href="/index/conf">配置管理</i-breadcrumb-item>
+      <i-breadcrumb-item href="/index/conf/toLeftNav">配置管理</i-breadcrumb-item>
       <i-breadcrumb-item>banner管理</i-breadcrumb-item>
     </i-breadcrumb>
     <div class="form-top-actions">
