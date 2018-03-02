@@ -198,7 +198,7 @@
                 <i-form-item v-if="readonly">
                   <i-input type="text" :readonly="true" v-model="approveData.loanPaymentAccountDTOS.acctNo"></i-input>
                 </i-form-item>
-                <i-form-item v-else label="账号" prop="loanPaymentAccountDTOS.openBankName"
+                <i-form-item v-else label="账号" prop="loanPaymentAccountDTOS.acctNo"
                              :rules="{required: true, message: '请选择放款账户账号'}">
                   <i-select :disabled="readonly" :value="approveData.loanPaymentAccountDTOS.acctNo" @on-change="paymentAccountChange" :label-in-value="true">
                     <i-option v-for="item in paymentAccountList" :key="item.acctNo" :value="item.acctNo">{{item.acctNo}}</i-option>
