@@ -16,7 +16,7 @@
                       :readonly="firstApproveInfoReadonly || isFromDetail" :isApprove="isApprove">
         </approve-info>
       </i-tab-pane>
-      <i-tab-pane label="人行征信报告" name="tabCreditInfo" v-if="taskNode !== '1' && taskNode !== '0' && taskNode !== '4'" :disabled="formData.custType === '2'">
+      <i-tab-pane label="人行征信报告" name="tabCreditInfo" v-if="taskNode !== '1' && taskNode !== '0'" :disabled="formData.custType === '2'">
         <i-checkbox v-if="showCreditCheckbox" v-model="isHasCheckCreditReport">&nbsp;&nbsp;已查看征信报告</i-checkbox>
         <div v-if="isCreditEerror" style="color: red; padding: 20px 0">暂无征信查询结果！</div>
         <br>

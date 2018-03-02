@@ -14,8 +14,7 @@
         <i-form-item label="股东类别" prop="partnerType"
                      :rules="{required: true, message: '请选择股东类别'}">
           <i-select v-model="formData.partnerType" id="u5568_input" placeholder="">
-            <i-option value="1">公司</i-option>
-            <i-option value="2">个人</i-option>
+            <i-option v-for="item in enumSelectData.get('CustTypeEnum')" :key="item.itemCode" :value="item.itemCode">{{item.itemName}}</i-option>
           </i-select>
         </i-form-item>
         <i-form-item label="出资额" prop="investAmt"

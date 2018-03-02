@@ -254,7 +254,8 @@ export default {
       });
       if (filterAry.length > 0) {
         this.$data.approveData.loanPaymentAccountDTOS.acctNo = filterAry[0].acctNo;
-        this.$data.approveData.loanPaymentAccountDTOS.bankName = filterAry[0].bankName;
+        this.$data.approveData.loanPaymentAccountDTOS.acctName = filterAry[0].acctName;
+        this.$data.approveData.loanPaymentAccountDTOS.openBankName = filterAry[0].bankName;
         this.$data.approveData.loanPaymentAccountDTOS.bankCode = filterAry[0].bankCode;
       }
     },
@@ -264,7 +265,8 @@ export default {
       });
       if (filterAry.length > 0) {
         this.$data.approveData.loanRePaymentAccountDTOS.acctNo = filterAry[0].acctNo;
-        this.$data.approveData.loanRePaymentAccountDTOS.bankName = filterAry[0].bankName;
+        this.$data.approveData.loanRePaymentAccountDTOS.acctName = filterAry[0].acctName;
+        this.$data.approveData.loanRePaymentAccountDTOS.openBankName = filterAry[0].bankName;
         this.$data.approveData.loanRePaymentAccountDTOS.bankCode = filterAry[0].bankCode;
       }
     },
