@@ -16,7 +16,7 @@
       </div>
     </table-distributor-list>
     <!--新增修改模态框-->
-    <bs-modal :title="isAdd ? '新增' : '修改'" v-model="showAddModal" :width="1000">
+    <bs-modal :title="isAdd ? '新增' : '修改'" v-model="showAddModal" :width="1000" @on-close="cancelFun">
       <i-form v-if="showAddModal" ref="formAdd" :model="formAdd" label-position="right" :label-width="120" style="padding: 30px 0;">
         <i-row :gutter="16">
           <i-col span="12">
@@ -176,17 +176,22 @@
       </i-form>
     </bs-modal>
 
-    <bs-modal :title="'新增'" v-model="showAreaAddModal" :width="520">
+    <bs-modal :title="'新增'" v-model="showAreaAddModal" :width="800">
       <i-form v-if="showAreaAddModal" ref="areaForm" :model="areaForm" label-position="right" :label-width="120" style="padding-bottom:0;">
         <i-form-item
           label="渠道商服务地区"
-          :rules="{required: true, message: '请选择渠道商服务地区', trigger: 'change'}"
-          prop="districtCode">
-          <input type="hidden" v-model="areaForm.districtCode">
-          <bs-dispicker-two :filterCQ="true"
+          class="required"
+          prop="provinceCode">
+          <input type="hidden" v-model="areaForm.provinceCode">
+          <bs-dispicker :currProvince="areaForm.provinceCode"
+                        :currDistrict="areaForm.districtCode"
+                        :currCity="areaForm.cityCode"
+                        @on-change="selectNowDistance">
+          </bs-dispicker>
+          <!--<bs-dispicker-two :filterCQ="true"
                             :currProvinceCode="areaForm.provinceCode"
                             :currDistrictCode="areaForm.districtCode"
-                            @on-change="selectNowDistance"></bs-dispicker-two>
+                            @on-change="selectNowDistance"></bs-dispicker-two>-->
         </i-form-item>
         <i-form-item class="text-right">
           <i-button type="primary" @click="areaFormAddSuBmit">提交</i-button>
@@ -210,6 +215,7 @@
 </template>
 <script>
   import TreeMerchant from '@/components/bs-tree-grid'; // 选择上级渠道商
+  import BsDispicker from '@/components/bs-dispicker';
   import TableCompanyCustomerList from '@/components/table-company-customer-list'; // 选择客户公司
   import TableCustomerList from '@/components/table-customer-list'; // 选择客户个人
   import tableDistributorList from '@/components/table-distributor-list';
@@ -217,6 +223,15 @@
   import BsDispickerTwo from '@/components/bs-dispicker-two';
   export default {
     name: 'distributorList',
+    components: {
+      BsModal,
+      TreeMerchant,
+      BsDispicker,
+      BsDispickerTwo,
+      tableDistributorList,
+      TableCustomerList,
+      TableCompanyCustomerList
+    },
     data() {
       return {
         showAddModal: false,
@@ -227,7 +242,9 @@
           'provinceName': '',
           'provinceCode': '',
           'districtName': '',
-          'districtCode': ''
+          'districtCode': '',
+          'cityCode': '',
+          'cityName': ''
         },
         treeMerchantData: [],
         treeMerchantColumns: [
@@ -294,12 +311,16 @@
         pageSize: 15,
         areaColumns: [
           {
-            title: '省',
+            title: '省/直辖市',
             width: 200,
             key: 'provinceName'
           },
           {
             title: '市',
+            key: 'cityName'
+          },
+          {
+            title: '区/县',
             key: 'districtName'
           },
           {
@@ -326,17 +347,9 @@
         ]
       };
     },
-    components: {
-      BsModal,
-      TreeMerchant,
-      BsDispickerTwo,
-      tableDistributorList,
-      TableCustomerList,
-      TableCompanyCustomerList
-    },
     watch: {
       'formAdd.customerType'(newVal, oldVal) {
-        if (oldVal !== '') {
+        if ((oldVal !== '') && (typeof oldVal !== 'undefined')) {
           this.$data.formAdd.corpName = '';
           this.$data.formAdd.corpNo = '';
         }
@@ -356,12 +369,14 @@
       this.getMerchantPidData();
     },
     methods: {
-      // 城市两级联动
+      // 城市联动
       selectNowDistance(city) {
         this.$data.areaForm.provinceCode = city.provinceCode;
         this.$data.areaForm.provinceName = city.provinceName;
         this.$data.areaForm.districtCode = city.districtCode;
         this.$data.areaForm.districtName = city.districtName;
+        this.$data.areaForm.cityCode = city.cityCode;
+        this.$data.areaForm.cityName = city.cityName;
       },
       // 新增服务地区
       areaAddModal() {
@@ -382,27 +397,26 @@
       areaFormCancel() {
         this.$data.showAreaAddModal = false;
       },
-      // 服务地区的添加（到本地）
-      areaFormAddSuBmit() {
-        this.$refs['areaForm'].validate(async (valid) => {
-          if (valid) {
-            let isExist = this.$data.formAdd.merchantAreaInfo.some((item, index, filterCityAry) => {
-              return (item.provinceName === this.$data.areaForm.provinceName) &&
-                (item.districtName === this.$data.areaForm.districtName);
-            });
-            if (isExist) {
-              this.$Message.error('地区已存在！');
-              return;
-            }
-            this.$data.formAdd.merchantAreaInfo.unshift({
-              ...this.$data.areaForm
-            });
-            this.$data.showAreaAddModal = false;
-            this.$Message.success('新增成功');
-          } else {
-            this.$Message.error('"<span style="color: red">*</span>"必填项不能为空');
-          }
+      // 服务地区的添加（到本地）请选择渠道商服务地区
+      async areaFormAddSuBmit() {
+        if ((this.$data.areaForm.provinceName === '') || (typeof this.$data.areaForm.provinceName === 'undefined')) {
+          this.$Message.error('请选择渠道商服务地区！');
+          return;
+        }
+        let isExist = this.$data.formAdd.merchantAreaInfo.some((item, index, filterCityAry) => {
+          return (item.provinceName === this.$data.areaForm.provinceName) &&
+            (item.districtName === this.$data.areaForm.districtName) &&
+            (item.cityName === this.$data.areaForm.cityName);
         });
+        if (isExist) {
+          this.$Message.error('地区已存在！');
+          return;
+        }
+        this.$data.formAdd.merchantAreaInfo.unshift({
+          ...this.$data.areaForm
+        });
+        this.$data.showAreaAddModal = false;
+        this.$Message.success('新增成功');
       },
       // 选择个人客户
       selectObligeeRow(row, index) {
@@ -449,6 +463,7 @@
       },
       // 修改
       setRow(row) {
+        // console.log(row.merchantAreaInfo);
         this.$data.isAdd = false;
         this.$data.showAddModal = true;
         this.$data.formAdd = row;
@@ -466,6 +481,7 @@
       },
       // 取消
       cancelFun() {
+        this.$data.formAdd = {};
         this.$data.showAddModal = false;
       },
       // 上传成功
@@ -507,9 +523,6 @@
       openAddDistributorModal() {
         this.$data.isAdd = true;
         this.$data.showAddModal = true;
-        this.$data.formAdd = {
-          merchantAreaInfo: []
-        };
       },
       // 判断是否选中的其中一行
       clickRowedFun() {

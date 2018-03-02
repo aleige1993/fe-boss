@@ -681,7 +681,7 @@
     },
     watch: {
       'setCarDataForm.custType'(newVal, oldVal) {
-        if (oldVal !== '') {
+        if ((oldVal !== '') && (typeof oldVal !== 'undefined')) {
           this.$data.setCarDataForm.carOwnerName = '';
           this.$data.setCarDataForm.carOwnerNo = '';
         }
