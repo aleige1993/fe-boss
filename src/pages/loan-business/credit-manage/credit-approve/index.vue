@@ -38,7 +38,7 @@
             <i-row>
               <i-col span="8">
                 <i-form-item label="授信总额度" prop="creditLimitParam.totalLimitAmt"
-                  :rules="{required: approveData.creditAuditParam.approveStatus === 'A', message: '请输入授信总额度'}">
+                  :rules="{required: true, message: '请输入授信总额度'}">
                   <i-input :readonly="creditStatus!=='5'&&creditStatus!=='6'" v-model="approveData.creditLimitParam.totalLimitAmt">
                     <span slot="append">元</span>
                   </i-input>
