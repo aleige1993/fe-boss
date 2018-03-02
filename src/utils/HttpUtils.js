@@ -6,20 +6,10 @@ import axios from 'axios';
 import Config from './Config';
 import MyRouter from '@/router';
 import UserLogin from './UserLogin';
-import toastr from '@/assets/js/toastr';
 // 处理Raw纯json字符串得请求
 axios.defaults.baseURL = Config.HTTPBASEURL;
 axios.defaults.headers.common['Content-Type'] = 'application/json;charset=UTF-8';
 Vue.prototype.$ajax = axios;
-toastr.options = {
-  closeButton: true,
-  progressBar: true,
-  positionClass: 'toast-top-right',
-  showDuration: '300',
-  hideDuration: '1000',
-  timeOut: '3000',
-  extendedTimeOut: '1000'
-};
 class Http {
   /**
    * 发起post请求
@@ -62,14 +52,13 @@ class Http {
         data.success = data.success === 'true' || data.success === true;
         return data;
       } else {
-        // toastr.error(_url + '<br/>' + res.data.reCode + ' <br/> ' + res.data.reMsg);
-        Vue.prototype.$Notice.error({ title: '错误提示',  desc: _url + '<br/>' + res.data.reCode + ' <br/> ' + res.data.reMsg });
+        let errorMsg = Config.XHRLOG ? _url + '<br/>' + res.data.reCode + ' <br/> ' + res.data.reMsg : res.data.reMsg;
+        Vue.prototype.$Notice.error({ title: '错误提示', desc: errorMsg});
         let data = res.data;
         data.success = data.success === 'true' || data.success === true;
         return data;
       }
     }).catch(err => {
-      // error todo
       Vue.prototype.$Notice.error({ title: '错误提示', desc: err });
     });
   }
@@ -113,7 +102,8 @@ class Http {
         data.success = data.success === 'true' || data.success === true;
         return data;
       } else {
-        Vue.prototype.$Notice.error({ title: '错误提示', desc: _url + '<br/>' + res.data.reCode + ' <br/> ' + res.data.reMsg });
+        let errorMsg = Config.XHRLOG ? _url + '<br/>' + res.data.reCode + ' <br/> ' + res.data.reMsg : res.data.reMsg;
+        Vue.prototype.$Notice.error({ title: '错误提示', desc: errorMsg });
         let data = res.data;
         data.success = data.success === 'true' || data.success === true;
         return data;
