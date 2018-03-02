@@ -166,12 +166,15 @@
         this.getList(page);
       },
       // 打开modal
-      addModal() {
-        if (this.$data.formQuota.merchantStatus === '1') {
-          this.$Message.warning({
-            content: '当前渠道商状态为“授信申请中”，不可新增授信额度信息！',
+      async addModal() {
+        let reps = await this.$http.post('merchant/credit/isAllowAdd', {
+          merchantNo: this.$data.formQuota.merchantNo
+        });
+        if (!reps.success) {
+          /* this.$Message.warning({
+            content: reps.reMsg,
             duration: 3
-          });
+          });*/
           return;
         }
         this.$data.isAdd = true;
