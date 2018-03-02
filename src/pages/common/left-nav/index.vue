@@ -119,7 +119,7 @@ export default {
         border-left: 4px solid $color-primary;
         color: $color-primary;
       }
-      &.active{
+      &.link-exact-active{
         background-color: #c5dcef;
         border-left: 4px solid $color-primary;
         color: $color-primary;

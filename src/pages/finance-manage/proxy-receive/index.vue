@@ -11,7 +11,7 @@
           <i-input type="text" v-model="searchForm.projectNo" placeholder="项目编号"></i-input>
         </i-form-item>
         <i-form-item prop="password">
-          <i-input v-model="searchForm.idHolder" type="text" placeholder="扣款人名称"></i-input>
+          <i-input v-model="searchForm.idHolder" type="text" placeholder="扣款人姓名"></i-input>
         </i-form-item>
         <i-form-item prop="password">
           <i-input v-model="searchForm.idCard" type="text" placeholder="证件号码"></i-input>
@@ -63,11 +63,11 @@
         certTypeEnum: [],
         searchForm: {
           'projectNo': '',
-          'toAccName': '',
-          'transCardId': '',
-          'btime': '',
-          'etime': '',
-          'status': '',
+          'idHolder': '',
+          'idCard': '',
+          'receiveSTime': '',
+          'receiveETime': '',
+          'orderStat': '',
           currentPage: 1,
           pageSize: 15
         },
