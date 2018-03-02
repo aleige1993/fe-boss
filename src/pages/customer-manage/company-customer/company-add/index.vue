@@ -2,7 +2,7 @@
   <div id="">
     <i-breadcrumb separator=">">
       <i-breadcrumb-item href="/">首页</i-breadcrumb-item>
-      <i-breadcrumb-item href="/index/customer/toLeftNav">客户档案</i-breadcrumb-item>
+      <i-breadcrumb-item href="/index/customer/toleftnav">客户档案</i-breadcrumb-item>
       <i-breadcrumb-item href="/index/customer/companycustomer">企业客户管理</i-breadcrumb-item>
       <i-breadcrumb-item>{{currentPageBreadcrumb}}</i-breadcrumb-item>
     </i-breadcrumb>

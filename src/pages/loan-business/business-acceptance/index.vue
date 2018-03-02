@@ -3,7 +3,7 @@
   <div id="personal-business-registration">
     <i-breadcrumb separator=">">
       <i-breadcrumb-item href="/">首页</i-breadcrumb-item>
-      <i-breadcrumb-item href="/index/loanbusiness/toLeftNav">贷款业务</i-breadcrumb-item>
+      <i-breadcrumb-item href="/index/loanbusiness/toleftnav">贷款业务</i-breadcrumb-item>
       <i-breadcrumb-item>
         <span v-if="customerType=='1'">个人业务登记</span>
         <span v-else-if="customerType=='2'">公司业务登记</span>

@@ -3,7 +3,7 @@
   <div id="contract-making-tab">
     <i-breadcrumb separator=">">
       <i-breadcrumb-item href="/">首页</i-breadcrumb-item>
-      <i-breadcrumb-item href="/index/contract/toLeftNav">合同管理</i-breadcrumb-item>
+      <i-breadcrumb-item href="/index/contract/toleftnav">合同管理</i-breadcrumb-item>
       <i-breadcrumb-item>个人业务合同制作</i-breadcrumb-item>
     </i-breadcrumb>
     <br>
