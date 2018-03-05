@@ -3,7 +3,7 @@
   <div id="toleftnavImange">
     <dl>
       <dt>
-        <img src="./to-left-nav.gif" alt="请点选左边菜单～">
+        <img src="./to-left-nav-car.gif" alt="请点选左边菜单～">
       </dt>
       <dd>请点选左边菜单～</dd>
     </dl>
@@ -27,22 +27,22 @@
   right: 0;
   & dl {
     display: block;
-    width: 120px;
-    height: 140px;
+    width: 160px;
     position: absolute;
-    top: 0;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    margin: auto;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    -ms-transform: translate(-50%, -50%);
+    -moz-transform: translate(-50%, -50%);
+    -webkit-transform: translate(-50%, -50%);
+    -o-transform: translate(-50%, -50%);
     & dt {
       display: block;
-      width: 120px;
-      height: 120px;
+      width: 100%;
       & img {
         display: block;
         width: 100%;
-        height: 100%;
+        height: auto;
       }
     }
     & dd {

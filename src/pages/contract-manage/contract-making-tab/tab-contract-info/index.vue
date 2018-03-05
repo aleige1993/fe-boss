@@ -185,17 +185,18 @@
   <bs-form-block :title="'合同信息'">
     <i-form inline ref="contractInfoForm" :model="contractInfoForm" :label-width="100" label-position="right">
       <i-row>
-        <i-col span="4">
+        <i-col span="8">
           <i-form-item
+            style="width: 100%"
             :rules="{required: true, message: '请选择合同开始日期', trigger: 'change'}"
             prop="contractInfo.startDate"
             label="合同开始日期">
-            <Poptip trigger="hover" title="提示" content="选择合同开始时间，即刷新“还款计划表”和“租金计划表”">
+            <Poptip trigger="hover" title="提示" content="选择合同开始时间，即刷新“还款计划表”和“租金计划表”" style="width: 100%">
               <bs-datepicker :isNowStart="true" v-model="contractInfoForm.contractInfo.startDate" @on-change="changeData"></bs-datepicker>
             </Poptip>
           </i-form-item>
         </i-col>
-        <i-col span="4">
+        <i-col span="8">
           <i-form-item
             prop="contractInfo.endDate"
             label="合同结束日期">
