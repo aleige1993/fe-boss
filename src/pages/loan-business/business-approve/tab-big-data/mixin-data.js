@@ -59,16 +59,16 @@ export default {
           key: 'contactsPhone'
         },
         {
-          title: '通话时间',
-          key: 'gmtCreate'
+          title: '通话开始时间',
+          key: 'startTime'
         },
         {
           title: '通话时长',
-          key: 'callTime'
+          key: 'timeLength'
         },
         {
           title: '通话次数',
-          key: 'callCount'
+          key: 'callTimes'
         }
       ],
       callInDatas: [],
