@@ -58,7 +58,7 @@ export default {
                 },
                 on: {
                   click: () => {
-                    Tools.openWin(`#/index/customer/detail?noaction=true&id=${params.row.spoMemberNo}&from=detail`);
+                    Tools.openWin(`#/index/customer/privatecustomer/detail?noaction=true&id=${params.row.spoMemberNo}&from=detail`);
                   }
                 }
               }, '详情'),

@@ -54,7 +54,7 @@ export default {
                 on: {
                   click: () => {
                     this.$router.push({
-                      path: '/index/customer/modify',
+                      path: '/index/customer/privatecustomer/modify',
                       query: {
                         id: params.row.id,
                         from: 'detail'

@@ -3,7 +3,7 @@
   <div id="condition-loan-handle-details">
     <i-breadcrumb separator=">">
       <i-breadcrumb-item href="/">首页</i-breadcrumb-item>
-      <i-breadcrumb-item href="/index/operate/toleftnav">运营管理</i-breadcrumb-item>
+      <i-breadcrumb-item href="/index/operate">运营管理</i-breadcrumb-item>
       <i-breadcrumb-item href="/index/operate/loan">GPS安装落实</i-breadcrumb-item>
       <i-breadcrumb-item>办理详情</i-breadcrumb-item>
     </i-breadcrumb>

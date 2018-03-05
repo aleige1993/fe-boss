@@ -3,7 +3,7 @@
   <div id="page-loan-GPS-list">
     <i-breadcrumb separator=">">
       <i-breadcrumb-item href="/">首页</i-breadcrumb-item>
-      <i-breadcrumb-item href="/index/operate/toleftnav">运营管理</i-breadcrumb-item>
+      <i-breadcrumb-item href="/index/operate">运营管理</i-breadcrumb-item>
       <i-breadcrumb-item href="/index/operate/loan">放款管理</i-breadcrumb-item>
       <i-breadcrumb-item>GPS安装落实</i-breadcrumb-item>
     </i-breadcrumb>

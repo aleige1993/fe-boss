@@ -26,7 +26,7 @@ export default {
       }
     },
     gotoPersonal() {
-      Tools.openWin(`#/index/customer/detail?noaction=true&id=${this.$data.formData.mbMemberDTO.memberNo}&from=detail`);
+      Tools.openWin(`#/index/customer/privatecustomer/detail?noaction=true&id=${this.$data.formData.mbMemberDTO.memberNo}&from=detail`);
     }
   }
 };

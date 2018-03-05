@@ -153,7 +153,7 @@
               <div class="form-top-actions">
                 <i-button @click="areaAddModal" type="info"><i class="iconfont icon-xinzeng"></i> 新增</i-button>
               </div>
-              <i-table border ref="areaTable" :columns="areaColumns" :data="formAdd.merchantAreaInfo"></i-table>
+              <i-table border ref="areaTable" :columns="areaColumns" :data="areaDataList"></i-table>
             </bs-form-block>
           </i-col>
           <br>
@@ -162,9 +162,8 @@
             <i-form-item class="text-right">
               <i-button type="primary"
                         @click="submitFun"
-                        :disabled="
-                        (formAdd.channelType==='1'||formAdd.channelType==='3')&&
-                        (formAdd.creditCode==='')||(formAdd.legalPerson==='')||(formAdd.telephone==='')"
+                        :disabled="((formAdd.channelType==='1'||formAdd.channelType==='3'))&&
+                        ((formAdd.creditCode==='')||(formAdd.legalPerson==='')||(formAdd.telephone===''))"
                         :loading="buttonLoading">
                 <span v-if="!buttonLoading">提交</span>
                 <span v-else>loading...</span>
@@ -344,7 +343,8 @@
               ]);
             }
           }
-        ]
+        ],
+        areaDataList: []
       };
     },
     watch: {
@@ -355,12 +355,16 @@
         }
       },
       'formAdd.channelType'(newVal, oldVal) {
-        if (newVal === '2') {
+        if ((newVal === '2') && !((oldVal === '') || (typeof oldVal === 'undefined'))) {
           this.$data.formAdd.merchantType = '';
           this.$data.formAdd.corpName = '';
           this.$data.formAdd.corpNo = '';
         }
-        if (newVal === '3') {
+        if ((oldVal === '2') && ((newVal === '1') || (newVal === '3'))) {
+          this.$data.formAdd.corpName = '';
+          this.$data.formAdd.corpNo = '';
+        }
+        if ((newVal === '2') || (newVal === '3')) {
           this.$data.formAdd.merchantType = '';
         }
       }
@@ -388,7 +392,7 @@
         Alertify.confirm('确定要删除吗？', (ok) => {
           if (ok) {
             const loadingMsg = this.$Message.loading('删除中...', 0);
-            this.$data.formAdd.merchantAreaInfo.splice(row._index, 1);
+            this.$data.areaDataList.splice(row._index, 1);
             loadingMsg();
             this.$Message.success('删除成功');
           }
@@ -403,7 +407,10 @@
           this.$Message.error('请选择渠道商服务地区！');
           return;
         }
-        let isExist = this.$data.formAdd.merchantAreaInfo.some((item, index, filterCityAry) => {
+        if (typeof this.$data.formAdd.merchantAreaInfo === 'undefined') {
+          this.$data.formAdd.merchantAreaInfo = [];
+        }
+        let isExist = this.$data.areaDataList.some((item, index, filterCityAry) => {
           return (item.provinceName === this.$data.areaForm.provinceName) &&
             (item.districtName === this.$data.areaForm.districtName) &&
             (item.cityName === this.$data.areaForm.cityName);
@@ -412,15 +419,15 @@
           this.$Message.error('地区已存在！');
           return;
         }
-        this.$data.formAdd.merchantAreaInfo.unshift({
+        this.$data.areaDataList.unshift({
           ...this.$data.areaForm
         });
+        this.$set(this.$data.formAdd, 'merchantAreaInfo', this.$data.areaDataList);
         this.$data.showAreaAddModal = false;
         this.$Message.success('新增成功');
       },
       // 选择个人客户
       selectObligeeRow(row, index) {
-        // console.log(row);
         this.$data.formAdd.corpNo = row.memberNo;
         this.$data.formAdd.corpName = row.name;
         this.$data.showSelectObligee = false;
@@ -436,7 +443,7 @@
       },
       // 新增
       async submitSuccess() {
-        if (this.$data.formAdd.merchantAreaInfo.length === 0) {
+        if (this.$data.areaDataList.length === 0) {
           this.$Notice.error({
             title: '错误提示',
             desc: '请添加渠道商服务地区！',
@@ -448,6 +455,7 @@
         if (this.$data.formAdd.channelType === '1' || this.$data.formAdd.channelType === '3') {
           this.$data.formAdd.customerType = '2';
         }
+        this.$set(this.$data.formAdd, 'merchantAreaInfo', this.$data.areaDataList);
         let resp = await this.$http.post('merchant/saveMerchant', {
           ...this.$data.formAdd
         });
@@ -463,10 +471,13 @@
       },
       // 修改
       setRow(row) {
-        // console.log(row.merchantAreaInfo);
         this.$data.isAdd = false;
         this.$data.showAddModal = true;
         this.$data.formAdd = row;
+        if (typeof row.merchantAreaInfo === 'undefined') {
+          row.merchantAreaInfo = [];
+        }
+        this.$data.areaDataList = row.merchantAreaInfo;
       },
       // 提交
       submitFun() {
@@ -523,6 +534,8 @@
       openAddDistributorModal() {
         this.$data.isAdd = true;
         this.$data.showAddModal = true;
+        this.$data.formAdd = {};
+        this.$data.areaDataList = [];
       },
       // 判断是否选中的其中一行
       clickRowedFun() {

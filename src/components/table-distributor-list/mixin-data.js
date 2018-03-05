@@ -208,7 +208,6 @@ export default {
                 },
                 on: {
                   click: () => {
-                    console.log(params.row);
                     let rowData = {};
                     $.extend(true, rowData, params.row);
                     this.$emit('on-set-row', rowData);

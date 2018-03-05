@@ -93,7 +93,7 @@
     },
     methods: {
       goToAdd() {
-        this.$router.push('/index/customer/modify');
+        this.$router.push('/index/customer/privatecustomer/modify');
       },
       async getCompanyCreditList(page) {
         this.$data.dataLoading = true;
