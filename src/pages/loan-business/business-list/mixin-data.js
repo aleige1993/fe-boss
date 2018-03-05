@@ -226,11 +226,6 @@ export default {
                         if (resp.success) {
                           this.$Message.success('领取任务成功');
                           this.getPrivateCustomerLoanList();
-                        } else {
-                          this.$Notice.error({
-                            title: '错误信息',
-                            desc: '领取任务出错'
-                          });
                         }
                       }
                     });
