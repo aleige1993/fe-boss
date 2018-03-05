@@ -64,7 +64,7 @@ export default {
                   click: () => {
                     // console.log(params.row);
                     this.$router.push({
-                      path: '/index/customer/detail',
+                      path: '/index/customer/privatecustomer/detail',
                       query: {
                         id: params.row.memberNo,
                         from: 'detail'
@@ -82,7 +82,7 @@ export default {
                 on: {
                   click: () => {
                     this.$router.push({
-                      path: '/index/customer/update',
+                      path: '/index/customer/privatecustomer/update',
                       query: {
                         id: params.row.memberNo,
                         from: 'modify'

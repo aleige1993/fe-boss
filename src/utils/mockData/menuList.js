@@ -10,14 +10,14 @@ export default [
           // 客户档案
           {
             name: '客户档案',
-            url: '/index/customer/toleftnav',
+            url: '/index/customer',
             childMenus: [
               {
                 name: '个人客户管理',
-                url: '/index/customer',
+                url: '/index/customer/privatecustomer',
                 childMenus: [
-                  { name: '个人客户列表', url: '/index/customer' },
-                  { name: '个人客户添加', url: '/index/customer/add' }
+                  { name: '个人客户列表', url: '/index/customer/privatecustomer' },
+                  { name: '个人客户添加', url: '/index/customer/privatecustomer/add' }
                 ]
               },
               {
@@ -50,7 +50,7 @@ export default [
           // 贷款业务
           {
             name: '贷款业务',
-            url: '/index/loanbusiness/toleftnav',
+            url: '/index/loanbusiness',
             childMenus: [
               {
                 name: '业务受理',
@@ -63,9 +63,18 @@ export default [
               },
               {
                 name: '业务审批',
-                url: '/index/loanbusiness',
+                url: '/index/loanbusiness/firststageapprove',
                 childMenus: [
                   { name: '业务初审', url: '/index/loanbusiness/firststageapprove' }
+                ]
+              },
+              {
+                name: '业务查询',
+                url: '/index/loanbusiness/alllist',
+                childMenus: [
+                  { name: '所有订单列表', url: '/index/loanbusiness/alllist' },
+                  { name: '待提交订单列表', url: '/index/loanbusiness/mypending' },
+                  { name: 'APP订单列表', url: '/index/loanbusiness/intentionorder' }
                 ]
               },
               /* {
@@ -90,11 +99,11 @@ export default [
           // 合同管理(原签约合同)
           {
             name: '合同管理',
-            url: '/index/contract/toleftnav',
+            url: '/index/contract',
             childMenus: [
               {
                 name: '合同管理',
-                url: '/index/contract',
+                url: '/index/contract/list',
                 childMenus: [
                   { name: '待制作合同列表', url: '/index/contract/list' },
                   { name: '待签署合同确认', url: '/index/contract/sign' },
@@ -106,7 +115,7 @@ export default [
           // 运营管理
           {
             name: '运营管理',
-            url: '/index/operate/toleftnav',
+            url: '/index/operate',
             childMenus: [
               { name: '放款管理',
                 url: '/index/operate/loan',
@@ -127,7 +136,7 @@ export default [
           // 配置管理
           {
             name: '配置管理',
-            url: '/index/conf/toleftnav',
+            url: '/index/conf',
             childMenus: [
               {
                 name: '产品配置',

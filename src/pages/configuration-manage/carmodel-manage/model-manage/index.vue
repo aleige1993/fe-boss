@@ -2,7 +2,7 @@
   <div id="page-table-demo">
     <i-breadcrumb separator=">">
       <i-breadcrumb-item href="/">首页</i-breadcrumb-item>
-      <i-breadcrumb-item href="/index/conf/toleftnav">配置管理</i-breadcrumb-item>
+      <i-breadcrumb-item href="/index/conf">配置管理</i-breadcrumb-item>
       <i-breadcrumb-item href="/index/conf/carmodelmanage">车型管理</i-breadcrumb-item>
       <i-breadcrumb-item>车型管理</i-breadcrumb-item>
     </i-breadcrumb>

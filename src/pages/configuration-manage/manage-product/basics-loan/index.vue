@@ -3,7 +3,7 @@
   <div id="page-loan">
     <i-breadcrumb separator="&gt;">
       <i-breadcrumb-item href="/">首页</i-breadcrumb-item>
-      <i-breadcrumb-item href="/index/conf/toleftnav">配置管理</i-breadcrumb-item>
+      <i-breadcrumb-item href="/index/conf">配置管理</i-breadcrumb-item>
       <i-breadcrumb-item href="/index/conf/product">产品配置</i-breadcrumb-item>
       <i-breadcrumb-item>贷款材料配置</i-breadcrumb-item>
     </i-breadcrumb>

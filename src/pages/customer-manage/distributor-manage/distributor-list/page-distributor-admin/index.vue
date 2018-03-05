@@ -31,7 +31,6 @@
         </i-form-item>
         <i-form-item
           label="身份证号码"
-          :rules="{required: true, message: '身份证号码不能为空', trigger: 'blur'}"
           prop="idCardNo">
           <i-input v-model="formAdmin.idCardNo"></i-input>
         </i-form-item>

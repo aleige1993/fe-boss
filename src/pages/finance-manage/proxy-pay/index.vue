@@ -2,7 +2,7 @@
   <div id="page-table-demo">
     <i-breadcrumb separator=">">
       <i-breadcrumb-item href="/">首页</i-breadcrumb-item>
-      <i-breadcrumb-item href="/index/financemanage/toleftnav">财务管理</i-breadcrumb-item>
+      <i-breadcrumb-item href="/index/financemanage">财务管理</i-breadcrumb-item>
       <i-breadcrumb-item>代付管理</i-breadcrumb-item>
     </i-breadcrumb>
     <div class="search-form-container">

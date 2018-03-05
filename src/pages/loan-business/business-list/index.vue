@@ -2,7 +2,7 @@
   <div id="page-table-demo">
     <i-breadcrumb separator=">">
       <i-breadcrumb-item href="/">首页</i-breadcrumb-item>
-      <i-breadcrumb-item href="/index/loanbusiness/toleftnav">贷款业务</i-breadcrumb-item>
+      <i-breadcrumb-item href="/index/loanbusiness">贷款业务</i-breadcrumb-item>
       <i-breadcrumb-item>{{breadcrumbName}}</i-breadcrumb-item>
     </i-breadcrumb>
     <div class="form-block-title">
@@ -142,7 +142,7 @@
     },
     methods: {
       goToAdd() {
-        this.$router.push('/index/customer/modify');
+        this.$router.push('/index/customer/privatecustomer/modify');
       },
       async getProductList() {
         let resp = await this.$http.get('/pms/product/list', { productName: '', currentPage: 1, pageSize: 99999 });

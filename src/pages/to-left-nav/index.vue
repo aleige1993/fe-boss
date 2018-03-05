@@ -3,7 +3,7 @@
   <div id="toleftnavImange">
     <dl>
       <dt>
-        <img src="./to-left-nav.gif" alt=">请点选左边菜单～">
+        <img src="./to-left-nav.gif" alt="请点选左边菜单～">
       </dt>
       <dd>请点选左边菜单～</dd>
     </dl>
@@ -27,8 +27,8 @@
   right: 0;
   & dl {
     display: block;
-    width: 240px;
-    height: 260px;
+    width: 120px;
+    height: 140px;
     position: absolute;
     top: 0;
     bottom: 0;
@@ -37,8 +37,8 @@
     margin: auto;
     & dt {
       display: block;
-      width: 240px;
-      height: 240px;
+      width: 120px;
+      height: 120px;
       & img {
         display: block;
         width: 100%;
