@@ -35,10 +35,6 @@ export default {
           key: 'regCapital'
         },
         {
-          title: '备注',
-          key: 'remark'
-        },
-        {
           title: '操作',
           key: 'action',
           render: (h, params) => {

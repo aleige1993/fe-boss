@@ -65,7 +65,7 @@ export default {
         if (approveInfoValid) {
           let submitData = {};
           if (loanNode === '3') {
-            if (this.$data.showCreditCheckbox && !this.$data.isHasCheckCreditReport) {
+            if (approveData.loanApproveDTO.result === 'A' && this.$data.showCreditCheckbox && !this.$data.isHasCheckCreditReport) {
               this.$data.tabIndex = 'tabCreditInfo';
               $('html, body')[0].scrollTop = 0; // 滚动条滚动到顶部
               this.$Message.error({
