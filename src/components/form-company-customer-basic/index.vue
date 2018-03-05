@@ -208,7 +208,8 @@
             <i-row>
               <i-col span="8">
                 <i-form-item label="职务" prop="baseDTO.mainLinkmanDuty">
-                  <i-input :readonly="isFromDetail" v-model="formData.baseDTO.mainLinkmanDuty"></i-input>
+                  <input type="hidden" v-model="formData.baseDTO.mainLinkmanDuty"/>
+                  <i-input :readonly="isFromDetail" :value="enumCode2Name(formData.baseDTO.mainLinkmanDuty, 'DutyEnum')"></i-input>
                 </i-form-item>
               </i-col>
               <i-col span="8">

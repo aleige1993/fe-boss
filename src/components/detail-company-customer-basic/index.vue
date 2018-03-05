@@ -183,7 +183,7 @@
             <i-row>
               <i-col span="8">
                 <i-form-item label="职务">
-                  <span v-text="formData.baseDTO.mainLinkmanDuty"></span>
+                  <span v-text="enumCode2Name(formData.baseDTO.mainLinkmanDuty, 'DutyEnum')"></span>
                 </i-form-item>
               </i-col>
               <i-col span="8">
