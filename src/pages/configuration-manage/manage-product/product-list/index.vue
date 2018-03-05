@@ -1,7 +1,7 @@
 <template>
   <div id="page-product">
     <i-breadcrumb separator="&gt;" v-if="type==='page'">
-      <i-breadcrumb-item href="/">首页</i-breadcrumb-item>
+      <i-breadcrumb-item href="/home">首页</i-breadcrumb-item>
       <i-breadcrumb-item href="/index/conf">配置管理</i-breadcrumb-item>
       <i-breadcrumb-item>产品列表</i-breadcrumb-item>
     </i-breadcrumb>

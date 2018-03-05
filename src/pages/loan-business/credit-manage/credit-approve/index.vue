@@ -1,7 +1,7 @@
 <template>
   <div id="credit-do-approve">
     <i-breadcrumb separator=">">
-      <i-breadcrumb-item href="/">首页</i-breadcrumb-item>
+      <i-breadcrumb-item href="/home">首页</i-breadcrumb-item>
       <i-breadcrumb-item href="/components/breadcrumb">贷款业务</i-breadcrumb-item>
       <i-breadcrumb-item href="/components/breadcrumb">公司授信管理</i-breadcrumb-item>
       <i-breadcrumb-item>授信审批</i-breadcrumb-item>

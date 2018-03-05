@@ -2,7 +2,7 @@
 <!--渠道商角色管理-->
 <div id="roleManage">
   <i-breadcrumb separator=">">
-    <i-breadcrumb-item href="/">首页</i-breadcrumb-item>
+    <i-breadcrumb-item href="/home">首页</i-breadcrumb-item>
     <i-breadcrumb-item href="/index/customer/distributor">渠道商管理</i-breadcrumb-item>
     <i-breadcrumb-item>渠道商角色管理</i-breadcrumb-item>
   </i-breadcrumb>

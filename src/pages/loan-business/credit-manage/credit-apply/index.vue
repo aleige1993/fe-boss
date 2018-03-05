@@ -1,7 +1,7 @@
 <template>
   <div id="credit-apply">
     <i-breadcrumb separator=">">
-      <i-breadcrumb-item href="/">首页</i-breadcrumb-item>
+      <i-breadcrumb-item href="/home">首页</i-breadcrumb-item>
       <i-breadcrumb-item href="/components/breadcrumb">贷款业务</i-breadcrumb-item>
       <i-breadcrumb-item href="/components/breadcrumb">公司授信管理</i-breadcrumb-item>
       <i-breadcrumb-item>{{id ? '授信信息修改' : '授信申请'}}</i-breadcrumb-item>

@@ -2,7 +2,7 @@
 <!--放款申请列表-->
   <div id="page-loan-condition-list">
     <i-breadcrumb separator=">">
-      <i-breadcrumb-item href="/">首页</i-breadcrumb-item>
+      <i-breadcrumb-item href="/home">首页</i-breadcrumb-item>
       <i-breadcrumb-item href="/index/operate">运营管理</i-breadcrumb-item>
       <i-breadcrumb-item href="/index/operate/loan">放款管理</i-breadcrumb-item>
       <i-breadcrumb-item>放款审批</i-breadcrumb-item>

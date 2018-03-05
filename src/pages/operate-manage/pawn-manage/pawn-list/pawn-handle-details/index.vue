@@ -2,7 +2,7 @@
 <!--抵押物办理详情-->
   <div id="pawnHanleDetails">
     <i-breadcrumb separator=">">
-      <i-breadcrumb-item href="/">首页</i-breadcrumb-item>
+      <i-breadcrumb-item href="/home">首页</i-breadcrumb-item>
       <i-breadcrumb-item href="/index/operate">运营管理</i-breadcrumb-item>
       <i-breadcrumb-item href="/index/operate/pawn">抵押物待办列表</i-breadcrumb-item>
       <i-breadcrumb-item>抵押物办理详情</i-breadcrumb-item>

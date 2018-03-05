@@ -1,7 +1,7 @@
 <template>
   <div id="page-table-demo">
     <i-breadcrumb separator=">">
-      <i-breadcrumb-item href="/">首页</i-breadcrumb-item>
+      <i-breadcrumb-item href="/home">首页</i-breadcrumb-item>
       <i-breadcrumb-item href="/components/breadcrumb">进件管理</i-breadcrumb-item>
       <i-breadcrumb-item>进件申请</i-breadcrumb-item>
     </i-breadcrumb>

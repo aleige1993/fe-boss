@@ -436,7 +436,10 @@
           ReqDataObj
         );
         this.getFirstApproveList(this.applyBasicInfo.loanNo);
-        this.getLoanPeriodByProductNo(this.$data.productPackageNo, this.applyBasicInfo.custLevel);
+        // 判断产品套餐是否获取成功，如果成功则获取产品贷款期限列表（依赖于接口/biz/queryApproveProductCredit）
+        if (this.$data.productPackageNo) {
+          this.getLoanPeriodByProductNo(this.$data.productPackageNo, this.applyBasicInfo.custLevel);
+        }
         this.getBankList(this.applyBasicInfo.loanNo);
       }
     },

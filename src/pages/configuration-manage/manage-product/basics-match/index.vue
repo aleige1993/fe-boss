@@ -2,7 +2,7 @@
 <!--产品匹配配置-->
   <div id="page-match">
     <i-breadcrumb separator="&gt;">
-      <i-breadcrumb-item href="/">首页</i-breadcrumb-item>
+      <i-breadcrumb-item href="/home">首页</i-breadcrumb-item>
       <i-breadcrumb-item href="/index/conf">配置管理</i-breadcrumb-item>
       <i-breadcrumb-item href="/index/conf/product">产品配置</i-breadcrumb-item>
       <i-breadcrumb-item>产品匹配配置</i-breadcrumb-item>

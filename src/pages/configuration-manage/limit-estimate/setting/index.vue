@@ -1,7 +1,7 @@
 <template>
   <div id="page-table-demo">
     <i-breadcrumb separator=">">
-      <i-breadcrumb-item href="/">首页</i-breadcrumb-item>
+      <i-breadcrumb-item href="/home">首页</i-breadcrumb-item>
       <i-breadcrumb-item href="/index/conf">配置管理</i-breadcrumb-item>
       <i-breadcrumb-item href="/index/conf/limitestimate">额度预估</i-breadcrumb-item>
       <i-breadcrumb-item>二级指标设置</i-breadcrumb-item>

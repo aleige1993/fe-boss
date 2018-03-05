@@ -227,11 +227,17 @@ export default {
         },
         {
           title: '还款方式',
-          key: 'repayMode'
+          key: 'repayMode',
+          render: (h, params) => {
+            return this.enumCode2Name(params.row.repayMode, 'RepaymentTypeEnum');
+          }
         },
         {
           title: '是否可提前还款',
-          key: 'isPrepayment'
+          key: 'isPrepayment',
+          render: (h, params) => {
+            return this.enumCode2Name(params.row.isPrepayment, 'YesNoEnum');
+          }
         },
         {
           title: '风控措施',

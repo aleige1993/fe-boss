@@ -2,7 +2,7 @@
 <!--渠道商列表-车型管理-->
   <div id="pageDistributorCar">
     <i-breadcrumb separator=">" v-if="!isDetail">
-      <i-breadcrumb-item href="/">首页</i-breadcrumb-item>
+      <i-breadcrumb-item href="/home">首页</i-breadcrumb-item>
       <i-breadcrumb-item href="/index/customer/distributor">渠道商管理</i-breadcrumb-item>
       <i-breadcrumb-item href="/index/customer/distributor">渠道商列表</i-breadcrumb-item>
       <i-breadcrumb-item>车型管理</i-breadcrumb-item>

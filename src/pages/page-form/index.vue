@@ -1,7 +1,7 @@
 <template>
   <div id="" class="clearfix">
     <i-breadcrumb separator=">">
-      <i-breadcrumb-item href="/">首页</i-breadcrumb-item>
+      <i-breadcrumb-item href="/home">首页</i-breadcrumb-item>
       <i-breadcrumb-item href="/components/i-breadcrumb">贷前管理</i-breadcrumb-item>
       <i-breadcrumb-item>进件登记</i-breadcrumb-item>
     </i-breadcrumb>
