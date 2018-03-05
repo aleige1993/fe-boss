@@ -249,7 +249,7 @@ export default {
   },
   methods: {
     gotoPersonal() {
-      Tools.openWin(`#/index/customer/companycustomer/modify?id=${this.corpNo}&name=${this.$data.formData.baseDTO.corpName}&from=detail`);
+      Tools.openWin(`#/index/customer/companycustomer/modify?noaction=true&id=${this.corpNo}&name=${this.$data.formData.baseDTO.corpName}&from=detail`);
     }
   },
   watch: {
