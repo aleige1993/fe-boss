@@ -85,8 +85,8 @@
               :rules="{required: true, message: '请选择用款形式', trigger: 'change'}"
               prop="loanType">
               <i-select v-model="formCustom.loanType">
-                <i-option value="1">贷款买车</i-option>
-                <i-option value="2">有车贷款</i-option>
+                <i-option value="1">有车贷款</i-option>
+                <i-option value="2">贷款买车</i-option>
               </i-select>
             </i-form-item>
           </i-col>
