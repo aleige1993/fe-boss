@@ -330,7 +330,7 @@
               <input type="hidden" v-model="formCar.carModel">
               <bs-carpicker :currBrand="formCar.carBrandName"
                             :currSeries="formCar.carTypeName"
-                            :currModel="formCar.carModel"
+                            :currModel="formCar.carModelName"
                             @on-change="selectLoanCar">
               </bs-carpicker>
             </i-form-item>
