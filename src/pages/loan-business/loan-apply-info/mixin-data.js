@@ -191,6 +191,7 @@ export default {
         carFrameNo: '',
         carMileage: '',
         carModel: '',
+        carModelName: '',
         billCorpName: '',
         loanCarEvalDTOList: [] // 车辆评估信息
       },
