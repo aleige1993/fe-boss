@@ -23,7 +23,7 @@
           </i-select>
         </i-form-item>-->
         <i-form-item>
-          <i-input v-model="searchForm.companyName" type="text" placeholder="客户名称"></i-input>
+          <i-input v-model="searchForm.corpName" type="text" placeholder="客户名称"></i-input>
         </i-form-item>
         <i-form-item>
           <bs-datepicker v-model="searchForm.startDate" type="text" placeholder="申请时间"></bs-datepicker>
@@ -66,7 +66,7 @@
         currentPage: 1,
         certTypeEnum: [],
         searchForm: {
-          companyName: '',
+          corpName: '',
           startDate: '',
           endDate: '',
           creditStatus: '',
