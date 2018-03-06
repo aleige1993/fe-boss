@@ -40,7 +40,6 @@ export default {
         'phoneNo': this.$data.searchForm.phoneNo,
         'pageSize': 15
       });
-      console.log(resp);
       this.$data.loadingContactBook = false;
       this.$data.callInTotal = resp.body.totalNum;
       this.$data.callInDatas = resp.body.resultList;
