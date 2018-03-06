@@ -61,7 +61,7 @@
         </div>
       </i-tab-pane>
       <i-tab-pane label="审批历史信息" name="tabSP">
-        <i-table v-if="tabIndex==='tabZJ'" :loading="examineTableLoading" border ref="examineTable" :columns="examineColumns" :data="examineData"></i-table>
+        <i-table v-if="tabIndex==='tabSP'" :loading="examineTableLoading" border ref="examineTable" :columns="examineColumns" :data="examineData"></i-table>
         <div class="page-container">
           <i-page @on-change="jumpPageExamine" :total="totalExamine" :page-size="pageSizeExamine" size="small" show-elevator show-total></i-page>
         </div>

@@ -77,7 +77,8 @@ export default {
           width: 120,
           key: 'evalGrade',
           render: (h, params) => {
-            return h('span', {}, this.enumCode2Name(params.row.evalGrade, 'CarConditionEnum'));
+            // console.log(this.$store.getters.enumSelectData.get('CarConditionEnum'));
+            return h('span', {}, this.enumCode2Name(params.row.carStatus, 'CarConditionEnum'));
           }
         },
         {
