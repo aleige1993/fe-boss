@@ -105,7 +105,7 @@
           'applyStartTime': '',
           'applyEndTime': '',
           'taskNode': '',
-          'status': ''
+          'status': '0;1;3'
         }
       };
     },
