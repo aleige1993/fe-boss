@@ -59,22 +59,24 @@ Vue.prototype.$hideLoading = () => {
   store.dispatch('toggleLoading', false);
 };
 // fundebug
-/*let formatComponentName = (vm) => {
+let formatComponentName = (vm) => {
   if (vm.$root === vm) return 'root';
   let name = vm._isVue ? (vm.$options && vm.$options.name) || (vm.$options && vm.$options._componentTag) : vm.name;
   return (name ? 'component <' + name + '>' : 'anonymous component') + (vm._isVue && vm.$options && vm.$options.__file ? ' at ' + (vm.$options && vm.$options.__file) : '');
 };
-Vue.config.errorHandler = function(err, vm, info) {
-  let componentName = formatComponentName(vm);
-  let propsData = vm.$options && vm.$options.propsData;
-  fundebug.notifyError(err, {
-    metaData: {
-      componentName: componentName,
-      propsData: propsData,
-      info: info
-    }
-  });
-};*/
+if (process.env.NODE_ENV === 'production') {
+  Vue.config.errorHandler = function(err, vm, info) {
+    let componentName = formatComponentName(vm);
+    let propsData = vm.$options && vm.$options.propsData;
+    fundebug.notifyError(err, {
+      metaData: {
+        componentName: componentName,
+        propsData: propsData,
+        info: info
+      }
+    });
+  };
+}
 /* eslint-disable no-new */
 $('.page-loading').show();
 new Http().post('/common/items', {}).then(response => {
