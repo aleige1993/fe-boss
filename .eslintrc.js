@@ -44,7 +44,7 @@ module.exports = {
     'max-len': [1, 160, 2],
     'max-nested-callbacks': [2, 3], // 回调嵌套深度
     'max-params': [2, 5], // 函数最多只能有5个参数
-    'max-statements': [1, 30],  // 单个函数最多30条语句
+    'max-statements': [1, 80],  // 单个函数最多80条语句
     'no-array-constructor': [2], // 禁止使用数组构造器
     'no-lonely-if': 2, // // 禁止else语句内只有if语句
     'no-multiple-empty-lines': [2, { 'max': 3, 'maxEOF': 1 }], // 空行最多不能超过2行
