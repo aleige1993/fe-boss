@@ -227,6 +227,11 @@ export default {
         this.$data.approveData.loanRePaymentAccountDTOS.openBankName = resp.body.repaymentBankName;
         this.$data.paymentAccountList = resp.body.paymentAccountList;
         this.$data.repaymentAccountList = resp.body.repaymentAccountList;
+        // 重置放款账户和还款账户信息
+        this.$data.approveData.loanPaymentAccountDTOS.acctName = resp.body.paymentAccountList[0].acctName;
+        this.$data.approveData.loanRePaymentAccountDTOS.acctName = resp.body.repaymentAccountList[0].acctName;
+        this.$data.approveData.loanPaymentAccountDTOS.openBankName = resp.body.paymentAccountList[0].bankName;
+        this.$data.approveData.loanRePaymentAccountDTOS.openBankName = resp.body.repaymentAccountList[0].bankName;
       }
     },
     /**
