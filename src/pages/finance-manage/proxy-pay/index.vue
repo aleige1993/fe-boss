@@ -41,6 +41,7 @@
     </div>
     <div class="form-top-actions" slot="topAction">
       <i-button type="info" @click="massPayment">批量付款</i-button>
+      <!--<i-button style="float:right;"  type="info" @click="exportExcel">导出EXCEL</i-button>-->
     </div>
     <slot name="topAction"></slot>
     <i-table border :loading="dataLoading" ref="selection" @on-select="selectRow" @on-select-all="selectRow" :columns="resultCustomerColumns" :data="privateCustomerLoanList"></i-table>
@@ -67,7 +68,7 @@
           'transCardId': '',
           'btime': '',
           'etime': '',
-          'status': '',
+          'state': '',
           currentPage: 1,
           pageSize: 15
         },
@@ -101,7 +102,6 @@
           this.$data.searchForm.currentPage = page;
         }
         let resp = await this.$http.post('/pay/payment', this.$data.searchForm);
-        // console.log(JSON.stringify(resp));
         this.$data.dataLoading = false;
         resp.body.resultList.map(item => {
           if (!(item.state === '-1' || item.state === '3') || item.flag === '1') {
@@ -138,6 +138,16 @@
           this.getProxyPayList();
         }
       }
+//      exportExcel() {
+//        let projectNo = this.$data.searchForm.projectNo;
+//        let toAccName = this.$data.searchForm.toAccName;
+//        let transCardId = this.$data.searchForm.transCardId;
+//        let btime = this.$data.searchForm.btime;
+//        let etime = this.$data.searchForm.etime;
+//        let state = this.$data.searchForm.state;
+//        let url = `/pay/payment/excel?projectNo=${projectNo}&toAccName=${toAccName}&transCardId=${transCardId}&btime=${btime}&etime=${etime}&state=${state}`;
+//        window.open(this.$config.HTTPBASEURL + url);
+//      }
     },
     mounted() {
       this.getProxyPayList();

@@ -151,7 +151,7 @@
         let resp = await this.$http.post('/ces/getMasterBrand', {
           brandName: ''
         });
-        let list = resp.body.resultList.map(item => {
+        resp.body.resultList.map(item => {
           item.groupList.map(sitem => {
             this.search.loadList.push(sitem);
           });
