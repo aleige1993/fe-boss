@@ -206,7 +206,7 @@ export default {
           return _valid;
         }
       }
-      if ((this.$data.formData.opinion === '') || (typeof this.$data.formData.opinion === 'undefined')) {
+      if ((this.$data.formData.opinin === '') || (typeof this.$data.formData.opinin === 'undefined')) {
         this.$Message.error('审核意见中请填写"意见信息"');
         _valid = false;
         return _valid;

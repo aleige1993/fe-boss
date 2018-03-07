@@ -163,11 +163,11 @@ let MyRouter = new Router({
           children: [
             { path: '/', name: 'toleftnav', component: resolve => require(['@/pages/to-left-nav'], resolve)},
             // 贷款业务-业务审批
-            { path: 'alllist', name: 'loanBusinessList',  props: { 'taskNode': '', breadcrumbName: '所有订单列表'}, component: resolve => require(['@/pages/loan-business/business-list'], resolve)},
+            { path: 'alllist', name: 'loanBusinessList',  props: { 'taskNode': '', status: '', breadcrumbName: '所有订单列表'}, component: resolve => require(['@/pages/loan-business/business-list'], resolve)},
             { path: 'mypending', name: 'loanBusinessMyPendingList',  props: { 'taskNode': '0;1', status: '0;1;3', breadcrumbName: '待提交订单列表'}, component: resolve => require(['@/pages/loan-business/business-list'], resolve)},
-            { path: 'firstapprove', name: 'loanBusinessFirstApproveList', props: { 'taskNode': '3', breadcrumbName: '业务初审'}, component: resolve => require(['@/pages/loan-business/business-list'], resolve)},
-            { path: 'firststageapprove', name: 'loanBusinessFirstStageApproveList', props: { 'taskNode': '4', breadcrumbName: '业务一级审批'}, component: resolve => require(['@/pages/loan-business/business-list'], resolve)},
-            { path: 'secondstageapprove', name: 'loanBusinessSecondStageApproveList', props: { 'taskNode': '5', breadcrumbName: '业务二级审批'}, component: resolve => require(['@/pages/loan-business/business-list'], resolve)},
+            { path: 'firstapprove', name: 'loanBusinessFirstApproveList', props: { 'taskNode': '3', status: '0;1;3', breadcrumbName: '业务初审'}, component: resolve => require(['@/pages/loan-business/business-list'], resolve)},
+            { path: 'firststageapprove', name: 'loanBusinessFirstStageApproveList', props: { 'taskNode': '4', status: '0;1;3', breadcrumbName: '业务一级审批'}, component: resolve => require(['@/pages/loan-business/business-list'], resolve)},
+            { path: 'secondstageapprove', name: 'loanBusinessSecondStageApproveList', props: { 'taskNode': '5', status: '0;1;3', breadcrumbName: '业务二级审批'}, component: resolve => require(['@/pages/loan-business/business-list'], resolve)},
             { path: 'doapprove', name: 'loanBusinessApprove', component: resolve => require(['@/pages/loan-business/business-approve'], resolve)},
             { path: 'detail', name: 'loanBusinessApprove', component: resolve => require(['@/pages/loan-business/business-approve'], resolve)},
             // 贷款业务-业务受理

@@ -253,8 +253,8 @@
         </i-row>
         <i-row>
           <i-col span="18">
-            <i-form-item label="意见信息" prop="opinion" :rules="{required: true, message: '意见信息不能为空', trigger: 'blur'}">
-              <i-input type="textarea" v-model="formData.opinion" :rows="4"></i-input>
+            <i-form-item label="意见信息" prop="opinin" :rules="{required: true, message: '意见信息不能为空', trigger: 'blur'}">
+              <i-input type="textarea" v-model="formData.opinin" :rows="4"></i-input>
             </i-form-item>
           </i-col>
         </i-row>
