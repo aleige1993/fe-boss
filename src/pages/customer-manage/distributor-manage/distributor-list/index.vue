@@ -557,6 +557,7 @@
             query: {
               currentPage: this.$data.currentPage,
               from: this.$data.clickRow.from,
+              corpName: this.$data.clickRow.corpName,
               merchantNo: this.$data.clickRow.merchantNo
             }
           });
@@ -584,6 +585,7 @@
             path: '/index/customer/distributor/admin',
             query: {
               currentPage: this.$data.currentPage,
+              corpName: this.$data.clickRow.corpName,
               merchantNo: this.$data.clickRow.merchantNo
             }
           });

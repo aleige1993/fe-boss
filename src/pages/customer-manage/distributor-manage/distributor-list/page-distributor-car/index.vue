@@ -5,7 +5,7 @@
       <i-breadcrumb-item href="/home">首页</i-breadcrumb-item>
       <i-breadcrumb-item href="/index/customer/distributor">渠道商管理</i-breadcrumb-item>
       <i-breadcrumb-item href="/index/customer/distributor">渠道商列表</i-breadcrumb-item>
-      <i-breadcrumb-item>车型管理</i-breadcrumb-item>
+      <i-breadcrumb-item>【{{$route.query.corpName}}】车型管理</i-breadcrumb-item>
     </i-breadcrumb>
     <div class="form-top-actions">
       <i-button v-if="!isDetail" @click="addModal" type="info"><i class="iconfont icon-xinzeng"></i>&nbsp;新增</i-button>

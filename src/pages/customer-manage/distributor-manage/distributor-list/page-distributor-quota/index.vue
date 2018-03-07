@@ -5,7 +5,7 @@
       <i-breadcrumb-item href="/home">首页</i-breadcrumb-item>
       <i-breadcrumb-item href="/index/customer/distributor">渠道商管理</i-breadcrumb-item>
       <i-breadcrumb-item href="/index/customer/distributor">渠道商列表</i-breadcrumb-item>
-      <i-breadcrumb-item>授信额度信息</i-breadcrumb-item>
+      <i-breadcrumb-item>【{{$route.query.corpName}}】授信额度信息</i-breadcrumb-item>
     </i-breadcrumb>
     <div id="tableDistributorQuota">
       <div class="form-top-actions">
