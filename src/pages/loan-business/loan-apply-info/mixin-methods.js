@@ -194,24 +194,35 @@ export default {
      * 表单审核意见验证
      */
     validateResultTest() {
-      let _valid = true;
-      if (this.$data.formData.result === '') {
+      let acceptResult = this.$data.formData.result;
+      let acceptOpinion = this.$data.formData.opinin;
+      if (acceptResult === '') {
         this.$Message.error('审核意见中请选择"结论"');
-        _valid = false;
-        return _valid;
-      } else if (this.$data.formData.result === 'R') {
+        return false;
+      } else if (acceptResult === 'R') {
         if ((this.$data.formData.rejectCause === '') || (typeof this.$data.formData.rejectCause === 'undefined')) {
           this.$Message.error('审核意见中请选择"拒绝原因"');
-          _valid = false;
-          return _valid;
+          return false;
+        }
+      } else if (acceptResult === 'B') {
+        if (this.$data.loanData.length === 0) {
+          this.$Message.error('请在退回前添加至少一条贷款材料清单');
+          return false;
+        } else {
+          let hasLoanAttachLose = this.$data.loanData.some(item => {
+            return item.status === '1';
+          });
+          if (!hasLoanAttachLose) {
+            this.$Message.error('请选择缺失的贷款材料清单');
+            return false;
+          }
         }
       }
-      if ((this.$data.formData.opinin === '') || (typeof this.$data.formData.opinin === 'undefined')) {
+      if ((acceptOpinion === '') || (typeof acceptOpinion === 'undefined')) {
         this.$Message.error('审核意见中请填写"意见信息"');
-        _valid = false;
-        return _valid;
+        return false;
       }
-      return _valid;
+      return true;
     },
     /**
      * 获取申请数据
