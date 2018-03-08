@@ -51,13 +51,27 @@ export default {
   },
   async mounted() {
     let _vm = this;
-    await bsWait(1000);
-    $('.left-nav li').each((index, ele) => {
-      if ($(ele).find('a').is('.link-active')) {
-        let _currIndex = $(ele).index();
-        _vm.$store.dispatch('setSelectedTopMenuIndex', _currIndex - 1);
+    // await bsWait(1000);
+    let count = 0;
+    let domLoaded = function() {
+      $('.left-nav li').each((index, ele) => {
+        if ($(ele).find('a').is('.link-active')) {
+          let _currIndex = $(ele).index();
+          _vm.$store.dispatch('setSelectedTopMenuIndex', _currIndex - 1);
+        }
+      });
+    };
+    let interval = setInterval(() => {
+      if (count > 1000) {
+        domLoaded();
+        clearInterval(interval);
       }
-    });
+      count++;
+      if (this.topMenuList.length > 0) {
+        domLoaded();
+        clearInterval(interval);
+      }
+    }, 0);
     // alert($('.left-nav li a.link-exact-active').size());
   }
 };
