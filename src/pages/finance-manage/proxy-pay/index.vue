@@ -41,7 +41,7 @@
     </div>
     <div class="form-top-actions" slot="topAction">
       <i-button type="info" @click="massPayment">批量付款</i-button>
-      <!--<i-button style="float:right;"  type="info" @click="exportExcel">导出EXCEL</i-button>-->
+      <a style="float: right; color: #fff" class="ivu-btn ivu-btn-info" :href="exportExcelUrl">导出EXCEL</a>
     </div>
     <slot name="topAction"></slot>
     <i-table border :loading="dataLoading" ref="selection" @on-select="selectRow" @on-select-all="selectRow" :columns="resultCustomerColumns" :data="privateCustomerLoanList"></i-table>
@@ -72,7 +72,8 @@
           currentPage: 1,
           pageSize: 15
         },
-        pay4Nos: [] // 批量代付ID
+        pay4Nos: [], // 批量代付ID
+        exportExcelUrl: ''
       };
     },
     computed: {
@@ -112,6 +113,7 @@
         this.$data.privateCustomerLoanList = resp.body.resultList;
         this.$data.currentPage = resp.body.currentPage;
         this.$data.total = resp.body.totalNum;
+        this.exportExcel();
       },
       selectRow(selection, row) {
         this.pay4Nos = [];
@@ -137,17 +139,15 @@
           this.$Message.success('付款成功');
           this.getProxyPayList();
         }
+      },
+      async exportExcel() {
+        this.$data.buttonLoading = true;
+        let resp = await this.$http.post('/pay/payment/excel', this.$data.searchForm);
+        this.$data.buttonLoading = false;
+        if (resp.success) {
+          this.$data.exportExcelUrl = resp.body;
+        }
       }
-//      exportExcel() {
-//        let projectNo = this.$data.searchForm.projectNo;
-//        let toAccName = this.$data.searchForm.toAccName;
-//        let transCardId = this.$data.searchForm.transCardId;
-//        let btime = this.$data.searchForm.btime;
-//        let etime = this.$data.searchForm.etime;
-//        let state = this.$data.searchForm.state;
-//        let url = `/pay/payment/excel?projectNo=${projectNo}&toAccName=${toAccName}&transCardId=${transCardId}&btime=${btime}&etime=${etime}&state=${state}`;
-//        window.open(this.$config.HTTPBASEURL + url);
-//      }
     },
     mounted() {
       this.getProxyPayList();

@@ -42,9 +42,7 @@
       picData: {
         type: Array,
         required: true,
-        default: function() {
-          return [];
-        }
+        default: []
       },
       details: {
         type: Boolean,
@@ -53,11 +51,7 @@
       }
     },
     mounted() {
-      if (this.details || this.details === 'true') {
-        this.$data.isDetails = true;
-      } else {
-        this.$data.isDetails = false;
-      }
+      this.$data.isDetails = this.details || this.details === 'true';
     },
     methods: {
       deleteFile(file, index) {
