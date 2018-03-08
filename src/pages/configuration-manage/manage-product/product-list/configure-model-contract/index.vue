@@ -111,9 +111,7 @@
       // 查询列表数据
       async getPrivateCustomerList(page) {
         this.$data.dataLoading = true;
-        if (page) {
-          this.$data.currentPage = page / 1;
-        }
+        page && (this.$data.currentPage = page);
         let resp = await this.$http.post('/pms/capital/listContractTemplateCfg', {
           currentPage: this.$data.currentPage,
           pageSize: this.$data.pageSize,

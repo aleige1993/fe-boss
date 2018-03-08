@@ -123,10 +123,10 @@
   import BsModal from '@/components/bs-modal';
   import ContractPictureList from '@/components/contract-picture-list';
   export default {
-    name: 'contractSigningDetailsTab',
+    name: 'contractSigningTab',
     mixins: [MixinData, examineMixinData],
     components: {
-      'bs-modal': BsModal,
+      BsModal,
       ContractPictureList
     },
     data() {
