@@ -36,7 +36,9 @@ export default {
     }
     monthNumber = monthNumber / 1;
     let d = getNextMonth(new Date(dateMonth), monthNumber);
-    let youWant = d.getFullYear() + '-' + (d.getMonth() + 1) + '-' + d.getDate(); // yyyy-MM-dd
+    let retMonth = ((d.getMonth() + 1) < 10) ? ('0' + (d.getMonth() + 1)) : (d.getMonth() + 1);
+    let retDate = (d.getDate() < 10) ? ('0' + d.getDate()) : d.getDate();
+    let youWant = d.getFullYear() + '-' + retMonth + '-' + retDate; // yyyy-MM-dd
     return youWant;
   }
 };
