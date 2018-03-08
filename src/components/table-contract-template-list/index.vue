@@ -51,9 +51,7 @@
         total: 0,
         pageSize: 15,
         formSearch: {
-          contractTemplateName: '',
-          pageSize: 15,
-          currentPage: 1
+          contractTemplateName: ''
         }
       };
     },
@@ -73,9 +71,12 @@
     },
     methods: {
       async getPrivateCustomerList(page) {
+        if (page) {
+          this.$data.currentPage = page;
+        }
         this.$data.dataLoading = true;
         let resp = await this.$http.post('/contract/listContractTemplate', {
-          currentPage: page || this.$data.currentPage,
+          currentPage: this.$data.currentPage,
           pageSize: this.$data.pageSize,
           contractTemplateName: this.$data.formSearch.contractTemplateName
           // contractSource: this.contractSource // 1:资金方，2:产品

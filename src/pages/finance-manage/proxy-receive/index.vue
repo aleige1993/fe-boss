@@ -41,6 +41,7 @@
     </div>
     <div class="form-top-actions" slot="topAction">
       <i-button type="info" @click="massPayment">批量扣款</i-button>
+      <a style="float: right; color: #fff" class="ivu-btn ivu-btn-info" :href="exportExcelUrl">导出EXCEL</a>
     </div>
     <slot name="topAction"></slot>
     <i-table border :loading="dataLoading" ref="selection" @on-select="selectRow" @on-select-all="selectRow" :columns="resultCustomerColumns" :data="privateCustomerLoanList"></i-table>
@@ -71,7 +72,8 @@
           currentPage: 1,
           pageSize: 15
         },
-        receiveNos: [] // 批量代扣ID
+        receiveNos: [], // 批量代扣ID
+        exportExcelUrl: ''
       };
     },
     computed: {
@@ -111,6 +113,7 @@
         this.$data.privateCustomerLoanList = resp.body.resultList;
         this.$data.currentPage = resp.body.currentPage;
         this.$data.total = resp.body.totalNum;
+        this.exportExcel();
       },
       selectRow(selection, row) {
         this.receiveNos = [];
@@ -136,6 +139,14 @@
         if (resp.reCode === '0000') {
           this.$Message.success('扣款成功');
           this.getProxyPayList();
+        }
+      },
+      async exportExcel() {
+        this.$data.buttonLoading = true;
+        let resp = await this.$http.post('/pay/receive/excel', this.$data.searchForm);
+        this.$data.buttonLoading = false;
+        if (resp.success) {
+          this.$data.exportExcelUrl = resp.body;
         }
       }
     },
