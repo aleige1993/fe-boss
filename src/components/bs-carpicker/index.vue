@@ -70,29 +70,31 @@
       },
       async brandChange(val) {
         this.$data.carData.brandName = val.label;
-        let resp = await this.$http.post('/ces/getSeriesByBrand', {
+        let resp = await this.$http.post('/ces/getSeriesByBrand?v=' + Math.random(100), {
           brandNo: val.value,
           seriesName: ''
         });
         if (resp.success) {
           this.$data.seriesDropList = resp.body.resultList;
         }
-        this.$emit('on-change', { ...this.$data.carData });
+        this.$emit('on-change', Object.assign({}, this.$data.carData));
       },
       async seriesChange(val) {
         this.$data.carData.seriesName = val.label;
-        let resp = await this.$http.post('/ces/getModelBySeries', {
-          seriesNo: val.value,
-          modelName: ''
-        });
-        if (resp.success) {
-          this.$data.modelDropList = resp.body.resultList;
+        if (val.value) {
+          let resp = await this.$http.post('/ces/getModelBySeries', {
+            seriesNo: val.value,
+            modelName: ''
+          });
+          if (resp.success) {
+            this.$data.modelDropList = resp.body.resultList;
+          }
+          this.$emit('on-change', Object.assign({}, this.$data.carData));
         }
-        this.$emit('on-change', Object.assign({}, this.$data.carData));
       },
       modelChange(val) {
         this.$data.carData.modelName = val.label;
-        this.$emit('on-change', { ...this.$data.carData });
+        this.$emit('on-change', Object.assign({}, this.$data.carData));
       }
     },
     async mounted() {
