@@ -87,7 +87,8 @@
     },
     methods: {
       // 查询列表数据
-      async getPrivateCustomerList() {
+      async getPrivateCustomerList(page) {
+        page && (this.$data.currentPage = page);
         this.$data.dataLoading = true;
         let resp = await this.$http.post('/pms/capital/listContractTemplateCfg', {
           currentPage: this.$data.currentPage,
