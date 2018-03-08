@@ -162,8 +162,8 @@
         // 如果不是查询全部，就用指定的状态赋值
         if (this.taskNode !== '') {
           this.$data.searchForm.taskNode = this.taskNode;
-          this.$data.searchForm.status = this.status;
         }
+        this.$data.searchForm.status = this.status;
         let resp = await this.$http.post(requestUrl, {
           taskNode: '0;1',
           ...this.$data.searchForm
