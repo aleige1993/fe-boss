@@ -9,7 +9,7 @@
     <div class="form-top-actions"></div>
     <i-tabs v-model="tabIndex" :animated="false" type="card">
       <i-tab-pane label="主体信息">
-        <tab-company-customer-basic-info v-if="tabIndex===0" @on-submit-success="submitBssicSuccess"></tab-company-customer-basic-info>
+        <tab-company-customer-basic-info type="page" v-if="tabIndex===0" @on-submit-success="submitBssicSuccess"></tab-company-customer-basic-info>
       </i-tab-pane>
       <i-tab-pane :disabled="otherDisabled" label="股东信息">
         <tab-shareholder-info :customer="addCustomer" v-if="tabIndex===1"></tab-shareholder-info>

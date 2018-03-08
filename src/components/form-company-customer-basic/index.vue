@@ -209,7 +209,9 @@
               <i-col span="8">
                 <i-form-item label="职务" prop="baseDTO.mainLinkmanDuty">
                   <input type="hidden" v-model="formData.baseDTO.mainLinkmanDuty"/>
-                  <i-input :readonly="isFromDetail" :value="enumCode2Name(formData.baseDTO.mainLinkmanDuty, 'DutyEnum')"></i-input>
+                  <i-select :disabled="isFromDetail" v-model="formData.baseDTO.mainLinkmanDuty">
+                    <i-option v-for="item in enumSelectData.get('DutyEnum')" :key="item.itemCode" :value="item.itemCode">{{item.itemName}}</i-option>
+                  </i-select>
                 </i-form-item>
               </i-col>
               <i-col span="8">

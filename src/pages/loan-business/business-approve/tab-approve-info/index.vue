@@ -3,7 +3,6 @@
     <i-row>
       <i-col span="24">
         <i-form label-position="right" ref="busApproveForm" :model="approveData" :label-width="140">
-
           <bs-form-block :title="'初审信息'">
             <i-row>
               <i-col span="24">
@@ -39,31 +38,22 @@
                   </i-select>
                 </i-form-item>
               </i-col>
-              <!--<i-col span="8">
-                <i-form-item label="车辆销售价" prop="loanApproveCreditDTO.carSaleAmt"
-                             :rules="{required: true, message: '请输入车辆销售价'}">
-                  <i-input :readonly="readonly" v-model="approveData.loanApproveCreditDTO.carSaleAmt">
-                    <span slot="append">元</span>
-                  </i-input>
-                </i-form-item>
-              </i-col>-->
             </i-row>
             <i-row>
               <i-col span="8">
-                <i-form-item label="审批额度" prop="loanApproveCreditDTO.approveLimitAmt"
-                             :rules="{required: true, message: '请输入审批额度'}">
-                  <i-input :readonly="readonly" v-model="approveData.loanApproveCreditDTO.approveLimitAmt">
-                    <span slot="append">元</span>
+                <i-form-item label="颂车产品名义利率" prop="loanApproveCreditDTO.loanNominalRate"
+                             :rules="{required: true, message: '请输入颂车产品名义利率'}">
+                  <i-input :readonly="true" v-model="approveData.loanApproveCreditDTO.loanNominalRate">
+                    <span slot="append">%</span>
                   </i-input>
                 </i-form-item>
               </i-col>
               <i-col span="8">
-                <i-form-item label="贷款期限" prop="loanApproveCreditDTO.loanPeriods"
-                             :rules="{required: true, message: '请选择贷款期限'}">
-                  <i-input :readonly="true" v-model="approveData.loanApproveCreditDTO.loanPeriods">
-                    <i-button slot="append" @click="selectPeriodsAndRate = !selectPeriodsAndRate">选择利率方案</i-button>
+                <i-form-item label="产品利率" prop="loanApproveCreditDTO.loanProductRate"
+                             :rules="{required: true, message: '请输入产品利率'}">
+                  <i-input :readonly="true" v-model="isNaN(approveData.loanApproveCreditDTO.loanProductRate)?'请输入定收利率':approveData.loanApproveCreditDTO.loanProductRate">
+                    <span slot="append">%</span>
                   </i-input>
-                    <!--<i-option v-for="item in loanPeriodsList" :key="item.loanPeriods" :value="item.loanPeriods">{{item.loanPeriods}}</i-option>-->
                 </i-form-item>
               </i-col>
               <i-col span="8">
@@ -77,26 +67,28 @@
             </i-row>
             <i-row>
               <i-col span="8">
-                <i-form-item label="颂车产品名义利率" prop="loanApproveCreditDTO.loanNominalRate"
-                             :rules="{required: true, message: '请输入颂车产品名义利率'}">
-                  <i-input :readonly="true" v-model="approveData.loanApproveCreditDTO.loanNominalRate">
-                    <span slot="append">%</span>
+                <i-form-item label="贷款期限" prop="loanApproveCreditDTO.loanPeriods"
+                             :rules="{required: true, message: '请选择贷款期限'}">
+                  <i-input :readonly="true" v-model="approveData.loanApproveCreditDTO.loanPeriods">
+                    <i-button slot="append" @click="selectPeriodsAndRate = !selectPeriodsAndRate">选择利率方案</i-button>
+                  </i-input>
+                  <!--<i-option v-for="item in loanPeriodsList" :key="item.loanPeriods" :value="item.loanPeriods">{{item.loanPeriods}}</i-option>-->
+                </i-form-item>
+              </i-col>
+              <i-col span="8">
+                <i-form-item label="审批额度" prop="loanApproveCreditDTO.approveLimitAmt"
+                             :rules="{required: true, message: '请输入审批额度'}">
+                  <i-input :readonly="readonly" v-model="approveData.loanApproveCreditDTO.approveLimitAmt">
+                    <span slot="append">元</span>
                   </i-input>
                 </i-form-item>
+
               </i-col>
               <i-col span="8">
                 <i-form-item label="定收利率" prop="loanApproveCreditDTO.loanRealRate"
                              :rules="{required: true, message: '请输入定收利率'}">
                   <i-input :readonly="readonly" v-model="approveData.loanApproveCreditDTO.loanRealRate" @on-blur="loanRealRateVerification">
                     <span slot="append">%/年</span>
-                  </i-input>
-                </i-form-item>
-              </i-col>
-              <i-col span="8">
-                <i-form-item label="产品利率" prop="loanApproveCreditDTO.loanProductRate"
-                             :rules="{required: true, message: '请输入产品利率'}">
-                  <i-input :readonly="true" v-model="isNaN(approveData.loanApproveCreditDTO.loanProductRate)?'请输入定收利率':approveData.loanApproveCreditDTO.loanProductRate">
-                    <span slot="append">%</span>
                   </i-input>
                 </i-form-item>
               </i-col>
