@@ -248,17 +248,19 @@
             this.$data.tabIndex = 'tabInfo';
             return;
           }
-          let resp = await this.$http.post('/biz/sign/contract/fristApprove', { ...requestData });
-          if (resp.success) {
-            this.$Message.success('提交成功！');
-            // 初审 回到合同制作列表
-            this.$router.push({
-              path: '/index/contract/list',
-              query: {
-                currentPage: this.$route.query.currentPage
-              }
-            });
-          }
+          this.$AuditPrompt.auditPromptFun(refData.loanApprove.approveStatus, async () => {
+            let resp = await this.$http.post('/biz/sign/contract/fristApprove', { ...requestData });
+            if (resp.success) {
+              this.$Message.success('提交成功！');
+              // 初审 回到合同制作列表
+              this.$router.push({
+                path: '/index/contract/list',
+                query: {
+                  currentPage: this.$route.query.currentPage
+                }
+              });
+            }
+          });
         }
       },
       // 获取审批信息列表的data
