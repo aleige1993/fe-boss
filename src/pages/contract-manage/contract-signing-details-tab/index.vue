@@ -247,6 +247,14 @@
         this.examineGetlist(page);
       },
       async saveAjax() {
+        // 合同信息中只要有一项“未签署” isNSignStatus就为true。 在“结论为同意”时
+        let isNSignStatus = this.$data.formData.contractList.some(item => {
+          return item.signStatus === '0';
+        });
+        if (isNSignStatus && (this.$data.loanApprove.approveStatus === 'A')) {
+          this.$Message.error('合同信息中不能有“未签署”状态的合同！');
+          return;
+        }
         this.$data.initFormLoading = true;
         let resp = await this.$http.post('/biz/sign/signConfirm', {
           signNo: this.$route.query.signNo,
@@ -268,7 +276,9 @@
       saveSubimt() {
         this.$refs['loanApprove'].validate((valid) => {
           if (valid) {
-            this.saveAjax();
+            this.$AuditPrompt.auditPromptFun(this.$data.loanApprove.approveStatus, () => {
+              this.saveAjax();
+            });
           } else {
             this.$Message.error('"<span style="color: red">*</span>"必填项不能为空');
           }
