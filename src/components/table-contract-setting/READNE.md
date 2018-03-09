@@ -29,7 +29,11 @@
 <table-contract-list :type="'page'" ref="tableContractSetingList" @on-row-dbclick="selectRow" @on-set-row="setRow">
 </table-contract-list>
 ```
-
+或者：
+```
+<table-contract-list :templateNo="seeContractTemplateNo" :templateName="seeContractTemplateName" v-if="showContractSeting" :type="'modal'" ref="tableContractSetingList">
+</table-contract-list>
+```
 - js:
 
 ```
