@@ -5,20 +5,15 @@
       <i-breadcrumb-item href="/index/conf">配置管理</i-breadcrumb-item>
       <i-breadcrumb-item href="/index/conf/invest">资方管理</i-breadcrumb-item>
       <i-breadcrumb-item href="/index/conf/invest/contract">合同模板维护</i-breadcrumb-item>
-      <i-breadcrumb-item>参数配置</i-breadcrumb-item>
+      <i-breadcrumb-item>合同属性配置</i-breadcrumb-item>
     </i-breadcrumb>
-    <div class="form-top-actions">
-      <i-button type="info" @click="add"><i class="iconfont icon-xinzeng"></i> 新增</i-button>
-    </div>
-    <slot name="topAction"></slot>
-    <i-table border :loading="dataLoading" ref="selection" @on-select="selectRow" :columns="resultCustomerColumns"
-             :data="privateCustomerLoanList"></i-table>
-    <div class="page-container">
-      <i-page :total="total" :page-size="15" :current="currentPage" @on-change="jumpPage" size="small" show-elevator
-              show-total></i-page>
-    </div>
+    <table-contract-list :type="'page'" ref="tableContractSetingList" @on-row-dbclick="selectRow" @on-set-row="setRow">
+      <div class="form-top-actions" slot="topAction">
+        <i-button type="info" @click="openAdd"><i class="iconfont icon-xinzeng"></i> 新增</i-button>
+      </div>
+    </table-contract-list>
     <pt-modal :title="isAdd ? '添加' : '修改'" v-model="addModal" :width="600" :zIndex="200">
-      <i-form ref="fromData" :model="fromData" label-position="left" :label-width="100">
+      <i-form v-if="addModal" ref="fromData" :model="fromData" label-position="left" :label-width="100">
         <!--<i-form-item label="合同编号" prop="contractTemplateName">-->
           <!--<i-input v-model="fromData.contractTemplateNo" placeholder="" readonly></i-input>-->
         <!--</i-form-item>-->
@@ -64,83 +59,44 @@
   </div>
 </template>
 <script>
-  import MixinData from './mixin-data';
   import PTModal from '@/components/bs-modal';
+  import tableContractList from '@/components/table-contract-setting'; // 合同属性配置列表
   export default {
     name: 'pageTable',
-    mixins: [MixinData],
     data() {
       return {
         isAdd: true,
         addModal: false,
-        dataLoading: false,
         buttonLoading: false,
-        total: 0,
-        currentPage: 1,
-        certTypeEnum: {},
-        uploadFileName: '',
-        searchForm: {
-          'projectNo': '',
-          'toAccName': '',
-          'transCardId': '',
-          'btime': '',
-          'etime': '',
-          'status': '',
-          currentPage: 1,
-          pageSize: 15
-        },
+        contractTemplateNo: this.$route.query.id || this.templateNo, // 合同编码
+        contractTemplateName: this.$route.query.name || this.templateName, // 合同名称
         fromData: {
           fieldType: ''
         },
-        contractTemplateNo: this.$route.query.id, // 合同编码
-        contractTemplateName: this.$route.query.name, // 合同名称
         settingTypeEnum: [], // 属性类型枚举
         sourceEntityEnum: [], // 属性取值来源实体
         sourceAttrEnum: [] // 属性取值来源字段
       };
     },
     components: {
-      'pt-modal': PTModal
-    },
-    computed: {
-      resultCustomerColumns() {
-        if (this.type === 'modal') {
-          return this.$data.customerColumns;
-        } else {
-          return [...this.$data.customerColumns, ...this.$data.customerActionColumns];
-        }
-      }
-    },
-    props: {
-      type: String,
-      default: 'page',
-      required: false
+      'pt-modal': PTModal,
+      tableContractList
     },
     methods: {
-      selectRow(row, index) {
-        this.$emit('on-row-dbclick', row, index);
+      // 双击时的回调 （此页面用不到此功能）
+      selectRow(row, index) {},
+      setRow(row, index) {
+        this.$data.isAdd = false;
+        this.$data.addModal = true;
+        this.$data.fromData = row;
       },
-      jumpPage(page) {
-        this.getProxyPayList(page);
-      },
-      search() {
-        this.getProxyPayList(1);
-      },
-      add() {
-        this.$refs['fromData'].resetFields();
+      openAdd() {
+        this.fromData = {};
         this.$data.isAdd = true;
         this.$data.addModal = true;
         this.$data.fromData.contractTemplateNo = this.$data.contractTemplateNo;
         this.$data.fromData.contractTemplateName = this.$data.contractTemplateName;
       },
-//      selectFieldType() {
-//        if (this.$data.fromData.fieldType === '1') {
-//          this.$data.defaultValueReadonly = false;
-//        } else {
-//          this.$data.defaultValueReadonly = true;
-//          this.$data.fromData.fieldDefaultValue = null;
-//        }
-//      },
       selectFieldSourceEntity() {
         let sourceArray = [];
         this.$data.sourceEntityEnum.map(item => {
@@ -159,28 +115,13 @@
           }
         });
       },
-      async getProxyPayList(page) {
-        this.$data.dataLoading = true;
-        if (page) {
-          this.$data.searchForm.currentPage = page;
-        }
-        // console.log(this.$data.searchForm.currentPage);
-        let resp = await this.$http.post('/cfg/contract/list', {
-          templateNo: this.$data.contractTemplateNo,
-          currentPage: this.$data.searchForm.currentPage,
-          pageSize: this.$data.searchForm.pageSize
-        });
-        // console.log(JSON.stringify(resp));
-        this.$data.dataLoading = false;
-        this.$data.privateCustomerLoanList = resp.body.resultList;
-        this.$data.currentPage = resp.body.currentPage;
-        this.$data.total = resp.body.totalNum;
-      },
+      // 获取 属性取值来源实体 枚举
       async getSourceList() {
         let resp = await this.$http.get('/cfg/contract/listField');
         this.sourceEntityEnum = resp.body;
         // console.log(JSON.stringify(this.sourceEntityEnum));
       },
+      // 提交的ajax
       async submitSuccess() {
         // console.log(this.$data.fromData.entityDesc, this.$data.fromData.attrDesc);
         if (this.$data.fromData.fieldType === '1') {
@@ -199,7 +140,7 @@
         if (resp.success) {
           let text = this.$data.isAdd ? '添加成功' : '修改成功';
           this.$Message.success(text);
-          this.getProxyPayList();
+          this.$refs.tableContractSetingList.getProxyPayList();
         }
       },
       // 提交
@@ -218,8 +159,7 @@
       }
     },
     mounted() {
-      this.getProxyPayList();
-      this.getSourceList();
+      this.getSourceList(); //属性取值来源实体枚举
       this.$data.settingTypeEnum = [
         {
           'itemCode': '1',

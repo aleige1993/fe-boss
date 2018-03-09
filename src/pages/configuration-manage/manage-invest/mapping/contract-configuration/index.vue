@@ -45,6 +45,10 @@
       <!--传入合同属主contractSource。（1为资金方，2为产品）-->
       <table-contracttemplate-list :type="'modal'"  :contractSource="'1'" v-if="showSelectContractTemplate" @on-row-dbclick="selectContractTemplate"></table-contracttemplate-list>
     </bs-modal>
+    <bs-modal title="查看合同属性" :width="1200" v-model="showContractSeting">
+      <table-contract-list :templateNo="seeContractTemplateNo" :templateName="seeContractTemplateName" v-if="showContractSeting" :type="'modal'" ref="tableContractSetingList">
+      </table-contract-list>
+    </bs-modal>
   </div>
 </template>
 
@@ -52,6 +56,7 @@
   import MixinData from './mixin-data';
   import BSModal from '@/components/bs-modal';
   import GetContractTemplateModal from '@/components/table-contract-template-list'; // 选择合同模板
+  import tableContractList from '@/components/table-contract-setting'; // 合同属性配置列表
   export default {
     name: 'contractConfiguration',
     mixins: [MixinData],
@@ -60,6 +65,7 @@
     },
     components: {
       'bs-modal': BSModal,
+      tableContractList,
       'table-contracttemplate-list': GetContractTemplateModal
     },
     data() {
@@ -68,10 +74,13 @@
         total: 0,
         pageSize: 10,
         ShowModal: false,
+        showContractSeting: false, // 查看合同属性窗口
         buttonLoading: false,
         btnLoading: false,
         dataLoading: false,
         showSelectContractTemplate: false, // 合同模板模态框
+        seeContractTemplateNo: '',
+        seeContractTemplateName: '',
         dataForm: {
           productName: '',
           capitalName: '',
@@ -86,6 +95,12 @@
       this.getPrivateCustomerList();
     },
     methods: {
+      // 点击“查看合同属性”按钮
+      openContcartSeting(row) {
+        this.$data.showContractSeting = true;
+        this.$data.seeContractTemplateNo = row.contractTemplateNo;
+        this.$data.seecontractTemplateName = row.contractTemplateName;
+      },
       // 查询列表数据
       async getPrivateCustomerList(page) {
         page && (this.$data.currentPage = page);

@@ -17,7 +17,7 @@ export default {
         {
           title: '操作',
           key: 'action',
-          width: 120,
+          width: 200,
           align: 'center',
           render: (h, params) => {
             return h('div', [
@@ -31,7 +31,18 @@ export default {
                     this.remove($.extend({}, params.row));
                   }
                 }
-              }, '删除')
+              }, '删除'),
+              h('Button', {
+                props: {
+                  type: 'success',
+                  size: 'small'
+                },
+                on: {
+                  click: () => {
+                    this.openContcartSeting($.extend({}, params.row));
+                  }
+                }
+              }, '查看合同属性')
             ]);
           }
         }

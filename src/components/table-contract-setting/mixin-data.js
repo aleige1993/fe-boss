@@ -59,9 +59,9 @@ export default {
                 style: { marginRight: '5px' },
                 on: {
                   click: () => {
-                    this.$data.isAdd = false;
-                    this.$data.addModal = true;
-                    this.$data.fromData = $.extend({}, params.row);
+                    let rowData = {};
+                    $.extend(true, rowData, params.row);
+                    this.$emit('on-set-row', rowData);
                   }
                 }
               }, '修改'),
