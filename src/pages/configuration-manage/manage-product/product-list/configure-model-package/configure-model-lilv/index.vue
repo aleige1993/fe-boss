@@ -411,7 +411,7 @@
         <div class="form-top-actions">
           <i-button @click="addModalOpenZFLV" type="info"><i class="iconfont icon-xinzeng"></i> 新增</i-button>
         </div>
-        <i-table :loading="ZFLVdataLoading" border ref="zfTable" :columns="columnsZFLV" :data="dataZFLV"></i-table>
+        <i-table :height="this.$store.getters.viewHeight + 98" :loading="ZFLVdataLoading" border ref="zfTable" :columns="columnsZFLV" :data="dataZFLV"></i-table>
       </div>
     </bs-modal>
     <!--选择资方的弹窗-->
@@ -454,7 +454,7 @@
       <div class="form-top-actions">
         <i-button @click="addCostModal" type="info"><i class="iconfont icon-xinzeng"></i> 新增</i-button>
       </div>
-      <i-table :loading="costDataLoading" border ref="FyTable" :columns="costcolumns" :data="costdata"></i-table>
+      <i-table :height="this.$store.getters.viewHeight + 98" :loading="costDataLoading" border ref="FyTable" :columns="costcolumns" :data="costdata"></i-table>
     </bs-modal>
     <bs-modal title="新增" v-model="showCostAdd" :width="520">
       <i-form ref="formCostModel" :model="formCostModel" label-position="left" :label-width="100">
