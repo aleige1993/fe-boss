@@ -10,7 +10,7 @@
           <i-input type="text" placeholder="合同名称"  v-model="formSearch.contractTemplateName"></i-input>
         </i-form-item>
         <i-form-item prop="contractTemplateName" style="width: 150px">
-          <i-select v-model="formSearch.contractSource" placeholder="合同属性">
+          <i-select v-model="formSearch.contractSource" placeholder="合同属主">
             <i-option value="" style="height: 26px; color: #bbbec4">-请选择-</i-option>
             <i-option v-for="item in enumSelectData.get('ContractSourceEnum')" :key="item.itemCode" :value="item.itemCode">{{item.itemName}}</i-option>
           </i-select>
