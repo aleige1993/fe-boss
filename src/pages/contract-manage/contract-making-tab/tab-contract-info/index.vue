@@ -315,7 +315,7 @@
             <input type="hidden" v-model="setCarDataForm.carModel">
             <bs-carpicker :currBrand="setCarDataForm.carBrandName"
                           :currSeries="setCarDataForm.carTypeName"
-                          :currModel="setCarDataForm.carModel"
+                          :currModel="setCarDataForm.carModelName"
                           @on-change="selectLoanCar">
             </bs-carpicker>
           </i-form-item>
