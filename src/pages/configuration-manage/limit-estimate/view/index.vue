@@ -6,26 +6,28 @@
       <i-breadcrumb-item href="/index/conf/limitestimate">额度预估</i-breadcrumb-item>
       <i-breadcrumb-item>设置预览</i-breadcrumb-item>
     </i-breadcrumb>
-    <table border="0" cellpadding="0" cellspacing="0">
-      <tr>
+    <div :style="{overflowY:'auto',border:'1px solid #ddd',maxHeight:(this.$store.getters.viewHeight+200)+'px'}">
+      <table border="0" cellpadding="0" cellspacing="0">
+        <tr>
           <th>一级指标</th>
           <th>二级指标</th>
           <th>满分</th>
           <th>评分标准</th>
           <th>所占百分比</th>
-      </tr>
-      <template v-for="list in resultList">
-        <tr>
-          <td :rowspan="list.memberScoreDTOList.length + 1">{{list.firstLevelTarget}}</td>
-          <td :rowspan="list.memberScoreDTOList.length + 1">{{list.secondLevelTarget}}</td>
-          <td :rowspan="list.memberScoreDTOList.length + 1">{{list.score}}</td>
         </tr>
-        <tr v-for="itemList in list.memberScoreDTOList">
+        <template v-for="list in resultList">
+          <tr>
+            <td :rowspan="list.memberScoreDTOList.length + 1">{{list.firstLevelTarget}}</td>
+            <td :rowspan="list.memberScoreDTOList.length + 1">{{list.secondLevelTarget}}</td>
+            <td :rowspan="list.memberScoreDTOList.length + 1">{{list.score}}</td>
+          </tr>
+          <tr v-for="itemList in list.memberScoreDTOList">
             <td>{{itemList.scoreName}}</td>
             <td>{{itemList.scoreRatio * 100}}%</td>
-        </tr>
-      </template>
-    </table>
+          </tr>
+        </template>
+      </table>
+    </div>
   </div>
 </template>
 

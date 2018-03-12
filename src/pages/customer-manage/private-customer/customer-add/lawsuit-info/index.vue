@@ -3,7 +3,7 @@
     <div class="form-top-actions" style="padding-top: 0" v-if="!isFromDetail">
       <i-button type="primary" @click="addModal=!addModal"><i class="iconfont icon-xinzeng"></i> 新增</i-button>
     </div>
-    <i-table :loading="loadingData" :columns="cusomerLawsuitColumns" :data="cusomerLawsuitDatas"></i-table>
+    <i-table :height="this.$store.getters.viewHeight+98" :loading="loadingData" :columns="cusomerLawsuitColumns" :data="cusomerLawsuitDatas"></i-table>
     <!--添加联系人模态框-->
     <pt-modal :title="'添加公司信息'" v-model="addModal">
       <i-form ref="formAdd" :model="formData" label-position="left" :label-width="120">

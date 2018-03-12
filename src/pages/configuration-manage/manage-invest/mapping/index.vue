@@ -24,7 +24,7 @@
     <div class="form-top-actions">
       <i-button @click="addModal" type="info"><i class="iconfont icon-xinzeng"></i> 新增</i-button>
     </div>
-    <i-table :loading="dataLoading" border ref="zfycTable" :columns="columns1" :data="data1"></i-table>
+    <i-table :height="this.$store.getters.viewHeight" :loading="dataLoading" border ref="zfycTable" :columns="columns1" :data="data1"></i-table>
     <div class="page-container">
       <i-page :page-size="pageSize" :current="currentPage" :total="total" size="small" show-elevator show-total @on-change="junmpPage">
       </i-page>

@@ -5,7 +5,7 @@
         <i-button type="success" @click="addModal=!addModal">添加</i-button>
       </div>
     </div>
-    <i-table :loading="listLoading" :columns="spouseColumns" :data="spouseDatas"></i-table>
+    <i-table :height="this.$store.getters.viewHeight+98" :loading="listLoading" :columns="spouseColumns" :data="spouseDatas"></i-table>
     <!--添加联系人模态框-->
     <pt-modal title="选择客户配偶" v-model="addModal" :width="1200">
       <table-customer-list ref="addCustomerSpouseModalTable" type="modal" @on-row-dbclick="selectSpouseRow">

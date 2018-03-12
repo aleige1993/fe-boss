@@ -2,7 +2,7 @@
 <!--资方维护列表-->
   <div id="table-invest-list">
     <slot name="topAction" v-if="!isModal"></slot>
-    <i-table :loading="dataLoading" border ref="proTable" :columns="resultColumns" :data="data1" @on-row-dblclick="selectRow"></i-table>
+    <i-table :height="this.$store.getters.viewHeight+98" :loading="dataLoading" border ref="proTable" :columns="resultColumns" :data="data1" @on-row-dblclick="selectRow"></i-table>
     <div class="page-container">
       <i-page :page-size="pageSize" :current="currentPage" :total="total" size="small" show-elevator show-total @on-change="jumpPage">
       </i-page>

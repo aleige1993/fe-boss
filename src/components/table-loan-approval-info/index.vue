@@ -1,7 +1,7 @@
 <template>
 <!--审批信息列表（放款管理）-->
   <div id="table-loan-approval-info">
-    <i-table :current="currentPageExamine" :loading="examineTableLoading" border ref="examineTable" :columns="examineColumns" :data="examineData"></i-table>
+    <i-table :height="this.$store.getters.viewHeight" :current="currentPageExamine" :loading="examineTableLoading" border ref="examineTable" :columns="examineColumns" :data="examineData"></i-table>
     <div class="page-container">
       <i-page @on-change="jumpPageExamine" :total="totalExamine" :page-size="pageSizeExamine" size="small" show-elevator show-total></i-page>
     </div>

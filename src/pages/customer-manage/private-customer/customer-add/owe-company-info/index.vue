@@ -3,7 +3,7 @@
     <div class="form-top-actions" style="padding-top: 0" v-if="!isFromDetail">
       <i-button type="primary" @click="addOweCompany"><i class="iconfont icon-xinzeng"></i> 新增</i-button>
     </div>
-    <i-table :loading="loadingData" :columns="bankAccountColumns" :data="bankAccountDatas"></i-table>
+    <i-table :height="this.$store.getters.viewHeight+98" :loading="loadingData" :columns="bankAccountColumns" :data="bankAccountDatas"></i-table>
     <!--添加联系人模态框-->
     <bs-modal :title="'添加公司信息'" v-model="addBankModal">
       <i-form ref="formAddOweCompany" :model="formData" label-position="left" :label-width="120">

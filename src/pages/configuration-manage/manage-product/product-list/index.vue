@@ -33,7 +33,7 @@
       <i-button @click="SetCityClick" type="ghost"><i class="iconfont icon-shenhe"></i> 投放城市配置</i-button>
       <i-button v-show="isClickRow" @click="handleClearCurrentRow" type="text"><i-icon type="android-cancel" class="button-cancel"></i-icon> 取消当前选中状态</i-button>
     </div>
-    <i-table highlight-row border :loading="dataLoading" ref="proTable" :columns="resultColumns" :data="data1" @on-current-change="radioFun" @on-row-dblclick="selectRow"></i-table>
+    <i-table :height="this.$store.getters.viewHeight" highlight-row border :loading="dataLoading" ref="proTable" :columns="resultColumns" :data="data1" @on-current-change="radioFun" @on-row-dblclick="selectRow"></i-table>
     <div class="page-container">
       <i-page :total="total" :page-size="pageSize" :current="currentPage" @on-change="jumpPage" size="small" show-elevator show-total></i-page>
     </div>
