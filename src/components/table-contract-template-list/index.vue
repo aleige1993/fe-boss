@@ -6,8 +6,14 @@
     </div>
     <div class="search-form-container">
       <i-form inline label-position="left" ref="formSearch" :model="formSearch">
-        <i-form-item prop="contractTemplateName" label="合同名称" :label-width="100">
+        <i-form-item prop="contractTemplateName">
           <i-input type="text" placeholder="合同名称"  v-model="formSearch.contractTemplateName"></i-input>
+        </i-form-item>
+        <i-form-item prop="contractTemplateName" style="width: 150px">
+          <i-select v-model="formSearch.contractSource" placeholder="合同属性">
+            <i-option value="" style="height: 26px; color: #bbbec4">-请选择-</i-option>
+            <i-option v-for="item in enumSelectData.get('ContractSourceEnum')" :key="item.itemCode" :value="item.itemCode">{{item.itemName}}</i-option>
+          </i-select>
         </i-form-item>
         <i-form-item>
           <i-button type="primary" @click="search">
@@ -51,7 +57,8 @@
         total: 0,
         pageSize: 15,
         formSearch: {
-          contractTemplateName: ''
+          contractTemplateName: '',
+          contractSource: ''
         }
       };
     },
@@ -78,7 +85,8 @@
         let resp = await this.$http.post('/contract/listContractTemplate', {
           currentPage: this.$data.currentPage,
           pageSize: this.$data.pageSize,
-          contractTemplateName: this.$data.formSearch.contractTemplateName
+          contractTemplateName: this.$data.formSearch.contractTemplateName,
+          contractSource: this.$data.formSearch.contractSource
           // contractSource: this.contractSource // 1:资金方，2:产品
         });
         this.$data.dataLoading = false;
