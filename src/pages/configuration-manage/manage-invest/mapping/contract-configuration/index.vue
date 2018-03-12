@@ -4,7 +4,7 @@
     <div class="form-top-actions">
       <i-button @click="addModal" type="info"><i class="iconfont icon-xinzeng"></i> 新增</i-button>
     </div>
-    <i-table :loading="dataLoading" border ref="ContractTable" :columns="columns1" :data="data1"></i-table>
+    <i-table :height="this.$store.getters.viewHeight + 98" :loading="dataLoading" border ref="ContractTable" :columns="columns1" :data="data1"></i-table>
     <div class="page-container">
       <i-page :current="currentPage" :total="total" size="small" show-elevator show-total @on-change="jumpPage" :page-size="pageSize"></i-page>
     </div>

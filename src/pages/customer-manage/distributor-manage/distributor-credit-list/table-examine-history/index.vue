@@ -10,7 +10,7 @@
     <br>
     <br>
     <bs-form-block :title="'审核历史意见'">
-      <i-table border :loading="dataLoading" ref="tableHistory" :columns="columns1" :data="data1"></i-table>
+      <i-table :height="this.$store.getters.viewHeight" border :loading="dataLoading" ref="tableHistory" :columns="columns1" :data="data1"></i-table>
     </bs-form-block>
   </div>
 </template>

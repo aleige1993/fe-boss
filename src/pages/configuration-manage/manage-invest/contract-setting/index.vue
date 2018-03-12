@@ -159,7 +159,7 @@
       }
     },
     mounted() {
-      this.getSourceList(); //属性取值来源实体枚举
+      this.getSourceList(); // 属性取值来源实体枚举
       this.$data.settingTypeEnum = [
         {
           'itemCode': '1',

@@ -257,7 +257,7 @@
             <div class="form-top-actions">
               <i-button type="primary" v-if="!isFromDetail" @click="openAddAttachModal">添加附件</i-button>
             </div>
-            <i-table :loading="loadingAttachFile" :columns="companyAttachFileColumns" :data="formData.attachDTOs"></i-table>
+            <i-table :height="this.$store.getters.viewHeight" :loading="loadingAttachFile" :columns="companyAttachFileColumns" :data="formData.attachDTOs"></i-table>
           </bs-form-block>
           <i-row v-if="type=='modal'" style="text-align:center">
             <i-button @click="submitCompanyCustomerBasic" :loading="initFormLoading" type="success">

@@ -15,7 +15,7 @@
           <bs-form-block title="初审信息">
             <i-row>
               <i-col span="24">
-                <i-table :columns="firstApproveColumns" :data="creditInfo.firstTrialDTO.creditCheckItemsList"></i-table>
+                <i-table :height="this.$store.getters.viewHeight" :columns="firstApproveColumns" :data="creditInfo.firstTrialDTO.creditCheckItemsList"></i-table>
               </i-col>
             </i-row>
           </bs-form-block>
@@ -23,7 +23,7 @@
           <bs-form-block title="现场尽调信息">
             <i-row>
               <i-col span="24">
-                <i-table :columns="outApproveColumns" :data="creditInfo.externalAuditDTOList"></i-table>
+                <i-table :height="this.$store.getters.viewHeight" :columns="outApproveColumns" :data="creditInfo.externalAuditDTOList"></i-table>
               </i-col>
             </i-row>
           </bs-form-block>

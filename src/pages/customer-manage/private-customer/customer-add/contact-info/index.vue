@@ -5,7 +5,7 @@
         <div class="form-top-actions" style="padding-top: 0">
           <i-button v-if="!isFromDetail" type="primary" @click="addContactModal"><i class="iconfont icon-xinzeng"></i> 新增</i-button>
         </div>
-        <i-table :loading="loadingContactBook" :columns="contactColumns" :data="contactDatas"></i-table>
+        <i-table :height="this.$store.getters.viewHeight+98" :loading="loadingContactBook" :columns="contactColumns" :data="contactDatas"></i-table>
       </i-tab-pane>
       <i-tab-pane label="电话本联系人">
         <div class="search-form-container">
@@ -18,7 +18,7 @@
             </i-form-item>
           </i-form>
         </div>
-        <i-table :loading="loadingContactBook" :columns="contactBookColumns" :data="contactBookDatas"></i-table>
+        <i-table :height="this.$store.getters.viewHeight" :loading="loadingContactBook" :columns="contactBookColumns" :data="contactBookDatas"></i-table>
         <div class="page-container">
           <i-page @on-change="contactBooksPageChange" :total="contactBookTotal" :page-size="15" size="small"  show-total></i-page>
         </div>
@@ -34,7 +34,7 @@
             </i-form-item>
           </i-form>
         </div>
-        <i-table :loading="loadingContactBook" :columns="callInColumns" :total="callInTotal" :data="callInDatas"></i-table>
+        <i-table :height="this.$store.getters.viewHeight" :loading="loadingContactBook" :columns="callInColumns" :total="callInTotal" :data="callInDatas"></i-table>
         <div class="page-container">
           <Page @on-change="callInPageChange" :total="callInTotal" size="small"  show-total></Page>
         </div>
@@ -50,7 +50,7 @@
             </i-form-item>
           </i-form>
         </div>
-        <i-table :loading="loadingContactBook" :columns="callInColumns" :total="callOutTotal" :data="callInDatas"></i-table>
+        <i-table :height="this.$store.getters.viewHeight" :loading="loadingContactBook" :columns="callInColumns" :total="callOutTotal" :data="callInDatas"></i-table>
         <div class="page-container">
           <Page @on-change="callOutPageChange" :total="callOutTotal" size="small"  show-total></Page>
         </div>

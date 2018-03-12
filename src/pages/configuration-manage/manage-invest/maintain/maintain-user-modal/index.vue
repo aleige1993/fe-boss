@@ -1,9 +1,10 @@
 <template>
+  <!--资方维护 账户信息-->
 <div id="maintain-user-modal">
   <div class="form-top-actions">
     <i-button @click="openShowModal" type="info"><i class="iconfont icon-xinzeng"></i> 新增</i-button>
   </div>
-  <i-table border ref="userTable" :columns="columns1" :data="data1" :loading="dataLoading"></i-table>
+  <i-table :height="this.$store.getters.viewHeight + 98" border ref="userTable" :columns="columns1" :data="data1" :loading="dataLoading"></i-table>
   <br>
   <br>
   <!--//////////////////////////////////////////////////////////////////////////////////////////////-->

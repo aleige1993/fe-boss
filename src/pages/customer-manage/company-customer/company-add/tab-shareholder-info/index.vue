@@ -3,7 +3,7 @@
     <div class="form-top-actions" v-if="!isFromDetail" style="padding-top: 0">
       <i-button type="primary" @click="openAddModal"><i class="iconfont icon-xinzeng"></i> 新增</i-button>
     </div>
-    <i-table :loading="loadingData" :columns="shareHolerColumns" :data="shareHolerDatas"></i-table>
+    <i-table :height="this.$store.getters.viewHeight+98" :loading="loadingData" :columns="shareHolerColumns" :data="shareHolerDatas"></i-table>
     <!--添加联系人模态框-->
     <pt-modal title="添加股东信息" v-model="addShareholerModal">
       <i-form ref="formShareHoler" :model="formData" label-position="left" :label-width="80">

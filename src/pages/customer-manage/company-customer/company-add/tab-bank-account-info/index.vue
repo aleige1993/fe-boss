@@ -3,7 +3,7 @@
     <div class="form-top-actions" v-if="!isFromDetail" style="padding-top: 0">
       <i-button type="primary" @click="openAddModal"><i class="iconfont icon-xinzeng"></i> 新增</i-button>
     </div>
-    <i-table :loading="dataLoading" :columns="bankAccountColumns" :data="bankAccountDatas"></i-table>
+    <i-table :height="this.$store.getters.viewHeight+98" :loading="dataLoading" :columns="bankAccountColumns" :data="bankAccountDatas"></i-table>
     <!--添加联系人模态框-->
     <pt-modal title="添加银行账户" v-model="addBankModal">
       <i-form ref="bankForm" :model="formData" label-position="left" :label-width="120">
