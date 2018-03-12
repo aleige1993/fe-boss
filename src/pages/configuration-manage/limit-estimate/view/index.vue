@@ -7,7 +7,7 @@
       <i-breadcrumb-item>设置预览</i-breadcrumb-item>
     </i-breadcrumb>
     <div class="scrollBarStyle" :style="{overflowY:'auto',border:'1px solid #ddd',maxHeight:(this.$store.getters.viewHeight+200)+'px'}">
-      <table border="0" cellpadding="0" cellspacing="0">
+      <table border="0" cellpadding="0" cellspacing="0" style="margin-top: 0px;">
         <tr>
           <th>一级指标</th>
           <th>二级指标</th>
