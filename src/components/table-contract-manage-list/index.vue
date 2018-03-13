@@ -42,7 +42,7 @@
             </i-form-item>
           </i-form>
         </div>
-        <i-table :height="this.$store.getters.viewHeight+48" border :loading="dataLoading" ref="contractTable" :columns="columns1" :data="data1"></i-table>
+        <i-table :height="tableFixHeight+48" border :loading="dataLoading" ref="contractTable" :columns="columns1" :data="data1"></i-table>
         <div class="page-container">
           <i-page :total="total" :page-size="pageSize" :current="currentPage" @on-change="jumpPage" size="small" show-elevator show-total></i-page>
         </div>

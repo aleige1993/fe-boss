@@ -1,7 +1,7 @@
 <template>
   <div id="table-contract-seting">
     <slot name="topAction" v-if="!isModal"></slot>
-    <i-table :height="this.$store.getters.viewHeight+48" border :loading="dataLoading" ref="selection" @on-select="selectRow" :columns="resultCustomerColumns"
+    <i-table :height="tableFixHeight+48" border :loading="dataLoading" ref="selection" @on-select="selectRow" :columns="resultCustomerColumns"
              :data="privateCustomerLoanList"></i-table>
     <div class="page-container">
       <i-page :total="total" :page-size="pageSize" :current="currentPage" @on-change="jumpPage" size="small" show-elevator

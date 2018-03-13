@@ -14,7 +14,7 @@
       </i-form>
     </div>
     <slot name="topAction"></slot>
-    <i-table :height="this.$store.getters.viewHeight+48" border :loading="dataLoading" ref="selection" @on-row-dblclick="selectRow" :columns="resultCompanyCustomerColumns" :data="companyCustomerData"></i-table>
+    <i-table :height="tableFixHeight+48" border :loading="dataLoading" ref="selection" @on-row-dblclick="selectRow" :columns="resultCompanyCustomerColumns" :data="companyCustomerData"></i-table>
     <div class="page-container">
       <i-page @on-change="jumpPage" :page-size="pageSize" :current="currentPage" :total="total" size="small" show-elevator show-total></i-page>
     </div>

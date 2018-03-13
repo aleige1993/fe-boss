@@ -12,7 +12,7 @@
       </i-form>
     </div>
     <slot name="topAction" v-if="!isModal"></slot>
-    <i-table :height="this.$store.getters.viewHeight+40" :loading="dataLoading" border ref="distributorRoleTable" :columns="resultColumns" :data="roleList" @on-row-dblclick="selectRow"></i-table>
+    <i-table :height="tableFixHeight+40" :loading="dataLoading" border ref="distributorRoleTable" :columns="resultColumns" :data="roleList" @on-row-dblclick="selectRow"></i-table>
     <div class="page-container">
       <i-page @on-change="jumpPage" :total="total" :page-size="pageSize" :current="currentPage" size="small" show-elevator show-total></i-page>
     </div>

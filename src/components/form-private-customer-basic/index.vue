@@ -271,7 +271,10 @@
                              prop="mbMemberWorkDTO.unitType"
                              :rules="{required: true, message: '请选择单位性质', trigger: 'blur'}">
                   <input v-model="formData.mbMemberWorkDTO.unitType" type="hidden"/>
-                  <i-input :readonly="true" :value="enumCode2Name(formData.mbMemberWorkDTO.unitType, 'UnitTypeEnum')" placeholder="自动带入"></i-input>
+                  <!--<i-input :readonly="true" :value="enumCode2Name(formData.mbMemberWorkDTO.unitType, 'UnitTypeEnum')" placeholder="自动带入"></i-input>-->
+                  <i-select :disabled="isFromDetail" v-model="formData.mbMemberWorkDTO.unitType" placeholder="公司性质">
+                    <i-option v-for="item in enumSelectData.get('UnitTypeEnum')" :key="item.itemCode" :value="item.itemCode">{{item.itemName}}</i-option>
+                  </i-select>
                 </i-form-item>
               </i-col>
               <i-col span="8">
@@ -279,7 +282,10 @@
                              prop="mbMemberWorkDTO.industryType"
                              :rules="{required: true, message: ' ', trigger: 'blur'}">
                   <input  v-model="formData.mbMemberWorkDTO.industryType" type="hidden" />
-                  <i-input :readonly="true" :value="enumCode2Name(formData.mbMemberWorkDTO.industryType, 'IndustryTypeEnum')" placeholder="自动带入"></i-input>
+                  <!--<i-input :readonly="true" :value="enumCode2Name(formData.mbMemberWorkDTO.industryType, 'IndustryTypeEnum')" placeholder="自动带入"></i-input>-->
+                  <i-select :disabled="isFromDetail" v-model="formData.mbMemberWorkDTO.industryType">
+                    <i-option v-for="item in enumSelectData.get('IndustryTypeEnum')" :key="item.itemCode" :value="item.itemCode">{{item.itemName}}</i-option>
+                  </i-select>
                 </i-form-item>
               </i-col>
             </i-row>
