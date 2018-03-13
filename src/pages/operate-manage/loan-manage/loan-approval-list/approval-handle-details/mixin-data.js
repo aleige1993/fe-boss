@@ -17,7 +17,7 @@ export default {
         },
         {
           title: '车辆型号',
-          key: 'carModel'
+          key: 'carModelName'
         },
         {
           title: '车牌号',
