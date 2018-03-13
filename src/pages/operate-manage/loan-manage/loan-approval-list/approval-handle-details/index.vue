@@ -112,12 +112,27 @@
                 </i-form-item>
               </i-col>
               <i-col span="8">
-                <i-form-item label="资金方利率">
-                  <span v-text="formData.paymentRecordDTO.capitalRate"></span>
+                <i-form-item label="放款类型">
+                  <i-select placeholder="请选择" value="1" @on-change="paymentTypeChange">
+                    <i-option value="1">一次放款</i-option>
+                    <i-option value="2">二次放款</i-option>
+                  </i-select>
+                </i-form-item>
+              </i-col>
+              <i-col span="8" v-if="formData.paymentRecordDTO.paymentType==='2'">
+                <i-form-item label="二次放款金额" class="required">
+                  <i-input v-model="formData.paymentRecordDTO.paymentSecondAmt" placeholder="" @on-change="paymentSecondAmtChange"  @on-blur="paymentSecondAmtBlur">
+                    <span slot="append">元</span>
+                  </i-input>
                 </i-form-item>
               </i-col>
             </i-row>
             <i-row>
+              <i-col span="8">
+                <i-form-item label="资金方利率">
+                  <span v-text="formData.paymentRecordDTO.capitalRate"></span>
+                </i-form-item>
+              </i-col>
               <i-col span="8">
                 <i-form-item label="应收分润金额">
                   <span v-text="formData.paymentRecordDTO.shareAmt"></span>
@@ -521,6 +536,7 @@
         guaranteeShowModal: false, // 担保落实modal
         // 费用收取落实
         feeTableLoading: false,
+        defaultLoanAmt: 0, // 页面初次加载的 放款金额
         formData: {
           'approveStatus': '',
           'rejectCause': '',
@@ -530,6 +546,8 @@
             'scRate': '',
             'capitalRate': '',
             'loanAmt': '',
+            'paymentType': '',
+            'paymentSecondAmt': '',
             'expectLoanDate': ''
           },
           'paymentApplyRecordDTO': {
@@ -634,8 +652,41 @@
       this.assureGtelist(); // 执行获取担保信息列表的data
       this.conditionGetlist(); // 执行获取放款条件列表的data
       this.feeGetlist(); // 执行获取费用收取落实列表的data
+      console.log(this.$data.formData.paymentRecordDTO.paymentSecondAmt);
     },
     methods: {
+      // 离开"二次放款金额"输入框时
+      paymentSecondAmtBlur(event) {
+        let newVal = event.target.value;
+        if (isNaN(newVal)) {
+          this.$Message.warning('二次放款金额必须是金额格式！');
+          $(event.target).focus();
+        }
+        if (newVal >= this.$data.defaultLoanAmt) {
+          this.$Message.warning('二次放款金额不能大于等于一次放款金额!');
+          $(event.target).focus();
+        } else {
+          this.$set(this.$data.formData.paymentRecordDTO, 'loanAmt', (this.$data.defaultLoanAmt - newVal));
+        }
+      },
+      // 输入"二次放款金额"时，放款金额 = 默认放款金额- 二次放款金额
+      paymentSecondAmtChange(event) {
+        let _val = event.target.value;
+        if (isNaN(_val)) {
+          this.$Message.warning('输入的必须是金额格式！');
+        }
+        if (_val >= this.$data.defaultLoanAmt) {
+          this.$Message.warning('二次放款金额不能大于等于一次放款金额!');
+        } else {
+          this.$set(this.$data.formData.paymentRecordDTO, 'loanAmt', (this.$data.defaultLoanAmt - _val));
+        }
+      },
+      // 放款类型变更
+      paymentTypeChange(val) {
+        this.$set(this.$data.formData.paymentRecordDTO, 'paymentType', val);
+        (val === '1') && this.$set(this.$data.formData.paymentRecordDTO, 'paymentSecondAmt', '');
+        // this.$data.formData.paymentRecordDTO.paymentType = val;
+      },
       // 获取放款条件详情
       async getFindPaymentApplyRecordInfo() {
         let reps = await this.$http.post('/biz/payment/findPaymentApplyRecordInfo', {
@@ -644,8 +695,10 @@
         });
         if (reps.success) {
           this.$data.formData = reps.body;
+          this.$data.defaultLoanAmt = reps.body.paymentRecordDTO.loanAmt;
         } else {
           this.$data.formData = {};
+          this.$data.defaultLoanAmt = 0;
         }
       },
       // 获取车辆信息列表的data
@@ -710,6 +763,40 @@
       },
       // 提交的ajax
       async allSubimt() {
+        if (this.$data.formData.approveStatus === 'A') {
+          // 默认为“一次放款金额”
+          if (
+            typeof this.$data.formData.paymentRecordDTO.paymentType === 'undefined' ||
+            (this.$data.formData.paymentRecordDTO.paymentType === '')
+          ) {
+            this.$data.formData.paymentRecordDTO.paymentType = '1';
+          }
+          // 当为“一次放款金额”时“二次放款金额”为空字符
+          if (
+            typeof this.$data.formData.paymentRecordDTO.paymentSecondAmt === 'undefined' ||
+            (this.$data.formData.paymentRecordDTO.paymentType === '1')
+          ) {
+            this.$data.formData.paymentRecordDTO.paymentSecondAmt = '';
+          }
+          // 验证二次金额的必填性
+          if (
+            (this.$data.formData.paymentRecordDTO.paymentType === '2') &&
+            (this.$data.formData.paymentRecordDTO.paymentSecondAmt === '')
+          ) {
+            this.$Message.error('请输入“放款信息”中“二次放款金额”！');
+            return;
+          }
+          // “二次放款金额”必须是金额格式！
+          if (isNaN(this.$data.formData.paymentRecordDTO.paymentSecondAmt)) {
+            this.$Message.error('“二次放款金额”必须是金额格式！');
+            return;
+          }
+          // "二次放款金额"不能大于等于“一次放款金额”
+          if (this.$data.formData.paymentRecordDTO.paymentSecondAmt >= this.$data.defaultLoanAmt) {
+            this.$Message.error('“二次放款金额”不能大于等于“一次放款金额”！');
+            return;
+          }
+        }
         this.$AuditPrompt.auditPromptFun(this.$data.formData.approveStatus, async () => {
           let rep = await this.$http.post('/biz/payment/paymentApprove', {
             paymentNo: this.$route.query.paymentNo,
@@ -717,7 +804,10 @@
               approveStatus: this.$data.formData.approveStatus,
               rejectCause: this.$data.formData.rejectCause,
               opinion: this.$data.formData.opinion
-            }
+            },
+            paymentType: this.$data.formData.paymentRecordDTO.paymentType,
+            paymentSecondAmt: this.$data.formData.paymentRecordDTO.paymentSecondAmt,
+            loanAmt: this.$data.formData.paymentRecordDTO.loanAmt
           });
           if (rep.success) {
             this.$Message.success('提交成功');
