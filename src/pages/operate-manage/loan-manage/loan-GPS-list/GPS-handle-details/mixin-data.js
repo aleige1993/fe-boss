@@ -17,7 +17,7 @@ export default {
         },
         {
           title: '车辆型号',
-          key: 'carModel'
+          key: 'carModelName'
         },
         {
           title: '车牌号',
@@ -109,7 +109,6 @@ export default {
       loanCarGpsDTOColumns: [
         {
           title: 'GPS型号',
-          width: 150,
           key: 'gpsModel'
         },
         {
@@ -122,7 +121,6 @@ export default {
         },
         {
           title: '安装状态',
-          width: 100,
           key: 'gpsInstallStatus',
           render: (h, params) => {
             return h('span', {}, this.enumCode2Name(params.row.gpsInstallStatus, 'GpsInstallStatusEnum'));
@@ -134,7 +132,6 @@ export default {
         },
         {
           title: '办理时间',
-          width: 200,
           key: 'makeDate'
         },
         {

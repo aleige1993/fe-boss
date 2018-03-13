@@ -185,7 +185,7 @@
           <i-col span="24">
             <i-form-item
               label="车辆品牌"
-              prop="carModel">
+              prop="carModelName">
               <span v-text="detailsCarDataForm.carBrandName+detailsCarDataForm.carTypeName+detailsCarDataForm.carModel"></span>
             </i-form-item>
           </i-col>
@@ -353,7 +353,7 @@
       <div class="form-top-actions">
         <i-button @click="addGPSModal" type="info"><i class="iconfont icon-xinzeng"></i>&nbsp;新增</i-button>
       </div>
-      <i-table v-if="GPSinstallShowModal" border ref="examineTable" :columns="loanCarGpsDTOColumns" :data="loanCarGpsList"></i-table>
+      <i-table :height="tableFixHeight+48" v-if="GPSinstallShowModal" border ref="examineTable" :columns="loanCarGpsDTOColumns" :data="loanCarGpsList"></i-table>
     </bs-modal>
     <!--GPS安装信息新增和修改模态框-->
     <bs-modal v-model="GPSShowModal" :title="isAddGPS?'新增':'修改'" :width="520" @on-close="formAddGPS = {}">
@@ -524,6 +524,7 @@
           carFrameNo: '',
           carMileage: '',
           carModel: '',
+          carModelName: '',
           billCorpName: ''
         },
         // 办理抵质押物手续

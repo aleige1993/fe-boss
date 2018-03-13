@@ -244,8 +244,8 @@
           <i-col span="24">
             <i-form-item
               label="车辆品牌"
-              prop="carModel">
-              <span v-text="detailsCarDataForm.carBrandName+detailsCarDataForm.carTypeName+detailsCarDataForm.carModel"></span>
+              prop="carModelName">
+              <span v-text="detailsCarDataForm.carModelName"></span>
             </i-form-item>
           </i-col>
         </i-row>
@@ -605,6 +605,7 @@
           carFrameNo: '',
           carMileage: '',
           carModel: '',
+          carModelName: '',
           billCorpName: ''
         },
         // 办理抵质押物手续

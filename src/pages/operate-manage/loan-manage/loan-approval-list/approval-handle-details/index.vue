@@ -271,7 +271,7 @@
     </bs-modal>
     <!--GPS安装信息-->
     <bs-modal v-model="GPSinstallShowModal" title="GPS安装信息详情" :width="1200">
-      <i-table v-if="GPSinstallShowModal" border ref="examineTable" :columns="loanCarGpsDTOColumns" :data="loanCarGpsList"></i-table>
+      <i-table :height="tableFixHeight+48" v-if="GPSinstallShowModal" border ref="examineTable" :columns="loanCarGpsDTOColumns" :data="loanCarGpsList"></i-table>
     </bs-modal>
     <!--车辆信息弹窗-->
     <bs-modal v-model="detailsCarDataShowModal" title="车辆信息" :width="1200">
@@ -317,7 +317,7 @@
           <i-col span="24">
             <i-form-item
               label="车辆品牌"
-              prop="carModel">
+              prop="carModelName">
               <span v-text="detailsCarDataForm.carBrandName+detailsCarDataForm.carTypeName+detailsCarDataForm.carModel"></span>
             </i-form-item>
           </i-col>
@@ -640,6 +640,7 @@
           carFrameNo: '',
           carMileage: '',
           carModel: '',
+          carModelName: '',
           billCorpName: ''
         },
         formagGuarantee: {
