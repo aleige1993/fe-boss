@@ -155,6 +155,11 @@
         }
       }
     },
+    watch: {
+      'paymentType'(newVal) {
+        this.getProxyPayList();
+      }
+    },
     mounted() {
       this.getProxyPayList();
       this.$data.certTypeEnum = [
