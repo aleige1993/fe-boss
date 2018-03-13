@@ -652,7 +652,6 @@
       this.assureGtelist(); // 执行获取担保信息列表的data
       this.conditionGetlist(); // 执行获取放款条件列表的data
       this.feeGetlist(); // 执行获取费用收取落实列表的data
-      console.log(this.$data.formData.paymentRecordDTO.paymentSecondAmt);
     },
     methods: {
       // 离开"二次放款金额"输入框时
