@@ -10,7 +10,7 @@
     <div class="form-top-actions">
       <i-button @click="addModal" type="info"><i class="iconfont icon-xinzeng"></i>&nbsp;新增产品</i-button>
     </div>
-    <i-table :height="this.$store.getters.viewHeight+98" :loading="dataLoading" border ref="selection" :columns="columns1" :data="data1"></i-table>
+    <i-table :height="tableFixHeight+98" :loading="dataLoading" border ref="selection" :columns="columns1" :data="data1"></i-table>
     <div class="page-container">
       <i-page :current="currentPage" :total="total" size="small" show-elevator show-total @on-change="jumpPage" :loading="buttonLoading" :page-size="pageSize"></i-page>
     </div>

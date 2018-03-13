@@ -484,7 +484,7 @@
             </div>
             <!--联系方式-->
             <bs-form-child-title :title="'联系方式'"></bs-form-child-title>
-            <i-table :height="this.$store.getters.viewHeight" style="margin: 0 20px" :columns="contactTableColume"  :data="formData.user.userContacts"></i-table>
+            <i-table :height="tableFixHeight" style="margin: 0 20px" :columns="contactTableColume"  :data="formData.user.userContacts"></i-table>
             <!--工作单位信息-->
             <bs-form-child-title :title="'工作单位信息'"></bs-form-child-title>
           </bs-form-block>

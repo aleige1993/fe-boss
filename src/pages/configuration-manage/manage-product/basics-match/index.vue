@@ -12,7 +12,7 @@
     </div>
     <i-table :loading="dataLoading" border ref="tableMatch" :columns="columns1" :data="data1"></i-table>
     <div class="page-container">
-      <i-page :height="this.$store.getters.viewHeight + 98" :current="currentPage" :total="total" size="small" show-elevator show-total @on-change="jumpPage" :page-size="pageSize"></i-page>
+      <i-page :height="tableFixHeight + 98" :current="currentPage" :total="total" size="small" show-elevator show-total @on-change="jumpPage" :page-size="pageSize"></i-page>
     </div>
     <bs-modal :title="isAdd ? '新增' : '修改'" v-model="showAddModal">
       <i-form  ref="formData" :model="formData" label-position="left" :label-width="100">

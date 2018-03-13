@@ -18,7 +18,7 @@
       </i-form>
     </div>
   </div>
-  <i-table :height="this.$store.getters.viewHeight" :loading="dataLoading" border ref="tableData" :columns="distributorColumns" :data="distributorList"></i-table>
+  <i-table :height="tableFixHeight" :loading="dataLoading" border ref="tableData" :columns="distributorColumns" :data="distributorList"></i-table>
   <div class="page-container">
     <i-page @on-change="jumpPage" :total="total" :page-size="pageSize" size="small" show-elevator show-total></i-page>
   </div>

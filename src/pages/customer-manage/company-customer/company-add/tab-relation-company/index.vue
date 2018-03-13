@@ -3,7 +3,7 @@
     <div class="form-top-actions" v-if="!isFromDetail" style="padding-top: 0">
       <i-button type="primary" @click="openAddModal"><i class="iconfont icon-xinzeng"></i> 新增</i-button>
     </div>
-    <i-table :height="this.$store.getters.viewHeight+98" :loading="listLoading" :columns="relationCorpColumns" :data="relationCorpDatas"></i-table>
+    <i-table :height="tableFixHeight+98" :loading="listLoading" :columns="relationCorpColumns" :data="relationCorpDatas"></i-table>
     <!--添加联系人模态框-->
     <bs-modal title="添加关联企业" v-model="addRelationCorpModal">
       <i-form ref="addRelationCorpForm" :model="formData" label-position="left" :label-width="80">

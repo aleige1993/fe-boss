@@ -34,7 +34,7 @@
         </i-form-item>
       </i-form>
     </div>
-    <i-table :height="this.$store.getters.viewHeight+48" :loading="dataLoading" border ref="tableData" :columns="pawnColumns" :data="pawnData"></i-table>
+    <i-table :height="tableFixHeight+48" :loading="dataLoading" border ref="tableData" :columns="pawnColumns" :data="pawnData"></i-table>
     <div class="page-container">
       <i-page @on-change="jumpPage" :total="total" :page-size="pageSize" size="small" show-elevator show-total></i-page>
     </div>

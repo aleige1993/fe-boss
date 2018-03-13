@@ -1,6 +1,6 @@
 <template>
 <div id="configure-model-loan">
-  <i-table :height="this.$store.getters.viewHeight + 98" :loading="dataLoading" border ref="loanTable" :columns="columns1" :data="data1" @on-selection-change="selectRowLoan"></i-table>
+  <i-table :height="tableFixHeight + 98" :loading="dataLoading" border ref="loanTable" :columns="columns1" :data="data1" @on-selection-change="selectRowLoan"></i-table>
   <br>
   <br>
   <div class="text-right">

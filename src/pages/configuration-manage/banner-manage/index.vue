@@ -9,7 +9,7 @@
       <i-button type="info" @click="add"><i class="iconfont icon-xinzeng"></i> 新增</i-button>
     </div>
     <slot name="topAction"></slot>
-    <i-table :height="this.$store.getters.viewHeight+98" border :loading="dataLoading" ref="selection" @on-select="selectRow" :columns="resultCustomerColumns" :data="privateCustomerLoanList"></i-table>
+    <i-table :height="tableFixHeight+98" border :loading="dataLoading" ref="selection" @on-select="selectRow" :columns="resultCustomerColumns" :data="privateCustomerLoanList"></i-table>
     <div class="page-container">
       <i-page :total="total" :page-size="15" :current="currentPage" @on-change="jumpPage" size="small" show-elevator show-total></i-page>
     </div>

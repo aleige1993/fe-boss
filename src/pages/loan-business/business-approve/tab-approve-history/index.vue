@@ -1,5 +1,5 @@
 <template>
-  <i-table :height="this.$store.getters.viewHeight" :loading="historyLoading" :columns="approveHistoryColumns" :data="approveHistoryData"></i-table>
+  <i-table :height="tableFixHeight" :loading="historyLoading" :columns="approveHistoryColumns" :data="approveHistoryData"></i-table>
 </template>
 <script>
   export default {
