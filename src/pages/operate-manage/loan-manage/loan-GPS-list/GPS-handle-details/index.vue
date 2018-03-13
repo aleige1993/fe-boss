@@ -185,7 +185,7 @@
           <i-col span="24">
             <i-form-item
               label="车辆品牌"
-              prop="carModelName">
+              prop="">
               <span v-text="detailsCarDataForm.carBrandName+detailsCarDataForm.carTypeName+detailsCarDataForm.carModel"></span>
             </i-form-item>
           </i-col>
