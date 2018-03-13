@@ -680,6 +680,9 @@
         } else if (newVal >= this.$data.defaultLoanAmt) {
           this.$Message.warning('“二次放款金额”不能大于等于“一次放款金额”!');
           $(event.target).focus();
+        } else if (newVal <= 0) {
+          this.$Message.warning('“二次放款金额”不能小于等于0!');
+          $(event.target).focus();
         } else {
           this.$set(this.$data.formData.paymentRecordDTO, 'loanAmt', (this.$data.defaultLoanAmt - newVal));
         }
@@ -800,6 +803,11 @@
           // "二次放款金额"不能大于等于“一次放款金额”
           if (formPaymentSecondAmt >= this.$data.defaultLoanAmt) {
             this.$Message.error('“二次放款金额”不能大于等于“一次放款金额”！');
+            return;
+          }
+          // “二次放款金额”不能小于等于0!
+          if (formPaymentSecondAmt <= 0) {
+            this.$Message.error('“二次放款金额”不能小于等于0！');
             return;
           }
         }
