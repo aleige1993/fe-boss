@@ -106,7 +106,6 @@ export default {
         {
           title: '保证人类型',
           align: 'center',
-          width: 100,
           key: 'guaPersonType',
           render: (h, params) => {
             return h('span', {}, this.enumCode2Name(params.row.guaPersonType, 'CustTypeEnum'));
@@ -171,12 +170,10 @@ export default {
         {
           title: '费用项目',
           align: 'center',
-          width: 200,
           key: 'feeName'
         },
         {
           title: '计算方式',
-          width: 200,
           key: 'feeCountType',
           render: (h, params) => {
             return h('span', {}, this.enumCode2Name(params.row.feeCountType, 'ReceiveTypeEnum'));
@@ -197,7 +194,6 @@ export default {
         {
           title: '是否挂账',
           key: 'isHang',
-          width: 200,
           render: (h, params) => {
             return h('span', {}, this.enumCode2Name(params.row.isHang, 'YesNoEnum'));
           }
@@ -209,7 +205,6 @@ export default {
         {
           title: '收取方式',
           key: 'receivMode',
-          width: 200,
           render: (h, params) => {
             return h('span', {}, this.enumCode2Name(params.row.receivMode, 'ReceivModeEnum'));
           }
@@ -217,7 +212,6 @@ export default {
         {
           title: '是否结清',
           key: 'isClearing',
-          width: 200,
           render: (h, params) => {
             return h('span', {}, this.enumCode2Name(params.row.isClearing, 'YesNoEnum'));
           }
@@ -229,7 +223,6 @@ export default {
         {
           title: '项目',
           align: 'center',
-          width: 200,
           key: 'paymentConName'
         },
         {
@@ -239,7 +232,6 @@ export default {
         {
           title: '落实状态',
           key: 'status',
-          width: 200,
           render: (h, params) => {
             return h('span', {}, this.enumCode2Name(params.row.status, 'LoanLuoShiStatusEnum'));
           }
@@ -250,7 +242,6 @@ export default {
       loanCarGpsDTOColumns: [
         {
           title: 'GPS型号',
-          width: 150,
           key: 'gpsModel'
         },
         {
@@ -263,7 +254,6 @@ export default {
         },
         {
           title: '安装状态',
-          width: 100,
           key: 'gpsInstallStatus',
           render: (h, params) => {
             return h('span', {}, this.enumCode2Name(params.row.gpsInstallStatus, 'GpsInstallStatusEnum'));
@@ -275,7 +265,6 @@ export default {
         },
         {
           title: '办理时间',
-          width: 200,
           key: 'makeDate'
         }
       ],
