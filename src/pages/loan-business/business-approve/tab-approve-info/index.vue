@@ -9,7 +9,7 @@
                 <div class="form-top-actions" v-if="!readonly">
                   <i-button type="primary" @click="firstApproveForm = {} ; addFirstApproveModal = !addFirstApproveModal">添加初审信息</i-button>
                 </div>
-                <i-table :height="this.$store.getters.viewHeight" :columns="firstApproveColumns" :data="approveData.loanApproveFirstDTOS"></i-table>
+                <i-table :columns="firstApproveColumns" :data="approveData.loanApproveFirstDTOS"></i-table>
               </i-col>
             </i-row>
           </bs-form-block>

@@ -2,10 +2,10 @@
   <div id="add-customer-business-contact">
     <i-tabs :animated="false">
       <i-tab-pane label="当前信息">
-        <i-table :height="this.$store.getters.viewHeight+80" :loading="dataLoading" :columns="currentInfoColumns" :data="currentInfoDatas"></i-table>
+        <i-table :height="tableFixHeight+80" :loading="dataLoading" :columns="currentInfoColumns" :data="currentInfoDatas"></i-table>
       </i-tab-pane>
       <i-tab-pane label="作为第三方保证">
-        <i-table :height="this.$store.getters.viewHeight+80" :loading="dataLoading" :columns="thirdPartyProofColumns" :data="thirdPartyProofDatas"></i-table>
+        <i-table :height="tableFixHeight+80" :loading="dataLoading" :columns="thirdPartyProofColumns" :data="thirdPartyProofDatas"></i-table>
       </i-tab-pane>
     </i-tabs>
   </div>

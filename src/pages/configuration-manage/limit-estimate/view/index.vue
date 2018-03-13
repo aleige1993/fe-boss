@@ -6,7 +6,7 @@
       <i-breadcrumb-item href="/index/conf/limitestimate">额度预估</i-breadcrumb-item>
       <i-breadcrumb-item>设置预览</i-breadcrumb-item>
     </i-breadcrumb>
-    <div class="scrollBarStyle" :style="{overflowY:'auto',border:'1px solid #ddd',maxHeight:(this.$store.getters.viewHeight+200)+'px'}">
+    <div class="scrollBarStyle" :style="{overflowY:'auto',border:'1px solid #ddd',maxHeight:(tableFixHeight+200)+'px'}">
       <table border="0" cellpadding="0" cellspacing="0" style="margin-top: 0px;">
         <tr>
           <th>一级指标</th>

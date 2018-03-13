@@ -3,6 +3,9 @@ Vue.mixin({
   computed: {
     enumSelectData() {
       return this.$store.getters.enumSelectData;
+    },
+    tableFixHeight() {
+      return this.$store.getters.viewHeight;
     }
   },
   methods: {
@@ -20,22 +23,14 @@ Vue.mixin({
       return name;
     },
     isImg(fileUrl) {
+      let imgSuffixAry = ['png', 'jpg', 'gif', 'jpeg', 'bmp', 'pic'];
       let suffix = '';
       if (fileUrl) {
         suffix = fileUrl.substring(fileUrl.lastIndexOf('.') + 1);
       }
-      return suffix === 'png' ||
-        suffix === 'jpg' ||
-        suffix === 'gif' ||
-        suffix === 'jpeg' ||
-        suffix === 'bmp' ||
-        suffix === 'pic' ||
-        suffix === 'PNG' ||
-        suffix === 'JPG' ||
-        suffix === 'GIF' ||
-        suffix === 'JPEG' ||
-        suffix === 'BMP' ||
-        suffix === 'PIC';
+      return imgSuffixAry.some(item => {
+        return suffix.toLowerCase() === item;
+      });
     }
   }
 });

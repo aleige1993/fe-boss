@@ -18,7 +18,7 @@
                 <div v-if="creditStatus==='3'||creditStatus==='4'" class="form-top-actions">
                   <i-button type="primary" @click="firstApproveForm = {} ; addFirstApproveModal = !addFirstApproveModal">添加初审信息</i-button>
                 </div>
-                <i-table :height="this.$store.getters.viewHeight" :columns="firstApproveColumns" :data="approveData.firstTrialParam.creditCheckItemsList"></i-table>
+                <i-table :height="tableFixHeight" :columns="firstApproveColumns" :data="approveData.firstTrialParam.creditCheckItemsList"></i-table>
               </i-col>
             </i-row>
           </bs-form-block>
@@ -29,7 +29,7 @@
                 <div v-if="creditStatus==='5'||creditStatus==='6'" class="form-top-actions">
                   <i-button type="primary" @click="addOutApproveModal = !addOutApproveModal">添加现场尽调信息</i-button>
                 </div>
-                <i-table :height="this.$store.getters.viewHeight" :columns="outApproveColumns" :data="approveData.creditCheckItemsList"></i-table>
+                <i-table :height="tableFixHeight" :columns="outApproveColumns" :data="approveData.creditCheckItemsList"></i-table>
               </i-col>
             </i-row>
           </bs-form-block>
@@ -89,7 +89,7 @@
             <div v-if="creditStatus==='5'||creditStatus==='6'" class="form-top-actions">
               <i-button type="primary" @click="openAddCreditPlanModal">添加用信方案</i-button>
             </div>
-            <i-table :height="this.$store.getters.viewHeight" :columns="creditPlanColumns" :data="approveData.creditPlanList"></i-table>
+            <i-table :height="tableFixHeight" :columns="creditPlanColumns" :data="approveData.creditPlanList"></i-table>
           </bs-form-block>
           <!--审核意见-->
           <bs-form-block title="审核意见">

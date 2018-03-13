@@ -28,7 +28,7 @@
     <div class="form-top-actions">
       <i-button type="info" @click="openAddModal"><i class="iconfont icon-xinzeng"></i> 新增</i-button>
     </div>
-    <i-table :height="this.$store.getters.viewHeight+40" :loading="dataLoading" border ref="distributorModuleTable" :columns="moduleColumns" :data="moduleList"></i-table>
+    <i-table :height="tableFixHeight+40" :loading="dataLoading" border ref="distributorModuleTable" :columns="moduleColumns" :data="moduleList"></i-table>
     <div class="page-container">
       <i-page @on-change="jumpPage" :total="total" :page-size="pageSize" :current="currentPage" size="small" show-elevator show-total></i-page>
     </div>

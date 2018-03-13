@@ -4,7 +4,7 @@
     <div class="form-top-actions">
       <i-button @click="addModal" type="info"><i class="iconfont icon-xinzeng"></i> 新增</i-button>
     </div>
-    <i-table :height="this.$store.getters.viewHeight+98" border ref="cityTable" :columns="columns1" :data="data1"></i-table>
+    <i-table :height="tableFixHeight+98" border ref="cityTable" :columns="columns1" :data="data1"></i-table>
     <br>
     <br>
     <bs-modal :title="'新增'" v-model="showAddModal">

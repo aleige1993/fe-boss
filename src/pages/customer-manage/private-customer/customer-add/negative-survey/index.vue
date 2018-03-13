@@ -3,7 +3,7 @@
     <div class="form-top-actions" style="padding-top: 0" v-if="!isFromDetail">
       <i-button type="primary" @click="openAddNegativeModal"><i class="iconfont icon-xinzeng"></i> 新增</i-button>
     </div>
-    <i-table :height="this.$store.getters.viewHeight+98" :loading="dataLoading" :columns="negativeSurveyColumns" :data="negativeSurveyDatas"></i-table>
+    <i-table :height="tableFixHeight+98" :loading="dataLoading" :columns="negativeSurveyColumns" :data="negativeSurveyDatas"></i-table>
     <!--添加联系人模态框-->
     <bs-modal v-model="addModal" :title="'添加负面调查'">
       <i-form ref="addPrivateCustomerNegativeForm" :model="formData" label-position="left" :label-width="120">

@@ -1,6 +1,6 @@
 <template>
   <div id="configure-model-rule">
-    <i-table :height="this.$store.getters.viewHeight + 98" :loading="dataLoading" border ref="proTable" :columns="columns1" :data="data1" @on-selection-change="selectRow"></i-table>
+    <i-table :height="tableFixHeight + 98" :loading="dataLoading" border ref="proTable" :columns="columns1" :data="data1" @on-selection-change="selectRow"></i-table>
     <br>
     <br>
     <div class="text-right">
