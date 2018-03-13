@@ -15,7 +15,7 @@
       </i-form>
     </div>
     <slot name="topAction" v-if="!isModal"></slot>
-    <i-table :height="this.$store.getters.viewHeight-20" :loading="dataLoading" highlight-row border ref="distributorTable" :columns="resultColumns" :data="distributorList" @on-current-change="radioFun" @on-row-dblclick="selectRow"></i-table>
+    <i-table :height="tableFixHeight-20" :loading="dataLoading" highlight-row border ref="distributorTable" :columns="resultColumns" :data="distributorList" @on-current-change="radioFun" @on-row-dblclick="selectRow"></i-table>
     <div class="page-container">
       <i-page @on-change="jumpPage" :total="total" :page-size="pageSize" size="small" show-elevator show-total></i-page>
     </div>
