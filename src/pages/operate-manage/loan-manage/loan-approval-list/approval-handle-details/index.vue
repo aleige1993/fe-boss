@@ -669,11 +669,11 @@
       paymentSecondAmtBlur(event) {
         let newVal = event.target.value;
         if (isNaN(newVal)) {
-          this.$Message.warning('二次放款金额必须是金额格式！');
+          this.$Message.warning('“二次放款金额”必须是金额格式！');
           $(event.target).focus();
         }
         if (newVal >= this.$data.defaultLoanAmt) {
-          this.$Message.warning('二次放款金额不能大于等于一次放款金额!');
+          this.$Message.warning('“二次放款金额”不能大于等于“一次放款金额”!');
           $(event.target).focus();
         } else {
           this.$set(this.$data.formData.paymentRecordDTO, 'loanAmt', (this.$data.defaultLoanAmt - newVal));
@@ -686,7 +686,7 @@
           this.$Message.warning('输入的必须是金额格式！');
         }
         if (_val >= this.$data.defaultLoanAmt) {
-          this.$Message.warning('二次放款金额不能大于等于一次放款金额!');
+          this.$Message.warning('“二次放款金额”不能大于等于“一次放款金额”!');
         } else {
           this.$set(this.$data.formData.paymentRecordDTO, 'loanAmt', (this.$data.defaultLoanAmt - _val));
         }
