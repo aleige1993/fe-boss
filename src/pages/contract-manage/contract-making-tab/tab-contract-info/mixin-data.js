@@ -5,7 +5,6 @@ export default {
       carColumns: [
         {
           title: '车辆品牌',
-          width: 170,
           align: 'center',
           key: 'carBrandName'
         },
@@ -76,7 +75,6 @@ export default {
       guaPersonColumns: [
         {
           title: '保证人类型',
-          width: 170,
           align: 'center',
           key: 'guaPersonType',
           render: (h, params) => {
@@ -93,7 +91,6 @@ export default {
         },
         {
           title: '证件类型',
-          width: 120,
           key: 'guaPersonCertType',
           render: (h, params) => {
             return h('span', {}, this.enumCode2Name(params.row.guaPersonCertType, 'CertTypeEnum'));
@@ -101,7 +98,6 @@ export default {
         },
         {
           title: '证件号码',
-          width: 180,
           key: 'guaPersonCertNo'
         },
         {
@@ -118,7 +114,6 @@ export default {
       feeTakeColumns: [
         {
           title: '费用项目代码',
-          width: 170,
           align: 'center',
           key: 'feeTypeCode'
         },
@@ -143,7 +138,6 @@ export default {
       contractInfoColumns: [
         {
           title: '文档编号',
-          width: 170,
           align: 'center',
           key: 'contractNo'
         },

@@ -6,12 +6,10 @@ export default {
         {
           title: '费用项目',
           align: 'center',
-          width: 200,
           key: 'feeName'
         },
         {
           title: '计算方式',
-          width: 200,
           key: 'feeCountType',
           render: (h, params) => {
             return h('span', {}, this.enumCode2Name(params.row.feeCountType, 'ReceiveTypeEnum'));
@@ -32,7 +30,6 @@ export default {
         {
           title: '是否挂账',
           key: 'isHang',
-          width: 200,
           render: (h, params) => {
             return h('i-select', {
               props: {
@@ -72,7 +69,6 @@ export default {
         {
           title: '收取方式',
           key: 'receivMode',
-          width: 200,
           render: (h, params) => {
             return h('i-select', {
               props: {
@@ -96,7 +92,6 @@ export default {
         {
           title: '是否结清',
           key: 'isClearing',
-          width: 200,
           render: (h, params) => {
             return h('i-select', {
               props: {
@@ -124,7 +119,6 @@ export default {
         {
           title: '项目',
           align: 'center',
-          width: 200,
           key: 'paymentConName'
         },
         {
@@ -147,7 +141,6 @@ export default {
         {
           title: '落实状态',
           key: 'status',
-          width: 200,
           render: (h, params) => {
             return h('i-select', {
               props: {

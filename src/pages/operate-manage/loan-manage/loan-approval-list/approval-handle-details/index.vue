@@ -119,7 +119,7 @@
                   </i-select>
                 </i-form-item>
               </i-col>
-              <i-col span="8" v-if="formData.paymentRecordDTO.paymentType==='2'">
+              <i-col span="8" v-if="showPaymentSecondAmt">
                 <i-form-item label="二次放款金额" class="required">
                   <i-input v-model="formData.paymentRecordDTO.paymentSecondAmt" placeholder="" @on-change="paymentSecondAmtChange"  @on-blur="paymentSecondAmtBlur">
                     <span slot="append">元</span>
@@ -537,6 +537,7 @@
         // 费用收取落实
         feeTableLoading: false,
         defaultLoanAmt: 0, // 页面初次加载的 放款金额
+        showPaymentSecondAmt: false, // 显示"二次放款金额"输入框
         formData: {
           'approveStatus': '',
           'rejectCause': '',
@@ -652,17 +653,27 @@
       this.assureGtelist(); // 执行获取担保信息列表的data
       this.conditionGetlist(); // 执行获取放款条件列表的data
       this.feeGetlist(); // 执行获取费用收取落实列表的data
+      let formPaymentType = this.$data.formData.paymentRecordDTO.paymentType;
+      let formPaymentSecondAmt = this.$data.formData.paymentRecordDTO.paymentSecondAmt;
+      // 默认为“一次放款金额”
+      if (typeof formPaymentType === 'undefined' || formPaymentType === '') {
+        this.$data.formData.paymentRecordDTO.paymentType = '1';
+      }
+      // 当为“一次放款金额”时“二次放款金额”为空字符
+      if (typeof formPaymentSecondAmt === 'undefined' || this.$data.formData.paymentRecordDTO.paymentType === '1') {
+        this.$data.formData.paymentRecordDTO.paymentSecondAmt = '';
+      }
     },
     methods: {
       // 离开"二次放款金额"输入框时
       paymentSecondAmtBlur(event) {
         let newVal = event.target.value;
         if (isNaN(newVal)) {
-          this.$Message.warning('二次放款金额必须是金额格式！');
+          this.$Message.warning('“二次放款金额”必须是金额格式！');
           $(event.target).focus();
         }
         if (newVal >= this.$data.defaultLoanAmt) {
-          this.$Message.warning('二次放款金额不能大于等于一次放款金额!');
+          this.$Message.warning('“二次放款金额”不能大于等于“一次放款金额”!');
           $(event.target).focus();
         } else {
           this.$set(this.$data.formData.paymentRecordDTO, 'loanAmt', (this.$data.defaultLoanAmt - newVal));
@@ -675,16 +686,22 @@
           this.$Message.warning('输入的必须是金额格式！');
         }
         if (_val >= this.$data.defaultLoanAmt) {
-          this.$Message.warning('二次放款金额不能大于等于一次放款金额!');
+          this.$Message.warning('“二次放款金额”不能大于等于“一次放款金额”!');
         } else {
           this.$set(this.$data.formData.paymentRecordDTO, 'loanAmt', (this.$data.defaultLoanAmt - _val));
         }
       },
       // 放款类型变更
       paymentTypeChange(val) {
-        this.$set(this.$data.formData.paymentRecordDTO, 'paymentType', val);
-        (val === '1') && this.$set(this.$data.formData.paymentRecordDTO, 'paymentSecondAmt', '');
-        // this.$data.formData.paymentRecordDTO.paymentType = val;
+        if (val === '1') {
+          this.$data.showPaymentSecondAmt = false;
+          this.$data.formData.paymentRecordDTO.paymentType = '1';
+          this.$data.formData.paymentRecordDTO.paymentSecondAmt = '';
+        }
+        if (val === '2') {
+          this.$data.showPaymentSecondAmt = true;
+          this.$data.formData.paymentRecordDTO.paymentType = '2';
+        }
       },
       // 获取放款条件详情
       async getFindPaymentApplyRecordInfo() {
@@ -762,40 +779,26 @@
       },
       // 提交的ajax
       async allSubimt() {
+        let formPaymentType = this.$data.formData.paymentRecordDTO.paymentType;
+        let formPaymentSecondAmt = this.$data.formData.paymentRecordDTO.paymentSecondAmt;
         if (this.$data.formData.approveStatus === 'A') {
-          // 默认为“一次放款金额”
-          if (
-            typeof this.$data.formData.paymentRecordDTO.paymentType === 'undefined' ||
-            (this.$data.formData.paymentRecordDTO.paymentType === '')
-          ) {
-            this.$data.formData.paymentRecordDTO.paymentType = '1';
-          }
-          // 当为“一次放款金额”时“二次放款金额”为空字符
-          if (
-            typeof this.$data.formData.paymentRecordDTO.paymentSecondAmt === 'undefined' ||
-            (this.$data.formData.paymentRecordDTO.paymentType === '1')
-          ) {
-            this.$data.formData.paymentRecordDTO.paymentSecondAmt = '';
-          }
           // 验证二次金额的必填性
-          if (
-            (this.$data.formData.paymentRecordDTO.paymentType === '2') &&
-            (this.$data.formData.paymentRecordDTO.paymentSecondAmt === '')
-          ) {
+          if ((formPaymentType === '2') && (formPaymentSecondAmt === '')) {
             this.$Message.error('请输入“放款信息”中“二次放款金额”！');
             return;
           }
           // “二次放款金额”必须是金额格式！
-          if (isNaN(this.$data.formData.paymentRecordDTO.paymentSecondAmt)) {
+          if (isNaN(formPaymentSecondAmt)) {
             this.$Message.error('“二次放款金额”必须是金额格式！');
             return;
           }
           // "二次放款金额"不能大于等于“一次放款金额”
-          if (this.$data.formData.paymentRecordDTO.paymentSecondAmt >= this.$data.defaultLoanAmt) {
+          if (formPaymentSecondAmt >= this.$data.defaultLoanAmt) {
             this.$Message.error('“二次放款金额”不能大于等于“一次放款金额”！');
             return;
           }
         }
+        // ajax
         this.$AuditPrompt.auditPromptFun(this.$data.formData.approveStatus, async () => {
           let rep = await this.$http.post('/biz/payment/paymentApprove', {
             paymentNo: this.$route.query.paymentNo,
@@ -804,8 +807,8 @@
               rejectCause: this.$data.formData.rejectCause,
               opinion: this.$data.formData.opinion
             },
-            paymentType: this.$data.formData.paymentRecordDTO.paymentType,
-            paymentSecondAmt: this.$data.formData.paymentRecordDTO.paymentSecondAmt,
+            paymentType: formPaymentType,
+            paymentSecondAmt: formPaymentSecondAmt,
             loanAmt: this.$data.formData.paymentRecordDTO.loanAmt
           });
           if (rep.success) {
