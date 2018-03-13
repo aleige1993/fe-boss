@@ -3,7 +3,9 @@
     <i-breadcrumb separator=">">
       <i-breadcrumb-item href="/home">首页</i-breadcrumb-item>
       <i-breadcrumb-item href="/index/financemanage">财务管理</i-breadcrumb-item>
-      <i-breadcrumb-item>代扣管理</i-breadcrumb-item>
+      <i-breadcrumb-item href="/index/financemanage/proxypay">代付管理</i-breadcrumb-item>
+      <i-breadcrumb-item v-if="paymentType === '1'">一次放款</i-breadcrumb-item>
+      <i-breadcrumb-item v-else>二次放款</i-breadcrumb-item>
     </i-breadcrumb>
     <div class="search-form-container">
       <i-form inline>
@@ -11,25 +13,25 @@
           <i-input type="text" v-model="searchForm.projectNo" placeholder="项目编号"></i-input>
         </i-form-item>
         <i-form-item prop="password">
-          <i-input v-model="searchForm.idHolder" type="text" placeholder="扣款人姓名"></i-input>
+          <i-input v-model="searchForm.toAccName" type="text" placeholder="收款人姓名"></i-input>
         </i-form-item>
         <i-form-item prop="password">
-          <i-input v-model="searchForm.idCard" type="text" placeholder="证件号码"></i-input>
+          <i-input v-model="searchForm.transCardId" type="text" placeholder="证件号码"></i-input>
         </i-form-item>
         <i-form-item prop="password">
-          扣款发起时间
+          预计付款时间
         </i-form-item>
         <i-form-item prop="password">
-          <bs-datepicker v-model="searchForm.receiveSTime" type="text" placeholder="查询时间"></bs-datepicker>
+          <bs-datepicker v-model="searchForm.btime" type="text" placeholder="查询时间"></bs-datepicker>
         </i-form-item>
         <i-form-item prop="password">
           -
         </i-form-item>
         <i-form-item prop="password">
-          <bs-datepicker v-model="searchForm.receiveETime" type="text" placeholder="查询时间"></bs-datepicker>
+          <bs-datepicker v-model="searchForm.etime" type="text" placeholder="查询时间"></bs-datepicker>
         </i-form-item>
         <i-form-item prop="password">
-          <i-select style="width: 120px;" v-model="searchForm.orderStat" placeholder="扣款状态">
+          <i-select style="width: 120px;" v-model="searchForm.state" placeholder="付款状态">
             <i-option value="" style="height: 26px; color: #bbbec4">-请选择-</i-option>
             <i-option v-for="item in certTypeEnum" :value="item.itemCode" :key="item.itemCode">{{item.itemName}}</i-option>
           </i-select>
@@ -40,11 +42,11 @@
       </i-form>
     </div>
     <div class="form-top-actions" slot="topAction">
-      <i-button type="info" @click="massPayment">批量扣款</i-button>
+      <i-button type="info" @click="massPayment">批量付款</i-button>
       <a style="color: #fff" class="ivu-btn ivu-btn-info" :href="exportExcelUrl">导出EXCEL</a>
     </div>
     <slot name="topAction"></slot>
-    <i-table :height="tableFixHeight+20" border :loading="dataLoading" ref="selection" @on-select="selectRow" @on-select-all="selectRow" :columns="resultCustomerColumns" :data="privateCustomerLoanList"></i-table>
+    <i-table :height="this.$store.getters.viewHeight+20" border :loading="dataLoading" ref="selection" @on-select="selectRow" @on-select-all="selectRow" :columns="resultCustomerColumns" :data="privateCustomerLoanList"></i-table>
     <div class="page-container">
       <i-page :total="total" :page-size="15" :current="currentPage" @on-change="jumpPage" size="small" show-elevator show-total></i-page>
     </div>
@@ -64,15 +66,16 @@
         certTypeEnum: [],
         searchForm: {
           'projectNo': '',
-          'idHolder': '',
-          'idCard': '',
-          'receiveSTime': '',
-          'receiveETime': '',
-          'orderStat': '',
+          'toAccName': '',
+          'transCardId': '',
+          'btime': '',
+          'etime': '',
+          'state': '',
+          'paymentType': '',
           currentPage: 1,
           pageSize: 15
         },
-        receiveNos: [], // 批量代扣ID
+        pay4Nos: [], // 批量代付ID
         exportExcelUrl: ''
       };
     },
@@ -86,9 +89,11 @@
       }
     },
     props: {
-      type: String,
-      default: 'page',
-      required: false
+      paymentType: {
+        type: String,
+        default: '',
+        required: false
+      }
     },
     methods: {
       jumpPage(page) {
@@ -102,10 +107,11 @@
         if (page) {
           this.$data.searchForm.currentPage = page;
         }
-        let resp = await this.$http.post('/pay/receive', this.$data.searchForm);
+        this.$data.searchForm.paymentType = this.paymentType || '';
+        let resp = await this.$http.post('/pay/payment', this.$data.searchForm);
         this.$data.dataLoading = false;
         resp.body.resultList.map(item => {
-          if (!(item.orderStat === 'F' || item.orderStat === 'D')) {
+          if (!(item.state === '-1' || item.state === '3') || item.flag === '1') {
             item._disabled = true;
           }
           return item;
@@ -116,34 +122,33 @@
         this.exportExcel();
       },
       selectRow(selection, row) {
-        this.receiveNos = [];
+        this.pay4Nos = [];
         selection.map(item => {
-          this.receiveNos.push(item.receiveNo + '');
+          this.pay4Nos.push(item.payForNo);
         });
       },
       massPayment() {
-        if (!this.receiveNos.length) {
+        if (!this.pay4Nos.length) {
           this.$Notice.error({
             title: '错误提示',
-            desc: '请先选择需扣款项'
+            desc: '请先选择需付款项'
           });
         } else {
-          this.submit(this.receiveNos);
+          this.submit(this.pay4Nos);
         }
       },
       async submit(idArray) {
-//        console.log(JSON.stringify(idArray));
-        let resp = await this.$http.post('/pay/apply/receive', {
-          receiveNos: idArray
+        let resp = await this.$http.post('/pay/apply/payment', {
+          pay4Nos: idArray
         });
         if (resp.reCode === '0000') {
-          this.$Message.success('扣款成功');
+          this.$Message.success('付款成功');
           this.getProxyPayList();
         }
       },
       async exportExcel() {
         this.$data.buttonLoading = true;
-        let resp = await this.$http.post('/pay/receive/excel', this.$data.searchForm);
+        let resp = await this.$http.post('/pay/payment/excel', this.$data.searchForm);
         this.$data.buttonLoading = false;
         if (resp.success) {
           this.$data.exportExcelUrl = resp.body;
@@ -154,23 +159,22 @@
       this.getProxyPayList();
       this.$data.certTypeEnum = [
         {
-          'itemCode': 'D',
-          'itemName': '待扣款'
+          'itemCode': '3',
+          'itemName': '待付款'
         },
         {
-          'itemCode': 'I',
-          'itemName': '扣款中'
+          'itemCode': '0',
+          'itemName': '付款中'
         },
         {
-          'itemCode': 'S',
-          'itemName': '扣款成功'
+          'itemCode': '1',
+          'itemName': '付款成功'
         },
         {
-          'itemCode': 'F',
-          'itemName': '扣款失败'
+          'itemCode': '-1',
+          'itemName': '付款失败'
         }
       ];
-      // console.log(.get('YesNoEnum'));
     }
   };
 </script>
