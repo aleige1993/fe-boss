@@ -249,12 +249,17 @@
       async saveAjax() {
         // 合同信息中只要有一项“未签署” isNSignStatus就为true。 在“结论为同意”时
         let isNSignStatus = this.$data.formData.contractList.some(item => {
-          return item.signConfirmStatus === '0' || (typeof item.signConfirmStatus === 'undefined');
+          return item.signStatus === '0' || (typeof item.signStatus === 'undefined');
         });
         if (isNSignStatus && (this.$data.loanApprove.approveStatus === 'A')) {
           this.$Message.error('合同信息中的合同必须是“已签署”状态！');
           return;
         }
+        // 转换字段“signStatus”为“signConfirmStatus”
+        await this.$data.formData.contractList.map((item) => {
+          item.signConfirmStatus = item.signStatus;
+          return item;
+        });
         this.$data.initFormLoading = true;
         let resp = await this.$http.post('/biz/sign/signConfirm', {
           signNo: this.$route.query.signNo,
