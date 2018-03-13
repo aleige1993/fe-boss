@@ -228,15 +228,22 @@ let MyRouter = new Router({
           children: [
             { path: '/', name: 'toleftnav', component: resolve => require(['@/pages/to-left-nav'], resolve)},
             // 代付管理
-            { path: 'proxypay', name: 'financeProxypay', component: resolve => require(['@/pages/finance-manage/proxy-pay'], resolve)},
-            // 代收管理
+            {
+              path: 'proxypay', name: 'financeProxypay', component: resolve => require(['@/pages/finance-manage/proxy-pay'], resolve),
+              children: [
+                { path: '/', name: 'toleftnav', component: resolve => require(['@/pages/to-left-nav'], resolve)},
+                { path: '1', name: 'financeProxypayFirst', props: {paymentType: '1'}, component: resolve => require(['@/pages/finance-manage/proxy-pay/list.vue'], resolve) },
+                { path: '2', name: 'financeProxypaySecond', props: {paymentType: '2'}, component: resolve => require(['@/pages/finance-manage/proxy-pay/list.vue'], resolve) },
+              ]
+            },
+            // 代扣管理
             { path: 'proxyreceive', name: 'financeProxyReceive', component: resolve => require(['@/pages/finance-manage/proxy-receive'], resolve)},
-            // 应收账单
-            { path: 'shouldreceiptorder', name: 'financeShouldReceiptOrder', component: resolve => require(['@/pages/finance-manage/shouldreceipt-order'], resolve)},
-            // 实收账单
-            { path: 'actualreceiptorder', name: 'financeActualReceiptOrder', component: resolve => require(['@/pages/finance-manage/actualreceipt-order'], resolve)},
-            // 减免记录
-            { path: 'deraterecord', name: 'financeDerateRecord', component: resolve => require(['@/pages/finance-manage/derate-record'], resolve)},
+            // // 应收账单
+            // { path: 'shouldreceiptorder', name: 'financeShouldReceiptOrder', component: resolve => require(['@/pages/finance-manage/shouldreceipt-order'], resolve)},
+            // // 实收账单
+            // { path: 'actualreceiptorder', name: 'financeActualReceiptOrder', component: resolve => require(['@/pages/finance-manage/actualreceipt-order'], resolve)},
+            // // 减免记录
+            // { path: 'deraterecord', name: 'financeDerateRecord', component: resolve => require(['@/pages/finance-manage/derate-record'], resolve)},
           ]
         },
         // 账务管理 end
