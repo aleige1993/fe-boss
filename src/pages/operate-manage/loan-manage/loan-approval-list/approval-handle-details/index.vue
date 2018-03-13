@@ -640,7 +640,6 @@
           carFrameNo: '',
           carMileage: '',
           carModel: '',
-          carModelName: '',
           billCorpName: ''
         },
         formagGuarantee: {

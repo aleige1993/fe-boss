@@ -605,7 +605,6 @@
           carFrameNo: '',
           carMileage: '',
           carModel: '',
-          carModelName: '',
           billCorpName: ''
         },
         // 办理抵质押物手续
