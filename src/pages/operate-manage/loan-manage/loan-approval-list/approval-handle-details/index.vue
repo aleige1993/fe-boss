@@ -107,7 +107,7 @@
             <i-row>
               <i-col span="8">
                 <i-form-item label="放款金额">
-                  <span v-text="formData.paymentRecordDTO.loanAmt"></span>
+                  <span :class="{loanAmtStyle: showLoanAmtStyle}" v-text="formData.paymentRecordDTO.loanAmt"></span>
                   <span v-if="formData.paymentRecordDTO.loanAmt!==''">元</span>
                 </i-form-item>
               </i-col>
@@ -538,6 +538,7 @@
         feeTableLoading: false,
         defaultLoanAmt: 0, // 页面初次加载的 放款金额
         showPaymentSecondAmt: false, // 显示"二次放款金额"输入框
+        showLoanAmtStyle: false, // 改变放款金额时，改变金额字体颜色
         formData: {
           'approveStatus': '',
           'rejectCause': '',
@@ -665,15 +666,22 @@
       }
     },
     methods: {
+      async changeShowLoanAmtStyle() {
+        this.$data.showLoanAmtStyle = true;
+        await bsWait(200);
+        this.$data.showLoanAmtStyle = false;
+      },
       // 离开"二次放款金额"输入框时
       paymentSecondAmtBlur(event) {
         let newVal = event.target.value;
         if (isNaN(newVal)) {
           this.$Message.warning('“二次放款金额”必须是金额格式！');
           $(event.target).focus();
-        }
-        if (newVal >= this.$data.defaultLoanAmt) {
+        } else if (newVal >= this.$data.defaultLoanAmt) {
           this.$Message.warning('“二次放款金额”不能大于等于“一次放款金额”!');
+          $(event.target).focus();
+        } else if (newVal <= 0) {
+          this.$Message.warning('“二次放款金额”不能小于等于0!');
           $(event.target).focus();
         } else {
           this.$set(this.$data.formData.paymentRecordDTO, 'loanAmt', (this.$data.defaultLoanAmt - newVal));
@@ -684,11 +692,11 @@
         let _val = event.target.value;
         if (isNaN(_val)) {
           this.$Message.warning('输入的必须是金额格式！');
-        }
-        if (_val >= this.$data.defaultLoanAmt) {
+        } else if (_val >= this.$data.defaultLoanAmt) {
           this.$Message.warning('“二次放款金额”不能大于等于“一次放款金额”!');
         } else {
           this.$set(this.$data.formData.paymentRecordDTO, 'loanAmt', (this.$data.defaultLoanAmt - _val));
+          this.changeShowLoanAmtStyle();
         }
       },
       // 放款类型变更
@@ -797,6 +805,11 @@
             this.$Message.error('“二次放款金额”不能大于等于“一次放款金额”！');
             return;
           }
+          // “二次放款金额”不能小于等于0!
+          if (formPaymentSecondAmt <= 0) {
+            this.$Message.error('“二次放款金额”不能小于等于0！');
+            return;
+          }
         }
         // ajax
         this.$AuditPrompt.auditPromptFun(this.$data.formData.approveStatus, async () => {
@@ -872,6 +885,9 @@
       line-height: 20px;
       min-height: 20px;
       color: #666;
+    }
+    & .loanAmtStyle {
+      color: red;
     }
   }
 </style>
