@@ -8,8 +8,19 @@
     </i-breadcrumb>
     <div class="search-form-container">
       <i-form inline>
-        <i-form-item prop="user">
-          <i-input type="text" v-model="searchForm.fieldDesc" placeholder="字段描述"></i-input>
+        <i-form-item>
+          实体来源：
+        </i-form-item>
+        <i-form-item>
+          <i-select style="width: 150px" v-model="searchForm.sourceEntityId">
+            <i-option v-for="item in enumSelectData.get('ContractFieldSourceAttrEnum')" :key="item.itemCode" :value="item.itemCode">{{item.itemName}}</i-option>
+          </i-select>
+        </i-form-item>
+        <i-form-item>
+          字段描述：
+        </i-form-item>
+        <i-form-item>
+          <i-input type="text" v-model="searchForm.fieldDesc" placeholder=""></i-input>
         </i-form-item>
         <i-form-item>
           <i-button @click="search" type="primary"><i-icon type="ios-search-strong"></i-icon> 搜索</i-button>
@@ -39,6 +50,7 @@
         currentPage: 1,
         uploadFileName: '',
         searchForm: {
+          'sourceEntityId': '',
           'fieldDesc': '',
           currentPage: 1,
           pageSize: 15
@@ -84,11 +96,12 @@
         });
         this.$data.dataLoading = false;
         this.$data.dataList = resp.body;
+        let sourceEntityId = this.$data.searchForm.sourceEntityId;
         let fieldDesc = this.$data.searchForm.fieldDesc;
-        if (fieldDesc && fieldDesc.length) {
+        if (sourceEntityId || fieldDesc) {
           let dataList = [];
           this.$data.dataList.map(item => {
-            if (item.fieldDesc.indexOf(fieldDesc) > -1) {
+            if (item.sourceEntityId === sourceEntityId && item.fieldDesc.indexOf(fieldDesc) > -1) {
               dataList.push(item);
             }
           });
