@@ -104,6 +104,16 @@ let MyRouter = new Router({
                 { path:'contract', name: 'contract', component: resolve => { require(['@/pages/configuration-manage/manage-invest/contract'], resolve) } },
                 // 配置管理-资方管理-合同模板参数配置
                 { path:'contractsetting', name: 'contractSetting', component: resolve => { require(['@/pages/configuration-manage/manage-invest/contract-setting'], resolve) } },
+                // 配置管理-资方管理-合同字段
+                {
+                  path:'contractattr', name: 'contractAttr', component: resolve => { require(['@/pages/configuration-manage/manage-invest/contract-attr'], resolve) },
+                  children: [
+                    // 变量池
+                    { path:'variable', name: 'contractAttrVariable', component: resolve => { require(['@/pages/configuration-manage/manage-invest/contract-attr/variable'], resolve) } },
+                    // 常量池
+                    { path:'constant', name: 'contractAttrConstant', component: resolve => { require(['@/pages/configuration-manage/manage-invest/contract-attr/constant'], resolve) } },
+                  ]
+                },
               ]
             },// 配置管理-资方管理end
 
