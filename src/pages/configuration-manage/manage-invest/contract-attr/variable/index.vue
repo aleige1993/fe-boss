@@ -88,11 +88,6 @@
       search() {
         this.getProxyPayList(1);
       },
-      add() {
-        this.$data.isAdd = true;
-        this.$data.addModal = true;
-        this.$refs['fromData'].resetFields();
-      },
       async getProxyPayList(page) {
         this.$data.dataLoading = true;
         if (page) {
@@ -103,24 +98,22 @@
         });
         this.$data.dataLoading = false;
         this.$data.dataList = resp.body;
+        this.searchProxyPayList();
+      },
+      searchProxyPayList() {
         let sourceEntityId = this.$data.searchForm.sourceEntityId.toUpperCase();
         let fieldName = this.$data.searchForm.fieldName.toUpperCase();
         let fieldDesc = this.$data.searchForm.fieldDesc.toUpperCase();
         if (sourceEntityId || fieldName || fieldDesc) {
           let dataList = [];
-          if (!sourceEntityId) {
-            this.$data.dataList.map(item => {
-              if (item.fieldName.toUpperCase().includes(fieldName) && item.fieldDesc.toUpperCase().includes(fieldDesc)) {
-                dataList.push(item);
-              }
-            });
-          } else {
-            this.$data.dataList.map(item => {
-              if (item.sourceEntityId === sourceEntityId && item.fieldName.toUpperCase().includes(fieldName) && item.fieldDesc.toUpperCase().includes(fieldDesc)) {
-                dataList.push(item);
-              }
-            });
-          }
+          this.$data.dataList.map(item => {
+            let searchCondition = item.fieldName.toUpperCase().includes(fieldName) && item.fieldDesc.toUpperCase().includes(fieldDesc);
+            if (!sourceEntityId && searchCondition) {
+              dataList.push(item);
+            } else if (item.sourceEntityId === sourceEntityId && searchCondition) {
+              dataList.push(item);
+            }
+          });
           this.$data.dataList = dataList;
         }
       }
