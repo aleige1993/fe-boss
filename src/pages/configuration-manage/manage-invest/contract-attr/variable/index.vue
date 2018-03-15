@@ -17,6 +17,12 @@
           </i-select>
         </i-form-item>
         <i-form-item>
+          字段名：
+        </i-form-item>
+        <i-form-item>
+          <i-input type="text" v-model="searchForm.fieldName" placeholder=""></i-input>
+        </i-form-item>
+        <i-form-item>
           字段描述：
         </i-form-item>
         <i-form-item>
@@ -51,6 +57,7 @@
         uploadFileName: '',
         searchForm: {
           'sourceEntityId': '',
+          'fieldName': '',
           'fieldDesc': '',
           currentPage: 1,
           pageSize: 15
@@ -96,15 +103,24 @@
         });
         this.$data.dataLoading = false;
         this.$data.dataList = resp.body;
-        let sourceEntityId = this.$data.searchForm.sourceEntityId;
-        let fieldDesc = this.$data.searchForm.fieldDesc;
-        if (sourceEntityId || fieldDesc) {
+        let sourceEntityId = this.$data.searchForm.sourceEntityId.toUpperCase();
+        let fieldName = this.$data.searchForm.fieldName.toUpperCase();
+        let fieldDesc = this.$data.searchForm.fieldDesc.toUpperCase();
+        if (sourceEntityId || fieldName || fieldDesc) {
           let dataList = [];
-          this.$data.dataList.map(item => {
-            if (item.sourceEntityId === sourceEntityId && item.fieldDesc.indexOf(fieldDesc) > -1) {
-              dataList.push(item);
-            }
-          });
+          if (!sourceEntityId) {
+            this.$data.dataList.map(item => {
+              if (item.fieldName.toUpperCase().includes(fieldName) && item.fieldDesc.toUpperCase().includes(fieldDesc)) {
+                dataList.push(item);
+              }
+            });
+          } else {
+            this.$data.dataList.map(item => {
+              if (item.sourceEntityId === sourceEntityId && item.fieldName.toUpperCase().includes(fieldName) && item.fieldDesc.toUpperCase().includes(fieldDesc)) {
+                dataList.push(item);
+              }
+            });
+          }
           this.$data.dataList = dataList;
         }
       }
