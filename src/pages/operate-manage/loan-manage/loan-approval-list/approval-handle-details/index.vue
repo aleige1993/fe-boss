@@ -806,7 +806,7 @@
             return;
           }
           // “二次放款金额”不能小于等于0!
-          if (formPaymentSecondAmt <= 0) {
+          if (formPaymentSecondAmt !== '' && formPaymentSecondAmt <= 0) {
             this.$Message.error('“二次放款金额”不能小于等于0！');
             return;
           }
