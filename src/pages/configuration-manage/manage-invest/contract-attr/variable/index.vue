@@ -17,6 +17,12 @@
           </i-select>
         </i-form-item>
         <i-form-item>
+          字段名：
+        </i-form-item>
+        <i-form-item>
+          <i-input type="text" v-model="searchForm.fieldName" placeholder=""></i-input>
+        </i-form-item>
+        <i-form-item>
           字段描述：
         </i-form-item>
         <i-form-item>
@@ -51,6 +57,7 @@
         uploadFileName: '',
         searchForm: {
           'sourceEntityId': '',
+          'fieldName': '',
           'fieldDesc': '',
           currentPage: 1,
           pageSize: 15
@@ -81,11 +88,6 @@
       search() {
         this.getProxyPayList(1);
       },
-      add() {
-        this.$data.isAdd = true;
-        this.$data.addModal = true;
-        this.$refs['fromData'].resetFields();
-      },
       async getProxyPayList(page) {
         this.$data.dataLoading = true;
         if (page) {
@@ -96,12 +98,19 @@
         });
         this.$data.dataLoading = false;
         this.$data.dataList = resp.body;
-        let sourceEntityId = this.$data.searchForm.sourceEntityId;
-        let fieldDesc = this.$data.searchForm.fieldDesc;
-        if (sourceEntityId || fieldDesc) {
+        this.searchProxyPayList();
+      },
+      searchProxyPayList() {
+        let sourceEntityId = this.$data.searchForm.sourceEntityId.toUpperCase();
+        let fieldName = this.$data.searchForm.fieldName.toUpperCase();
+        let fieldDesc = this.$data.searchForm.fieldDesc.toUpperCase();
+        if (sourceEntityId || fieldName || fieldDesc) {
           let dataList = [];
           this.$data.dataList.map(item => {
-            if (item.sourceEntityId === sourceEntityId && item.fieldDesc.indexOf(fieldDesc) > -1) {
+            let searchCondition = item.fieldName.toUpperCase().includes(fieldName) && item.fieldDesc.toUpperCase().includes(fieldDesc);
+            if (!sourceEntityId && searchCondition) {
+              dataList.push(item);
+            } else if (item.sourceEntityId === sourceEntityId && searchCondition) {
               dataList.push(item);
             }
           });
