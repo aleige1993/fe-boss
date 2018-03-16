@@ -11,7 +11,7 @@
             </ul>
           </bs-collepse>
           <!--<router-link v-else :to="second.url"><Icon v-bind:class="{active: isOpen}" type="ios-arrow-right"></Icon> {{second.name}}</router-link>-->
-          <router-link style="text-indent: 10px" v-else :to="second.url">{{second.name}}</router-link>
+          <router-link style="text-indent: 10px; font-weight: bold;" v-else :to="second.url">{{second.name}}</router-link>
         </li>
         <!--<li>-->
           <!--<bs-collepse title="业务审批">-->

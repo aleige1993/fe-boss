@@ -28,6 +28,7 @@ export default {
 </script>
 <style lang="scss" scoped>
 .bs-collepse-title{
+  font-weight: bold;
   display: block;
   height: 32px;
   line-height: 32px;
