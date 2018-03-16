@@ -313,12 +313,12 @@
           </i-col>
         </i-row>
         <i-row>
-          <!--车辆品牌-->
+          <!--车辆型号-->
           <i-col span="24">
             <i-form-item
-              label="车辆品牌"
+              label="车辆型号"
               prop="">
-              <span v-text="detailsCarDataForm.carBrandName+detailsCarDataForm.carTypeName+detailsCarDataForm.carModel"></span>
+              <span v-text="detailsCarDataForm.carBrandName+detailsCarDataForm.carTypeName+detailsCarDataForm.carModelName"></span>
             </i-form-item>
           </i-col>
         </i-row>
