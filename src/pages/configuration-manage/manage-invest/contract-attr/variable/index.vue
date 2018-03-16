@@ -13,6 +13,7 @@
         </i-form-item>
         <i-form-item>
           <i-select style="width: 150px" v-model="searchForm.sourceEntityId">
+            <i-option value="" style="height: 26px; color: #bbbec4">-请选择-</i-option>
             <i-option v-for="item in enumSelectData.get('ContractFieldSourceAttrEnum')" :key="item.itemCode" :value="item.itemCode">{{item.itemName}}</i-option>
           </i-select>
         </i-form-item>

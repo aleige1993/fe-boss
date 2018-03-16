@@ -25,6 +25,7 @@
         </i-form-item>
         <i-form-item prop="user">
           <i-select style="width: 120px" v-model="searchForm.fieldType">
+            <i-option value="" style="height: 26px; color: #bbbec4">-请选择-</i-option>
             <i-option v-for="item in certTypeEnum" :key="item.itemCode" :value="item.itemCode">{{item.itemName}}</i-option>
           </i-select>
         </i-form-item>
