@@ -829,16 +829,28 @@
       // 生成合同ajax
       async createContractAjax() {
         this.$data.contractGeneratingLoading = true;
+        // 告知父组件的 已经点击了“生成按钮”,此时为loading状态，“提交按钮”禁止点击
+        this.$emit('on-create-contracted-loading');
+        const msg = this.$Message.loading({
+          content: '正在生成合同中，请稍等...',
+          duration: 0
+        });
         let resp = await this.$http.post('/biz/sign/create/contract', {
           signNo: this.$data.contractInfoForm.signNo,
           startDate: this.$data.contractInfoForm.contractInfo.startDate,
           endDate: this.$data.contractInfoForm.contractInfo.endDate
         });
+        msg();
         this.$data.contractGeneratingLoading = false;
         if (resp.success && resp.body.length !== 0) {
           this.$data.contractInfoForm.contractInfo.loanContractFileList = resp.body;
         } else {
           this.$data.contractInfoForm.contractInfo.loanContractFileList = [];
+        }
+        if (!resp.success) {
+          this.$Message.error('生成合同失败！');
+        } else {
+          this.$Message.success('生成合同完毕');
         }
       },
       // 生成合同
@@ -852,7 +864,7 @@
             }
             this.$data.contractInfoForm.loanApprove = this.$data.loanApprove;
             await this.createContractAjax();
-            // 告知父组件的 已经点击了“生成按钮”
+            // 告知父组件的 已经点击了“生成按钮”，此时已经生成了合同
             this.$emit('on-create-contracted');
           } else {
             this.$Message.error('"<span style="color: red">*</span>"必填项不能为空');
