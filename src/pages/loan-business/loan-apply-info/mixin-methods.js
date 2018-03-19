@@ -141,6 +141,8 @@ export default {
         this.$data.formData.channelName = row.corpName;
       }*/
       // 2018.3.19修改为统一为渠道商
+      this.$data.formData.merchantNo = row.merchantNo;
+      this.$data.formData.merchantAbbr = row.corpName;
       this.$data.formData.channelNo = row.merchantNo;
       this.$data.formData.channelName = row.corpName;
       this.$data.showSelectDistributor = false;
