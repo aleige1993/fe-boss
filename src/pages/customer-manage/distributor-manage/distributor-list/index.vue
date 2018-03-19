@@ -85,6 +85,24 @@
               </i-form-item>
             </i-col>
             <i-col span="12">
+              <i-form-item label="公司电话"
+                           :rules="{required: true, message: '请输入公司电话', trigger: 'blur'}"
+                           prop="telephone">
+                <i-input v-model="formAdd.telephone" placeholder=""></i-input>
+              </i-form-item>
+            </i-col>
+          </i-row>
+          <i-row :gutter="16">
+            <i-col span="12">
+              <i-form-item label="注册资金"
+                           :rules="{required: true, message: '请输入注册资金', trigger: 'blur'}"
+                           prop="regCapital">
+                <i-input v-model="formAdd.regCapital" placeholder="请输入金额数字">
+                  <span slot="append">万元</span>
+                </i-input>
+              </i-form-item>
+            </i-col>
+            <i-col span="12">
               <i-form-item
                 :rules="{required: true, message: '请选择注册日期', trigger: 'change'}"
                 label="注册日期"
@@ -121,24 +139,6 @@
                               @on-change="selectBizDistance">
                 </bs-dispicker>
                 <i-input v-model="formAdd.bizRoadAddr" placeholder="街道信息" style="width: 220px;"></i-input>
-              </i-form-item>
-            </i-col>
-          </i-row>
-          <i-row :gutter="16">
-            <i-col span="12">
-              <i-form-item label="注册资金"
-                           :rules="{required: true, message: '请输入注册资金', trigger: 'blur'}"
-                           prop="regCapital">
-                <i-input v-model="formAdd.regCapital" placeholder="请输入金额数字">
-                  <span slot="append">万元</span>
-                </i-input>
-              </i-form-item>
-            </i-col>
-            <i-col span="12">
-              <i-form-item label="公司电话"
-                           :rules="{required: true, message: '请输入公司电话', trigger: 'blur'}"
-                           prop="telephone">
-                <i-input v-model="formAdd.telephone" placeholder=""></i-input>
               </i-form-item>
             </i-col>
           </i-row>
