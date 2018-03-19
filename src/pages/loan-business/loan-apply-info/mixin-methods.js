@@ -132,14 +132,17 @@ export default {
      */
     selectDistributor(row, index) {
       // 选择的是经销商时：
-      if (this.$data.isDistributor) {
+      /* if (this.$data.isDistributor) {
         this.$data.formData.merchantNo = row.corpNo;
         this.$data.formData.merchantAbbr = row.corpName;
       } else {
         // 选择的是渠道商时：
         this.$data.formData.channelNo = row.merchantNo;
         this.$data.formData.channelName = row.corpName;
-      }
+      }*/
+      // 2018.3.19修改为统一为渠道商
+      this.$data.formData.channelNo = row.merchantNo;
+      this.$data.formData.channelName = row.corpName;
       this.$data.showSelectDistributor = false;
     },
     // 验证表单信息并向外抛出数据
