@@ -271,7 +271,7 @@
     </bs-modal>
     <!--GPS安装信息-->
     <bs-modal v-model="GPSinstallShowModal" title="GPS安装信息详情" :width="1200">
-      <i-table :height="tableFixHeight+48" v-if="GPSinstallShowModal" border ref="examineTable" :columns="loanCarGpsDTOColumns" :data="loanCarGpsList"></i-table>
+      <i-table v-if="GPSinstallShowModal" border ref="examineTable" :columns="loanCarGpsDTOColumns" :data="loanCarGpsList"></i-table>
     </bs-modal>
     <!--车辆信息弹窗-->
     <bs-modal v-model="detailsCarDataShowModal" title="车辆信息" :width="1200">

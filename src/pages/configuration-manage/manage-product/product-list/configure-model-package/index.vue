@@ -4,7 +4,7 @@
   <div class="form-top-actions">
     <i-button @click="addModal" type="info"><i class="iconfont icon-xinzeng"></i> 新增</i-button>
   </div>
-  <i-table :height="tableFixHeight+110" :loading="dataLoading" border ref="PackageTable" :columns="columns1" :data="data1"></i-table>
+  <i-table :loading="dataLoading" border ref="PackageTable" :columns="columns1" :data="data1"></i-table>
   <br>
   <br>
   <pt-modal :title="isAdd?'新增':'修改'" v-model="showAdd" :width="1200" @on-close="noticeLilvFun">

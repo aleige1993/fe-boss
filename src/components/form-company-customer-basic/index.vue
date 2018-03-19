@@ -29,7 +29,7 @@
             <i-row>
               <i-col span="8">
                 <i-form-item label="注册资金" prop="baseDTO.regCapital">
-                  <i-input :readonly="isFromDetail" v-model="formData.baseDTO.regCapital" placeholder="输入字符串（如100万）">
+                  <i-input :readonly="isFromDetail" v-model="formData.baseDTO.regCapital" placeholder="请输入金额数字">
                     <span slot="append">万元</span>
                   </i-input>
                 </i-form-item>

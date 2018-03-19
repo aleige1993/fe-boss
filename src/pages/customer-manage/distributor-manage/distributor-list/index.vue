@@ -18,7 +18,7 @@
     <!--新增修改模态框-->
     <bs-modal :title="isAdd ? '新增' : '修改'" v-model="showAddModal" :width="1000" @on-close="cancelFun">
       <i-form v-if="showAddModal" ref="formAdd" :model="formAdd" label-position="right" :label-width="120" style="padding: 30px 0;">
-        <i-row :gutter="16">
+        <i-row>
           <i-col span="12">
             <i-form-item
               label="渠道商类型"
@@ -40,72 +40,110 @@
             </i-form-item>
           </i-col>
         </i-row>
-        <i-row :gutter="16">
-          <i-col span="24" v-if="formAdd.channelType==='1'||formAdd.channelType==='3'">
-            <i-row>
-              <i-col span="12">
-                <i-form-item
-                  label="客户类型"
-                  prop="customerType">
-                  <span v-text="enumCode2Name('2', 'CustTypeEnum')"></span>
-                </i-form-item>
-              </i-col>
-
-              <i-col span="12">
-                <i-form-item
-                  label="客户名称"
-                  :rules="{required: true, message: '客户名称不能为空', trigger: 'change'}"
-                  prop="corpName">
-                  <input type="hidden" v-model="formAdd.corpName"/>
-                  <i-input v-model="formAdd.corpName" :readonly="true" placeholder="选择公司客户">
-                    <i-button @click="showSelectCompanyOwner=!showSelectCompanyOwner" slot="append">选择公司客户 <Icon type="ios-more"></Icon></i-button>
-                  </i-input>
-                  <p class="formAddClass" v-if="formAdd.creditCode===''">“社会征信统一代码”不存在，不能提交！</p>
-                  <p class="formAddClass" v-if="formAdd.legalPerson===''">“法定代表人”不存在，不能提交！</p>
-                  <p class="formAddClass" v-if="formAdd.telephone===''">“公司电话”不存在，不能提交！</p>
-                </i-form-item>
-              </i-col>
-            </i-row>
-          </i-col>
-        </i-row>
-        <i-row :gutter="16">
-          <i-col v-if="formAdd.channelType==='2'">
-            <i-row>
-              <i-col span="12">
-                <i-form-item
-                  label="客户类型"
-                  prop="customerType"
-                  :rules="{required: true, message: '请选择客户类型', trigger: 'change'}">
-                  <i-select v-model="formAdd.customerType">
-                    <i-option v-for="item in enumSelectData.get('CustTypeEnum')" :key="item.itemCode" :value="item.itemCode">{{item.itemName}}</i-option>
-                  </i-select>
-                </i-form-item>
-              </i-col>
-              <i-col span="12" v-if="formAdd.customerType==='1'||formAdd.customerType==='2'">
-                <i-form-item
-                  label="客户名称"
-                  :rules="{required: true, message: '客户名称不能为空', trigger: 'change'}"
-                  prop="corpName">
-                  <input type="hidden" v-model="formAdd.corpName"/>
-                  <div v-show="formAdd.customerType==='1'">
-                    <i-input v-model="formAdd.corpName" :readonly="true" placeholder="选择个人客户">
-                      <i-button @click="showSelectObligee=!showSelectObligee" slot="append">选择个人客户 <Icon type="ios-more"></Icon></i-button>
-                    </i-input>
-                  </div>
-                  <div v-show="formAdd.customerType==='2'">
-                    <i-input v-model="formAdd.corpName" :readonly="true" placeholder="选择公司客户">
-                      <i-button @click="showSelectCompanyOwner=!showSelectCompanyOwner" slot="append">选择公司客户 <Icon type="ios-more"></Icon></i-button>
-                    </i-input>
-                    <p class="formAddClass" v-if="formAdd.creditCode===''">“社会征信统一代码”不存在，不能提交！</p>
-                    <p class="formAddClass" v-if="formAdd.legalPerson===''">“法定代表人”不存在，不能提交！</p>
-                    <p class="formAddClass" v-if="formAdd.telephone===''">“公司电话”不存在，不能提交！</p>
-                  </div>
-                </i-form-item>
-              </i-col>
-            </i-row>
-          </i-col>
-        </i-row>
-        <i-row :gutter="16">
+        <div style="background: #f7f7f7; padding: 14px 5px 0 0;margin-bottom: 14px;width: 100%;">
+          <i-row :gutter="16">
+            <i-col span="12">
+              <i-form-item
+                label="客户名称"
+                :rules="{required: true, message: '客户名称不能为空', trigger: 'change'}"
+                prop="corpName">
+                <input type="hidden" v-model="formAdd.corpName"/>
+                <i-input v-model="formAdd.corpName" :readonly="true" placeholder="选择公司客户">
+                  <i-button @click="showSelectCompanyOwner=!showSelectCompanyOwner" slot="append">选择公司客户 <Icon type="ios-more"></Icon></i-button>
+                </i-input>
+              </i-form-item>
+            </i-col>
+          </i-row>
+          <i-row :gutter="16">
+            <i-col span="12">
+              <i-form-item label="客户经理"
+                           prop="custMgrName"
+                           :rules="{required: true, message: '请选择客户经理', trigger: 'change'}">
+                <input type="hidden" v-model="formAdd.custMgrNo"/>
+                  <i-input v-model="formAdd.custMgrName"
+                           :readonly="true"
+                           placeholder="选择客户经理">
+                  <i-button @click="showSelectEmployer=!showSelectEmployer" slot="append">选择客户经理 <Icon type="ios-more"></Icon></i-button>
+                </i-input>
+               </i-form-item>
+             </i-col>
+            <i-col span="12">
+              <i-form-item prop="suCreditCode" label="统一社会信用代码"
+                           :rules="{required: true, type: 'string', max: 18, message: '统一社会信用代码必填且小于18位', trigger: 'change'}">
+                <i-input v-model="formAdd.suCreditCode" placeholder="统一社会信用代码"></i-input>
+              </i-form-item>
+            </i-col>
+          </i-row>
+          <i-row :gutter="16">
+            <i-col span="12">
+              <i-form-item label="法定代表人姓名"
+                           :rules="{required: true, message: '请选择法定代表人', trigger: 'change'}"
+                           prop="legalPerson">
+                <i-input v-model="formAdd.legalPerson" :readonly="true">
+                  <i-button type="primary" @click="selectRulerModal=!selectRulerModal" slot="append">选择代表人 <Icon type="ios-more"></Icon></i-button>
+                </i-input>
+              </i-form-item>
+            </i-col>
+            <i-col span="12">
+              <i-form-item
+                :rules="{required: true, message: '请选择注册日期', trigger: 'change'}"
+                label="注册日期"
+                prop="regDate">
+                <input type="hidden" v-model="formAdd.regDate">
+                <bs-datepicker v-model="formAdd.regDate" type="date" placeholder="选择日期" style="width: 100%"></bs-datepicker>
+              </i-form-item>
+            </i-col>
+          </i-row>
+          <i-row>
+            <i-col span="24">
+              <i-form-item label="注册地址"
+                           :rules="{required: true, message: '请选择注册地址', trigger: 'blur'}"
+                           prop="roadAddr">
+                <input type="hidden" v-model="formAdd.districtName"/>
+                <bs-dispicker :currProvince="formAdd.provinceName"
+                              :currDistrict="formAdd.districtName"
+                              :currCity="formAdd.cityName"
+                              @on-change="selectDistance">
+                </bs-dispicker>
+                <i-input v-model="formAdd.roadAddr" placeholder="街道信息" style="width: 220px;"></i-input>
+              </i-form-item>
+            </i-col>
+          </i-row>
+          <i-row>
+            <i-col span="24">
+              <i-form-item label="营业地址"
+                           :rules="{required: true, message: '请选择营业地址', trigger: 'blur'}"
+                           prop="bizRoadAddr">
+                <input type="hidden" v-model="formAdd.bizDistrictName"/>
+                <bs-dispicker :currProvince="formAdd.bizProvinceName"
+                              :currDistrict="formAdd.bizDistrictName"
+                              :currCity="formAdd.bizCityName"
+                              @on-change="selectBizDistance">
+                </bs-dispicker>
+                <i-input v-model="formAdd.bizRoadAddr" placeholder="街道信息" style="width: 220px;"></i-input>
+              </i-form-item>
+            </i-col>
+          </i-row>
+          <i-row :gutter="16">
+            <i-col span="12">
+              <i-form-item label="注册资金"
+                           :rules="{required: true, message: '请输入注册资金', trigger: 'blur'}"
+                           prop="regCapital">
+                <i-input v-model="formAdd.regCapital" placeholder="请输入金额数字">
+                  <span slot="append">万元</span>
+                </i-input>
+              </i-form-item>
+            </i-col>
+            <i-col span="12">
+              <i-form-item label="公司电话"
+                           :rules="{required: true, message: '请输入公司电话', trigger: 'blur'}"
+                           prop="telephone">
+                <i-input v-model="formAdd.telephone" placeholder=""></i-input>
+              </i-form-item>
+            </i-col>
+          </i-row>
+        </div>
+        <i-row>
           <i-col span="12">
             <i-form-item
               label="上级渠道商"
@@ -127,7 +165,7 @@
             </i-form-item>
           </i-col>
         </i-row>
-        <i-row :gutter="16">
+        <i-row>
           <i-col span="12">
             <i-form-item
               label="渠道商简称"
@@ -147,7 +185,7 @@
             </i-form-item>
           </i-col>
         </i-row>
-        <i-row :gutter="16">
+        <i-row>
           <i-col span="24">
             <bs-form-block :title="'渠道商服务地区'">
               <div class="form-top-actions">
@@ -162,8 +200,6 @@
             <i-form-item class="text-right">
               <i-button type="primary"
                         @click="submitFun"
-                        :disabled="((formAdd.channelType==='1'||formAdd.channelType==='3'))&&
-                        ((formAdd.creditCode==='')||(formAdd.legalPerson==='')||(formAdd.telephone===''))"
                         :loading="buttonLoading">
                 <span v-if="!buttonLoading">提交</span>
                 <span v-else>loading...</span>
@@ -198,10 +234,6 @@
         </i-form-item>
       </i-form>
     </bs-modal>
-    <!--选择客户个人的模态框-->
-    <bs-modal :title="'选择个人'" v-model="showSelectObligee" :width="1200">
-      <table-customer-list v-if="showSelectObligee" ref="ObligeeTable" type="modal" @on-row-dbclick="selectObligeeRow"></table-customer-list>
-    </bs-modal>
     <!--选择客户公司的模态框-->
     <bs-modal :title="'选择公司'" v-model="showSelectCompanyOwner" :width="1200">
       <table-company-customer-list v-if="showSelectCompanyOwner" ref="companyTable" type="modal" @on-row-dbclick="selectCompanyRow"></table-company-customer-list>
@@ -210,13 +242,22 @@
     <bs-modal :width="880" v-model="showSelectMerchant" title="选择上级渠道商">
       <tree-merchant v-if="showSelectMerchant" @on-row-dblclick="selectMerchant" :columns="treeMerchantColumns" :data="treeMerchantData"></tree-merchant>
     </bs-modal>
+    <!-- 选择客户经理的弹窗 -->
+    <bs-modal title="选择客户经理" :width="1200" v-model="showSelectEmployer">
+      <table-employer-list @on-row-dbclick="selectEmployer"></table-employer-list>
+    </bs-modal>
+    <!--选择法人模态框-->
+    <bs-modal title="选择法人代表" v-model="selectRulerModal" :width="1200">
+      <table-customer-list ref="addCustomerSpouseModalTable" type="modal" @on-row-dbclick="selectRulerRow"></table-customer-list>
+    </bs-modal>
   </div>
 </template>
 <script>
+  import TableCustomerList from '@/components/table-customer-list'; // 选择法定代表人
+  import TableEmployerList from '@/components/table-employer-list'; // 选择客户经理
   import TreeMerchant from '@/components/bs-tree-grid'; // 选择上级渠道商
   import BsDispicker from '@/components/bs-dispicker';
   import TableCompanyCustomerList from '@/components/table-company-customer-list'; // 选择客户公司
-  import TableCustomerList from '@/components/table-customer-list'; // 选择客户个人
   import tableDistributorList from '@/components/table-distributor-list';
   import BsModal from '@/components/bs-modal';
   import BsDispickerTwo from '@/components/bs-dispicker-two';
@@ -228,6 +269,7 @@
       BsDispicker,
       BsDispickerTwo,
       tableDistributorList,
+      TableEmployerList,
       TableCustomerList,
       TableCompanyCustomerList
     },
@@ -237,6 +279,8 @@
         buttonLoading: false,
         showSelectMerchant: false,
         showAreaAddModal: false,
+        showSelectEmployer: false,
+        selectRulerModal: false,
         areaForm: {
           'provinceName': '',
           'provinceCode': '',
@@ -263,7 +307,6 @@
         formSearch: {
           corpName: ''
         },
-        showSelectObligee: false,
         showSelectCompanyOwner: false,
         formAdd: {
           'merchantNo': '',
@@ -272,7 +315,6 @@
           'custMgrName': '',
           'pid': '',
           'channelType': '',
-          'customerType': '',
           'pcorpName': '',
           'corpNo': '',
           'corpName': '',
@@ -348,23 +390,8 @@
       };
     },
     watch: {
-      'formAdd.customerType'(newVal, oldVal) {
-        if ((oldVal !== '') && (typeof oldVal !== 'undefined')) {
-          this.$data.formAdd.corpName = '';
-          this.$data.formAdd.corpNo = '';
-        }
-      },
       'formAdd.channelType'(newVal, oldVal) {
-        if ((newVal === '2') && !((oldVal === '') || (typeof oldVal === 'undefined'))) {
-          this.$data.formAdd.merchantType = '';
-          this.$data.formAdd.corpName = '';
-          this.$data.formAdd.corpNo = '';
-        }
-        if ((oldVal === '2') && ((newVal === '1') || (newVal === '3'))) {
-          this.$data.formAdd.corpName = '';
-          this.$data.formAdd.corpNo = '';
-        }
-        if ((newVal === '2') || (newVal === '3')) {
+        if (((newVal === '2') || (newVal === '3')) && (oldVal === '1')) {
           this.$data.formAdd.merchantType = '';
         }
       }
@@ -373,6 +400,30 @@
       this.getMerchantPidData();
     },
     methods: {
+      // 选择注册地址
+      selectDistance(distance) {
+        this.$data.formAdd.provinceCode = distance.provinceCode;
+        this.$data.formAdd.provinceName = distance.provinceName;
+        this.$data.formAdd.cityCode = distance.cityCode;
+        this.$data.formAdd.cityName = distance.cityName;
+        this.$data.formAdd.districtCode = distance.districtCode;
+        this.$data.formAdd.districtName = distance.districtName;
+      },
+      // 选择营业地址
+      selectBizDistance(distance) {
+        this.$data.formAdd.bizProvinceCode = distance.provinceCode;
+        this.$data.formAdd.bizProvinceName = distance.provinceName;
+        this.$data.formAdd.bizCityCode = distance.cityCode;
+        this.$data.formAdd.bizCityName = distance.cityName;
+        this.$data.formAdd.bizDistrictCode = distance.districtCode;
+        this.$data.formAdd.bizDistrictName = distance.districtName;
+      },
+      // 选择客户经理的回调
+      selectEmployer(row, index) {
+        this.$data.formAdd.custMgrNo = row.userCode;
+        this.$data.formAdd.custMgrName = row.userName;
+        this.$data.showSelectEmployer = false;
+      },
       // 城市联动
       selectNowDistance(city) {
         this.$data.areaForm.provinceCode = city.provinceCode;
@@ -426,18 +477,42 @@
         this.$data.showAreaAddModal = false;
         this.$Message.success('新增成功');
       },
-      // 选择个人客户
-      selectObligeeRow(row, index) {
-        this.$data.formAdd.corpNo = row.memberNo;
-        this.$data.formAdd.corpName = row.name;
-        this.$data.showSelectObligee = false;
+      // 选择法人代表
+      selectRulerRow(row, index) {
+        // console.log(row);
+        this.$data.formAdd.legalPersonNo = row.memberNo;
+        this.$data.formAdd.legalPerson = row.name;
+        this.$data.selectRulerModal = false;
       },
       // 选择公司客户
       selectCompanyRow(row, index) {
         this.$data.formAdd.corpNo = row.corpNo;
         this.$data.formAdd.corpName = row.corpName;
-        this.$data.formAdd.creditCode = row.creditCode;
-        this.$data.formAdd.legalPerson = row.legalPerson;
+        this.$data.formAdd.custMgrNo = row.custMgrNo;
+        this.$data.formAdd.custMgrName = row.custMgrName;
+        this.$data.formAdd.regDate = row.regDate;
+        this.$data.formAdd.suCreditCode = row.creditCode; // 统一社会信用代码
+        this.$data.formAdd.legalPerson = row.legalPerson; // 法人代表
+
+        this.$data.formAdd.bizProvinceCode = row.bizProvinceCode; // 营业地址
+        this.$data.formAdd.bizProvinceName = row.bizProvinceName;
+        this.$data.formAdd.bizCityCode = row.bizCityCode;
+        this.$data.formAdd.bizCityName = row.bizCityName;
+        this.$data.formAdd.bizDistrictCode = row.bizDistrictCode;
+        this.$data.formAdd.bizDistrictName = row.bizDistrictName;
+        this.$data.formAdd.bizRoadAddr = row.bizRoadAddr;
+
+        this.$data.formAdd.provinceCode = row.regProvinceCode; // 注册地址
+        this.$data.formAdd.provinceName = row.regProvinceName;
+        this.$data.formAdd.cityCode = row.regCityCode;
+        this.$data.formAdd.cityName = row.regCityName;
+        this.$data.formAdd.districtCode = row.regDistrictCode;
+        this.$data.formAdd.districtName = row.regDistrictName;
+        this.$data.formAdd.roadAddr = row.regRoadAddr;
+        if (typeof row.regCapital === 'undefined' || (row.regCapital === null)) {
+          row.regCapital = '';
+        }
+        this.$data.formAdd.regCapital = row.regCapital + ''; // 注册资金
         this.$data.formAdd.telephone = row.telephone;
         this.$data.showSelectCompanyOwner = false;
       },
@@ -452,11 +527,14 @@
           return;
         }
         this.$data.buttonLoading = true;
-        if (this.$data.formAdd.channelType === '1' || this.$data.formAdd.channelType === '3') {
-          this.$data.formAdd.customerType = '2';
+        let ajaxUrl = '';
+        if (this.$data.isAdd) {
+          ajaxUrl = 'merchant/addCompanyMerchant';
+        } else {
+          ajaxUrl = 'merchant/updateCompanyMerchant';
         }
         this.$set(this.$data.formAdd, 'merchantAreaInfo', this.$data.areaDataList);
-        let resp = await this.$http.post('merchant/saveMerchant', {
+        let resp = await this.$http.post(ajaxUrl, {
           ...this.$data.formAdd
         });
         this.$data.buttonLoading = false;
@@ -474,6 +552,10 @@
         this.$data.isAdd = false;
         this.$data.showAddModal = true;
         this.$data.formAdd = row;
+        if (typeof row.regCapital === 'undefined' || (row.regCapital === null)) {
+          row.regCapital = '';
+        }
+        this.$data.formAdd.regCapital = row.regCapital + '';
         if (typeof row.merchantAreaInfo === 'undefined') {
           row.merchantAreaInfo = [];
         }
@@ -481,8 +563,7 @@
       },
       // 提交
       submitFun() {
-        const formName = 'formAdd';
-        this.$refs[formName].validate((valid) => {
+        this.$refs['formAdd'].validate((valid) => {
           if (valid) {
             this.submitSuccess();
           } else {

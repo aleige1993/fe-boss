@@ -1,7 +1,7 @@
 <template>
   <!--归档材料-->
 <div id="configure-model-file">
-  <i-table :height="tableFixHeight + 98" border ref="proTable" :columns="columns1" :data="data1" @on-selection-change="selectRow"></i-table>
+  <i-table border ref="proTable" :columns="columns1" :data="data1" @on-selection-change="selectRow"></i-table>
   <br>
   <br>
   <div class="text-right">

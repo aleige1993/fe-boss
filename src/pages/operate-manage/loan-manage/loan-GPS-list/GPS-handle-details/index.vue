@@ -353,7 +353,7 @@
       <div class="form-top-actions">
         <i-button @click="addGPSModal" type="info"><i class="iconfont icon-xinzeng"></i>&nbsp;新增</i-button>
       </div>
-      <i-table :height="tableFixHeight+48" v-if="GPSinstallShowModal" border ref="examineTable" :columns="loanCarGpsDTOColumns" :data="loanCarGpsList"></i-table>
+      <i-table v-if="GPSinstallShowModal" border ref="examineTable" :columns="loanCarGpsDTOColumns" :data="loanCarGpsList"></i-table>
     </bs-modal>
     <!--GPS安装信息新增和修改模态框-->
     <bs-modal v-model="GPSShowModal" :title="isAddGPS?'新增':'修改'" :width="520" @on-close="formAddGPS = {}">
