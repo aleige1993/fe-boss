@@ -1,6 +1,6 @@
 <template>
 <div id="configure-model-lending">
-  <i-table :height="tableFixHeight + 98" :loading="dataLoading" border ref="lendingTable" :columns="columns1" :data="data1" @on-selection-change="selectRow"></i-table>
+  <i-table :loading="dataLoading" border ref="lendingTable" :columns="columns1" :data="data1" @on-selection-change="selectRow"></i-table>
   <br>
   <br>
   <div class="text-right">
