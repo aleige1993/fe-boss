@@ -134,25 +134,25 @@ h1,h2,h3,h4,h5,h6 {
   /*
   * 修改webkit内核的浏览器滚动条
   */
-  & .ivu-table-body {
-    &::-webkit-scrollbar {
-      width: 6px;
-      height: 10px;
-    }
-    &::-webkit-scrollbar-button {
-      display: none;
-    }
-    &::-webkit-scrollbar-track {
-      display: none;
-    }
-    &::-webkit-scrollbar-thumb {
-      background: #c5dcef;
-      border-radius: 5px;
-      &:hover {
-        background: #add1f0;
-      }
-    }
-  }
+  //& .ivu-table-body {
+  //  &::-webkit-scrollbar {
+  //    width: 6px;
+  //    height: 10px;
+  //  }
+  //  &::-webkit-scrollbar-button {
+  //    display: none;
+  //  }
+  //  &::-webkit-scrollbar-track {
+  //    display: none;
+  //  }
+  //  &::-webkit-scrollbar-thumb {
+  //    background: #c5dcef;
+  //    border-radius: 5px;
+  //    &:hover {
+  //      background: #add1f0;
+  //    }
+  //  }
+  //}
   /*
   * end 修改webkit内核的浏览器滚动条
   */
@@ -162,27 +162,28 @@ h1,h2,h3,h4,h5,h6 {
   min-width: 0px;
 }
 // 在查看详情的表单中（i-form）添加lass="input-label-color"，使其label字体颜色改变
-.input-label-color.ivu-form .ivu-form-item-label{
-  color: #999;}
+.input-label-color.ivu-form .ivu-form-item-label {
+  color: #999;
+}
 /*
  * 添加class=“scrollBarStyle” 修改webkit内核的浏览器滚动条
  */
-.scrollBarStyle {
-  &::-webkit-scrollbar {
-    width: 6px;
-    height: 10px;
-  }
-  &::-webkit-scrollbar-button {
-    display: none;
-  }
-  &::-webkit-scrollbar-track {
-    display: none;
-  }
-  &::-webkit-scrollbar-thumb {
-    background: #c5dcef;
-    border-radius: 5px;
-    &:hover {
-      background: #add1f0;
-    }
-  }
-}
+//.scrollBarStyle {
+//  &::-webkit-scrollbar {
+//    width: 6px;
+//    height: 10px;
+//  }
+//  &::-webkit-scrollbar-button {
+//    display: none;
+//  }
+//  &::-webkit-scrollbar-track {
+//    display: none;
+//  }
+//  &::-webkit-scrollbar-thumb {
+//    background: #c5dcef;
+//    border-radius: 5px;
+//    &:hover {
+//      background: #add1f0;
+//    }
+//  }
+//}

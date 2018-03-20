@@ -46,7 +46,7 @@
       <a style="color: #fff" class="ivu-btn ivu-btn-info" :href="exportExcelUrl">导出EXCEL</a>
     </div>
     <slot name="topAction"></slot>
-    <i-table :height="this.$store.getters.viewHeight+20" border :loading="dataLoading" ref="selection" @on-select="selectRow" @on-select-all="selectRow" :columns="resultCustomerColumns" :data="privateCustomerLoanList"></i-table>
+    <i-table :height="tableFixHeight+20" border :loading="dataLoading" ref="selection" @on-select="selectRow" @on-select-all="selectRow" :columns="resultCustomerColumns" :data="privateCustomerLoanList"></i-table>
     <div class="page-container">
       <i-page :total="total" :page-size="15" :current="currentPage" @on-change="jumpPage" size="small" show-elevator show-total></i-page>
     </div>
