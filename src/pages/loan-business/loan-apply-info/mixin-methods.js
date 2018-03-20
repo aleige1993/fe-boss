@@ -143,8 +143,11 @@ export default {
       // 2018.3.19修改为统一为渠道商
       this.$data.formData.merchantNo = row.merchantNo;
       this.$data.formData.merchantAbbr = row.corpName;
-      this.$data.formData.channelNo = row.merchantNo;
-      this.$data.formData.channelName = row.corpName;
+      // 如果来自于业务登记，把渠道商设置成经销商相同的值
+      if (!this.$route.query.id) {
+        this.$data.formData.channelNo = row.merchantNo;
+        this.$data.formData.channelName = row.corpName;
+      }
       this.$data.showSelectDistributor = false;
     },
     // 验证表单信息并向外抛出数据
