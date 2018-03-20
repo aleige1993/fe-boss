@@ -54,6 +54,22 @@
           this.$data.data1 = [];
         }
       },
+      // 删除套餐
+      async remove(row) {
+        Alertify.confirm('确定要删除吗？', async (ok) => {
+          if (ok) {
+            const loadingMsg = this.$Message.loading('删除中...', 0);
+            let respDel = await this.$http.get('/pms/productPackage/remove', {
+              packageNo: row.packageNo
+            });
+            loadingMsg();
+            if (respDel.success) {
+              this.$Message.success('删除成功');
+              this.getPrivateCustomerList();
+            }
+          }
+        });
+      },
       // 打开新增窗口
       addModal() {
         this.$data.isAdd = true;

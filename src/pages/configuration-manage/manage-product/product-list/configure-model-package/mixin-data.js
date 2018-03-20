@@ -54,7 +54,7 @@ export default {
         {
           title: '操作',
           key: 'action',
-          width: 200,
+          width: 140,
           align: 'center',
           render: (h, params) => {
             return h('div', [
@@ -72,8 +72,8 @@ export default {
                     this.$data.LlShowModel = true;
                   }
                 }
-              }, '修改')
-              /* h('Button', {
+              }, '修改'),
+              h('Button', {
                 props: {
                   type: 'error',
                   size: 'small'
@@ -83,7 +83,7 @@ export default {
                     this.remove($.extend({}, params.row));
                   }
                 }
-              }, '删除')*/
+              }, '删除')
             ]);
           }
         }
