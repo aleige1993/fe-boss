@@ -72,22 +72,50 @@ export default {
                   }
                 }
               }, '修改'),
-              h('Button', {
+              h('Tooltip', {
                 props: {
-                  type: 'error',
-                  size: 'small',
-                  disabled: params.row.status !== '3' || this.type !== 'page'
+                  disabled: true
                 },
                 on: {
-                  click: () => {
-                    this.remove($.extend({}, params.row));
+                  'on-popper-show': () => {
+                    if (params.row.status !== '3') {
+                      this.$data.tooltipShow = true;
+                    }
+                  },
+                  'on-popper-hide': () => {
+                    if (params.row.status !== '3') {
+                      this.$data.tooltipShow = false;
+                    }
                   }
                 }
-              }, '删除')
+              }, [
+                h('Button', {
+                  props: {
+                    type: 'error',
+                    size: 'small',
+                    disabled: params.row.status !== '3' || this.type !== 'page'
+                  },
+                  on: {
+                    click: () => {
+                      this.remove($.extend({}, params.row));
+                    }
+                  }
+                }, '删除')
+              ])
+            ]);
+          },
+          renderHeader: (h, params) => {
+            return h('div', [
+              h('span', {
+                style: {
+                  'color': this.$data.tooltipShow ? 'red' : '#495060'
+                }
+              }, this.$data.tooltipShow ? '产品状态为“初始化状态”时方可删除' : '操作')
             ]);
           }
         }
       ],
+      tooltipShow: false,
       data1: []
     };
   }
