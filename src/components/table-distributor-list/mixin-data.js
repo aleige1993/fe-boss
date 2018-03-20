@@ -24,13 +24,13 @@ export default {
           width: 150,
           key: 'merchantAbbr'
         },
-        {
+        /*{
           title: '客户编号',
           width: 170,
           key: 'corpNo'
-        },
+        },*/
         {
-          title: '客户名称',
+          title: '渠道商名称',
           width: 150,
           key: 'corpName'
         },
