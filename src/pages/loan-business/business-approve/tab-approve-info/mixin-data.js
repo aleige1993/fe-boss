@@ -61,11 +61,11 @@ export default {
       ],
       firstApproveColumns: [
         {
-          title: '查询渠道',
+          title: '初审名称',
           key: 'approveWebsite'
         },
         {
-          title: '查询描述',
+          title: '初审内容',
           key: 'approveDesc'
         },
         {
