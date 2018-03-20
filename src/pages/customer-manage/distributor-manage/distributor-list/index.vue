@@ -12,13 +12,14 @@
         <i-button type="ghost" @click="openCarModal"><i class="iconfont icon-shenhe"></i> 车型管理</i-button>
         <i-button type="ghost" @click="openQuotaModal"><i class="iconfont icon-shenhe"></i> 额度管理</i-button>
         <i-button type="ghost" @click="openOperatorModal"><i class="iconfont icon-shenhe"></i> 操作员管理</i-button>
+        <i-button type="ghost" @click="openBankModal"><i class="iconfont icon-shenhe"></i> 银行账号维护</i-button>
         <i-button v-show="isClickRow" @click="handleClearCurrentRow" type="text"><i-icon type="android-cancel" class="button-cancel"></i-icon> 取消当前选中状态</i-button>
       </div>
     </table-distributor-list>
     <!--新增修改模态框-->
     <bs-modal :title="isAdd ? '新增' : '修改'" v-model="showAddModal" :width="1000" @on-close="cancelFun">
       <i-form v-if="showAddModal" ref="formAdd" :model="formAdd" label-position="right" :label-width="120" style="padding: 30px 0;">
-        <i-row>
+        <i-row :gutter="16">
           <i-col span="12">
             <i-form-item
               label="渠道商类型"
@@ -40,9 +41,10 @@
             </i-form-item>
           </i-col>
         </i-row>
-        <div style="background: #f7f7f7; padding: 14px 5px 0 0;margin-bottom: 14px;width: 100%;">
+        <!--<div style="background: #f7f7f7; padding: 14px 5px 0 0;margin-bottom: 14px;width: 100%;">-->
+        <div>
           <i-row :gutter="16">
-            <i-col span="12">
+            <!--<i-col span="12">
               <i-form-item
                 label="客户名称"
                 :rules="{required: true, message: '客户名称不能为空', trigger: 'change'}"
@@ -52,13 +54,30 @@
                   <i-button @click="showSelectCompanyOwner=!showSelectCompanyOwner" slot="append">选择公司客户 <Icon type="ios-more"></Icon></i-button>
                 </i-input>
               </i-form-item>
+            </i-col>-->
+            <i-col span="12">
+              <i-form-item
+                label="渠道商名称"
+                :rules="{required: true, message: '渠道商名称不能为空', trigger: 'change'}"
+                prop="corpName">
+                <i-input v-model="formAdd.corpName" placeholder=""></i-input>
+              </i-form-item>
+            </i-col>
+            <i-col span="12">
+              <i-form-item
+                label="上级渠道商"
+                :rules="{required: true, message: '请选择上级渠道商', trigger: 'change'}"
+                prop="pcorpName">
+                <i-input v-model="formAdd.pcorpName" :readonly="true" placeholder="选择上级渠道商">
+                  <i-button @click="showSelectMerchant=!showSelectMerchant" slot="append">选择上级渠道商 <Icon type="ios-more"></Icon></i-button>
+                </i-input>
+              </i-form-item>
             </i-col>
           </i-row>
           <i-row :gutter="16">
             <i-col span="12">
               <i-form-item label="客户经理"
-                           prop="custMgrName"
-                           :rules="{required: true, message: '请选择客户经理', trigger: 'change'}">
+                           prop="custMgrName">
                 <input type="hidden" v-model="formAdd.custMgrNo"/>
                   <i-input v-model="formAdd.custMgrName"
                            :readonly="true"
@@ -70,18 +89,25 @@
             <i-col span="12">
               <i-form-item prop="suCreditCode" label="统一社会信用代码"
                            :rules="{required: true, type: 'string', max: 18, message: '统一社会信用代码必填且小于18位', trigger: 'change'}">
-                <i-input v-model="formAdd.suCreditCode" placeholder="统一社会信用代码"></i-input>
+                <i-input v-model="formAdd.suCreditCode" placeholder=""></i-input>
               </i-form-item>
             </i-col>
           </i-row>
           <i-row :gutter="16">
-            <i-col span="12">
+            <!--<i-col span="12">
               <i-form-item label="法定代表人姓名"
                            :rules="{required: true, message: '请选择法定代表人', trigger: 'change'}"
                            prop="legalPerson">
                 <i-input v-model="formAdd.legalPerson" :readonly="true">
                   <i-button type="primary" @click="selectRulerModal=!selectRulerModal" slot="append">选择代表人 <Icon type="ios-more"></Icon></i-button>
                 </i-input>
+              </i-form-item>
+            </i-col>-->
+            <i-col span="12">
+              <i-form-item label="法定代表人姓名"
+                           :rules="{required: true, message: '请选择法定代表人', trigger: 'change'}"
+                           prop="legalPerson">
+                <i-input v-model="formAdd.legalPerson"></i-input>
               </i-form-item>
             </i-col>
             <i-col span="12">
@@ -143,17 +169,7 @@
             </i-col>
           </i-row>
         </div>
-        <i-row>
-          <i-col span="12">
-            <i-form-item
-              label="上级渠道商"
-              :rules="{required: true, message: '请选择上级渠道商', trigger: 'change'}"
-              prop="pcorpName">
-              <i-input v-model="formAdd.pcorpName" :readonly="true" placeholder="选择上级渠道商">
-                <i-button @click="showSelectMerchant=!showSelectMerchant" slot="append">选择上级渠道商 <Icon type="ios-more"></Icon></i-button>
-              </i-input>
-            </i-form-item>
-          </i-col>
+        <i-row :gutter="16">
           <i-col span="12">
             <i-form-item
               label="是否允许补件"
@@ -164,16 +180,6 @@
               </i-select>
             </i-form-item>
           </i-col>
-        </i-row>
-        <i-row>
-          <i-col span="12">
-            <i-form-item
-              label="渠道商简称"
-              prop="merchantAbbr"
-              :rules="{required: true, message: '请选择渠道商简称', trigger: 'blur'}">
-              <i-input v-model="formAdd.merchantAbbr" placeholder=""></i-input>
-            </i-form-item>
-          </i-col>
           <i-col span="12">
             <i-form-item
               label="是否在app中显示"
@@ -182,6 +188,16 @@
               <i-select v-model="formAdd.isDisplayInApp">
                 <i-option v-for="item in enumSelectData.get('YesNoEnum')" :key="item.itemCode" :value="item.itemCode">{{item.itemName}}</i-option>
               </i-select>
+            </i-form-item>
+          </i-col>
+        </i-row>
+        <i-row :gutter="16">
+          <i-col span="12">
+            <i-form-item
+              label="渠道商简称"
+              prop="merchantAbbr"
+              :rules="{required: true, message: '请选择渠道商简称', trigger: 'blur'}">
+              <i-input v-model="formAdd.merchantAbbr" placeholder=""></i-input>
             </i-form-item>
           </i-col>
         </i-row>
@@ -565,6 +581,11 @@
       submitFun() {
         this.$refs['formAdd'].validate((valid) => {
           if (valid) {
+            if ((this.$data.formAdd.bizDistrictName === '') || (this.$data.formAdd.districtName === '') ||
+              (typeof this.$data.formAdd.bizDistrictName === 'undefined') || (typeof this.$data.formAdd.districtName === 'undefined')
+            ) {
+              this.$Message.error('地址信息不能为空！');
+            }
             this.submitSuccess();
           } else {
             this.$Message.error('"<span style="color: red">*</span>"必填项不能为空');
@@ -664,6 +685,19 @@
         if (this.clickRowedFun()) {
           this.$router.push({
             path: '/index/customer/distributor/admin',
+            query: {
+              currentPage: this.$data.currentPage,
+              corpName: this.$data.clickRow.corpName,
+              merchantNo: this.$data.clickRow.merchantNo
+            }
+          });
+        }
+      },
+      // 打开银行账号维护
+      openBankModal() {
+        if (this.clickRowedFun()) {
+          this.$router.push({
+            path: '/index/customer/distributor/bank',
             query: {
               currentPage: this.$data.currentPage,
               corpName: this.$data.clickRow.corpName,

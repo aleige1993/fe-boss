@@ -121,23 +121,7 @@ export default {
                   'paddingTop': '10px',
                   'paddingBottom': '10px'
                 }
-              })/* ,
-              h('br', {}),
-              h('a', {
-                props: {
-                  display: 'block',
-                  href: 'params.row.qrCodeUrl',
-                  target: '_blank'
-                },
-                style: {
-                  'textDecoration': 'underline'
-                },
-                on: {
-                  click: () => {
-                    window.open(params.row.qrCodeUrl, '_blank');
-                  }
-                }
-              }, '预览/下载二维码')*/
+              })
             ]);
           }
         },
@@ -177,13 +161,13 @@ export default {
       columnsFeatureActionColumns: [
         {
           title: '操作',
-          width: 230,
+          width: 180,
           align: 'center',
           fixed: 'right',
           key: 'action',
           render: (h, params) => {
             return h('div', [
-              h('i-button', {
+             /* h('i-button', {
                 props: {
                   type: 'primary'
                 },
@@ -201,7 +185,7 @@ export default {
                     });
                   }
                 }
-              }, '详情'),
+              }, '详情'),*/
               h('i-button', {
                 props: {
                   type: 'success'

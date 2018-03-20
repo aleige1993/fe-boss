@@ -1,11 +1,17 @@
 <template>
-  <div>
-    <div class="form-top-actions" v-if="!isFromDetail" style="padding-top: 0">
+  <div id="DistributorBank">
+    <i-breadcrumb separator=">">
+      <i-breadcrumb-item href="/home">首页</i-breadcrumb-item>
+      <i-breadcrumb-item href="/index/customer/distributor">渠道商管理</i-breadcrumb-item>
+      <i-breadcrumb-item href="/index/customer/distributor">渠道商列表</i-breadcrumb-item>
+      <i-breadcrumb-item>【{{$route.query.corpName}}】银行账号维护</i-breadcrumb-item>
+    </i-breadcrumb>
+    <div class="form-top-actions">
       <i-button type="primary" @click="openAddModal"><i class="iconfont icon-xinzeng"></i> 新增</i-button>
     </div>
     <i-table :height="tableFixHeight+98" :loading="dataLoading" :columns="bankAccountColumns" :data="bankAccountDatas"></i-table>
     <!--添加联系人模态框-->
-    <pt-modal title="添加银行账户" v-model="addBankModal">
+    <bs-modal :title="isAdd?'添加银行账户':'编辑银行账户'" v-model="addBankModal">
       <i-form ref="bankForm" :model="formData" label-position="left" :label-width="120">
         <i-form-item label="账户名" prop="acctName"
           :rules="{required: true, message: '账户名不能为空', trigger: 'blur'}">
@@ -61,18 +67,22 @@
           </i-button>
         </i-form-item>
       </i-form>
-    </pt-modal>
+    </bs-modal>
   </div>
 </template>
 <script>
-  import PTModal from '@/components/bs-modal';
+  import BsModal from '@/components/bs-modal';
   import MixinData from './mixin-data';
-  import MixinTabComputed from '../mixin-tab-computed';
+  // import MixinTabComputed from '../mixin-tab-computed';
   export default {
-    name: 'TabCompanyCustomerAddBankAccountInfo',
-    mixins: [MixinData, MixinTabComputed],
+    name: 'TabDistributorBankAccountInfo',
+    mixins: [MixinData],
+    components: {
+      BsModal
+    },
     data() {
       return {
+        isAdd: false,
         addBankModal: false,
         submitLoading: false,
         dataLoading: false,
@@ -80,7 +90,7 @@
         provinceDropList: [],
         cityDropList: [],
         formData: {
-          'corpNo': '',
+          'merchantNo': '',
           'corpName': '',
           'acctName': '',
           'acctNo': '',
@@ -96,11 +106,11 @@
       };
     },
     computed: {},
-    props: ['customer'],
     methods: {
       openAddModal() {
         this.$data.formData = {};
         this.$data.addBankModal = true;
+        this.$data.isAdd = true;
       },
       selectBank(select) {
         this.$data.formData.bankName = select.label;
@@ -108,17 +118,10 @@
       submitForm() {
         this.$refs['bankForm'].validate(async (valid) => {
           if (valid) {
-            let url = '';
-            let recordId = this.$data.formData.id;
-            if (recordId && recordId !== '') {
-              url = '/corp/saveCorpAcct';
-            } else {
-              url = '/corp/saveCorpAcct';
-            }
             this.$data.submitLoading = true;
-            this.$data.formData.corpNo = this.corpNo;
-            this.$data.formData.corpName = this.corpName;
-            let resp = await this.$http.post(url, this.$data.formData);
+            this.$data.formData.merchantNo = this.$route.query.merchantNo;
+            this.$data.formData.corpName = this.$route.query.corpName;
+            let resp = await this.$http.post('/merchant/acct/save', this.$data.formData);
             this.$data.submitLoading = false;
             if (resp.reCode === '0000') {
               this.$Message.success('保存成功');
@@ -141,8 +144,8 @@
       },
       async getCustomerBankList() {
         this.$data.dataLoading = true;
-        let resp = await this.$http.post('/corp/listCorpAcct', {
-          corpNo: this.corpNo,
+        let resp = await this.$http.post('/merchant/acct/list', {
+          merchantNo: this.$route.query.merchantNo,
           currentPage: 1,
           pageSize: 9999
         });
@@ -165,9 +168,6 @@
       cityChange(val) {
         this.$data.formData.openBankCity = val.label;
       }
-    },
-    components: {
-      'pt-modal': PTModal
     },
     async mounted() {
       this.getCustomerBankList();

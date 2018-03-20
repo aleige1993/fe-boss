@@ -49,6 +49,8 @@ let MyRouter = new Router({
                 { path: 'quota', name: 'quotaDistributor', component: resolve => require(['@/pages/customer-manage/distributor-manage/distributor-list/page-distributor-quota'], resolve)},
                 // 首页 > 渠道商管理 > 渠道商列表 > 渠道操作员管理
                 { path: 'admin', name: 'adminDistributor', component: resolve => require(['@/pages/customer-manage/distributor-manage/distributor-list/page-distributor-admin'], resolve)},
+                // 首页 > 渠道商管理 > 渠道商列表 > 银行账号维护
+                { path: 'bank', name: 'bankDistributor', component: resolve => require(['@/pages/customer-manage/distributor-manage/distributor-list/page-distributor-bank'], resolve)},
                 // 首页 > 渠道商管理 > 渠道商列表 > 渠道商详情
                 { path: 'details', name: 'detailsDistributor', component: resolve => require(['@/pages/customer-manage/distributor-manage/distributor-list/page-distributor-details'], resolve)},
                 // 首页 > 渠道商管理 > 渠道商列表 > 车型管理
