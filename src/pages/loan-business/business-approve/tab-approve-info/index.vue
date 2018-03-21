@@ -49,8 +49,8 @@
                 </i-form-item>
               </i-col>
               <i-col span="8">
-                <i-form-item label="产品利率" prop="loanApproveCreditDTO.loanProductRate"
-                             :rules="{required: true, message: '请输入产品利率'}">
+                <i-form-item label="颂车+云贷利率" prop="loanApproveCreditDTO.loanProductRate"
+                             :rules="{required: true, message: '请输入颂车+云贷利率'}">
                   <i-input :readonly="true" v-model="isNaN(approveData.loanApproveCreditDTO.loanProductRate)?'请输入定收利率':approveData.loanApproveCreditDTO.loanProductRate">
                     <span slot="append">%</span>
                   </i-input>
@@ -85,8 +85,8 @@
 
               </i-col>
               <i-col span="8">
-                <i-form-item label="定收利率" prop="loanApproveCreditDTO.loanRealRate"
-                             :rules="{required: true, message: '请输入定收利率'}">
+                <i-form-item label="颂车定收利率" prop="loanApproveCreditDTO.loanRealRate"
+                             :rules="{required: true, message: '请输入颂车定收利率'}">
                   <i-input :readonly="readonly" v-model="approveData.loanApproveCreditDTO.loanRealRate" @on-blur="loanRealRateVerification">
                     <span slot="append">%/年</span>
                   </i-input>
@@ -106,7 +106,7 @@
               <i-col span="8">
                 <i-form-item label="放款方式" prop="loanApproveCreditDTO.loanMode"
                              :rules="{required: true, message: '请输入放款方式'}">
-                  <i-select :disabled="readonly" @on-change="getBankList" v-model="approveData.loanApproveCreditDTO.loanMode">
+                  <i-select :disabled="true" @on-change="getBankList" v-model="approveData.loanApproveCreditDTO.loanMode">
                     <i-option v-for="item in enumSelectData.get('LoanModeEnum')" :key="item.itemCode" :value="item.itemCode">{{item.itemName}}</i-option>
                   </i-select>
                 </i-form-item>
@@ -162,10 +162,9 @@
           </bs-form-block>
           <bs-form-block :title="'费用收取方案'">
             <i-table ref="feeMethodsTable" :columns="feeMethodCol" :data="approveData.loanApproveFeePlanDTOS"></i-table>
-            <i-row style="margin-top: 10px;">
+            <i-row v-if="approveData.loanApproveFeePlanDTOS.length>0" style="margin-top: 10px;">
               <i-col span="24">
-                <i-form-item label="可融资金额" prop="loanApproveCreditDTO.carSaleAmt"
-                             :rules="{required: true, message: '请先计算可融资金额'}">
+                <i-form-item label="可融资金额" prop="loanApproveCreditDTO.carSaleAmt">
                   <i-input style="width: 120px" :readonly="true" v-model="approveData.loanApproveCreditDTO.carSaleAmt"></i-input>
                   <i-poptip trigger="hover" title="计算方法" content='由选中行的"应收金额"之间的加减运算(当前行的"计算方式")得出'>
                     <i-button type="primary" @click="countFinanceAmount" :loading="countFinanceLoading" size="large">

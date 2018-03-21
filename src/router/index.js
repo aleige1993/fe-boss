@@ -11,13 +11,11 @@ let MyRouter = new Router({
     { path: '*', component: PageNotFound },
     { path: '/', name: 'login', component: resolve => { require(['@/pages/page-login'], resolve) } },
     { path: '/login', name: 'login', component: resolve => { require(['@/pages/page-login'], resolve) } },
-    { path: '/home', name: 'home', component: resolve => { require(['@/pages/page-home'], resolve)} },
+    { path: '/home', name: 'home', component: resolve => { require(['@/pages/page-welcome'], resolve)} },
     { path: '/errors', name: 'errors', component: Errors },
     {
       path: '/index', name: 'main', component: resolve => { require(['@/pages/page-main'], resolve) },
       children: [
-        { path: 'form', name: 'form', component: resolve => { require(['@/pages/page-form'], resolve) } },
-        { path: 'table', name: 'table', component: resolve => { require(['@/pages/page-table'], resolve )} },
         // 贷前业务
         { path: 'orderregister', name: 'orderRegister', component: resolve => { require(['@/pages/beforeloan-manage/order-register'], resolve) } },
         // 客户管理
