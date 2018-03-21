@@ -771,14 +771,6 @@
             return;
           }
         }
-        // 放款条件列表中 备注和落实状态的必填性验证
-        if (this.$data.conditionData && this.$data.conditionData.length === 0) {
-          this.$Message.error({
-            content: '放款条件中没有数据！',
-            duration: 2
-          });
-          return;
-        }
         let conditionArray = this.$data.conditionData;
         if (conditionArray && conditionArray.length > 0) {
           for (let item of conditionArray) {
