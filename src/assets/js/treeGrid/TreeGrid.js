@@ -47,7 +47,7 @@ let TreeGrid = function(_config) {
       var id = _pid + '_' + i; // 行id
       var row = _rows[i];
 
-      s += '<tr id=\'TR' + id + '\' pid=\'' + ((_pid == '') ? '' : ('TR' + _pid)) + '\' open=\'Y\' data="' + TreeGrid.json2str(row) + '" rowIndex=\'' + rownum++ + '\'>';
+      s += '<tr id=\'TR' + id + '\' pid=\'' + ((_pid == '') ? '' : ('TR' + _pid)) + '\' open=\'N\' data="' + TreeGrid.json2str(row) + '" rowIndex=\'' + rownum++ + '\'>';
       for (var j = 0; j < _cols.length; j++) {
         var col = _cols[j];
         if (col.hidden) {
@@ -129,34 +129,48 @@ let TreeGrid = function(_config) {
     });
 
 		// 将双击击事件绑定到tr标签
-    __root.find('tr').bind('dblclick', function() {
-    	clearTimeout(clickTimer);
-      __root.find('tr').removeClass('row_active');
-      jQuery(this).addClass('row_active');
+    __root.find('tr').bind('dblclick', function(e) {
+      if ($(e.target).not('img')) {
+        clearTimeout(clickTimer);
+        __root.find('tr').removeClass('row_active');
+        jQuery(this).addClass('row_active');
 
-      // 获取当前行的数据
-      __selectedData = this.data || this.getAttribute('data');
-      __selectedId = this.id || this.getAttribute('id');
-      __selectedIndex = this.rownum || this.getAttribute('rowIndex');
+        // 获取当前行的数据
+        __selectedData = this.data || this.getAttribute('data');
+        __selectedId = this.id || this.getAttribute('id');
+        __selectedIndex = this.rownum || this.getAttribute('rowIndex');
 
-      // 行记录单击后触发的事件
-      if (_config.itemDblClick) {
-        _config.itemDblClick(__selectedId, __selectedIndex, TreeGrid.str2json(__selectedData));
+        // 行记录单击后触发的事件
+        if (_config.itemDblClick) {
+          _config.itemDblClick(__selectedId, __selectedIndex, TreeGrid.str2json(__selectedData));
+        }
       }
     });
 		// 展开、关闭下级节点
-    __root.find('img[folder=\'Y\']').bind('click', function() {
-      var trid = this.trid || this.getAttribute('trid');
-      var dom = __root.find('#' + trid)[0];
-      var isOpen = dom.getAttribute('open');
-      isOpen = (isOpen === 'Y') ? 'N' : 'Y';
-	      	dom.setAttribute('open', isOpen);
-      showHiddenNode(trid, isOpen);
+    var imgClickTimer = null;
+    __root.find('img[folder=\'Y\']').bind('click', function(e) {
+      e.cancelBubble = true;
+      e.stopPropagation();
+      clearTimeout(imgClickTimer);
+      var _self = this;
+      imgClickTimer = setTimeout(function() {
+        var trid = _self.trid || _self.getAttribute('trid');
+        var dom = __root.find('#' + trid)[0];
+        var isOpen = dom.getAttribute('open');
+        isOpen = (isOpen === 'Y') ? 'N' : 'Y';
+  	      	dom.setAttribute('open', isOpen);
+        showHiddenNode(trid, isOpen);
+      }, 250);
 // 			var trid = this.trid || this.getAttribute("trid");
 // 			var isOpen = __root.find("#" + trid).attr("open");
 // 			isOpen = (isOpen == "Y") ? "N" : "Y";
 // 			__root.find("#" + trid).attr("open", isOpen);
 // 			showHiddenNode(trid, isOpen);
+    });
+    __root.find('img[folder=\'Y\']').bind('dblclick', function(e) {
+      e.cancelBubble = true;
+      e.stopPropagation();
+      return false;
     });
   };
 

@@ -573,13 +573,13 @@
         </i-row>
         <i-row>
           <i-col span="12">
-            <i-form-item label="联系电话" prop="guaPersonMobile">
-              <i-input :readonly="true" v-model="formAssure.guaPersonMobile"></i-input>
+            <i-form-item label="证件号码" prop="guaPersonCertNo">
+              <i-input :readonly="true" v-model="formAssure.guaPersonCertNo"></i-input>
             </i-form-item>
           </i-col>
           <i-col span="12">
-            <i-form-item label="证件号码" prop="guaPersonCertNo">
-              <i-input :readonly="true" v-model="formAssure.guaPersonCertNo"></i-input>
+            <i-form-item label="联系电话" prop="guaPersonMobile">
+              <i-input v-model="formAssure.guaPersonMobile"></i-input>
             </i-form-item>
           </i-col>
         </i-row>
@@ -602,7 +602,7 @@
         <i-row>
           <i-col span="12">
             <i-form-item label="联系地址" prop="guaPersonAddr">
-              <i-input :readonly="true" v-model="formAssure.guaPersonAddr"></i-input>
+              <i-input v-model="formAssure.guaPersonAddr"></i-input>
             </i-form-item>
           </i-col>
         </i-row>
