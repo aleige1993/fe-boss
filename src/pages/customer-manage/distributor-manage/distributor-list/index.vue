@@ -554,8 +554,8 @@
           ...this.$data.formAdd
         });
         this.$data.buttonLoading = false;
-        this.$data.showAddModal = false;
         if (resp.success) {
+          this.$data.showAddModal = false;
           let text = this.$data.isAdd ? '新增成功' : '修改成功';
           this.$Message.success(text);
           this.$refs.tableDistributorList.getPrivateCustomerList();
