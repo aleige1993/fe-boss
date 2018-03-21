@@ -328,7 +328,7 @@ export default [
           {
             'guaranteeType|1': ['1', '2', '3'],
             'carBrandName': '长安',
-            'carModel': 'CS75',
+            'carModelName': 'CS75',
             'carEngineNo': /[0-9A-Z]{18}/,
             'isMortgage|1': ['0', '1'],
             'isInstallGps|1': ['0', '1'],

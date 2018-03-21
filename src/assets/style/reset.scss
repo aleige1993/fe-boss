@@ -128,7 +128,10 @@ h1,h2,h3,h4,h5,h6 {
     color: #495060;
   }
 }
-// (iView)全局控制table的宽度最小为1200px
+// (iView)全局控制table的宽度最小为1200px，并table过长时做滚动处理
+.block-body {
+  overflow-x: auto;
+}
 .ivu-table-wrapper {
   min-width: 1118px;
   /*

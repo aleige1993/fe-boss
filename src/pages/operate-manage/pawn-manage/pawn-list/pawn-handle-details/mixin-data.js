@@ -5,7 +5,6 @@ export default {
       carColumns: [
         {
           title: '担保类型',
-          width: 90,
           key: 'guaranteeType',
           render: (h, params) => {
             return h('span', {}, this.enumCode2Name(params.row.guaranteeType, 'PawnTypeEnum'));
@@ -22,22 +21,18 @@ export default {
         },
         {
           title: '车牌号',
-          width: 120,
           key: 'carPlateNo'
         },
         {
           title: '发动机号',
-          width: 180,
           key: 'carEngineNo'
         },
         {
           title: '车架号',
-          width: 180,
           key: 'carFrameNo'
         },
         {
           title: '抵押状态',
-          width: 90,
           key: 'mortgageStatus',
           render: (h, params) => {
             return h('span', {}, this.enumCode2Name(params.row.mortgageStatus, 'MortgageStatusEnum'));
@@ -45,7 +40,6 @@ export default {
         },
         {
           title: 'GPS安装状态',
-          width: 110,
           key: 'gpsInstallStatus',
           render: (h, params) => {
             return h('span', {}, this.enumCode2Name(params.row.gpsInstallStatus, 'GpsInstallStatusEnum'));
@@ -54,7 +48,6 @@ export default {
         {
           title: '操作',
           key: 'action',
-          width: 210,
           align: 'center',
           render: (h, params) => {
             return h('div', [
@@ -62,7 +55,7 @@ export default {
                 props: {
                   type: 'primary',
                   size: 'small',
-                  disabled: params.row.mortgageStatus === '0'
+                  disabled: params.row.mortgageStatus !== '0'
                 },
                 style: {
                   marginRight: '5px'
@@ -74,7 +67,7 @@ export default {
                     this.$data.formalities = params.row;
                   }
                 }
-              }, '办理抵押')
+              }, params.row.mortgageStatus !== '0' ? '已办理抵押' : '办理抵押')
             ]);
           }
         }
