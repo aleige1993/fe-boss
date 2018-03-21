@@ -4,7 +4,7 @@
     <i-breadcrumb separator=">">
       <i-breadcrumb-item href="/home">首页</i-breadcrumb-item>
       <i-breadcrumb-item href="/index/operate">运营管理</i-breadcrumb-item>
-      <i-breadcrumb-item href="/index/operate/approval">放款审批列表</i-breadcrumb-item>
+      <i-breadcrumb-item href="/index/operate/loan/approval">放款审批列表</i-breadcrumb-item>
       <i-breadcrumb-item>放款审批详情</i-breadcrumb-item>
     </i-breadcrumb>
     <br>
