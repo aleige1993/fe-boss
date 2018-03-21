@@ -165,6 +165,15 @@ h1,h2,h3,h4,h5,h6 {
 .input-label-color.ivu-form .ivu-form-item-label {
   color: #999;
 }
+// 修改iView 确定交互框的位置
+.alertify {
+  position: fixed; z-index: 99999;
+  top: 50%; left: 50%;
+  width: 420px;
+  margin-left: -210px;
+  margin-top: -67px;
+  opacity: 1;
+}
 /*
  * 添加class=“scrollBarStyle” 修改webkit内核的浏览器滚动条
  */

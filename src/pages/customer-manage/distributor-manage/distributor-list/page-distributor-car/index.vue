@@ -15,7 +15,7 @@
       <i-page :current="currentPage" :total="total" size="small" show-elevator show-total @on-change="jumpPage" :page-size="pageSize"></i-page>
     </div>
     <bs-modal :title="isAdd ? '新增' : '修改'" v-model="showAddModal" :width="670">
-      <i-form  ref="formCustom" :model="formCustom" label-position="right" :label-width="100">
+      <i-form v-if="showAddModal" ref="formCustom" :model="formCustom" label-position="right" :label-width="100">
         <i-form-item
           v-if="isAdd"
           :rules="{required: true, message: '车型不能为空', trigger: 'blur'}"
