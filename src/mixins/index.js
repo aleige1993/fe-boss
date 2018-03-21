@@ -31,6 +31,17 @@ Vue.mixin({
       return imgSuffixAry.some(item => {
         return suffix.toLowerCase() === item;
       });
+    },
+    async initMenuTree() {
+      const msg = this.$Message.loading({
+        content: '正在初始化菜单',
+        duration: 0
+      });
+      let promise = await this.$http.get('/sys/menu/list?menuId=98');
+      msg();
+      if (promise.reCode === '0000') {
+        this.$store.dispatch('setMenuList', promise.body.childMenus);
+      }
     }
   }
 });

@@ -174,7 +174,7 @@ export default {
           'capitalNo': '',
           // 产品利率=定收利率+资金方信息的资方借款利率 （loanProductRate产品利率仅作展示用）
           'loanProductRate': this.$data.loanRateSumProuductRate + (this.$data.approveData.loanApproveCreditDTO.loanRealRate / 1),
-          'loanNominalRate': result.loanNominalRate || '12',
+          'loanNominalRate': result.loanNominalRate,
           'productName': result.productName,
           'capitalName': '',
           'interestType': result.interestType,
@@ -189,7 +189,7 @@ export default {
           'remark': result.riskControlContent,
           'repaymentMode': result.repaymentMode,
           'loanMode': result.loanMode,
-          'carSaleAmt': result.carSaleAmt || '0',
+          'carSaleAmt': result.carSaleAmt,
           'isNeedGps': result.isNeedGps
         };
       }
