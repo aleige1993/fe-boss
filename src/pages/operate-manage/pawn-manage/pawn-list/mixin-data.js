@@ -60,6 +60,7 @@ export default {
                       path: '/index/operate/pawn/handle',
                       query: {
                         currentPage: this.$data.currentPage,
+                        loanNo: params.row.loanNo,
                         id: params.row.id
                       }
                     });

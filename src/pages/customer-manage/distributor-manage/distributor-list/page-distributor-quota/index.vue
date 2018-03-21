@@ -16,69 +16,93 @@
         <i-page @on-change="jumpPage" :total="total" :page-size="pageSize" size="small" show-elevator show-total></i-page>
       </div>
     </div>
-    <bs-modal :title="isAdd?'新增授信额度信息':'修改授信额度信息'" v-model="showAddModal" :width="520">
+    <bs-modal :title="isAdd?'新增授信额度信息':'修改授信额度信息'" v-model="showAddModal" :width="800">
       <i-form ref="formQuota" :model="formQuota" label-position="right" :label-width="120" style="padding: 30px 0;">
-        <!--客户名称-->
-        <i-form-item label="客户名称" prop="corpName">
-          <span v-text="formQuota.corpName"></span>
-        </i-form-item>
-        <!--客户经理-->
-        <i-form-item label="客户经理" prop="custMgrName">
-          <span v-text="formQuota.custMgrName"></span>
-        </i-form-item>
+        <i-row :gutter="16">
+          <i-col span="12">
+            <!--客户名称-->
+            <i-form-item label="客户名称" prop="corpName">
+              <span v-text="formQuota.corpName"></span>
+            </i-form-item>
+          </i-col>
+          <i-col span="12">
+            <!--客户经理-->
+            <i-form-item label="客户经理" prop="custMgrName">
+              <span v-text="formQuota.custMgrName"></span>
+            </i-form-item>
+          </i-col>
+        </i-row>
         <br>
         <br>
-        <!--授信总额度-->
-        <i-form-item
-          :rules="{required: true, message: '授信总额度不能为空', trigger: 'blur'}"
-          label="授信总额度"
-          prop="creditTotalLimit">
-          <i-input v-model="formQuota.creditTotalLimit" placeholder="">
-            <span slot="append">元</span>
-          </i-input>
-        </i-form-item>
-        <!--可用额度-->
-        <i-form-item
-          label="可用额度"
-          prop="creditTotalLimit">
-          <i-input v-model="formQuota.creditTotalLimit" :readonly="true" placeholder="">
-            <span slot="append">元</span>
-          </i-input>
-        </i-form-item>
-        <!--单笔最大额度-->
-        <i-form-item
-          :rules="{required: true, message: '单笔最大额度不能为空', trigger: 'blur'}"
-          label="单笔最大额度"
-          prop="singleUsableLimit">
-          <i-input v-model="formQuota.singleUsableLimit" placeholder="">
-            <!--<span slot="append">元</span>-->
-          </i-input>
-        </i-form-item>
-        <!--授信起始日期-->
-        <i-form-item
-          :rules="{required: true, message: '授信起始日期不能为空', trigger: 'blur'}"
-          label="授信起始日期"
-          prop="creditStartDate">
-          <input type="hidden" v-model="formQuota.creditStartDate">
-          <bs-datepicker :isNowStart="true" v-model="formQuota.creditStartDate"></bs-datepicker>
-        </i-form-item>
-        <!--授信到期日期-->
-        <i-form-item
-          :rules="{required: true, message: '授信到期日期不能为空', trigger: 'blur'}"
-          label="授信到期日期"
-          prop="creditStartDate">
-          <input type="hidden" v-model="formQuota.creditEndDate">
-          <bs-datepicker :isNowStart="true" v-model="formQuota.creditEndDate"></bs-datepicker>
-        </i-form-item>
-        <!--额度释放方式-->
-        <i-form-item
-          :rules="{required: true, message: '请选择额度释放方式', trigger: 'change'}"
-          label="额度释放方式"
-          prop="creditReleaseType"><!--CreditReleaseTypeEnum-->
-          <i-select v-model="formQuota.creditReleaseType">
-            <i-option v-for="item in enumSelectData.get('CreditReleaseTypeEnum')" :key="item.itemCode" :value="item.itemCode">{{item.itemName}}</i-option>
-          </i-select>
-        </i-form-item>
+        <i-row :gutter="16">
+          <!--授信起始日期-->
+          <i-col span="12">
+            <i-form-item
+              :rules="{required: true, message: '授信起始日期不能为空', trigger: 'blur'}"
+              label="授信起始日期"
+              prop="creditStartDate">
+              <input type="hidden" v-model="formQuota.creditStartDate">
+              <bs-datepicker :isNowStart="true" v-model="formQuota.creditStartDate"></bs-datepicker>
+            </i-form-item>
+          </i-col>
+          <i-col span="12">
+            <!--授信到期日期-->
+            <i-form-item
+              :rules="{required: true, message: '授信到期日期不能为空', trigger: 'blur'}"
+              label="授信到期日期"
+              prop="creditStartDate">
+              <input type="hidden" v-model="formQuota.creditEndDate">
+              <bs-datepicker :isNowStart="true" v-model="formQuota.creditEndDate"></bs-datepicker>
+            </i-form-item>
+          </i-col>
+        </i-row>
+        <i-row :gutter="16">
+          <i-col span="12">
+            <!--授信总额度-->
+            <i-form-item
+              :rules="{required: true, message: '授信总额度不能为空', trigger: 'blur'}"
+              label="授信总额度"
+              prop="creditTotalLimit">
+              <i-input v-model="formQuota.creditTotalLimit" placeholder="">
+                <span slot="append">万元</span>
+              </i-input>
+            </i-form-item>
+          </i-col>
+          <i-col span="12">
+            <!--可用额度-->
+            <i-form-item
+              label="可用额度"
+              prop="creditTotalLimit">
+              <i-input v-model="formQuota.creditTotalLimit" :readonly="true" placeholder="">
+                <span slot="append">万元</span>
+              </i-input>
+            </i-form-item>
+          </i-col>
+        </i-row>
+        <i-row :gutter="16">
+          <i-col span="12">
+            <!--单笔最大额度-->
+            <i-form-item
+              :rules="{required: true, message: '单笔最大额度不能为空', trigger: 'blur'}"
+              label="单笔最大额度"
+              prop="singleUsableLimit">
+              <i-input v-model="formQuota.singleUsableLimit" placeholder="">
+                <span slot="append">万元</span>
+              </i-input>
+            </i-form-item>
+          </i-col>
+          <i-col span="12">
+            <!--额度释放方式-->
+            <i-form-item
+              :rules="{required: true, message: '请选择额度释放方式', trigger: 'change'}"
+              label="额度释放方式"
+              prop="creditReleaseType"><!--CreditReleaseTypeEnum-->
+              <i-select v-model="formQuota.creditReleaseType">
+                <i-option v-for="item in enumSelectData.get('CreditReleaseTypeEnum')" :key="item.itemCode" :value="item.itemCode">{{item.itemName}}</i-option>
+              </i-select>
+            </i-form-item>
+          </i-col>
+        </i-row>
         <i-form-item class="text-right">
           <i-button type="primary" @click="saveDraft" :loading="draftLoading" style="margin-right: 10px">
             <span v-if="!draftLoading">保存草稿</span>
