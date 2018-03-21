@@ -17,7 +17,7 @@
       </div>
     </div>
     <bs-modal :title="isAdd?'新增授信额度信息':'修改授信额度信息'" v-model="showAddModal" :width="800">
-      <i-form ref="formQuota" :model="formQuota" label-position="right" :label-width="120" style="padding: 30px 0;">
+      <i-form v-if="showAddModal" ref="formQuota" :model="formQuota" label-position="right" :label-width="120" style="padding: 30px 0;">
         <i-row :gutter="16">
           <i-col span="12">
             <!--客户名称-->
