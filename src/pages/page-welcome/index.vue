@@ -3,13 +3,7 @@
     <top-bar></top-bar>
     <top-nav></top-nav>
     <div class="welcome-body" id="welcome-body">
-      <div class="welcome-main">
-        <div class="welcome-left">
-          <p>Welcom!</p>
-          <p>运营支撑管理平台</p>
-        </div>
-        <div class="welcome-right"></div>
-      </div>
+      <div class="welcome-main"></div>
     </div>
   </section>
 </template>
@@ -48,7 +42,7 @@
       margin: 5% auto;
       height: 70%;
       background: url("../../../static/img/welcome.png") right center no-repeat;
-      background-size: auto 100%;
+      background-size: contain;
       color: #fff;
       padding-top: 157px;
       .welcome-left p{
