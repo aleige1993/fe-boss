@@ -9,9 +9,9 @@
           <a href="javascript:;" @click="fullScreen"><Icon type="arrow-expand"></Icon></a>
         </li>-->
         <li><a href="javascript:;"><img class="top-avatar" src="./img/potrat.png" alt=""/>{{loginInfo.loginName}}</a></li>
-        <!-- <li><router-link :to="{ name: 'routeName'">
+        <li><router-link :to="{ name: 'resetPwd' }">
           <i class="iconfont icon-xiugaimima"></i> <span>修改密码</span></a>
-        </router-link></li> -->
+        </router-link></li>
         <li><a href="javascript:;" @click.prevent="logout"><i class="iconfont icon-daochu1"></i> <span>退出登录</span></a></li>
       </ul>
     </div>
@@ -22,7 +22,9 @@ import Tools from '../../../utils/Tools';
 export default {
   name: '',
   data() {
-    return {};
+    return {
+      showResetPwd: true
+    };
   },
   computed: {
     loginInfo() {

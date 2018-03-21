@@ -40,13 +40,19 @@ export default {
   computed: {
     secondMenuList() {
       let currTopMenuIndex = this.$store.getters.selectedTopMenuIndex;
+      if (currTopMenuIndex < 0) {
+        currTopMenuIndex = 0;
+      }
       let menuList = this.$store.getters.menuList;
       return menuList.length !== 0 ? menuList[currTopMenuIndex].childMenus : [];
     },
     topMenuName() {
       let currTopMenuIndex = this.$store.getters.selectedTopMenuIndex;
+      if (currTopMenuIndex < 0) {
+        currTopMenuIndex = 0;
+      }
       let menuList = this.$store.getters.menuList;
-      return menuList.length !== 0 ? menuList[currTopMenuIndex].name : ' ';
+      return menuList.length > 0 ? menuList[currTopMenuIndex].name : ' ';
     }
   },
   mounted() {
