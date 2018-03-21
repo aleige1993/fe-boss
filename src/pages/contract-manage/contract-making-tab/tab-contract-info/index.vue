@@ -698,6 +698,17 @@
       this.getCarList(); // 获取车辆信息列表data
       this.getGuaPersonList(); // 获取担保信息列表data
       this.getFeeTakeList(); // 查询费用收取方案列表data
+      // 如合同信息表里有数据，即已生成合同的情况下（已生成了合同）
+      if (
+        this.$data.contractInfoForm.contractInfo.loanContractFileList.length > 0 &&
+        ((this.$data.contractInfoForm.contractInfo.startDate !== '') || (this.$data.contractInfoForm.contractInfo.startDate !== null)) &&
+        ((this.$data.contractInfoForm.contractInfo.endDate !== '') || (this.$data.contractInfoForm.contractInfo.endDate !== null))
+      ) {
+        // 生成还款计划表 和 租金计划表
+        this.$emit('on-create-repay-plan', this.$data.contractInfoForm.contractInfo.startDate);
+        // 告知父组件的 已经点击了“生成按钮”，此时已经生成了合同
+        this.$emit('on-create-contracted');
+      }
     },
     methods: {
       // 合同开始时间变更的回调

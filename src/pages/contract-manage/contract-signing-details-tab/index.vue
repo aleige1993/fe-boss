@@ -269,7 +269,7 @@
         this.$data.initFormLoading = false;
         if (resp.success) {
           this.$Message.success('提交成功！');
-          // 初审 回到合同制作列表
+          // 初审 回到合同签署确认列表
           this.$router.push({
             path: '/index/contract/sign',
             query: {
