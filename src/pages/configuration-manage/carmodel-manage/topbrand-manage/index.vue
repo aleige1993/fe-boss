@@ -29,10 +29,11 @@
     </div>
     <pt-modal :title="isAdd ? '添加' : '修改'" v-model="addModal" :width="600" :zIndex="200">
       <i-form ref="fromData" :model="fromData" label-position="left" :label-width="80">
-        <i-form-item label="品牌名称" prop="brandNo" :rules="{required: true, message: '请选择品牌名称'}">
+        <i-form-item label="品牌名称" prop="brandNo" :rules="{required: true, message: '品牌名称不能为空'}">
           <i-select
             v-if="isAdd"
             v-model="fromData.brandNo"
+            placeholder=""
             filterable
             remote
             :remote-method="remoteSearch"
