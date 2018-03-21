@@ -105,9 +105,11 @@
               <i-input :readonly="readonly" v-model="formData.loanUse"></i-input>
             </i-form-item>
           </i-col>
+          <input type="hidden" :value="formData.merchantNo"/>
           <i-col span="8" v-if="formData.loandType!=='1'">
             <i-form-item label="经销商" prop="merchantAbbr">
               <input type="hidden" v-model="formData.merchantAbbr"/>
+
               <i-input v-model="formData.merchantAbbr" :readonly="true" placeholder="选择经销商">
                 <i-button v-if="!readonly" @click="distributorClick" slot="append">选择经销商 <Icon type="ios-more"></Icon></i-button>
               </i-input>
