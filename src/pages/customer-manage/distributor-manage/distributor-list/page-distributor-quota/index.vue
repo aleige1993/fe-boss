@@ -64,7 +64,7 @@
               label="授信总额度"
               prop="creditTotalLimit">
               <i-input v-model="formQuota.creditTotalLimit" placeholder="">
-                <span slot="append">万元</span>
+                <span slot="append">元</span>
               </i-input>
             </i-form-item>
           </i-col>
@@ -74,7 +74,7 @@
               label="可用额度"
               prop="creditTotalLimit">
               <i-input v-model="formQuota.creditTotalLimit" :readonly="true" placeholder="">
-                <span slot="append">万元</span>
+                <span slot="append">元</span>
               </i-input>
             </i-form-item>
           </i-col>
@@ -87,7 +87,7 @@
               label="单笔最大额度"
               prop="singleUsableLimit">
               <i-input v-model="formQuota.singleUsableLimit" placeholder="">
-                <span slot="append">万元</span>
+                <span slot="append">元</span>
               </i-input>
             </i-form-item>
           </i-col>
