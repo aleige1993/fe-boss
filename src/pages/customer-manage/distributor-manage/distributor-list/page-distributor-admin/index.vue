@@ -35,7 +35,7 @@
           <i-input v-model="formAdmin.idCardNo"></i-input>
         </i-form-item>
         <i-form-item
-          label="用户名称"
+          label="操作员名称"
           prop="userName">
           <i-input v-model="formAdmin.userName"></i-input>
         </i-form-item>

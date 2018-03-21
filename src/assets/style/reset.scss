@@ -128,7 +128,10 @@ h1,h2,h3,h4,h5,h6 {
     color: #495060;
   }
 }
-// (iView)全局控制table的宽度最小为1200px
+// (iView)全局控制table的宽度最小为1200px，并table过长时做滚动处理
+.block-body {
+  overflow-x: auto;
+}
 .ivu-table-wrapper {
   min-width: 1118px;
   /*
@@ -164,6 +167,15 @@ h1,h2,h3,h4,h5,h6 {
 // 在查看详情的表单中（i-form）添加lass="input-label-color"，使其label字体颜色改变
 .input-label-color.ivu-form .ivu-form-item-label {
   color: #999;
+}
+// 修改iView 确定交互框的位置
+.alertify {
+  position: fixed; z-index: 99999;
+  top: 50%; left: 50%;
+  width: 420px;
+  margin-left: -210px;
+  margin-top: -67px;
+  opacity: 1;
 }
 /*
  * 添加class=“scrollBarStyle” 修改webkit内核的浏览器滚动条

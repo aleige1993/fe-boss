@@ -12,5 +12,7 @@
   };
 </script>
 <style lang="scss">
-
+#page-operate-manager {
+  overflow-x: auto;
+}
 </style>

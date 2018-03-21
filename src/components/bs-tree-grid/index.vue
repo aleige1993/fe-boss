@@ -112,7 +112,7 @@
     border: 0;
     margin-right: 3px;
     position: relative;
-    top: 2px;
+    top: 0px;
     cursor: pointer;
     align: absmiddle;
   }
