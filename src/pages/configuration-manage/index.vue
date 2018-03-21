@@ -14,5 +14,7 @@
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style lang="scss" scoped>
-
+#page-configuration-manage {
+  overflow-x: auto;
+}
 </style>
