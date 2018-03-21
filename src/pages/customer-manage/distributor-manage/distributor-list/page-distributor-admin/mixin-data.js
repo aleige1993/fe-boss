@@ -3,19 +3,12 @@ export default {
     return {
       columns1: [
         {
-          title: '渠道商编号',
+          title: '操作员编号',
           width: '180',
-          align: 'center',
-          key: 'merchantNo'
+          key: 'userNo'
         },
-        /* {
-          title: '客户名称',
-          width: '180',
-          align: 'center',
-          key: 'merchantName'
-        },*/
         {
-          title: '用户名称',
+          title: '操作员名称',
           key: 'userName'
         },
         {
