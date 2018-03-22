@@ -1,6 +1,10 @@
 export default {
   methods: {
+    uploadFirstApproveFileLoading() {
+      this.$data.isUploadFirstApproveFileLoading = true;
+    },
     uploadFirstApproveFileSuccess(res) {
+      this.$data.isUploadFirstApproveFileLoading = false;
       this.$set(this.$data.firstApproveForm, 'resultPath', res.body.url);
       this.$set(this.$data.firstApproveForm, 'resultFileName', res.body.fileName);
       // this.$data.firstApproveForm.fileUrl = res.body.url;

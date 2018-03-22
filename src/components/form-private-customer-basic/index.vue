@@ -215,9 +215,14 @@
                   <bs-big-img v-if="formData.mbMemberDTO.certFrontUrl!==''&&isFromDetail" :thumb="formData.mbMemberDTO.certFrontUrl"
                               :thumbWidth="149" :thumbHeight="95"
                               :full="formData.mbMemberDTO.certFrontUrl" :full-width="945"></bs-big-img>
-                  <i-upload v-else :on-success="uploadFaceSuccess" :on-error="uploadError" :action="$config.HTTPBASEURL+'/common/upload'" :show-upload-list="false">
+                  <i-upload v-else :on-success="uploadFaceSuccess"
+                  :on-progress="uploadFaceLoading"
+                  :format="['jpg','jpeg','png']"
+                  :on-error="uploadError"
+                  :action="$config.HTTPBASEURL+'/common/upload'" :show-upload-list="false">
                     <img v-if="formData.mbMemberDTO.certFrontUrl&&formData.mbMemberDTO.certFrontUrl!==''"  width="149" height="95" :src="formData.mbMemberDTO.certFrontUrl" alt="">
                     <idcard-placeholder v-else type="face"></idcard-placeholder>
+                    <i-spin fix v-if="idcardFaceUploading"></i-spin>
                   </i-upload>
                 </i-form-item>
               </i-col>
@@ -230,9 +235,13 @@
                   <bs-big-img v-if="formData.mbMemberDTO.certBackUrl!==''&&isFromDetail" :thumb="formData.mbMemberDTO.certBackUrl"
                               :thumbWidth="149" :thumbHeight="95"
                               :full="formData.mbMemberDTO.certBackUrl" :full-width="945"></bs-big-img>
-                  <i-upload v-else :on-success="uploadBackSuccess" :action="$config.HTTPBASEURL+'/common/upload'" :show-upload-list="false">
+                  <i-upload v-else :on-success="uploadBackSuccess"
+                  :on-progress="uploadBackLoading"
+                  :format="['jpg','jpeg','png']"
+                  :action="$config.HTTPBASEURL+'/common/upload'" :show-upload-list="false">
                     <img v-if="formData.mbMemberDTO.certBackUrl&&formData.mbMemberDTO.certBackUrl!==''" width="149" height="95" :src="formData.mbMemberDTO.certBackUrl" alt="">
                     <idcard-placeholder v-else type="back"></idcard-placeholder>
+                    <i-spin fix v-if="idcardBackUploading"></i-spin>
                   </i-upload>
                 </i-form-item>
               </i-col>
@@ -246,9 +255,13 @@
                               :thumbWidth="149" :thumbHeight="95"
                               :full="formData.mbMemberDTO.certHandUrl" :full-width="945">
                   </bs-big-img>
-                  <i-upload v-else :on-success="uploadHandSuccess" :action="$config.HTTPBASEURL+'/common/upload'" :show-upload-list="false">
+                  <i-upload v-else :on-success="uploadHandSuccess"
+                  :on-progress="uploadHandLoading"
+                  :format="['jpg','jpeg','png']"
+                  :action="$config.HTTPBASEURL+'/common/upload'" :show-upload-list="false">
                     <img v-if="formData.mbMemberDTO.certHandUrl&&formData.mbMemberDTO.certHandUrl!==''" width="149" height="95" :src="formData.mbMemberDTO.certHandUrl" alt="">
                     <idcard-placeholder v-else type="hand"></idcard-placeholder>
+                    <i-spin fix v-if="idcardHandUploading"></i-spin>
                   </i-upload>
                 </i-form-item>
               </i-col>

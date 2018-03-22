@@ -288,6 +288,7 @@
         <i-form-item label="查询结果" prop="resultPath">
           <input type="hidden" v-model="firstApproveForm.resultPath"/>
           <i-upload :show-upload-list="false"
+                    :on-progress="uploadFirstApproveFileLoading"
                     multiple type="drag" :on-success="uploadFirstApproveFileSuccess"
                     :action="$config.HTTPBASEURL+'/common/upload'">
             <div style="padding: 20px 0" v-if="!firstApproveForm.resultPath || firstApproveForm.resultPath===''">
@@ -298,6 +299,7 @@
               <img v-if="isImg(firstApproveForm.resultPath)" :src="firstApproveForm.resultPath"/>
               <span v-else>{{firstApproveForm.resultFileName}}</span>
             </p>
+            <i-spin fix v-if="isUploadFirstApproveFileLoading"></i-spin>
           </i-upload>
         </i-form-item>
         <i-form-item label="">

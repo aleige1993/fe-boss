@@ -17,15 +17,25 @@ export default {
         }, 500);
       }
     },
+    uploadFaceLoading() {
+      this.$data.idcardFaceUploading = true;
+    },
     uploadFaceSuccess(res, file, fileList) {
       this.$data.formData.mbMemberDTO.certFrontUrl = res.body.url;
+      this.$data.idcardFaceUploading = false;
+    },
+    uploadBackLoading() {
+      this.$data.idcardBackUploading = true;
     },
     uploadBackSuccess(res) {
-      // aa
+      this.$data.idcardBackUploading = false;
       this.$data.formData.mbMemberDTO.certBackUrl = res.body.url;
     },
+    uploadHandLoading() {
+      this.$data.idcardHandUploading = true;
+    },
     uploadHandSuccess(res) {
-      // aa
+      this.$data.idcardHandUploading = false;
       this.$data.formData.mbMemberDTO.certHandUrl = res.body.url;
     },
     uploadError(err, file, fileList) {
