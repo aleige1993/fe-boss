@@ -25,11 +25,11 @@ export default {
         {
           title: '操作',
           key: 'action',
-          width: 200,
+          width: 150,
           align: 'center',
           render: (h, params) => {
             return h('div', [
-              h('Button', {
+              /* h('Button', {
                 props: {
                   type: 'primary',
                   size: 'small'
@@ -42,7 +42,7 @@ export default {
                     this.setList($.extend({}, params.row));
                   }
                 }
-              }, '修改'),
+              }, '修改'),*/
               h('Button', {
                 props: {
                   type: 'error',
