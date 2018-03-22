@@ -1,6 +1,9 @@
 export default {
   data() {
     return {
+      idcardFaceUploading: false,
+      idcardBackUploading: false,
+      idcardHandUploading: false,
       formData: {
         mbMemberDTO: {
           name: '', // 姓名

@@ -289,12 +289,14 @@
           <input type="hidden" v-model="attachFormData.attachUrl"/>
           <Upload multiple type="drag" :multiple="false" :show-upload-list="false"
             :on-success="uploadAttachSuccess"
+            :on-progress="uploadAttachLoading"
             :action="$config.HTTPBASEURL+'/common/upload'">
             <div style="padding: 20px 0" v-if="attachFormData.attachUrl===''">
               <Icon type="ios-cloud-upload" size="52" style="color: #3399ff"></Icon>
               <p>点击选择文件或者拖放文件到这里</p>
             </div>
-            <p v-else>{{attachFormData.attachUrl}}</p>
+            <p v-else>{{attachFormData.fileName}}</p>
+            <i-spin fix v-if="isUploadAttachLoading"></i-spin>
           </Upload>
         </i-form-item>
         <i-form-item label="">
@@ -331,6 +333,7 @@ export default {
   data() {
     return {
       addAttachModal: false,
+      isUploadAttachLoading: false,
       showSelectEmployer: false,
       selectDepartmentModal: false,
       initFormLoading: false,
@@ -339,6 +342,7 @@ export default {
       checkoutCertNoTimer: null,
       attachFormData: {
         attachName: '',
+        fileName: '',
         attachUrl: ''
       }
     };

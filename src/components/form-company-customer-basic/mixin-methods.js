@@ -71,8 +71,13 @@ export default {
         attachUrl: ''
       };
     },
+    uploadAttachLoading() {
+      this.$data.isUploadAttachLoading = true;
+    },
     uploadAttachSuccess(res) {
+      this.$data.isUploadAttachLoading = false;
       this.$data.attachFormData.attachUrl = res.body.url;
+      this.$data.attachFormData.fileName = res.body.fileName;
     },
     submitAttach() {
       this.$refs['formCompanyCustomerAttach'].validate(valid => {

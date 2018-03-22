@@ -3,6 +3,7 @@ import Tools from '../../../../utils/Tools';
 export default {
   data() {
     return {
+      isUploadFirstApproveFileLoading: false,
       accessRuleCol: [
         {
           title: '准入规则',
