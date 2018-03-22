@@ -106,7 +106,7 @@
               <i-col span="8">
                 <i-form-item label="放款方式" prop="loanApproveCreditDTO.loanMode"
                              :rules="{required: true, message: '请输入放款方式'}">
-                  <i-select :disabled="true" @on-change="getBankList" v-model="approveData.loanApproveCreditDTO.loanMode">
+                  <i-select :disabled="readonly" @on-change="getBankList" v-model="approveData.loanApproveCreditDTO.loanMode">
                     <i-option v-for="item in enumSelectData.get('LoanModeEnum')" :key="item.itemCode" :value="item.itemCode">{{item.itemName}}</i-option>
                   </i-select>
                 </i-form-item>
@@ -186,7 +186,7 @@
                 </i-form-item>
               </i-col>
               <i-col span="8">
-                <i-form-item v-if="readonly">
+                <i-form-item v-if="readonly" label="账号">
                   <i-input type="text" :readonly="true" v-model="approveData.loanPaymentAccountDTOS.acctNo"></i-input>
                 </i-form-item>
                 <i-form-item v-else label="账号" prop="loanPaymentAccountDTOS.acctNo"
@@ -213,7 +213,7 @@
                 </i-form-item>
               </i-col>
               <i-col span="8">
-                <i-form-item v-if="readonly">
+                <i-form-item v-if="readonly" label="账号">
                   <i-input type="text" :readonly="true" v-model="approveData.loanRePaymentAccountDTOS.acctNo"></i-input>
                 </i-form-item>
                 <i-form-item v-else label="账号" prop="loanRePaymentAccountDTOS.acctNo"

@@ -121,23 +121,29 @@ export default {
                 style: { marginBottom: '5px' },
                 on: {
                   click: async(e) => {
-                    // this.$data.applyApproveLoading = true;
-                    let resp = await this.$http.post('/biz/holdUpLoanBizByLoanNo', { loanNo: params.row.loanNo });
-                    // this.$data.applyApproveLoading = false;
-                    if (resp.success) {
-                      this.$router.push({
-                        path: '/index/loanbusiness/doapprove',
-                        query: {
-                          id: params.row.loanNo,
-                          status: params.row.taskNode
-                        },
-                        force: true
-                      });
-                    } else {
-                      this.$Notice.error({
-                        title: '错误提示', desc: '设置处理人失败请稍后重试'
-                      });
-                    }
+                    // let resp = await this.$http.post('/biz/holdUpLoanBizByLoanNo', { loanNo: params.row.loanNo });
+                    this.$router.push({
+                      path: '/index/loanbusiness/doapprove',
+                      query: {
+                        id: params.row.loanNo,
+                        status: params.row.taskNode
+                      },
+                      force: true
+                    });
+                    // if (resp.success) {
+                    //   this.$router.push({
+                    //     path: '/index/loanbusiness/doapprove',
+                    //     query: {
+                    //       id: params.row.loanNo,
+                    //       status: params.row.taskNode
+                    //     },
+                    //     force: true
+                    //   });
+                    // } else {
+                    //   this.$Notice.error({
+                    //     title: '错误提示', desc: '设置处理人失败请稍后重试'
+                    //   });
+                    // }
                   }
                 }
               }, statusText),
@@ -193,21 +199,28 @@ export default {
                 style: { marginBottom: '5px' },
                 on: {
                   click: async() => {
-                    let resp = await this.$http.post('/biz/holdUpLoanBizByLoanNo', { loanNo: params.row.loanNo });
-                    if (resp.success) {
-                      this.$router.push({
-                        path: '/index/loanbusiness/accept',
-                        query: {
-                          id: params.row.loanNo
-                        },
-                        force: true
-                      });
-                    } else {
-                      this.$Notice.error({
-                        title: '错误信息',
-                        desc: '设置处理人出错'
-                      });
-                    }
+                    this.$router.push({
+                      path: '/index/loanbusiness/accept',
+                      query: {
+                        id: params.row.loanNo
+                      },
+                      force: true
+                    });
+                    // let resp = await this.$http.post('/biz/holdUpLoanBizByLoanNo', { loanNo: params.row.loanNo });
+                    // if (resp.success) {
+                    //   this.$router.push({
+                    //     path: '/index/loanbusiness/accept',
+                    //     query: {
+                    //       id: params.row.loanNo
+                    //     },
+                    //     force: true
+                    //   });
+                    // } else {
+                    //   this.$Notice.error({
+                    //     title: '错误信息',
+                    //     desc: '设置处理人出错'
+                    //   });
+                    // }
                   }
                 }
               }, '处理'),

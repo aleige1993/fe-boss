@@ -62,7 +62,7 @@
         buttonLoading: false,
         formData: {
           userId: this.$userLogin.getLoginInfo().userId || '',
-          username: this.$userLogin.getLoginInfo().userName || '',
+          username: this.$userLogin.getLoginInfo().loginName || '',
           oldPassword: '',
           password: '',
           confirmPassword: ''
@@ -97,7 +97,7 @@
           ...this.$data.formData
         });
         this.$data.buttonLoading = false;
-        if (resp.success && resp.success === 'true') {
+        if (resp.success) {
           this.$Message.success('密码修改成功，请重新登录');
           // 先退出之前的登录信息再跳转到登录页面
           this.logout();

@@ -29,10 +29,9 @@ export default {
 /* @import "./assets/style/var.scss";*/
 /* @import "./assets/style/common.scss";*/
 #app {
-  font-family: '微软雅黑';
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  color: #333;
+  color: #000;
   .wraper{
     padding: 110px 15px 20px;
     &.no-action{
