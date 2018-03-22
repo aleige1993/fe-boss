@@ -12,6 +12,14 @@ export default {
           key: 'merchantNo'
         },
         {
+          title: '渠道商类型',
+          width: 80,
+          key: 'channelType',
+          render: (h, params) => {
+            return h('span', {}, this.enumCode2Name(params.row.channelType, 'MerchantChannelTypeEnum'));
+          }
+        },
+        {
           title: '经销商类型',
           width: 80,
           key: 'merchantType',
@@ -88,14 +96,6 @@ export default {
           }
         },
         {
-          title: '渠道商状态', // 0:未授信1-授信申请中2-已授信5-授信过期6-冻结
-          width: 100,
-          key: 'merchantStatus',
-          render: (h, params) => {
-            return h('span', {}, this.enumCode2Name(params.row.merchantStatus, 'MerchantStatusEnum'));
-          }
-        },
-        {
           title: '启停状态', // 0:冻结1:激活
           width: 100,
           key: 'enableStatus',
@@ -155,6 +155,15 @@ export default {
                 return h('p', {}, showCityNames);
               }
             }
+          }
+        },
+        {
+          title: '渠道商状态', // 0:未授信1-授信申请中2-已授信5-授信过期6-冻结
+          width: 100,
+          key: 'merchantStatus',
+          fixed: 'right',
+          render: (h, params) => {
+            return h('span', {}, this.enumCode2Name(params.row.merchantStatus, 'MerchantStatusEnum'));
           }
         }
       ],
