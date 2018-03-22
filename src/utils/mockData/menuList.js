@@ -54,7 +54,7 @@ export default [
             childMenus: [
               {
                 name: '业务受理',
-                url: '/index/loanbusiness/accept',
+                url: '/index/loanbusiness',
                 childMenus: [
                   { name: '个人业务登记', url: '/index/loanbusiness/accept' },
                   { name: '公司业务登记', url: '/index/loanbusiness/companyaccept' }
