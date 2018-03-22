@@ -534,14 +534,10 @@
       },
       // 新增
       async submitSuccess() {
-        if (this.$data.areaDataList.length === 0) {
-          this.$Notice.error({
-            title: '错误提示',
-            desc: '请添加渠道商服务地区！',
-            duration: 2
-          });
+        /*if (this.$data.areaDataList.length === 0) {
+          this.$Message.error('请添加渠道商服务地区！');
           return;
-        }
+        }*/
         this.$data.buttonLoading = true;
         let ajaxUrl = '';
         if (this.$data.isAdd) {

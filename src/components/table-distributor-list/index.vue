@@ -7,7 +7,19 @@
     <div class="search-form-container">
       <i-form inline ref="formSearch" :model="formSearch">
         <i-form-item prop="corpName">
-          <i-input style="width: 240px;" type="text" placeholder="公司名称" v-model="formSearch.corpName"></i-input>
+          <i-input style="width: 240px;" type="text" placeholder="渠道商名称" v-model="formSearch.corpName"></i-input>
+        </i-form-item>
+        <i-form-item prop="channelType" style="width: 150px;">
+          <i-select v-model="formSearch.channelType" placeholder="渠道商类型">
+            <i-option value="" style="height: 26px; color: #bbbec4">-请选择-</i-option>
+            <i-option v-for="item in enumSelectData.get('MerchantChannelTypeEnum')" :key="item.itemCode" :value="item.itemCode">{{item.itemName}}</i-option>
+          </i-select>
+        </i-form-item>
+        <i-form-item prop="merchantType" style="width: 150px;">
+          <i-select v-model="formSearch.merchantType" placeholder="经销商类型">
+            <i-option value="" style="height: 26px; color: #bbbec4">-请选择-</i-option>
+            <i-option v-for="item in enumSelectData.get('MerchantTypeEnum')" :key="item.itemCode" :value="item.itemCode">{{item.itemName}}</i-option>
+          </i-select>
         </i-form-item>
         <i-form-item>
           <i-button @click="searchSubmit" type="primary"><i-icon type="ios-search-strong"></i-icon> 搜索</i-button>
@@ -36,7 +48,9 @@
         total: 0,
         dataLoading: false,
         formSearch: {
-          corpName: ''
+          corpName: '',
+          channelType: '',
+          merchantType: ''
         }
       };
     },
@@ -93,7 +107,7 @@
           }
         }
         let resp = await this.$http.post('merchant/listMerchant', {
-          corpName: this.$data.formSearch.corpName, // 公司名称，模糊查询
+          ...this.$data.formSearch,
           merchantStatus: merchantStatusCode, // 当组件以modal形式显示的时候 传merchantStatus值为5（显示授信通过的数据）
           currentPage: this.$data.currentPage,
           pageSize: this.$data.pageSize
