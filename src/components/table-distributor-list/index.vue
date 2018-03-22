@@ -80,16 +80,16 @@
         // 当组件以modal形式显示的时候 传merchantStatus值为2（显示授信通过的数据）
         let merchantStatusCode = '';
         if (this.type === 'page') {
-          if (this.status !== 'allStatus') {
-            merchantStatusCode = this.status;
-          } else {
+          if (this.status === 'allStatus') {
             merchantStatusCode = '';
+          } else {
+            merchantStatusCode = this.status;
           }
         } else if (this.type === 'modal') {
-          if (this.status !== 'allStatus') {
-            merchantStatusCode = this.status;
-          } else {
+          if (this.status === 'allStatus') {
             merchantStatusCode = '2';
+          } else {
+            merchantStatusCode = this.status;
           }
         }
         let resp = await this.$http.post('merchant/listMerchant', {

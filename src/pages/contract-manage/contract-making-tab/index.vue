@@ -143,14 +143,10 @@
         if (reps.success) {
           // 获取资方列表data
           this.getRepayPlanCapitalList();
-          this.$Notice.success({
-            title: '已刷新“还款计划表”'
-          });
+          this.$Message.success('已刷新“还款计划表”');
           repsReturn = true;
         } else {
-          this.$Notice.error({
-            title: '“还款计划表”刷新失败！'
-          });
+          this.$Message.error('“还款计划表”刷新失败！');
           repsReturn = false;
         }
         return repsReturn;
@@ -165,14 +161,10 @@
         if (reps.success) {
           // 获取租金还款计划列表data
           this.getRepayPlanRentalList();
-          this.$Notice.success({
-            title: '已刷新“租金计划表”'
-          });
+          this.$Message.success('已刷新“租金计划表”');
           repsReturn = true;
         } else {
-          this.$Notice.error({
-            title: '“租金计划表”刷新失败！'
-          });
+          this.$Message.error('“租金计划表”刷新失败！');
           repsReturn = false;
         }
         return repsReturn;

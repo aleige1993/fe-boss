@@ -61,11 +61,11 @@ export default {
                 on: {
                   click: () => {
                     // 设置当前处理人
-                    if (!this.succeed) {
+                    /* if (!this.succeed) {
                       if (!this.settingHandleUser(params.row)) {
                         return;
                       }
-                    }
+                    }*/
                     this.openMakingModal($.extend({}, params.row));
                   }
                 }

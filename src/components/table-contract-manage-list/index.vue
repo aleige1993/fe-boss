@@ -113,14 +113,16 @@
       },
       // 设置当前处理人
       async settingHandleUser(row) {
-        let resp = await this.$http.post('/biz/sign/settingHandleUser', {
+        // 2018.03.22 突然又说不要做设置当前处理人了，此处注释，以防以后又变回来
+        /* let resp = await this.$http.post('/biz/sign/settingHandleUser', {
           signNo: row.signNo
         });
         if (resp.success) {
           return true;
         } else {
           return false;
-        }
+        }*/
+        return true;
       },
       // 查询列表数据
       async getList(page) {

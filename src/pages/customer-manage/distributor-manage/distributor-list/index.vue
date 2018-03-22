@@ -470,10 +470,10 @@
       },
       // 服务地区的添加（到本地）请选择渠道商服务地区
       async areaFormAddSuBmit() {
-        if ((this.$data.areaForm.provinceName === '') || (typeof this.$data.areaForm.provinceName === 'undefined')) {
+        /* if ((this.$data.areaForm.provinceName === '') || (typeof this.$data.areaForm.provinceName === 'undefined')) {
           this.$Message.error('请选择渠道商服务地区！');
           return;
-        }
+        }*/
         if (typeof this.$data.formAdd.merchantAreaInfo === 'undefined') {
           this.$data.formAdd.merchantAreaInfo = [];
         }

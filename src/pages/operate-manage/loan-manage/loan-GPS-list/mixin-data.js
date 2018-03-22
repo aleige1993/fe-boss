@@ -64,12 +64,12 @@ export default {
                 on: {
                   click: async() => {
                     // 设置当前处理人
-                    let rep = await this.$http.post('/biz/payment/settingHandleUser', {
+                    /* let rep = await this.$http.post('/biz/payment/settingHandleUser', {
                       paymentNo: params.row.paymentNo
                     });
                     if (!rep.success) {
                       return;
-                    }
+                    }*/
                     this.$router.push({
                       path: '/index/operate/loan/GPS/handle',
                       query: {

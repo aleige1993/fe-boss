@@ -50,12 +50,12 @@ export default {
                 on: {
                   click: async() => {
                     // 设置当前处理人
-                    let rep = await this.$http.post('/biz/payment/settingHandleUserWithPawn', {
+                    /* let rep = await this.$http.post('/biz/payment/settingHandleUserWithPawn', {
                       id: params.row.id
                     });
                     if (!rep.success) {
                       return;
-                    }
+                    }*/
                     this.$router.push({
                       path: '/index/operate/pawn/handle',
                       query: {
