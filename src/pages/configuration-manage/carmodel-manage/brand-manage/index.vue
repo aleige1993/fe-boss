@@ -19,9 +19,9 @@
         </i-form-item>
       </i-form>
     </div>
-    <!--<div class="form-top-actions">-->
-      <!--<i-button type="info" @click="add"><i class="iconfont icon-xinzeng"></i> 新增</i-button>-->
-    <!--</div>-->
+    <div class="form-top-actions">
+      <i-button type="info" @click="add"><i class="iconfont icon-xinzeng"></i> 新增</i-button>
+    </div>
     <slot name="topAction"></slot>
     <i-table :height="tableFixHeight+88" border :loading="dataLoading" ref="selection" @on-select="selectRow" :columns="resultCustomerColumns" :data="privateCustomerLoanList"></i-table>
     <div class="page-container">
@@ -29,13 +29,13 @@
     </div>
     <pt-modal :title="isAdd ? '添加' : '修改'" v-model="addModal" :width="600" :zIndex="200">
       <i-form ref="fromData" :model="fromData" label-position="left" :label-width="80">
-        <i-form-item label="品牌名称" prop="brandName">
-          <i-input v-model="fromData.brandName" placeholder="" readonly></i-input>
+        <i-form-item label="品牌名称" prop="brandName" :rules="{required: true, message: '品牌名称不能为空', trigger: 'blur'}">
+          <i-input v-model="fromData.brandName" placeholder=""></i-input>
         </i-form-item>
-        <i-form-item label="首字母" prop="initial">
-          <i-input v-model="fromData.initial" placeholder="" readonly></i-input>
+        <i-form-item label="首字母" prop="initial" :rules="{required: true, message: '首字母不能为空', trigger: 'blur'}">
+          <i-input v-model="fromData.initial" placeholder=""></i-input>
         </i-form-item>
-        <i-form-item label="品牌LOGO" prop="bannerUrl" :rules="{required: true, message: '请选择图片', trigger: 'blur'}">
+        <i-form-item label="品牌LOGO" prop="logo">
           <input type="hidden" v-model="fromData.logo"/>
           <i-upload
             :format="['jpg','jpeg','png']"
@@ -142,7 +142,7 @@
       },
       async submitSuccess() {
         this.$data.buttonLoading = true;
-        let url = this.$data.isAdd ? '' : '/ces/brand/update';
+        let url = this.$data.isAdd ? '/ces/add/brand' : '/ces/brand/update';
         let resp = await this.$http.post(url, {
           ...this.$data.fromData
         });
