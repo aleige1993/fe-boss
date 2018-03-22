@@ -177,6 +177,10 @@ h1,h2,h3,h4,h5,h6 {
   margin-top: -67px;
   opacity: 1;
 }
+// 上传文件的样式
+.demo-spin-icon-load{
+  animation: ani-demo-spin 1s linear infinite;
+}
 /*
  * 添加class=“scrollBarStyle” 修改webkit内核的浏览器滚动条
  */

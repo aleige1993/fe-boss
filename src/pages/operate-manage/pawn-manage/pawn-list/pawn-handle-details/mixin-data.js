@@ -54,8 +54,7 @@ export default {
               h('Button', {
                 props: {
                   type: 'primary',
-                  size: 'small',
-                  disabled: params.row.mortgageStatus !== '0'
+                  size: 'small'
                 },
                 style: {
                   marginRight: '5px'
@@ -64,10 +63,10 @@ export default {
                   click: () => {
                     this.$data.formalitiesShowModal = true;
                     this.$data.clickRow = params.row;
-                    this.$data.formalities = params.row;
+                    this.$data.formalities = $.extend(true, {}, this.$data.formalities, params.row);
                   }
                 }
-              }, params.row.mortgageStatus !== '0' ? '已办理抵押' : '办理抵押')
+              }, '办理抵押')
             ]);
           }
         }

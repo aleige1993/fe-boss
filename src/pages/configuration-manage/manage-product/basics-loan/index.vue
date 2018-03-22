@@ -8,7 +8,7 @@
       <i-breadcrumb-item>贷款材料配置</i-breadcrumb-item>
     </i-breadcrumb>
     <div class="form-top-actions">
-      <i-button @click="addModal" type="info"><i class="iconfont icon-xinzeng"></i>&nbsp;新增产品</i-button>
+      <i-button @click="addModal" type="info"><i class="iconfont icon-xinzeng"></i>&nbsp;新增</i-button>
     </div>
     <i-table :height="tableFixHeight+98" :loading="dataLoading" border ref="selection" :columns="columns1" :data="data1"></i-table>
     <div class="page-container">

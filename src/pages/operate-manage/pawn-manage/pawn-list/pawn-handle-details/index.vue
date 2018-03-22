@@ -140,12 +140,17 @@
           <i-upload
             :show-upload-list="false"
             :on-success="uploadSuccessAlities"
+            :before-upload="uploadBefore"
             :on-error="uploadErrorAlities"
             type="drag"
             :action="$config.HTTPBASEURL + '/common/upload'">
             <div style="padding: 20px 0">
               <i-icon type="ios-cloud-upload" size="52" style="color: #3399ff"></i-icon>
               <p>单击或拖动文件上传</p>
+              <i-spin fix v-if="fileUploading">
+                <Icon type="load-c" size=18 class="demo-spin-icon-load"></Icon>
+                <div style="margin-top: 10px">正在上传中，请勿关闭...</div>
+              </i-spin>
             </div>
           </i-upload>
           <p class="show-upload-text" v-text="formalities.makeName"></p>
@@ -174,6 +179,7 @@
         carDataLoading: false,
         initFormLoading: false,
         formalitiesShowModal: false,
+        fileUploading: false,
         clickRow: {},
         formData: {
           'gmtModified': '',
@@ -252,12 +258,12 @@
         let ind = this.$data.clickRow._index; // 车辆列表的索引index
         this.$refs['formalities'].validate(async (valid) => {
           if (valid) {
-            this.$data.carData[ind] = this.$data.formalities;
+            this.$data.formalitiesShowModal = false;
+            this.$set(this.$data.carData, ind, this.$data.formalities);
             this.$Message.success('提交成功');
           } else {
             this.$Message.error('<span style="color: red">*</span>项不能为空');
           }
-          this.$data.formalitiesShowModal = false;
         });
       },
       // 提交的ajax
@@ -271,28 +277,37 @@
           this.$router.push({
             path: '/index/operate/pawn',
             query: {
-              currentPage: (this.$route.query.currentPage ? this.$route.query.currentPage : 1)
+              currentPage: this.$route.query.currentPage || 1
             }
           });
         }
       },
       // 所有的提交按钮
-      saveSubimt() {
-        this.$refs['formData'].validate(async (valid) => {
-          if (valid) {
-            this.$data.initFormLoading = true;
-            await this.allSubimt();
-            this.$data.initFormLoading = false;
-          } else {
-            this.$data.tabIndex = 0;
-            this.$Message.error('<span style="color: red">*</span>项不能为空');
-          }
+      async saveSubimt() {
+        // 车辆信息中的抵押状态必须都是“已抵押”状态！
+        let isMortgageStatus = this.$data.carData.some(item => {
+          return item.mortgageStatus === '0' || (typeof item.mortgageStatus === 'undefined');
         });
+        if (isMortgageStatus) {
+          this.$Message.error({
+            content: '车辆信息中的抵押状态必须都是“已抵押”状态！',
+            duration: 2
+          });
+          return;
+        }
+        this.$data.initFormLoading = true;
+        await this.allSubimt();
+        this.$data.initFormLoading = false;
+      },
+      // 上传文件之前的回掉
+      uploadBefore() {
+        this.$data.fileUploading = true;
       },
       // 办理抵质押物手续文件上传成功
       uploadSuccessAlities(res, file, fileList) {
         this.$data.formalities.makeName = file.name;
         this.$data.formalities.makeUrl = res.body.url;
+        this.$data.fileUploading = false;
       },
       // 办理抵质押物手续文件上传失败
       uploadErrorAlities(err, file, fileList) {
@@ -300,6 +315,7 @@
         this.$Notice.error({
           title: '错误提示', desc: err
         });
+        this.$data.fileUploading = false;
       }
     }
   };

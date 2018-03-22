@@ -20,16 +20,20 @@
       <i-upload
         :show-upload-list="false"
         :on-success="uploadSuccess"
+        :before-upload="uploadBefore"
         :on-error="uploadError"
         type="drag"
         :action="$config.HTTPBASEURL + '/common/upload'">
         <div style="padding: 20px 0">
+          <Spin fix v-if="fileUploading">
+            <Icon type="load-c" size=18 class="demo-spin-icon-load"></Icon>
+            <div style="margin-top: 10px">正在上传中，请勿关闭...</div>
+          </Spin>
           <i-icon type="ios-cloud-upload" size="52" style="color: #3399ff"></i-icon>
           <p>单击或拖动文件上传</p>
         </div>
       </i-upload>
-      <p v-if="isAdd" class="show-upload-text" v-text="uploadFileName"></p>
-      <p v-else class="show-upload-text" v-text="formAgreement.attachUrl"></p>
+      <p class="show-upload-text" v-text="formAgreement.attachUrl"></p>
       <input type="hidden" v-model="formAgreement.attachUrl" style="width: 100%;border: 0;">
     </i-form-item>
     <i-form-item class="text-right">
@@ -52,6 +56,7 @@
     data() {
       return {
         buttonLoading: false,
+        fileUploading: false,
         uploadFileName: '',
         formAgreement: {
           cooperationName: '', // 协议名称
@@ -90,10 +95,15 @@
           }
         });
       },
+      // 上传之前的回掉
+      uploadBefore(res, file, fileList) {
+        this.$data.fileUploading = true;
+      },
       // 上传成功
       uploadSuccess(res, file, fileList) {
         this.$data.uploadFileName = file.name;
         this.$data.formAgreement.attachUrl = res.body.url;
+        this.$data.fileUploading = false;
       },
       // 上传失败
       uploadError(err, file, fileList) {
@@ -101,6 +111,7 @@
         this.$Notice.error({
           title: '错误提示', desc: err
         });
+        this.$data.fileUploading = false;
       },
       formCancel() {
         this.$emit('parModel');

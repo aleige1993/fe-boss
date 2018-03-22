@@ -49,7 +49,11 @@
             <i-form-item class="upload-image" label="车型图片" :rules="{required: true, message: '请上传车型图片'}" prop="modelImg">
               <input type="hidden" v-model="fromData.modelImg"/>
               <bs-big-img :thumb="fromData.modelImg" :thumbHeight="32" :full="fromData.modelImg" :full-width="945"></bs-big-img>
-              <i-upload :on-success="uploadModelSuccess" :on-error="uploadError" :action="$config.HTTPBASEURL+'/common/upload'" :show-upload-list="false">
+              <i-upload
+                :on-success="uploadModelSuccess"
+                :on-error="uploadError"
+                :action="$config.HTTPBASEURL+'/common/upload'"
+                :show-upload-list="false">
                 <i-form-item prop="password">
                   <a href="javascript:">修改</a>
                 </i-form-item>

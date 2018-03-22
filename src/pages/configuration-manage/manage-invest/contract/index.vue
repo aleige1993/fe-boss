@@ -56,12 +56,17 @@
           <i-upload
             :show-upload-list="false"
             :on-success="uploadSuccess"
+            :before-upload="uploadBefore"
             :on-error="uploadError"
             type="drag"
             :action="$config.HTTPBASEURL + '/common/upload'">
             <div style="padding: 20px 0">
               <i-icon type="ios-cloud-upload" size="52" style="color: #3399ff"></i-icon>
               <p>单击或拖动文件上传</p>
+              <i-spin fix v-if="fileUploading">
+                <Icon type="load-c" size=18 class="demo-spin-icon-load"></Icon>
+                <div style="margin-top: 10px">正在上传中，请勿关闭...</div>
+              </i-spin>
             </div>
           </i-upload>
           <p v-if="isAdd" class="show-upload-text" v-text="uploadFileName"></p>
@@ -94,6 +99,7 @@
         isAdd: true,
         ShowModal: false,
         buttonLoading: false,
+        fileUploading: false,
         dataLoading: false,
         currentPage: 1,
         total: 0,
@@ -179,10 +185,15 @@
         this.$data.ShowModal = false;
         this.$data.formContract = {};
       },
+      // 上传文件之前的回掉
+      uploadBefore() {
+        this.$data.fileUploading = true;
+      },
       // 上传成功
       uploadSuccess(res, file, fileList) {
         this.$data.uploadFileName = file.name;
         this.$data.formContract.contractTemplateAttach = res.body.url;
+        this.$data.fileUploading = false;
       },
       // 上传失败
       uploadError(err, file, fileList) {
@@ -190,6 +201,7 @@
         this.$Notice.error({
           title: '错误提示', desc: err
         });
+        this.$data.fileUploading = false;
       }
     }
   };

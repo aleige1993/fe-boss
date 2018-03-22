@@ -26,6 +26,7 @@
           <i-upload
               :format="['jpg','jpeg','png']"
               :on-success="uploadSuccess"
+              :before-upload="uploadBefore"
               :on-error="uploadError"
               :action="$config.HTTPBASEURL+'/common/upload'"
               :show-upload-list="false">
@@ -33,6 +34,10 @@
               <div v-if="!fromData.bannerLogo">
                 <i-icon type="ios-cloud-upload" size="52" style="color: #3399ff"></i-icon>
                 <p>单击或拖动文件上传</p>
+                <i-spin fix v-if="fileUploading">
+                  <Icon type="load-c" size=18 class="demo-spin-icon-load"></Icon>
+                  <div style="margin-top: 10px">正在上传中，请勿关闭...</div>
+                </i-spin>
               </div>
               <img v-else height="95" :src="fromData.bannerLogo" alt="">
             </div>
@@ -67,6 +72,7 @@
         addModal: false,
         dataLoading: false,
         buttonLoading: false,
+        fileUploading: false,
         total: 0,
         currentPage: 1,
         uploadFileName: '',
@@ -156,9 +162,14 @@
           }
         });
       },
+      // 上传文件之前的回掉
+      uploadBefore() {
+        this.$data.fileUploading = true;
+      },
       // 上传成功
       uploadSuccess(res, file, fileList) {
         this.$data.fromData.bannerLogo = res.body.url;
+        this.$data.fileUploading = false;
       },
       // 上传失败
       uploadError(err, file, fileList) {
@@ -166,6 +177,7 @@
           title: '错误提示',
           desc: err
         });
+        this.$data.fileUploading = false;
       },
       // 取消 按钮
       cancelFun() {
