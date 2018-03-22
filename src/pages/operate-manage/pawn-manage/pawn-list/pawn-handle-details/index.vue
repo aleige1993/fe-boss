@@ -258,12 +258,12 @@
         let ind = this.$data.clickRow._index; // 车辆列表的索引index
         this.$refs['formalities'].validate(async (valid) => {
           if (valid) {
-            this.$data.carData[ind] = this.$data.formalities;
+            this.$data.formalitiesShowModal = false;
+            this.$set(this.$data.carData, ind, this.$data.formalities);
             this.$Message.success('提交成功');
           } else {
             this.$Message.error('<span style="color: red">*</span>项不能为空');
           }
-          this.$data.formalitiesShowModal = false;
         });
       },
       // 提交的ajax
@@ -277,23 +277,27 @@
           this.$router.push({
             path: '/index/operate/pawn',
             query: {
-              currentPage: (this.$route.query.currentPage ? this.$route.query.currentPage : 1)
+              currentPage: this.$route.query.currentPage || 1
             }
           });
         }
       },
       // 所有的提交按钮
-      saveSubimt() {
-        this.$refs['formData'].validate(async (valid) => {
-          if (valid) {
-            this.$data.initFormLoading = true;
-            await this.allSubimt();
-            this.$data.initFormLoading = false;
-          } else {
-            this.$data.tabIndex = 0;
-            this.$Message.error('<span style="color: red">*</span>项不能为空');
-          }
+      async saveSubimt() {
+        // 车辆信息中的抵押状态必须都是“已抵押”状态！
+        let isMortgageStatus = this.$data.carData.some(item => {
+          return item.mortgageStatus === '0' || (typeof item.mortgageStatus === 'undefined');
         });
+        if (isMortgageStatus) {
+          this.$Message.error({
+            content: '车辆信息中的抵押状态必须都是“已抵押”状态！',
+            duration: 2
+          });
+          return;
+        }
+        this.$data.initFormLoading = true;
+        await this.allSubimt();
+        this.$data.initFormLoading = false;
       },
       // 上传文件之前的回掉
       uploadBefore() {
