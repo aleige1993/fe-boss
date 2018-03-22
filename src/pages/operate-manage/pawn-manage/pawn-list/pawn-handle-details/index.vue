@@ -140,12 +140,17 @@
           <i-upload
             :show-upload-list="false"
             :on-success="uploadSuccessAlities"
+            :before-upload="uploadBefore"
             :on-error="uploadErrorAlities"
             type="drag"
             :action="$config.HTTPBASEURL + '/common/upload'">
             <div style="padding: 20px 0">
               <i-icon type="ios-cloud-upload" size="52" style="color: #3399ff"></i-icon>
               <p>单击或拖动文件上传</p>
+              <i-spin fix v-if="fileUploading">
+                <Icon type="load-c" size=18 class="demo-spin-icon-load"></Icon>
+                <div style="margin-top: 10px">正在上传中，请勿关闭...</div>
+              </i-spin>
             </div>
           </i-upload>
           <p class="show-upload-text" v-text="formalities.makeName"></p>
@@ -174,6 +179,7 @@
         carDataLoading: false,
         initFormLoading: false,
         formalitiesShowModal: false,
+        fileUploading: false,
         clickRow: {},
         formData: {
           'gmtModified': '',
@@ -289,10 +295,15 @@
           }
         });
       },
+      // 上传文件之前的回掉
+      uploadBefore() {
+        this.$data.fileUploading = true;
+      },
       // 办理抵质押物手续文件上传成功
       uploadSuccessAlities(res, file, fileList) {
         this.$data.formalities.makeName = file.name;
         this.$data.formalities.makeUrl = res.body.url;
+        this.$data.fileUploading = false;
       },
       // 办理抵质押物手续文件上传失败
       uploadErrorAlities(err, file, fileList) {
@@ -300,6 +311,7 @@
         this.$Notice.error({
           title: '错误提示', desc: err
         });
+        this.$data.fileUploading = false;
       }
     }
   };
