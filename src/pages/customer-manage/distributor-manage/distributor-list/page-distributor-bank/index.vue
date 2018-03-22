@@ -12,7 +12,7 @@
     <i-table :height="tableFixHeight+98" :loading="dataLoading" :columns="bankAccountColumns" :data="bankAccountDatas"></i-table>
     <!--添加联系人模态框-->
     <bs-modal :title="isAdd?'添加银行账户':'编辑银行账户'" v-model="addBankModal">
-      <i-form ref="bankForm" :model="formData" label-position="left" :label-width="120">
+      <i-form v-if="addBankModal" ref="bankForm" :model="formData" label-position="left" :label-width="120">
         <i-form-item label="账户名" prop="acctName"
           :rules="{required: true, message: '账户名不能为空', trigger: 'blur'}">
           <i-input v-model="formData.acctName" placeholder=""></i-input>
@@ -38,14 +38,14 @@
         <i-form-item label="开户行所在省" prop="openBankProvince"
                      :rules="{required: true, message: '请选择开户行所在省'}">
           <input v-model="formData.openBankProvince" type="hidden"/>
-          <i-select :placeholder="formData.openBankProvince" :label-in-value="true" @on-change="provinceChange">
+          <i-select :placeholder="formData.openBankProvince||''" :label-in-value="true" @on-change="provinceChange">
             <i-option v-for="item in provinceDropList" :value="item.regionCode" :key="item.regionCode">{{item.regionName}}</i-option>
           </i-select>
         </i-form-item>
         <i-form-item label="开户行所在市" prop="openBankCity"
                      :rules="{required: true, message: '请选择开户行所在市'}">
           <input v-model="formData.openBankCity" type="hidden"/>
-          <i-select :placeholder="formData.openBankCity" :label-in-value="true" @on-change="cityChange">
+          <i-select :placeholder="formData.openBankCity||''" :label-in-value="true" @on-change="cityChange">
             <i-option v-for="item in cityDropList" :value="item.regionCode" :key="item.regionCode">{{item.regionName}}</i-option>
           </i-select>
         </i-form-item>
@@ -180,5 +180,9 @@
   };
 </script>
 <style lang="scss">
-
+#DistributorBank {
+  & .ivu-select-placeholder {
+    color: #495060;
+  }
+}
 </style>
