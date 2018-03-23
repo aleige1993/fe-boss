@@ -66,12 +66,12 @@
       <i-row>
         <i-col span="8">
           <i-form-item label="车价总额">
-            <span v-text="approveCredit.carTotalAmt"></span>
+            <span v-if="approveCredit.carTotalAmt">{{approveCredit.carTotalAmt || ''}} 元</span>
           </i-form-item>
         </i-col>
         <i-col span="8">
           <i-form-item label="贷款总额">
-            <span v-text="approveCredit.approveLimitAmt"></span>
+            <span v-if="approveCredit.approveLimitAmt">{{approveCredit.approveLimitAmt || ''}} 元</span>
           </i-form-item>
         </i-col>
         <i-col span="8">
@@ -88,7 +88,7 @@
         </i-col>
         <i-col span="8">
           <i-form-item label="期数">
-            <span v-text="approveCredit.loanPeriods"></span>
+            <span v-if="approveCredit.loanPeriods">{{approveCredit.loanPeriods || ''}} 月</span>
           </i-form-item>
         </i-col>
         <i-col span="8">
@@ -105,7 +105,7 @@
         </i-col>
         <i-col span="8">
           <i-form-item label="颂车利率">
-            <span v-text="approveCredit.loanRealRate"></span>
+            <span v-if="approveCredit.loanRealRate">{{approveCredit.loanRealRate || ''}} %/年</span>
           </i-form-item>
         </i-col>
         <i-col span="8">
