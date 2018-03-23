@@ -14,7 +14,7 @@
                 multiple type="drag"
                 :format="['jpg','jpeg','png','gif','bmp','jpeg','pic']"
                 :on-progress="uploading"
-                :before-upload="beforeUpload"
+                :before-upload="uploadBefore"
                 :on-success="uploadFileSuccess"
                 :action="$config.HTTPBASEURL+'/common/upload'">
         <div style="width: 126px;height:128px;line-height: 150px; text-align: center; border: 1px dashed #2196f3; color: #2196f3">
@@ -66,7 +66,7 @@
         this.$data.isUploading = true;
       },
       // 上传之前对上传的文件进行验证 必须为图片格式
-      beforeUpload(file) {
+      uploadBefore(file) {
         if (!this.isImg(file.name)) {
           this.$Message.error('请上传图片格式的文件！');
           return false;

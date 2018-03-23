@@ -40,7 +40,7 @@
           <i-upload
             :format="['jpg','jpeg','png']"
             :on-success="uploadSuccess"
-            :before-upload="uploadBefore"
+            :before-upload="uploadProgress"
             :on-error="uploadError"
             :action="$config.HTTPBASEURL+'/common/upload'"
             :show-upload-list="false">
@@ -171,7 +171,7 @@
         });
       },
       // 上传文件之前的回掉
-      uploadBefore() {
+      uploadProgress() {
         this.$data.fileUploading = true;
       },
       // 上传成功
