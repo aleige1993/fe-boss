@@ -228,14 +228,14 @@ export default {
         this.$data.approveData.loanRePaymentAccountDTOS.acctName = resp.body.repaymentAccountName;
         this.$data.approveData.loanRePaymentAccountDTOS.acctNo = resp.body.repaymentAcctNo;
         this.$data.approveData.loanRePaymentAccountDTOS.bankName = resp.body.repaymentBankName;
-        this.$data.approveData.loanRePaymentAccountDTOS.openBankName = resp.body.repaymentBankName;
+        this.$data.approveData.loanRePaymentAccountDTOS.openBankName = resp.body.repaymentOpenBankName;
         this.$data.paymentAccountList = resp.body.paymentAccountList;
         this.$data.repaymentAccountList = resp.body.repaymentAccountList;
         // 重置放款账户和还款账户信息
         this.$data.approveData.loanPaymentAccountDTOS.acctName = resp.body.paymentAccountList[0].acctName;
         this.$data.approveData.loanRePaymentAccountDTOS.acctName = resp.body.repaymentAccountList[0].acctName;
         this.$data.approveData.loanPaymentAccountDTOS.openBankName = resp.body.paymentAccountList[0].bankName;
-        this.$data.approveData.loanRePaymentAccountDTOS.openBankName = resp.body.repaymentAccountList[0].bankName;
+        this.$data.approveData.loanRePaymentAccountDTOS.openBankName = resp.body.repaymentAccountList[0].openBankName;
       }
     },
     /**
@@ -264,7 +264,7 @@ export default {
       if (filterAry.length > 0) {
         this.$data.approveData.loanPaymentAccountDTOS.acctNo = filterAry[0].acctNo;
         this.$data.approveData.loanPaymentAccountDTOS.acctName = filterAry[0].acctName;
-        this.$data.approveData.loanPaymentAccountDTOS.openBankName = filterAry[0].bankName;
+        this.$data.approveData.loanPaymentAccountDTOS.openBankName = filterAry[0].openBankName;
         this.$data.approveData.loanPaymentAccountDTOS.bankCode = filterAry[0].bankCode;
       }
     },
@@ -275,7 +275,7 @@ export default {
       if (filterAry.length > 0) {
         this.$data.approveData.loanRePaymentAccountDTOS.acctNo = filterAry[0].acctNo;
         this.$data.approveData.loanRePaymentAccountDTOS.acctName = filterAry[0].acctName;
-        this.$data.approveData.loanRePaymentAccountDTOS.openBankName = filterAry[0].bankName;
+        this.$data.approveData.loanRePaymentAccountDTOS.openBankName = filterAry[0].openBankName;
         this.$data.approveData.loanRePaymentAccountDTOS.bankCode = filterAry[0].bankCode;
       }
     },

@@ -40,7 +40,7 @@ export default {
           width: 200
         },*/
         {
-          title: '渠道商名称',
+          title: '经销商名称',
           key: 'merchantAbbr'
         },
         {
