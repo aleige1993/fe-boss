@@ -140,7 +140,7 @@
           <i-upload
             :show-upload-list="false"
             :on-success="uploadSuccessAlities"
-            :before-upload="uploadBefore"
+            :before-upload="uploadProgress"
             :on-error="uploadErrorAlities"
             type="drag"
             :action="$config.HTTPBASEURL + '/common/upload'">
@@ -300,7 +300,7 @@
         this.$data.initFormLoading = false;
       },
       // 上传文件之前的回掉
-      uploadBefore() {
+      uploadProgress() {
         this.$data.fileUploading = true;
       },
       // 办理抵质押物手续文件上传成功

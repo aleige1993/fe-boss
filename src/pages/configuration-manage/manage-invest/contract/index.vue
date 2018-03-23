@@ -56,7 +56,7 @@
           <i-upload
             :show-upload-list="false"
             :on-success="uploadSuccess"
-            :before-upload="uploadBefore"
+            :before-upload="uploadProgress"
             :on-error="uploadError"
             type="drag"
             :action="$config.HTTPBASEURL + '/common/upload'">
@@ -186,7 +186,7 @@
         this.$data.formContract = {};
       },
       // 上传文件之前的回掉
-      uploadBefore() {
+      uploadProgress() {
         this.$data.fileUploading = true;
       },
       // 上传成功

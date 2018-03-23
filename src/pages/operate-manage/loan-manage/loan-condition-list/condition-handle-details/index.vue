@@ -184,7 +184,7 @@
           <i-upload
             :show-upload-list="false"
             :on-success="uploadSuccessAlities"
-            :before-upload="uploadBeforeAlities"
+            :before-upload="uploadProgressAlities"
             :on-error="uploadErrorAlities"
             type="drag"
             :action="$config.HTTPBASEURL + '/common/upload'">
@@ -459,7 +459,7 @@
           <i-upload
             :show-upload-list="false"
             :on-success="uploadSuccessGuarantee"
-            :before-upload="uploadBeforeGuarantee"
+            :before-upload="uploadProgressGuarantee"
             :on-error="uploadErrorGuarantee"
             type="drag"
             :action="$config.HTTPBASEURL + '/common/upload'">
@@ -916,7 +916,7 @@
         });
       },
       // 办理抵质押物手续文件上传文件之前的回掉
-      uploadBeforeAlities() {
+      uploadProgressAlities() {
         this.$data.fileUploadingAlities = true;
       },
       // 办理抵质押物手续文件上传成功
@@ -935,7 +935,7 @@
         this.$data.fileUploadingAlities = false;
       },
       // 担保落实文件上传文件之前的回掉
-      uploadBeforeGuarantee() {
+      uploadProgressGuarantee() {
         this.$data.fileUploadingGuarantee = true;
       },
       // 担保落实文件上传成功

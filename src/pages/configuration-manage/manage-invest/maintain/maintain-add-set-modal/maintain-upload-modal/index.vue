@@ -20,17 +20,17 @@
       <i-upload
         :show-upload-list="false"
         :on-success="uploadSuccess"
-        :before-upload="uploadBefore"
+        :before-upload="uploadProgress"
         :on-error="uploadError"
         type="drag"
         :action="$config.HTTPBASEURL + '/common/upload'">
         <div style="padding: 20px 0">
-          <Spin fix v-if="fileUploading">
-            <Icon type="load-c" size=18 class="demo-spin-icon-load"></Icon>
-            <div style="margin-top: 10px">正在上传中，请勿关闭...</div>
-          </Spin>
           <i-icon type="ios-cloud-upload" size="52" style="color: #3399ff"></i-icon>
           <p>单击或拖动文件上传</p>
+          <i-spin fix v-if="fileUploading">
+            <Icon type="load-c" size=18 class="demo-spin-icon-load"></Icon>
+            <div style="margin-top: 10px">正在上传中，请勿关闭...</div>
+          </i-spin>
         </div>
       </i-upload>
       <p class="show-upload-text" v-text="formAgreement.attachUrl"></p>
@@ -96,7 +96,7 @@
         });
       },
       // 上传之前的回掉
-      uploadBefore(res, file, fileList) {
+      uploadProgress(res, file, fileList) {
         this.$data.fileUploading = true;
       },
       // 上传成功
