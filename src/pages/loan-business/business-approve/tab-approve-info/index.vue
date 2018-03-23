@@ -197,7 +197,7 @@
                 </i-form-item>
               </i-col>
               <i-col span="8">
-                <i-form-item label="开户银行">
+                <i-form-item label="开户行">
                   <i-input :readonly="true" v-model="approveData.loanPaymentAccountDTOS.openBankName"></i-input>
                 </i-form-item>
               </i-col>
@@ -225,8 +225,8 @@
                 <input type="hidden" v-model="approveData.loanRePaymentAccountDTOS.bankName"/>
               </i-col>
               <i-col span="8">
-                <i-form-item label="开户银行">
-                  <i-input :readonly="true" v-model="approveData.loanRePaymentAccountDTOS.bankName"></i-input>
+                <i-form-item label="开户行">
+                  <i-input :readonly="true" v-model="approveData.loanRePaymentAccountDTOS.openBankName"></i-input>
                 </i-form-item>
               </i-col>
             </i-row>
@@ -331,7 +331,7 @@
     <bs-modal v-model="selectPeriodsAndRate" :width="1200" title="选择产品的利率方案">
       <i-table :columns="loanPeriodsColumns" :data="loanPeriodsList" @on-row-dblclick="selectPeriodsRow"></i-table>
     </bs-modal>
-    <i-spin fix v-if="initPageLoading">加载中...</i-spin>
+    <i-spin fix v-if="initPageLoading">初始化数据加载中...</i-spin>
   </div>
 </template>
 <script>
