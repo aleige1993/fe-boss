@@ -534,7 +534,7 @@
       },
       // 新增
       async submitSuccess() {
-        /*if (this.$data.areaDataList.length === 0) {
+        /* if (this.$data.areaDataList.length === 0) {
           this.$Message.error('请添加渠道商服务地区！');
           return;
         }*/
@@ -592,16 +592,6 @@
       cancelFun() {
         this.$data.formAdd = {};
         this.$data.showAddModal = false;
-      },
-      // 上传成功
-      uploadSuccess(res, file, fileList) {
-        this.$data.formAdd.logoUrl = res.body.url;
-      },
-      // 上传失败
-      uploadError(err, file, fileList) {
-        this.$Notice.error({
-          title: '错误提示', desc: err
-        });
       },
       // 子组件通知 单选了每一行
       radioFun(currentRow) {

@@ -65,7 +65,7 @@ export default {
         {
           title: '操作',
           key: 'action',
-          width: 240,
+          width: 300,
           align: 'center',
           render: (h, params) => {
             return h('div', [
@@ -89,7 +89,8 @@ export default {
               h('Button', {
                 props: {
                   type: 'primary',
-                  size: 'small'
+                  size: 'small',
+                  disabled: this.$data.warrantType === ''
                 },
                 style: {
                   marginRight: '5px'
@@ -243,6 +244,9 @@ export default {
       // 权证回传方式为《先抵押后入库》则展示权证回传天数按钮
       if (this.$data.warrantType === '1') {
         btnText = '设置回传天数';
+      }
+      if (this.$data.warrantType === '') {
+        btnText = '获取“权证回传方式”失败';
       }
       return btnText;
     }

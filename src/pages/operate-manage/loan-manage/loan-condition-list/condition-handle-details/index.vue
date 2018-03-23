@@ -10,7 +10,7 @@
     <br>
     <br>
     <i-tabs v-model="tabIndex" :animated="false" type="card">
-      <i-tab-pane label="基本信息">
+      <i-tab-pane label="基本信息" :name="'info'">
         <i-form ref="formData" :model="formData" label-position="right" :label-width="120">
           <bs-form-block :title="'借款信息'">
             <i-row>
@@ -137,8 +137,8 @@
           </bs-form-block>
         </i-form>
       </i-tab-pane>
-      <i-tab-pane label="审批信息">
-        <table-loan-info v-if="tabIndex===1" :requestData="{loanNo: $route.query.loanNo}"></table-loan-info>
+      <i-tab-pane label="审批信息" :name="'approvalList'">
+        <table-loan-info :requestData="{loanNo: $route.query.loanNo||''}"></table-loan-info>
       </i-tab-pane>
       <div class="form-footer-actions">
         <i-button @click="saveSubimt" :loading="initFormLoading" type="success">
@@ -512,7 +512,7 @@
       return {
         clickRow: {},
         isAddGPS: true,
-        tabIndex: 0,
+        tabIndex: 'info',
         fileUploadingAlities: false,
         fileUploadingGuarantee: false,
         showSelectObligee: false, // 选择车辆权利人
@@ -708,7 +708,12 @@
           this.$data.formData = reps.body;
           this.$data.warrantType = reps.body.paymentApplyRecordDTO.warrantType;
         } else {
-          this.$data.formData = {};
+          this.$data.formData = {
+            paymentApplyRecordDTO: {
+              loanNo: ''
+            }
+          };
+          this.$data.warrantType = '';
         }
       },
       // 获取车辆信息列表的data
@@ -833,7 +838,7 @@
           if (valid) {
             this.allSubimt();
           } else {
-            this.$data.tabIndex = 0;
+            this.$data.tabIndex = 'info';
             this.$Message.error('<span style="color: red">*</span>项不能为空');
           }
         });
@@ -912,13 +917,13 @@
       },
       // 办理抵质押物手续文件上传文件之前的回掉
       uploadBeforeAlities() {
-        this.$data.uploadBeforeAlities = true;
+        this.$data.fileUploadingAlities = true;
       },
       // 办理抵质押物手续文件上传成功
       uploadSuccessAlities(res, file, fileList) {
         this.$data.formalities.mortgageName = file.name;
         this.$data.formalities.mortgageUrl = res.body.url;
-        this.$data.uploadBeforeAlities = false;
+        this.$data.fileUploadingAlities = false;
       },
       // 办理抵质押物手续文件上传失败
       uploadErrorAlities(err, file, fileList) {
@@ -927,17 +932,17 @@
           title: '错误提示',
           desc: err
         });
-        this.$data.uploadBeforeAlities = false;
+        this.$data.fileUploadingAlities = false;
       },
       // 担保落实文件上传文件之前的回掉
       uploadBeforeGuarantee() {
-        this.$data.uploadBeforeGuarantee = true;
+        this.$data.fileUploadingGuarantee = true;
       },
       // 担保落实文件上传成功
       uploadSuccessGuarantee(res, file, fileList) {
         this.$data.formagGuarantee.makeName = file.name;
         this.$data.formagGuarantee.makeUrl = res.body.url;
-        this.$data.uploadBeforeGuarantee = false;
+        this.$data.fileUploadingGuarantee = false;
       },
       // 担保落实文件上传失败
       uploadErrorGuarantee(err, file, fileList) {
@@ -946,7 +951,7 @@
           title: '错误提示',
           desc: err
         });
-        this.$data.uploadBeforeGuarantee = false;
+        this.$data.fileUploadingGuarantee = false;
       }
     }
   };

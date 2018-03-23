@@ -67,7 +67,7 @@
       requestData: {
         type: Object,
         default: {
-          loan: ''
+          loanNo: ''
         }
       }
     },
@@ -85,7 +85,7 @@
         if (page) {
           this.$data.currentPageExamine = page;
         }
-        let loanNo = this.requestData.loanNo;
+        let loanNo = this.requestData.loanNo || '';
         let reps = await this.$http.post('biz/listApproveHistory', {
           loanNo,
           currentPage: this.$data.currentPageExamine,

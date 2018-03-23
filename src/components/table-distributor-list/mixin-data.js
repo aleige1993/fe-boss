@@ -32,7 +32,7 @@ export default {
           width: 150,
           key: 'merchantAbbr'
         },
-        /*{
+        /* {
           title: '客户编号',
           width: 170,
           key: 'corpNo'
