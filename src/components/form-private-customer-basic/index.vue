@@ -180,8 +180,8 @@
                 </i-form-item>
                 <i-form-item v-else label="户籍地址">
                   {{formData.mbMemberDTO.censusProvinceName}}
-                  {{formData.mbMemberDTO.censusDistrictName}}
                   {{formData.mbMemberDTO.censusCityName}}
+                  {{formData.mbMemberDTO.censusDistrictName}}
                   {{formData.mbMemberDTO.censusRoadAddr}}
                 </i-form-item>
               </i-col>
@@ -199,8 +199,8 @@
                 </i-form-item>
                 <i-form-item v-else label="居住地址">
                   {{formData.mbMemberDTO.nowProvinceName}}
-                  {{formData.mbMemberDTO.nowDistrictName}}
                   {{formData.mbMemberDTO.nowCityName}}
+                  {{formData.mbMemberDTO.nowDistrictName}}
                   {{formData.mbMemberDTO.nowRoadAddr}}
                 </i-form-item>
               </i-col>
@@ -354,8 +354,8 @@
                 </i-form-item>
                 <i-form-item v-else label="公司地址">
                   {{formData.mbMemberWorkDTO.provinceName}}
-                  {{formData.mbMemberWorkDTO.districtName}}
                   {{formData.mbMemberWorkDTO.cityName}}
+                  {{formData.mbMemberWorkDTO.districtName}}
                   {{formData.mbMemberWorkDTO.roadAddr}}
                 </i-form-item>
               </i-col>
