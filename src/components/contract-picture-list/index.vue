@@ -2,7 +2,7 @@
   <div class="pic-file-list">
     <div class="list-files clearfix">
       <template v-for="(item, index) in picData">
-        <template v-if="isImg(item.attachUrl)">
+        <template v-if="isImg(item.attachmentUrl)">
           <bs-big-img  style="float: left" :thumbWidth="128" :thumbHeight="128" :fullWidth="1280"
                        :thumb="item.attachmentUrl"
                        :full="item.attachmentUrl">
@@ -10,7 +10,7 @@
           </bs-big-img>
         </template>
         <template v-else>
-          <bs-file-item style="float: left" :type="getFileSuffix(item.attachUrl)" :fileUrl="item.attachUrl" :fileName="item.attachName">
+          <bs-file-item style="float: left" :type="getFileSuffix(item.attachmentUrl)" :fileUrl="item.attachmentUrl" :fileName="item.attachmentName">
             <span class="icon-remove" slot="icon-remove" @click.stop="deleteFile(item, index)"><i-icon type="close"></i-icon></span>
           </bs-file-item>
         </template>
@@ -18,7 +18,6 @@
       <i-upload v-if="!isDetails" style="display: inline-block; float: left; width:128px; margin-left: 5px; position: relative" :show-upload-list="false"
                 multiple type="drag"
                 :on-progress="uploading"
-                :before-upload="uploadBefore"
                 :on-success="uploadFileSuccess"
                 :action="$config.HTTPBASEURL+'/common/upload'">
         <div style="width: 126px;height:128px;line-height: 150px; text-align: center; border: 1px dashed #2196f3; color: #2196f3">
@@ -55,6 +54,8 @@
       }
     },
     mounted() {
+      console.log(this.picData);
+      console.log(this.isDetails);
       this.$data.isDetails = this.details || this.details === 'true';
     },
     methods: {
