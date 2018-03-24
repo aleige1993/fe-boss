@@ -104,7 +104,7 @@ export default {
                     }
                   }
                 }
-              }, this.$data.isDetails ? '查看合同图片' : '上传/查看合同图片'),
+              }, this.$data.isDetails ? '查看合同文件' : '上传/查看合同文件'),
               h('Button', {
                 props: {
                   type: 'success',
