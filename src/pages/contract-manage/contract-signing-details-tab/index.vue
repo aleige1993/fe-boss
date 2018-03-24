@@ -110,8 +110,8 @@
       <i-button v-else @click="goBackBtnFun" type="success"><Icon type="chevron-left"></Icon> 返回</i-button>
     </div>
   </i-tabs>
-  <!--上传/查看车辆图片-->
-  <bs-modal :title="isDetails?'查看合同图片':'上传/查看合同图片'" v-model="seePictureModal" :width="1200" @on-close="emptyRowPic">
+  <!--上传/查看车辆文件-->
+  <bs-modal :title="isDetails?'查看合同文件':'上传/查看合同文件'" v-model="seePictureModal" :width="1200" @on-close="emptyRowPic">
     <contract-picture-list v-if="seePictureModal" :details="isDetails||isDetails==='true'" :picData="loanPicVOListModalData" @on-data-remove="picDataRomove"  @on-data-add="picDataAdd"></contract-picture-list>
   </bs-modal>
 </div>
