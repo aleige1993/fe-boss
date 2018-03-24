@@ -80,6 +80,8 @@ export default {
           } else {
             submitData = {
               loanNo: applyData.loanVO.loanNo,
+              approveLimitAmt: approveData.loanApproveCreditDTO.approveLimitAmt, // 审批额度
+              loanRealRate: approveData.loanApproveCreditDTO.loanRealRate, // 颂车定收利率
               loanApproveDTO: approveData.loanApproveDTO
             };
           }

@@ -154,8 +154,8 @@
                 <i-form-item label="户籍地址" prop="mbMemberDTO.censusCityCode">
                   <span>
                     {{formData.mbMemberDTO.censusProvinceName}}
-                    {{formData.mbMemberDTO.censusDistrictName}}
                     {{formData.mbMemberDTO.censusCityName}}
+                    {{formData.mbMemberDTO.censusDistrictName}}
                     {{formData.mbMemberDTO.censusRoadAddr}}
                   </span>
                 </i-form-item>
@@ -166,8 +166,8 @@
                 <i-form-item label="居住地址" prop="mbMemberDTO.nowCityCode">
                   <span>
                     {{formData.mbMemberDTO.nowProvinceName}}
-                    {{formData.mbMemberDTO.nowDistrictName}}
                     {{formData.mbMemberDTO.nowCityName}}
+                    {{formData.mbMemberDTO.nowDistrictName}}
                     {{formData.mbMemberDTO.nowRoadAddr}}
                   </span>
                 </i-form-item>
@@ -267,8 +267,8 @@
                              prop="mbMemberWorkDTO.cityCode">
                   <span>
                     {{formData.mbMemberWorkDTO.provinceName}}
-                    {{formData.mbMemberWorkDTO.districtName}}
                     {{formData.mbMemberWorkDTO.cityName}}
+                    {{formData.mbMemberWorkDTO.districtName}}
                     {{formData.mbMemberWorkDTO.roadAddr}}
                   </span>
                 </i-form-item>

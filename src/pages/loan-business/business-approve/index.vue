@@ -29,7 +29,7 @@
         <tab-big-data :customerType="formData.custType" :applyBasicInfo="formData" v-if="tabIndex === 'tabContactInfo'"> </tab-big-data>
       </i-tab-pane>
       <i-tab-pane :label="'审批信息'" name="tabApproveInfo" v-if="taskNode !== '1' && taskNode !== '0'">
-        <approve-info ref="approveInfo" :applyBasicInfo="formData"
+        <approve-info ref="approveInfo" :applyBasicInfo="formData" :isFromDetail="isFromDetail"
                       :readonly="firstApproveInfoReadonly || isFromDetail" :isApprove="isApprove">
         </approve-info>
       </i-tab-pane>

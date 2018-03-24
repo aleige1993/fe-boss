@@ -2,17 +2,21 @@
   <div class="pic-file-list">
     <div class="list-files clearfix">
       <template v-for="(item, index) in picData">
-        <template>
+        <template v-if="isImg(item.attachUrl)">
           <bs-big-img  style="float: left" :thumbWidth="128" :thumbHeight="128" :fullWidth="1280"
                        :thumb="item.attachmentUrl"
                        :full="item.attachmentUrl">
             <span v-if="!isDetails" class="icon-remove" slot="icon-remove" @click.stop="deleteFile(item, index)"><i-icon type="close"></i-icon></span>
           </bs-big-img>
         </template>
+        <template v-else>
+          <bs-file-item style="float: left" :type="getFileSuffix(item.attachUrl)" :fileUrl="item.attachUrl" :fileName="item.attachName">
+            <span class="icon-remove" slot="icon-remove" @click.stop="deleteFile(item, index)"><i-icon type="close"></i-icon></span>
+          </bs-file-item>
+        </template>
       </template>
       <i-upload v-if="!isDetails" style="display: inline-block; float: left; width:128px; margin-left: 5px; position: relative" :show-upload-list="false"
                 multiple type="drag"
-                :format="['jpg','jpeg','png','gif','bmp','jpeg','pic']"
                 :on-progress="uploading"
                 :before-upload="uploadBefore"
                 :on-success="uploadFileSuccess"
@@ -64,14 +68,6 @@
       },
       uploading() {
         this.$data.isUploading = true;
-      },
-      // 上传之前对上传的文件进行验证 必须为图片格式
-      uploadBefore(file) {
-        if (!this.isImg(file.name)) {
-          this.$Message.error('请上传图片格式的文件！');
-          return false;
-        } else {
-        }
       },
       uploadFileSuccess(res) {
         this.$data.isUploading = false;

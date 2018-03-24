@@ -1,8 +1,10 @@
 <template>
   <div class="bs-file-item" @click="downLoad">
-    <img :src="'./static/img/file-icons/'+suffix+'.png'" alt="">
-    <p :title="fileName">{{fileName}}</p>
-    <slot name="icon-remove"></slot>
+    <a :href="fileUrl" target="_blank">
+      <img :src="'./static/img/file-icons/'+suffix+'.png'" alt="">
+      <p :title="fileName">{{fileName}}</p>
+      <slot name="icon-remove"></slot>
+    </a>
   </div>
 </template>
 <script>
