@@ -25,7 +25,7 @@
     },
     computed: {
       suffix() {
-        switch (this.type) {
+        switch (this.type.toLowerCase()) {
         case 'png':
           return 'png';
         case 'doc':
