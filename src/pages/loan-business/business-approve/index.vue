@@ -16,10 +16,14 @@
       </i-tab-pane>
       <i-tab-pane label="人行征信报告" name="tabCreditInfo" v-if="taskNode !== '1' && taskNode !== '0'" :disabled="formData.custType === '2'">
         <i-checkbox v-if="showCreditCheckbox" v-model="isHasCheckCreditReport">&nbsp;&nbsp;已查看征信报告</i-checkbox>
+
         <div v-if="isCreditEerror" style="color: red; padding: 20px 0">暂无征信查询结果！</div>
         <br>
         <br>
-        <iframe style="border:1px solid #f5f5f5" v-if="tabIndex === 'tabCreditInfo'" :src="creditReportURL" width="100%" :height="iframeHeight" frameborder="0"></iframe>
+        <p style="text-align: center;background: #f7f7f7;">
+          <span style="color: #f89406;font-size: 14px;line-height: 30px;" v-if="creditReportURLLoading"><Icon style="vertical-align: middle" type="load-c" size=14 class="demo-spin-icon-load"></Icon> 人行征信报告生成中...</span>
+        </p>
+        <iframe style="border:1px solid #f5f5f5" :src="creditReportURL" width="100%" :height="iframeHeight" frameborder="0"></iframe>
       </i-tab-pane>
       <i-tab-pane label="联系人信息" name="tabContactInfo">
         <tab-big-data :customerType="formData.custType" :applyBasicInfo="formData" v-if="tabIndex === 'tabContactInfo'"> </tab-big-data>
@@ -74,6 +78,7 @@
         isHasCheckCreditReport: false, // 是否征信报告
         showCreditCheckbox: true, // 显示 已查看征信报告按钮
         isCreditEerror: false, // 暂无征信查询结果 时显示
+        creditReportURLLoading: false,
         iframeHeight: 460,
         tabIndex: 0,
         initFormLoading: false,

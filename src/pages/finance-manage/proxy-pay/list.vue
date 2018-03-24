@@ -157,7 +157,7 @@
     },
     watch: {
       'paymentType'(newVal) {
-        this.getProxyPayList();
+        this.getProxyPayList(1);
       }
     },
     mounted() {

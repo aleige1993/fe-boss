@@ -135,7 +135,7 @@
         </i-form-item>
         <i-form-item
           label="办理文件"
-          prop="makeUrl"
+          prop="mortgageUrl"
           :rules="{required: true, message: '请上传办理文件', trigger: 'blur'}">
           <i-upload
             :show-upload-list="false"
@@ -153,8 +153,8 @@
               </i-spin>
             </div>
           </i-upload>
-          <p class="show-upload-text" v-text="formalities.makeName"></p>
-          <input type="hidden" v-model="formalities.makeUrl" style="width: 100%;border: 0;">
+          <p class="show-upload-text" v-text="formalities.mortgageName"></p>
+          <input type="hidden" v-model="formalities.mortgageUrl" style="width: 100%;border: 0;">
         </i-form-item>
         <i-form-item class="text-right">
           <i-button type="primary" @click="formalitiesSubmit">提交</i-button>
@@ -213,8 +213,8 @@
         },
         // 办理抵质押物手续
         formalities: {
-          'makeName': '',
-          'makeUrl': '',
+          'mortgageName': '',
+          'mortgageUrl': '',
           'makeDate': '',
           'makeUser': '',
           'warrantNo': '',
@@ -305,13 +305,13 @@
       },
       // 办理抵质押物手续文件上传成功
       uploadSuccessAlities(res, file, fileList) {
-        this.$data.formalities.makeName = file.name;
-        this.$data.formalities.makeUrl = res.body.url;
+        this.$data.formalities.mortgageName = file.name;
+        this.$data.formalities.mortgageUrl = res.body.url;
         this.$data.fileUploading = false;
       },
       // 办理抵质押物手续文件上传失败
       uploadErrorAlities(err, file, fileList) {
-        this.$data.formalities.makeName = '';
+        this.$data.formalities.mortgageName = '';
         this.$Notice.error({
           title: '错误提示', desc: err
         });

@@ -23,9 +23,11 @@ export default {
     async getCreditReportUrl() {
       let loanNo = this.$route.query.id;
       if (loanNo) {
+        this.$data.creditReportURLLoading = true;
         let resp = await this.$http.post('/biz/getCreditReportURL', {
           loanNo
         });
+        this.$data.creditReportURLLoading = false;
         if (resp.success) {
           this.$data.showCreditCheckbox = true;
           this.$data.creditReportURL = resp.body.creditFinalURL;

@@ -15,7 +15,7 @@ export default {
           key: 'productName'
         },
         {
-          title: '期数',
+          title: '期数(月)',
           key: 'periods'
         },
         {

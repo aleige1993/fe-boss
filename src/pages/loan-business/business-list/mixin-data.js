@@ -48,10 +48,10 @@ export default {
           key: 'productName'
         },
         {
-          title: '期数',
+          title: '期数(月)',
           key: 'applyPeriods',
           align: 'center',
-          width: 80
+          width: 90
         },
         {
           title: '申请金额（元）',
