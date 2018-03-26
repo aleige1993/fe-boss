@@ -7,7 +7,7 @@
             <i-row>
               <i-col span="24">
                 <div class="form-top-actions" v-if="!readonly">
-                  <i-button type="primary" @click="firstApproveForm = {} ; addFirstApproveModal = !addFirstApproveModal">添加初审信息</i-button>
+                  <i-button type="primary" @click="firstApproveForm = {}; firstApproveEditIndex = -1; addFirstApproveModal = !addFirstApproveModal">添加初审信息</i-button>
                 </div>
                 <i-table :columns="firstApproveColumns" :data="approveData.loanApproveFirstDTOS"></i-table>
               </i-col>
@@ -244,7 +244,7 @@
               <i-col span="18">
                 <i-form-item label="结论" prop="loanApproveDTO.result" :rules="{required: true, message: '请选择你的结论', trigger: 'change'}">
                   <input type="hidden" v-model="approveData.loanApproveDTO.result"/>
-                  <i-radio-group v-model="approveData.loanApproveDTO.result">
+                  <i-radio-group @on-change="approveResultChanged" v-model="approveData.loanApproveDTO.result">
                     <i-radio v-for="item in enumSelectData.get('ApproveStatusEnum')" :label="item.itemCode" :key="item.itemCode" style="margin-right: 20px; margin-top: -5px">{{item.itemName}}</i-radio>
                   </i-radio-group>
                 </i-form-item>
@@ -351,6 +351,8 @@
         showSelectProduct: false,
         selectPeriodsAndRate: false,
         loanRateSumProuductRate: '',
+        // 初审信息
+        firstApproveEditIndex: -1,
         firstApproveForm: {
           approveDesc: '',
           approveWebsite: '',
@@ -433,6 +435,9 @@
           this.getLoanPeriodByProductNo(this.$data.productPackageNo, this.applyBasicInfo.custLevel);
         }
         this.getBankList(this.applyBasicInfo.loanNo);
+      },
+      approveResultChanged(e) {
+        this.$emit('on-result-change', e);
       }
     },
     mounted() {

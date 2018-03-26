@@ -116,6 +116,7 @@ export default {
                 },
                 on: {
                   click: () => {
+                    this.$data.firstApproveEditIndex = params.index;
                     this.$data.firstApproveForm = $.extend({}, params.row);
                     this.$data.addFirstApproveModal = true;
                   }

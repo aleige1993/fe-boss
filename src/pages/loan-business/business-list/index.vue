@@ -211,6 +211,10 @@
       }
     },
     mounted() {
+      this.$refs['loanSearchForm'].resetFields();
+      this.$data.searchForm.currentPage = 1;
+      this.$data.searchForm.pageSize = 15;
+      this.$data.searchForm.status = '0;1;3';
       this.getPrivateCustomerLoanList();
       this.getProductList();
       let enumSelectData = this.$store.getters.enumSelectData;
