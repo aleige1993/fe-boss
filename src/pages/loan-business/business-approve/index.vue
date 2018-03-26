@@ -38,6 +38,10 @@
       </i-tab-pane>
     </i-tabs>
     <div v-if="!isFromDetail" class="form-footer-actions">
+      <!-- <i-button @click="saveLoanApproveCraft" :loading="submitApproveLoading" type="success">
+        <span v-if="!submitApproveLoading"><i class="iconfont icon-tijiao"></i> 保存草稿</span>
+        <span v-else> loading...</span>
+      </i-button> -->
       <i-button @click="submitLoanApprove" :loading="submitApproveLoading" type="success">
         <span v-if="!submitApproveLoading"><i class="iconfont icon-tijiao"></i> 提交</span>
         <span v-else> loading...</span>

@@ -38,6 +38,12 @@ export default {
       }
     },
     /**
+     * 提交审批 -- 保存草稿
+    */
+    saveLoanApproveCraft() {
+      // TODO
+    },
+    /**
      * 提交审批
     */
     async submitLoanApprove() {

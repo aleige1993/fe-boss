@@ -78,7 +78,7 @@
               <i-col span="8">
                 <i-form-item label="审批额度" prop="loanApproveCreditDTO.approveLimitAmt"
                              :rules="{required: true, message: '请输入审批额度'}">
-                  <i-input :readonly="isFromDetail" v-model="approveData.loanApproveCreditDTO.approveLimitAmt">
+                  <i-input :readonly="isFromDetail" @on-change="approveAmtChanged" v-model="approveData.loanApproveCreditDTO.approveLimitAmt">
                     <span slot="append">元</span>
                   </i-input>
                 </i-form-item>
@@ -275,7 +275,7 @@
     </i-row>
 
     <!--添加初审信息的弹窗-->
-    <bs-modal v-model="addFirstApproveModal" :width="520" title="添加初审信息">
+    <bs-modal v-model="addFirstApproveModal" :width="520" title="添加/编辑初审信息">
       <i-form :label-width="120" ref="addFirstApproveForm" :model="firstApproveForm">
         <i-form-item label="查询渠道" prop="approveWebsite"
                      :rules="{required: true, message: '请输入查询渠道'}">

@@ -116,7 +116,10 @@ export default {
         this.$data.approveData.loanApproveCreditDTO = approveCreditResp.body;
       }
       if (approveFeePlanResp.success) {
-        this.$data.approveData.loanApproveFeePlanDTOS = approveFeePlanResp.body;
+        this.$data.approveData.loanApproveFeePlanDTOS = approveFeePlanResp.body.map(item => {
+          item.feeActualAmt = item.feeAmt;
+          return item;
+        });
       }
     },
     async getFirstApproveList(loanNo) {
@@ -151,7 +154,11 @@ export default {
         let tmLoanApproveFeePlanDTOList = result.tmLoanApproveFeePlanDTOList;
         // 费用收取方案 转换字段--实际费用金额
         if (tmLoanApproveFeePlanDTOList && tmLoanApproveFeePlanDTOList.length > 0) {
-          this.$data.approveData.loanApproveFeePlanDTOS = tmLoanApproveFeePlanDTOList;
+          this.$data.approveData.loanApproveFeePlanDTOS = tmLoanApproveFeePlanDTOList.map(item => {
+            // 让每一行的应收金额默认为当前行的费用金额
+            item.feeActualAmt = item.feeAmt;
+            return item;
+          });
         }
         // 放款条件
         this.$data.approveData.loanPaymentConditionDTOS = result.loanPaymentConditionDTOList;
@@ -289,6 +296,23 @@ export default {
       this.$data.approveData.loanApproveCreditDTO.loanNominalRate = row.loanNominalRate;
       this.$data.approveData.loanApproveCreditDTO.interestType = row.interestType;
       this.$data.selectPeriodsAndRate = false;
+    },
+    /**
+     * 输入审批金额，计算费用收取方案中的费用金额和应收金额
+     */
+    approveAmtChanged(e) {
+      let value = e.target.value || 0;
+      this.$data.approveData.loanApproveCreditDTO.carSaleAmt = '';
+      let newAry = this.$data.approveData.loanApproveFeePlanDTOS.map(item => {
+        if (item.feeCountType === '2') {
+          return item;
+        } else {
+          item.feeAmt = (value * item.feePercent) / 100;
+          item.feeActualAmt = (value * item.feePercent) / 100;
+          return item;
+        }
+      });
+      this.$data.approveData.loanApproveFeePlanDTOS = newAry;
     },
     /**
      * 表单验证

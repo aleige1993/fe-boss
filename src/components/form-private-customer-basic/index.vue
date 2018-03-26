@@ -61,8 +61,7 @@
                 </i-form-item>
               </i-col>
               <i-col span="8">
-                <i-form-item label="证件有效期" prop="mbMemberDTO.certValidDate"
-                  :rules="{required: true, message: '证件有效期不能为空', trigger: 'blur'}">
+                <i-form-item label="证件有效期" prop="mbMemberDTO.certValidDate">
                   <!-- <i-date-picker format="yyyy-MM-dd" :readonly="isFromDetail"
                   @on-change="certValidDateChange" :value="formData.mbMemberDTO.certValidDate"
                   type="date" placeholder="Select date" style="width: 100%"></i-date-picker> -->
