@@ -45,7 +45,7 @@
             </i-form-item>
           </i-form>
         </div>
-        <i-table :height="tableFixHeight+48" border :loading="dataLoading" ref="contractTable" :columns="columns1" :data="data1"></i-table>
+        <i-table :height="tableFixHeight+48" border :loading="dataLoading" ref="contractTable" :columns="columns" :data="data1"></i-table>
         <div class="page-container">
           <i-page :total="total" :page-size="pageSize" :current="currentPage" @on-change="jumpPage" size="small" show-elevator show-total></i-page>
         </div>
@@ -66,6 +66,7 @@
         total: 0,
         dataLoading: false,
         statusData: '0;1',
+        columns: [],
         clickRow: {},
         formSearch: {
           loanNo: '',
@@ -130,6 +131,11 @@
       },
       // 查询列表数据
       async getList(page) {
+        if (this.taskNode === '8' && !this.succeed) {
+          this.$data.columns = [...this.$data.columnsHasSign, ...this.$data.columns1];
+        } else {
+          this.$data.columns = this.$data.columns1;
+        }
         this.$data.dataLoading = true;
         if (page) {
           this.$data.currentPage = page;

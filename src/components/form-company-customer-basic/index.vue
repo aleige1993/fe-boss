@@ -279,7 +279,7 @@
       </i-col>
     </i-row>
     <bs-modal v-model="addAttachModal" title="上传附件">
-      <i-form ref="formCompanyCustomerAttach" :model="attachFormData" :label-width="80">
+      <i-form v-if="addAttachModal" ref="formCompanyCustomerAttach" :model="attachFormData" :label-width="80">
         <i-form-item label="文件名" prop="attachName"
                      :rules="{required: true, message: '请输入文件名'}">
           <i-input v-model="attachFormData.attachName"></i-input>

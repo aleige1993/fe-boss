@@ -46,6 +46,7 @@ export default {
         },
         {
           title: '操作',
+          fixed: 'right',
           key: 'action',
           width: 120,
           align: 'center',
@@ -74,7 +75,18 @@ export default {
           }
         }
       ],
-      data1: []
+      data1: [],
+      columnsHasSign: [
+        {
+          title: '线上签约状态', // succeed
+          fixed: 'right',
+          width: 100,
+          key: 'hasSign',
+          render: (h, params) => {
+            return h('span', {}, this.enumCode2Name(params.row.hasSign, 'YesNoEnum'));
+          }
+        }
+      ]
     };
   },
   methods: {

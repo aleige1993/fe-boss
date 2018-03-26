@@ -18,6 +18,7 @@
       <i-upload v-if="!isDetails" style="display: inline-block; float: left; width:128px; margin-left: 5px; position: relative" :show-upload-list="false"
                 multiple type="drag"
                 :on-progress="uploading"
+                :before-upload="uploadBefore"
                 :on-success="uploadFileSuccess"
                 :action="$config.HTTPBASEURL+'/common/upload'">
         <div style="width: 126px;height:128px;line-height: 150px; text-align: center; border: 1px dashed #2196f3; color: #2196f3">
@@ -51,6 +52,11 @@
         type: Boolean,
         required: false,
         default: false
+      },
+      regularText: {
+        type: String,
+        required: false,
+        default: ''
       }
     },
     mounted() {
@@ -67,6 +73,18 @@
       },
       uploading() {
         this.$data.isUploading = true;
+      },
+      uploadBefore(file) {
+        if (this.regularText !== '' && file.name.includes(this.regularText)) {
+          this.$Message.error({
+            content: `上传的文件名称中不能包含“${this.regularText}”字符！`,
+            duration: 2
+          });
+          return false;
+        }
+      },
+      closeUploading() {
+        this.$data.isUploading = false;
       },
       uploadFileSuccess(res) {
         this.$data.isUploading = false;
