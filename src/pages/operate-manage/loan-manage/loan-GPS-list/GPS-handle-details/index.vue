@@ -141,42 +141,58 @@
         </i-button>
       </div>
     </i-tabs>
-    <!--查看车辆信息弹窗-->
+    <!--完善车辆信息弹窗-->
     <bs-modal v-model="detailsCarDataShowModal" title="车辆信息" :width="1200">
-      <i-form v-if="detailsCarDataShowModal" ref="detailsCarDataForm" :model="detailsCarDataForm" label-position="right" :label-width="120" class="input-label-color">
+      <i-form v-if="detailsCarDataShowModal" ref="detailsCarDataForm" :model="detailsCarDataForm" label-position="right" :label-width="120">
         <i-row>
           <i-col span="8">
             <i-form-item
               label="担保类型"
+              :rules="{required: true, message: '担保类型不能为空'}"
               prop="guaranteeType">
-              <span v-text="enumCode2Name(detailsCarDataForm.guaranteeType, 'PawnTypeEnum')"></span>
+              <i-select v-model="detailsCarDataForm.guaranteeType">
+                <i-option v-for="item in enumSelectData.get('PawnTypeEnum')" :key="item.itemCode" :value="item.itemCode">{{item.itemName}}</i-option>
+              </i-select>
             </i-form-item>
           </i-col>
           <i-col span="8">
             <i-form-item
               label="权利人类型"
+              :rules="{required: true, message: '权利人类型不能为空'}"
               prop="custType">
-              <span v-text="enumCode2Name(detailsCarDataForm.custType, 'CustTypeEnum')"></span>
+              <i-select v-model="detailsCarDataForm.custType">
+                <i-option v-for="item in enumSelectData.get('CustTypeEnum')" :key="item.itemCode" :value="item.itemCode">{{item.itemName}}</i-option>
+              </i-select>
             </i-form-item>
           </i-col>
           <!--权利人-->
           <i-col span="8" v-if="detailsCarDataForm.custType=='1' || detailsCarDataForm.custType=='2'">
             <i-form-item
               label="权利人"
+              :rules="{required: true, message: '请选择权利人'}"
               prop="carOwnerNo">
-              <span v-text="detailsCarDataForm.carOwnerName"></span>
+              <input type="hidden" v-model="detailsCarDataForm.carOwnerNo"/>
+              <i-input v-if="detailsCarDataForm.custType=='1'" v-model="detailsCarDataForm.carOwnerName" :readonly="true" placeholder="选择权利人">
+                <i-button @click="showSelectObligee=!showSelectObligee" slot="append">选择权利人 <Icon type="ios-more"></Icon></i-button>
+              </i-input>
+              <i-input v-if="detailsCarDataForm.custType=='2'" v-model="detailsCarDataForm.carOwnerName" :readonly="true" placeholder="选择企业权利人">
+                <i-button @click="showSelectCompanyOwner=!showSelectCompanyOwner" slot="append">选择企业权利人 <Icon type="ios-more"></Icon></i-button>
+              </i-input>
             </i-form-item>
           </i-col>
         </i-row>
         <i-row>
           <i-col span="8">
             <i-form-item label="车牌号" prop="carPlateNo">
-              <span v-text="detailsCarDataForm.carPlateNo"></span>
+              <i-input v-model="detailsCarDataForm.carPlateNo" placeholder="">
+              </i-input>
             </i-form-item>
           </i-col>
           <i-col span="8">
             <i-form-item label="是否临时车牌" prop="isTmpPlate">
-              <span v-text="enumCode2Name(detailsCarDataForm.isTmpPlate, 'YesNoEnum')"></span>
+              <i-select v-model="detailsCarDataForm.isTmpPlate">
+                <i-option v-for="item in enumSelectData.get('YesNoEnum')" :key="item.itemCode" :value="item.itemCode">{{item.itemName}}</i-option>
+              </i-select>
             </i-form-item>
           </i-col>
         </i-row>
@@ -184,49 +200,62 @@
           <!--车辆品牌-->
           <i-col span="24">
             <i-form-item
-              label="车辆型号"
-              prop="">
-              <span v-text="detailsCarDataForm.carBrandName+detailsCarDataForm.carTypeName+detailsCarDataForm.carModelName"></span>
+              label="车辆品牌"
+              prop="carModel"
+              :rules="{required: true, message: '车辆品牌不能为空'}">
+              <input type="hidden" v-model="detailsCarDataForm.carModel">
+              <bs-carpicker :currBrand="detailsCarDataForm.carBrandName"
+                            :currSeries="detailsCarDataForm.carTypeName"
+                            :currModel="detailsCarDataForm.carModelName"
+                            @on-change="selectLoanCar">
+              </bs-carpicker>
             </i-form-item>
           </i-col>
         </i-row>
         <i-row>
           <!--车辆颜色-->
           <i-col span="8">
-            <i-form-item label="车辆颜色" prop="carColor">
-              <span v-text="enumCode2Name(detailsCarDataForm.carColor, 'CarColorEnum')"></span>
+            <i-form-item label="车辆颜色" prop="carColor" :rules="{required: true, message: '请选择车辆颜色', trigger: 'change'}">
+              <i-select v-model="detailsCarDataForm.carColor">
+                <i-option v-for="item in enumSelectData.get('CarColorEnum')" :key="item.itemCode" :value="item.itemCode">{{item.itemName}}</i-option>
+              </i-select>
             </i-form-item>
           </i-col>
           <!--排量-->
           <i-col span="8">
             <i-form-item label="排量" prop="carOutputVolume">
-              <span v-text="detailsCarDataForm.carOutputVolume"></span>
+              <i-input v-model="detailsCarDataForm.carOutputVolume" placeholder="">
+              </i-input>
             </i-form-item>
           </i-col>
           <!--排放标准-->
           <i-col span="8">
             <i-form-item label="排放标准" prop="carOutputStand">
-              <span v-text="detailsCarDataForm.carOutputStand"></span>
+              <i-input v-model="detailsCarDataForm.carOutputStand" placeholder="">
+              </i-input>
             </i-form-item>
           </i-col>
         </i-row>
         <i-row>
           <!--生产厂商-->
           <i-col span="8">
-            <i-form-item label="生产厂商" prop="carVendor">
-              <span v-text="detailsCarDataForm.carVendor"></span>
+            <i-form-item label="生产厂商" prop="carVendor" :rules="{required: true, message: '请输入生产厂商'}">
+              <i-input v-model="detailsCarDataForm.carVendor" placeholder="">
+              </i-input>
             </i-form-item>
           </i-col>
           <!--发动机号-->
           <i-col span="8">
             <i-form-item label="发动机号" prop="carEngineNo">
-              <span v-text="detailsCarDataForm.carEngineNo"></span>
+              <i-input v-model="detailsCarDataForm.carEngineNo" placeholder="">
+              </i-input>
             </i-form-item>
           </i-col>
           <!--车架号-->
           <i-col span="8">
             <i-form-item label="车架号" prop="carFrameNo">
-              <span v-text="detailsCarDataForm.carFrameNo"></span>
+              <i-input v-model="detailsCarDataForm.carFrameNo" placeholder="">
+              </i-input>
             </i-form-item>
           </i-col>
         </i-row>
@@ -234,19 +263,20 @@
           <!--出厂日期-->
           <i-col span="8">
             <i-form-item label="出厂日期" prop="carBirthday">
-              <span v-text="detailsCarDataForm.carBirthday"></span>
+              <bs-datepicker v-model="detailsCarDataForm.carBirthday" placeholder="出厂日期"></bs-datepicker>
             </i-form-item>
           </i-col>
           <!--上牌城市-->
           <i-col span="8">
             <i-form-item label="上牌城市" prop="carOnCity">
-              <span v-text="detailsCarDataForm.carOnCity"></span>
+              <i-input v-model="detailsCarDataForm.carOnCity" placeholder="">
+              </i-input>
             </i-form-item>
           </i-col>
           <!--上牌时间-->
           <i-col span="8">
             <i-form-item label="上牌时间" prop="carOnDate">
-              <span v-text="detailsCarDataForm.carOnDate"></span>
+              <bs-datepicker v-model="detailsCarDataForm.carOnDate" placeholder="申请时间"></bs-datepicker>
             </i-form-item>
           </i-col>
         </i-row>
@@ -254,19 +284,23 @@
           <!--过户次数-->
           <i-col span="8">
             <i-form-item label="过户次数" prop="carTransferCount">
-              <span v-text="detailsCarDataForm.carTransferCount"></span>
+              <i-input v-model="detailsCarDataForm.carTransferCount" placeholder="">
+              </i-input>
             </i-form-item>
           </i-col>
           <!--抵押次数-->
           <i-col span="8">
             <i-form-item label="抵押次数" prop="carGuaCount">
-              <span v-text="detailsCarDataForm.carGuaCount"></span>
+              <i-input v-model="detailsCarDataForm.carGuaCount" placeholder="">
+              </i-input>
             </i-form-item>
           </i-col>
           <!--行驶里程-->
           <i-col span="8">
             <i-form-item label="行驶里程" prop="carMileage">
-              <span v-text="(detailsCarDataForm.carMileage&&detailsCarDataForm.carMileage!=='')?detailsCarDataForm.carMileage+'KM':detailsCarDataForm.carMileage"></span>
+              <i-input v-model="detailsCarDataForm.carMileage" placeholder="">
+                <span slot="append">KM</span>
+              </i-input>
             </i-form-item>
           </i-col>
         </i-row>
@@ -274,7 +308,8 @@
           <!--合格证号-->
           <i-col span="8">
             <i-form-item label="合格证号" prop="carCertNo">
-              <span v-text="detailsCarDataForm.carCertNo"></span>
+              <i-input v-model="detailsCarDataForm.carCertNo" placeholder="">
+              </i-input>
             </i-form-item>
           </i-col>
           <!--车辆状况-->
@@ -282,13 +317,17 @@
             <i-form-item
               label="车辆状况"
               prop="carStatus">
-              <span v-text="enumCode2Name(detailsCarDataForm.carStatus, 'CarConditionEnum')"></span>
+              <i-select v-model="detailsCarDataForm.carStatus">
+                <i-option v-for="item in enumSelectData.get('CarConditionEnum')" :key="item.itemCode" :value="item.itemCode">{{item.itemName}}</i-option>
+              </i-select>
             </i-form-item>
           </i-col>
           <!--有无事故-->
           <i-col span="8">
             <i-form-item label="有无事故" prop="carIsFault">
-              <span v-text="enumCode2Name(detailsCarDataForm.carIsFault, 'HaveNoEnum')"></span>
+              <i-select v-model="detailsCarDataForm.carIsFault">
+                <i-option v-for="item in enumSelectData.get('HaveNoEnum')" :key="item.itemCode" :value="item.itemCode">{{item.itemName}}</i-option>
+              </i-select>
             </i-form-item>
           </i-col>
         </i-row>
@@ -296,13 +335,16 @@
           <!--机动车登记证书号-->
           <i-col span="8">
             <i-form-item label="机动车登记证书号" prop="carRegNo">
-              <span v-text="detailsCarDataForm.carRegNo"></span>
+              <i-input v-model="detailsCarDataForm.carRegNo" placeholder="">
+              </i-input>
             </i-form-item>
           </i-col>
           <!--是否挂靠-->
           <i-col span="8">
             <i-form-item label="是否挂靠" prop="carIsAnchored">
-              <span v-text="enumCode2Name(detailsCarDataForm.carIsAnchored, 'YesNoEnum')"></span>
+              <i-select v-model="detailsCarDataForm.carIsAnchored">
+                <i-option v-for="item in enumSelectData.get('YesNoEnum')" :key="item.itemCode" :value="item.itemCode">{{item.itemName}}</i-option>
+              </i-select>
             </i-form-item>
           </i-col>
         </i-row>
@@ -310,19 +352,21 @@
           <!--发票开具单位-->
           <i-col span="8">
             <i-form-item label="发票开具单位" prop="billCorpName">
-              <span v-text="detailsCarDataForm.billCorpName"></span>
+              <i-input v-model="detailsCarDataForm.billCorpName" placeholder="">
+              </i-input>
             </i-form-item>
           </i-col>
           <!--发票号-->
           <i-col span="8">
             <i-form-item label="发票编号" prop="billNo">
-              <span v-text="detailsCarDataForm.billNo"></span>
+              <i-input v-model="detailsCarDataForm.billNo" placeholder="">
+              </i-input>
             </i-form-item>
           </i-col>
           <!--发票价格-->
           <i-col span="8">
             <i-form-item label="发票价格" prop="billAmt">
-              <span v-text="detailsCarDataForm.billAmt"></span>
+              <i-input v-model="detailsCarDataForm.billAmt" placeholder=""></i-input>
             </i-form-item>
           </i-col>
         </i-row>
@@ -330,22 +374,31 @@
           <!--厂商指导价-->
           <i-col span="8">
             <i-form-item label="厂商指导价" prop="carGuidePrice">
-              <span v-text="(detailsCarDataForm.billAmt&&detailsCarDataForm.billAmt!=='')&&(detailsCarDataForm.billAmt+'元')"></span>
+              <i-input v-model="detailsCarDataForm.carGuidePrice" placeholder="">
+                <span slot="append">元</span>
+              </i-input>
             </i-form-item>
           </i-col>
           <!--车辆购买价格-->
           <i-col span="8">
-            <i-form-item label="车辆购买价格" prop="carBuyPrice">
-              <span v-text="(detailsCarDataForm.carBuyPrice&&detailsCarDataForm.carBuyPrice!=='')&&(detailsCarDataForm.carBuyPrice+'元')"></span>
+            <i-form-item label="车辆购买价格" prop="carBuyPrice" :rules="{required: true, message: '请输入车辆购买价格', trigger: 'blur'}">
+              <i-input v-model="detailsCarDataForm.carBuyPrice" placeholder="">
+                <span slot="append">元</span>
+              </i-input>
             </i-form-item>
           </i-col>
           <!--车辆价值-->
           <i-col span="8">
             <i-form-item label="车辆价值" prop="carEvaluatePrice">
-              <span v-text="(detailsCarDataForm.carEvaluatePrice&&detailsCarDataForm.carEvaluatePrice!=='')&&(detailsCarDataForm.carEvaluatePrice+'元')"></span>
+              <i-input v-model="detailsCarDataForm.carEvaluatePrice" placeholder="">
+                <span slot="append">元</span>
+              </i-input>
             </i-form-item>
           </i-col>
         </i-row>
+        <i-form-item class="text-right">
+          <i-button type="primary" @click="setCarDataSubmit">提交</i-button>
+        </i-form-item>
       </i-form>
     </bs-modal>
     <!--GPS安装信息-->
@@ -428,6 +481,7 @@
         clickRow: {},
         isAddGPS: true,
         tabIndex: 0,
+        clickRowIndex: 0,
         showSelectObligee: false, // 选择车辆权利人
         showSelectCompanyOwner: false, // 选择车辆企业权利人
         carDataLoading: false, // 车辆表loading
@@ -732,14 +786,20 @@
       },
       // 完善车辆信息弹窗的提交按钮
       setCarDataSubmit() {
-        let ind = this.$data.clickRow._index; // 车辆列表的索引index
+        let ind = this.$data.clickRowIndex; // 车辆列表的索引index
         this.$refs['detailsCarDataForm'].validate(async (valid) => {
           if (valid) {
-            this.$set(this.$data.carData, ind, this.$data.detailsCarDataForm);
-            this.$Message.success('提交成功');
+            let reps = await this.$http.post('/biz/sign/update/loanCar', {
+              ...this.$data.detailsCarDataForm
+            });
             this.$data.detailsCarDataShowModal = false;
+            if (reps.success) {
+              this.$set(this.$data.carData, ind, this.$data.detailsCarDataForm);
+              this.$Message.success('车辆信息提交成功');
+            }
           } else {
             this.$Message.error('<span style="color: red">*</span>项不能为空');
+            this.$data.detailsCarDataShowModal = true;
           }
         });
       },

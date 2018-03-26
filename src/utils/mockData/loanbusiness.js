@@ -615,7 +615,7 @@ export default [
       'success': true
     })
   },
-  // 抵押物管理-设置当前处理人 （可通用）
+  // 权证管理-设置当前处理人 （可通用）
   {
     url: '/biz/payment/settingHandleUserWithPawn',
     on: true,
@@ -655,7 +655,7 @@ export default [
       'success': true
     })
   },
-  // 抵押物待办列表
+  // 权证待办列表
   {
     url: '/biz/payment/pagePaymentWaitDonePawn',
     on: true,

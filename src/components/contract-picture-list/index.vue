@@ -54,8 +54,6 @@
       }
     },
     mounted() {
-      console.log(this.picData);
-      console.log(this.isDetails);
       this.$data.isDetails = this.details || this.details === 'true';
     },
     methods: {

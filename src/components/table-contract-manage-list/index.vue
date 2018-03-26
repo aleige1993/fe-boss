@@ -21,6 +21,9 @@
             <i-form-item prop="custName" style="margin-right:20px;">
               <i-input type="text" placeholder="客户名称" v-model="formSearch.custName"></i-input>
             </i-form-item>
+            <i-form-item prop="productName" style="margin-right:20px;">
+              <i-input type="text" placeholder="产品名称" v-model="formSearch.productName"></i-input>
+            </i-form-item>
             <i-form-item prop="certType" style="margin-right:20px;">
               <i-select v-model="formSearch.certType" style="width:150px" placeholder="证件类型">
                 <i-option value="" style="height: 26px; color: #bbbec4">-请选择-</i-option>
@@ -67,6 +70,7 @@
         formSearch: {
           loanNo: '',
           custName: '',
+          productName: '',
           certType: '',
           certNo: '',
           startDate: '',
