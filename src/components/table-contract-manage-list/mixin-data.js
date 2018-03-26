@@ -74,7 +74,17 @@ export default {
           }
         }
       ],
-      data1: []
+      data1: [],
+      columnsHasSign: [
+        {
+          title: '线上签约状态', // succeed
+          width: 90,
+          key: 'hasSign',
+          render: (h, params) => {
+            return h('span', {}, this.enumCode2Name(params.row.hasSign, 'YesNoEnum'));
+          }
+        }
+      ]
     };
   },
   methods: {
