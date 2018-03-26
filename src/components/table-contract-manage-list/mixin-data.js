@@ -46,6 +46,7 @@ export default {
         },
         {
           title: '操作',
+          fixed: 'right',
           key: 'action',
           width: 120,
           align: 'center',
@@ -78,7 +79,8 @@ export default {
       columnsHasSign: [
         {
           title: '线上签约状态', // succeed
-          width: 90,
+          fixed: 'right',
+          width: 100,
           key: 'hasSign',
           render: (h, params) => {
             return h('span', {}, this.enumCode2Name(params.row.hasSign, 'YesNoEnum'));
