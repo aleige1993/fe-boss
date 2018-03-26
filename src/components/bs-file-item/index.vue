@@ -54,6 +54,8 @@
           return 'text';
         case 'pdf':
           return 'pdf';
+        case 'mp4' || 'avi' || 'mpeg4' || 'rmvb' || 'mkv' || 'mov' || 'f4v':
+          return 'mpeg';
         default:
           return 'file';
         }
