@@ -79,6 +79,7 @@ export default {
                 },
                 on: {
                   click: async() => {
+                    this.$data.tableRowIndex = params.index;
                     this.$data.detailsCarDataShowModal = true;
                     this.$data.clickRow = {};
                     this.$data.clickRow = $.extend({}, params.row);
@@ -98,10 +99,18 @@ export default {
                 on: {
                   click: () => {
                     this.$data.clickRow = params.row;
+                    this.$data.tableRowIndex = params.index;
                     // 权证回传方式为《先入库后抵押》则展示办理抵押按钮
                     if (this.$data.warrantType === '2') {
                       this.$data.formalitiesShowModal = true;
                       this.$data.formalities = $.extend(true, {}, this.$data.formalities, params.row);
+                      // 转成数组
+                      if (!this.$data.formalities.mortgageUrl || !this.$data.formalities.mortgageName) {
+                        this.$data.mortgageList = [];
+                      } else {
+                        this.$data.mortgageList = this.mortgageStrToArray(this.$data.formalities.mortgageUrl, this.$data.formalities.mortgageName);
+                        console.log(this.$data.mortgageList);
+                      }
                     }
                     // 权证回传方式为《先抵押后入库》则展示办理抵押按钮
                     if (this.$data.warrantType === '1') {

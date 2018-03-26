@@ -71,7 +71,7 @@ export default {
             return h('div', [
               h('Button', {
                 props: {
-                  type: 'success',
+                  type: 'primary',
                   size: 'small'
                 },
                 style: {
@@ -82,10 +82,19 @@ export default {
                     this.$data.detailsCarDataShowModal = true;
                     this.$data.clickRow = {};
                     this.$data.clickRow = $.extend({}, params.row);
+                    this.$data.clickRowIndex = params.index;
                     this.$data.detailsCarDataForm = $.extend({}, params.row);
+                    this.$data.detailsCarDataForm.billAmt &&
+                    (this.$data.detailsCarDataForm.billAmt = this.$data.detailsCarDataForm.billAmt + '');
+                    this.$data.detailsCarDataForm.carBuyPrice &&
+                    (this.$data.detailsCarDataForm.carBuyPrice = this.$data.detailsCarDataForm.carBuyPrice + '');
+                    this.$data.detailsCarDataForm.carGuidePrice &&
+                    (this.$data.detailsCarDataForm.carGuidePrice = this.$data.detailsCarDataForm.carGuidePrice + '');
+                    this.$data.detailsCarDataForm.carEvaluatePrice &&
+                    (this.$data.detailsCarDataForm.carEvaluatePrice = this.$data.detailsCarDataForm.carEvaluatePrice + '');
                   }
                 }
-              }, '查看车辆信息'),
+              }, '完善车辆信息'),
               h('Button', {
                 props: {
                   type: 'error',

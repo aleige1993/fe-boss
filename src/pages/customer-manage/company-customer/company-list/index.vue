@@ -33,9 +33,9 @@
         this.$router.push('/index/customer/companycustomer/modify');
       },
       selectCompanyCustomer(row, index) {
-        this.$Modal.info({
+        /* this.$Modal.info({
           content: index
-        });
+        });*/
       }
     },
     components: {

@@ -125,10 +125,10 @@ export default [
                   { name: '放款审批', url: '/index/operate/loan/approval' }
                 ]
               },
-              { name: '抵押物管理',
+              { name: '权证管理',
                 url: '/index/operate/pawn',
                 childMenus: [
-                  { name: '抵押物待办列表', url: '/index/operate/pawn' }
+                  { name: '权证待办列表', url: '/index/operate/pawn' }
                 ]
               }
             ]
