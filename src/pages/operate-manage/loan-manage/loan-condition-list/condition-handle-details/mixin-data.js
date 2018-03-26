@@ -109,7 +109,6 @@ export default {
                         this.$data.mortgageList = [];
                       } else {
                         this.$data.mortgageList = this.mortgageStrToArray(this.$data.formalities.mortgageUrl, this.$data.formalities.mortgageName);
-                        console.log(this.$data.mortgageList);
                       }
                     }
                     // 权证回传方式为《先抵押后入库》则展示办理抵押按钮

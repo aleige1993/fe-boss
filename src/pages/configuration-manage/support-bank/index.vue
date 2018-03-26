@@ -14,7 +14,7 @@
       <i-page :total="total" :page-size="15" :current="currentPage" @on-change="jumpPage" size="small" show-elevator show-total></i-page>
     </div>
     <pt-modal :title="isAdd ? '添加' : '修改'" v-model="addModal" :width="600" :zIndex="200">
-      <i-form ref="fromData" :model="fromData" label-position="left" :label-width="80">
+      <i-form v-if="addModal" ref="fromData" :model="fromData" label-position="left" :label-width="80">
         <i-form-item label="银行名称" prop="bankName">
           <i-input v-model="fromData.bankName" placeholder="" ></i-input>
         </i-form-item>

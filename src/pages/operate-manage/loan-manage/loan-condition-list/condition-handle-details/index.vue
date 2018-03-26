@@ -149,7 +149,7 @@
     </i-tabs>
     <!--办理抵质押物手续-->
     <bs-modal v-model="formalitiesShowModal" title="办理抵质押物手续" :width="1200" @on-close="emptyRowPic">
-      <i-form ref="formalities" :model="formalities" label-position="right" :label-width="80">
+      <i-form v-if="formalitiesShowModal" ref="formalities" :model="formalities" label-position="right" :label-width="80">
         <i-row>
           <i-col span="12">
             <i-form-item label="抵押状态">
@@ -198,7 +198,7 @@
         <i-row>
           <i-col span="24">
             <i-form-item label="办理文件" prop="">
-              <contract-picture-list :picData="mortgageList" @on-data-remove="picDataRomove"  @on-data-add="picDataAdd"></contract-picture-list>
+              <mortgage-picture-list ref="mortgagePictureList" :regularText="'@'" :picData="mortgageList" @on-data-remove="picDataRomove"  @on-data-add="picDataAdd"></mortgage-picture-list>
             </i-form-item>
           </i-col>
         </i-row>
@@ -432,7 +432,7 @@
     </bs-modal>
     <!--担保落实modal-->
     <bs-modal v-model="guaranteeShowModal" title="担保落实" :width="520">
-      <i-form ref="formagGuarantee" :model="formagGuarantee" label-position="right" :label-width="80">
+      <i-form v-if="guaranteeShowModal" ref="formagGuarantee" :model="formagGuarantee" label-position="right" :label-width="80">
         <i-form-item label="办理时间"
                      prop="makeDate"
                      :rules="{required: true, message: '办理时间不能为空', trigger: 'blur'}">
@@ -494,7 +494,7 @@
 </template>
 
 <script>
-  import ContractPictureList from '@/components/contract-picture-list';
+  import MortgagePictureList from '@/components/file-picture-list';
   import MixinData from './mixin-data';
   import BsModal from '@/components/bs-modal';
   import TableLoanInfo from '@/components/table-loan-approval-info';
@@ -507,7 +507,7 @@
     components: {
       BsModal,
       'bs-carpicker': BsCarpicker,
-      ContractPictureList,
+      MortgagePictureList,
       TableCustomerList,
       TableCompanyCustomerList,
       TableLoanInfo
@@ -673,12 +673,8 @@
     methods: {
       // 把车辆信息里的办理文件名和地址解析成数组 间隔字符‘@’,第一个参数时文件地址，第二个时文件名称
       mortgageStrToArray(urLStr, nameStr) {
-        console.log(urLStr);
-        console.log(nameStr);
         let urlAry = urLStr.split('@');
         let nameAry = nameStr.split('@');
-        console.log(urlAry);
-        console.log(nameAry);
         let mortgageAry = [];
         urlAry.map((item, index) => {
           mortgageAry[index] = {
@@ -687,49 +683,53 @@
           };
           return item;
         });
-        console.log(mortgageAry);
+        // console.log(mortgageAry);
         return mortgageAry;
       },
-      // 把车辆信息里的办理文件名和地址解析返回成字符串 间隔字符‘@’,第一个参数时文件地址，第二个时文件名称, 第三个参数是要转换的数组集合(attachmentUrl和attachmentName)
-      mortgageArrayToObj(url, name, urLAry) {
+      // 把车辆信息里的办理文件名和地址解析返回成字符串 间隔字符‘@’,参数是要转换的数组集合(attachmentUrl和attachmentName)
+      mortgageArrayToObj(urLAry) {
         let mortgageObj = {
-          url: '',
-          name: ''
+          mortgageUrl: '',
+          mortgageName: ''
         };
         urLAry.map((item, index) => {
-          mortgageObj.url += item.attachmentUrl + '@';
-          mortgageObj.name += item.attachmentName + '@';
+          mortgageObj.mortgageUrl += item.attachmentUrl + '@';
+          mortgageObj.mortgageName += item.attachmentName + '@';
           return item;
         });
-        mortgageObj.url = mortgageObj.url.substring(0, mortgageObj.url.indexOf('@') + 1);
-        mortgageObj.name = mortgageObj.name.substring(0, mortgageObj.name.indexOf('@') + 1);
+        mortgageObj.mortgageUrl = mortgageObj.mortgageUrl.substring(0, mortgageObj.mortgageUrl.lastIndexOf('@'));
+        mortgageObj.mortgageName = mortgageObj.mortgageName.substring(0, mortgageObj.mortgageName.lastIndexOf('@'));
         // console.log(mortgageObj);
         return mortgageObj;
       },
       // 添加车辆图片
       picDataAdd(dataList) {
-        this.$data.formalities.mortgageUrl += '@' + dataList.attachmentUrl;
-        this.$data.formalities.mortgageName += '@' + dataList.attachmentName;
-        if (this.$data.formalities.mortgageUrl.substring(0, 1) === '@') {
-          this.$data.formalities.mortgageUrl =
-            this.$data.formalities.mortgageUrl.slice(1);
-          console.log('this.$data.formalities.mortgageUrl:' + this.$data.formalities.mortgageUrl);
+        if (this.$data.formalities.mortgageUrl === '') {
+          this.$data.formalities.mortgageUrl += dataList.attachmentUrl;
+        } else {
+          this.$data.formalities.mortgageUrl += '@' + dataList.attachmentUrl;
         }
-        this.$data.formalities.mortgageName =
-          this.$data.formalities.mortgageName.substring(this.$data.formalities.mortgageName.IndexOf('@'));
+        if (this.$data.formalities.mortgageName === '') {
+          this.$data.formalities.mortgageName += dataList.attachmentName;
+        } else {
+          this.$data.formalities.mortgageName += '@' + dataList.attachmentName;
+        }
       },
       // 删除车辆图片
       picDataRomove(index) {
         // 转数组
-        let mortgageAry = this.mortgageStrToArray(this.$data.formalities.mortgageUrl, this.$data.formalities.mortgageName);
+        let mortgageAry = this.mortgageStrToArray('' + this.$data.formalities.mortgageUrl, '' + this.$data.formalities.mortgageName);
         mortgageAry.splice(index, 1);
-        let newtgageObj = this.mortgageArrayToObj('mortgageUrl', 'mortgageName', mortgageAry);
-        this.$data.formalities.mortgageUrl = newtgageObj.mortgageUrl;
-        this.$data.formalities.mortgageName = newtgageObj.mortgageName;
+        this.$data.mortgageList = mortgageAry;
+        let newtgageObj = this.mortgageArrayToObj(mortgageAry);
+        this.$set(this.$data.formalities, 'mortgageUrl', newtgageObj.mortgageUrl);
+        this.$set(this.$data.formalities, 'mortgageName', newtgageObj.mortgageName);
       },
       // 办理抵押模态框关闭后清楚组件内文件数据
       emptyRowPic() {
         this.$data.mortgageList = [];
+        this.$data.formalities = {};
+        this.$refs['mortgagePictureList'].closeUploading();
       },
       /**
        *  车辆品牌
@@ -923,6 +923,7 @@
       },
       // 办理抵质押物手续modal-提交按钮
       formalitiesSubmit() {
+        this.$refs['mortgagePictureList'].closeUploading(); // 关闭上传loading
         let ind = this.$data.clickRow._index; // 车辆列表的索引index
         this.$refs['formalities'].validate(async (valid) => {
           if (valid) {
