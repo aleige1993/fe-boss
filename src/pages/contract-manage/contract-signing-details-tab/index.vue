@@ -121,7 +121,7 @@
   import MixinData from './mixin-data';
   import examineMixinData from './examine-mixin-data';
   import BsModal from '@/components/bs-modal';
-  import ContractPictureList from '@/components/contract-picture-list';
+  import ContractPictureList from '@/components/file-picture-list';
   export default {
     name: 'contractSigningTab',
     mixins: [MixinData, examineMixinData],

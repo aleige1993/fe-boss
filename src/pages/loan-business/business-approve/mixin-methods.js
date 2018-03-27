@@ -38,6 +38,34 @@ export default {
       }
     },
     /**
+    * 提交数据到后端
+    */
+    async submitApproveData(submitUrl, submitData) {
+      this.$data.submitApproveLoading = true;
+      let resp = await this.$http.post(submitUrl, submitData);
+      this.$data.submitApproveLoading = false;
+      if (resp.success && resp.reMsg !== '失败') {
+        this.$Message.success('审批成功');
+        this.$router.push({
+          name: 'loanBusinessList'
+        });
+      }
+    },
+    /**
+     * 提交审批 -- 保存草稿
+    */
+    saveLoanApproveCraft() {
+      // TODO
+      Alertify.confirm('确定要保存当前数据吗？', ok => {
+        let vmApplyInfo = this.$refs['applyInfo'];
+        let applyData = vmApplyInfo.getApplyData();
+        let vmApproveInfo = this.$refs['approveInfo'];
+        let approveData = vmApproveInfo.getApproveData();
+        let submitData = $.extend({ opeType: '1' }, applyData, approveData);
+        this.submitApproveData('/biz/saveLoanApprove', submitData);
+      });
+    },
+    /**
      * 提交审批
     */
     async submitLoanApprove() {
@@ -103,15 +131,9 @@ export default {
             $('html, body')[0].scrollTop = $('body')[0].clientHeight; // 滚动条滚动到底部
             return;
           }
-          await this.$AuditPrompt.auditPromptFun(submitData.loanApproveDTO.result, async () => {
-            this.$data.submitApproveLoading = true;
-            let resp = await this.$http.post(submitUrl, submitData);
-            this.$data.submitApproveLoading = false;
-            if (resp.success && resp.reMsg !== '失败') {
-              this.$Message.success('审批成功');
-              this.$router.push({
-                name: 'loanBusinessList'
-              });
+          Alertify.confirm('确定要提交审批吗？', ok => {
+            if (ok) {
+              this.submitApproveData(submitUrl, submitData);
             }
           });
         }

@@ -148,58 +148,64 @@
       </div>
     </i-tabs>
     <!--办理抵质押物手续-->
-    <bs-modal v-model="formalitiesShowModal" title="办理抵质押物手续" :width="520">
-      <i-form ref="formalities" :model="formalities" label-position="right" :label-width="80">
-        <i-form-item label="抵押状态">
-          <span v-text="enumCode2Name('1', 'MortgageStatusEnum')"></span>
-        </i-form-item>
-        <i-form-item label="办理时间"
-                     prop="makeDate"
-                     :rules="{required: true, message: '办理时间不能为空', trigger: 'blur'}">
-          <bs-datepicker v-model="formalities.makeDate" type="text" placeholder="办理时间"></bs-datepicker>
-        </i-form-item>
-        <i-form-item label="经办人"
-                     prop="makeUser"
-                     :rules="{required: true, message: '经办人不能为空', trigger: 'blur'}">
-          <i-input v-model="formalities.makeUser" placeholder=""></i-input>
-        </i-form-item>
-        <i-form-item label="权证编号"
-                     prop="warrantNo"
-                     :rules="{required: true, message: '权证编号不能为空', trigger: 'blur'}">
-          <i-input v-model="formalities.warrantNo" placeholder=""></i-input>
-        </i-form-item>
-        <i-form-item label="登记机关"
-                     prop="registerCompany"
-                     :rules="{required: true, message: '登记机关不能为空', trigger: 'blur'}">
-          <i-input v-model="formalities.registerCompany" placeholder=""></i-input>
-        </i-form-item>
-        <i-form-item label="备注"
-                     prop="remark">
-          <i-input type="textarea" :rows="2" v-model="formalities.remark" placeholder=""></i-input>
-        </i-form-item>
-        <i-form-item
-          label="办理文件"
-          prop="mortgageUrl"
-          :rules="{required: true, message: '请上传办理文件', trigger: 'blur'}">
-          <i-upload
-            :show-upload-list="false"
-            :on-success="uploadSuccessAlities"
-            :before-upload="uploadProgressAlities"
-            :on-error="uploadErrorAlities"
-            type="drag"
-            :action="$config.HTTPBASEURL + '/common/upload'">
-            <div style="padding: 20px 0">
-              <i-icon type="ios-cloud-upload" size="52" style="color: #3399ff"></i-icon>
-              <p>单击或拖动文件上传</p>
-              <i-spin fix v-if="fileUploadingAlities">
-                <Icon type="load-c" size=18 class="demo-spin-icon-load"></Icon>
-                <div style="margin-top: 10px">正在上传中，请勿关闭...</div>
-              </i-spin>
-            </div>
-          </i-upload>
-          <p v-text="formalities.mortgageName"></p>
-          <input type="hidden" v-model="formalities.mortgageUrl" style="width: 100%;border: 0;">
-        </i-form-item>
+    <bs-modal v-model="formalitiesShowModal" title="办理抵质押物手续" :width="1200" @on-close="emptyRowPic">
+      <i-form v-if="formalitiesShowModal" ref="formalities" :model="formalities" label-position="right" :label-width="80">
+        <i-row>
+          <i-col span="12">
+            <i-form-item label="抵押状态">
+              <span v-text="enumCode2Name('1', 'MortgageStatusEnum')"></span>
+            </i-form-item>
+          </i-col>
+          <i-col span="12">
+            <i-form-item label="经办人"
+                         prop="makeUser"
+                         :rules="{required: true, message: '经办人不能为空', trigger: 'blur'}">
+              <i-input v-model="formalities.makeUser" placeholder=""></i-input>
+            </i-form-item>
+          </i-col>
+        </i-row>
+        <i-row>
+          <i-col span="12">
+            <i-form-item label="办理时间"
+                         prop="makeDate"
+                         :rules="{required: true, message: '办理时间不能为空', trigger: 'blur'}">
+              <bs-datepicker v-model="formalities.makeDate" type="text" placeholder="办理时间"></bs-datepicker>
+            </i-form-item>
+          </i-col>
+          <i-col span="12">
+            <i-form-item label="权证编号"
+                         prop="warrantNo"
+                         :rules="{required: true, message: '权证编号不能为空', trigger: 'blur'}">
+              <i-input v-model="formalities.warrantNo" placeholder=""></i-input>
+            </i-form-item>
+          </i-col>
+        </i-row>
+        <i-row>
+          <i-col span="12">
+            <i-form-item label="备注"
+                         prop="remark">
+              <i-input type="textarea" :rows="2" v-model="formalities.remark" placeholder=""></i-input>
+            </i-form-item>
+          </i-col>
+          <i-col span="12">
+            <i-form-item label="登记机关"
+                         prop="registerCompany"
+                         :rules="{required: true, message: '登记机关不能为空', trigger: 'blur'}">
+              <i-input v-model="formalities.registerCompany" placeholder=""></i-input>
+            </i-form-item>
+          </i-col>
+        </i-row>
+        <i-row>
+          <i-col span="24">
+            <i-form-item
+              label="办理文件"
+              :rules="{required: true, message: '至少上传一份办理文件！', trigger: 'blur'}"
+              prop="mortgageUrl">
+              <input type="hidden" v-model="formalities.mortgageUrl">
+              <mortgage-picture-list ref="mortgagePictureList" :regularText="'@'" :picData="mortgageList" @on-data-remove="picDataRomove"  @on-data-add="picDataAdd"></mortgage-picture-list>
+            </i-form-item>
+          </i-col>
+        </i-row>
         <i-form-item class="text-right">
           <i-button type="primary" @click="formalitiesSubmit">提交</i-button>
         </i-form-item>
@@ -245,10 +251,10 @@
           </i-col>
         </i-row>
         <i-row>
-          <!--车辆品牌-->
+          <!--车型名称-->
           <i-col span="24">
             <i-form-item
-              label="车辆型号"
+              label="车型名称"
               prop="">
               <span v-text="detailsCarDataForm.carBrandName+detailsCarDataForm.carTypeName+detailsCarDataForm.carModelName"></span>
             </i-form-item>
@@ -430,7 +436,7 @@
     </bs-modal>
     <!--担保落实modal-->
     <bs-modal v-model="guaranteeShowModal" title="担保落实" :width="520">
-      <i-form ref="formagGuarantee" :model="formagGuarantee" label-position="right" :label-width="80">
+      <i-form v-if="guaranteeShowModal" ref="formagGuarantee" :model="formagGuarantee" label-position="right" :label-width="80">
         <i-form-item label="办理时间"
                      prop="makeDate"
                      :rules="{required: true, message: '办理时间不能为空', trigger: 'blur'}">
@@ -492,6 +498,7 @@
 </template>
 
 <script>
+  import MortgagePictureList from '@/components/file-picture-list';
   import MixinData from './mixin-data';
   import BsModal from '@/components/bs-modal';
   import TableLoanInfo from '@/components/table-loan-approval-info';
@@ -504,6 +511,7 @@
     components: {
       BsModal,
       'bs-carpicker': BsCarpicker,
+      MortgagePictureList,
       TableCustomerList,
       TableCompanyCustomerList,
       TableLoanInfo
@@ -513,7 +521,7 @@
         clickRow: {},
         isAddGPS: true,
         tabIndex: 'info',
-        fileUploadingAlities: false,
+        tableRowIndex: 0,
         fileUploadingGuarantee: false,
         showSelectObligee: false, // 选择车辆权利人
         showSelectCompanyOwner: false, // 选择车辆企业权利人
@@ -631,6 +639,7 @@
           'mortgageUrl': '',
           'remark': ''
         },
+        mortgageList: [],
         // 担保落实
         formagGuarantee: {
           'makeName': '',
@@ -666,6 +675,66 @@
       }
     },
     methods: {
+      // 把车辆信息里的办理文件名和地址解析成数组 间隔字符‘@’,第一个参数时文件地址，第二个时文件名称
+      mortgageStrToArray(urLStr, nameStr) {
+        let urlAry = urLStr.split('@');
+        let nameAry = nameStr.split('@');
+        let mortgageAry = [];
+        urlAry.map((item, index) => {
+          mortgageAry[index] = {
+            attachmentUrl: urlAry[index],
+            attachmentName: nameAry[index]
+          };
+          return item;
+        });
+        // console.log(mortgageAry);
+        return mortgageAry;
+      },
+      // 把车辆信息里的办理文件名和地址解析返回成字符串 间隔字符‘@’,参数是要转换的数组集合(attachmentUrl和attachmentName)
+      mortgageArrayToObj(urLAry) {
+        let mortgageObj = {
+          mortgageUrl: '',
+          mortgageName: ''
+        };
+        urLAry.map((item, index) => {
+          mortgageObj.mortgageUrl += item.attachmentUrl + '@';
+          mortgageObj.mortgageName += item.attachmentName + '@';
+          return item;
+        });
+        mortgageObj.mortgageUrl = mortgageObj.mortgageUrl.substring(0, mortgageObj.mortgageUrl.lastIndexOf('@'));
+        mortgageObj.mortgageName = mortgageObj.mortgageName.substring(0, mortgageObj.mortgageName.lastIndexOf('@'));
+        // console.log(mortgageObj);
+        return mortgageObj;
+      },
+      // 添加车辆图片
+      picDataAdd(dataList) {
+        if (this.$data.formalities.mortgageUrl === '') {
+          this.$data.formalities.mortgageUrl += dataList.attachmentUrl;
+        } else {
+          this.$data.formalities.mortgageUrl += '@' + dataList.attachmentUrl;
+        }
+        if (this.$data.formalities.mortgageName === '') {
+          this.$data.formalities.mortgageName += dataList.attachmentName;
+        } else {
+          this.$data.formalities.mortgageName += '@' + dataList.attachmentName;
+        }
+      },
+      // 删除车辆图片
+      picDataRomove(index) {
+        // 转数组
+        let mortgageAry = this.mortgageStrToArray('' + this.$data.formalities.mortgageUrl, '' + this.$data.formalities.mortgageName);
+        mortgageAry.splice(index, 1);
+        this.$data.mortgageList = mortgageAry;
+        let newtgageObj = this.mortgageArrayToObj(mortgageAry);
+        this.$set(this.$data.formalities, 'mortgageUrl', newtgageObj.mortgageUrl);
+        this.$set(this.$data.formalities, 'mortgageName', newtgageObj.mortgageName);
+      },
+      // 办理抵押模态框关闭后清楚组件内文件数据
+      emptyRowPic() {
+        this.$data.mortgageList = [];
+        this.$data.formalities = {};
+        this.$refs['mortgagePictureList'].closeUploading();
+      },
       /**
        *  车辆品牌
        * @param car
@@ -675,7 +744,8 @@
         this.$data.detailsCarDataForm.carBrandName = car.brandName;
         this.$data.detailsCarDataForm.carTypeCode = car.seriesNo;
         this.$data.detailsCarDataForm.carTypeName = car.seriesName;
-        this.$data.detailsCarDataForm.carModel = car.modelName;
+        this.$data.detailsCarDataForm.carModel = car.modelNo;
+        this.$data.detailsCarDataForm.carModelName = car.modelName;
       },
       /**
        *  选择权利人
@@ -858,6 +928,7 @@
       },
       // 办理抵质押物手续modal-提交按钮
       formalitiesSubmit() {
+        this.$refs['mortgagePictureList'].closeUploading(); // 关闭上传loading
         let ind = this.$data.clickRow._index; // 车辆列表的索引index
         this.$refs['formalities'].validate(async (valid) => {
           if (valid) {
@@ -914,25 +985,6 @@
             this.$Message.error('<span style="color: red">*</span>项不能为空');
           }
         });
-      },
-      // 办理抵质押物手续文件上传文件之前的回掉
-      uploadProgressAlities() {
-        this.$data.fileUploadingAlities = true;
-      },
-      // 办理抵质押物手续文件上传成功
-      uploadSuccessAlities(res, file, fileList) {
-        this.$data.formalities.mortgageName = file.name;
-        this.$data.formalities.mortgageUrl = res.body.url;
-        this.$data.fileUploadingAlities = false;
-      },
-      // 办理抵质押物手续文件上传失败
-      uploadErrorAlities(err, file, fileList) {
-        this.$data.formalities.mortgageName = '';
-        this.$Notice.error({
-          title: '错误提示',
-          desc: err
-        });
-        this.$data.fileUploadingAlities = false;
       },
       // 担保落实文件上传文件之前的回掉
       uploadProgressGuarantee() {

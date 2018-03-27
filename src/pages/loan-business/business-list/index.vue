@@ -150,7 +150,7 @@
           this.$data.productList = resp.body.resultList;
         }
       },
-      async getPrivateCustomerLoanList(page) {
+      async getPrivateCustomerLoanList(page, isFirstTimeGet = true) {
         let requestUrl = '/biz/listLoanBizByCon';
         if (this.taskNode === '1') {
           requestUrl = '/biz/listWaitLoanBizByCon';
@@ -163,7 +163,9 @@
         if (this.taskNode !== '') {
           this.$data.searchForm.taskNode = this.taskNode;
         }
-        this.$data.searchForm.status = this.status;
+        if (isFirstTimeGet) {
+          this.$data.searchForm.status = this.status;
+        }
         let resp = await this.$http.post(requestUrl, {
           taskNode: '0;1',
           ...this.$data.searchForm
@@ -187,10 +189,17 @@
           this.$Message.error('“开始日期”不能大于“结束日期”');
           return;
         }
-        this.getPrivateCustomerLoanList(1);
+        this.getPrivateCustomerLoanList(1, false);
       },
       selectRow(row, index) {
-        // this.$emit('on-row-dbclick', row, index);
+        this.$router.push({
+          path: '/index/loanbusiness/detail',
+          query: {
+            id: row.loanNo,
+            status: row.taskNode,
+            from: 'detail'
+          }
+        });
       }
     },
     watch: {
@@ -202,11 +211,14 @@
       }
     },
     mounted() {
+      this.$refs['loanSearchForm'].resetFields();
+      this.$data.searchForm.currentPage = 1;
+      this.$data.searchForm.pageSize = 15;
+      this.$data.searchForm.status = '0;1;3';
       this.getPrivateCustomerLoanList();
       this.getProductList();
       let enumSelectData = this.$store.getters.enumSelectData;
       this.$data.certTypeEnum = enumSelectData.get('CertTypeEnum');
-      // console.log(.get('YesNoEnum'));
     }
   };
 </script>

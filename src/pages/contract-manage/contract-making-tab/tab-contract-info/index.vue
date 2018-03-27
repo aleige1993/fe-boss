@@ -358,14 +358,14 @@
         </i-col>
         <!--发动机号-->
         <i-col span="8">
-          <i-form-item label="发动机号" prop="carEngineNo" :rules="{required: true, message: '请输入发动机号'}">
+          <i-form-item label="发动机号" prop="carEngineNo">
             <i-input v-model="setCarDataForm.carEngineNo" placeholder="">
             </i-input>
           </i-form-item>
         </i-col>
         <!--车架号-->
         <i-col span="8">
-          <i-form-item label="车架号" prop="carFrameNo" :rules="{required: true, message: '请输入车架号'}">
+          <i-form-item label="车架号" prop="carFrameNo">
             <i-input v-model="setCarDataForm.carFrameNo" placeholder="">
             </i-input>
           </i-form-item>
@@ -701,17 +701,18 @@
       this.getCarList(); // 获取车辆信息列表data
       this.getGuaPersonList(); // 获取担保信息列表data
       this.getFeeTakeList(); // 查询费用收取方案列表data
+      if ((this.$data.contractInfoForm.contractInfo.startDate === '') || (this.$data.contractInfoForm.contractInfo.startDate === null)) {
+        let nowDate = new Date();
+        let nowDateStart = dateMonth.getMonthPeriods(new Date(nowDate), 0);
+        this.$data.contractInfoForm.contractInfo.startDate = nowDateStart;
+      }
       // 如合同信息表里有数据，即已生成合同的情况下（已生成了合同）
-      if (
-        this.$data.contractInfoForm.contractInfo.loanContractFileList.length > 0 &&
-        ((this.$data.contractInfoForm.contractInfo.startDate !== '') || (this.$data.contractInfoForm.contractInfo.startDate !== null)) &&
-        ((this.$data.contractInfoForm.contractInfo.endDate !== '') || (this.$data.contractInfoForm.contractInfo.endDate !== null))
-      ) {
-        // 生成还款计划表 和 租金计划表
-        this.$emit('on-create-repay-plan', this.$data.contractInfoForm.contractInfo.startDate);
+      if (this.$data.contractInfoForm.contractInfo.loanContractFileList.length > 0) {
         // 告知父组件的 已经点击了“生成按钮”，此时已经生成了合同
         this.$emit('on-create-contracted');
       }
+      // 生成还款计划表 和 租金计划表
+      this.$emit('on-create-repay-plan', this.$data.contractInfoForm.contractInfo.startDate);
     },
     methods: {
       // 合同开始时间变更的回调
@@ -729,7 +730,7 @@
             this.$data.setCarDataShowModal = false;
             if (reps.success) {
               this.$set(this.$data.carData, ind, this.$data.setCarDataForm);
-              this.$Message.success('提交成功');
+              this.$Message.success('车辆信息提交成功');
             }
           } else {
             this.$Message.error('<span style="color: red">*</span>项不能为空');
@@ -746,7 +747,8 @@
         this.$data.setCarDataForm.carBrandName = car.brandName;
         this.$data.setCarDataForm.carTypeCode = car.seriesNo;
         this.$data.setCarDataForm.carTypeName = car.seriesName;
-        this.$data.setCarDataForm.carModel = car.modelName;
+        this.$data.setCarDataForm.carModel = car.modelNo;
+        this.$data.setCarDataForm.carModelName = car.modelName;
       },
       /**
        *  选择权利人

@@ -108,6 +108,22 @@ export default {
               }, '下载'),
               h('Button', {
                 props: {
+                  type: 'warning',
+                  size: 'small'
+                },
+                style: {
+                  marginRight: '5px'
+                },
+                on: {
+                  click: () => {
+                    this.$data.firstApproveEditIndex = params.index;
+                    this.$data.firstApproveForm = $.extend({}, params.row);
+                    this.$data.addFirstApproveModal = true;
+                  }
+                }
+              }, '编辑'),
+              h('Button', {
+                props: {
                   type: 'error',
                   size: 'small',
                   disabled: this.$route.query.status !== '3'
@@ -138,7 +154,7 @@ export default {
             return h('i-select', {
               props: {
                 disabled: this.readonly,
-                value: '+'
+                value: params.row.calcSign || '+'
               },
               on: {
                 'on-change': (value) => {
@@ -199,6 +215,12 @@ export default {
                 }
               })
             ]);
+          }
+        },
+        {
+          title: '费用计算方式',
+          render: (h, params) => {
+            return h('span', {}, this.enumCode2Name(params.row.feeCountType, 'ReceiveTypeEnum'));
           }
         },
         {

@@ -212,7 +212,7 @@
         </i-form>
       </i-tab-pane>
       <i-tab-pane label="审批信息">
-        <table-loan-info v-if="tabIndex===1" :requestData="{loanNo: $route.query.loanNo}"></table-loan-info>
+        <table-loan-info v-if="tabIndex===1" :requestData="{loanNo: $route.query.loanNo||''}"></table-loan-info>
       </i-tab-pane>
       <div class="form-footer-actions">
         <i-button @click="saveSubimt" :loading="initFormLoading" type="success">
@@ -317,7 +317,11 @@
         if (reps.success) {
           this.$data.formData = reps.body;
         } else {
-          this.$data.formData = {};
+          this.$data.formData = {
+            paymentApplyRecordDTO: {
+              loanNo: ''
+            }
+          };
         }
       },
       // 获取放款条件列表的data

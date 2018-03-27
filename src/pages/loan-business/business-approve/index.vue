@@ -30,6 +30,7 @@
       </i-tab-pane>
       <i-tab-pane :label="'审批信息'" name="tabApproveInfo" v-if="taskNode !== '1' && taskNode !== '0'">
         <approve-info ref="approveInfo" :applyBasicInfo="formData" :isFromDetail="isFromDetail"
+                      @on-result-change="approveResultChanged"
                       :readonly="firstApproveInfoReadonly || isFromDetail" :isApprove="isApprove">
         </approve-info>
       </i-tab-pane>
@@ -38,6 +39,10 @@
       </i-tab-pane>
     </i-tabs>
     <div v-if="!isFromDetail" class="form-footer-actions">
+      <!-- <i-button v-if="taskNode === '3'" @click="saveLoanApproveCraft" :loading="submitApproveLoading" type="primary">
+        <span v-if="!submitApproveLoading"><i class="iconfont icon-baocun"></i> 保存草稿</span>
+        <span v-else> loading...</span>
+      </i-button> -->
       <i-button @click="submitLoanApprove" :loading="submitApproveLoading" type="success">
         <span v-if="!submitApproveLoading"><i class="iconfont icon-tijiao"></i> 提交</span>
         <span v-else> loading...</span>
@@ -85,7 +90,8 @@
         submitApproveLoading: false,
         memberNo: '1',
         corpNo: '1',
-        creditReportURL: ''
+        creditReportURL: '',
+        approveResult: ''
       };
     },
     computed: {
@@ -154,6 +160,9 @@
       },
       saveSubimt() {
         // a
+      },
+      approveResultChanged(result) {
+        this.$data.approveResult = result;
       }
     },
     mounted() {

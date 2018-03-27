@@ -21,6 +21,13 @@
             <i-form-item prop="custName" style="margin-right:20px;">
               <i-input type="text" placeholder="客户名称" v-model="formSearch.custName"></i-input>
             </i-form-item>
+            <i-form-item prop="productNo">
+              <input type="hidden" v-model="formSearch.productName">
+              <i-select v-model="formSearch.productNo" type="text" placeholder="产品名称" style="width: 180px;" :label-in-value="true" @on-change="productChange">
+                <i-option value="" style="height: 26px; color: #bbbec4">-请选择-</i-option>
+                <i-option v-for="product in productList" :value="product.productNo" :key="product.productNo">{{product.productName}}</i-option>
+              </i-select>
+            </i-form-item>
             <i-form-item prop="certType" style="margin-right:20px;">
               <i-select v-model="formSearch.certType" style="width:150px" placeholder="证件类型">
                 <i-option value="" style="height: 26px; color: #bbbec4">-请选择-</i-option>
@@ -42,7 +49,7 @@
             </i-form-item>
           </i-form>
         </div>
-        <i-table :height="tableFixHeight+48" border :loading="dataLoading" ref="contractTable" :columns="columns1" :data="data1"></i-table>
+        <i-table :height="tableFixHeight+48" border :loading="dataLoading" ref="contractTable" :columns="columns" :data="data1"></i-table>
         <div class="page-container">
           <i-page :total="total" :page-size="pageSize" :current="currentPage" @on-change="jumpPage" size="small" show-elevator show-total></i-page>
         </div>
@@ -63,10 +70,14 @@
         total: 0,
         dataLoading: false,
         statusData: '0;1',
+        columns: [],
         clickRow: {},
+        productList: [],
         formSearch: {
           loanNo: '',
           custName: '',
+          productNo: '',
+          productName: '',
           certType: '',
           certNo: '',
           startDate: '',
@@ -97,9 +108,29 @@
       }
     },
     mounted() {
+      this.getProductList(); // 获取产品列表 下拉
       this.initFun();
     },
     methods: {
+      // 搜索框 产品条件变化时
+      productChange(val) {
+        if (val.value === '') {
+          this.$data.formSearch.productName = '';
+        } else {
+          this.$data.formSearch.productName = val.label;
+        }
+      },
+      /*
+      * 获取产品列表 下拉
+       */
+      async getProductList() {
+        let resp = await this.$http.get('/pms/product/list', { productName: '', currentPage: 1, pageSize: 99999 });
+        if (resp.success) {
+          this.$data.productList = resp.body.resultList;
+        } else {
+          this.$data.productList = [];
+        }
+      },
       async initFun() {
         if (this.$route.query.currentPage) {
           this.$data.currentPage = this.$route.query.currentPage / 1;
@@ -126,6 +157,11 @@
       },
       // 查询列表数据
       async getList(page) {
+        if (this.taskNode === '8' && !this.succeed) {
+          this.$data.columns = [...this.$data.columnsHasSign, ...this.$data.columns1];
+        } else {
+          this.$data.columns = this.$data.columns1;
+        }
         this.$data.dataLoading = true;
         if (page) {
           this.$data.currentPage = page;

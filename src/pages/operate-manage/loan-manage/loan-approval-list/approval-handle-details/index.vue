@@ -233,7 +233,7 @@
         </i-form>
       </i-tab-pane>
       <i-tab-pane label="审批信息">
-        <table-loan-info v-if="tabIndex===1" :requestData="{loanNo: $route.query.loanNo}"></table-loan-info>
+        <table-loan-info v-if="tabIndex===1" :requestData="{loanNo: $route.query.loanNo||''}"></table-loan-info>
       </i-tab-pane>
       <div class="form-footer-actions">
         <i-button @click="saveSubimt" :loading="initFormLoading" type="success">
@@ -314,10 +314,10 @@
           </i-col>
         </i-row>
         <i-row>
-          <!--车辆型号-->
+          <!--车型名称-->
           <i-col span="24">
             <i-form-item
-              label="车辆型号"
+              label="车型名称"
               prop="">
               <span v-text="detailsCarDataForm.carBrandName+detailsCarDataForm.carTypeName+detailsCarDataForm.carModelName"></span>
             </i-form-item>
@@ -722,7 +722,11 @@
           this.$data.formData = reps.body;
           this.$data.defaultLoanAmt = reps.body.paymentRecordDTO.loanAmt;
         } else {
-          this.$data.formData = {};
+          this.$data.formData = {
+            paymentApplyRecordDTO: {
+              loanNo: ''
+            }
+          };
           this.$data.defaultLoanAmt = 0;
         }
       },

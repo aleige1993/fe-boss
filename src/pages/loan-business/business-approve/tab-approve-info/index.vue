@@ -7,7 +7,7 @@
             <i-row>
               <i-col span="24">
                 <div class="form-top-actions" v-if="!readonly">
-                  <i-button type="primary" @click="firstApproveForm = {} ; addFirstApproveModal = !addFirstApproveModal">添加初审信息</i-button>
+                  <i-button type="primary" @click="firstApproveForm = {}; firstApproveEditIndex = -1; addFirstApproveModal = !addFirstApproveModal">添加初审信息</i-button>
                 </div>
                 <i-table :columns="firstApproveColumns" :data="approveData.loanApproveFirstDTOS"></i-table>
               </i-col>
@@ -78,7 +78,7 @@
               <i-col span="8">
                 <i-form-item label="审批额度" prop="loanApproveCreditDTO.approveLimitAmt"
                              :rules="{required: true, message: '请输入审批额度'}">
-                  <i-input :readonly="isFromDetail" v-model="approveData.loanApproveCreditDTO.approveLimitAmt">
+                  <i-input :readonly="isFromDetail" @on-change="approveAmtChanged" v-model="approveData.loanApproveCreditDTO.approveLimitAmt">
                     <span slot="append">元</span>
                   </i-input>
                 </i-form-item>
@@ -244,7 +244,7 @@
               <i-col span="18">
                 <i-form-item label="结论" prop="loanApproveDTO.result" :rules="{required: true, message: '请选择你的结论', trigger: 'change'}">
                   <input type="hidden" v-model="approveData.loanApproveDTO.result"/>
-                  <i-radio-group v-model="approveData.loanApproveDTO.result">
+                  <i-radio-group @on-change="approveResultChanged" v-model="approveData.loanApproveDTO.result">
                     <i-radio v-for="item in enumSelectData.get('ApproveStatusEnum')" :label="item.itemCode" :key="item.itemCode" style="margin-right: 20px; margin-top: -5px">{{item.itemName}}</i-radio>
                   </i-radio-group>
                 </i-form-item>
@@ -275,7 +275,7 @@
     </i-row>
 
     <!--添加初审信息的弹窗-->
-    <bs-modal v-model="addFirstApproveModal" :width="520" title="添加初审信息">
+    <bs-modal v-model="addFirstApproveModal" :width="520" title="添加/编辑初审信息">
       <i-form :label-width="120" ref="addFirstApproveForm" :model="firstApproveForm">
         <i-form-item label="查询渠道" prop="approveWebsite"
                      :rules="{required: true, message: '请输入查询渠道'}">
@@ -351,6 +351,8 @@
         showSelectProduct: false,
         selectPeriodsAndRate: false,
         loanRateSumProuductRate: '',
+        // 初审信息
+        firstApproveEditIndex: -1,
         firstApproveForm: {
           approveDesc: '',
           approveWebsite: '',
@@ -433,6 +435,9 @@
           this.getLoanPeriodByProductNo(this.$data.productPackageNo, this.applyBasicInfo.custLevel);
         }
         this.getBankList(this.applyBasicInfo.loanNo);
+      },
+      approveResultChanged(e) {
+        this.$emit('on-result-change', e);
       }
     },
     mounted() {
