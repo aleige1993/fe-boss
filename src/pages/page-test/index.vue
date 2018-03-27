@@ -12,6 +12,11 @@ export default {
   },
   components: {
     BsBigImg
+  },
+  mounted() {
+    setTimeout(() => {
+      this.$data.url = 'https://prod-songchedai.oss-cn-shanghai.aliyuncs.com/20180323/18032313162615600139.png';
+    }, 3000);
   }
 };
 </script>
