@@ -129,7 +129,7 @@
         this.$data.formData.regCapital = row.regCapital;
         this.$data.formData.linkmanName = row.mainLinkmanName;
         this.$data.formData.linkmanMobile = row.mainLinkmanPhone;
-        this.$data.formData.bizAddress = row.bizProvinceName + row.bizDistrictName + row.bizCityName + row.bizRoadAddr;
+        this.$data.formData.bizAddress = row.bizProvinceName + row.bizCityName + row.bizDistrictName + row.bizRoadAddr;
         this.$data.slectRelationCompanyModal = false;
       },
       addCompanySuccess() {
