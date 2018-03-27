@@ -1,12 +1,14 @@
 export default {
   data() {
     return {
-      customerColumns: [
+      customerCheckboxColumns: [
         {
           type: 'selection',
           width: 60,
           align: 'center'
-        },
+        }
+      ],
+      customerColumns: [
         {
           title: '项目编号',
           key: 'projectNo',
@@ -26,6 +28,11 @@ export default {
           title: '代付金额',
           key: 'transMoney',
           width: 120
+        },
+        {
+          title: '创建时间',
+          key: 'gmtCreate',
+          width: 160
         },
         {
           title: '收款人姓名',
@@ -66,11 +73,6 @@ export default {
           title: '银行卡预留手机号',
           key: 'transMobile',
           width: 140
-        },
-        {
-          title: '预计付款时间',
-          key: 'expectTime',
-          width: 160
         },
         {
           title: '付款发起时间',

@@ -9,11 +9,11 @@
     </i-breadcrumb>
     <div class="form-top-actions"></div>
     <i-tabs v-model="tabIndex" :animated="false" type="card">
-      <i-tab-pane label="云贷">
-        <proxy-pay-list  v-if="tabIndex === 0" :paymentType="paymentType" :flag="'1'"></proxy-pay-list>
-      </i-tab-pane>
       <i-tab-pane label="宝付">
-        <proxy-pay-list  v-if="tabIndex === 1" :paymentType="paymentType" :flag="'0'"></proxy-pay-list>
+        <proxy-pay-list  v-if="tabIndex === 0" :flag="'0'" :paymentType="paymentType" :isDetail="isDetail"></proxy-pay-list>
+      </i-tab-pane>
+      <i-tab-pane label="云贷">
+        <proxy-pay-list  v-if="tabIndex === 1" :flag="'1'" :paymentType="paymentType" :isDetail="isDetail"></proxy-pay-list>
       </i-tab-pane>
     </i-tabs>
   </div>
@@ -32,6 +32,11 @@
       paymentType: {
         type: String,
         default: '',
+        required: false
+      },
+      isDetail: {
+        type: Boolean,
+        default: true,
         required: false
       }
     },
