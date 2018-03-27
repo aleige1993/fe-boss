@@ -5,4 +5,5 @@ module.exports = {
   HTTPMOCK_TIMEOUT: 500,
   XHRLOG: false, // 是否console出ajax的详细信息；右上角的Notice是否打印url和code
   HTTPBASEURL: '""' // 开发服务器
+  // HTTPBASEURL: '"http://10.164.5.47:8091"'
 };

@@ -55,7 +55,7 @@ export default {
       let selection = this.$refs['feeMethodsTable'].getSelection();
       let selectData = selection.map(item => {
         return {
-          calcAmt: item.feeActualAmt || '',
+          calcAmt: item.feeActualAmt,
           calcSign: item.calcSign || '+'
         };
       });
@@ -161,7 +161,9 @@ export default {
         if (tmLoanApproveFeePlanDTOList && tmLoanApproveFeePlanDTOList.length > 0) {
           this.$data.approveData.loanApproveFeePlanDTOS = tmLoanApproveFeePlanDTOList.map(item => {
             // 让每一行的应收金额默认为当前行的费用金额
-            item.feeActualAmt = item.feeAmt;
+            if (item.feeActualAmt === '' || item.feeActualAmt === null) {
+              item.feeActualAmt = item.feeAmt;
+            }
             return item;
           });
         }
@@ -312,8 +314,9 @@ export default {
         if (item.feeCountType === '2') {
           return item;
         } else {
-          item.feeAmt = (value * item.feePercent) / 100;
-          item.feeActualAmt = (value * item.feePercent) / 100;
+          let countNum = (value * item.feePercent) / 100;
+          item.feeAmt = countNum.toFixed(2);
+          item.feeActualAmt = countNum.toFixed(2);
           return item;
         }
       });

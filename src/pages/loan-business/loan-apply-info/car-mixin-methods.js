@@ -7,6 +7,7 @@ export default {
       this.$data.formCar.carTypeName = car.seriesName;
       // this.$data.formCar.carTypeCode = car.seriesCode;
       this.$data.formCar.carModel = car.modelName;
+      this.$data.formCar.carModelName = car.brandName + car.seriesName + car.modelName;
     },
     // 获取车辆列表
     async getCarList() {

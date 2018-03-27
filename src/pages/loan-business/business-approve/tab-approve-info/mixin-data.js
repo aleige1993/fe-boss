@@ -154,7 +154,7 @@ export default {
             return h('i-select', {
               props: {
                 disabled: this.readonly,
-                value: '+'
+                value: params.row.calcSign || '+'
               },
               on: {
                 'on-change': (value) => {
