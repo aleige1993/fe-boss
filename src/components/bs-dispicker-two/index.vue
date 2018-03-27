@@ -93,6 +93,10 @@
       let resp = await this.getAddressDropList();
       if (resp.success) {
         this.$data.provinceDropList = resp.body;
+        let resp1 = await this.getAddressDropList(resp.body[0].regionCode);
+        if (resp1.success) {
+          this.$data.cityDropList = resp1.body;
+        }
       }
     }
   };
