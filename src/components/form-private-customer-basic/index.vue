@@ -167,9 +167,9 @@
             </i-row>
             <i-row>
               <i-col span="18">
-                <i-form-item v-if="!isFromDetail" label="户籍地址" prop="mbMemberDTO.censusCityCode"
+                <i-form-item v-if="!isFromDetail" label="户籍地址" prop="mbMemberDTO.censusDistrictName"
                              :rules="{required: true, message: '请输入户籍地址', trigger: 'blur'}">
-                  <input type="hidden" v-model="formData.mbMemberDTO.censusCityCode">
+                  <input type="hidden" v-model="formData.mbMemberDTO.censusDistrictName">
                   <bs-dispicker :currProvince="formData.mbMemberDTO.censusProvinceName"
                                 :currDistrict="formData.mbMemberDTO.censusDistrictName"
                                 :currCity="formData.mbMemberDTO.censusCityName"
@@ -187,9 +187,9 @@
             </i-row>
             <i-row>
               <i-col span="18">
-                <i-form-item v-if="!isFromDetail" label="居住地址" prop="mbMemberDTO.nowCityCode"
+                <i-form-item v-if="!isFromDetail" label="居住地址" prop="mbMemberDTO.nowDistrictName"
                              :rules="{required: true, message: '请输入居住地址', trigger: 'blur'}">
-                  <input type="hidden" v-model="formData.mbMemberDTO.nowCityCode">
+                  <input type="hidden" v-model="formData.mbMemberDTO.nowDistrictName">
                   <bs-dispicker ref="censusDispicker" :currProvince="formData.mbMemberDTO.nowProvinceName"
                                 :currDistrict="formData.mbMemberDTO.nowDistrictName"
                                 :currCity="formData.mbMemberDTO.nowCityName"
@@ -489,11 +489,11 @@ export default {
       this.formData.mbMemberWorkDTO.industryType = industryType;
       this.formData.mbMemberWorkDTO.companyTel = row.telephone;
       this.formData.mbMemberWorkDTO.provinceCode = row.bizProvinceCode;
-      this.formData.mbMemberWorkDTO.districtCode = row.bizCityCode;
-      this.formData.mbMemberWorkDTO.cityCode = row.bizDistrictCode;
       this.formData.mbMemberWorkDTO.provinceName = row.bizProvinceName;
-      this.formData.mbMemberWorkDTO.districtName = row.bizCityName;
-      this.formData.mbMemberWorkDTO.cityName = row.bizDistrictName;
+      this.formData.mbMemberWorkDTO.cityCode = row.bizCityCode;
+      this.formData.mbMemberWorkDTO.cityName = row.bizCityName;
+      this.formData.mbMemberWorkDTO.districtCode = row.bizDistrictCode;
+      this.formData.mbMemberWorkDTO.districtName = row.bizDistrictName;
       this.formData.mbMemberWorkDTO.roadAddr = row.bizRoadAddr;
     },
     async initPageData() {

@@ -100,8 +100,8 @@
             <i-form-item label="地址" prop="bizDistrictCode">
               <input type="hidden" v-model="formMaintain.bizDistrictCode">
               <bs-dispicker :currProvince="formMaintain.bizProvinceName"
-                            :currDistrict="formMaintain.bizCityName"
-                            :currCity="formMaintain.bizDistrictName"
+                            :currDistrict="formMaintain.bizDistrictName"
+                            :currCity="formMaintain.bizCityName"
                             @on-change="selectCensusDistance">
               </bs-dispicker>
               <i-input placeholder="街道信息" v-model="formMaintain.bizRoadAddr" style="width: 539px;"></i-input>

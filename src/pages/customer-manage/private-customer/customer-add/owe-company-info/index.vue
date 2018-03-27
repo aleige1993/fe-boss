@@ -115,7 +115,7 @@
         this.$data.formData.regCapital = row.regCapital;
         this.$data.formData.contactUser = row.mainLinkmanName;
         this.$data.formData.contactUserPhone = row.mainLinkmanPhone;
-        this.$data.formData.bizAddr = row.bizProvinceName + row.bizDistrictName + row.bizCityName + row.bizRoadAddr;
+        this.$data.formData.bizAddr = row.bizProvinceName + row.bizCityName + row.bizDistrictName + row.bizRoadAddr;
         this.$data.slectOweCompanyModal = false;
       },
       async getOweComList() {
