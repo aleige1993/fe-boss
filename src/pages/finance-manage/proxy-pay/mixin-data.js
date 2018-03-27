@@ -14,7 +14,7 @@ export default {
         },
         {
           title: '产品名称',
-          key: 'projectName',
+          key: 'productName',
           width: 140
         },
         {

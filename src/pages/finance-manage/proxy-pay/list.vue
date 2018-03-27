@@ -6,7 +6,7 @@
           <i-input type="text" v-model="searchForm.projectNo" placeholder="项目编号"></i-input>
         </i-form-item>
         <i-form-item prop="">
-          <i-input v-model="searchForm.projectName" type="text" placeholder="产品名称"></i-input>
+          <i-input v-model="searchForm.productName" type="text" placeholder="产品名称"></i-input>
         </i-form-item>
         <i-form-item prop="">
           <i-input v-model="searchForm.custName" type="text" placeholder="客户名称"></i-input>
@@ -70,7 +70,7 @@
         certTypeEnum: [],
         searchForm: {
           'projectNo': '',
-          'projectName': '',
+          'productName': '',
           'custName': '',
           'toAccName': '',
           'transCardId': '',
