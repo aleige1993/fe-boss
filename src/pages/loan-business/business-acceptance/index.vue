@@ -25,7 +25,7 @@
     </i-tabs>
     <div class="form-footer-actions">
       <i-button @click="saveDraft" :loading="initFormLoading" type="primary">
-        <span v-if="!initFormLoading"><i class="iconfont icon-tijiao"></i> 保存草稿</span>
+        <span v-if="!initFormLoading"><i class="iconfont icon-baocun"></i> 保存草稿</span>
         <span v-else> loading...</span>
       </i-button>
       <i-button @click="saveSubimt" :loading="initFormLoading" type="success">

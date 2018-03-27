@@ -14,8 +14,13 @@ export default {
      */
     submitFirstApprove() {
       this.$refs['addFirstApproveForm'].validate(valid => {
+        let _index = this.$data.firstApproveEditIndex;
         if (valid) {
-          this.$data.approveData.loanApproveFirstDTOS.push(this.$data.firstApproveForm);
+          if (_index !== -1) {
+            this.$set(this.$data.approveData.loanApproveFirstDTOS, _index, this.$data.firstApproveForm);
+          } else {
+            this.$data.approveData.loanApproveFirstDTOS.push(this.$data.firstApproveForm);
+          }
           this.$data.addFirstApproveModal = false;
         }
       });
