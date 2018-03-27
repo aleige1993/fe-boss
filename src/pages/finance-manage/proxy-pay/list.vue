@@ -1,36 +1,35 @@
 <template>
   <div id="page-table-demo">
-    <i-breadcrumb separator=">">
-      <i-breadcrumb-item href="/home">首页</i-breadcrumb-item>
-      <i-breadcrumb-item href="/index/financemanage">财务管理</i-breadcrumb-item>
-      <i-breadcrumb-item href="/index/financemanage/proxypay">代付管理</i-breadcrumb-item>
-      <i-breadcrumb-item v-if="paymentType === '1'">一次放款</i-breadcrumb-item>
-      <i-breadcrumb-item v-else>二次放款</i-breadcrumb-item>
-    </i-breadcrumb>
     <div class="search-form-container">
       <i-form inline>
-        <i-form-item prop="user">
+        <i-form-item prop="">
           <i-input type="text" v-model="searchForm.projectNo" placeholder="项目编号"></i-input>
         </i-form-item>
-        <i-form-item prop="password">
+        <i-form-item prop="">
+          <i-input v-model="searchForm.projectName" type="text" placeholder="产品名称"></i-input>
+        </i-form-item>
+        <i-form-item prop="">
+          <i-input v-model="searchForm.custName" type="text" placeholder="客户名称"></i-input>
+        </i-form-item>
+        <i-form-item prop="">
           <i-input v-model="searchForm.toAccName" type="text" placeholder="收款人姓名"></i-input>
         </i-form-item>
-        <i-form-item prop="password">
+        <i-form-item prop="">
           <i-input v-model="searchForm.transCardId" type="text" placeholder="证件号码"></i-input>
         </i-form-item>
-        <i-form-item prop="password">
-          预计付款时间
+        <i-form-item prop="">
+          付款完成时间
         </i-form-item>
-        <i-form-item prop="password">
+        <i-form-item prop="">
           <bs-datepicker v-model="searchForm.btime" type="text" placeholder="查询时间"></bs-datepicker>
         </i-form-item>
-        <i-form-item prop="password">
+        <i-form-item prop="">
           -
         </i-form-item>
-        <i-form-item prop="password">
+        <i-form-item prop="">
           <bs-datepicker v-model="searchForm.etime" type="text" placeholder="查询时间"></bs-datepicker>
         </i-form-item>
-        <i-form-item prop="password">
+        <i-form-item prop="">
           <i-select style="width: 120px;" v-model="searchForm.state" placeholder="付款状态">
             <i-option value="" style="height: 26px; color: #bbbec4">-请选择-</i-option>
             <i-option v-for="item in certTypeEnum" :value="item.itemCode" :key="item.itemCode">{{item.itemName}}</i-option>
@@ -43,10 +42,14 @@
     </div>
     <div class="form-top-actions" slot="topAction">
       <i-button type="info" @click="massPayment">批量付款</i-button>
-      <a style="color: #fff" class="ivu-btn ivu-btn-info" :href="exportExcelUrl">导出EXCEL</a>
+      <i-button type="primary" @click="exportExcel" :loading="buttonLoading">
+        <span v-if="!buttonLoading">导出EXCEL</span>
+        <span v-else>Loading...</span>
+      </i-button>
+      <a style="display: none" ref="exportExcelRef" :href="exportExcelUrl">触发导出</a>
     </div>
     <slot name="topAction"></slot>
-    <i-table :height="tableFixHeight+20" border :loading="dataLoading" ref="selection" @on-select="selectRow" @on-select-all="selectRow" :columns="resultCustomerColumns" :data="privateCustomerLoanList"></i-table>
+    <i-table :height="tableFixHeight - 20" border :loading="dataLoading" ref="selection" @on-select="selectRow" @on-select-all="selectRow" :columns="resultCustomerColumns" :data="privateCustomerLoanList"></i-table>
     <div class="page-container">
       <i-page :total="total" :page-size="15" :current="currentPage" @on-change="jumpPage" size="small" show-elevator show-total></i-page>
     </div>
@@ -60,18 +63,22 @@
     data() {
       return {
         showAddModal: false,
+        buttonLoading: false,
         dataLoading: false,
         total: 0,
         currentPage: 1,
         certTypeEnum: [],
         searchForm: {
           'projectNo': '',
+          'projectName': '',
+          'custName': '',
           'toAccName': '',
           'transCardId': '',
           'btime': '',
           'etime': '',
           'state': '',
           'paymentType': '',
+          'flag': '',
           currentPage: 1,
           pageSize: 15
         },
@@ -93,6 +100,11 @@
         type: String,
         default: '',
         required: false
+      },
+      flag: {
+        type: String,
+        default: '',
+        required: false
       }
     },
     methods: {
@@ -107,8 +119,11 @@
         if (page) {
           this.$data.searchForm.currentPage = page;
         }
-        this.$data.searchForm.paymentType = this.paymentType || '';
-        let resp = await this.$http.post('/pay/payment', this.$data.searchForm);
+        this.$data.searchForm.paymentType = this.paymentType;
+        this.$data.searchForm.flag = this.flag;
+        let resp = await this.$http.post('/pay/payment', {
+          ...this.$data.searchForm
+        });
         this.$data.dataLoading = false;
         resp.body.resultList.map(item => {
           if (!(item.state === '-1' || item.state === '3') || item.flag === '1') {
@@ -117,9 +132,8 @@
           return item;
         });
         this.$data.privateCustomerLoanList = resp.body.resultList;
-        this.$data.currentPage = resp.body.currentPage;
-        this.$data.total = resp.body.totalNum;
-        this.exportExcel();
+        this.$data.currentPage = resp.body.currentPage / 1;
+        this.$data.total = resp.body.totalNum / 1;
       },
       selectRow(selection, row) {
         this.pay4Nos = [];
@@ -148,10 +162,15 @@
       },
       async exportExcel() {
         this.$data.buttonLoading = true;
+//        this.$data.searchForm.paymentType = this.paymentType;
+//        this.$data.searchForm.flag = this.flag;
         let resp = await this.$http.post('/pay/payment/excel', this.$data.searchForm);
         this.$data.buttonLoading = false;
         if (resp.success) {
           this.$data.exportExcelUrl = resp.body;
+          this.$nextTick(() => {
+            this.$refs.exportExcelRef.click();
+          });
         }
       }
     },

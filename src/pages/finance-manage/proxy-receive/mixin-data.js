@@ -69,15 +69,17 @@ export default {
           fixed: 'right',
           align: 'center',
           render: (h, params) => {
+            let msg = '';
             if (params.row.orderStat === 'S') {
-              return '成功';
+              msg = '成功';
             } else if (params.row.orderStat === 'F') {
-              return '失败';
+              msg = '失败';
             } else if (params.row.orderStat === 'I') {
-              return '扣款中';
+              msg = '扣款中';
             } else if (params.row.orderStat === 'D') {
-              return '待扣款';
+              msg = '待扣款';
             }
+            return h('span', {}, msg);
           }
         }
       ],
