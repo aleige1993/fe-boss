@@ -13,9 +13,14 @@ export default {
           width: 140
         },
         {
-          title: '支付流水号',
-          key: 'transNo',
-          width: 240
+          title: '产品名称',
+          key: 'productName',
+          width: 140
+        },
+        {
+          title: '客户名称',
+          key: 'custName',
+          width: 140
         },
         {
           title: '代付金额',
@@ -78,15 +83,20 @@ export default {
           width: 160
         },
         {
-          title: '支付渠道',
-          key: 'flag',
-          width: 80,
-          fixed: 'right',
-          align: 'center',
-          render: (h, params) => {
-            return params.row.flag === '0' ? '宝付' : '云贷';
-          }
+          title: '支付流水号',
+          key: 'transNo',
+          width: 240
         },
+        // {
+        //   title: '支付渠道',
+        //   key: 'flag',
+        //   width: 80,
+        //   fixed: 'right',
+        //   align: 'center',
+        //   render: (h, params) => {
+        //     return params.row.flag === '0' ? '宝付' : '云贷';
+        //   }
+        // },
         {
           title: '付款状态',
           key: 'state',
@@ -95,19 +105,19 @@ export default {
           align: 'center',
           render: (h, params) => {
             if (params.row.state === '0') {
-              return '付款中';
+              return h('span', {}, '付款中');
             } else if (params.row.state === '1') {
-              return '成功';
+              return h('span', {}, '成功');
             } else if (params.row.state === '-1') {
               return h('Tooltip', {
                 props: {
                   content: `失败原因：${params.row.transRemark}`
                 }
-              }, '失败');
+              }, h('span', {}, '失败'));
             } else if (params.row.state === '2') {
-              return '已退款';
+              return h('span', {}, '已退款');
             } else if (params.row.state === '3') {
-              return '待付款';
+              return h('span', {}, '待付款');
             }
           }
         }

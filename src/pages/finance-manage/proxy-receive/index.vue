@@ -41,7 +41,11 @@
     </div>
     <div class="form-top-actions" slot="topAction">
       <i-button type="info" @click="massPayment">批量扣款</i-button>
-      <a style="color: #fff" class="ivu-btn ivu-btn-info" :href="exportExcelUrl">导出EXCEL</a>
+      <i-button type="primary" @click="exportExcel" :loading="buttonLoading">
+        <span v-if="!buttonLoading">导出EXCEL</span>
+        <span v-else>Loading...</span>
+      </i-button>
+      <a style="display: none" ref="exportExcelRef" :href="exportExcelUrl">触发导出</a>
     </div>
     <slot name="topAction"></slot>
     <i-table :height="tableFixHeight+20" border :loading="dataLoading" ref="selection" @on-select="selectRow" @on-select-all="selectRow" :columns="resultCustomerColumns" :data="privateCustomerLoanList"></i-table>
@@ -58,6 +62,7 @@
     data() {
       return {
         showAddModal: false,
+        buttonLoading: false,
         dataLoading: false,
         total: 0,
         currentPage: 1,
@@ -111,9 +116,8 @@
           return item;
         });
         this.$data.privateCustomerLoanList = resp.body.resultList;
-        this.$data.currentPage = resp.body.currentPage;
-        this.$data.total = resp.body.totalNum;
-        this.exportExcel();
+        this.$data.currentPage = resp.body.currentPage / 1;
+        this.$data.total = resp.body.totalNum / 1;
       },
       selectRow(selection, row) {
         this.receiveNos = [];
@@ -132,7 +136,6 @@
         }
       },
       async submit(idArray) {
-//        console.log(JSON.stringify(idArray));
         let resp = await this.$http.post('/pay/apply/receive', {
           receiveNos: idArray
         });
@@ -147,6 +150,9 @@
         this.$data.buttonLoading = false;
         if (resp.success) {
           this.$data.exportExcelUrl = resp.body;
+          this.$nextTick(() => {
+            this.$refs.exportExcelRef.click();
+          });
         }
       }
     },

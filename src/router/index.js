@@ -243,8 +243,8 @@ let MyRouter = new Router({
               path: 'proxypay', name: 'financeProxypay', component: resolve => require(['@/pages/finance-manage/proxy-pay'], resolve),
               children: [
                 { path: '/', name: 'toleftnav', component: resolve => require(['@/pages/to-left-nav'], resolve)},
-                { path: '1', name: 'financeProxypayFirst', props: {paymentType: '1'}, component: resolve => require(['@/pages/finance-manage/proxy-pay/list.vue'], resolve) },
-                { path: '2', name: 'financeProxypaySecond', props: {paymentType: '2'}, component: resolve => require(['@/pages/finance-manage/proxy-pay/list.vue'], resolve) },
+                { path: '1', name: 'financeProxypayFirst', props: {paymentType: '1'}, component: resolve => require(['@/pages/finance-manage/proxy-pay/info.vue'], resolve) },
+                { path: '2', name: 'financeProxypaySecond', props: {paymentType: '2'}, component: resolve => require(['@/pages/finance-manage/proxy-pay/info.vue'], resolve) },
               ]
             },
             // 代扣管理

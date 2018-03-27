@@ -30,7 +30,7 @@ export default {
       this.$data.formAssure.guaPersonMobile = row.telephone;
       this.$data.formAssure.guaPersonNo = row.corpNo;
       this.$data.formAssure.guaPersonName = row.corpName;
-      this.$data.formAssure.guaPersonAddr = row.bizProvinceName + row.bizDistrictName + row.bizCityName;
+      this.$data.formAssure.guaPersonAddr = row.bizProvinceName + row.bizCityName + row.bizDistrictName;
       this.$data.showSelectCompanyGua = false;
     },
     /**
@@ -39,7 +39,7 @@ export default {
      */
     selectCompany(company) {
       // console.log(company);
-      this.$data.formData.address = company.bizProvinceName + company.bizDistrictName + company.bizCityName + company.bizRoadAddr;
+      this.$data.formData.address = company.bizProvinceName + company.bizCityName + company.bizDistrictName + company.bizRoadAddr;
       this.$data.formData.memberNo = company.corpNo;
       this.$data.formData.memberName = company.corpName;
       this.$data.formData.mobileNo = company.telephone;
@@ -63,10 +63,7 @@ export default {
         this.$data.memberNo = CertData.mbMemberDTO.memberNo;
         // 联系地址
         this.$data.formData.address =
-          CertData.mbMemberDTO.nowProvinceName +
-          CertData.mbMemberDTO.nowDistrictName +
-          CertData.mbMemberDTO.nowCityName +
-          CertData.mbMemberDTO.nowRoadAddr;
+          CertData.mbMemberDTO.nowProvinceName + CertData.mbMemberDTO.nowCityName + CertData.mbMemberDTO.nowDistrictName + CertData.mbMemberDTO.nowRoadAddr;
         this.$data.formData.memberNo = CertData.mbMemberDTO['memberNo'];
         this.$data.formData.memberName = CertData.mbMemberDTO.name;
         this.$data.formData.mobileNo = CertData.mbMemberDTO.mobile;
