@@ -637,7 +637,8 @@
         this.$data.detailsCarDataForm.carBrandName = car.brandName;
         this.$data.detailsCarDataForm.carTypeCode = car.seriesNo;
         this.$data.detailsCarDataForm.carTypeName = car.seriesName;
-        this.$data.detailsCarDataForm.carModel = car.modelName;
+        this.$data.detailsCarDataForm.carModel = car.modelNo;
+        this.$data.detailsCarDataForm.carModelName = car.modelName;
       },
       /**
        *  选择权利人
