@@ -101,20 +101,6 @@
       let resp = await this.getBrandDropList();
       if (resp.success) {
         this.$data.brandDropList = resp.body.resultList;
-        let resp1 = await this.$http.post('/ces/getSeriesByBrand?v=' + Math.random(100), {
-          brandNo: resp.body.resultList[0].groupList[0].brandNo,
-          seriesName: ''
-        });
-        if (resp1.success) {
-          this.$data.seriesDropList = resp1.body.resultList;
-          let resp2 = await this.$http.post('/ces/getModelBySeries', {
-            seriesNo: resp1.body.resultList[0].groupList[0].seriesNo,
-            modelName: ''
-          });
-          if (resp2.success) {
-            this.$data.modelDropList = resp2.body.resultList;
-          }
-        }
       }
     }
   };

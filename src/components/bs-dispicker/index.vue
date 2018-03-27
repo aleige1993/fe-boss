@@ -104,14 +104,6 @@
       let resp = await this.getAddressDropList();
       if (resp.success) {
         this.$data.provinceDropList = resp.body;
-        let resp1 = await this.getAddressDropList(resp.body[0].regionCode);
-        if (resp1.success) {
-          this.$data.cityDropList = resp1.body;
-          let resp2 = await this.getAddressDropList(resp1.body[0].regionCode);
-          if (resp2.success) {
-            this.$data.districtDropList = resp2.body;
-          }
-        }
       }
       // await bsWait(2000);
       // this.initData();
