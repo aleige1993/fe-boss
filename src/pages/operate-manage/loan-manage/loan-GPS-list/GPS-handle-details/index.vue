@@ -10,7 +10,7 @@
     <br>
     <br>
     <i-tabs v-model="tabIndex" :animated="false" type="card">
-      <i-tab-pane label="基本信息">
+      <i-tab-pane label="基本信息" name="info">
         <i-form ref="formData" :model="formData" label-position="right" :label-width="120">
           <bs-form-block :title="'借款信息'">
             <i-row>
@@ -131,8 +131,8 @@
           </bs-form-block>
         </i-form>
       </i-tab-pane>
-      <i-tab-pane label="审批信息">
-        <table-loan-info v-if="tabIndex===1" :requestData="{loanNo: $route.query.loanNo}"></table-loan-info>
+      <i-tab-pane label="审批信息" name="approveTab">
+        <table-loan-info :requestData="{loanNo: $route.query.loanNo||''}"></table-loan-info>
       </i-tab-pane>
       <div class="form-footer-actions">
         <i-button @click="saveSubimt" :loading="initFormLoading" type="success">
@@ -480,7 +480,7 @@
       return {
         clickRow: {},
         isAddGPS: true,
-        tabIndex: 0,
+        tabIndex: 'info',
         clickRowIndex: 0,
         showSelectObligee: false, // 选择车辆权利人
         showSelectCompanyOwner: false, // 选择车辆企业权利人
@@ -670,7 +670,11 @@
           this.$data.formData = reps.body;
           this.$data.warrantType = reps.body.paymentApplyRecordDTO.warrantType;
         } else {
-          this.$data.formData = {};
+          this.$data.formData = {
+            paymentApplyRecordDTO: {
+              loanNo: ''
+            }
+          };
         }
       },
       // 获取车辆信息列表的data
@@ -733,21 +737,23 @@
 
       // 提交的ajax
       async allSubimt() {
-        if (this.$data.carData.length === 0) {
-          this.$Message.error({
-            content: '没有车辆信息，无法提交！',
-            duration: 2
-          });
-          return;
-        }
-        // 车辆信息中须配置好“GPS安装落实”
-        for (let item of this.$data.carData) {
-          if (item.loanCarGpsList && item.loanCarGpsList.length === 0) {
+        if (this.$data.formData.approveStatus === 'A') {
+          if (this.$data.carData.length === 0) {
             this.$Message.error({
-              content: '车辆信息中须配置好“GPS安装落实”！',
+              content: '没有车辆信息，无法提交！',
               duration: 2
             });
             return;
+          }
+          // 车辆信息中须配置好“GPS安装落实”
+          for (let item of this.$data.carData) {
+            if (item.loanCarGpsList && item.loanCarGpsList.length === 0) {
+              this.$Message.error({
+                content: '车辆信息中须配置好“GPS安装落实”！',
+                duration: 2
+              });
+              return;
+            }
           }
         }
         this.$AuditPrompt.auditPromptFun(this.$data.formData.approveStatus, async () => {
@@ -779,7 +785,7 @@
           if (valid) {
             this.allSubimt();
           } else {
-            this.$data.tabIndex = 0;
+            this.$data.tabIndex = 'info';
             this.$Message.error('<span style="color: red">*</span>项不能为空');
           }
         });
