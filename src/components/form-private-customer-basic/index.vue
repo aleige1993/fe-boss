@@ -167,9 +167,9 @@
             </i-row>
             <i-row>
               <i-col span="18">
-                <i-form-item v-if="!isFromDetail" label="户籍地址" prop="mbMemberDTO.censusCityCode"
+                <i-form-item v-if="!isFromDetail" label="户籍地址" prop="mbMemberDTO.censusDistrictName"
                              :rules="{required: true, message: '请输入户籍地址', trigger: 'blur'}">
-                  <input type="hidden" v-model="formData.mbMemberDTO.censusCityCode">
+                  <input type="hidden" v-model="formData.mbMemberDTO.censusDistrictName">
                   <bs-dispicker :currProvince="formData.mbMemberDTO.censusProvinceName"
                                 :currDistrict="formData.mbMemberDTO.censusDistrictName"
                                 :currCity="formData.mbMemberDTO.censusCityName"
@@ -187,9 +187,9 @@
             </i-row>
             <i-row>
               <i-col span="18">
-                <i-form-item v-if="!isFromDetail" label="居住地址" prop="mbMemberDTO.nowCityCode"
+                <i-form-item v-if="!isFromDetail" label="居住地址" prop="mbMemberDTO.nowDistrictName"
                              :rules="{required: true, message: '请输入居住地址', trigger: 'blur'}">
-                  <input type="hidden" v-model="formData.mbMemberDTO.nowCityCode">
+                  <input type="hidden" v-model="formData.mbMemberDTO.nowDistrictName">
                   <bs-dispicker ref="censusDispicker" :currProvince="formData.mbMemberDTO.nowProvinceName"
                                 :currDistrict="formData.mbMemberDTO.nowDistrictName"
                                 :currCity="formData.mbMemberDTO.nowCityName"
