@@ -115,7 +115,7 @@ export default {
                 props: {
                   content: `失败原因：${params.row.transRemark}`
                 }
-              }, h('span', {}, '失败'));
+              }, '失败');
             } else if (params.row.state === '2') {
               return h('span', {}, '已退款');
             } else if (params.row.state === '3') {
