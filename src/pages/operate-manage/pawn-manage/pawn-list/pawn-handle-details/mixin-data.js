@@ -16,8 +16,11 @@ export default {
           key: 'carBrandName'
         },
         {
-          title: '车辆型号',
-          key: 'carModelName'
+          title: '车型名称',
+          key: 'carModelName',
+          render: (h, params) => {
+            return h('span', {}, params.row.carBrandName + params.row.carTypeName + params.row.carModelName);
+          }
         },
         {
           title: '车牌号',

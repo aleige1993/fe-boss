@@ -251,10 +251,10 @@
           </i-col>
         </i-row>
         <i-row>
-          <!--车辆品牌-->
+          <!--车型名称-->
           <i-col span="24">
             <i-form-item
-              label="车辆型号"
+              label="车型名称"
               prop="">
               <span v-text="detailsCarDataForm.carBrandName+detailsCarDataForm.carTypeName+detailsCarDataForm.carModelName"></span>
             </i-form-item>
@@ -744,7 +744,8 @@
         this.$data.detailsCarDataForm.carBrandName = car.brandName;
         this.$data.detailsCarDataForm.carTypeCode = car.seriesNo;
         this.$data.detailsCarDataForm.carTypeName = car.seriesName;
-        this.$data.detailsCarDataForm.carModel = car.modelName;
+        this.$data.detailsCarDataForm.carModel = car.modelNo;
+        this.$data.detailsCarDataForm.carModelName = car.modelName;
       },
       /**
        *  选择权利人
