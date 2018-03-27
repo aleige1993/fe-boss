@@ -5,8 +5,15 @@
         <i-form-item prop="">
           <i-input type="text" v-model="searchForm.projectNo" placeholder="项目编号"></i-input>
         </i-form-item>
-        <i-form-item prop="">
-          <i-input v-model="searchForm.productName" type="text" placeholder="产品名称"></i-input>
+        <!--<i-form-item prop="">-->
+          <!--<i-input v-model="searchForm.productName" type="text" placeholder="产品名称"></i-input>-->
+        <!--</i-form-item>-->
+        <i-form-item prop="productNo">
+          <input type="hidden" v-model="searchForm.productName">
+          <i-select v-model="searchForm.productNo" type="text" placeholder="产品名称" style="width: 180px;" :label-in-value="true" @on-change="productChange">
+            <i-option value="" style="height: 26px; color: #bbbec4">-请选择-</i-option>
+            <i-option v-for="product in productList" :value="product.productNo" :key="product.productNo">{{product.productName}}</i-option>
+          </i-select>
         </i-form-item>
         <i-form-item prop="">
           <i-input v-model="searchForm.custName" type="text" placeholder="客户名称"></i-input>
@@ -41,7 +48,7 @@
       </i-form>
     </div>
     <div class="form-top-actions" slot="topAction">
-      <i-button type="info" @click="massPayment">批量付款</i-button>
+      <i-button v-if="!isDetail" type="info" @click="massPayment">批量付款</i-button>
       <i-button type="primary" @click="exportExcel" :loading="buttonLoading">
         <span v-if="!buttonLoading">导出EXCEL</span>
         <span v-else>Loading...</span>
@@ -82,16 +89,17 @@
           currentPage: 1,
           pageSize: 15
         },
+        productList: [],
         pay4Nos: [], // 批量代付ID
         exportExcelUrl: ''
       };
     },
     computed: {
       resultCustomerColumns() {
-        if (this.type === 'modal') {
+        if (this.isDetail) {
           return this.$data.customerColumns;
         } else {
-          return [...this.$data.customerColumns, ...this.$data.customerActionColumns];
+          return [...this.$data.customerCheckboxColumns, ...this.$data.customerColumns, ...this.$data.customerActionColumns];
         }
       }
     },
@@ -105,9 +113,33 @@
         type: String,
         default: '',
         required: false
+      },
+      isDetail: {
+        type: Boolean,
+        default: true,
+        required: false
       }
     },
     methods: {
+      // 搜索框 产品条件变化时
+      productChange(val) {
+        if (val.value === '') {
+          this.$data.searchForm.productName = '';
+        } else {
+          this.$data.searchForm.productName = val.label;
+        }
+      },
+      /*
+      * 获取产品列表 下拉
+       */
+      async getProductList() {
+        let resp = await this.$http.get('/pms/product/list', { productName: '', currentPage: 1, pageSize: 99999 });
+        if (resp.success) {
+          this.$data.productList = resp.body.resultList;
+        } else {
+          this.$data.productList = [];
+        }
+      },
       jumpPage(page) {
         this.getProxyPayList(page);
       },
@@ -180,6 +212,8 @@
       }
     },
     mounted() {
+//      alert(this.isDetail);
+      this.getProductList();
       this.getProxyPayList();
       this.$data.certTypeEnum = [
         {
