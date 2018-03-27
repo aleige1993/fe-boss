@@ -3,10 +3,10 @@
     <i-select :placeholder="currProvince" :disabled="readonly"  :label-in-value="true" v-model="distanceData.provinceCode"  @on-change="provinceChange" style="width: 150px">
       <i-option v-for="item in provinceDropList" :value="item.regionCode" :key="item.regionCode">{{item.regionName}}</i-option>
     </i-select>
-    <i-select :placeholder="currCity" :disabled="readonly" :label-in-value="true" @on-change="cityChange" v-model="distanceData.cityCode" style="width: 150px">
+    <i-select :placeholder="currCity" :disabled="readonly || cityDropList.length === 0" :label-in-value="true" @on-change="cityChange" v-model="distanceData.cityCode" style="width: 150px">
       <i-option v-for="item in cityDropList" :value="item.regionCode" :key="item.regionCode">{{item.regionName}}</i-option>
     </i-select>
-    <i-select :placeholder="currDistrict" :="readonly" :label-in-value="true" v-model="distanceData.districtCode" @on-change="districtChange" style="width: 150px">
+    <i-select :placeholder="currDistrict" :disabled="readonly || districtDropList.length === 0" :label-in-value="true" v-model="distanceData.districtCode" @on-change="districtChange" style="width: 150px">
       <i-option v-for="item in districtDropList" :value="item.regionCode" :key="item.regionCode">{{item.regionName}}</i-option>
     </i-select>
   </span>
@@ -104,6 +104,14 @@
       let resp = await this.getAddressDropList();
       if (resp.success) {
         this.$data.provinceDropList = resp.body;
+        let resp1 = await this.getAddressDropList(resp.body[0].regionCode);
+        if (resp1.success) {
+          this.$data.cityDropList = resp1.body;
+          let resp2 = await this.getAddressDropList(resp1.body[0].regionCode);
+          if (resp2.success) {
+            this.$data.districtDropList = resp2.body;
+          }
+        }
       }
       // await bsWait(2000);
       // this.initData();
