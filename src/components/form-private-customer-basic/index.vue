@@ -489,11 +489,11 @@ export default {
       this.formData.mbMemberWorkDTO.industryType = industryType;
       this.formData.mbMemberWorkDTO.companyTel = row.telephone;
       this.formData.mbMemberWorkDTO.provinceCode = row.bizProvinceCode;
-      this.formData.mbMemberWorkDTO.districtCode = row.bizCityCode;
-      this.formData.mbMemberWorkDTO.cityCode = row.bizDistrictCode;
       this.formData.mbMemberWorkDTO.provinceName = row.bizProvinceName;
-      this.formData.mbMemberWorkDTO.districtName = row.bizCityName;
-      this.formData.mbMemberWorkDTO.cityName = row.bizDistrictName;
+      this.formData.mbMemberWorkDTO.cityCode = row.bizCityCode;
+      this.formData.mbMemberWorkDTO.cityName = row.bizCityName;
+      this.formData.mbMemberWorkDTO.districtCode = row.bizDistrictCode;
+      this.formData.mbMemberWorkDTO.districtName = row.bizDistrictName;
       this.formData.mbMemberWorkDTO.roadAddr = row.bizRoadAddr;
     },
     async initPageData() {
