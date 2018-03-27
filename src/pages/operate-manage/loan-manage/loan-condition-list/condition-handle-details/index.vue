@@ -197,7 +197,11 @@
         </i-row>
         <i-row>
           <i-col span="24">
-            <i-form-item label="办理文件" prop="">
+            <i-form-item
+              label="办理文件"
+              :rules="{required: true, message: '至少上传一份办理文件！', trigger: 'blur'}"
+              prop="mortgageUrl">
+              <input type="hidden" v-model="formalities.mortgageUrl">
               <mortgage-picture-list ref="mortgagePictureList" :regularText="'@'" :picData="mortgageList" @on-data-remove="picDataRomove"  @on-data-add="picDataAdd"></mortgage-picture-list>
             </i-form-item>
           </i-col>
