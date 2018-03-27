@@ -157,12 +157,14 @@
           ...this.$data.searchForm
         });
         this.$data.dataLoading = false;
-        resp.body.resultList.map(item => {
-          if (!(item.state === '-1' || item.state === '3') || item.flag === '1') {
-            item._disabled = true;
-          }
-          return item;
-        });
+        if (!this.isDetail) {
+          resp.body.resultList.map(item => {
+            if (!(item.state === '-1' || item.state === '3') || item.flag === '1') {
+              item._disabled = true;
+            }
+            return item;
+          });
+        }
         this.$data.privateCustomerLoanList = resp.body.resultList;
         this.$data.currentPage = resp.body.currentPage / 1;
         this.$data.total = resp.body.totalNum / 1;
