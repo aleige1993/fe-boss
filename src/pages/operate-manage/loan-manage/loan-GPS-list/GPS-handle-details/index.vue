@@ -215,7 +215,7 @@
         <i-row>
           <!--车辆颜色-->
           <i-col span="8">
-            <i-form-item label="车辆颜色" prop="carColor" :rules="{required: true, message: '请选择车辆颜色', trigger: 'change'}">
+            <i-form-item label="车辆颜色" prop="carColor">
               <i-select v-model="detailsCarDataForm.carColor">
                 <i-option v-for="item in enumSelectData.get('CarColorEnum')" :key="item.itemCode" :value="item.itemCode">{{item.itemName}}</i-option>
               </i-select>
@@ -239,7 +239,7 @@
         <i-row>
           <!--生产厂商-->
           <i-col span="8">
-            <i-form-item label="生产厂商" prop="carVendor" :rules="{required: true, message: '请输入生产厂商'}">
+            <i-form-item label="生产厂商" prop="carVendor">
               <i-input v-model="detailsCarDataForm.carVendor" placeholder="">
               </i-input>
             </i-form-item>
@@ -381,7 +381,7 @@
           </i-col>
           <!--车辆购买价格-->
           <i-col span="8">
-            <i-form-item label="车辆购买价格" prop="carBuyPrice" :rules="{required: true, message: '请输入车辆购买价格', trigger: 'blur'}">
+            <i-form-item label="车辆购买价格" prop="carBuyPrice">
               <i-input v-model="detailsCarDataForm.carBuyPrice" placeholder="">
                 <span slot="append">元</span>
               </i-input>
