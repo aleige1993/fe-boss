@@ -104,8 +104,8 @@ export default {
                     }
                   }
                 }
-              }, this.$data.isDetails ? '查看合同文件' : '上传/查看合同文件'),
-              h('Button', {
+              }, this.$data.isDetails ? '查看合同文件' : '上传/查看合同文件')
+              /* h('Button', {
                 props: {
                   type: 'success',
                   size: 'small',
@@ -119,7 +119,7 @@ export default {
                     alert('点击此按钮后生成一笔待签约任务，推送至APP');
                   }
                 }
-              }, '重新签署')
+              }, '重新签署')*/
             ]);
           }
         }
