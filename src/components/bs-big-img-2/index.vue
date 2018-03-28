@@ -5,6 +5,7 @@
         <img :width="thumbWidth" :height="thumbHeight" :data-original="full" :src="thumb" alt="">
       </li>
     </ul>
+    <slot name="icon-remove"></slot>
   </div>
 </template>
 <script>
