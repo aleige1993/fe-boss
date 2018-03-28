@@ -14,49 +14,100 @@
     <bs-modal :title="isAdd?'添加银行账户':'编辑银行账户'" v-model="addBankModal">
       <i-form v-if="addBankModal" ref="bankForm" :model="formData" label-position="left" :label-width="120">
         <i-form-item label="账户名" prop="acctName"
-          :rules="{required: true, message: '账户名不能为空', trigger: 'blur'}">
+                     class="required"
+                     :rules="{required: true, message: '账户名不能为空', trigger: 'blur'}">
           <i-input v-model="formData.acctName" placeholder=""></i-input>
         </i-form-item>
-        <i-form-item label="账号" prop="acctNo"
-          :rules="{required: true, message: '账号不能为空', trigger: 'blur'}">
-          <i-input v-model="formData.acctNo" placeholder=""></i-input>
-        </i-form-item>
-        <i-form-item label="银行名称" prop="bankNo"
-          :rules="{required: true, message: '银行名称不能为空', trigger: 'blur'}">
-          <i-select @on-change="selectBank" :label-in-value="true" v-model="formData.bankNo" placeholder="">
-            <i-option v-for="item in bankList" :key="item.bankCode" :value="item.bankCode">{{item.bankName}}</i-option>
+        <i-form-item label="账户类型" prop="accountType"
+                     class="required"
+                     :rules="{required: true, message: '账户类型不能为空', trigger: 'change'}">
+          <i-select v-model="formData.accountType" placeholder="">
+            <i-option v-for="item in enumSelectData.get('PublicFlagEnum')" :key="item.itemCode" :value="item.itemCode">{{item.itemName}}</i-option>
           </i-select>
         </i-form-item>
-        <i-form-item label="开户行" prop="openBankName"
-          :rules="{required: true, message: '开户行不能为空', type: 'string', trigger: 'blur'}">
-          <i-input type="text" v-model="formData.openBankName" placeholder=""></i-input>
-        </i-form-item>
-        <i-form-item label="开户行号" prop="openBankNo"
-        :rules="{required: true, message: '开户行号不能为空', trigger: 'blur'}">
-          <i-input v-model="formData.openBankNo" placeholder=""></i-input>
-        </i-form-item>
-        <i-form-item label="开户行所在省" prop="openBankProvince"
-                     :rules="{required: true, message: '请选择开户行所在省'}">
-          <input v-model="formData.openBankProvince" type="hidden"/>
-          <i-select :placeholder="formData.openBankProvince||''" :label-in-value="true" @on-change="provinceChange">
-            <i-option v-for="item in provinceDropList" :value="item.regionCode" :key="item.regionCode">{{item.regionName}}</i-option>
-          </i-select>
-        </i-form-item>
-        <i-form-item label="开户行所在市" prop="openBankCity"
-                     :rules="{required: true, message: '请选择开户行所在市'}">
-          <input v-model="formData.openBankCity" type="hidden"/>
-          <i-select :placeholder="formData.openBankCity||''" :label-in-value="true" @on-change="cityChange">
-            <i-option v-for="item in cityDropList" :value="item.regionCode" :key="item.regionCode">{{item.regionName}}</i-option>
-          </i-select>
-        </i-form-item>
-        <i-form-item label="清算行行号" prop="openBankClearingNo"
-                     :rules="{required: true, message: '请输入清算行行号'}">
-          <i-input type="text" v-model="formData.openBankClearingNo" placeholder=""></i-input>
-        </i-form-item>
-        <!--<i-form-item label="预留手机号" prop="bankMobile"
-          :rules="{required: true, message: '预留手机号不能为空', trigger: 'blur'}">
-          <i-input v-model="formData.bankMobile" placeholder=""></i-input>
-        </i-form-item>-->
+        <!--对公的时候必填身份证号码-->
+        <div v-if="formData.accountType === '1'">
+          <i-form-item label="账号" prop="acctNo"
+                       class="required"
+                       :rules="{required: true, message: '账号不能为空', trigger: 'blur'}">
+            <i-input v-model="formData.acctNo" placeholder=""></i-input>
+          </i-form-item>
+          <i-form-item label="银行名称" prop="bankNo"
+                       class="required"
+                       :rules="{required: true, message: '银行名称不能为空', trigger: 'blur'}">
+            <i-select @on-change="selectBank" :label-in-value="true" v-model="formData.bankNo" placeholder="">
+              <i-option v-for="item in bankList" :key="item.bankCode" :value="item.bankCode">{{item.bankName}}</i-option>
+            </i-select>
+          </i-form-item>
+          <i-form-item label="开户行" prop="openBankName"
+                       class="required"
+                       :rules="{required: true, message: '开户行不能为空', type: 'string', trigger: 'blur'}">
+            <i-input type="text" v-model="formData.openBankName" placeholder=""></i-input>
+          </i-form-item>
+          <i-form-item label="开户行号" prop="openBankNo"
+                       class="required"
+                       :rules="{required: true, message: '开户行号不能为空', trigger: 'blur'}">
+            <i-input v-model="formData.openBankNo" placeholder=""></i-input>
+          </i-form-item>
+          <i-form-item label="开户行所在省" prop="openBankProvince"
+                       class="required"
+                       :rules="{required: true, message: '请选择开户行所在省'}">
+            <input v-model="formData.openBankProvince" type="hidden"/>
+            <i-select :placeholder="formData.openBankProvince||''" :label-in-value="true" @on-change="provinceChange">
+              <i-option v-for="item in provinceDropList" :value="item.regionCode" :key="item.regionCode">{{item.regionName}}</i-option>
+            </i-select>
+          </i-form-item>
+          <i-form-item label="开户行所在市" prop="openBankCity"
+                       class="required"
+                       :rules="{required: true, message: '请选择开户行所在市'}">
+            <input v-model="formData.openBankCity" type="hidden"/>
+            <i-select :placeholder="formData.openBankCity||''" :label-in-value="true" @on-change="cityChange">
+              <i-option v-for="item in cityDropList" :value="item.regionCode" :key="item.regionCode">{{item.regionName}}</i-option>
+            </i-select>
+          </i-form-item>
+          <i-form-item label="清算行行号" prop="openBankClearingNo"
+                       class="required"
+                       :rules="{required: true, message: '请输入清算行行号'}">
+            <i-input type="text" v-model="formData.openBankClearingNo" placeholder=""></i-input>
+          </i-form-item>
+        </div>
+        <!--对私的时候必填身份证号码-->
+        <div v-if="formData.accountType === '0'">
+          <i-form-item label="身份证号码"
+                       prop="idCardNo"
+                       :rules="{required: true, message: '身份证号码不能为空', trigger: 'blur'}">
+            <i-input v-model="formData.idCardNo" placeholder=""></i-input>
+          </i-form-item>
+          <i-form-item label="账号" prop="acctNo">
+            <i-input v-model="formData.acctNo" placeholder=""></i-input>
+          </i-form-item>
+          <i-form-item label="银行名称" prop="bankNo">
+            <i-select @on-change="selectBank" :label-in-value="true" v-model="formData.bankNo" placeholder="">
+              <i-option v-for="item in bankList" :key="item.bankCode" :value="item.bankCode">{{item.bankName}}</i-option>
+            </i-select>
+          </i-form-item>
+          <i-form-item label="开户行" prop="openBankName">
+            <i-input type="text" v-model="formData.openBankName" placeholder=""></i-input>
+          </i-form-item>
+          <i-form-item label="开户行号" prop="openBankNo">
+            <i-input v-model="formData.openBankNo" placeholder=""></i-input>
+          </i-form-item>
+          <i-form-item label="开户行所在省" prop="openBankProvince">
+            <input v-model="formData.openBankProvince" type="hidden"/>
+            <i-select :placeholder="formData.openBankProvince||''" :label-in-value="true" @on-change="provinceChange">
+              <i-option v-for="item in provinceDropList" :value="item.regionCode" :key="item.regionCode">{{item.regionName}}</i-option>
+            </i-select>
+          </i-form-item>
+          <i-form-item label="开户行所在市" prop="openBankCity">
+            <input v-model="formData.openBankCity" type="hidden"/>
+            <i-select :placeholder="formData.openBankCity||''" :label-in-value="true" @on-change="cityChange">
+              <i-option v-for="item in cityDropList" :value="item.regionCode" :key="item.regionCode">{{item.regionName}}</i-option>
+            </i-select>
+          </i-form-item>
+          <i-form-item label="清算行行号" prop="openBankClearingNo">
+            <i-input type="text" v-model="formData.openBankClearingNo" placeholder=""></i-input>
+          </i-form-item>
+        </div>
         <i-form-item label="备注" prop="remark">
           <i-input type="textarea" :rows="4" v-model="formData.remark" placeholder=""></i-input>
         </i-form-item>
@@ -93,6 +144,8 @@
           'merchantNo': '',
           'corpName': '',
           'acctName': '',
+          'accountType': '',
+          'idCardNo': '',
           'acctNo': '',
           'bankNo': '',
           'bankName': '',
@@ -104,6 +157,23 @@
           'remark': ''
         }
       };
+    },
+    watch: {
+      'formData.accountType'(newVal, oldVal) {
+        if ((typeof oldVal !== 'undefined') && oldVal !== '') {
+          if (newVal === '1') {
+            this.$data.formData.idCardNo = '';
+          }
+          /* this.$set(this.$data.formData, 'acctNo', '');
+          this.$set(this.$data.formData, 'bankNo', '');
+          this.$set(this.$data.formData, 'bankName', '');
+          this.$set(this.$data.formData, 'openBankName', '');
+          this.$set(this.$data.formData, 'openBankNo', '');
+          this.$set(this.$data.formData, 'openBankProvince', '');
+          this.$set(this.$data.formData, 'openBankCity', '');
+          this.$set(this.$data.formData, 'openBankClearingNo', '');*/
+        }
+      }
     },
     computed: {},
     methods: {
