@@ -46,9 +46,11 @@ export default {
       this.$data.submitApproveLoading = false;
       if (resp.success && resp.reMsg !== '失败') {
         this.$Message.success('审批成功');
-        this.$router.push({
-          name: 'loanBusinessList'
-        });
+        if (submitData.opeType === '2') {
+          this.$router.push({
+            name: 'loanBusinessList'
+          });
+        }
       }
     },
     /**

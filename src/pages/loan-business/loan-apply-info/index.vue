@@ -268,7 +268,7 @@
     </bs-modal>
     <!--车辆信息的新增修改模态框-->
     <bs-modal :title="isAddCar ? '新增' : '编辑'" v-model="showModalCar" :width="1200">
-      <i-form ref="formCar" :model="formCar" label-position="right" :label-width="140">
+      <i-form v-if="showModalCar" ref="formCar" :model="formCar" label-position="right" :label-width="140">
         <i-row>
           <i-col span="8">
             <i-form-item
