@@ -225,7 +225,7 @@
         }
       },
       async getBankList() {
-        let resp = await this.$http.post('/support/bank/list');
+        let resp = await this.$http.post('/common/support/bank/list');
         this.$data.bankList = resp.body;
       },
       async provinceChange(val) {
