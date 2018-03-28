@@ -9,7 +9,7 @@
     <div class="form-top-actions">
       <i-button type="primary" @click="openAddModal"><i class="iconfont icon-xinzeng"></i> 新增</i-button>
     </div>
-    <i-table :height="tableFixHeight+98" :loading="dataLoading" :columns="bankAccountColumns" :data="bankAccountDatas"></i-table>
+    <i-table border :height="tableFixHeight+98" :loading="dataLoading" :columns="bankAccountColumns" :data="bankAccountDatas"></i-table>
     <!--添加联系人模态框-->
     <bs-modal :title="isAdd?'添加银行账户':'编辑银行账户'" v-model="addBankModal">
       <i-form v-if="addBankModal" ref="bankForm" :model="formData" label-position="left" :label-width="120">
