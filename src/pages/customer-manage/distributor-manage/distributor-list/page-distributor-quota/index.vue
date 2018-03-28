@@ -227,8 +227,8 @@
           creditReleaseType: this.$data.formQuota.creditReleaseType
         });
         this.$data.btnLoading = false;
-        this.$data.showAddModal = false;
         if (resp.success) {
+          this.$data.showAddModal = false;
           this.$Message.success('已提交额度信息');
           await bsWait(1000);
           this.getList();
@@ -247,8 +247,8 @@
           creditReleaseType: this.$data.formQuota.creditReleaseType
         });
         this.$data.btnLoading = false;
-        this.$data.showAddModal = false;
         if (resp.success) {
+          this.$data.showAddModal = false;
           this.$Message.success('已修改额度信息');
           await bsWait(1000);
           this.getList();
@@ -275,8 +275,8 @@
           creditReleaseType: this.$data.formQuota.creditReleaseType
         });
         this.$data.draftLoading = false;
-        this.$data.showAddModal = false;
         if (resp.success) {
+          this.$data.showAddModal = false;
           this.$Message.success('已保存草稿');
           await bsWait(1000);
           this.getList();

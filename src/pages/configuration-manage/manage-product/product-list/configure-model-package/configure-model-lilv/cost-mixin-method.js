@@ -98,8 +98,8 @@ export default {
         productId: this.childMsg.id // 产品ID
       });
       this.$data.buttonLoading = false; // 关闭按钮的loading状态
-      this.$data.showCostAdd = false;
       if (resAdd.success) {
+        this.$data.showCostAdd = false;
         this.$Message.success('添加费用类型成功');
         this.getCostCollectList();
       }
@@ -133,9 +133,9 @@ export default {
         productNo: this.childMsg.productNo,  // 产品编号
         ratio: this.$data.formCostModel.ratio  // 标准比例
       });
-      this.$data.showCostAdd = false;
       this.$data.buttonLoading = false;
       if (resModify.success) {
+        this.$data.showCostAdd = false;
         this.$Message.success('修改费用类型成功');
         this.getCostCollectList();
       }

@@ -44,17 +44,6 @@
         <!--<div style="background: #f7f7f7; padding: 14px 5px 0 0;margin-bottom: 14px;width: 100%;">-->
         <div>
           <i-row :gutter="16">
-            <!--<i-col span="12">
-              <i-form-item
-                label="客户名称"
-                :rules="{required: true, message: '客户名称不能为空', trigger: 'change'}"
-                prop="corpName">
-                <input type="hidden" v-model="formAdd.corpName"/>
-                <i-input v-model="formAdd.corpName" :readonly="true" placeholder="选择公司客户">
-                  <i-button @click="showSelectCompanyOwner=!showSelectCompanyOwner" slot="append">选择公司客户 <Icon type="ios-more"></Icon></i-button>
-                </i-input>
-              </i-form-item>
-            </i-col>-->
             <i-col span="12">
               <i-form-item
                 label="渠道商名称"
@@ -94,15 +83,6 @@
             </i-col>
           </i-row>
           <i-row :gutter="16">
-            <!--<i-col span="12">
-              <i-form-item label="法定代表人姓名"
-                           :rules="{required: true, message: '请选择法定代表人', trigger: 'change'}"
-                           prop="legalPerson">
-                <i-input v-model="formAdd.legalPerson" :readonly="true">
-                  <i-button type="primary" @click="selectRulerModal=!selectRulerModal" slot="append">选择代表人 <Icon type="ios-more"></Icon></i-button>
-                </i-input>
-              </i-form-item>
-            </i-col>-->
             <i-col span="12">
               <i-form-item label="法定代表人姓名"
                            :rules="{required: true, message: '请选择法定代表人', trigger: 'change'}"
@@ -255,8 +235,11 @@
       <table-company-customer-list v-if="showSelectCompanyOwner" ref="companyTable" type="modal" @on-row-dbclick="selectCompanyRow"></table-company-customer-list>
     </bs-modal>
     <!-- 选择上级渠道商 -->
-    <bs-modal :width="880" v-model="showSelectMerchant" title="选择上级渠道商">
+    <!--<bs-modal :width="880" v-model="showSelectMerchant" title="选择上级渠道商">
       <tree-merchant v-if="showSelectMerchant" @on-row-dblclick="selectMerchant" :columns="treeMerchantColumns" :data="treeMerchantData"></tree-merchant>
+    </bs-modal>-->
+    <bs-modal :title="'选择上级渠道商'" v-model="showSelectMerchant" :width="1200">
+      <table-distributor-list v-if="showSelectMerchant" ref="distributorTable" type="modal" :treeAllList="true" @on-row-dbclick="selectDistributor"></table-distributor-list>
     </bs-modal>
     <!-- 选择客户经理的弹窗 -->
     <bs-modal title="选择客户经理" :width="1200" v-model="showSelectEmployer">
@@ -269,12 +252,12 @@
   </div>
 </template>
 <script>
+  import TableDistributorList from '@/components/table-distributor-list/index.vue';
   import TableCustomerList from '@/components/table-customer-list'; // 选择法定代表人
   import TableEmployerList from '@/components/table-employer-list'; // 选择客户经理
   import TreeMerchant from '@/components/bs-tree-grid'; // 选择上级渠道商
   import BsDispicker from '@/components/bs-dispicker';
   import TableCompanyCustomerList from '@/components/table-company-customer-list'; // 选择客户公司
-  import tableDistributorList from '@/components/table-distributor-list';
   import BsModal from '@/components/bs-modal';
   import BsDispickerTwo from '@/components/bs-dispicker-two';
   export default {
@@ -284,7 +267,7 @@
       TreeMerchant,
       BsDispicker,
       BsDispickerTwo,
-      tableDistributorList,
+      TableDistributorList,
       TableEmployerList,
       TableCustomerList,
       TableCompanyCustomerList
@@ -413,7 +396,7 @@
       }
     },
     mounted() {
-      this.getMerchantPidData();
+      // this.getMerchantPidData(); // 更新节点树
     },
     methods: {
       // 选择注册地址
@@ -556,7 +539,7 @@
           this.$Message.success(text);
           this.$refs.tableDistributorList.getPrivateCustomerList();
           // 更新节点树
-          this.getMerchantPidData();
+          // this.getMerchantPidData();
         }
       },
       // 修改
@@ -607,18 +590,29 @@
         this.$data.isClickRow = false;
         this.$data.clickRow = {};
       },
-      selectMerchant(id, index, treeData) {
+      // 树形 选择渠道商
+      /* selectMerchant(id, index, treeData) {
         this.$data.formAdd.pcorpName = treeData.corpName;
         this.$data.formAdd.Pid = treeData.id;
         this.$data.showSelectMerchant = false;
+      },*/
+      /**
+       * 选择渠道商
+       * @param row
+       * @param index
+       */
+      selectDistributor(row, index) {
+        this.$data.formAdd.Pid = row.id;
+        this.$data.formAdd.pcorpName = row.corpName;
+        this.$data.showSelectMerchant = false;
       },
       // 获取上级渠道商树形结构数据
-      async getMerchantPidData() {
+      /* async getMerchantPidData() {
         let resp = await this.$http.get('/merchant/tree');
         if (resp.success) {
           this.$data.treeMerchantData = resp.body;
         }
-      },
+      },*/
       openAddDistributorModal() {
         this.$data.isAdd = true;
         this.$data.showAddModal = true;

@@ -178,8 +178,8 @@
         }
         let resp = await this.$http.post(url, data);
         this.$data.buttonLoading = false;
-        this.$data.addModal = false;
         if (resp.success) {
+          this.$data.addModal = false;
           let text = this.$data.isAdd ? '添加成功' : '修改成功';
           this.$Message.success(text);
           this.getProxyPayList();

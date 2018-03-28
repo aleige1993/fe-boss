@@ -2,7 +2,7 @@
 <!--渠道商列表-->
   <div id="table-distributor-list">
     <div class="form-block-title">
-      客户信息
+      搜索信息
     </div>
     <div class="search-form-container">
       <i-form inline ref="formSearch" :model="formSearch">
@@ -27,7 +27,7 @@
       </i-form>
     </div>
     <slot name="topAction" v-if="!isModal"></slot>
-    <i-table :height="tableFixHeight-20" :loading="dataLoading" highlight-row border ref="distributorTable" :columns="resultColumns" :data="distributorList" @on-current-change="radioFun" @on-row-dblclick="selectRow"></i-table>
+    <i-table :height="!isModal?(tableFixHeight-20):tableFixHeight" :loading="dataLoading" highlight-row border ref="distributorTable" :columns="resultColumns" :data="distributorList" @on-current-change="radioFun" @on-row-dblclick="selectRow"></i-table>
     <div class="page-container">
       <i-page @on-change="jumpPage" :total="total" :page-size="pageSize" size="small" show-elevator show-total></i-page>
     </div>
@@ -63,6 +63,11 @@
       status: {
         type: String,
         default: 'allStatus',
+        required: false
+      },
+      treeAllList: {
+        type: Boolean,
+        default: false,
         required: false
       }
     },
@@ -106,12 +111,27 @@
             merchantStatusCode = this.status;
           }
         }
-        let resp = await this.$http.post('merchant/listMerchant', {
-          ...this.$data.formSearch,
-          merchantStatus: merchantStatusCode, // 当组件以modal形式显示的时候 传merchantStatus值为5（显示授信通过的数据）
-          currentPage: this.$data.currentPage,
-          pageSize: this.$data.pageSize
-        });
+        let resData = {};
+        let resUrl = '';
+        // 查询带顶级渠道商的所有信息列表(分页查询渠道商基础信息)
+        if (this.treeAllList) {
+          resUrl = '/merchant/listAll';
+          resData = {
+            ...this.$data.formSearch,
+            currentPage: this.$data.currentPage,
+            pageSize: this.$data.pageSize
+          };
+        } else {
+          // 查询不带顶级渠道商的信息列表(渠道商信息分页查询)
+          resUrl = 'merchant/listMerchant';
+          resData = {
+            ...this.$data.formSearch,
+            merchantStatus: merchantStatusCode, // 当组件以modal形式显示的时候 传merchantStatus值为5（显示授信通过的数据）
+            currentPage: this.$data.currentPage,
+            pageSize: this.$data.pageSize
+          };
+        }
+        let resp = await this.$http.post(resUrl, resData);
         this.$data.clickRow = {};
         // 告诉父组件取消了点选行状态
         this.$emit('on-cancel-clickRow'); //  this.$data.isClickRow = false;
