@@ -83,7 +83,7 @@ export default {
           width: 100,
           key: 'hasSign',
           render: (h, params) => {
-            return h('span', {}, this.enumCode2Name(params.row.hasSign, 'YesNoEnum'));
+            return h('span', {}, params.row.hasSign === '1' ? '签约已完成' : '签约未完成');
           }
         }
       ]
