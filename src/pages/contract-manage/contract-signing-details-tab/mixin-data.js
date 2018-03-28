@@ -81,7 +81,7 @@ export default {
         {
           title: '操作',
           align: 'center',
-          width: '300',
+          width: '200',
           render: (h, params) => {
             return h('div', [
               h('Button', {

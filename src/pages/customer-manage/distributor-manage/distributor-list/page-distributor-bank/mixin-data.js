@@ -7,6 +7,17 @@ export default {
           key: 'acctName'
         },
         {
+          title: '账户类型',
+          key: 'accountType',
+          render: (h, params) => {
+            return h('span', {}, this.enumCode2Name(params.row.accountType, 'PublicFlagEnum'));
+          }
+        },
+        {
+          title: '身份证号码',
+          key: 'idCardNo'
+        },
+        {
           title: '账号',
           key: 'acctNo'
         },
