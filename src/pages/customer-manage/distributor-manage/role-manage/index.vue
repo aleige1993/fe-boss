@@ -105,8 +105,8 @@
           roleName: this.$data.formData.roleName,
           moduleList: this.$data.moduleListCheck
         });
-        this.$data.showAddModal = false;
         if (reps.success) {
+          this.$data.showAddModal = false;
           this.$Message.success('新增成功');
           this.$refs.tableRoleList.getPrivateCustomerList(); // 刷新列表
         }
@@ -117,8 +117,8 @@
           roleName: this.$data.formData.roleName,
           moduleList: this.$data.moduleListCheck
         });
-        this.$data.showAddModal = false;
         if (reps.success) {
+          this.$data.showAddModal = false;
           this.$Message.success('修改成功');
           this.$refs.tableRoleList.getPrivateCustomerList(); // 刷新列表
         }

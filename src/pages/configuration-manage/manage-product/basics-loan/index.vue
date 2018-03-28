@@ -85,9 +85,9 @@
           loanDocName: this.$data.formCustom.loanDocName,
           custType: this.$data.formCustom.custType
         });
-        this.$data.showAddModal = false;
         this.$data.buttonLoading = false; // 关闭按钮的loading状态
         if (resAdd.success) {
+          this.$data.showAddModal = false;
           this.$Message.success('添加贷款材料成功');
           this.getPrivateCustomerList();
         }

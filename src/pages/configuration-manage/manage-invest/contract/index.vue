@@ -161,8 +161,8 @@
           yundaiContractId: this.$data.formContract.yundaiContractId
         });
         this.$data.buttonLoading = false; // 关闭按钮的loading状态
-        this.$data.ShowModal = false;
         if (resAdd.success) {
+          this.$data.ShowModal = false;
           this.$Message.success(tit);
           this.$refs['tableContractList'].getPrivateCustomerList();
         }

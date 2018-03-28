@@ -106,7 +106,6 @@
             if (resp.success) {
               this.$data.addShareholerModal = false;
               this.$Message.success('提交成功');
-              this.$data.addShareholerModal = false;
               this.getShareHolderList();
             }
           }
