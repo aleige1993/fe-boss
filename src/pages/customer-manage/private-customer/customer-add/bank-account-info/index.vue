@@ -125,7 +125,7 @@
         this.$data.bankAccountDatas = resp.body;
       },
       async getBankList() {
-        let resp = await this.$http.post('/common/support/bank/list');
+        let resp = await this.$http.post('/support/bank/list');
         this.$data.bankList = resp.body;
       }
     },

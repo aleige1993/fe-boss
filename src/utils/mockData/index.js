@@ -67,7 +67,7 @@ let ary = [
   },
   // 银行下拉
   {
-    url: '/common/support/bank/list',
+    url: '/support/bank/list',
     on: true,
     resp: Mock.mock({
       reCode: '0000',

@@ -219,7 +219,7 @@
       },
       // 获取银行名称枚举
       async getBankSelect() {
-        let resp = await this.$http.get('/common/support/bank/list');
+        let resp = await this.$http.get('/support/bank/list');
         if (resp.success) {
           this.$data.bankSelect = resp.body;
         } else {
