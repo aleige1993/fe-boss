@@ -5,9 +5,6 @@
         <i-form-item prop="">
           <i-input type="text" v-model="searchForm.projectNo" placeholder="项目编号"></i-input>
         </i-form-item>
-        <!--<i-form-item prop="">-->
-          <!--<i-input v-model="searchForm.productName" type="text" placeholder="产品名称"></i-input>-->
-        <!--</i-form-item>-->
         <i-form-item prop="productNo">
           <input type="hidden" v-model="searchForm.productName">
           <i-select v-model="searchForm.productNo" type="text" placeholder="产品名称" style="width: 180px;" :label-in-value="true" @on-change="productChange">
@@ -24,6 +21,20 @@
         <i-form-item prop="">
           <i-input v-model="searchForm.transCardId" type="text" placeholder="证件号码"></i-input>
         </i-form-item>
+
+        <i-form-item prop="">
+          创建时间
+        </i-form-item>
+        <i-form-item prop="">
+          <bs-datepicker v-model="searchForm.btime" type="text" placeholder="查询时间"></bs-datepicker>
+        </i-form-item>
+        <i-form-item prop="">
+          -
+        </i-form-item>
+        <i-form-item prop="">
+          <bs-datepicker v-model="searchForm.etime" type="text" placeholder="查询时间"></bs-datepicker>
+        </i-form-item>
+
         <i-form-item prop="">
           付款完成时间
         </i-form-item>
@@ -36,6 +47,7 @@
         <i-form-item prop="">
           <bs-datepicker v-model="searchForm.etime" type="text" placeholder="查询时间"></bs-datepicker>
         </i-form-item>
+
         <i-form-item prop="">
           <i-select style="width: 120px;" v-model="searchForm.state" placeholder="付款状态">
             <i-option value="" style="height: 26px; color: #bbbec4">-请选择-</i-option>
