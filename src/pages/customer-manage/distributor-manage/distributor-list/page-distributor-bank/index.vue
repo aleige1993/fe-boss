@@ -25,7 +25,7 @@
             <i-option v-for="item in enumSelectData.get('PublicFlagEnum')" :key="item.itemCode" :value="item.itemCode">{{item.itemName}}</i-option>
           </i-select>
         </i-form-item>
-        <!--对公的时候必填身份证号码-->
+        <!--对公的时候-->
         <div v-if="formData.accountType === '1'">
           <i-form-item label="账号" prop="acctNo"
                        class="required"
@@ -75,13 +75,18 @@
         <div v-if="formData.accountType === '0'">
           <i-form-item label="身份证号码"
                        prop="idCardNo"
+                       class="required"
                        :rules="{required: true, message: '身份证号码不能为空', trigger: 'blur'}">
             <i-input v-model="formData.idCardNo" placeholder=""></i-input>
           </i-form-item>
-          <i-form-item label="账号" prop="acctNo">
+          <i-form-item label="账号" prop="acctNo"
+                       class="required"
+                       :rules="{required: true, message: '账号不能为空', trigger: 'blur'}">
             <i-input v-model="formData.acctNo" placeholder=""></i-input>
           </i-form-item>
-          <i-form-item label="银行名称" prop="bankNo">
+          <i-form-item label="银行名称" prop="bankNo"
+                       class="required"
+                       :rules="{required: true, message: '请选择银行名称', trigger: 'change'}">
             <i-select @on-change="selectBank" :label-in-value="true" v-model="formData.bankNo" placeholder="">
               <i-option v-for="item in bankList" :key="item.bankCode" :value="item.bankCode">{{item.bankName}}</i-option>
             </i-select>
