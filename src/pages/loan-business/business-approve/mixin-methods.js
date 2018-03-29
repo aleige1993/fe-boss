@@ -46,7 +46,7 @@ export default {
       this.$data.submitApproveLoading = false;
       if (resp.success && resp.reMsg !== '失败') {
         this.$Message.success('审批成功');
-        if (submitData.opeType === '2') {
+        if (submitData.opeType !== '1') {
           this.$router.push({
             name: 'loanBusinessList'
           });

@@ -223,8 +223,8 @@
         let reps = await this.$http.post('/merchant/module/add', {
           ...this.$data.formData
         });
-        this.$data.showAddModal = false;
         if (reps.success) {
+          this.$data.showAddModal = false;
           this.$Message.success('新增成功');
           this.getModuleList(); // 刷新列表
         }
@@ -234,8 +234,8 @@
         let reps = await this.$http.post('/merchant/module/update', {
           ...this.$data.formData
         });
-        this.$data.showAddModal = false;
         if (reps.success) {
+          this.$data.showAddModal = false;
           this.$Message.success('修改成功');
           this.getModuleList(); // 刷新列表
         }

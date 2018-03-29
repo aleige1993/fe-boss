@@ -66,8 +66,8 @@
         this.$data.submitLoading = true;
         let resp = await this.$http.post('/member/negative/examine/insert', this.$data.formData);
         this.$data.submitLoading = false;
-        this.$data.addModal = false;
         if (resp.success) {
+          this.$data.addModal = false;
           this.getList();
         }
       }

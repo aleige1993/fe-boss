@@ -151,9 +151,9 @@
           salesStatus: '1',
           ...this.$data.formCustom
         });
-        this.$data.showAddModal = false;
         this.$data.buttonLoading = false; // 关闭按钮的loading状态
         if (resAdd.success) {
+          this.$data.showAddModal = false;
           this.$Message.success('新增成功');
           this.getPrivateCustomerList();
         }
@@ -172,9 +172,9 @@
           merchantNo: this.$route.query.merchantNo,
           ...this.$data.formCustom
         });
-        this.$data.showAddModal = false;
         this.$data.buttonLoading = false;
         if (resModify.success) {
+          this.$data.showAddModal = false;
           this.$Message.success('修改成功');
           this.getPrivateCustomerList();
         }

@@ -128,8 +128,8 @@
               pmsProductCityDTOS: { ...this.$data.pmsProductCityDTOS }
             });
             this.$data.buttonLoading = false; // 关闭按钮的loading状态
-            this.$data.showAddModal = false;
             if (resAdd.success) {
+              this.$data.showAddModal = false;
               this.$Message.success('新增成功');
               this.getPrivateCustomerList();
             }

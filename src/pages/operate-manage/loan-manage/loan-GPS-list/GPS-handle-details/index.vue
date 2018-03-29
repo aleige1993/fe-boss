@@ -799,8 +799,8 @@
             let reps = await this.$http.post('/biz/sign/update/loanCar', {
               ...this.$data.detailsCarDataForm
             });
-            this.$data.detailsCarDataShowModal = false;
             if (reps.success) {
+              this.$data.detailsCarDataShowModal = false;
               this.$set(this.$data.carData, ind, this.$data.detailsCarDataForm);
               this.$Message.success('车辆信息提交成功');
             }

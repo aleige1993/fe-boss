@@ -214,8 +214,8 @@
           ...this.$data.formAdmin
         });
         this.$data.buttonLoading = false;
-        this.$data.showAddModal = false;
         if (resp.success) {
+          this.$data.showAddModal = false;
           this.$Message.success(_text + '成功');
           this.getList();
         }
