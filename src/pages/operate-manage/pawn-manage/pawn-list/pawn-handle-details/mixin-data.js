@@ -67,6 +67,12 @@ export default {
                     this.$data.formalitiesShowModal = true;
                     this.$data.clickRow = params.row;
                     this.$data.formalities = $.extend(true, {}, this.$data.formalities, params.row);
+                    // 转成数组
+                    if (!this.$data.formalities.mortgageUrl || !this.$data.formalities.mortgageName) {
+                      this.$data.mortgageList = [];
+                    } else {
+                      this.$data.mortgageList = this.mortgageStrToArray(this.$data.formalities.mortgageUrl, this.$data.formalities.mortgageName);
+                    }
                   }
                 }
               }, '办理抵押')

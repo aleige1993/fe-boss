@@ -11,7 +11,7 @@
         </template>
         <template v-else>
           <bs-file-item style="float: left" :type="getFileSuffix(item.attachmentUrl)" :fileUrl="item.attachmentUrl" :fileName="item.attachmentName">
-            <span class="icon-remove" slot="icon-remove" @click.stop="deleteFile(item, index)"><i-icon type="close"></i-icon></span>
+            <span v-if="!details" class="icon-remove" slot="icon-remove" v-on:click.stop="deleteFile(item, index)"><i-icon type="close"></i-icon></span>
           </bs-file-item>
         </template>
       </template>

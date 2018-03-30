@@ -243,31 +243,52 @@
       </div>
     </i-tabs>
     <!--办理抵质押物手续-->
-    <bs-modal v-model="formalitiesShowModal" title="抵押详情" :width="520">
+    <bs-modal v-model="formalitiesShowModal" title="抵押详情" :width="1200" @on-close="emptyRowPic">
       <i-form v-if="formalitiesShowModal" ref="formalities" :model="formalities" label-position="right" :label-width="80" class="input-label-color">
-        <i-form-item label="办理时间">
-          <span v-text="formalities.makeDate"></span>
-        </i-form-item>
-        <i-form-item label="经办人">
-          <span v-text="formalities.makeUser"></span>
-        </i-form-item>
-        <i-form-item label="权证编号">
-          <span v-text="formalities.warrantNo"></span>
-        </i-form-item>
-        <i-form-item label="登记机关">
-          <span v-text="formalities.registerCompany"></span>
-        </i-form-item>
-        <i-form-item label="抵押状态">
-          <span v-text="enumCode2Name(formalities.mortgageStatus, 'MortgageStatusEnum')"></span>
-        </i-form-item>
-        <i-form-item label="备注">
-          <span v-text="formalities.remark"></span>
-        </i-form-item>
-        <i-form-item label="办理文件">
-          <Tooltip content="点击浏览/下载" placement="top">
-            <a :href="formalities.mortgageUrl" target="_blank">{{formalities.mortgageName}}</a>
-          </Tooltip>
-        </i-form-item>
+        <i-row>
+          <i-col span="12">
+            <i-form-item label="办理时间">
+              <span v-text="formalities.makeDate"></span>
+            </i-form-item>
+          </i-col>
+          <i-col span="12">
+            <i-form-item label="经办人">
+              <span v-text="formalities.makeUser"></span>
+            </i-form-item>
+          </i-col>
+        </i-row>
+        <i-row>
+          <i-col span="12">
+            <i-form-item label="权证编号">
+              <span v-text="formalities.warrantNo"></span>
+            </i-form-item>
+          </i-col>
+          <i-col span="12">
+            <i-form-item label="登记机关">
+              <span v-text="formalities.registerCompany"></span>
+            </i-form-item>
+          </i-col>
+        </i-row>
+        <i-row>
+          <i-col span="12">
+            <i-form-item label="备注">
+              <span v-text="formalities.remark"></span>
+            </i-form-item>
+          </i-col>
+          <i-col span="12">
+            <i-form-item label="抵押状态">
+              <span v-text="enumCode2Name(formalities.mortgageStatus, 'MortgageStatusEnum')"></span>
+            </i-form-item>
+          </i-col>
+        </i-row>
+        <i-row>
+          <i-col sapn="24">
+            <i-form-item label="办理文件">
+              <input type="hidden" v-model="formalities.mortgageUrl">
+              <mortgage-picture-list :details="true" ref="mortgagePictureList" :regularText="'@'" :picData="mortgageList"></mortgage-picture-list>
+            </i-form-item>
+          </i-col>
+        </i-row>
       </i-form>
     </bs-modal>
     <!--GPS安装信息-->
@@ -511,11 +532,12 @@
 
 <script>
   import MixinData from './mixin-data';
+  import MixinFilePicUpload from '../../../file-pic-upload-mixin'; // 抵押物办理文件 单张变多张上传
   import BsModal from '@/components/bs-modal';
   import TableLoanInfo from '@/components/table-loan-approval-info';
   export default {
     name: 'pageLoanHandleDetails',
-    mixins: [MixinData],
+    mixins: [MixinData, MixinFilePicUpload],
     components: {
       BsModal,
       TableLoanInfo
@@ -667,6 +689,12 @@
       }
     },
     methods: {
+      // 办理抵押模态框关闭后清楚组件内文件数据
+      emptyRowPic() {
+        this.$data.mortgageList = [];
+        this.$data.formalities = {};
+        this.$refs['mortgagePictureList'].closeUploading();
+      },
       async changeShowLoanAmtStyle() {
         this.$data.showLoanAmtStyle = true;
         await bsWait(200);
@@ -851,30 +879,6 @@
             this.$data.tabIndex = 0;
             this.$Message.error('<span style="color: red">*</span>项不能为空');
           }
-        });
-      },
-      // 办理抵质押物手续文件上传成功
-      uploadSuccessAlities(res, file, fileList) {
-        this.$data.formalities.uploadFileName = file.name;
-        this.$data.formalities.makeUrl = res.body.url;
-      },
-      // 办理抵质押物手续文件上传失败
-      uploadErrorAlities(err, file, fileList) {
-        this.$data.formalities.uploadFileName = '';
-        this.$Notice.error({
-          title: '错误提示', desc: err
-        });
-      },
-      // 担保落实文件上传成功
-      uploadSuccessGuarantee(res, file, fileList) {
-        this.$data.formalities.uploadFileName = file.name;
-        this.$data.formalities.makeUrl = res.body.url;
-      },
-      // 担保落实文件上传失败
-      uploadErrorGuarantee(err, file, fileList) {
-        this.$data.formalities.uploadFileName = '';
-        this.$Notice.error({
-          title: '错误提示', desc: err
         });
       }
     }
