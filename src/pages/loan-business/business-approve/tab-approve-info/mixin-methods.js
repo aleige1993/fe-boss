@@ -239,7 +239,6 @@ export default {
         this.$data.approveData.loanPaymentAccountDTOS.bankName = resp.body.paymentBankName;
         this.$data.approveData.loanPaymentAccountDTOS.openBankName = resp.body.paymentBankName;
         this.$data.approveData.loanRePaymentAccountDTOS.acctName = resp.body.repaymentAccountName;
-        this.$data.approveData.loanRePaymentAccountDTOS.acctName = resp.body.repaymentAccountName;
         this.$data.approveData.loanRePaymentAccountDTOS.acctNo = resp.body.repaymentAcctNo;
         this.$data.approveData.loanRePaymentAccountDTOS.bankName = resp.body.repaymentBankName;
         this.$data.approveData.loanRePaymentAccountDTOS.openBankName = resp.body.repaymentOpenBankName;
