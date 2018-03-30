@@ -3,8 +3,8 @@
     <a :href="fileUrl" target="_blank">
       <img :src="'./static/img/file-icons/'+suffix+'.png'" alt="">
       <p :title="fileName">{{fileName}}</p>
-      <slot name="icon-remove"></slot>
     </a>
+    <slot name="icon-remove"></slot>
   </div>
 </template>
 <script>
