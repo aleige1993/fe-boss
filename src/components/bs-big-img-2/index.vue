@@ -39,6 +39,9 @@
     }
   };
 </script>
-<style lang="scss" scoped="">
+<style lang="scss">
 @import '../../assets/style/viewer.min.css';
+.viewer-prev, .viewer-next{
+  display: none !important;
+}
 </style>
