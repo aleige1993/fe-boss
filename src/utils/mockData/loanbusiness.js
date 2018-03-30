@@ -316,6 +316,69 @@ export default [
       'success': true
     })
   },
+  // 签约管理- 放款条件落实-办理详情
+  {
+    url: '/biz/payment/findPaymentApplyRecordInfo',
+    on: true,
+    resp: Mock.mock({
+      'body': {
+        'approveStatus': '',
+        'rejectCause': '',
+        'opinion': '',
+        'paymentRecordDTO': {
+          'shareAmt': '',
+          'scRate': '',
+          'capitalRate': '',
+          'loanAmt': '11111111',
+          'paymentType': '',
+          'paymentSecondAmt': '',
+          'expectLoanDate': ''
+        },
+        'paymentApplyRecordDTO': {
+          'custNo': '',
+          'warrantType|1': ['1', '2'],
+          'certType': '',
+          'loanNo': '',
+          'operatingMode': '',
+          'contractStartDate': '',
+          'contractEndDate': '',
+          'paymentNo': '',
+          'custName': '',
+          'productName': '',
+          'totalPeriods': '',
+          'merchantName': '',
+          'signConfirmDate': '',
+          'certNo': '',
+          'telPhone': '',
+          'custType': '',
+          'addr': '',
+          'applyDate': '',
+          'loanTotalAmt': '',
+          'productNo': '',
+          'merchantNo': ''
+        },
+        'loanAccountDTO': {
+          'loanAcctNo': '',
+          'loanBankCode': '',
+          'loanOpenBankCode': '',
+          'loanBankName': '',
+          'loanAcctName': '',
+          'loanOpenBankName': ''
+        },
+        'repayAccountDTO': {
+          'repayBankCode': '',
+          'repayOpenBankCode': '',
+          'repayAcctName': '',
+          'repayOpenBankName': '',
+          'repayAcctNo': '',
+          'repayBankName': ''
+        }
+      },
+      'reCode': '0000',
+      'reMsg': '成功',
+      'success': true
+    })
+  },
   // 签约管理-合同制作-车辆信息 &  放款管理-办理详情-车辆信息
   {
     url: '/biz/listLoanCarByLoanNo',
@@ -350,8 +413,8 @@ export default [
                 'loanNo': '11111' // 项目编号
               }
             ],
-            'makeName': '办理文件名.jpg',
-            'makeUrl': '@image(\'200x100\', \'#4A7BF7\', \'Hello\')',
+            'mortgageName': '办理文件名01.jpg@办理文件名02.jpg@办理文件名03.png',
+            'mortgageUrl': '@image(\'200x100\', \'#666\')' + '@' + '@image(\'200x100\', \'#333\')' + '@' + '@image(\'200x100\', \'#999\')',
             'makeDate': '@date',
             'makeUser': 'mockjs',
             'warrantNo': '0000001',
