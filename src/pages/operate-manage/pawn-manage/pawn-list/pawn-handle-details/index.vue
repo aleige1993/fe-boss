@@ -222,7 +222,7 @@
           'makeUser': '',
           'warrantNo': '',
           'registerCompany': '',
-          'mortgageStatus': '',
+          'mortgageStatus': '1',
           'remark': ''
         }
       };
@@ -292,6 +292,7 @@
           if (valid) {
             this.$data.formalitiesShowModal = false;
             this.$set(this.$data.carData, ind, this.$data.formalities);
+            this.$set(this.$data.carData[ind], 'mortgageStatus', '1');
             this.$Message.success('提交成功');
           } else {
             this.$Message.error('<span style="color: red">*</span>项不能为空');
