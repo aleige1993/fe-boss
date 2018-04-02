@@ -90,13 +90,19 @@
             </i-row>
           </bs-form-block>
           <bs-form-block :title="'车辆信息'">
-            <i-table :loading="carDataLoading" border ref="selection" :columns="carColumns" :data="carData"></i-table>
+            <div class="scrollBarStyle" style="width: 100%; overflow-x: auto">
+              <i-table :loading="carDataLoading" border ref="selection" :columns="carColumns" :data="carData"></i-table>
+            </div>
           </bs-form-block>
           <bs-form-block :title="'担保信息'">
-            <i-table :loading="assureDataLoading" border ref="selection" :columns="assureColumns" :data="assureData"></i-table>
+            <div class="scrollBarStyle" style="width: 100%; overflow-x: auto">
+              <i-table :loading="assureDataLoading" border ref="selection" :columns="assureColumns" :data="assureData"></i-table>
+            </div>
           </bs-form-block>
           <bs-form-block :title="'放款条件'">
-            <i-table :loading="conditionLoading" border ref="selection" :columns="conditionColumns" :data="conditionData"></i-table>
+            <div class="scrollBarStyle" style="width: 100%; overflow-x: auto">
+              <i-table :loading="conditionLoading" border ref="selection" :columns="conditionColumns" :data="conditionData"></i-table>
+            </div>
           </bs-form-block>
           <bs-form-block :title="'审核意见'">
             <i-row>

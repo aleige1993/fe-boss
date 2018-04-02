@@ -158,10 +158,14 @@
           </bs-form-block>
           <!--资金方信息-->
           <bs-form-block :title="'资金方信息'">
-            <i-table :columns="loanFundPartyCol" :data="approveData.loanCapitalDTOS"></i-table>
+            <div class="scrollBarStyle" style="width: 100%; overflow-x: auto">
+              <i-table :columns="loanFundPartyCol" :data="approveData.loanCapitalDTOS"></i-table>
+            </div>
           </bs-form-block>
           <bs-form-block :title="'费用收取方案'">
-            <i-table ref="feeMethodsTable" :columns="feeMethodCol" :data="approveData.loanApproveFeePlanDTOS"></i-table>
+            <div class="scrollBarStyle" style="width: 100%; overflow-x: auto">
+              <i-table ref="feeMethodsTable" :columns="feeMethodCol" :data="approveData.loanApproveFeePlanDTOS"></i-table>
+            </div>
             <i-row v-if="approveData.loanApproveFeePlanDTOS.length>0" style="margin-top: 10px;">
               <i-col span="24">
                 <i-form-item label="可融资金额" prop="loanApproveCreditDTO.carSaleAmt">
@@ -236,7 +240,9 @@
             <div class="form-top-actions" v-if="!readonly">
               <i-button type="primary" @click="conditionForm = {} ; addConditionModal = !addConditionModal">添加放款条件</i-button>
             </div>
-            <i-table :columns="loanPaymentConditionCol" :data="approveData.loanPaymentConditionDTOS"></i-table>
+            <div class="scrollBarStyle" style="width: 100%; overflow-x: auto">
+              <i-table :columns="loanPaymentConditionCol" :data="approveData.loanPaymentConditionDTOS"></i-table>
+            </div>
           </bs-form-block>
           <!--审核意见-->
           <bs-form-block title="审核意见" v-if="!isFromDetail">

@@ -220,7 +220,9 @@
           </bs-form-block>
           <!--附件信息-->
           <bs-form-block :title="'附件信息'">
-            <i-table :loading="loadingAttachFile" :columns="companyAttachFileColumns" :data="formData.attachDTOs"></i-table>
+            <div class="scrollBarStyle" style="width: 100%; overflow-x: auto">
+              <i-table :loading="loadingAttachFile" :columns="companyAttachFileColumns" :data="formData.attachDTOs"></i-table>
+            </div>
           </bs-form-block>
         </i-form>
       </i-col>

@@ -201,21 +201,27 @@
       </bs-form-block>
     </i-form>
     <bs-form-block :title="'贷款准入规则'">
-      <i-table :columns="accessRuleCol" :data="loanApproveRuleDTOS"></i-table>
+      <div class="scrollBarStyle" style="width: 100%; overflow-x: auto">
+        <i-table :columns="accessRuleCol" :data="loanApproveRuleDTOS"></i-table>
+      </div>
     </bs-form-block>
     <!--车辆信息-->
     <bs-form-block :title="'车辆信息'">
-      <div class="form-top-actions" v-if="!readonly">
-        <i-button @click="openModalCar" type="info"><i class="iconfont icon-xinzeng"></i>&nbsp;新增</i-button>
+      <div class="scrollBarStyle" style="width: 100%; overflow-x: auto">
+        <div class="form-top-actions" v-if="!readonly">
+          <i-button @click="openModalCar" type="info"><i class="iconfont icon-xinzeng"></i>&nbsp;新增</i-button>
+        </div>
+        <i-table :loading="carDataLoading" border ref="selection" :columns="carColumns" :data="carData"></i-table>
       </div>
-      <i-table :loading="carDataLoading" border ref="selection" :columns="carColumns" :data="carData"></i-table>
     </bs-form-block>
     <!--担保信息-->
     <bs-form-block :title="'担保信息'">
       <div class="form-top-actions" v-if="!readonly">
         <i-button @click="openModalAssure" type="info"><i class="iconfont icon-xinzeng"></i>&nbsp;新增</i-button>
       </div>
-      <i-table :loading="assureDataLoading" border ref="selection" :columns="assureColumns" :data="assureData"></i-table>
+      <div class="scrollBarStyle" style="width: 100%; overflow-x: auto">
+        <i-table :loading="assureDataLoading" border ref="selection" :columns="assureColumns" :data="assureData"></i-table>
+      </div>
     </bs-form-block>
     <!--贷款材料清单-->
     <bs-form-block :title="'贷款材料清单'">

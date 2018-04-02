@@ -55,8 +55,9 @@
         </bs-form-block>
         <!--合同信息-->
         <bs-form-block :title="'合同信息'">
-          <i-table border :loading="contractInfoListLoading" ref="contractInfoTable" :columns="contractInfoColumns" :data="formData.contractList">
-          </i-table>
+          <div class="scrollBarStyle" style="width: 100%; overflow-x: auto">
+            <i-table border :loading="contractInfoListLoading" ref="contractInfoTable" :columns="contractInfoColumns" :data="formData.contractList"></i-table>
+          </div>
         </bs-form-block>
       </i-form>
       <bs-form-block v-if="!isDetails" :title="'审核意见'">
