@@ -498,8 +498,8 @@
 </template>
 
 <script>
-  import MortgagePictureList from '@/components/file-picture-list';
   import MixinData from './mixin-data';
+  import MixinFilePicUpload from '../../../file-pic-upload-mixin'; // 抵押物办理文件 单张变多张上传
   import BsModal from '@/components/bs-modal';
   import TableLoanInfo from '@/components/table-loan-approval-info';
   import TableCustomerList from '@/components/table-customer-list'; // 选择权利人的模态框
@@ -507,11 +507,10 @@
   import BsCarpicker from '@/components/bs-carpicker';
   export default {
     name: 'pageLoanHandleDetails',
-    mixins: [MixinData],
+    mixins: [MixinData, MixinFilePicUpload],
     components: {
       BsModal,
       'bs-carpicker': BsCarpicker,
-      MortgagePictureList,
       TableCustomerList,
       TableCompanyCustomerList,
       TableLoanInfo
@@ -675,37 +674,6 @@
       }
     },
     methods: {
-      // 把车辆信息里的办理文件名和地址解析成数组 间隔字符‘@’,第一个参数时文件地址，第二个时文件名称
-      mortgageStrToArray(urLStr, nameStr) {
-        let urlAry = urLStr.split('@');
-        let nameAry = nameStr.split('@');
-        let mortgageAry = [];
-        urlAry.map((item, index) => {
-          mortgageAry[index] = {
-            attachmentUrl: urlAry[index],
-            attachmentName: nameAry[index]
-          };
-          return item;
-        });
-        // console.log(mortgageAry);
-        return mortgageAry;
-      },
-      // 把车辆信息里的办理文件名和地址解析返回成字符串 间隔字符‘@’,参数是要转换的数组集合(attachmentUrl和attachmentName)
-      mortgageArrayToObj(urLAry) {
-        let mortgageObj = {
-          mortgageUrl: '',
-          mortgageName: ''
-        };
-        urLAry.map((item, index) => {
-          mortgageObj.mortgageUrl += item.attachmentUrl + '@';
-          mortgageObj.mortgageName += item.attachmentName + '@';
-          return item;
-        });
-        mortgageObj.mortgageUrl = mortgageObj.mortgageUrl.substring(0, mortgageObj.mortgageUrl.lastIndexOf('@'));
-        mortgageObj.mortgageName = mortgageObj.mortgageName.substring(0, mortgageObj.mortgageName.lastIndexOf('@'));
-        // console.log(mortgageObj);
-        return mortgageObj;
-      },
       // 添加车辆图片
       picDataAdd(dataList) {
         if (this.$data.formalities.mortgageUrl === '') {

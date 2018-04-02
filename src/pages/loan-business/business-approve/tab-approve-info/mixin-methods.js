@@ -234,10 +234,12 @@ export default {
         paymentCustNo // 放款客户编号，LoanModeEnum=1时，传渠道商编号，LoanModeEnum=2时传客户编号
       });
       if (resp.success) {
+        // payment account info
         this.$data.approveData.loanPaymentAccountDTOS.acctName = resp.body.paymentAccountName;
         this.$data.approveData.loanPaymentAccountDTOS.acctNo = resp.body.paymentAcctNo;
         this.$data.approveData.loanPaymentAccountDTOS.bankName = resp.body.paymentBankName;
-        this.$data.approveData.loanPaymentAccountDTOS.openBankName = resp.body.paymentBankName;
+        this.$data.approveData.loanPaymentAccountDTOS.openBankName = resp.body.paymentOpenBankName;
+        // repayment account info
         this.$data.approveData.loanRePaymentAccountDTOS.acctName = resp.body.repaymentAccountName;
         this.$data.approveData.loanRePaymentAccountDTOS.acctNo = resp.body.repaymentAcctNo;
         this.$data.approveData.loanRePaymentAccountDTOS.bankName = resp.body.repaymentBankName;
@@ -245,10 +247,10 @@ export default {
         this.$data.paymentAccountList = resp.body.paymentAccountList;
         this.$data.repaymentAccountList = resp.body.repaymentAccountList;
         // 重置放款账户和还款账户信息
-        this.$data.approveData.loanPaymentAccountDTOS.acctName = resp.body.paymentAccountList[0].acctName;
-        this.$data.approveData.loanRePaymentAccountDTOS.acctName = resp.body.repaymentAccountList[0].acctName;
-        this.$data.approveData.loanPaymentAccountDTOS.openBankName = resp.body.paymentAccountList[0].bankName;
-        this.$data.approveData.loanRePaymentAccountDTOS.openBankName = resp.body.repaymentAccountList[0].openBankName;
+        // this.$data.approveData.loanPaymentAccountDTOS.acctName = resp.body.paymentAccountList[0].acctName;
+        // this.$data.approveData.loanRePaymentAccountDTOS.acctName = resp.body.repaymentAccountList[0].acctName;
+        // this.$data.approveData.loanPaymentAccountDTOS.openBankName = resp.body.paymentAccountList[0].bankName;
+        // this.$data.approveData.loanRePaymentAccountDTOS.openBankName = resp.body.repaymentAccountList[0].openBankName;
       }
     },
     /**

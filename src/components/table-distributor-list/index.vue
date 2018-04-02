@@ -75,10 +75,18 @@
       resultColumns() {
         if (this.type === 'modal') {
           this.$data.isModal = true;
-          return this.$data.distributorColumns;
+          if (this.treeAllList) {
+            return this.$data.distributorColumns;
+          } else {
+            return [...this.$data.distributorColumns, ...this.$data.isNtreeAllListColumns];
+          }
         } else {
           this.$data.isModal = false;
-          return [...this.$data.distributorColumns, ...this.$data.columnsFeatureActionColumns];
+          if (this.treeAllList) {
+            return [...this.$data.distributorColumns, ...this.$data.columnsFeatureActionColumns];
+          } else {
+            return [...this.$data.distributorColumns, ...this.$data.isNtreeAllListColumns, ...this.$data.columnsFeatureActionColumns];
+          }
         }
       }
     },

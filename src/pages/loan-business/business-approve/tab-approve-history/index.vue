@@ -53,7 +53,7 @@
         let _id = this.$route.query.id;
         if (_id && _id !== '') {
           this.$data.historyLoading = true;
-          let resp = await this.$http.post('/biz/listApproveHistory', { loanNo: _id });
+          let resp = await this.$http.post('/biz/listApproveHistory', { loanNo: _id, pageSize: 9999, currentPage: 1 });
           this.$data.historyLoading = false;
           if (resp.success) {
             this.$data.approveHistoryData = resp.body.resultList;

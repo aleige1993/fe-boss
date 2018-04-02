@@ -126,6 +126,17 @@ export default {
           }
         },
         {
+          title: '渠道商状态', // 0:未授信1-授信申请中2-已授信5-授信过期6-冻结
+          width: 100,
+          key: 'merchantStatus',
+          fixed: 'right',
+          render: (h, params) => {
+            return h('span', {}, this.enumCode2Name(params.row.merchantStatus, 'MerchantStatusEnum'));
+          }
+        }
+      ],
+      isNtreeAllListColumns: [
+        {
           title: '渠道商服务地区', // 数组集合
           width: 200,
           key: 'merchantAreaInfo',
@@ -155,15 +166,6 @@ export default {
                 return h('p', {}, showCityNames);
               }
             }
-          }
-        },
-        {
-          title: '渠道商状态', // 0:未授信1-授信申请中2-已授信5-授信过期6-冻结
-          width: 100,
-          key: 'merchantStatus',
-          fixed: 'right',
-          render: (h, params) => {
-            return h('span', {}, this.enumCode2Name(params.row.merchantStatus, 'MerchantStatusEnum'));
           }
         }
       ],
