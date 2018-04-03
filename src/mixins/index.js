@@ -1,4 +1,5 @@
 import Vue from 'vue';
+import Config from '../utils/Config';
 Vue.mixin({
   computed: {
     enumSelectData() {
@@ -6,6 +7,9 @@ Vue.mixin({
     },
     tableFixHeight() {
       return this.$store.getters.viewHeight;
+    },
+    uploadMaxSize() {
+      return Config.UPLOAD_FILE_MAX_SIZE;
     }
   },
   methods: {
@@ -42,6 +46,12 @@ Vue.mixin({
       if (promise.reCode === '0000') {
         this.$store.dispatch('setMenuList', promise.body.childMenus);
       }
+    },
+    handleMaxSize(file) {
+      this.$Notice.warning({
+        title: '上传文件过大',
+        desc: '文件  ' + file.name + ' 太大了, 上传的文件不能大于' + Config.UPLOAD_FILE_MAX_SIZE / 1024 + 'M.'
+      });
     }
   }
 });

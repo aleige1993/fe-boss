@@ -8,7 +8,7 @@ export default {
           width: 100,
           key: 'custType',
           render: (h, params) => {
-            return this.enumCode2Name(params.row.custType, 'CustTypeEnum');
+            return h('span', {}, this.enumCode2Name(params.row.custType, 'CustTypeEnum'));
           }
         },
         {

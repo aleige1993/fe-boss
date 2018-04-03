@@ -217,6 +217,8 @@
                   <i-upload v-else :on-success="uploadFaceSuccess"
                   :on-progress="uploadFaceLoading"
                   :format="['jpg','jpeg','png']"
+                  :max-size="uploadMaxSize"
+                  :on-exceeded-size="handleMaxSize"
                   :on-error="uploadError"
                   :action="$config.HTTPBASEURL+'/common/upload'" :show-upload-list="false">
                     <img v-if="formData.mbMemberDTO.certFrontUrl&&formData.mbMemberDTO.certFrontUrl!==''"  width="149" height="95" :src="formData.mbMemberDTO.certFrontUrl" alt="">
@@ -235,9 +237,11 @@
                               :thumbWidth="149" :thumbHeight="95"
                               :full="formData.mbMemberDTO.certBackUrl" :full-width="945"></bs-big-img>
                   <i-upload v-else :on-success="uploadBackSuccess"
-                  :on-progress="uploadBackLoading"
-                  :format="['jpg','jpeg','png']"
-                  :action="$config.HTTPBASEURL+'/common/upload'" :show-upload-list="false">
+                                    :on-progress="uploadBackLoading"
+                                    :max-size="uploadMaxSize"
+                                    :on-exceeded-size="handleMaxSize"
+                                    :format="['jpg','jpeg','png']"
+                                    :action="$config.HTTPBASEURL+'/common/upload'" :show-upload-list="false">
                     <img v-if="formData.mbMemberDTO.certBackUrl&&formData.mbMemberDTO.certBackUrl!==''" width="149" height="95" :src="formData.mbMemberDTO.certBackUrl" alt="">
                     <idcard-placeholder v-else type="back"></idcard-placeholder>
                     <i-spin fix v-if="idcardBackUploading"></i-spin>
@@ -257,6 +261,8 @@
                   <i-upload v-else :on-success="uploadHandSuccess"
                   :on-progress="uploadHandLoading"
                   :format="['jpg','jpeg','png']"
+                  :max-size="uploadMaxSize"
+                  :on-exceeded-size="handleMaxSize"
                   :action="$config.HTTPBASEURL+'/common/upload'" :show-upload-list="false">
                     <img v-if="formData.mbMemberDTO.certHandUrl&&formData.mbMemberDTO.certHandUrl!==''" width="149" height="95" :src="formData.mbMemberDTO.certHandUrl" alt="">
                     <idcard-placeholder v-else type="hand"></idcard-placeholder>
@@ -524,6 +530,12 @@ export default {
       this.$data.formData.mbMemberDTO.bizDepartmentCode = data.id;
       this.$data.formData.mbMemberDTO.bizDepartmentName = data.text;
       this.$data.selectDepartmentModal = false;
+    },
+    handleMaxSize(file) {
+      this.$Notice.warning({
+        title: '上传文件过大',
+        desc: '文件  ' + file.name + ' 太大了, 上传的文件不能大于' + this.$config.UPLOAD_FILE_MAX_SIZE / 1024 + 'M.'
+      });
     }
   },
   async mounted() {

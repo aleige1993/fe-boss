@@ -34,7 +34,7 @@ export default {
           width: 160,
           align: 'center',
           render: (h, params) => {
-            return this.enumCode2Name(params.row.status, 'YesNoEnum');
+            return h('span', {}, this.enumCode2Name(params.row.status, 'YesNoEnum'));
           }
         }
       ],

@@ -14,6 +14,8 @@
                 multiple type="drag"
                 :format="['jpg','jpeg','png','gif','bmp','jpeg','pic']"
                 :on-progress="uploading"
+                :max-size="uploadMaxSize"
+                :on-exceeded-size="handleMaxSize"
                 :before-upload="uploadBefore"
                 :on-success="uploadFileSuccess"
                 :action="$config.HTTPBASEURL+'/common/upload'">

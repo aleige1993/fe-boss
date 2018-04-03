@@ -25,11 +25,7 @@ export default {
           title: '是否自动触发',
           key: 'autoTrigger',
           render: (h, params) => {
-            if (params.row.autoTrigger === '1') {
-              return '是';
-            } else {
-              return '否';
-            }
+            return h('span', {}, this.enumCode2Name(params.row.autoTrigger, 'YesNoEnum'));
           }
         },
         {

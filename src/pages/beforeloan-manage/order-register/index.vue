@@ -369,7 +369,10 @@
             <i-row>
               <i-col span="6">
                 <i-form-item class="required" label="身份证正面">
-                  <i-upload action="//jsonplaceholder.typicode.com/posts/">
+                  <i-upload
+                    :max-size="uploadMaxSize"
+                    :on-exceeded-size="handleMaxSize"
+                    action="//jsonplaceholder.typicode.com/posts/">
                     <div style="padding: 20px 0">
                       <Icon type="ios-cloud-upload" size="52" style="color: #3399ff"></Icon>
                       <p>Click or drag files here to upload</p>
@@ -379,7 +382,8 @@
               </i-col>
               <i-col span="6">
                 <i-form-item class="required" label="身份证反面">
-                  <i-upload action="//jsonplaceholder.typicode.com/posts/">
+                  <i-upload :max-size="uploadMaxSize"
+                    :on-exceeded-size="handleMaxSize" action="//jsonplaceholder.typicode.com/posts/">
                     <div style="padding: 20px 0">
                       <Icon type="ios-cloud-upload" size="52" style="color: #3399ff"></Icon>
                       <p>Click or drag files here to upload</p>
@@ -389,7 +393,8 @@
               </i-col>
               <i-col span="6">
                 <i-form-item class="required" label="手持身份证">
-                  <i-upload action="//jsonplaceholder.typicode.com/posts/">
+                  <i-upload :max-size="uploadMaxSize"
+                    :on-exceeded-size="handleMaxSize" action="//jsonplaceholder.typicode.com/posts/">
                     <div style="padding: 20px 0">
                       <Icon type="ios-cloud-upload" size="52" style="color: #3399ff"></Icon>
                       <p>Click or drag files here to upload</p>
@@ -462,7 +467,8 @@
               <i-row>
                 <i-col span="6">
                   <i-form-item class="required" label="身份证正面">
-                    <i-upload action="//jsonplaceholder.typicode.com/posts/">
+                    <i-upload :max-size="uploadMaxSize"
+                      :on-exceeded-size="handleMaxSize" action="//jsonplaceholder.typicode.com/posts/">
                       <div style="padding: 20px 0">
                         <Icon type="ios-cloud-upload" size="52" style="color: #3399ff"></Icon>
                         <p>Click or drag files here to upload</p>
@@ -472,7 +478,8 @@
                 </i-col>
                 <i-col span="6">
                   <i-form-item class="required" label="身份证反面">
-                    <i-upload action="//jsonplaceholder.typicode.com/posts/">
+                    <i-upload :max-size="uploadMaxSize"
+                      :on-exceeded-size="handleMaxSize" action="//jsonplaceholder.typicode.com/posts/">
                       <div style="padding: 20px 0">
                         <Icon type="ios-cloud-upload" size="52" style="color: #3399ff"></Icon>
                         <p>Click or drag files here to upload</p>

@@ -294,6 +294,8 @@
         <i-form-item label="查询结果" prop="resultPath">
           <input type="hidden" v-model="firstApproveForm.resultPath"/>
           <i-upload :show-upload-list="false"
+                    :max-size="uploadMaxSize"
+                    :on-exceeded-size="handleMaxSize"
                     :on-progress="uploadFirstApproveFileLoading"
                     multiple type="drag" :on-success="uploadFirstApproveFileSuccess"
                     :action="$config.HTTPBASEURL+'/common/upload'">

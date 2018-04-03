@@ -33,9 +33,9 @@ export default {
           key: 'activeStatus',
           render: (h, params) => {
             if (params.row.activeStatus === '1') {
-              return '是';
+              return h('span', {}, '是');
             } else {
-              return '否';
+              return h('span', {}, '否');
             }
           }
         },

@@ -7,7 +7,7 @@ export default {
           width: 60,
           align: 'center',
           render: (h, params) => {
-            return (this.$data.searchForm.currentPage - 1) * this.$data.searchForm.pageSize + params.index + 1;
+            return h('span', {}, (this.$data.searchForm.currentPage - 1) * this.$data.searchForm.pageSize + params.index + 1);
           }
         },
         {

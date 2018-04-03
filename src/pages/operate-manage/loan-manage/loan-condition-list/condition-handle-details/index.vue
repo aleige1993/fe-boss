@@ -470,6 +470,8 @@
           :rules="{required: true, message: '请上传办理文件', trigger: 'blur'}">
           <i-upload
             :show-upload-list="false"
+            :max-size="uploadMaxSize"
+            :on-exceeded-size="handleMaxSize"
             :on-success="uploadSuccessGuarantee"
             :before-upload="uploadProgressGuarantee"
             :on-error="uploadErrorGuarantee"

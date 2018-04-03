@@ -636,6 +636,8 @@
           prop="attachPath">
           <i-upload
             :show-upload-list="false"
+            :max-size="uploadMaxSize"
+            :on-exceeded-size="handleMaxSize"
             :on-success="uploadLoanFileSuccess"
             :on-error="uploadError"
             type="drag"

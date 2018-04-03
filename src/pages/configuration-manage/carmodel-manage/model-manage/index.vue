@@ -52,6 +52,8 @@
               <i-upload
                 :on-success="uploadModelSuccess"
                 :on-error="uploadError"
+                :max-size="uploadMaxSize"
+                :on-exceeded-size="handleMaxSize"
                 :action="$config.HTTPBASEURL+'/common/upload'"
                 :show-upload-list="false">
                 <i-form-item prop="password">
@@ -202,7 +204,10 @@
             <i-form-item class="upload-image" label="logo地址" :rules="{required: true, message: '请上传logo地址'}" prop="modelImg">
               <input type="hidden" v-model="fromData.logourl"/>
               <bs-big-img :thumb="fromData.logourl" :thumbHeight="32" :full="fromData.logourl" :full-width="945"></bs-big-img>
-              <i-upload :on-success="uploadLogoSuccess" :on-error="uploadError" :action="$config.HTTPBASEURL+'/common/upload'" :show-upload-list="false">
+              <i-upload :on-success="uploadLogoSuccess"
+                :max-size="uploadMaxSize"
+                :on-exceeded-size="handleMaxSize"
+                :on-error="uploadError" :action="$config.HTTPBASEURL+'/common/upload'" :show-upload-list="false">
                 <i-form-item prop="password">
                   <a href="javascript:">修改</a>
                 </i-form-item>
@@ -256,7 +261,10 @@
             <i-form-item class="upload-image" label="车系图片" :rules="{required: true, message: '请上传车系图片'}" prop="modelImg">
               <input type="hidden" v-model="fromData.serialPic"/>
               <bs-big-img :thumb="fromData.serialPic" :thumbHeight="32" :full="fromData.serialPic" :full-width="945"></bs-big-img>
-              <i-upload :on-success="uploadSerialSuccess" :on-error="uploadError" :action="$config.HTTPBASEURL+'/common/upload'" :show-upload-list="false">
+              <i-upload :on-success="uploadSerialSuccess"
+                :max-size="uploadMaxSize"
+                :on-exceeded-size="handleMaxSize"
+                :on-error="uploadError" :action="$config.HTTPBASEURL+'/common/upload'" :show-upload-list="false">
                 <i-form-item prop="password">
                   <a href="javascript:">修改</a>
                 </i-form-item>

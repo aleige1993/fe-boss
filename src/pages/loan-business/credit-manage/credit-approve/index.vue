@@ -159,6 +159,8 @@
                      :rules="{required: true, trigger: 'change', message: '请上传凭证'}">
           <input type="hidden" v-model="firstApproveForm.fileName">
           <i-upload :show-upload-list="false"
+              :max-size="uploadMaxSize"
+              :on-exceeded-size="handleMaxSize"
               multiple type="drag" :on-success="uploadFirstApproveFileSuccess"
               :action="$config.HTTPBASEURL+'/common/upload'">
             <div style="padding: 20px 0" v-if="!firstApproveForm.fileUrl || firstApproveForm.fileUrl===''">
@@ -188,6 +190,8 @@
                      :rules="{required: true, message: '请上传查询结果'}">
           <input type="hidden" v-model="outApproveForm.fileName">
           <i-upload :show-upload-list="false"
+              :max-size="uploadMaxSize"
+              :on-exceeded-size="handleMaxSize"
               multiple type="drag" :on-success="uploadOutApproveFileSuccess"
               :action="$config.HTTPBASEURL+'/common/upload'">
             <div style="padding: 20px 0" v-if="!outApproveForm.fileUrl||outApproveForm.fileUrl===''">

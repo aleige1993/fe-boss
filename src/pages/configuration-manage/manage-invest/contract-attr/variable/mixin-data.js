@@ -21,9 +21,9 @@ export default {
             let fieldEnum = params.row.fieldEnum;
             if (fieldEnum && fieldEnum.indexOf('.') > -1) {
               fieldEnum = fieldEnum.split('.');
-              return fieldEnum[fieldEnum.length - 1];
+              return h('span', {}, fieldEnum[fieldEnum.length - 1]);
             } else {
-              return '';
+              return h('span', {}, '');
             }
           }
         },
