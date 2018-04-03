@@ -178,7 +178,6 @@
       // 合同信息里 点击了“生成合同”
       isCreateContractFun() {
         this.$data.isCreateContract = true;
-        console.log(12312312);
       },
       // 获取资方列表data
       async getRepayPlanCapitalList() {
@@ -238,10 +237,8 @@
           // repayPlanRentalList: this.$data.repayPlanRentalList // 租金放还款计划表数据
         };
         // 初审的提交
-        console.log(this.$route.query.taskNode);
         if (this.$route.query.taskNode === '6') {
           // 初审时 审核意见的结论是“同意”的情况下才判断是否已点击“生成合同”
-          console.log(this.$data.isCreateContract);
           if (!this.$data.isCreateContract && this.$data.approveStatus === 'A') {
             this.$Message.warning('请生成合同！');
             this.$data.tabIndex = 'tabInfo';
