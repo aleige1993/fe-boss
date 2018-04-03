@@ -721,6 +721,10 @@
       this.$emit('on-create-repay-plan', this.$data.contractInfoForm.contractInfo.startDate);
     },
     methods: {
+      // 父级检测 “生成合同按钮”是否是loading状态
+      createContractisLoading() {
+        return this.$data.contractGeneratingLoading;
+      },
       // 检测后台生成的合同是否完成并成功
       async seeContractFileList() {
         let reps = await this.$http.post('/biz/sign/contract/queryContract', {
@@ -796,6 +800,7 @@
           this.$data.contractGeneratingLoading = true;
           this.$data.contractPrompt = '生成合同请求已提交，可点击"查看合同附件信息"按钮查看合同状态'; // 生成合同按钮文字
         } else {
+          this.$data.contractGeneratingLoading = false;
           this.$Message.error('提交生成合同失败！');
         }
       },

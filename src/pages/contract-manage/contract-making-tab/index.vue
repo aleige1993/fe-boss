@@ -244,6 +244,12 @@
             this.$data.tabIndex = 'tabInfo';
             return;
           }
+          // 生成合同按钮的loading状态，loading状态时不能提交
+          if (this.$refs.contractInfo.createContractisLoading()) {
+            this.$Message.warning('合同正在生成中，成功之后才能提交！');
+            this.$data.tabIndex = 'tabInfo';
+            return;
+          }
           this.$AuditPrompt.auditPromptFun(refData.loanApprove.approveStatus, async () => {
             let resp = await this.$http.post('/biz/sign/contract/fristApprove', { ...requestData });
             if (resp.success) {
