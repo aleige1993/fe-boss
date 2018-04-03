@@ -23,7 +23,7 @@ export default {
           title: '颜色',
           key: 'carColor',
           render: (h, params) => {
-            return this.enumCode2Name(params.row.carColor, 'CarColorEnum');
+            return h('span', {}, this.enumCode2Name(params.row.carColor, 'CarColorEnum'));
           }
         },
         {
@@ -128,7 +128,7 @@ export default {
           title: '收取方式',
           key: 'feeTakeType',
           render: (h, params) => {
-            return this.enumCode2Name(params.row.feeTakeType, 'ServiceFeeTypeEnum');
+            return h('span', {}, this.enumCode2Name(params.row.feeTakeType, 'ServiceFeeTypeEnum'));
           }
         },
         {

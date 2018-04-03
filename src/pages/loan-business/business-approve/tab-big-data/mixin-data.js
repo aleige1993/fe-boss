@@ -6,7 +6,7 @@ export default {
           title: '关系',
           key: 'relative',
           render: (h, params) => {
-            return this.enumCode2Name(params.row.relative, 'RelativeEnum');
+            return h('span', {}, this.enumCode2Name(params.row.relative, 'RelativeEnum'));
           }
         },
         {
@@ -21,7 +21,7 @@ export default {
           title: '联系人类型',
           key: 'contactType',
           render: (h, params) => {
-            return this.enumCode2Name(params.row.contactType, 'ContactTypeEnum');
+            return h('span', {}, this.enumCode2Name(params.row.contactType, 'ContactTypeEnum'));
           }
         }
       ],

@@ -23,14 +23,6 @@ export default {
           title: '系统筛查意见',
           key: 'sysProcessOpinion'
         },
-        /* {
-          title: '客户类型',
-          width: 100,
-          key: 'custType',
-          render: (h, params) => {
-            return this.enumCode2Name(params.row.custType, 'CustTypeEnum');
-          }
-        },*/
         {
           title: '初审意见',
           key: 'status',

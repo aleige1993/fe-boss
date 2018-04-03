@@ -12,11 +12,7 @@ export default {
           key: 'custType',
           width: 90,
           render: (h, params) => {
-            if (params.row.custType === '1') {
-              return '个人客户';
-            } else {
-              return '公司客户';
-            }
+            return h('span', {}, params.row.custType === '1' ? '个人客户' : '公司客户');
           }
         },
         {
@@ -24,11 +20,7 @@ export default {
           key: 'memberName',
           width: 200,
           render: (h, params) => {
-            if (params.row.custType === '1') {
-              return params.row.memberName;
-            } else {
-              return params.row.corpName;
-            }
+            return h('span', {}, params.row.custType === '1' ? params.row.memberName : params.row.corpName);
           }
         },
         {
@@ -36,11 +28,7 @@ export default {
           width: 120,
           key: 'certType',
           render: (h, params) => {
-            if (params.row.custType === '1') {
-              return h('span', {}, this.enumCode2Name(params.row.certType, 'CertTypeEnum'));
-            } else {
-              return '统一社会信用代码';
-            }
+            return h('span', {}, params.row.custType === '1' ? this.enumCode2Name(params.row.certType, 'CertTypeEnum') : '统一社会信用代码');
           }
         },
         {
@@ -48,11 +36,7 @@ export default {
           key: 'certNo',
           width: 200,
           render: (h, params) => {
-            if (params.row.custType === '1') {
-              return params.row.certNo;
-            } else {
-              return params.row.creditCode;
-            }
+            return h('span', {}, params.row.custType === '1' ? params.row.certNo : params.row.creditCode);
           }
         },
         {

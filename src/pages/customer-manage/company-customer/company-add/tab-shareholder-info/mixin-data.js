@@ -10,7 +10,7 @@ export default {
           title: '股东类别',
           key: 'partnerType',
           render: (h, params) => {
-            return this.enumCode2Name(params.row.partnerType, 'CustTypeEnum');
+            return h('span', {}, this.enumCode2Name(params.row.partnerType, 'CustTypeEnum'));
           }
         },
         {
@@ -21,7 +21,7 @@ export default {
           title: '出资方式',
           key: 'investType',
           render: (h, params) => {
-            return params.row.investType === '1' ? '现金' : '技术入股';
+            return h('span', {}, params.row.investType === '1' ? '现金' : '技术入股');
           }
         },
         {

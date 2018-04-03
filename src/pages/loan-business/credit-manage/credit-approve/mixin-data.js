@@ -101,7 +101,7 @@ export default {
                 }
               });
             } else {
-              return params.row.fileName;
+              return h('span', {}, params.row.fileName);
             }
           }
         },
@@ -171,7 +171,7 @@ export default {
                 }
               });
             } else {
-              return params.row.fileName;
+              return h('span', {}, params.row.fileName);
             }
           }
         },
@@ -229,14 +229,14 @@ export default {
           title: '还款方式',
           key: 'repayMode',
           render: (h, params) => {
-            return this.enumCode2Name(params.row.repayMode, 'RepaymentTypeEnum');
+            return h('span', {}, this.enumCode2Name(params.row.repayMode, 'RepaymentTypeEnum'));
           }
         },
         {
           title: '是否可提前还款',
           key: 'isPrepayment',
           render: (h, params) => {
-            return this.enumCode2Name(params.row.isPrepayment, 'YesNoEnum');
+            return h('span', {}, this.enumCode2Name(params.row.isPrepayment, 'YesNoEnum'));
           }
         },
         {

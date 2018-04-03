@@ -34,6 +34,8 @@
       <i-upload v-if="!readonly" style="display: inline-block; float: left; width:128px; margin-left: 5px; position: relative" :show-upload-list="false"
                 multiple type="drag"
                 :on-progress="uploading"
+                :max-size="uploadMaxSize"
+                :on-exceeded-size="handleMaxSize"
                 :on-success="uploadFileSuccess"
                 :action="$config.HTTPBASEURL+'/common/upload'">
         <div style="width: 126px;height:128px;line-height: 150px; text-align: center; border: 1px dashed #2196f3; color: #2196f3">
