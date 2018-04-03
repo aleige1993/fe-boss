@@ -13,7 +13,6 @@
         <tab-contract-info ref="contractInfo"
                            @on-create-repay-plan="createRepayPlanFun"
                            @on-create-contracted="isCreateContractFun"
-                           @on-create-contracted-loading="isClickGeneratingFun"
                            @on-radio-approveStatus="radioApproveStatus">
         </tab-contract-info>
       </i-tab-pane>
@@ -73,7 +72,7 @@
       </i-tab-pane>
     </i-tabs>
     <div class="form-footer-actions">
-      <i-button @click="saveSubimt" :loading="initFormLoading" type="success" :disabled="isClickContracting">
+      <i-button @click="saveSubimt" :loading="initFormLoading" type="success">
         <span v-if="!initFormLoading">
           <i class="iconfont icon-tijiao"></i> 提交
         </span>
@@ -107,7 +106,6 @@
         isCapital: false, // 资金方是否生成了计划表
         isRental: false, // 租金方是否生成了计划表
         isCreateContract: false,
-        isClickContracting: false, // 点击生成合同按钮时，提交按钮禁止点击。
         tabIndex: 'tabInfo',
         initFormLoading: false,
         currentPageExamine: 1,
@@ -179,12 +177,8 @@
       },
       // 合同信息里 点击了“生成合同”
       isCreateContractFun() {
-        this.$data.isClickContracting = false;
         this.$data.isCreateContract = true;
-      },
-      //  合同信息里 点击了“生成合同”loading状态时
-      isClickGeneratingFun() {
-        this.$data.isClickContracting = true;
+        console.log(12312312);
       },
       // 获取资方列表data
       async getRepayPlanCapitalList() {
@@ -244,8 +238,10 @@
           // repayPlanRentalList: this.$data.repayPlanRentalList // 租金放还款计划表数据
         };
         // 初审的提交
+        console.log(this.$route.query.taskNode);
         if (this.$route.query.taskNode === '6') {
           // 初审时 审核意见的结论是“同意”的情况下才判断是否已点击“生成合同”
+          console.log(this.$data.isCreateContract);
           if (!this.$data.isCreateContract && this.$data.approveStatus === 'A') {
             this.$Message.warning('请生成合同！');
             this.$data.tabIndex = 'tabInfo';

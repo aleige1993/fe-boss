@@ -169,7 +169,13 @@ export default {
           }
         },
         {
+          title: '合同开始日期',
+          width: 180,
+          key: 'startDate'
+        },
+        {
           title: '生成方式',
+          width: 200,
           key: 'makeSystem',
           render: (h, params) => {
             return h('span', {}, this.enumCode2Name(params.row.makeSystem, 'MakeSystemEnum'));
