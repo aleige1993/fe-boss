@@ -214,13 +214,15 @@
                   <bs-big-img v-if="formData.mbMemberDTO.certFrontUrl!==''&&isFromDetail" :thumb="formData.mbMemberDTO.certFrontUrl"
                               :thumbWidth="149" :thumbHeight="95"
                               :full="formData.mbMemberDTO.certFrontUrl" :full-width="945"></bs-big-img>
-                  <i-upload v-else :on-success="uploadFaceSuccess"
-                  :on-progress="uploadFaceLoading"
-                  :format="['jpg','jpeg','png']"
-                  :max-size="uploadMaxSize"
-                  :on-exceeded-size="handleMaxSize"
-                  :on-error="uploadError"
-                  :action="$config.HTTPBASEURL+'/common/upload'" :show-upload-list="false">
+                  <i-upload v-else
+                    :on-success="uploadFaceSuccess"
+                    :on-progress="uploadFaceLoading"
+                    :format="['jpg','jpeg','png']"
+                    :max-size="uploadMaxSize"
+                    :on-format-error="handleFormatError"
+                    :on-exceeded-size="handleMaxSize"
+                    :on-error="uploadError"
+                    :action="$config.HTTPBASEURL+'/common/upload'" :show-upload-list="false">
                     <img v-if="formData.mbMemberDTO.certFrontUrl&&formData.mbMemberDTO.certFrontUrl!==''"  width="149" height="95" :src="formData.mbMemberDTO.certFrontUrl" alt="">
                     <idcard-placeholder v-else type="face"></idcard-placeholder>
                     <i-spin fix v-if="idcardFaceUploading"></i-spin>
@@ -239,6 +241,7 @@
                   <i-upload v-else :on-success="uploadBackSuccess"
                                     :on-progress="uploadBackLoading"
                                     :max-size="uploadMaxSize"
+                                    :on-format-error="handleFormatError"
                                     :on-exceeded-size="handleMaxSize"
                                     :format="['jpg','jpeg','png']"
                                     :action="$config.HTTPBASEURL+'/common/upload'" :show-upload-list="false">
@@ -262,6 +265,7 @@
                   :on-progress="uploadHandLoading"
                   :format="['jpg','jpeg','png']"
                   :max-size="uploadMaxSize"
+                  :on-format-error="handleFormatError"
                   :on-exceeded-size="handleMaxSize"
                   :action="$config.HTTPBASEURL+'/common/upload'" :show-upload-list="false">
                     <img v-if="formData.mbMemberDTO.certHandUrl&&formData.mbMemberDTO.certHandUrl!==''" width="149" height="95" :src="formData.mbMemberDTO.certHandUrl" alt="">

@@ -47,6 +47,12 @@ Vue.mixin({
         this.$store.dispatch('setMenuList', promise.body.childMenus);
       }
     },
+    handleFormatError(file) {
+      this.$Notice.warning({
+        title: '文件格式错误',
+        desc: file.name + '不是正确的图片格式的文件，请选择图片文件'
+      });
+    },
     handleMaxSize(file) {
       this.$Notice.warning({
         title: '上传文件过大',
