@@ -183,8 +183,7 @@ export default {
                 on: {
                   click: () => {
                     this.$data.guaranteeShowModal = true;
-                    this.$data.formagGuarantee = {};
-                    this.$data.formagGuarantee = params.row;
+                    this.$data.formagGuarantee = $.extend(true, {}, params.row);
                   }
                 }
               }, '担保落实')
