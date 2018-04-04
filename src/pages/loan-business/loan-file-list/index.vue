@@ -47,6 +47,7 @@
   </div>
 </template>
 <script>
+  import bus from '@/bus';
   export default {
     name: 'loanFileList',
     data() {
@@ -85,8 +86,10 @@
       },
       uploading() {
         this.$data.isUploading = true;
+        bus.$emit('loanFileUploading', true);
       },
       uploadFileSuccess(res) {
+        bus.$emit('loanFileUploading', false);
         this.$data.isUploading = false;
         if (res.success) {
           let file = res.body;

@@ -37,6 +37,7 @@
 </template>
 
 <script>
+  import bus from '@/bus';
   import LoanApplyInfo from '../loan-apply-info/index.vue';
   /* import modalPersonalApproval from './personal-approval';*/
   export default {
@@ -120,6 +121,10 @@
     },
     mounted() {
       this.initPage();
+      // 文件上传完成的回调
+      bus.$on('loanFileUploading', (e) => {
+        this.$data.initFormLoading = e;
+      });
     },
     watch: {
       '$route.query': {
