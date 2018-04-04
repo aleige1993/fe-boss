@@ -266,11 +266,11 @@
             </i-button>
           </i-row>
           <div v-if="type==='page'&&!isFromDetail" class="form-footer-actions">
-            <i-button v-if="!corpNo" @click="saveCompanyCustomerBasic" :loading="initFormLoading" type="primary">
+            <i-button v-if="!corpNo" @click="saveCompanyCustomerBasic" :loading="initFormLoading || isUploadAttachLoading" type="primary">
               <span v-if="!initFormLoading"><i class="iconfont icon-tijiao"></i> 保存草稿</span>
               <span v-else> 处理中</span>
             </i-button>
-            <i-button @click="submitCompanyCustomerBasic" :loading="initFormLoading" type="success">
+            <i-button @click="submitCompanyCustomerBasic" :loading="initFormLoading || isUploadAttachLoading" type="success">
               <span v-if="!initFormLoading"><i class="iconfont icon-tijiao"></i> 提交</span>
               <span v-else> 处理中</span>
             </i-button>
@@ -302,7 +302,7 @@
           </Upload>
         </i-form-item>
         <i-form-item label="">
-          <i-button @click="submitAttach" style="width: 80px;" type="primary" size="large">保存</i-button>
+          <i-button @click="submitAttach" :disabled="isUploadAttachLoading" style="width: 80px;" type="primary" size="large">保存</i-button>
         </i-form-item>
       </i-form>
     </bs-modal>

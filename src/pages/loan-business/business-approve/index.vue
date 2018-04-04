@@ -51,6 +51,7 @@
   </div>
 </template>
 <script>
+  import bus from '@/bus';
   import MixinData from './mixin-data';
   import MixinMethods from './mixin-methods';
   import BsModal from '@/components/bs-modal';
@@ -173,6 +174,10 @@
     mounted() {
       this.$data.iframeHeight = $(window).height() - 280;
       this.initPage();
+      // 文件上传完成的回调
+      bus.$on('loanFileUploading', (e) => {
+        this.$data.submitApproveLoading = e;
+      });
     }
   };
 </script>

@@ -161,6 +161,7 @@
           <i-upload :show-upload-list="false"
               :max-size="uploadMaxSize"
               :on-exceeded-size="handleMaxSize"
+              :on-progress="approveFileUploading"
               multiple type="drag" :on-success="uploadFirstApproveFileSuccess"
               :action="$config.HTTPBASEURL+'/common/upload'">
             <div style="padding: 20px 0" v-if="!firstApproveForm.fileUrl || firstApproveForm.fileUrl===''">
@@ -168,10 +169,11 @@
               <p>点击选择文件或者拖放文件到这里</p>
             </div>
             <p v-else>{{firstApproveForm.fileName}}</p>
+            <i-spin fix v-if="isUploadingFile"></i-spin>
           </i-upload>
         </i-form-item>
         <i-form-item label="">
-          <i-button @click="submitFirstApprove" style="width: 120px;" type="primary" size="large">保存</i-button>
+          <i-button @click="submitFirstApprove" :disabled="isUploadingFile" style="width: 120px;" type="primary" size="large">保存</i-button>
         </i-form-item>
       </i-form>
     </bs-modal>
@@ -192,17 +194,20 @@
           <i-upload :show-upload-list="false"
               :max-size="uploadMaxSize"
               :on-exceeded-size="handleMaxSize"
-              multiple type="drag" :on-success="uploadOutApproveFileSuccess"
+              multiple type="drag"
+              :on-progress="approveFileUploading"
+              :on-success="uploadOutApproveFileSuccess"
               :action="$config.HTTPBASEURL+'/common/upload'">
             <div style="padding: 20px 0" v-if="!outApproveForm.fileUrl||outApproveForm.fileUrl===''">
               <Icon type="ios-cloud-upload" size="52" style="color: #3399ff"></Icon>
               <p>点击选择文件或者拖放文件到这里</p>
             </div>
             <p v-else>{{outApproveForm.fileName}}</p>
+            <i-spin fix v-if="isUploadingFile"></i-spin>
           </i-upload>
         </i-form-item>
         <i-form-item label="">
-          <i-button @click="submitOutApprove" style="width: 120px;" type="primary" size="large">提交</i-button>
+          <i-button @click="submitOutApprove" :disabled="isUploadingFile" style="width: 120px;" type="primary" size="large">提交</i-button>
         </i-form-item>
       </i-form>
     </bs-modal>
