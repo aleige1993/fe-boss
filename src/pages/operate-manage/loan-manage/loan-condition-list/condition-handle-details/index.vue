@@ -788,8 +788,7 @@
         });
         this.$data.assureDataLoading = false;
         if (reps.success) {
-          // this.$data.assureData = reps.body.resultList;
-          this.$data.assureData = [{}];
+          this.$data.assureData = reps.body.resultList;
         } else {
           this.$data.assureData = [];
         }
