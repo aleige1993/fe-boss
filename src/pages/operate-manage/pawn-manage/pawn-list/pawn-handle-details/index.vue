@@ -88,7 +88,9 @@
             </i-row>
           </bs-form-block>
           <bs-form-block :title="'车辆信息'">
-            <i-table :loading="carDataLoading" border ref="selection" :columns="carColumns" :data="carData"></i-table>
+            <div class="scrollBarStyle" style="width: 100%; overflow-x: auto">
+              <i-table :loading="carDataLoading" border ref="selection" :columns="carColumns" :data="carData"></i-table>
+            </div>
           </bs-form-block>
         </i-form>
       </i-tab-pane>

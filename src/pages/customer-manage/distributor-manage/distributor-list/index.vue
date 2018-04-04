@@ -187,7 +187,9 @@
               <div class="form-top-actions">
                 <i-button @click="areaAddModal" type="info"><i class="iconfont icon-xinzeng"></i> 新增</i-button>
               </div>
-              <i-table border ref="areaTable" :columns="areaColumns" :data="areaDataList"></i-table>
+              <div class="scrollBarStyle" style="width: 100%; overflow-x: auto">
+                <i-table border ref="areaTable" :columns="areaColumns" :data="areaDataList"></i-table>
+              </div>
             </bs-form-block>
           </i-col>
           <br>

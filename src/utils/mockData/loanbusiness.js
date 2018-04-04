@@ -290,6 +290,28 @@ export default [
       'success': true
     })
   },
+  // 签约管理-合同制作-查看合同生成状态
+  {
+    url: '/biz/sign/contract/queryContract',
+    on: true,
+    resp: Mock.mock({
+      'body': {
+        'signStatus|1': ['0', '1', '2', '3'], // signStatus:1-合同生成中，2-生成失败，3-生成成功
+        'loanNo': '',
+        'loanContractAttachmentList|3': [
+          {
+            'contractNo': '1111',
+            'contractName': '合同名称111',
+            'startDate': '2018-04-03',
+            'makeSystem|1': ['1', '2']
+          }
+        ]
+      },
+      'reCode': '0000',
+      'reMsg': '成功',
+      'success': true
+    })
+  },
   // 签约管理-合同制作-担保信息
   {
     url: '/biz/listGuaranteeByLoanNo',

@@ -29,7 +29,9 @@
                 <div v-if="creditStatus==='5'||creditStatus==='6'" class="form-top-actions">
                   <i-button type="primary" @click="addOutApproveModal = !addOutApproveModal">添加现场尽调信息</i-button>
                 </div>
-                <i-table :columns="outApproveColumns" :data="approveData.creditCheckItemsList"></i-table>
+                <div class="scrollBarStyle" style="width: 100%; overflow-x: auto">
+                  <i-table :columns="outApproveColumns" :data="approveData.creditCheckItemsList"></i-table>
+                </div>
               </i-col>
             </i-row>
           </bs-form-block>
@@ -89,7 +91,9 @@
             <div v-if="creditStatus==='5'||creditStatus==='6'" class="form-top-actions">
               <i-button type="primary" @click="openAddCreditPlanModal">添加用信方案</i-button>
             </div>
-            <i-table :columns="creditPlanColumns" :data="approveData.creditPlanList"></i-table>
+            <div class="scrollBarStyle" style="width: 100%; overflow-x: auto">
+              <i-table :columns="creditPlanColumns" :data="approveData.creditPlanList"></i-table>
+            </div>
           </bs-form-block>
           <!--审核意见-->
           <bs-form-block title="审核意见">
@@ -155,6 +159,8 @@
                      :rules="{required: true, trigger: 'change', message: '请上传凭证'}">
           <input type="hidden" v-model="firstApproveForm.fileName">
           <i-upload :show-upload-list="false"
+              :max-size="uploadMaxSize"
+              :on-exceeded-size="handleMaxSize"
               multiple type="drag" :on-success="uploadFirstApproveFileSuccess"
               :action="$config.HTTPBASEURL+'/common/upload'">
             <div style="padding: 20px 0" v-if="!firstApproveForm.fileUrl || firstApproveForm.fileUrl===''">
@@ -184,6 +190,8 @@
                      :rules="{required: true, message: '请上传查询结果'}">
           <input type="hidden" v-model="outApproveForm.fileName">
           <i-upload :show-upload-list="false"
+              :max-size="uploadMaxSize"
+              :on-exceeded-size="handleMaxSize"
               multiple type="drag" :on-success="uploadOutApproveFileSuccess"
               :action="$config.HTTPBASEURL+'/common/upload'">
             <div style="padding: 20px 0" v-if="!outApproveForm.fileUrl||outApproveForm.fileUrl===''">

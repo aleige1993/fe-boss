@@ -13,7 +13,6 @@
         <tab-contract-info ref="contractInfo"
                            @on-create-repay-plan="createRepayPlanFun"
                            @on-create-contracted="isCreateContractFun"
-                           @on-create-contracted-loading="isClickGeneratingFun"
                            @on-radio-approveStatus="radioApproveStatus">
         </tab-contract-info>
       </i-tab-pane>
@@ -21,12 +20,15 @@
         <div v-if="tabIndex==='tabHK'">
           <!--资金方信息-->
           <bs-form-block :title="'资金方信息'">
-            <i-table border :loading="loanCapitalListLoading" ref="proTable" :columns="loanCapitalColumns" :data="loanCapitalData"></i-table>
+            <div class="scrollBarStyle" style="width: 100%; overflow-x: auto">
+              <i-table border :loading="loanCapitalListLoading" ref="proTable" :columns="loanCapitalColumns" :data="loanCapitalData"></i-table>
+            </div>
           </bs-form-block>
           <!--资金方还款计划表-->
           <bs-form-block :title="'资金方还款计划表'">
-            <i-table border :loading="capitalPlanCapitalListLoading" ref="capitalTable" :columns="repayPlanCapitalColumns" :data="repayPlanCapitalList">
-            </i-table>
+            <div class="scrollBarStyle" style="width: 100%; overflow-x: auto">
+              <i-table border :loading="capitalPlanCapitalListLoading" ref="capitalTable" :columns="repayPlanCapitalColumns" :data="repayPlanCapitalList"></i-table>
+            </div>
           </bs-form-block>
         </div>
       </i-tab-pane>
@@ -56,8 +58,9 @@
           </bs-form-block>
           <!--租金还款计划表-->
           <bs-form-block :title="'租金还款计划表'">
-            <i-table border :loading="rentPlanCapitalListLoading" ref="rentTable" :columns="repayPlanRentalColumns" :data="repayPlanRentalList">
-            </i-table>
+            <div class="scrollBarStyle" style="width: 100%; overflow-x: auto">
+              <i-table border :loading="rentPlanCapitalListLoading" ref="rentTable" :columns="repayPlanRentalColumns" :data="repayPlanRentalList"></i-table>
+            </div>
           </bs-form-block>
         </div>
       </i-tab-pane>
@@ -69,7 +72,7 @@
       </i-tab-pane>
     </i-tabs>
     <div class="form-footer-actions">
-      <i-button @click="saveSubimt" :loading="initFormLoading" type="success" :disabled="isClickContracting">
+      <i-button @click="saveSubimt" :loading="initFormLoading" type="success">
         <span v-if="!initFormLoading">
           <i class="iconfont icon-tijiao"></i> 提交
         </span>
@@ -103,7 +106,6 @@
         isCapital: false, // 资金方是否生成了计划表
         isRental: false, // 租金方是否生成了计划表
         isCreateContract: false,
-        isClickContracting: false, // 点击生成合同按钮时，提交按钮禁止点击。
         tabIndex: 'tabInfo',
         initFormLoading: false,
         currentPageExamine: 1,
@@ -175,12 +177,7 @@
       },
       // 合同信息里 点击了“生成合同”
       isCreateContractFun() {
-        this.$data.isClickContracting = false;
         this.$data.isCreateContract = true;
-      },
-      //  合同信息里 点击了“生成合同”loading状态时
-      isClickGeneratingFun() {
-        this.$data.isClickContracting = true;
       },
       // 获取资方列表data
       async getRepayPlanCapitalList() {
@@ -244,6 +241,12 @@
           // 初审时 审核意见的结论是“同意”的情况下才判断是否已点击“生成合同”
           if (!this.$data.isCreateContract && this.$data.approveStatus === 'A') {
             this.$Message.warning('请生成合同！');
+            this.$data.tabIndex = 'tabInfo';
+            return;
+          }
+          // 生成合同按钮的loading状态，loading状态时不能提交
+          if (this.$refs.contractInfo.createContractisLoading()) {
+            this.$Message.warning('合同正在生成中，成功之后才能提交！');
             this.$data.tabIndex = 'tabInfo';
             return;
           }

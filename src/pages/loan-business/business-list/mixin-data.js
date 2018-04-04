@@ -7,38 +7,13 @@ export default {
           title: '项目编号',
           key: 'loanNo'
         },
-        /* {
-          title: '客户类型',
-          width: 100,
-          key: 'custType',
-          render: (h, params) => {
-            return this.enumCode2Name(params.row.custType, 'CertTypeEnum')
-          }
-        },*/
         {
           title: '客户名称',
           key: 'memberName',
           render: (h, params) => {
-            return params.row.memberName;
+            return h('span', {}, params.row.memberName);
           }
         },
-        /* {
-          title: '证件类型',
-          width: 90,
-          key: 'certType',
-          render: (h, params) => {
-            if (params.row.custType === '1') {
-              return h('span', {}, this.enumCode2Name(params.row.certType, 'CertTypeEnum'));
-            } else {
-              return '统一社会信用代码';
-            }
-          }
-        },
-        {
-          title: '证件号码',
-          key: 'certNo',
-          width: 200
-        },*/
         {
           title: '经销商名称',
           key: 'merchantAbbr'
@@ -72,7 +47,7 @@ export default {
           key: 'loanChannel',
           align: 'center',
           render: (h, params) => {
-            return this.enumCode2Name(params.row.loanChannel, 'BizChannelEnum');
+            return h('span', {}, this.enumCode2Name(params.row.loanChannel, 'BizChannelEnum'));
           }
         },
         {

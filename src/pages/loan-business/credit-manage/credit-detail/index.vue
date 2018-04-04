@@ -23,7 +23,9 @@
           <bs-form-block title="现场尽调信息">
             <i-row>
               <i-col span="24">
-                <i-table :height="tableFixHeight" :columns="outApproveColumns" :data="creditInfo.externalAuditDTOList"></i-table>
+                <div class="scrollBarStyle" style="width: 100%; overflow-x: auto">
+                  <i-table :height="tableFixHeight" :columns="outApproveColumns" :data="creditInfo.externalAuditDTOList"></i-table>
+                </div>
               </i-col>
             </i-row>
           </bs-form-block>

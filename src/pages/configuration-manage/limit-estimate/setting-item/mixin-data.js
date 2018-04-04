@@ -11,7 +11,7 @@ export default {
           title: '二级指标名称',
           key: 'name',
           render: (h, params) => {
-            return this.$data.name;
+            return h('span', {}, this.$data.name);
           }
         },
         {
@@ -23,9 +23,9 @@ export default {
           key: 'type',
           render: (h, params) => {
             if (params.row.type === 0) {
-              return '固定值';
+              return h('span', {}, '固定值');
             } else {
-              return '比例*满分';
+              return h('span', {}, '比例*满分');
             }
           }
         },

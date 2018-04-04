@@ -18,7 +18,7 @@ export default {
           title: '关系',
           key: 'relation',
           render: (h, params) => {
-            return this.enumCode2Name(params.row.relation, 'HaveCompanyRelativeEnum');
+            return h('span', {}, this.enumCode2Name(params.row.relation, 'HaveCompanyRelativeEnum'));
           }
         },
         {

@@ -18,6 +18,8 @@
       <i-upload v-if="!isDetails" style="display: inline-block; float: left; width:128px; margin-left: 5px; position: relative" :show-upload-list="false"
                 multiple type="drag"
                 :on-progress="uploading"
+                :max-size="uploadMaxSize"
+                :on-exceeded-size="handleMaxSize"
                 :before-upload="uploadBefore"
                 :on-success="uploadFileSuccess"
                 :action="$config.HTTPBASEURL+'/common/upload'">

@@ -42,6 +42,9 @@
             :on-success="uploadSuccess"
             :before-upload="uploadProgress"
             :on-error="uploadError"
+            :max-size="uploadMaxSize"
+            :on-format-error="handleFormatError"
+            :on-exceeded-size="handleMaxSize"
             :action="$config.HTTPBASEURL+'/common/upload'"
             :show-upload-list="false">
             <div class="upload-image">

@@ -289,6 +289,8 @@
           <input type="hidden" v-model="attachFormData.attachUrl"/>
           <Upload multiple type="drag" :multiple="false" :show-upload-list="false"
             :on-success="uploadAttachSuccess"
+            :max-size="uploadMaxSize"
+            :on-exceeded-size="handleMaxSize"
             :on-progress="uploadAttachLoading"
             :action="$config.HTTPBASEURL+'/common/upload'">
             <div style="padding: 20px 0" v-if="attachFormData.attachUrl===''">

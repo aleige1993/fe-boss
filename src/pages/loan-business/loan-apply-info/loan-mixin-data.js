@@ -29,7 +29,7 @@ export default {
                 }
               });
             } else {
-              return params.row.attachPath;
+              return h('span', {}, params.row.attachPath);
             }
           }
         },

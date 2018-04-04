@@ -20,6 +20,8 @@
       <i-upload
         :show-upload-list="false"
         :on-success="uploadSuccess"
+        :max-size="uploadMaxSize"
+        :on-exceeded-size="handleMaxSize"
         :before-upload="uploadProgress"
         :on-error="uploadError"
         type="drag"

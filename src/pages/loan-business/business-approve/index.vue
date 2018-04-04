@@ -14,7 +14,7 @@
                     :readonly="applyInfoReadonly || isFromDetail" @on-approve-info="approveInfoRefresh">
         </apply-info>
       </i-tab-pane>
-      <i-tab-pane label="人行征信报告" name="tabCreditInfo" v-if="taskNode !== '1' && taskNode !== '0'" :disabled="formData.custType === '2'">
+      <i-tab-pane label="人行征信报告" name="tabCreditInfo" v-if="taskNode !== '1' && taskNode !== '0' && !isRecordRole" :disabled="formData.custType === '2'">
         <i-checkbox v-if="showCreditCheckbox" v-model="isHasCheckCreditReport">&nbsp;&nbsp;已查看征信报告</i-checkbox>
 
         <div v-if="isCreditEerror" style="color: red; padding: 20px 0">暂无征信查询结果！</div>
@@ -28,7 +28,7 @@
       <i-tab-pane label="联系人信息" name="tabContactInfo">
         <tab-big-data :customerType="formData.custType" :applyBasicInfo="formData" v-if="tabIndex === 'tabContactInfo'"> </tab-big-data>
       </i-tab-pane>
-      <i-tab-pane :label="'审批信息'" name="tabApproveInfo" v-if="taskNode !== '1' && taskNode !== '0'">
+      <i-tab-pane :label="'审批信息'" name="tabApproveInfo" v-if="taskNode !== '1' && taskNode !== '0'  && !isRecordRole">
         <approve-info ref="approveInfo" :applyBasicInfo="formData" :isFromDetail="isFromDetail"
                       @on-result-change="approveResultChanged"
                       :readonly="firstApproveInfoReadonly || isFromDetail" :isApprove="isApprove">
@@ -115,6 +115,11 @@
       },
       isFromDetail() {
         return location.href.indexOf('detail') !== -1;
+      },
+      // 是否是录单岗
+      isRecordRole() {
+        let userRoles = this.$userLogin.getLoginInfo().roles;
+        return userRoles.length === 1 && userRoles[0] === 48;
       }
     },
     props: {

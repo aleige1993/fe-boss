@@ -22,7 +22,7 @@ export default {
           title: '车类',
           key: 'productType',
           render: (h, params) => {
-            return this.enumCode2Name(params.row.productType, 'BizTypeEnum');
+            return h('span', {}, this.enumCode2Name(params.row.productType, 'BizTypeEnum'));
           }
         },
         {
@@ -57,7 +57,7 @@ export default {
           title: '来源终端',
           key: 'channelNo',
           render: (h, params) => {
-            return this.enumCode2Name(params.row.channelNo, 'BizChannelEnum');
+            return h('span', {}, this.enumCode2Name(params.row.channelNo, 'BizChannelEnum'));
           }
         },
         {

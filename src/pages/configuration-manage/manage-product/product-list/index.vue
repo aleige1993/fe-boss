@@ -125,7 +125,9 @@
           <div class="form-top-actions">
             <i-button @click="openModalFeature" type="info"><i class="iconfont icon-xinzeng"></i>&nbsp;新增</i-button>
           </div>
-          <i-table :loading="tabelFeatureLoading" border ref="tableFeature" :columns="columnsFeature" :data="dataFeature"></i-table>
+          <div class="scrollBarStyle" style="width: 100%; overflow-x: auto">
+            <i-table :loading="tabelFeatureLoading" border ref="tableFeature" :columns="columnsFeature" :data="dataFeature"></i-table>
+          </div>
         </bs-form-block>
         <i-form-item class="text-right">
           <i-button type="primary" @click="formSubmit" :loading="buttonLoading">

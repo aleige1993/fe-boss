@@ -6,7 +6,9 @@
       <div id="" class="clearfix">
         <left-nav v-if="!noaction"></left-nav>
         <div class="right-main" v-bind:class="{'no-action': noaction}">
-          <router-view></router-view>
+          <div class="scrollBarStyle" style="width: 100%; overflow-x: auto">
+            <router-view></router-view>
+          </div>
         </div>
       </div>
     </div>

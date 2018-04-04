@@ -18,7 +18,7 @@ export default {
           title: '常量类型',
           key: 'fieldType',
           render: (h, params) => {
-            return params.row.fieldType === '1' ? '系统常量' : '自定义常量';
+            return h('span', {}, params.row.fieldType === '1' ? '系统常量' : '自定义常量');
           }
         }
       ],
