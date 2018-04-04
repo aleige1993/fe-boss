@@ -36,6 +36,7 @@
   </div>
 </template>
 <script>
+  import BUS from '@/bus/index.js';
   export default {
     name: 'picFileList',
     data() {
@@ -59,6 +60,11 @@
         type: String,
         required: false,
         default: ''
+      }
+    },
+    watch: {
+      isUploading(newVal, oldVal) {
+        BUS.$emit('uploadState', newVal);
       }
     },
     mounted() {
@@ -87,6 +93,7 @@
       },
       closeUploading() {
         this.$data.isUploading = false;
+        BUS.$emit('uploadState', false);
       },
       uploadFileSuccess(res) {
         this.$data.isUploading = false;

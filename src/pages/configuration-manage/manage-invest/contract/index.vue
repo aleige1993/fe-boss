@@ -12,7 +12,7 @@
         <i-button @click="addModal" type="info"><i class="iconfont icon-xinzeng"></i> 新增</i-button>
       </div>
     </table-contract-template-list>
-    <bs-modal :title="isAdd ? '新增' : '修改'" v-model="ShowModal" :width="620">
+    <bs-modal :title="isAdd ? '新增' : '修改'" v-model="ShowModal" :width="620" @on-close="fileUploading=false">
       <i-form v-if="ShowModal" ref="formContract" :model="formContract" label-position="right" :label-width="130">
         <i-form-item
           label="合同名称"
@@ -76,7 +76,7 @@
           <input type="hidden" v-model="formContract.contractTemplateAttach" style="width: 100%;border: 0;">
         </i-form-item>
         <i-form-item class="text-right">
-          <i-button type="primary" @click="formSubmit" :loading="buttonLoading">
+          <i-button type="primary" @click="formSubmit" :loading="buttonLoading||fileUploading">
             <span v-if="!buttonLoading">提交</span>
             <span v-else>Loading...</span>
           </i-button>
@@ -193,8 +193,10 @@
       },
       // 上传成功
       uploadSuccess(res, file, fileList) {
-        this.$data.uploadFileName = file.name;
-        this.$data.formContract.contractTemplateAttach = res.body.url;
+        if (this.$data.ShowModal) {
+          this.$data.uploadFileName = file.name;
+          this.$data.formContract.contractTemplateAttach = res.body.url;
+        }
         this.$data.fileUploading = false;
       },
       // 上传失败

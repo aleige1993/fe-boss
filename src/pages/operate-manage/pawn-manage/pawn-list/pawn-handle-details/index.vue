@@ -161,7 +161,7 @@
           </i-col>
         </i-row>
         <i-form-item class="text-right">
-          <i-button type="primary" @click="formalitiesSubmit">提交</i-button>
+          <i-button :loading="uploadState" type="primary" @click="formalitiesSubmit">提交</i-button>
         </i-form-item>
       </i-form>
     </bs-modal>
@@ -169,6 +169,7 @@
 </template>
 
 <script>
+  import BUS from '@/bus/index.js';
   import BsModal from '@/components/bs-modal';
   import MixinFilePicUpload from '../../../file-pic-upload-mixin'; // 抵押物办理文件 单张变多张上传
   import MixinData from './mixin-data';
@@ -185,6 +186,7 @@
         carDataLoading: false,
         initFormLoading: false,
         formalitiesShowModal: false,
+        uploadState: false,
         clickRow: {},
         formData: {
           'gmtModified': '',
@@ -232,6 +234,9 @@
     mounted() {
       this.findPaymentWaitDonePawnById(); // 执行获取抵押物处理详情
       this.carGetlist(); // 执行获取车辆信息列表的data
+      BUS.$on('uploadState', (e) => {
+        this.$data.uploadState = e;
+      });
     },
     methods: {
       // 添加车辆图片

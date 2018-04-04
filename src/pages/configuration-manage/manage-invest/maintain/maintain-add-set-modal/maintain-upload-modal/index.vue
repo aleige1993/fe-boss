@@ -39,7 +39,7 @@
       <input type="hidden" v-model="formAgreement.attachUrl" style="width: 100%;border: 0;">
     </i-form-item>
     <i-form-item class="text-right">
-      <i-button type="primary" @click="formSubmit" :loading="buttonLoading">
+      <i-button type="primary" @click="formSubmit" :loading="buttonLoading||fileUploading">
         <span v-if="!buttonLoading">提交</span>
         <span v-else>loading...</span>
       </i-button>

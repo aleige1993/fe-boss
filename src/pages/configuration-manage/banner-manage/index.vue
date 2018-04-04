@@ -13,7 +13,7 @@
     <div class="page-container">
       <i-page :total="total" :page-size="15" :current="currentPage" @on-change="jumpPage" size="small" show-elevator show-total></i-page>
     </div>
-    <pt-modal :title="isAdd ? '添加' : '修改'" v-model="addModal" :width="600" :zIndex="200">
+    <pt-modal :title="isAdd ? '添加' : '修改'" v-model="addModal" :width="600" :zIndex="200" @on-close="fileUploading=false">
       <i-form v-if="addModal" ref="fromData" :model="fromData" label-position="left" :label-width="80">
         <i-form-item label="标题" prop="title" :rules="{required: true, message: '标题不能为空', trigger: 'blur'}">
           <i-input v-model="fromData.title" placeholder="" ></i-input>
@@ -55,7 +55,7 @@
           </i-select>
         </i-form-item>
         <i-form-item class="text-right">
-          <i-button type="primary" @click="submitFun" :loading="buttonLoading">
+          <i-button type="primary" @click="submitFun" :loading="buttonLoading||fileUploading">
             <span v-if="!buttonLoading">提交</span>
             <span v-else>loading...</span>
           </i-button>
@@ -185,7 +185,9 @@
       },
       // 上传成功
       uploadSuccess(res, file, fileList) {
-        this.$data.fromData.bannerUrl = res.body.url;
+        if (this.$data.addModal) {
+          this.$data.fromData.bannerUrl = res.body.url;
+        }
         this.$data.fileUploading = false;
       },
       // 上传失败
