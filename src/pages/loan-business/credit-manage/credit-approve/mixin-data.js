@@ -5,6 +5,7 @@ export default {
     return {
       loadingAttachFile: false,
       submitApplyLoading: false,
+      isUploadingFile: false,
       approveData: {
         // 初审信息
         firstTrialParam: {
