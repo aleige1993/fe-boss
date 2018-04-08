@@ -219,6 +219,10 @@
       <span v-if="!contractGeneratingLoading"><i class="iconfont icon-xinzeng"></i> 生成合同</span>
       <span v-else>loading...</span>
       </i-button>
+      <i-button v-if="showDownloadContractAll" @click="downloadContractAll" type="success" :loading="downloadContractAllLoading">
+        <span style="color: #fff; text-underline: none;" v-if="!downloadContractAllLoading"><Icon type="ios-download-outline"></Icon> 下载全部合同</span>
+        <span v-else>loading...</span>
+      </i-button>
     </div>
     <i-table border :loading="contractInfoListLoading" ref="contractInfoTable" :columns="contractInfoColumns" :data="contractInfoForm.contractInfo.loanContractFileList">
     </i-table>
@@ -550,6 +554,8 @@
       return {
         clickRowIndex: 0, // 点击车辆信息列表后的当前行索引
         showSelectObligee: false, // 选择车辆权利人
+        showDownloadContractAll: false, // 显示“下载全部合同”按钮
+        downloadContractAllLoading: false, // “下载全部合同”按钮的loading
         showSelectCompanyOwner: false, // 选择车辆企业权利人
         carListLoading: false, // 车辆表loading
         setCarDataShowModal: false, // 车辆表loading
@@ -716,6 +722,9 @@
       if (this.$data.contractInfoForm.contractInfo.loanContractFileList.length > 0) {
         // 告知父组件的 已经点击了“生成按钮”，此时已经生成了合同
         this.$emit('on-create-contracted');
+        this.$data.showDownloadContractAll = true;
+      } else {
+        this.$data.showDownloadContractAll = false;
       }
       // 生成还款计划表 和 租金计划表
       this.$emit('on-create-repay-plan', this.$data.contractInfoForm.contractInfo.startDate);
@@ -848,6 +857,51 @@
           this.$data.guaPersonData = [];
         }
       },
+      // 点击“下载全部合同”按钮
+      async downloadContractAll() {
+        /* let searchData = getData();
+        let json = {
+          'sid': $.cookie('sid'),
+          'searchJson': searchData
+        };*/
+        let submitData = {
+          loanNo: this.$route.query.loanNo,
+          contractFileDTOS: this.$data.contractInfoForm.contractInfo.loanContractFileList
+        };
+        alert(JSON.stringify(submitData));
+        console.log(JSON.stringify(submitData));
+        let form = $('<form></form>');
+        form.attr('style', 'display:none');
+        form.attr('target', '');
+        form.attr('enctype', 'application/x-www-form-urlencoded');
+        form.attr('method', 'post'); // 请求方式
+        form.attr('action', this.$config.HTTPBASEURL + '/biz/sign/downloadAllContract');//请求地址
+
+        let input1 = $('<input>');// 将你请求的数据模仿成一个input表单
+        input1.attr('type', 'hidden');
+        input1.attr('name', 'contractJson');// 该输入框的name
+        input1.attr('value', JSON.stringify(submitData));// 该输入框的值
+
+        $('body').append(form);
+        form.append(input1);
+        debugger;
+        await form.submit();
+        form.remove();
+
+        /* this.$data.downloadContractAllLoading = true;
+        let reps = await this.$http.post('/biz/sign/downloadAllContract', {
+          loanNo: this.$route.query.loanNo,
+          contractFileDTOS: this.$data.contractInfoForm.contractInfo.loanContractFileList
+        });
+        console.log(reps);
+        this.$data.downloadContractAllLoading = false;
+        if (reps.success) {
+          // window.open();
+          console.log(reps.body);
+        } else {
+          this.$Message.error(reps.reMsg);
+        }*/
+      },
       // 生成合同ajax
       async createContractAjax() {
         this.$data.contractGeneratingLoading = true;
@@ -864,15 +918,14 @@
         });
         msg();
         this.$data.contractGeneratingLoading = false;
-        if (resp.success && resp.body.length !== 0) {
-          this.$data.contractInfoForm.contractInfo.loanContractFileList = resp.body;
-        } else {
-          this.$data.contractInfoForm.contractInfo.loanContractFileList = [];
-        }
-        if (!resp.success) {
-          this.$Message.error('生成合同失败！');
-        } else {
+        if (resp.success) {
           this.$Message.success('生成合同完毕');
+          this.$data.contractInfoForm.contractInfo.loanContractFileList = resp.body;
+          this.$data.showDownloadContractAll = true;
+        } else {
+          this.$Message.error('生成合同失败！');
+          this.$data.contractInfoForm.contractInfo.loanContractFileList = [];
+          this.$data.showDownloadContractAll = false;
         }
       },
       // 生成合同

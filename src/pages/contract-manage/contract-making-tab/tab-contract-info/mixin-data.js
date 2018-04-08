@@ -155,10 +155,6 @@ export default {
               }
             }, [
               h('a', {
-                props: {
-                  href: 'params.row.makeContractUrl',
-                  target: '_blank'
-                },
                 on: {
                   click: () => {
                     window.open(params.row.makeContractUrl, '_blank');
