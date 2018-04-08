@@ -219,7 +219,8 @@
       <span v-if="!contractGeneratingLoading"><i class="iconfont icon-xinzeng"></i> 生成合同</span>
       <span v-else>loading...</span>
       </i-button>
-      <i-button v-if="showDownloadContractAll" @click="downloadContractAll" type="success" :loading="downloadContractAllLoading">
+      <!-- showDownloadContractAll -->
+      <i-button v-if="true" @click="downloadContractAll" type="success" :loading="downloadContractAllLoading">
         <span style="color: #fff; text-underline: none;" v-if="!downloadContractAllLoading"><Icon type="ios-download-outline"></Icon> 下载全部合同</span>
         <span v-else>loading...</span>
       </i-button>
@@ -541,6 +542,7 @@
   import TableCustomerList from '@/components/table-customer-list'; // 选择权利人的模态框
   import TableCompanyCustomerList from '@/components/table-company-customer-list'; // 选择企业权利人的模态框
   import BsCarpicker from '@/components/bs-carpicker';
+  import Data from './json';
   export default {
     name: 'tabContractInfo',
     mixins: [MixinData],
@@ -859,41 +861,35 @@
       },
       // 点击“下载全部合同”按钮
       async downloadContractAll() {
-        /* let searchData = getData();
-        let json = {
-          'sid': $.cookie('sid'),
-          'searchJson': searchData
-        };*/
-        let submitData = {
-          loanNo: this.$route.query.loanNo,
-          contractFileDTOS: this.$data.contractInfoForm.contractInfo.loanContractFileList
-        };
-        alert(JSON.stringify(submitData));
-        console.log(JSON.stringify(submitData));
+        // let submitData = {
+        //   loanNo: this.$route.query.loanNo,
+        //   contractFileDTOS: this.$data.contractInfoForm.contractInfo.loanContractFileList
+        // };
+        let submitData = Data;
         let form = $('<form></form>');
-        form.attr('style', 'display:none');
-        form.attr('target', '');
-        form.attr('enctype', 'application/x-www-form-urlencoded');
-        form.attr('method', 'post'); // 请求方式
-        form.attr('action', this.$config.HTTPBASEURL + '/biz/sign/downloadAllContract');//请求地址
-
+        form.attr({
+          'style': 'display:none',
+          'method': 'post',
+          'target': '_blank',
+          'enctype': 'application/x-www-form-urlencoded',
+          'action': this.$config.HTTPBASEURL + '/biz/sign/downloadAllContract'
+        });
         let input1 = $('<input>');// 将你请求的数据模仿成一个input表单
-        input1.attr('type', 'hidden');
-        input1.attr('name', 'contractJson');// 该输入框的name
-        input1.attr('value', JSON.stringify(submitData));// 该输入框的值
-
+        input1.attr({
+          'type': 'hidden',
+          'name': 'contractJson', // 该输入框的name
+          'value': JSON.stringify(submitData) // 该输入框的值JSON.stringify(submitData)
+        });
         $('body').append(form);
         form.append(input1);
-        debugger;
         await form.submit();
         form.remove();
-
-        /* this.$data.downloadContractAllLoading = true;
-        let reps = await this.$http.post('/biz/sign/downloadAllContract', {
+        // this.$data.downloadContractAllLoading = true;
+        /* let reps = await this.$http.post('/biz/sign/downloadAllContract', {
           loanNo: this.$route.query.loanNo,
           contractFileDTOS: this.$data.contractInfoForm.contractInfo.loanContractFileList
-        });
-        console.log(reps);
+        });*/
+        /* let reps = await this.$http.post('/biz/sign/downloadAllContract', submitData);
         this.$data.downloadContractAllLoading = false;
         if (reps.success) {
           // window.open();
