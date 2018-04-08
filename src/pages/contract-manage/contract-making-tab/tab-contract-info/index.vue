@@ -219,10 +219,8 @@
       <span v-if="!contractGeneratingLoading"><i class="iconfont icon-xinzeng"></i> 生成合同</span>
       <span v-else>loading...</span>
       </i-button>
-      <!-- showDownloadContractAll -->
-      <i-button v-if="true" @click="downloadContractAll" type="success" :loading="downloadContractAllLoading">
-        <span style="color: #fff; text-underline: none;" v-if="!downloadContractAllLoading"><Icon type="ios-download-outline"></Icon> 下载全部合同</span>
-        <span v-else>loading...</span>
+      <i-button v-if="showDownloadContractAll" @click="downloadContractAll" type="success">
+        <Icon type="ios-download-outline"></Icon> 批量下载全部合同
       </i-button>
     </div>
     <i-table border :loading="contractInfoListLoading" ref="contractInfoTable" :columns="contractInfoColumns" :data="contractInfoForm.contractInfo.loanContractFileList">
@@ -542,7 +540,6 @@
   import TableCustomerList from '@/components/table-customer-list'; // 选择权利人的模态框
   import TableCompanyCustomerList from '@/components/table-company-customer-list'; // 选择企业权利人的模态框
   import BsCarpicker from '@/components/bs-carpicker';
-  import Data from './json';
   export default {
     name: 'tabContractInfo',
     mixins: [MixinData],
@@ -557,7 +554,6 @@
         clickRowIndex: 0, // 点击车辆信息列表后的当前行索引
         showSelectObligee: false, // 选择车辆权利人
         showDownloadContractAll: false, // 显示“下载全部合同”按钮
-        downloadContractAllLoading: false, // “下载全部合同”按钮的loading
         showSelectCompanyOwner: false, // 选择车辆企业权利人
         carListLoading: false, // 车辆表loading
         setCarDataShowModal: false, // 车辆表loading
@@ -861,11 +857,10 @@
       },
       // 点击“下载全部合同”按钮
       async downloadContractAll() {
-        // let submitData = {
-        //   loanNo: this.$route.query.loanNo,
-        //   contractFileDTOS: this.$data.contractInfoForm.contractInfo.loanContractFileList
-        // };
-        let submitData = Data;
+        let submitData = {
+          loanNo: this.$route.query.loanNo,
+          contractFileDTOS: this.$data.contractInfoForm.contractInfo.loanContractFileList
+        };
         let form = $('<form></form>');
         form.attr({
           'style': 'display:none',
@@ -884,23 +879,11 @@
         form.append(input1);
         await form.submit();
         form.remove();
-        // this.$data.downloadContractAllLoading = true;
-        /* let reps = await this.$http.post('/biz/sign/downloadAllContract', {
-          loanNo: this.$route.query.loanNo,
-          contractFileDTOS: this.$data.contractInfoForm.contractInfo.loanContractFileList
-        });*/
-        /* let reps = await this.$http.post('/biz/sign/downloadAllContract', submitData);
-        this.$data.downloadContractAllLoading = false;
-        if (reps.success) {
-          // window.open();
-          console.log(reps.body);
-        } else {
-          this.$Message.error(reps.reMsg);
-        }*/
       },
       // 生成合同ajax
       async createContractAjax() {
         this.$data.contractGeneratingLoading = true;
+        this.$data.showDownloadContractAll = false;
         // 告知父组件的 已经点击了“生成按钮”,此时为loading状态，“提交按钮”禁止点击
         this.$emit('on-create-contracted-loading');
         const msg = this.$Message.loading({

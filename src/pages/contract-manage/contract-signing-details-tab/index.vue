@@ -56,6 +56,12 @@
         <!--合同信息-->
         <bs-form-block :title="'合同信息'">
           <div class="scrollBarStyle" style="width: 100%; overflow-x: auto">
+            <div v-if="!this.$data.isDetails" class="form-top-actions" style="padding-top:0;">
+              <i-button @click="backChannelFun" :loading="backChannelLoading">
+                <span v-if="!backChannelLoading"><Icon type="backspace"></Icon> 退回至渠道商</span>
+                <span v-else>loading...</span>
+              </i-button>
+            </div>
             <i-table border :loading="contractInfoListLoading" ref="contractInfoTable" :columns="contractInfoColumns" :data="formData.contractList"></i-table>
           </div>
         </bs-form-block>
@@ -140,6 +146,7 @@
           }
         ],
         seePictureModal: false,
+        backChannelLoading: false,
         isDetails: false,
         currentPageExamine: 1,
         pageSizeExamine: 15,
@@ -192,6 +199,23 @@
       this.examineGetlist(); // 获取审批历史信息列表data
     },
     methods: {
+      // 退回至渠道商
+      backChannelFun() {
+        Alertify.confirm('确定要退回至渠道商吗？', async ok => {
+          if (ok) {
+            this.$data.backChannelLoading = true;
+            let reps = await this.$http.post('/biz/sign/rebackToMerchant', {
+              loanNo: this.$route.query.loanNo
+            });
+            this.$data.backChannelLoading = false;
+            if (reps.success) {
+              this.$Message.success('成功退回至渠道商');
+            } else {
+              this.$Message.error('退回至渠道商失败！');
+            }
+          }
+        });
+      },
       // 模态框关闭后清楚组件内车辆图片数据
       emptyRowPic() {
         this.$data.loanPicVOListModalData = [];
