@@ -702,10 +702,12 @@
       }
     },
     async mounted() {
+      let custName = this.$route.query.custName;
+      let signNo = this.$route.query.signNo;
       let loanNo = await this.$route.query.loanNo;
-      let signNo = await this.$route.query.signNo;
       this.$data.contractInfoForm.loanNo = loanNo;
       this.$data.contractInfoForm.signNo = signNo;
+      this.$data.contractInfoForm.custName = custName;
       await this.getfindContractApproveInfo(); //  获取合同信息详情
       this.getApproveCredit(); //  获取借款信息详情
       this.getCarList(); // 获取车辆信息列表data
@@ -858,7 +860,8 @@
       // 点击“下载全部合同”按钮
       async downloadContractAll() {
         let submitData = {
-          loanNo: this.$route.query.loanNo,
+          loanNo: this.$data.contractInfoForm.loanNo,
+          custName: this.$data.contractInfoForm.custName,
           contractFileDTOS: this.$data.contractInfoForm.contractInfo.loanContractFileList
         };
         let form = $('<form></form>');
