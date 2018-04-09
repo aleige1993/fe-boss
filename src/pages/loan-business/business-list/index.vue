@@ -34,10 +34,10 @@
         <!--<i-form-item prop="orderNo">-->
           <!--<i-input v-model="searchForm.orderNo" type="text" placeholder="渠道业务编号"></i-input>-->
         <!--</i-form-item>-->
-        <i-form-item prop="orderNo">
+        <i-form-item prop="merchantAbbr">
           <i-input v-model="searchForm.merchantAbbr" type="text" placeholder="经销商名称"></i-input>
         </i-form-item>
-        <i-form-item prop="orderNo">
+        <i-form-item prop="channelName">
           <i-input v-model="searchForm.channelName" type="text" placeholder="渠道商名称"></i-input>
         </i-form-item>
         <i-form-item prop="loanChannel">
