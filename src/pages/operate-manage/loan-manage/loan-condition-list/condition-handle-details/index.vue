@@ -213,7 +213,7 @@
           </i-col>
         </i-row>
         <i-form-item class="text-right">
-          <i-button type="primary" @click="formalitiesSubmit">提交</i-button>
+          <i-button :loading="uploadState" type="primary" @click="formalitiesSubmit">提交</i-button>
         </i-form-item>
       </i-form>
     </bs-modal>
@@ -441,7 +441,7 @@
       </i-form>
     </bs-modal>
     <!--担保落实modal-->
-    <bs-modal v-model="guaranteeShowModal" title="担保落实" :width="520">
+    <bs-modal v-model="guaranteeShowModal" title="担保落实" :width="520" @on-close="fileUploadingGuarantee = false">
       <i-form v-if="guaranteeShowModal" ref="formagGuarantee" :model="formagGuarantee" label-position="right" :label-width="80">
         <i-form-item label="办理时间"
                      prop="makeDate"
@@ -490,7 +490,7 @@
           <input type="hidden" v-model="formagGuarantee.makeUrl" style="width: 100%;border: 0;">
         </i-form-item>
         <i-form-item class="text-right">
-          <i-button type="primary" @click="formagGuaranteeSubmit">提交</i-button>
+          <i-button :loading="fileUploadingGuarantee" type="primary" @click="formagGuaranteeSubmit">提交</i-button>
         </i-form-item>
       </i-form>
     </bs-modal>
@@ -506,6 +506,7 @@
 </template>
 
 <script>
+  import BUS from '@/bus/index.js';
   import MixinData from './mixin-data';
   import MixinFilePicUpload from '../../../file-pic-upload-mixin'; // 抵押物办理文件 单张变多张上传
   import BsModal from '@/components/bs-modal';
@@ -655,7 +656,8 @@
           'remark': '',
           'makeDate': '',
           'lsStatus': ''
-        }
+        },
+        uploadState: false
       };
     },
     watch: {
@@ -667,6 +669,9 @@
       }
     },
     async mounted() {
+      BUS.$on('uploadState', (e) => {
+        this.$data.uploadState = e;
+      });
       await this.getFindPaymentApplyRecordInfo(); // 获取放款条件详情
       this.carGetlist(); // 执行获取车辆信息列表的data
       this.assureGtelist(); // 执行获取担保信息列表的data
@@ -968,8 +973,10 @@
       },
       // 担保落实文件上传成功
       uploadSuccessGuarantee(res, file, fileList) {
-        this.$data.formagGuarantee.makeName = file.name;
-        this.$data.formagGuarantee.makeUrl = res.body.url;
+        if (this.$data.guaranteeShowModal) {
+          this.$data.formagGuarantee.makeName = file.name;
+          this.$data.formagGuarantee.makeUrl = res.body.url;
+        }
         this.$data.fileUploadingGuarantee = false;
       },
       // 担保落实文件上传失败

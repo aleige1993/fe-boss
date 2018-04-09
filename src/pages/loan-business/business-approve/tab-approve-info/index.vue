@@ -311,7 +311,7 @@
           </i-upload>
         </i-form-item>
         <i-form-item label="">
-          <i-button @click="submitFirstApprove" style="width: 120px;" type="primary" size="large">保存</i-button>
+          <i-button @click="submitFirstApprove" :disabled="isUploadFirstApproveFileLoading" style="width: 120px;" type="primary" size="large">保存</i-button>
         </i-form-item>
       </i-form>
     </bs-modal>

@@ -66,6 +66,7 @@ export default {
     },
     // 初审添加
     uploadFirstApproveFileSuccess(res) {
+      this.$data.isUploadingFile = false;
       this.$set(this.$data.firstApproveForm, 'fileUrl', res.body.url);
       this.$set(this.$data.firstApproveForm, 'fileName', res.body.fileName);
       // this.$data.firstApproveForm.fileUrl = res.body.url;
@@ -80,6 +81,7 @@ export default {
     },
     // 外审添加
     uploadOutApproveFileSuccess(res) {
+      this.$data.isUploadingFile = false;
       this.$set(this.$data.outApproveForm, 'fileUrl', res.body.url);
       this.$set(this.$data.outApproveForm, 'fileName', res.body.fileName);
     },
@@ -99,8 +101,12 @@ export default {
       };
     },
     uploadAttachSuccess(res) {
+      this.$data.isUploadingFile = false;
       this.$data.attachFormData.attachUrl = res.body.url;
       this.$data.attachFormData.attachName = res.body.fileName;
+    },
+    approveFileUploading() {
+      this.$data.isUploadingFile = true;
     },
     submitAttach() {
       this.$data.applyData.creditApplyAttachParamList.push(this.$data.attachFormData);
