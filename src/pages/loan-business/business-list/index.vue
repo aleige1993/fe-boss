@@ -31,8 +31,14 @@
             <i-option v-for="product in productList" :value="product.productNo" :key="product.productNo">{{product.productName}}</i-option>
           </i-select>
         </i-form-item>
+        <!--<i-form-item prop="orderNo">-->
+          <!--<i-input v-model="searchForm.orderNo" type="text" placeholder="渠道业务编号"></i-input>-->
+        <!--</i-form-item>-->
         <i-form-item prop="orderNo">
-          <i-input v-model="searchForm.orderNo" type="text" placeholder="渠道业务编号"></i-input>
+          <i-input v-model="searchForm.merchantAbbr" type="text" placeholder="经销商名称"></i-input>
+        </i-form-item>
+        <i-form-item prop="orderNo">
+          <i-input v-model="searchForm.channelName" type="text" placeholder="渠道商名称"></i-input>
         </i-form-item>
         <i-form-item prop="loanChannel">
           <i-select style="width: 120px;" v-model="searchForm.loanChannel" placeholder="来源渠道">
@@ -105,7 +111,9 @@
           'applyStartTime': '',
           'applyEndTime': '',
           'taskNode': '',
-          'status': '0;1;3'
+          'status': '0;1;3',
+          'merchantAbbr': '',
+          'channelName': ''
         }
       };
     },

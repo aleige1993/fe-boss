@@ -19,6 +19,10 @@ export default {
           key: 'merchantAbbr'
         },
         {
+          title: '渠道商名称',
+          key: 'channelName'
+        },
+        {
           title: '产品',
           key: 'productName'
         },
