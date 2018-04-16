@@ -142,13 +142,16 @@ export default {
     },
     // 删除数据的请求
     async costRemove(row) {
+      // console.log(row);
       Alertify.confirm('确定要删除吗？', async (ok) => {
         if (ok) {
           let feeTypeNo = row.feeTypeNo;
+          let id = row.id;
           const loadingMsg = this.$Message.loading('删除中...', 0);
           let respDel = await this.$http.post('/pms/productFeeDetail/remove', {
-            feeTypeNo,
-            packageRateNo: this.$data.packageRateNo
+            id,
+            feeTypeNo
+            // packageRateNo: this.$data.packageRateNo
           });
           loadingMsg();
           if (respDel.success) {

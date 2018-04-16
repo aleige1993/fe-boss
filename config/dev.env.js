@@ -8,8 +8,9 @@ module.exports = merge(prodEnv, {
   HTTPMOCK_ON: false,
   HTTPMOCK_TIMEOUT: 500,
   XHRLOG: true, // 是否console出ajax的详细信息；右上角的Notice是否打印url和code
-  HTTPBASEURL: '"http://10.164.238.15:8080"' // 开发服务器
-  // HTTPBASEURL: '"http://192.168.201.200:8089"' //
+  // HTTPBASEURL: '"http://10.164.238.15:8080"' // 开发服务器
+  HTTPBASEURL: '"http://192.168.201.200:8089"' //
+  // HTTPBASEURL: '"http://10.164.1.6:8089"' //
   // HTTPBASEURL: 'http://10.164.5.47:8091' // 幸小杰
   // HTTPBASEURL: 'http://10.164.1.36:28080' // 李卫
   // HTTPBASEURL: 'http://10.164.1.57:8080' // 赵明
