@@ -62,11 +62,11 @@ export default {
                 },
                 on: {
                   click: () => {
-                    if (params.row.ratio) {
-                      params.row.ratio = params.row.ratio.toString();
-                    }
                     if (params.row.fixedAmount) {
                       params.row.fixedAmount = params.row.fixedAmount.toString();
+                    }
+                    if (params.row.ratio) {
+                      params.row.ratio = params.row.ratio.toString();
                     }
                     this.setCostList($.extend({}, params.row));
                   }
