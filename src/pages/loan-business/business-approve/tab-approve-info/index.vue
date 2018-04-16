@@ -70,7 +70,7 @@
                 <i-form-item label="贷款期限" prop="loanApproveCreditDTO.loanPeriods"
                              :rules="{required: true, message: '请选择贷款期限'}">
                   <i-input :readonly="true" v-model="approveData.loanApproveCreditDTO.loanPeriods">
-                    <i-button slot="append" @click="selectPeriodsAndRate = !selectPeriodsAndRate">选择利率方案</i-button>
+                    <i-button v-if="!isFromDetail" slot="append" @click="selectPeriodsAndRate = !selectPeriodsAndRate">选择利率方案</i-button>
                   </i-input>
                   <!--<i-option v-for="item in loanPeriodsList" :key="item.loanPeriods" :value="item.loanPeriods">{{item.loanPeriods}}</i-option>-->
                 </i-form-item>
