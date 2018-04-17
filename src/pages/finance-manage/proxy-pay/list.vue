@@ -26,13 +26,13 @@
           创建时间
         </i-form-item>
         <i-form-item prop="">
-          <bs-datepicker v-model="searchForm.btime" type="text" placeholder="查询时间"></bs-datepicker>
+          <bs-datepicker v-model="searchForm.firsTime" type="text" placeholder="查询时间"></bs-datepicker>
         </i-form-item>
         <i-form-item prop="">
           -
         </i-form-item>
         <i-form-item prop="">
-          <bs-datepicker v-model="searchForm.etime" type="text" placeholder="查询时间"></bs-datepicker>
+          <bs-datepicker v-model="searchForm.endTime" type="text" placeholder="查询时间"></bs-datepicker>
         </i-form-item>
 
         <i-form-item prop="">
@@ -68,7 +68,7 @@
       <a style="display: none" ref="exportExcelRef" :href="exportExcelUrl">触发导出</a>
     </div>
     <slot name="topAction"></slot>
-    <i-table :height="tableFixHeight - 20" border :loading="dataLoading" ref="selection" @on-select="selectRow" @on-select-all="selectRow" :columns="resultCustomerColumns" :data="privateCustomerLoanList"></i-table>
+    <i-table :height="tableFixHeight - 70" border :loading="dataLoading" ref="selection" @on-select="selectRow" @on-select-all="selectRow" :columns="resultCustomerColumns" :data="privateCustomerLoanList"></i-table>
     <div class="page-container">
       <i-page :total="total" :page-size="15" :current="currentPage" @on-change="jumpPage" size="small" show-elevator show-total></i-page>
     </div>
@@ -93,9 +93,11 @@
           'custName': '',
           'toAccName': '',
           'transCardId': '',
+          'firsTime': '',
+          'endTime': '',
           'btime': '',
           'etime': '',
-          'state': '',
+          'state': '3',
           'paymentType': '',
           'flag': '',
           currentPage: 1,
@@ -218,15 +220,21 @@
             this.$refs.exportExcelRef.click();
           });
         }
+      },
+      setDefaultState() {
+        this.$data.searchForm.state = this.isDetail ? '' : '3';
       }
     },
     watch: {
       'paymentType'(newVal) {
         this.getProxyPayList(1);
+      },
+      'isDetail'(newVal) {
+        this.setDefaultState();
       }
     },
     mounted() {
-//      alert(this.isDetail);
+      this.setDefaultState();
       this.getProductList();
       this.getProxyPayList();
       this.$data.certTypeEnum = [

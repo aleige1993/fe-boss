@@ -174,7 +174,7 @@ export default {
         {
           title: '操作',
           align: 'center',
-          width: '120',
+          // width: '120',
           render: (h, params) => {
             return h('div', [
               h('Button', {
@@ -182,9 +182,9 @@ export default {
                   type: 'primary',
                   size: 'small'
                 },
-                style: {
-                  marginRight: '5px'
-                },
+                // style: {
+                //   marginRight: '5px'
+                // },
                 on: {
                   click: () => {
                     window.open(params.row.makeContractUrl, '_blank');
