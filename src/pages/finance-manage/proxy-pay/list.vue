@@ -1,8 +1,8 @@
 <template>
   <div id="page-table-demo">
     <div class="search-form-container">
-      <i-form inline>
-        <i-form-item prop="">
+      <i-form inline ref="searchForm" :model="searchForm">
+        <i-form-item prop="projectNo">
           <i-input type="text" v-model="searchForm.projectNo" placeholder="项目编号"></i-input>
         </i-form-item>
         <i-form-item prop="productNo">
@@ -12,43 +12,43 @@
             <i-option v-for="product in productList" :value="product.productNo" :key="product.productNo">{{product.productName}}</i-option>
           </i-select>
         </i-form-item>
-        <i-form-item prop="">
+        <i-form-item prop="custName">
           <i-input v-model="searchForm.custName" type="text" placeholder="客户名称"></i-input>
         </i-form-item>
-        <i-form-item prop="">
+        <i-form-item prop="toAccName">
           <i-input v-model="searchForm.toAccName" type="text" placeholder="收款人姓名"></i-input>
         </i-form-item>
-        <i-form-item prop="">
+        <i-form-item prop="transCardId">
           <i-input v-model="searchForm.transCardId" type="text" placeholder="证件号码"></i-input>
         </i-form-item>
 
         <i-form-item prop="">
           创建时间
         </i-form-item>
-        <i-form-item prop="">
+        <i-form-item prop="firsTime">
           <bs-datepicker v-model="searchForm.firsTime" type="text" placeholder="查询时间"></bs-datepicker>
         </i-form-item>
         <i-form-item prop="">
           -
         </i-form-item>
-        <i-form-item prop="">
+        <i-form-item prop="endTime">
           <bs-datepicker v-model="searchForm.endTime" type="text" placeholder="查询时间"></bs-datepicker>
         </i-form-item>
 
         <i-form-item prop="">
           付款完成时间
         </i-form-item>
-        <i-form-item prop="">
+        <i-form-item prop="btime">
           <bs-datepicker v-model="searchForm.btime" type="text" placeholder="查询时间"></bs-datepicker>
         </i-form-item>
         <i-form-item prop="">
           -
         </i-form-item>
-        <i-form-item prop="">
+        <i-form-item prop="etime">
           <bs-datepicker v-model="searchForm.etime" type="text" placeholder="查询时间"></bs-datepicker>
         </i-form-item>
 
-        <i-form-item prop="">
+        <i-form-item prop="state">
           <i-select style="width: 120px;" v-model="searchForm.state" placeholder="付款状态">
             <i-option value="" style="height: 26px; color: #bbbec4">-请选择-</i-option>
             <i-option v-for="item in certTypeEnum" :value="item.itemCode" :key="item.itemCode">{{item.itemName}}</i-option>
@@ -97,7 +97,7 @@
           'endTime': '',
           'btime': '',
           'etime': '',
-          'state': '3',
+          'state': '',
           'paymentType': '',
           'flag': '',
           currentPage: 1,
@@ -118,12 +118,12 @@
       }
     },
     props: {
-      paymentType: {
+      flag: {
         type: String,
         default: '',
         required: false
       },
-      flag: {
+      paymentType: {
         type: String,
         default: '',
         required: false
@@ -220,23 +220,18 @@
             this.$refs.exportExcelRef.click();
           });
         }
-      },
-      setDefaultState() {
-        this.$data.searchForm.state = this.isDetail ? '' : '3';
       }
     },
     watch: {
-      'paymentType'(newVal) {
+      '$route'() {
+        this.$refs['searchForm'].resetFields();
+        this.$data.searchForm.state = this.isDetail ? '' : '3';
         this.getProxyPayList(1);
-      },
-      'isDetail'(newVal) {
-        this.setDefaultState();
       }
     },
     mounted() {
-      this.setDefaultState();
       this.getProductList();
-      this.getProxyPayList();
+      this.getProxyPayList(1);
       this.$data.certTypeEnum = [
         {
           'itemCode': '3',

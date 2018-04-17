@@ -44,7 +44,7 @@
       ProxyPayList
     },
     watch: {
-      'paymentType'(newVal) {
+      '$route'() {
         this.$data.tabIndex = 0;
       }
     },
