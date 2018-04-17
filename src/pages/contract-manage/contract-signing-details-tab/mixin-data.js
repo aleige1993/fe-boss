@@ -5,7 +5,7 @@ export default {
       contractInfoColumns: [
         {
           title: '合同编号',
-          width: 170,
+          // width: 170,
           align: 'center',
           key: 'contractNo'
         },
@@ -81,7 +81,7 @@ export default {
         {
           title: '操作',
           align: 'center',
-          width: '200',
+          // width: '200',
           render: (h, params) => {
             return h('div', [
               h('Button', {
