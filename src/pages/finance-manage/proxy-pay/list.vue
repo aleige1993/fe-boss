@@ -220,17 +220,21 @@
             this.$refs.exportExcelRef.click();
           });
         }
+      },
+      defaultPayStatus() {
+        this.$data.searchForm.state = this.isDetail ? '' : '3';
       }
     },
     watch: {
       '$route'() {
         this.$refs['searchForm'].resetFields();
-        this.$data.searchForm.state = this.isDetail ? '' : '3';
+        this.defaultPayStatus();
         this.getProxyPayList(1);
       }
     },
     mounted() {
       this.getProductList();
+      this.defaultPayStatus();
       this.getProxyPayList(1);
       this.$data.certTypeEnum = [
         {
