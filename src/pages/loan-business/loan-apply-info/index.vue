@@ -109,8 +109,7 @@
           <i-col span="8" v-if="formData.loandType!=='1'">
             <i-form-item label="经销商" prop="merchantAbbr">
               <input type="hidden" v-model="formData.merchantAbbr"/>
-
-              <i-input v-model="formData.merchantAbbr" :readonly="true" placeholder="选择经销商">
+              <i-input v-model="formData.merchantAbbr" :readonly="true" placeholder="">
                 <i-button v-if="!readonly" @click="distributorClick" slot="append">选择经销商 <Icon type="ios-more"></Icon></i-button>
               </i-input>
             </i-form-item>
@@ -120,7 +119,7 @@
                          prop="merchantAbbr"
                          :rules="{required: true, message: '请选择经销商'}">
               <input type="hidden" v-model="formData.merchantAbbr"/>
-              <i-input v-model="formData.merchantAbbr" :readonly="true" placeholder="选择经销商">
+              <i-input v-model="formData.merchantAbbr" :readonly="true" placeholder="">
                 <i-button v-if="!readonly" @click="distributorClick" slot="append">选择经销商 <Icon type="ios-more"></Icon></i-button>
               </i-input>
             </i-form-item>
@@ -154,7 +153,7 @@
           <i-col span="8">
             <i-form-item label="渠道商" prop="channelName">
               <input type="hidden" v-model="formData.channelName"/>
-              <i-input v-model="formData.channelName" :readonly="true" placeholder="选择渠道商">
+              <i-input v-model="formData.channelName" :readonly="true" placeholder="">
                 <i-button v-if="!readonly" @click="merchantClick" slot="append">选择渠道商 <Icon type="ios-more"></Icon></i-button>
               </i-input>
             </i-form-item>
