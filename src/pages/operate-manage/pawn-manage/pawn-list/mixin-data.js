@@ -4,35 +4,34 @@ export default {
       pawnColumns: [
         {
           title: '项目编号',
-          key: 'loanNo',
-          width: 170
+          key: 'loanNo'
         },
         {
           title: '客户名称',
           key: 'custName'
         },
         {
-          title: '产品',
+          title: '产品名称',
           key: 'productName'
         },
         {
           title: '期数(月)',
-          key: 'totalPeriods',
-          width: 90
+          key: 'totalPeriods'
         },
         {
           title: '贷款金额(元)',
-          width: 120,
           key: 'loanTotalAmt'
         },
         {
+          title: '回传截至日期',
+          key: 'backDate'
+        },
+        {
           title: '回传天数(天)',
-          width: 120,
           key: 'backDays'
         },
         {
           title: '剩余回传天数(天)',
-          width: 140,
           key: 'surplusBackDays'
         },
         {

@@ -18,6 +18,13 @@
         <i-form-item prop="custName">
           <i-input v-model="searchForm.custName" type="text" placeholder="客户名称"></i-input>
         </i-form-item>
+        <i-form-item prop="productNo">
+          <input type="hidden" v-model="searchForm.productName">
+          <i-select v-model="searchForm.productNo" type="text" placeholder="产品名称" style="width: 180px;" :label-in-value="true" @on-change="productChange">
+            <i-option value="" style="height: 26px; color: #bbbec4">-请选择-</i-option>
+            <i-option v-for="product in productList" :value="product.productNo" :key="product.productNo">{{product.productName}}</i-option>
+          </i-select>
+        </i-form-item>
         <!--<i-form-item prop="certType">
           <i-select style="width: 120px;" v-model="searchForm.certType" placeholder="证件类型">
             <i-option v-for="item in enumSelectData.get('CertTypeEnum')" :key="item.itemCode" :value="item.itemCode">{{item.itemName}}</i-option>
@@ -55,18 +62,33 @@
         searchForm: {
           'loanNo': '',
           'custName': '',
+          'productName': '',
           'certNo': '',
           'surplusBackDays': ''
-        }
+        },
+        productList: []
       };
     },
-    mounted() {
-      if (this.$route.query.currentPage) {
-        this.$data.currentPag = this.$route.query.currentPag / 1;
-      }
-      this.getList();
-    },
     methods: {
+      // 搜索框 产品条件变化时
+      productChange(val) {
+        if (val.value === '') {
+          this.$data.searchForm.productName = '';
+        } else {
+          this.$data.searchForm.productName = val.label;
+        }
+      },
+      /*
+      * 获取产品列表 下拉
+       */
+      async getProductList() {
+        let resp = await this.$http.get('/pms/product/list', { productName: '', currentPage: 1, pageSize: 99999 });
+        if (resp.success) {
+          this.$data.productList = resp.body.resultList;
+        } else {
+          this.$data.productList = [];
+        }
+      },
       async getList(page) {
         this.$data.dataLoading = true;
         if (page) {
@@ -92,6 +114,13 @@
       jumpPage(page) {
         this.getList(page);
       }
+    },
+    mounted() {
+      if (this.$route.query.currentPage) {
+        this.$data.currentPag = this.$route.query.currentPag / 1;
+      }
+      this.getList();
+      this.getProductList();
     }
   };
 </script>
