@@ -30,9 +30,9 @@
             <i-option v-for="item in enumSelectData.get('CertTypeEnum')" :key="item.itemCode" :value="item.itemCode">{{item.itemName}}</i-option>
           </i-select>
         </i-form-item>-->
-        <i-form-item prop="certNo">
-          <i-input v-model="searchForm.certNo" type="text" placeholder="证件号码" style="width: 170px"></i-input>
-        </i-form-item>
+        <!--<i-form-item prop="certNo">-->
+          <!--<i-input v-model="searchForm.certNo" type="text" placeholder="证件号码" style="width: 170px"></i-input>-->
+        <!--</i-form-item>-->
         <i-form-item prop="surplusBackDays">
           <i-input v-model="searchForm.surplusBackDays" type="text" placeholder="剩余回传天数" style="width: 170px"></i-input>
         </i-form-item>
