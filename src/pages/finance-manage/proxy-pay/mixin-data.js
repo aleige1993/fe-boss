@@ -1,4 +1,8 @@
+import BsTooltip from '@/components/bs-tooltip';
 export default {
+  components: {
+    BsTooltip
+  },
   data() {
     return {
       customerCheckboxColumns: [
@@ -102,7 +106,7 @@ export default {
         {
           title: '付款状态',
           key: 'state',
-          width: 100,
+          width: 140,
           fixed: 'right',
           align: 'center',
           render: (h, params) => {
@@ -111,11 +115,16 @@ export default {
             } else if (params.row.state === '1') {
               return h('span', {}, '成功');
             } else if (params.row.state === '-1') {
-              return h('Tooltip', {
+              return h(BsTooltip, {
                 props: {
-                  content: `失败原因：${params.row.transRemark}`
+                  showText: '失败',
+                  tipText: `失败原因：${params.row.transRemark}`,
+                  placement: params.index <= 1 ? 'bottom-start' : 'top-start',
+                  // width: '100',
+                  wordBreak: 'break-all',
+                  whiteSpace: 'normal'
                 }
-              }, '失败');
+              });
             } else if (params.row.state === '2') {
               return h('span', {}, '已退款');
             } else if (params.row.state === '3') {
@@ -128,7 +137,7 @@ export default {
         {
           title: '操作',
           key: 'action',
-          width: 80,
+          width: 140,
           fixed: 'right',
           align: 'center',
           render: (h, params) => {
