@@ -5,7 +5,8 @@
       <i-breadcrumb-item href="/home">首页</i-breadcrumb-item>
       <i-breadcrumb-item href="/index/operate">运营管理</i-breadcrumb-item>
       <i-breadcrumb-item href="/index/operate/pawn">权证管理列表</i-breadcrumb-item>
-      <i-breadcrumb-item>权证待办列表</i-breadcrumb-item>
+      <i-breadcrumb-item v-if="status === '0'">权证待办列表</i-breadcrumb-item>
+      <i-breadcrumb-item v-if="status === '2'">权证已办列表</i-breadcrumb-item>
     </i-breadcrumb>
     <div class="form-block-title">
       查询条件
@@ -33,7 +34,7 @@
         <!--<i-form-item prop="certNo">-->
           <!--<i-input v-model="searchForm.certNo" type="text" placeholder="证件号码" style="width: 170px"></i-input>-->
         <!--</i-form-item>-->
-        <i-form-item prop="surplusBackDays">
+        <i-form-item v-if="status === '0'" prop="surplusBackDays">
           <i-input v-model="searchForm.surplusBackDays" type="text" placeholder="剩余回传天数" style="width: 170px"></i-input>
         </i-form-item>
         <i-form-item>
@@ -64,10 +65,27 @@
           'custName': '',
           'productName': '',
           'certNo': '',
-          'surplusBackDays': ''
+          'surplusBackDays': '',
+          'status': ''
         },
         productList: []
       };
+    },
+    props: {
+      status: {
+        type: String,
+        default: '',
+        required: true
+      }
+    },
+    computed: {
+      pawnColumns() {
+        if (this.status === '0') {
+          return [...this.$data.pawnBasicColumns, ...this.$data.pawnSurplusBackDaysColumns, ...this.$data.pawnActionColumns];
+        } else {
+          return [...this.$data.pawnBasicColumns, ...this.$data.pawnGmtModifiedColumns, ...this.$data.pawnActionColumns];
+        }
+      }
     },
     methods: {
       // 搜索框 产品条件变化时
@@ -94,6 +112,7 @@
         if (page) {
           this.$data.currentPage = page;
         }
+        this.$data.searchForm.status = this.status;
         let resp = await this.$http.post('/biz/payment/pagePaymentWaitDonePawn', {
           ...this.$data.searchForm,
           currentPage: this.$data.currentPage,
@@ -115,12 +134,17 @@
         this.getList(page);
       }
     },
+    watch: {
+      'status'(newVal) {
+        this.getList();
+      }
+    },
     mounted() {
       if (this.$route.query.currentPage) {
         this.$data.currentPag = this.$route.query.currentPag / 1;
       }
-      this.getList();
       this.getProductList();
+      this.getList();
     }
   };
 </script>

@@ -4,7 +4,8 @@
     <i-breadcrumb separator=">">
       <i-breadcrumb-item href="/home">首页</i-breadcrumb-item>
       <i-breadcrumb-item href="/index/operate">运营管理</i-breadcrumb-item>
-      <i-breadcrumb-item href="/index/operate/pawn">权证待办列表</i-breadcrumb-item>
+      <i-breadcrumb-item v-if="!detail" href="/index/operate/pawn">权证待办列表</i-breadcrumb-item>
+      <i-breadcrumb-item v-else="" href="/index/operate/pawn/finished">权证已办列表</i-breadcrumb-item>
       <i-breadcrumb-item>抵押物办理详情</i-breadcrumb-item>
     </i-breadcrumb>
     <i-tabs v-model="tabIndex" :animated="false" type="card">
@@ -94,7 +95,7 @@
           </bs-form-block>
         </i-form>
       </i-tab-pane>
-      <div class="form-footer-actions">
+      <div v-if="!details" class="form-footer-actions">
         <i-button @click="saveSubimt" :loading="initFormLoading" type="success">
           <span v-if="!initFormLoading"><i class="iconfont icon-tijiao"></i> 提交</span>
           <span v-else> loading...</span>
@@ -114,7 +115,7 @@
             <i-form-item label="经办人"
                          prop="makeUser"
                          :rules="{required: true, message: '经办人不能为空', trigger: 'blur'}">
-              <i-input v-model="formalities.makeUser" placeholder=""></i-input>
+              <i-input v-model="formalities.makeUser" placeholder="" readonly="details"></i-input>
             </i-form-item>
           </i-col>
         </i-row>
@@ -123,14 +124,14 @@
             <i-form-item label="办理时间"
                          prop="makeDate"
                          :rules="{required: true, message: '办理时间不能为空', trigger: 'blur'}">
-              <bs-datepicker v-model="formalities.makeDate" type="text" placeholder="办理时间"></bs-datepicker>
+              <bs-datepicker v-model="formalities.makeDate" type="text" placeholder="办理时间" readonly="details"></bs-datepicker>
             </i-form-item>
           </i-col>
           <i-col span="12">
             <i-form-item label="权证编号"
                          prop="warrantNo"
                          :rules="{required: true, message: '权证编号不能为空', trigger: 'blur'}">
-              <i-input v-model="formalities.warrantNo" placeholder=""></i-input>
+              <i-input v-model="formalities.warrantNo" placeholder="" readonly="details"></i-input>
             </i-form-item>
           </i-col>
         </i-row>
@@ -138,14 +139,14 @@
           <i-col span="12">
             <i-form-item label="备注"
                          prop="remark">
-              <i-input type="textarea" :rows="2" v-model="formalities.remark" placeholder=""></i-input>
+              <i-input type="textarea" :rows="2" v-model="formalities.remark" placeholder="" readonly="details"></i-input>
             </i-form-item>
           </i-col>
           <i-col span="12">
             <i-form-item label="登记机关"
                          prop="registerCompany"
                          :rules="{required: true, message: '登记机关不能为空', trigger: 'blur'}">
-              <i-input v-model="formalities.registerCompany" placeholder=""></i-input>
+              <i-input v-model="formalities.registerCompany" placeholder="" readonly="details"></i-input>
             </i-form-item>
           </i-col>
         </i-row>
@@ -156,11 +157,11 @@
               :rules="{required: true, message: '至少上传一份办理文件！', trigger: 'blur'}"
               prop="mortgageUrl">
               <input type="hidden" v-model="formalities.mortgageUrl">
-              <mortgage-picture-list ref="mortgagePictureList" :regularText="'@'" :picData="mortgageList" @on-data-remove="picDataRomove"  @on-data-add="picDataAdd"></mortgage-picture-list>
+              <mortgage-picture-list :details="details" ref="mortgagePictureList" :regularText="'@'" :picData="mortgageList" @on-data-remove="picDataRomove"  @on-data-add="picDataAdd"></mortgage-picture-list>
             </i-form-item>
           </i-col>
         </i-row>
-        <i-form-item class="text-right">
+        <i-form-item v-if="!details" class="text-right">
           <i-button :loading="uploadState" type="primary" @click="formalitiesSubmit">提交</i-button>
         </i-form-item>
       </i-form>
@@ -182,6 +183,7 @@
     },
     data() {
       return {
+        details: this.$route.query.details,
         tabIndex: 0,
         carDataLoading: false,
         initFormLoading: false,

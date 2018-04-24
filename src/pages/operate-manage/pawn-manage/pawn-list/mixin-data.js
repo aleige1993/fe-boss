@@ -1,7 +1,7 @@
 export default {
   data() {
     return {
-      pawnColumns: [
+      pawnBasicColumns: [
         {
           title: '项目编号',
           key: 'loanNo'
@@ -29,11 +29,21 @@ export default {
         {
           title: '回传天数(天)',
           key: 'backDays'
-        },
+        }
+      ],
+      pawnSurplusBackDaysColumns: [
         {
           title: '剩余回传天数(天)',
           key: 'surplusBackDays'
-        },
+        }
+      ],
+      pawnGmtModifiedColumns: [
+        {
+          title: '权证录入时间',
+          key: 'gmtModified'
+        }
+      ],
+      pawnActionColumns: [
         {
           title: '操作',
           key: 'action',
@@ -47,7 +57,7 @@ export default {
                   size: 'small'
                 },
                 on: {
-                  click: async() => {
+                  click: () => {
                     // 设置当前处理人
                     /* let rep = await this.$http.post('/biz/payment/settingHandleUserWithPawn', {
                       id: params.row.id
@@ -60,12 +70,13 @@ export default {
                       query: {
                         currentPage: this.$data.currentPage,
                         loanNo: params.row.loanNo,
-                        id: params.row.id
+                        id: params.row.id,
+                        details: this.status !== '0'
                       }
                     });
                   }
                 }
-              }, '办理')
+              }, this.status === '0' ? '办理' : '查看')
             ]);
           }
         }

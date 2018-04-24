@@ -291,8 +291,10 @@ let MyRouter = new Router({
             // 运营管理-权证管理
             { path: 'pawn', name: 'pawnManage', component: resolve => require(['@/pages/operate-manage/pawn-manage'], resolve),
               children: [
-                // 运营管理-权证管理-抵押物代办列表
-                { path: '/', name: 'pawnList', component: resolve => require(['@/pages/operate-manage/pawn-manage/pawn-list'], resolve)},
+                // 运营管理-权证待办列表
+                { path: '/', name: 'pawnList', props: {status: '0'}, component: resolve => require(['@/pages/operate-manage/pawn-manage/pawn-list'], resolve)},
+                // 运营管理-权证管已办列表
+                { path: 'finished', name: 'pawnFinishedList',  props: {status: '2'}, component: resolve => require(['@/pages/operate-manage/pawn-manage/pawn-list'], resolve)},
                 // 运营管理-放款管理-放款条件落实-办理详情
                 { path: 'handle', name: 'pawnListHandle', component: resolve => require(['@/pages/operate-manage/pawn-manage/pawn-list/pawn-handle-details'], resolve)}
               ]

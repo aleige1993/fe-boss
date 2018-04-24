@@ -75,7 +75,7 @@ export default {
                     }
                   }
                 }
-              }, '办理抵押')
+              }, !this.$data.details ? '办理抵押' : '查看抵押')
             ]);
           }
         }
