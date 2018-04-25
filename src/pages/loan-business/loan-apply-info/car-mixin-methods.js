@@ -56,10 +56,9 @@ export default {
      * @param row
      * @returns {Promise<void>}
      */
-    async setListCar(row) {
+    setListCar(row) {
       this.$data.isAddCar = false;
       this.$data.showModalCar = true;
-      // await this.$refs['formCar'].resetFields();
       this.$data.carInfoDataIndex = row._index;
       this.$data.formCar = row;
     },

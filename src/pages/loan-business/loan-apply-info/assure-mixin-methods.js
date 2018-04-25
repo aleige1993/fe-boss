@@ -22,7 +22,7 @@ export default {
     openModalAssure() {
       this.$data.isAddAssure = true;
       this.$data.showModalAssure = true;
-      this.$data.formAssure = {};
+      this.$refs['formAssure'].resetFields();
     },
     // 担保信息提交
     async addSuBmitAssure() {
