@@ -136,6 +136,7 @@
     },
     watch: {
       'status'(newVal) {
+        /*****/
         this.getList();
       }
     },
