@@ -136,7 +136,7 @@
     },
     watch: {
       'status'(newVal) {
-        /*****/
+        this.$refs['searchForm'].resetFields();
         this.getList();
       }
     },
