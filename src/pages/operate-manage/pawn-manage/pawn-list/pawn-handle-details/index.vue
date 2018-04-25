@@ -115,7 +115,8 @@
             <i-form-item label="经办人"
                          prop="makeUser"
                          :rules="{required: true, message: '经办人不能为空', trigger: 'blur'}">
-              <i-input v-model="formalities.makeUser" placeholder="" readonly="details"></i-input>
+              <span v-if="details" v-text="formalities.makeUser"></span>
+              <i-input v-else v-model="formalities.makeUser" placeholder=""></i-input>
             </i-form-item>
           </i-col>
         </i-row>
@@ -124,29 +125,33 @@
             <i-form-item label="办理时间"
                          prop="makeDate"
                          :rules="{required: true, message: '办理时间不能为空', trigger: 'blur'}">
-              <bs-datepicker v-model="formalities.makeDate" type="text" placeholder="办理时间" readonly="details"></bs-datepicker>
+              <span v-if="details" v-text="formalities.makeDate"></span>
+              <bs-datepicker v-else v-model="formalities.makeDate" type="text" placeholder="办理时间"></bs-datepicker>
             </i-form-item>
           </i-col>
           <i-col span="12">
             <i-form-item label="权证编号"
                          prop="warrantNo"
                          :rules="{required: true, message: '权证编号不能为空', trigger: 'blur'}">
-              <i-input v-model="formalities.warrantNo" placeholder="" readonly="details"></i-input>
+              <span v-if="details" v-text="formalities.warrantNo"></span>
+              <i-input  v-else v-model="formalities.warrantNo" placeholder=""></i-input>
             </i-form-item>
           </i-col>
         </i-row>
         <i-row>
           <i-col span="12">
-            <i-form-item label="备注"
-                         prop="remark">
-              <i-input type="textarea" :rows="2" v-model="formalities.remark" placeholder="" readonly="details"></i-input>
-            </i-form-item>
-          </i-col>
-          <i-col span="12">
             <i-form-item label="登记机关"
                          prop="registerCompany"
                          :rules="{required: true, message: '登记机关不能为空', trigger: 'blur'}">
-              <i-input v-model="formalities.registerCompany" placeholder="" readonly="details"></i-input>
+              <span v-if="details" v-text="formalities.registerCompany"></span>
+              <i-input v-else v-model="formalities.registerCompany" placeholder=""></i-input>
+            </i-form-item>
+          </i-col>
+          <i-col span="12">
+            <i-form-item label="备注"
+                         prop="remark">
+              <span v-if="details" v-text="formalities.remark"></span>
+              <i-input v-else type="textarea" :rows="2" v-model="formalities.remark" placeholder=""></i-input>
             </i-form-item>
           </i-col>
         </i-row>
