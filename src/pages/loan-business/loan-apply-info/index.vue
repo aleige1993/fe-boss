@@ -691,17 +691,17 @@
             </i-form-item>
           </i-col>
           <i-col span="12">
-            <i-form-item v-if="formAssure.guaPersonType === '1'" label="证件号码" prop="carOwnerNumber"
+            <i-form-item v-if="formAssure.guaPersonType === '1'" label="证件号码" prop="guaPersonCertNo"
                          :rules="[{required: true, message: '证件号码不能为空'},
                                   {required: true, min: 18, message: '请输入正确的证件号码'},
                                   {required: true, max: 18, message: '请输入正确的证件号码'}]">
-              <i-input v-model="formAssure.carOwnerNumber"/>
+              <i-input v-model="formAssure.guaPersonCertNo"/>
             </i-form-item>
-            <i-form-item v-else label="统一社会信用代码" prop="carOwnerNumber"
+            <i-form-item v-else label="统一社会信用代码" prop="guaPersonCertNo"
                          :rules="[{required: true, message: '统一社会信用代码不能为空'},
                                   {required: true, min: 18, message: '请输入正确的统一社会信用代码'},
                                   {required: true, max: 18, message: '请输入正确的统一社会信用代码'}]">
-              <i-input v-model="formAssure.carOwnerNumber"/>
+              <i-input v-model="formAssure.guaPersonCertNo"/>
             </i-form-item>
           </i-col>
         </i-row>
