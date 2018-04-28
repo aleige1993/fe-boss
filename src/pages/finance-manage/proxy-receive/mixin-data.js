@@ -18,6 +18,11 @@ export default {
           width: 240
         },
         {
+          title: '产品名称',
+          key: 'receiveProduct',
+          width: 160
+        },
+        {
           title: '代扣金额',
           key: 'txnAmt',
           width: 120
