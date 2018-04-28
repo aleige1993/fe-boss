@@ -295,13 +295,13 @@
                   <i-input :readonly="isFromDetail" v-model="formData.mbMemberWorkDTO.companyName"/>
                 </i-form-item>
               </i-col>
-              <i-col span="8">
-                <i-form-item label="统一社会信用代码"
-                             prop="mbMemberWorkDTO.creditCode"
-                             :rules="{required: true, message: '统一社会信用代码不能为空', trigger: 'blur'}">
-                  <i-input :readonly="isFromDetail" v-model="formData.mbMemberWorkDTO.creditCode"/>
-                </i-form-item>
-              </i-col>
+              <!--<i-col span="8">-->
+                <!--<i-form-item label="统一社会信用代码"-->
+                             <!--prop="mbMemberWorkDTO.creditCode"-->
+                             <!--:rules="{required: true, message: '统一社会信用代码不能为空', trigger: 'blur'}">-->
+                  <!--<i-input :readonly="isFromDetail" v-model="formData.mbMemberWorkDTO.creditCode"/>-->
+                <!--</i-form-item>-->
+              <!--</i-col>-->
               <i-col span="8">
                 <i-form-item label="单位性质"
                              prop="mbMemberWorkDTO.unitType"
@@ -313,8 +313,6 @@
                   </i-select>
                 </i-form-item>
               </i-col>
-            </i-row>
-            <i-row>
               <i-col span="8">
                 <i-form-item label="行业类别"
                              prop="mbMemberWorkDTO.industryType"
@@ -326,6 +324,8 @@
                   </i-select>
                 </i-form-item>
               </i-col>
+            </i-row>
+            <i-row>
               <i-col span="8">
                 <i-form-item label="职务" prop="mbMemberWorkDTO.duty"
                              :rules="{required: true, message: '请选择职务', trigger: 'change'}">
@@ -339,20 +339,20 @@
                   <bs-datepicker :readonly="isFromDetail" v-model="formData.mbMemberWorkDTO.joinDate"></bs-datepicker>
                 </i-form-item>
               </i-col>
-            </i-row>
-            <i-row>
               <i-col span="8">
                 <i-form-item label="所属部门">
                   <i-input :readonly="isFromDetail" v-model="formData.mbMemberWorkDTO.department"></i-input>
                 </i-form-item>
               </i-col>
-              <!--<i-col span="8">-->
-                <!--<i-form-item label="月收入">-->
-                  <!--<i-input :readonly="isFromDetail" v-model="formData.mbMemberWorkDTO.monthRevenue">-->
-                    <!--<span v-if="formData.mbMemberWorkDTO.monthRevenue" slot="append">元</span>-->
-                  <!--</i-input>-->
-                <!--</i-form-item>-->
-              <!--</i-col>-->
+            </i-row>
+            <i-row>
+              <i-col span="8">
+                <i-form-item label="月收入">
+                  <i-input :readonly="isFromDetail" v-model="formData.mbMemberWorkDTO.monthRevenue">
+                    <span v-if="formData.mbMemberWorkDTO.monthRevenue" slot="append">元</span>
+                  </i-input>
+                </i-form-item>
+              </i-col>
               <i-col span="8">
                 <i-form-item label="单位电话"
                              prop="mbMemberWorkDTO.companyTel"
