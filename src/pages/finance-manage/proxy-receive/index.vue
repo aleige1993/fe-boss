@@ -11,7 +11,7 @@
           <i-input type="text" v-model="searchForm.projectNo" placeholder="项目编号"></i-input>
         </i-form-item>
         <i-form-item prop="productNo">
-          <input type="hidden" v-model="searchForm.productName">
+          <input type="hidden" v-model="searchForm.receiveProduct">
           <i-select v-model="searchForm.productNo" type="text" placeholder="产品名称" style="width: 180px;" :label-in-value="true" @on-change="productChange">
             <i-option value="" style="height: 26px; color: #bbbec4">-请选择-</i-option>
             <i-option v-for="product in productList" :value="product.productNo" :key="product.productNo">{{product.productName}}</i-option>
@@ -76,6 +76,7 @@
         certTypeEnum: [],
         searchForm: {
           'projectNo': '',
+          'receiveProduct': '',
           'idHolder': '',
           'idCard': '',
           'receiveSTime': '',
@@ -107,9 +108,9 @@
       // 搜索框 产品条件变化时
       productChange(val) {
         if (val.value === '') {
-          this.$data.searchForm.productName = '';
+          this.$data.searchForm.receiveProduct = '';
         } else {
-          this.$data.searchForm.productName = val.label;
+          this.$data.searchForm.receiveProduct = val.label;
         }
       },
       /*
