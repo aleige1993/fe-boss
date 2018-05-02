@@ -168,18 +168,60 @@
             </i-form-item>
           </i-col>
           <!--权利人-->
-          <i-col span="8" v-if="detailsCarDataForm.custType=='1' || detailsCarDataForm.custType=='2'">
+          <!--<i-col span="8" v-if="detailsCarDataForm.custType=='1' || detailsCarDataForm.custType=='2'">-->
+            <!--<i-form-item-->
+              <!--label="权利人"-->
+              <!--:rules="{required: true, message: '请选择权利人'}"-->
+              <!--prop="carOwnerNo">-->
+              <!--<input type="hidden" v-model="detailsCarDataForm.carOwnerNo"/>-->
+              <!--<i-input v-if="detailsCarDataForm.custType=='1'" v-model="detailsCarDataForm.carOwnerName" :readonly="true" placeholder="选择权利人">-->
+                <!--<i-button @click="showSelectObligee=!showSelectObligee" slot="append">选择权利人 <Icon type="ios-more"></Icon></i-button>-->
+              <!--</i-input>-->
+              <!--<i-input v-if="detailsCarDataForm.custType=='2'" v-model="detailsCarDataForm.carOwnerName" :readonly="true" placeholder="选择企业权利人">-->
+                <!--<i-button @click="showSelectCompanyOwner=!showSelectCompanyOwner" slot="append">选择企业权利人 <Icon type="ios-more"></Icon></i-button>-->
+              <!--</i-input>-->
+            <!--</i-form-item>-->
+          <!--</i-col>-->
+        </i-row>
+        <i-row>
+          <!--权利人-->
+          <i-col span="8">
             <i-form-item
               label="权利人"
-              :rules="{required: true, message: '请选择权利人'}"
-              prop="carOwnerNo">
+              :rules="{required: true, message: '权利人不能为空'}"
+              prop="carOwnerName">
               <input type="hidden" v-model="detailsCarDataForm.carOwnerNo"/>
-              <i-input v-if="detailsCarDataForm.custType=='1'" v-model="detailsCarDataForm.carOwnerName" :readonly="true" placeholder="选择权利人">
-                <i-button @click="showSelectObligee=!showSelectObligee" slot="append">选择权利人 <Icon type="ios-more"></Icon></i-button>
-              </i-input>
-              <i-input v-if="detailsCarDataForm.custType=='2'" v-model="detailsCarDataForm.carOwnerName" :readonly="true" placeholder="选择企业权利人">
-                <i-button @click="showSelectCompanyOwner=!showSelectCompanyOwner" slot="append">选择企业权利人 <Icon type="ios-more"></Icon></i-button>
-              </i-input>
+              <i-input v-model="detailsCarDataForm.carOwnerName" placeholder=""/>
+            </i-form-item>
+          </i-col>
+          <i-col span="8">
+            <i-form-item label="证件类型" prop="guaPersonType">
+              <!--<i-select :disabled="true" v-model="formAssure.guaPersonCertType">-->
+              <!--<i-option v-for="item in enumSelectData.get('CertTypeEnum')" :key="item.itemCode"-->
+              <!--:value="item.itemCode">{{item.itemName}}-->
+              <!--</i-option>-->
+              <!--</i-select>-->
+              <span v-text="detailsCarDataForm.custType === '2' ? '营业执照' : '身份证'"></span>
+            </i-form-item>
+          </i-col>
+          <i-col span="8">
+            <!--<i-form-item-->
+            <!--label="证件号码"-->
+            <!--prop="idCode"-->
+            <!--:rules="{required: true, message: '证件号码不能为空'}">-->
+            <!--<i-input v-model="formCar.idCode" placeholder=""></i-input>-->
+            <!--</i-form-item>-->
+            <i-form-item v-if="detailsCarDataForm.custType === '1'" label="证件号码" prop="carOwnerNumber"
+                         :rules="[{required: true, message: '证件号码不能为空'},
+                                  {required: true, min: 18, message: '请输入正确的证件号码'},
+                                  {required: true, max: 18, message: '请输入正确的证件号码'}]">
+              <i-input v-model="detailsCarDataForm.carOwnerNumber"/>
+            </i-form-item>
+            <i-form-item v-else label="统一社会信用代码" prop="carOwnerNumber"
+                         :rules="[{required: true, message: '统一社会信用代码不能为空'},
+                                  {required: true, min: 18, message: '请输入正确的统一社会信用代码'},
+                                  {required: true, max: 18, message: '请输入正确的统一社会信用代码'}]">
+              <i-input v-model="detailsCarDataForm.carOwnerNumber"/>
             </i-form-item>
           </i-col>
         </i-row>
