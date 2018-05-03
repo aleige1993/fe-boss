@@ -1,4 +1,8 @@
+import BsTooltip from '@/components/bs-tooltip';
 export default {
+  components: {
+    BsTooltip
+  },
   data() {
     return {
       customerColumns: [
@@ -16,6 +20,11 @@ export default {
           title: '支付流水号',
           key: 'transId',
           width: 240
+        },
+        {
+          title: '产品名称',
+          key: 'receiveProduct',
+          width: 160
         },
         {
           title: '代扣金额',
@@ -71,13 +80,22 @@ export default {
           render: (h, params) => {
             let msg = '';
             if (params.row.orderStat === 'S') {
-              msg = '成功';
+              return h('span', {}, '成功');
             } else if (params.row.orderStat === 'F') {
-              msg = '失败';
+              return h(BsTooltip, {
+                props: {
+                  showText: '失败',
+                  tipText: `失败原因：${params.row.reqReserved}`,
+                  placement: params.index <= 1 ? 'bottom-start' : 'top-start',
+                  // width: '100',
+                  wordBreak: 'break-all',
+                  whiteSpace: 'normal'
+                }
+              });
             } else if (params.row.orderStat === 'I') {
-              msg = '扣款中';
+              return h('span', {}, '扣款中');
             } else if (params.row.orderStat === 'D') {
-              msg = '待扣款';
+              return h('span', {}, '待扣款');
             }
             return h('span', {}, msg);
           }
