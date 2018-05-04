@@ -790,7 +790,7 @@
               this.$Message.success('车辆信息提交成功');
             }
           } else {
-            this.$Message.error('<span style="color: red">*</span>项不能为空');
+            this.$Message.error('<span style="color: red">*</span>项不能为空或填写格式错误');
             this.$data.setCarDataShowModal = true;
           }
         });

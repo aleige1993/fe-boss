@@ -47,7 +47,7 @@ export default {
             this.setSuBmitAssure();
           }
         } else {
-          this.$Message.error('<span style="color: red">*</span>项不能为空');
+          this.$Message.error('<span style="color: red">*</span>项不能为空或填写格式错误');
         }
       });
     },
