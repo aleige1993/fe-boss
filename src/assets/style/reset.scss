@@ -34,7 +34,46 @@ h1,h2,h3,h4,h5,h6 {
   font-weight: normal;
   font-size: 100%;
 }
+
+/*
+ * 添加class=“scrollBarStyle” 修改webkit内核的浏览器滚动条
+ */
+.scrollBarStyle {
+  &::-webkit-scrollbar {
+    width: 6px;
+    height: 10px;
+  }
+  &::-webkit-scrollbar-button {
+    display: none;
+  }
+  &::-webkit-scrollbar-track {
+    display: none;
+  }
+  &::-webkit-scrollbar-thumb {
+    background: #c5dcef;
+    border-radius: 5px;
+    &:hover {
+      background: #add1f0;
+    }
+  }
+}
+
 // ivew-ui reset 样式覆盖
+// 修改iView 确定交互框的位置
+.alertify {
+  position: fixed; z-index: 99999;
+  top: 50%; left: 50%;
+  width: 420px;
+  margin-left: -210px;
+  margin-top: -67px;
+  opacity: 1;
+}
+
+// 上传文件的样式
+.demo-spin-icon-load{
+  animation: ani-demo-spin 1s linear infinite;
+}
+
 .iconfont{
   line-height: 1;
 }
@@ -51,6 +90,11 @@ h1,h2,h3,h4,h5,h6 {
     font-size: 12px;
   }
 }
+
+// 在查看详情的表单中（i-form）添加lass="input-label-color"，使其label字体颜色改变
+.input-label-color.ivu-form .ivu-form-item-label {
+  color: #999;
+}
 .ivu-form{
   padding-bottom: 27px;
   &.ivu-form-inline{
@@ -64,15 +108,6 @@ h1,h2,h3,h4,h5,h6 {
   display: block !important;
   content: " "
 }
-.ivu-input[readonly]{
-  background-color: #f4f4f4;
-}
-.ivu-input-group-append{
-  background-color: #fff;
-}
-.ivu-select-dropdown-list .ivu-select-item{
-  padding: 5px 10px;
-}
 .ivu-form-item.required > .ivu-form-item-label{
   &:before{
     content: "*";
@@ -85,52 +120,7 @@ h1,h2,h3,h4,h5,h6 {
 .ivu-form-item-error-tip{
   padding-top: 0
 }
-// iview选中行的样式覆盖
-.ivu-table-row-highlight td{
-  background-color: #23A1F4 !important;
-  color: #fff;
-}
-// jquery confirm 样式覆盖
-.jconfirm .container{
-  width: 320px;
-  margin: 0 auto;
-}
-// 表格内的按钮
-.ivu-table-cell {
-  button{
-    margin-right: 5px;
-  }
-  button:last-of-type{
-    margin-right: 0px;
-  }
-}
-.ivu-select-disabled .ivu-select-selection{
-  color: #666;
-}
-// 表格内的字体英文基线以下不显示的问题修复
-.ivu-table-cell {
-  font-size: 12px;
-  line-height: 16px;
-}
-// 地址联动。当地址有默认值时，改变placeholder属性的字体颜色
-.select-show-input .ivu-select-single .ivu-select-selection .ivu-select-placeholder {
-  color: #495060;
-}
-// 车型联动。当车型有默认值时，改变placeholder属性的字体颜色
-.select-show-input {
-  & .ivu-select-single input[placeholder]::-webkit-input-placeholder {
-    color: #495060;
-  }
-  & .ivu-select-single input[placeholder]::-moz-placeholder {
-    color: #495060;
-  }
-  & .ivu-select-single input[placeholder]:-moz-placeholder {
-    color: #495060;
-  }
-  & .ivu-select-single input[placeholder]:-ms-input-placeholder {
-    color: #495060;
-  }
-}
+
 // (iView)全局控制table的宽度最小为1200px，并table过长时做滚动处理
 .block-body {
   // overflow-x: auto;
@@ -167,42 +157,63 @@ h1,h2,h3,h4,h5,h6 {
 .pt-modal-dialog .ivu-table-wrapper {
   min-width: 0px;
 }
-// 在查看详情的表单中（i-form）添加lass="input-label-color"，使其label字体颜色改变
-.input-label-color.ivu-form .ivu-form-item-label {
-  color: #999;
+// 给td增加背景颜色
+.ivu-table .warning-row{
+  background-color: #f60;
+  color: #fff;
 }
-// 修改iView 确定交互框的位置
-.alertify {
-  position: fixed; z-index: 99999;
-  top: 50%; left: 50%;
-  width: 420px;
-  margin-left: -210px;
-  margin-top: -67px;
-  opacity: 1;
+// iview选中行的样式覆盖
+.ivu-table-row-highlight td{
+  background-color: #23A1F4 !important;
+  color: #fff;
 }
-// 上传文件的样式
-.demo-spin-icon-load{
-  animation: ani-demo-spin 1s linear infinite;
+.ivu-table-cell {
+  // 表格内的字体英文基线以下不显示的问题修复
+  font-size: 12px;
+  line-height: 16px;
+  // 表格内的按钮
+  button{
+    margin-right: 5px;
+  }
+  button:last-of-type{
+    margin-right: 0px;
+  }
 }
-/*
- * 添加class=“scrollBarStyle” 修改webkit内核的浏览器滚动条
- */
-.scrollBarStyle {
-  &::-webkit-scrollbar {
-    width: 6px;
-    height: 10px;
+
+.ivu-input[readonly]{
+  background-color: #f4f4f4;
+}
+.ivu-input-group-append{
+  background-color: #fff;
+}
+.ivu-select-dropdown-list .ivu-select-item{
+  padding: 5px 10px;
+}
+.ivu-select-disabled .ivu-select-selection{
+  color: #666;
+}
+// 地址联动。当地址有默认值时，改变placeholder属性的字体颜色
+.select-show-input .ivu-select-single .ivu-select-selection .ivu-select-placeholder {
+  color: #495060;
+}
+// 车型联动。当车型有默认值时，改变placeholder属性的字体颜色
+.select-show-input {
+  & .ivu-select-single input[placeholder]::-webkit-input-placeholder {
+    color: #495060;
   }
-  &::-webkit-scrollbar-button {
-    display: none;
+  & .ivu-select-single input[placeholder]::-moz-placeholder {
+    color: #495060;
   }
-  &::-webkit-scrollbar-track {
-    display: none;
+  & .ivu-select-single input[placeholder]:-moz-placeholder {
+    color: #495060;
   }
-  &::-webkit-scrollbar-thumb {
-    background: #c5dcef;
-    border-radius: 5px;
-    &:hover {
-      background: #add1f0;
-    }
+  & .ivu-select-single input[placeholder]:-ms-input-placeholder {
+    color: #495060;
   }
+}
+
+// jquery confirm 样式覆盖
+.jconfirm .container{
+  width: 320px;
+  margin: 0 auto;
 }

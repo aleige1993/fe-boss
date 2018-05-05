@@ -22,7 +22,7 @@ export default {
     openModalAssure() {
       this.$data.isAddAssure = true;
       this.$data.showModalAssure = true;
-      this.$data.formAssure = {};
+      this.$refs['formAssure'].resetFields();
     },
     // 担保信息提交
     async addSuBmitAssure() {
@@ -47,7 +47,7 @@ export default {
             this.setSuBmitAssure();
           }
         } else {
-          this.$Message.error('<span style="color: red">*</span>项不能为空');
+          this.$Message.error('<span style="color: red">*</span>项不能为空或填写格式错误');
         }
       });
     },
