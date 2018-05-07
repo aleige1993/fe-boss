@@ -25,8 +25,8 @@ export default {
       this.$refs['formAssure'].resetFields();
     },
     // 担保信息提交
-    async addSuBmitAssure() {
-      await this.assureData.unshift(this.$data.formAssure);
+    addSuBmitAssure() {
+      this.$data.assureData.unshift($.extend({}, this.$data.formAssure));
       this.$data.showModalAssure = false;
       this.$Message.success('新增成功');
     },

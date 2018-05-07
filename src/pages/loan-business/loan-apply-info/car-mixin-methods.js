@@ -28,7 +28,7 @@ export default {
     },
     // 车辆提交
     async addSuBmitCar() {
-      await this.carData.unshift(this.$data.formCar);
+      await this.carData.unshift($.extend({}, this.$data.formCar));
       this.$data.showModalCar = false;
     },
     // 修改情况下的提交数据
