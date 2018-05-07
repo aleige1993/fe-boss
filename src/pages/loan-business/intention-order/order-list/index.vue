@@ -16,6 +16,20 @@
         <i-form-item prop="password">
           <i-input v-model="searchForm.custName" type="text" placeholder="客户经理"></i-input>
         </i-form-item>-->
+
+
+        <i-form-item>
+          <i-input type="text" v-model="searchForm.orderNo" placeholder="订单编号"></i-input>
+        </i-form-item>
+        <i-form-item  >
+         <i-input v-model="searchForm.RealName" type="text" placeholder="客户名称"></i-input>
+        </i-form-item>
+        <i-form-item  >
+          <i-select v-model="searchForm.productName" type="text" placeholder="产品" style="width: 180px;">
+            <i-option value="" style="height: 26px; color: #bbbec4">-请选择-</i-option>
+            <i-option v-for="product in productList" :value="product.productName" :key="product.productNo">{{product.productName}}</i-option>
+          </i-select>
+        </i-form-item>
         <i-form-item>
           <i-select style="width: 120px;" v-model="searchForm.channelNo" placeholder="来源终端">
             <i-option value="" style="height: 26px; color: #bbbec4">-请选择-</i-option>
@@ -61,6 +75,7 @@
         total: 0,
         currentPage: 1,
         certTypeEnum: [],
+        productList: [],
         applyApproveLoading: false,
         searchForm: {
           currentPage: 1,
@@ -68,7 +83,10 @@
           'channelNo': '', // 渠道编号（1：Android；2：苹果；3：微信；4：其他）
           'orderStatus': '', // 订单状态
           'applyTimeStart': '',
-          'applyTimeEnd': ''
+          'applyTimeEnd': '',
+          'productName': '', // 产品
+          'RealName': '', // 客户名
+          'orderNo': '' // 项目编号
         }
       };
     },
@@ -102,10 +120,18 @@
       },
       selectRow(row, index) {
         // this.$emit('on-row-dbclick', row, index);
+      },
+      async getProductList() {
+        let resp = await this.$http.get('/pms/product/list', { productName: '', currentPage: 1, pageSize: 99999 });
+        if (resp.success) {
+          this.$data.productList = resp.body.resultList;
+        }
       }
     },
     mounted() {
       this.getCustomerIntentionOrderList();
+      this.getProductList();
+      console.log(location.hash);
     }
   };
 </script>
