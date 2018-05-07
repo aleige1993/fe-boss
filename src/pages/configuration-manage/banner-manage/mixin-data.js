@@ -3,19 +3,6 @@ export default {
     return {
       customerColumns: [
         {
-          title: '类型',
-          key: 'bannerType',
-          render: (h, params) => {
-            if (params.row.bannerType === '3') {
-              return h('span', {}, '全部');
-            } else if (params.row.bannerType === '1') {
-              return h('span', {}, 'banner');
-            } else {
-              return h('span', {}, '头条');
-            }
-          }
-        },
-        {
           title: '标题',
           key: 'title'
         },

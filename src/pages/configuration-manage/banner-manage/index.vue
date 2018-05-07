@@ -15,11 +15,6 @@
     </div>
     <pt-modal :title="isAdd ? '添加' : '修改'" v-model="addModal" :width="600" :zIndex="200" @on-close="fileUploading=false">
       <i-form v-if="addModal" ref="fromData" :model="fromData" label-position="left" :label-width="80">
-        <i-form-item label="类型" prop="bannerType" :rules="{required: true, message: '请选择类型', trigger: 'blur'}">
-          <i-select v-model="fromData.bannerType">
-            <i-option v-for="item in bannerTypeEnum" :key="item.itemCode" :value="item.itemCode">{{item.itemName}}</i-option>
-          </i-select>
-        </i-form-item>
         <i-form-item label="标题" prop="title" :rules="{required: true, message: '标题不能为空', trigger: 'blur'}">
           <i-input v-model="fromData.title" placeholder="" ></i-input>
         </i-form-item>
@@ -86,7 +81,6 @@
         fileUploading: false,
         total: 0,
         currentPage: 1,
-        bannerTypeEnum: {},
         certTypeEnum: {},
         uploadFileName: '',
         searchForm: {
@@ -105,8 +99,7 @@
           'bannerUrl': '',
           'linkUrl': '',
           'index': '',
-          'activeStatus': '',
-          'bannerType': ''
+          'activeStatus': ''
         }
       };
     },
@@ -152,18 +145,21 @@
         });
         this.$data.dataLoading = false;
         this.$data.privateCustomerLoanList = resp.body.resultList;
-        this.$data.privateCustomerLoanList = this.$data.privateCustomerLoanList.map(item => {
-          item.bannerType = item.bannerType.toString();
-          return item;
-        });
-        this.$data.currentPage = resp.body.currentPage / 1;
-        this.$data.total = resp.body.totalNum / 1;
+        this.$data.currentPage = resp.body.currentPage;
+        this.$data.total = resp.body.totalNum;
+        this.$data.currentPage = resp.body.currentPage;
+        this.$data.total = resp.body.totalNum;
       },
       async submitSuccess() {
         this.$data.buttonLoading = true;
         let url = this.$data.isAdd ? 'cfg/banner/add' : 'cfg/banner/modify';
         let resp = await this.$http.post(url, {
-          ...this.$data.fromData
+          'id': this.$data.fromData.id,
+          'title': this.$data.fromData.title,
+          'bannerUrl': this.$data.fromData.bannerUrl,
+          'linkUrl': this.$data.fromData.linkUrl,
+          'index': this.$data.fromData.index,
+          'activeStatus': this.$data.fromData.activeStatus
         });
         this.$data.buttonLoading = false;
         if (resp.success) {
@@ -209,20 +205,6 @@
     },
     mounted() {
       this.getProxyPayList();
-      this.$data.bannerTypeEnum = [
-        {
-          'itemCode': '3',
-          'itemName': '全部'
-        },
-        {
-          'itemCode': '1',
-          'itemName': 'banner'
-        },
-        {
-          'itemCode': '2',
-          'itemName': '头条'
-        }
-      ];
       this.$data.certTypeEnum = [
         {
           'itemCode': '1',
