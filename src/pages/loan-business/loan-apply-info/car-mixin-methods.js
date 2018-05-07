@@ -47,7 +47,7 @@ export default {
             this.setSuBmitCar();
           }
         } else {
-          this.$Message.error('<span style="color: red">*</span>项不能为空');
+          this.$Message.error('<span style="color: red">*</span>项不能为空或填写格式错误');
         }
       });
     },
@@ -56,10 +56,9 @@ export default {
      * @param row
      * @returns {Promise<void>}
      */
-    async setListCar(row) {
+    setListCar(row) {
       this.$data.isAddCar = false;
       this.$data.showModalCar = true;
-      // await this.$refs['formCar'].resetFields();
       this.$data.carInfoDataIndex = row._index;
       this.$data.formCar = row;
     },

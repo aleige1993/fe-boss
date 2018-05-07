@@ -142,37 +142,51 @@
           <!--法定代表人姓名-->
           <bs-form-block v-if="type==='page'" :title="'法定代表人信息'">
             <i-row>
+              <!--<i-col span="8">-->
+                <!--<i-form-item label="法定代表人姓名" prop="baseDTO.legalPerson">-->
+                  <!--<i-input v-model="formData.baseDTO.legalPerson" :readonly="true">-->
+                    <!--<i-button v-if="!isFromDetail" type="primary" @click="selectRulerModal=!selectRulerModal" slot="append">选择代表人 <Icon type="ios-more"></Icon></i-button>-->
+                  <!--</i-input>-->
+                <!--</i-form-item>-->
+              <!--</i-col>-->
               <i-col span="8">
-                <i-form-item label="法定代表人姓名" prop="baseDTO.legalPerson">
-                  <i-input v-model="formData.baseDTO.legalPerson" :readonly="true">
-                    <i-button v-if="!isFromDetail" type="primary" @click="selectRulerModal=!selectRulerModal" slot="append">选择代表人 <Icon type="ios-more"></Icon></i-button>
-                  </i-input>
+                <i-form-item
+                    label="法定代表人姓名"
+                    prop="baseDTO.legalPerson"
+                    :rules="{required: true, message: '法定代表人姓名不能为空', trigger: 'blur'}">
+                  <i-input :readonly="isFromDetail" v-model="formData.baseDTO.legalPerson" placeholder=""></i-input>
                 </i-form-item>
               </i-col>
               <i-col span="8">
-                <i-form-item label="性别"  prop="baseDTO.legalPersonSex">
-                  <i-select :disabled="true" v-model="formData.baseDTO.legalPersonSex">
+                <i-form-item label="性别" prop="baseDTO.legalPersonSex">
+                  <i-select :disabled="isFromDetail" v-model="formData.baseDTO.legalPersonSex">
                     <i-option v-for="item in enumSelectData.get('SexEnum')" :key="item.itemCode" :value="item.itemCode">{{item.itemName}}</i-option>
                   </i-select>
                 </i-form-item>
               </i-col>
               <i-col span="8">
-                <i-form-item label="手机号码" prop="baseDTO.legalPersonMobile">
-                  <i-input v-model="formData.baseDTO.legalPersonMobile" :readonly="true" placeholder="自动带入"></i-input>
+                <i-form-item
+                  label="手机号码"
+                  prop="baseDTO.legalPersonMobile"
+                  :rules="{required: true, message: '手机号码不能为空', trigger: 'blur'}">
+                  <i-input :readonly="isFromDetail" v-model="formData.baseDTO.legalPersonMobile" placeholder=""></i-input>
                 </i-form-item>
               </i-col>
             </i-row>
             <i-row>
               <i-col span="8">
                 <i-form-item label="证件类型" prop="baseDTO.legalPersonCerttype">
-                  <i-select :disabled="true" v-model="formData.baseDTO.legalPersonCerttype">
+                  <i-select :disabled="isFromDetail" v-model="formData.baseDTO.legalPersonCerttype">
                     <i-option v-for="item in enumSelectData.get('CertTypeEnum')" :key="item.itemCode" :value="item.itemCode">{{item.itemName}}</i-option>
                   </i-select>
                 </i-form-item>
               </i-col>
               <i-col span="8">
-                <i-form-item label="证件号码" prop="baseDTO.legalPersonCertno">
-                  <i-input :readonly="true" v-model="formData.baseDTO.legalPersonCertno"></i-input>
+                <i-form-item
+                  label="证件号码"
+                  prop="baseDTO.legalPersonCertno"
+                  :rules="{required: true, message: '证件号码不能为空', trigger: 'blur'}">
+                  <i-input :readonly="isFromDetail" v-model="formData.baseDTO.legalPersonCertno"></i-input>
                 </i-form-item>
               </i-col>
               <i-col span="8">
@@ -188,7 +202,10 @@
           <bs-form-block v-if="type==='page'" :title="'主联系人信息'">
             <i-row>
               <i-col span="8">
-                <i-form-item label="联系人人姓名" prop="baseDTO.mainLinkmanName">
+                <i-form-item
+                  label="联系人姓名"
+                  prop="baseDTO.mainLinkmanName"
+                  :rules="{required: true, message: '联系人姓名不能为空', trigger: 'blur'}">
                   <i-input :readonly="isFromDetail" v-model="formData.baseDTO.mainLinkmanName"></i-input>
                 </i-form-item>
               </i-col>
@@ -200,8 +217,11 @@
                 </i-form-item>
               </i-col>
               <i-col span="8">
-                <i-form-item label="联系电话" prop="baseDTO.mainLinkmanPhone">
-                  <i-input :readonly="isFromDetail" v-model="formData.baseDTO.mainLinkmanPhone" placeholder="自动带入"></i-input>
+                <i-form-item
+                  label="联系电话"
+                  prop="baseDTO.mainLinkmanPhone"
+                  :rules="{required: true, message: '联系电话不能为空', trigger: 'blur'}">
+                  <i-input :readonly="isFromDetail" v-model="formData.baseDTO.mainLinkmanPhone" placeholder=""></i-input>
                 </i-form-item>
               </i-col>
             </i-row>
@@ -215,7 +235,10 @@
                 </i-form-item>
               </i-col>
               <i-col span="8">
-                <i-form-item label="身份证号" prop="baseDTO.mainLinkmanCertno">
+                <i-form-item
+                  label="身份证号"
+                  prop="baseDTO.mainLinkmanCertno"
+                  :rules="{required: true, message: '身份证号不能为空', trigger: 'blur'}">
                   <i-input :readonly="isFromDetail" v-model="formData.baseDTO.mainLinkmanCertno"></i-input>
                 </i-form-item>
               </i-col>

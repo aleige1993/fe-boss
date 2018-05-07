@@ -279,15 +279,29 @@
           <!--工作信息 职业类型不是自由职业者时才需要-->
           <bs-form-block v-if="formData.mbMemberDTO.workType !== '2'" :title="'工作信息'">
             <i-row>
+              <!--<i-col span="8">-->
+                <!--<i-form-item label="单位名称"-->
+                             <!--prop="mbMemberWorkDTO.companyName"-->
+                             <!--:rules="{required: true, message: '请选择单位', trigger: 'change'}">-->
+                  <!--<i-input :readonly="true" v-model="formData.mbMemberWorkDTO.companyName">-->
+                    <!--<i-button v-if="!isFromDetail" type="primary" @click="showSelectCompany=!showSelectCompany" slot="append">选择公司 <Icon type="ios-more"></Icon></i-button>-->
+                  <!--</i-input>-->
+                <!--</i-form-item>-->
+              <!--</i-col>-->
               <i-col span="8">
                 <i-form-item label="单位名称"
                              prop="mbMemberWorkDTO.companyName"
-                             :rules="{required: true, message: '请选择单位', trigger: 'change'}">
-                  <i-input :readonly="true" v-model="formData.mbMemberWorkDTO.companyName">
-                    <i-button v-if="!isFromDetail" type="primary" @click="showSelectCompany=!showSelectCompany" slot="append">选择公司 <Icon type="ios-more"></Icon></i-button>
-                  </i-input>
+                             :rules="{required: true, message: '单位名称不能为空', trigger: 'blur'}">
+                  <i-input :readonly="isFromDetail" v-model="formData.mbMemberWorkDTO.companyName"/>
                 </i-form-item>
               </i-col>
+              <!--<i-col span="8">-->
+                <!--<i-form-item label="统一社会信用代码"-->
+                             <!--prop="mbMemberWorkDTO.creditCode"-->
+                             <!--:rules="{required: true, message: '统一社会信用代码不能为空', trigger: 'blur'}">-->
+                  <!--<i-input :readonly="isFromDetail" v-model="formData.mbMemberWorkDTO.creditCode"/>-->
+                <!--</i-form-item>-->
+              <!--</i-col>-->
               <i-col span="8">
                 <i-form-item label="单位性质"
                              prop="mbMemberWorkDTO.unitType"
@@ -302,7 +316,7 @@
               <i-col span="8">
                 <i-form-item label="行业类别"
                              prop="mbMemberWorkDTO.industryType"
-                             :rules="{required: true, message: ' ', trigger: 'blur'}">
+                             :rules="{required: true, message: '请选择行业类别', trigger: 'blur'}">
                   <input  v-model="formData.mbMemberWorkDTO.industryType" type="hidden" />
                   <!--<i-input :readonly="true" :value="enumCode2Name(formData.mbMemberWorkDTO.industryType, 'IndustryTypeEnum')" placeholder="自动带入"></i-input>-->
                   <i-select :disabled="isFromDetail" v-model="formData.mbMemberWorkDTO.industryType">
@@ -346,7 +360,6 @@
                   <i-input :readonly="isFromDetail" v-model="formData.mbMemberWorkDTO.companyTel" placeholder=""></i-input>
                 </i-form-item>
               </i-col>
-
             </i-row>
             <i-row>
               <i-col span="18">
