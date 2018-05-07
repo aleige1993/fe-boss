@@ -24,7 +24,7 @@ export default {
     openModalCar() {
       this.$data.isAddCar = true;
       this.$data.showModalCar = true;
-      this.$refs['formCar'].resetFields();
+      // this.$refs['formCar'].resetFields();
     },
     // 车辆提交
     async addSuBmitCar() {
