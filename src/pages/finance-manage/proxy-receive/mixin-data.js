@@ -78,26 +78,15 @@ export default {
           fixed: 'right',
           align: 'center',
           render: (h, params) => {
-            let msg = '';
             if (params.row.orderStat === 'S') {
               return h('span', {}, '成功');
             } else if (params.row.orderStat === 'F') {
-              return h(BsTooltip, {
-                props: {
-                  showText: '失败',
-                  tipText: `失败原因：${params.row.reqReserved}`,
-                  placement: params.index <= 1 ? 'bottom-start' : 'top-start',
-                  // width: '100',
-                  wordBreak: 'break-all',
-                  whiteSpace: 'normal'
-                }
-              });
+              return h('span', {}, '失败');
             } else if (params.row.orderStat === 'I') {
               return h('span', {}, '扣款中');
             } else if (params.row.orderStat === 'D') {
               return h('span', {}, '待扣款');
             }
-            return h('span', {}, msg);
           }
         }
       ],
@@ -130,6 +119,12 @@ export default {
               ]);
             }
           }
+        },
+        {
+          title: '备注',
+          key: 'reqReserved',
+          width: 120,
+          fixed: 'right'
         }
       ],
       privateCustomerLoanList: []

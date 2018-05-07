@@ -106,7 +106,7 @@ export default {
         {
           title: '付款状态',
           key: 'state',
-          width: 140,
+          width: 100,
           fixed: 'right',
           align: 'center',
           render: (h, params) => {
@@ -115,16 +115,17 @@ export default {
             } else if (params.row.state === '1') {
               return h('span', {}, '成功');
             } else if (params.row.state === '-1') {
-              return h(BsTooltip, {
-                props: {
-                  showText: '失败',
-                  tipText: `失败原因：${params.row.transRemark}`,
-                  placement: params.index <= 1 ? 'bottom-start' : 'top-start',
-                  // width: '100',
-                  wordBreak: 'break-all',
-                  whiteSpace: 'normal'
-                }
-              });
+              // return h(BsTooltip, {
+              //   props: {
+              //     showText: '失败',
+              //     tipText: `失败原因：${params.row.transRemark}`,
+              //     placement: params.index <= 1 ? 'bottom-start' : 'top-start',
+              //     // width: '100',
+              //     wordBreak: 'break-all',
+              //     whiteSpace: 'normal'
+              //   }
+              // });
+              return h('span', {}, '失败');
             } else if (params.row.state === '2') {
               return h('span', {}, '已退款');
             } else if (params.row.state === '3') {
@@ -137,7 +138,7 @@ export default {
         {
           title: '操作',
           key: 'action',
-          width: 140,
+          width: 80,
           fixed: 'right',
           align: 'center',
           render: (h, params) => {
@@ -162,6 +163,14 @@ export default {
               ]);
             }
           }
+        }
+      ],
+      remarkColumns: [
+        {
+          title: '备注',
+          key: 'transRemark',
+          width: 120,
+          fixed: 'right'
         }
       ],
       privateCustomerLoanList: []

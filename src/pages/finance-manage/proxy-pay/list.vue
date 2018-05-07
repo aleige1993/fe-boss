@@ -111,9 +111,9 @@
     computed: {
       resultCustomerColumns() {
         if (this.isDetail) {
-          return this.$data.customerColumns;
+          return [...this.$data.customerColumns, ...this.$data.remarkColumns];
         } else {
-          return [...this.$data.customerCheckboxColumns, ...this.$data.customerColumns, ...this.$data.customerActionColumns];
+          return [...this.$data.customerCheckboxColumns, ...this.$data.customerColumns, ...this.$data.customerActionColumns, ...this.$data.remarkColumns];
         }
       }
     },

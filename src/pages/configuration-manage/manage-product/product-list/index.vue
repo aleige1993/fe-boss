@@ -120,6 +120,16 @@
               </i-select>
             </i-form-item>
           </i-col>
+          <i-col span="8">
+            <i-form-item
+              label="是否分账"
+              :rules="{required: true, message: '请选择是否分账', trigger: 'change'}"
+              prop="divideMoneyFlag">
+              <i-select v-model="formCustom.divideMoneyFlag">
+                <i-option v-for="item in enumSelectData.get('YesNoEnum')" :key="item.itemCode" :value="item.itemCode">{{item.itemName}}</i-option>
+              </i-select>
+            </i-form-item>
+          </i-col>
         </i-row>
         <bs-form-block :title="'产品特性'" v-if="!isAdd">
           <div class="form-top-actions">
@@ -257,7 +267,8 @@
           productType: '',  // 产品类型
           loanType: '',
           maxLimit: '',
-          status: ''  // 产品状态
+          status: '',  // 产品状态
+          divideMoneyFlag: '' // 是否分账
         }
       };
     },
@@ -377,7 +388,8 @@
           productName: this.$data.formCustom.productName,
           loanType: this.$data.formCustom.loanType,
           maxLimit: this.$data.formCustom.maxLimit,
-          status: this.$data.formCustom.status
+          status: this.$data.formCustom.status,
+          divideMoneyFlag: this.$data.formCustom.divideMoneyFlag
         });
         this.$data.buttonLoading = false; // 关闭按钮的loading状态
         if (resAdd.success) {
@@ -416,7 +428,8 @@
           productAlias: this.$data.formCustom.productAlias,  // 产品别名
           loanType: this.$data.formCustom.loanType,
           maxLimit: this.$data.formCustom.maxLimit,
-          status: this.$data.formCustom.status  // 产品状态
+          status: this.$data.formCustom.status,  // 产品状态
+          divideMoneyFlag: this.$data.formCustom.divideMoneyFlag
         });
         if (resModify.success) {
           this.$data.showAddModal = false;
