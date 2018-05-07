@@ -3,19 +3,41 @@ export default {
     return {
       customerColumns: [
         {
-          title: '车型编号',
-          key: 'modelNo',
-          width: 200
+          title: '品牌名称',
+          key: 'modelNo'
         },
         {
-          title: '车型名称',
+          title: '子品牌名称',
+          key: 'modelNo'
+        },
+        {
+          title: '车系名称',
           key: 'modelFullName'
         },
         {
-          title: '厂商指导价',
-          key: 'guidancePrice',
-          width: 200
+          title: '车型名称',
+          key: 'guidancePrice'
         },
+        {
+          title: '车辆颜色',
+          key: 'guidancePrice'
+        },
+        {
+          title: '生产年份',
+          key: 'guidancePrice'
+        },
+        {
+          title: '指导售价',
+          key: 'guidancePrice'
+        },
+        {
+          title: '车型图片',
+          key: 'guidancePrice'
+        },
+        {
+          title: '发动机排量',
+          key: 'guidancePrice'
+        }
         // {
         //   title: '车型图片',
         //   key: 'logo',
@@ -35,16 +57,6 @@ export default {
         //     });
         //   }
         // },
-        {
-          title: '年份',
-          key: 'seriesYear',
-          width: 200
-        },
-        {
-          title: '创建时间',
-          key: 'gmtCreate',
-          width: 200
-        }
       ],
       customerActionColumns: [
         {

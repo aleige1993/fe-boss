@@ -9,6 +9,24 @@
     <div class="search-form-container">
       <i-form inline>
         <i-form-item prop="password">
+          车型名称
+        </i-form-item>
+        <i-form-item prop="user">
+          <i-input type="text" v-model="searchForm.modelFullName" placeholder=""></i-input>
+        </i-form-item>
+        <i-form-item prop="password">
+          车系名称
+        </i-form-item>
+        <i-form-item prop="user">
+          <i-input type="text" v-model="searchForm.modelFullName" placeholder=""></i-input>
+        </i-form-item>
+        <i-form-item prop="password">
+          子品牌名称
+        </i-form-item>
+        <i-form-item prop="user">
+          <i-input type="text" v-model="searchForm.modelFullName" placeholder=""></i-input>
+        </i-form-item>
+        <i-form-item prop="password">
           品牌名称
         </i-form-item>
         <i-form-item prop="user">
@@ -27,12 +45,22 @@
     <div class="page-container">
       <i-page :total="total" :page-size="15" :current="currentPage" @on-change="jumpPage" size="small" show-elevator show-total></i-page>
     </div>
-    <pt-modal :title="isAdd ? '添加车型参数配置' : '修改车型参数配置'" v-model="addModal" :width="1200" :zIndex="200">
+    <pt-modal :title="isAdd ? '添加车型' : '修改车型'" v-model="addModal" :width="1200" :zIndex="200">
       <i-form ref="fromData" :model="fromData" label-position="right" :label-width="100">
         <i-row>
           <i-col span="6">
-            <i-form-item label="车型编号" :rules="{required: true, message: '车型编号不能为空'}" prop="modelNo">
-              <i-input v-model="fromData.modelNo" placeholder="" readonly></i-input>
+            <i-form-item label="品牌名称" prop="brandNo" :rules="{required: true, message: '品牌名称不能为空'}">
+              <i-select
+                v-if="isAdd"
+                v-model="fromData.brandNo"
+                placeholder=""
+                filterable
+                remote
+                :remote-method="remoteSearch"
+                :loading="search.loading">
+                <i-option v-for="item in search.returnlist" :key="item.brandNo" :value="item.brandNo">{{item.brandName}}</i-option>
+              </i-select>
+              <i-input v-else v-model="fromData.brandName" placeholder="" readonly></i-input>
             </i-form-item>
           </i-col>
           <i-col span="6">
