@@ -10,14 +10,6 @@
     </div>
     <div class="search-form-container">
       <i-form inline>
-        <!--<i-form-item prop="user">
-          <i-input type="text" v-model="searchForm.loanNo" placeholder="所属部门"></i-input>
-        </i-form-item>
-        <i-form-item prop="password">
-          <i-input v-model="searchForm.custName" type="text" placeholder="客户经理"></i-input>
-        </i-form-item>-->
-
-
         <i-form-item>
           <i-input type="text" v-model="searchForm.orderNo" placeholder="订单编号"></i-input>
         </i-form-item>
@@ -131,7 +123,6 @@
     mounted() {
       this.getCustomerIntentionOrderList();
       this.getProductList();
-      console.log(location.hash);
     }
   };
 </script>
