@@ -2,24 +2,20 @@ export default {
   methods: {
     async remoteSearchBrand(brandName = '') {
       if (brandName !== '') {
-        this.$data.remoteCar.brandLoading = true;
+        this.$data.brand.searchLoading = true;
         let res = await this.$http.post('/ces/getMasterBrand', {
           brandName
         });
         if (res.success) {
-          // console.log(res.body.resultList);
           res.body.resultList.map(items => {
-            // console.log(item.groupList);
-            // this.$data.remoteCar.brandList.push(item.groupList);
             items.groupList.map(item => {
-              console.log(item);
-              this.$data.remoteCar.brandList.push(item);
+              this.$data.brand.searchList.push(item);
             });
           });
-          this.$data.remoteCar.brandLoading = false;
+          this.$data.brand.searchLoading = false;
         }
       } else {
-        this.$data.remoteCar.brandList = [];
+        this.$data.brand.searchList = [];
       }
     },
     selectRow(row, index) {

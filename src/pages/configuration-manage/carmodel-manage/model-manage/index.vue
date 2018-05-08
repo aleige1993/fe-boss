@@ -1,5 +1,5 @@
 <template>
-  <div id="page-table-demo">
+  <div id="page-table-demo" class="page-carmodel-manage">
     <i-breadcrumb separator=">">
       <i-breadcrumb-item href="/home">首页</i-breadcrumb-item>
       <i-breadcrumb-item href="/index/conf">配置管理</i-breadcrumb-item>
@@ -45,20 +45,23 @@
     <div class="page-container">
       <i-page :total="total" :page-size="15" :current="currentPage" @on-change="jumpPage" size="small" show-elevator show-total></i-page>
     </div>
-    <pt-modal :title="isAdd ? '添加车型' : '修改车型'" v-model="addModal" :width="1200" :zIndex="200">
+    <pt-modal :title="isAdd ? '添加车型' : '修改车型'" v-model="addModal" :width="1280" :zIndex="200">
       <i-form ref="fromData" :model="fromData" label-position="right" :label-width="100">
         <i-row>
           <i-col span="6">
             <i-form-item label="品牌名称" prop="brandNo" :rules="{required: true, message: '品牌名称不能为空'}">
-              <i-select
-                v-model="fromData.brandNo"
-                placeholder=""
-                filterable
-                remote
-                :remote-method="remoteSearchBrand"
-                :loading="remoteCar.brandLoading">
-                <i-option v-for="item in remoteCar.brandList" :key="item.brandNo" :value="item.brandNo">{{item.brandName}}</i-option>
-              </i-select>
+              <div class="flex-items">
+                <i-select
+                  v-model="fromData.brandNo"
+                  placeholder=""
+                  filterable
+                  remote
+                  :remote-method="remoteSearchBrand"
+                  :loading="brand.searchLoading">
+                  <i-option v-for="item in brand.searchList" :key="item.brandNo" :value="item.brandNo">{{item.brandName}}</i-option>
+                </i-select>
+                <i-button type="info">增加</i-button>
+              </div>
             </i-form-item>
           </i-col>
           <i-col span="6">
@@ -339,16 +342,58 @@
         </i-form-item>
       </i-form>
     </pt-modal>
+
+    <!--添加品牌-->
+    <pt-modal title="添加" v-model="brand.addModel" :width="600" :zIndex="200" @on-close="fileUploading=false">
+      <i-form v-if="brand.addModel" ref="brand.addFormData" :model="brand.addFormData" label-position="left" :label-width="80">
+        <i-form-item label="品牌名称" prop="brandName" :rules="{required: true, message: '品牌名称不能为空', trigger: 'blur'}">
+          <i-input v-model="brand.addFormData.brandName" placeholder=""></i-input>
+        </i-form-item>
+        <i-form-item label="首字母" prop="initial" :rules="{required: true, message: '首字母不能为空', trigger: 'blur'}">
+          <i-input v-model="brand.addFormData.initial" placeholder=""></i-input>
+        </i-form-item>
+        <i-form-item label="品牌LOGO" prop="logo">
+          <input type="hidden" v-model="brand.addFormData.logo"/>
+          <i-upload
+            :format="['jpg','jpeg','png']"
+            :on-success="uploadSuccess"
+            :before-upload="uploadProgress"
+            :on-error="uploadError"
+            :max-size="uploadMaxSize"
+            :on-format-error="handleFormatError"
+            :on-exceeded-size="handleMaxSize"
+            :action="$config.HTTPBASEURL+'/common/upload'"
+            :show-upload-list="false">
+            <div class="upload-image">
+              <i-icon type="ios-cloud-upload" size="52" style="color: #3399ff"></i-icon>
+              <p>单击或拖动文件上传</p>
+              <i-spin fix v-if="fileUploading">
+                <Icon type="load-c" size=18 class="demo-spin-icon-load"></Icon>
+                <div style="margin-top: 10px">正在上传中，请勿关闭...</div>
+              </i-spin>
+            </div>
+          </i-upload>
+        </i-form-item>
+        <i-form-item class="text-right">
+          <i-button type="primary" @click="submitFun" :loading="buttonLoading||fileUploading">
+            <span v-if="!buttonLoading">提交</span>
+            <span v-else>loading...</span>
+          </i-button>
+          <i-button type="ghost" @click="cancelFun" style="margin-left: 8px">取消</i-button>
+        </i-form-item>
+      </i-form>
+    </pt-modal>
   </div>
 </template>
 
 <script>
   import MixinData from './mixin-data';
   import MixinMothod from './mixin-method';
+  import MixinBrandMethod from './mixin-mehtod-brand';
   import PTModal from '@/components/bs-modal';
   export default {
-    name: 'bannerManage',
-    mixins: [MixinData, MixinMothod],
+    name: 'carModelManage',
+    mixins: [MixinData, MixinMothod, MixinBrandMethod],
     components: {
       'pt-modal': PTModal
     },
@@ -364,6 +409,12 @@
   };
 </script>
 <style lang="scss" scoped>
+  .flex-items {
+    display: flex;
+    .ivu-btn {
+      margin-left: 5px;
+    }
+  }
   .upload-image {
     height: 32px;
     .ivu-upload {

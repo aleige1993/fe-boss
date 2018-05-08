@@ -2,7 +2,7 @@ export default {
   data() {
     return {
       isAdd: true,
-      addModal: true,
+      addModal: false,
       dataLoading: false,
       buttonLoading: false,
       total: 0,
@@ -13,9 +13,17 @@ export default {
         currentPage: 1,
         pageSize: 15
       },
-      remoteCar: {
-        brandLoading: false,
-        brandList: []
+      brand: {
+        searchList: [],
+        searchLoading: false,
+        addModel: false,
+        addLoading: false,
+        addFormData: {
+          'brandName': '',
+          'initial': '',
+          'logo': '',
+          'brandNo': ''
+        }
       },
       fromData: {},
       customerColumns: [
