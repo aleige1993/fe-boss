@@ -318,7 +318,7 @@
               label="权利人"
               :rules="{required: true, message: '权利人不能为空'}"
               prop="carOwnerName">
-              <input type="hidden" v-model="formCar.carOwnerNo"/>
+              <!--<input type="hidden" v-model="formCar.carOwnerNo"/>-->
               <i-input v-model="formCar.carOwnerName" placeholder=""/>
             </i-form-item>
           </i-col>
@@ -982,12 +982,12 @@
       }
     },
     watch: {
-      'formCar.custType'(newVal, oldVal) {
-        if ((oldVal !== '') && (typeof oldVal !== 'undefined')) {
-          this.$data.formCar.carOwnerName = '';
-          this.$data.formCar.carOwnerNo = '';
-        }
-      },
+//      'formCar.custType'(newVal, oldVal) {
+//        if ((oldVal !== '') && (typeof oldVal !== 'undefined')) {
+//          this.$data.formCar.carOwnerName = '';
+//          this.$data.formCar.carOwnerNo = '';
+//        }
+//      },
       'customerType'() {
         this.initPage();
       }
