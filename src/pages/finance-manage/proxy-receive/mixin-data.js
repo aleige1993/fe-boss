@@ -124,7 +124,8 @@ export default {
           title: '备注',
           key: 'reqReserved',
           width: 120,
-          fixed: 'right'
+          fixed: 'right',
+          align: 'center'
         }
       ],
       privateCustomerLoanList: []
