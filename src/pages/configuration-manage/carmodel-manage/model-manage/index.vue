@@ -45,14 +45,14 @@
     <div class="page-container">
       <i-page :total="total" :page-size="15" :current="currentPage" @on-change="jumpPage" size="small" show-elevator show-total></i-page>
     </div>
-    <pt-modal :title="isAdd ? '添加车型' : '修改车型'" v-model="addModal" :width="1280" :zIndex="200">
+    <pt-modal :title="isAdd ? '添加车型' : '修改车型'" v-model="addModal" :width="1200" :zIndex="200">
       <i-form ref="fromData" :model="fromData" label-position="right" :label-width="100">
         <i-row>
-          <i-col span="6">
+          <i-col span="8">
             <i-form-item label="品牌名称" prop="brandNo" :rules="{required: true, message: '品牌名称不能为空'}">
               <div class="flex-items">
                 <i-select
-                  v-model="fromData.brandNo"
+                  v-model="fromData.brandName"
                   placeholder=""
                   filterable
                   remote
@@ -64,31 +64,9 @@
               </div>
             </i-form-item>
           </i-col>
-          <i-col span="6">
+          <i-col span="8">
             <i-form-item label="车型全称" :rules="{required: true, message: '车型全称不能为空'}" prop="modelFullName">
               <i-input v-model="fromData.modelFullName" placeholder=""></i-input>
-            </i-form-item>
-          </i-col>
-          <i-col span="6">
-            <i-form-item label="车型名称" :rules="{required: true, message: '车型名称不能为空'}" prop="name">
-              <i-input v-model="fromData.name" placeholder=""></i-input>
-            </i-form-item>
-          </i-col>
-          <i-col span="6">
-            <i-form-item class="upload-image" label="车型图片" :rules="{required: true, message: '请上传车型图片'}" prop="modelImg">
-              <input type="hidden" v-model="fromData.modelImg"/>
-              <bs-big-img :thumb="fromData.modelImg" :thumbHeight="32" :full="fromData.modelImg" :full-width="945"></bs-big-img>
-              <i-upload
-                :on-success="uploadModelSuccess"
-                :on-error="uploadError"
-                :max-size="uploadMaxSize"
-                :on-exceeded-size="handleMaxSize"
-                :action="$config.HTTPBASEURL+'/common/upload'"
-                :show-upload-list="false">
-                <i-form-item prop="password">
-                  <a href="javascript:">修改</a>
-                </i-form-item>
-              </i-upload>
             </i-form-item>
           </i-col>
         </i-row>
