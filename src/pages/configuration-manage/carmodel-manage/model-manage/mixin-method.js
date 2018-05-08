@@ -8,9 +8,13 @@ export default {
         });
         if (res.success) {
           // console.log(res.body.resultList);
-          res.body.resultList.map(item => {
-            console.log(item.groupList);
-            this.$data.remoteCar.brandList.push(item.groupList);
+          res.body.resultList.map(items => {
+            // console.log(item.groupList);
+            // this.$data.remoteCar.brandList.push(item.groupList);
+            items.groupList.map(item => {
+              console.log(item);
+              this.$data.remoteCar.brandList.push(item);
+            });
           });
           this.$data.remoteCar.brandLoading = false;
         }
