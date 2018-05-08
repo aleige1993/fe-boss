@@ -1,6 +1,23 @@
 export default {
   data() {
     return {
+      isAdd: true,
+      addModal: true,
+      dataLoading: false,
+      buttonLoading: false,
+      total: 0,
+      currentPage: 1,
+      uploadFileName: '',
+      searchForm: {
+        'modelFullName': '',
+        currentPage: 1,
+        pageSize: 15
+      },
+      remoteCar: {
+        brandLoading: false,
+        brandList: []
+      },
+      fromData: {},
       customerColumns: [
         {
           title: '品牌名称',

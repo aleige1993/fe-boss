@@ -51,16 +51,14 @@
           <i-col span="6">
             <i-form-item label="品牌名称" prop="brandNo" :rules="{required: true, message: '品牌名称不能为空'}">
               <i-select
-                v-if="isAdd"
                 v-model="fromData.brandNo"
                 placeholder=""
                 filterable
                 remote
-                :remote-method="remoteSearch"
-                :loading="search.loading">
-                <i-option v-for="item in search.returnlist" :key="item.brandNo" :value="item.brandNo">{{item.brandName}}</i-option>
+                :remote-method="remoteSearchBrand"
+                :loading="remoteCar.brandLoading">
+                <i-option v-for="item in remoteCar.brandList" :key="item.brandNo" :value="item.brandNo">{{item.brandName}}</i-option>
               </i-select>
-              <i-input v-else v-model="fromData.brandName" placeholder="" readonly></i-input>
             </i-form-item>
           </i-col>
           <i-col span="6">
@@ -346,28 +344,11 @@
 
 <script>
   import MixinData from './mixin-data';
+  import MixinMothod from './mixin-method';
   import PTModal from '@/components/bs-modal';
   export default {
     name: 'bannerManage',
-    mixins: [MixinData],
-    data() {
-      return {
-        isAdd: true,
-        addModal: false,
-        dataLoading: false,
-        buttonLoading: false,
-        total: 0,
-        currentPage: 1,
-        smsTriggerPointEnum: {},
-        uploadFileName: '',
-        searchForm: {
-          'modelFullName': '',
-          currentPage: 1,
-          pageSize: 15
-        },
-        fromData: {}
-      };
-    },
+    mixins: [MixinData, MixinMothod],
     components: {
       'pt-modal': PTModal
     },
@@ -379,90 +360,6 @@
           return [...this.$data.customerColumns, ...this.$data.customerActionColumns];
         }
       }
-    },
-    props: {
-      type: String,
-      default: 'page',
-      required: false
-    },
-    methods: {
-      selectRow(row, index) {
-        this.$emit('on-row-dbclick', row, index);
-      },
-      jumpPage(page) {
-        this.getProxyPayList(page);
-      },
-      search() {
-        this.getProxyPayList(1);
-      },
-      add() {
-        this.$data.isAdd = true;
-        this.$data.addModal = true;
-        this.$data.fromData = {};
-      },
-      async getProxyPayList(page) {
-        this.$data.dataLoading = true;
-        if (page) {
-          this.$data.searchForm.currentPage = page;
-        }
-        let resp = await this.$http.post('/ces/model/page', {
-          ...this.$data.searchForm
-        });
-        this.$data.dataLoading = false;
-        this.$data.privateCustomerLoanList = resp.body.resultList;
-        this.$data.currentPage = resp.body.currentPage;
-        this.$data.total = resp.body.totalNum;
-      },
-      async submitSuccess() {
-        this.$data.buttonLoading = true;
-        let url = this.$data.isAdd ? '' : '/ces/model/detail/update';
-        let resp = await this.$http.post(url, {
-          ...this.$data.fromData
-        });
-        this.$data.buttonLoading = false;
-        this.$data.addModal = false;
-        if (resp.success) {
-          let text = this.$data.isAdd ? '添加成功' : '修改成功';
-          this.$Message.success(text);
-          this.getProxyPayList();
-        }
-      },
-      // 提交
-      submitFun() {
-        this.$refs['fromData'].validate((valid) => {
-          if (valid) {
-            this.submitSuccess();
-          } else {
-            this.$Message.error('"<span style="color: red">*</span>"必填项不能为空');
-          }
-        });
-      },
-      // 上传成功
-      uploadModelSuccess(res, file, fileList) {
-        this.$data.fromData.modelImg = res.body.url;
-      },
-      uploadSerialSuccess(res, file, fileList) {
-        this.$data.fromData.serialPic = res.body.url;
-      },
-      uploadLogoSuccess(res, file, fileList) {
-        this.$data.fromData.logourl = res.body.url;
-      },
-      // 上传失败
-      uploadError(err, file, fileList) {
-        this.$Notice.error({
-          title: '错误提示',
-          desc: err
-        });
-      },
-      // 取消 按钮
-      cancelFun() {
-        this.$data.addModal = false;
-      }
-    },
-    mounted() {
-      this.getProxyPayList();
-      let enumSelectData = this.$store.getters.enumSelectData;
-      this.$data.smsTriggerPointEnum = enumSelectData.get('smsTriggerPointEnum');
     }
   };
 </script>

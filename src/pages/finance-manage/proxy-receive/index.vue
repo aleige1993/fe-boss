@@ -168,7 +168,7 @@
           receiveNos: idArray
         });
         if (resp.reCode === '0000') {
-          this.$Message.success('扣款成功');
+          this.$Message.success('扣款请求成功');
           this.getProxyPayList();
         }
       },
