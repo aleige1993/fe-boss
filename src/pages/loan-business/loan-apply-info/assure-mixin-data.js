@@ -23,7 +23,7 @@ export default {
           title: '证件类型',
           key: 'guaPersonCertType',
           render: (h, params) => {
-            return h('span', {}, this.enumCode2Name(params.row.guaPersonCertType, 'CertTypeEnum'));
+            return h('span', {}, params.row.guaPersonType === '1' ? '身份证' : '营业执照');
           }
         },
         {

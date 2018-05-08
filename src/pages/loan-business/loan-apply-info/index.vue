@@ -686,12 +686,12 @@
         </i-row>
         <i-row>
           <i-col span="12">
-            <i-form-item label="证件类型">
-              <span v-text="formAssure.guaPersonType === '1' ? '身份证' : '营业执照'"></span>
+            <i-form-item label="证件类型"  prop="guaPersonType">
+              <span v-text="formAssure.guaPersonType == '1' ? '身份证' : '营业执照'"></span>
             </i-form-item>
           </i-col>
           <i-col span="12">
-            <i-form-item v-if="formAssure.guaPersonType === '1'" label="证件号码" prop="guaPersonCertNo"
+            <i-form-item v-if="formAssure.guaPersonType == '1'" label="证件号码" prop="guaPersonCertNo"
                          :rules="[{required: true, message: '证件号码不能为空'},
                                   {required: true, min: 18, message: '请输入正确的证件号码'},
                                   {required: true, max: 18, message: '请输入正确的证件号码'}]">
