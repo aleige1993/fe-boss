@@ -45,7 +45,7 @@ export default {
       let resp = await this.$http.post(submitUrl, submitData);
       this.$data.submitApproveLoading = false;
       if (resp.success && resp.reMsg !== '失败') {
-        this.$Message.success('审批成功');
+        this.$Message.success(submitData.opeType === '1' ? '保存成功' : '审批成功');
         if (submitData.opeType !== '1') {
           this.$router.push({
             name: 'loanBusinessList'
