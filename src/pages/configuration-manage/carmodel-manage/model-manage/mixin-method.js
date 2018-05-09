@@ -1,23 +1,5 @@
 export default {
   methods: {
-    async remoteSearchBrand(brandName = '') {
-      if (brandName !== '') {
-        this.$data.brand.searchLoading = true;
-        let res = await this.$http.post('/ces/getMasterBrand', {
-          brandName
-        });
-        if (res.success) {
-          res.body.resultList.map(items => {
-            items.groupList.map(item => {
-              this.$data.brand.searchList.push(item);
-            });
-          });
-          this.$data.brand.searchLoading = false;
-        }
-      } else {
-        this.$data.brand.searchList = [];
-      }
-    },
     selectRow(row, index) {
       this.$emit('on-row-dbclick', row, index);
     },
@@ -69,22 +51,24 @@ export default {
         }
       });
     },
+    // 上传文件之前的回掉
+    uploadModelProgress() {
+      this.$data.fromData.modelFileUploading = true;
+    },
     // 上传成功
     uploadModelSuccess(res, file, fileList) {
-      this.$data.fromData.modelImg = res.body.url;
-    },
-    uploadSerialSuccess(res, file, fileList) {
-      this.$data.fromData.serialPic = res.body.url;
-    },
-    uploadLogoSuccess(res, file, fileList) {
-      this.$data.fromData.logourl = res.body.url;
+      if (this.$data.addModal) {
+        this.$data.fromData.modelImg = res.body.url;
+      }
+      this.$data.fromData.modelFileUploading = false;
     },
     // 上传失败
-    uploadError(err, file, fileList) {
+    uploadModelError(err, file, fileList) {
       this.$Notice.error({
         title: '错误提示',
         desc: err
       });
+      this.$data.fromData.modelFileUploading = false;
     },
     // 取消 按钮
     cancelFun() {

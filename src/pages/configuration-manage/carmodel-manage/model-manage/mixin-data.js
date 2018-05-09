@@ -13,19 +13,11 @@ export default {
         currentPage: 1,
         pageSize: 15
       },
-      brand: {
-        searchList: [],
-        searchLoading: false,
-        addModel: false,
-        addLoading: false,
-        addFormData: {
-          'brandName': '',
-          'initial': '',
-          'logo': '',
-          'brandNo': ''
-        }
+      fromData: {
+        brandNo: '',
+        modelImg: '',
+        modelFileUploading: false
       },
-      fromData: {},
       customerColumns: [
         {
           title: '品牌名称',
