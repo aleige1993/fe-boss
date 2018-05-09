@@ -1,4 +1,3 @@
-
 export default {
   data() {
     return {
@@ -43,9 +42,7 @@ export default {
     },
     // 上传成功
     uploadBrandSuccess(res, file, fileList) {
-      if (this.$data.brand.addModal) {
-        this.$data.brand.addFormData.logo = res.body.url;
-      }
+      this.$data.brand.addFormData.logo = res.body.url;
       this.$data.brand.fileUploading = false;
     },
     // 上传失败

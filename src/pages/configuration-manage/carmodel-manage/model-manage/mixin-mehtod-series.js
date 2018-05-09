@@ -19,20 +19,20 @@ export default {
     };
   },
   watch: {
-    'fromData.brandNo'(newVal) {
-      let brandNo = this.$data.fromData.brandNo;
+    'modelData.brandNo'(newVal) {
+      let brandNo = this.$data.modelData.brandNo;
       if (brandNo && brandNo.length) {
         this.getAllSeriesList();
       }
     },
-    'fromData.childBrandName'(newVal) {
+    'modelData.childBrandName'(newVal) {
       this.setSeriesListByChildBrand();
     }
   },
   methods: {
     async getAllSeriesList() {
       let res = await this.$http.post('/ces/getSeriesByBrand', {
-        brandNo: this.$data.fromData.brandNo,
+        brandNo: this.$data.modelData.brandNo,
         seriesName: ''
       });
       if (res.success) {
@@ -52,13 +52,13 @@ export default {
       // alert(this.$data.fromData.childBrandName);
       this.$data.series.resultList = [];
       this.$data.seriesList.map(item => {
-        if (item.groupName === this.$data.fromData.childBrandName) {
+        if (item.groupName === this.$data.modelData.childBrandName) {
           this.$data.series.resultList = item.groupList;
         }
       });
     },
     addSeries() {
-      let brandNo = this.$data.fromData.brandNo;
+      let brandNo = this.$data.modelData.brandNo;
       this.$data.brand.searchList.map(item => {
         if (item.brandNo === brandNo) {
           this.$data.series.addFormData.brandName = item.brandName;
@@ -73,9 +73,7 @@ export default {
     },
     // 上传成功
     uploadSeriesSuccess(res, file, fileList) {
-      if (this.$data.series.addModal) {
-        this.$data.series.addFormData.seriesImg = res.body.url;
-      }
+      this.$data.series.addFormData.seriesImg = res.body.url;
       this.$data.series.fileUploading = false;
     },
     // 上传失败

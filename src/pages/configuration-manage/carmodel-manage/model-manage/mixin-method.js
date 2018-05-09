@@ -12,7 +12,7 @@ export default {
     add() {
       this.$data.isAdd = true;
       this.$data.addModal = true;
-      this.$data.fromData = {};
+      this.$data.modelData = {};
     },
     async getProxyPayList(page) {
       this.$data.dataLoading = true;
@@ -31,7 +31,7 @@ export default {
       this.$data.buttonLoading = true;
       let url = this.$data.isAdd ? '' : '/ces/model/detail/update';
       let resp = await this.$http.post(url, {
-        ...this.$data.fromData
+        ...this.$data.modelData
       });
       this.$data.buttonLoading = false;
       this.$data.addModal = false;
@@ -43,7 +43,7 @@ export default {
     },
     // 提交
     submitFun() {
-      this.$refs['fromData'].validate((valid) => {
+      this.$refs['modelData'].validate((valid) => {
         if (valid) {
           this.submitSuccess();
         } else {
@@ -53,14 +53,12 @@ export default {
     },
     // 上传文件之前的回掉
     uploadModelProgress() {
-      this.$data.fromData.modelFileUploading = true;
+      this.$data.model.fileUploading = true;
     },
     // 上传成功
     uploadModelSuccess(res, file, fileList) {
-      if (this.$data.addModal) {
-        this.$data.fromData.modelImg = res.body.url;
-      }
-      this.$data.fromData.modelFileUploading = false;
+      this.$data.model.logo = res.body.url;
+      this.$data.model.fileUploading = false;
     },
     // 上传失败
     uploadModelError(err, file, fileList) {
@@ -68,7 +66,7 @@ export default {
         title: '错误提示',
         desc: err
       });
-      this.$data.fromData.modelFileUploading = false;
+      this.$data.model.fileUploading = false;
     },
     // 取消 按钮
     cancelFun() {
