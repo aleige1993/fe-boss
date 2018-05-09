@@ -17,7 +17,7 @@
     <pt-modal title="添加客户" v-model="showAddModal" :width="600" :zIndex="200">
       <Form ref="formValidate" label-position="left" :label-width="80">
         <i-form-item label="姓名" prop="name">
-          <i-input placeholder="请输入姓名"></i-input>
+        <i-input placeholder="请输入姓名"></i-input>
         </i-form-item>
         <i-form-item label="邮箱" prop="mail">
           <i-input placeholder="请输入邮箱"></i-input>

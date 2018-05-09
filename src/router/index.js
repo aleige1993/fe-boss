@@ -68,7 +68,11 @@ let MyRouter = new Router({
               ]
             },
             // 黑名单管理
-            { path: 'blacklist', component: resolve => { require(['@/pages/customer-manage/blacklist-manage'], resolve) }, name: 'customerBlacklist'}
+            { path: 'blacklist', component: resolve => { require(['@/pages/customer-manage/blacklist-manage'], resolve) }, name: 'customerBlacklist'},
+            //客户解绑
+            {
+              path:'unbundl',name: 'unbundling',component: resolve => { require(['@/pages/customer-manage/unbundl-user'], resolve) }
+            }
           ]
         },
         // 配置管理
