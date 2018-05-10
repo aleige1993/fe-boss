@@ -80,7 +80,7 @@
             <i-form-item label="车系名称" prop="carSeriesId" :rules="{required: true, message: '车系名称不能为空'}">
               <div class="flex-items">
                 <i-select :disabled="!modelData.id" v-model="modelData.carSeriesId" placeholder="">
-                  <i-option v-for="item in series.resultList" :key="item.seriesNo" :value="item.seriesNo">{{item.seriesName}}</i-option>
+                  <i-option v-for="item in series.resultList" :key="item.id" :value="item.id">{{item.seriesName}}</i-option>
                 </i-select>
                 <i-button v-if="modelData.id" @click="addSeries" type="info">新增</i-button>
               </div>
