@@ -19,9 +19,8 @@ export default {
     };
   },
   watch: {
-    'modelData.brandNo'(newVal) {
-      let brandNo = this.$data.modelData.brandNo;
-      if (brandNo && brandNo.length) {
+    'modelData.id'(newVal) {
+      if (this.$data.modelData.id) {
         this.getAllSeriesList();
       }
     },
@@ -31,8 +30,14 @@ export default {
   },
   methods: {
     async getAllSeriesList() {
+      let brandNo = null;
+      this.$data.brand.searchList.map(item => {
+        if (item.id === this.$data.modelData.id) {
+          brandNo = item.brandNo;
+        }
+      });
       let res = await this.$http.post('/ces/getSeriesByBrand', {
-        brandNo: this.$data.modelData.brandNo,
+        brandNo,
         seriesName: ''
       });
       if (res.success) {
@@ -49,7 +54,6 @@ export default {
       });
     },
     setSeriesListByChildBrand() {
-      // alert(this.$data.fromData.childBrandName);
       this.$data.series.resultList = [];
       this.$data.seriesList.map(item => {
         if (item.groupName === this.$data.modelData.childBrandName) {
@@ -58,13 +62,13 @@ export default {
       });
     },
     addSeries() {
-      let brandNo = this.$data.modelData.brandNo;
+      let id = this.$data.modelData.id;
       this.$data.brand.searchList.map(item => {
-        if (item.brandNo === brandNo) {
+        if (item.id === id) {
           this.$data.series.addFormData.brandName = item.brandName;
         };
       });
-      this.$data.series.addFormData.brandId = brandNo;
+      this.$data.series.addFormData.brandId = id;
       this.$data.series.addModel = true;
     },
     // 上传文件之前的回掉
@@ -89,7 +93,8 @@ export default {
         if (valid) {
           this.$data.series.addLoading = true;
           let resp = await this.$http.post('/ces/add/childBrand', {
-            ...this.$data.series.addFormData
+            CarSeries: this.$data.series.addFormData,
+            brandId: this.$data.series.addFormData.brandId
           });
           this.$data.series.addLoading = false;
           if (resp.success) {

@@ -49,16 +49,16 @@
       <i-form v-if="addModal" ref="modelData" :model="modelData" label-position="right" :label-width="100">
         <i-row>
           <i-col span="12">
-            <i-form-item label="品牌名称" prop="brandNo" :rules="{required: true, message: '品牌名称不能为空'}">
+            <i-form-item label="品牌名称" prop="id" :rules="{required: true, message: '品牌名称不能为空'}">
               <div class="flex-items">
                 <i-select
-                  v-model="modelData.brandNo"
+                  v-model="modelData.id"
                   placeholder=""
                   filterable
                   remote
                   :remote-method="remoteSearchBrand"
                   :loading="brand.searchLoading">
-                  <i-option v-for="item in brand.searchList" :key="item.brandNo" :value="item.brandNo">{{item.brandName}}</i-option>
+                  <i-option v-for="item in brand.searchList" :key="item.id" :value="item.id">{{item.brandName}}</i-option>
                 </i-select>
                 <i-button @click="addBrand" type="info">新增</i-button>
               </div>
@@ -67,52 +67,59 @@
           <i-col span="12">
             <i-form-item label="子品牌名称" prop="childBrandName" :rules="{required: true, message: '子品牌名称不能为空'}">
               <div class="flex-items">
-                <i-select :disabled="!modelData.brandNo" v-model="modelData.childBrandName" placeholder="">
+                <i-select :disabled="!modelData.id" v-model="modelData.childBrandName" placeholder="">
                   <i-option v-for="item in childBrandList" :key="item.name" :value="item.name">{{item.name}}</i-option>
                 </i-select>
-                <i-button v-if="modelData.brandNo" @click="addSeries" type="info">新增</i-button>
+                <i-button v-if="modelData.id" @click="addSeries" type="info">新增</i-button>
               </div>
             </i-form-item>
           </i-col>
         </i-row>
         <i-row>
           <i-col span="12">
-            <i-form-item label="车系名称" prop="seriesName" :rules="{required: true, message: '车系名称不能为空'}">
+            <i-form-item label="车系名称" prop="carSeriesId" :rules="{required: true, message: '车系名称不能为空'}">
               <div class="flex-items">
-                <i-select :disabled="!modelData.brandNo" v-model="modelData.seriesName" placeholder="">
-                  <i-option v-for="item in series.resultList" :key="item.seriesNo" :value="item.seriesName">{{item.seriesName}}</i-option>
+                <i-select :disabled="!modelData.id" v-model="modelData.carSeriesId" placeholder="">
+                  <i-option v-for="item in series.resultList" :key="item.seriesNo" :value="item.seriesNo">{{item.seriesName}}</i-option>
                 </i-select>
-                <i-button v-if="modelData.brandNo" @click="addSeries" type="info">新增</i-button>
+                <i-button v-if="modelData.id" @click="addSeries" type="info">新增</i-button>
               </div>
             </i-form-item>
           </i-col>
           <i-col span="12">
-            <i-form-item label="车型名称" :rules="{required: true, message: '车型名称不能为空'}" prop="modelName">
-              <i-input :disabled="!modelData.brandNo" v-model="modelData.modelName" placeholder=""></i-input>
+            <i-form-item label="车型全称" :rules="{required: true, message: '车型全称不能为空'}" prop="modelFullName">
+              <i-input v-model="modelData.modelFullName" placeholder=""></i-input>
             </i-form-item>
           </i-col>
         </i-row>
         <i-row>
           <i-col span="6">
-            <i-form-item label="生产年份" :rules="{required: true, message: '生产年份不能为空'}" prop="brandName">
-              <i-input v-model="modelData.brandName" placeholder=""></i-input>
+            <i-form-item label="车型名称" :rules="{required: true, message: '车型名称不能为空'}" prop="modelName">
+              <i-input v-model="modelData.modelName" placeholder=""></i-input>
             </i-form-item>
           </i-col>
           <i-col span="6">
-            <i-form-item label="指导售价" :rules="{required: true, message: '指导售价不能为空'}" prop="classType">
-              <i-input v-model="modelData.classType" placeholder=""></i-input>
+            <i-form-item label="生产年份" :rules="{required: true, message: '生产年份不能为空'}" prop="yyyy">
+              <i-input v-model="modelData.yyyy" placeholder=""></i-input>
             </i-form-item>
           </i-col>
           <i-col span="6">
-            <i-form-item label="车辆颜色" prop="doors">
-              <i-input v-model="modelData.doors" placeholder=""></i-input>
+            <i-form-item label="指导售价" :rules="{required: true, message: '指导售价不能为空'}" prop="referprice">
+              <i-input v-model="modelData.referprice" placeholder=""></i-input>
             </i-form-item>
           </i-col>
           <i-col span="6">
-            <i-form-item label="发动机排量" :rules="{required: true, message: '发动机排量不能为空'}" prop="brandName">
-              <i-input v-model="modelData.brandName" placeholder=""></i-input>
+            <i-form-item label="发动机排量" :rules="{required: true, message: '发动机排量不能为空'}" prop="engineExhaustForFloat">
+              <i-input v-model="modelData.engineExhaustForFloat" placeholder=""></i-input>
             </i-form-item>
           </i-col>
+          <!--<i-col span="6">-->
+            <!--<i-form-item label="车辆颜色" prop="colorType">-->
+              <!--<i-select v-model="modelData.colorType" placeholder="">-->
+                <!--<i-option v-for="item in enumSelectData.get('CarColorEnum')" :key="item.itemCode" :value="item.itemCode">{{item.itemName}}</i-option>-->
+              <!--</i-select>-->
+            <!--</i-form-item>-->
+          <!--</i-col>-->
         </i-row>
         <i-row>
           <i-col span="6">
@@ -121,150 +128,150 @@
             </i-form-item>
           </i-col>
           <i-col span="6">
-            <i-form-item label="驱动类型" prop="doors">
+            <i-form-item label="驱动类型" prop="driveType">
+              <i-input v-model="modelData.driveType" placeholder=""></i-input>
+            </i-form-item>
+          </i-col>
+          <i-col span="6">
+            <i-form-item label="车门数" prop="doors">
               <i-input v-model="modelData.doors" placeholder=""></i-input>
             </i-form-item>
           </i-col>
           <i-col span="6">
-            <i-form-item label="车门数" prop="brandName">
-              <i-input v-model="modelData.brandName" placeholder=""></i-input>
-            </i-form-item>
-          </i-col>
-          <i-col span="6">
-            <i-form-item label="车身结构" prop="classType">
-              <i-input v-model="modelData.classType" placeholder=""></i-input>
+            <i-form-item label="车身结构" prop="struct">
+              <i-input v-model="modelData.struct" placeholder=""></i-input>
             </i-form-item>
           </i-col>
         </i-row>
         <i-row>
           <i-col span="6">
-            <i-form-item label="环保标准" prop="doors">
-              <i-input v-model="modelData.doors" placeholder=""></i-input>
+            <i-form-item label="环保标准" prop="engineEnvirStandard">
+              <i-input v-model="modelData.engineEnvirStandard" placeholder=""></i-input>
             </i-form-item>
           </i-col>
           <i-col span="6">
-            <i-form-item label="精确排量" prop="brandName">
-              <i-input v-model="modelData.brandName" placeholder=""></i-input>
+            <i-form-item label="精确排量" prop="engineExhaust">
+              <i-input v-model="modelData.engineExhaust" placeholder=""></i-input>
             </i-form-item>
           </i-col>
           <i-col span="6">
-            <i-form-item label="燃料" prop="classType">
-              <i-input v-model="modelData.classType" placeholder=""></i-input>
+            <i-form-item label="燃料" prop="engineFuel">
+              <i-input v-model="modelData.engineFuel" placeholder=""></i-input>
             </i-form-item>
           </i-col>
           <i-col span="6">
-            <i-form-item label="进气形式" prop="doors">
-              <i-input v-model="modelData.doors" placeholder=""></i-input>
-            </i-form-item>
-          </i-col>
-        </i-row>
-        <i-row>
-          <i-col span="6">
-            <i-form-item label="最大扭矩" prop="brandName">
-              <i-input v-model="modelData.brandName" placeholder=""></i-input>
-            </i-form-item>
-          </i-col>
-          <i-col span="6">
-            <i-form-item label="最大扭矩转速" prop="classType">
-              <i-input v-model="modelData.classType" placeholder=""></i-input>
-            </i-form-item>
-          </i-col>
-          <i-col span="6">
-            <i-form-item label="最大功率" prop="doors">
-              <i-input v-model="modelData.doors" placeholder=""></i-input>
-            </i-form-item>
-          </i-col>
-          <i-col span="6">
-            <i-form-item label="最大转速" prop="brandName">
-              <i-input v-model="modelData.brandName" placeholder=""></i-input>
+            <i-form-item label="进气形式" prop="engineIntake">
+              <i-input v-model="modelData.engineIntake" placeholder=""></i-input>
             </i-form-item>
           </i-col>
         </i-row>
         <i-row>
           <i-col span="6">
-            <i-form-item label="制动方式" prop="classType">
-              <i-input v-model="modelData.classType" placeholder=""></i-input>
+            <i-form-item label="最大扭矩" prop="engineMaxNj">
+              <i-input v-model="modelData.engineMaxNj" placeholder=""></i-input>
             </i-form-item>
           </i-col>
           <i-col span="6">
-            <i-form-item label="档位个数" prop="doors">
-              <i-input v-model="modelData.doors" placeholder=""></i-input>
+            <i-form-item label="最大扭矩转速" prop="engineMaxNjSpeed">
+              <i-input v-model="modelData.engineMaxNjSpeed" placeholder=""></i-input>
             </i-form-item>
           </i-col>
           <i-col span="6">
-            <i-form-item label="变速箱类型" prop="brandName">
-              <i-input v-model="modelData.brandName" placeholder=""></i-input>
+            <i-form-item label="最大功率" prop="engineMaxPower">
+              <i-input v-model="modelData.engineMaxPower" placeholder=""></i-input>
             </i-form-item>
           </i-col>
           <i-col span="6">
-            <i-form-item label="最大速度" prop="classType">
-              <i-input v-model="modelData.classType" placeholder=""></i-input>
-            </i-form-item>
-          </i-col>
-        </i-row>
-        <i-row>
-          <i-col span="6">
-            <i-form-item label="长" prop="doors">
-              <i-input v-model="modelData.doors" placeholder=""></i-input>
-            </i-form-item>
-          </i-col>
-          <i-col span="6">
-            <i-form-item label="宽" prop="brandName">
-              <i-input v-model="modelData.brandName" placeholder=""></i-input>
-            </i-form-item>
-          </i-col>
-          <i-col span="6">
-            <i-form-item label="高" prop="classType">
-              <i-input v-model="modelData.classType" placeholder=""></i-input>
-            </i-form-item>
-          </i-col>
-          <i-col span="6">
-            <i-form-item label="上市时间" prop="brandName">
-              <i-input v-model="modelData.brandName" placeholder=""></i-input>
+            <i-form-item label="最大转速" prop="engineMaxPowerSpeed">
+              <i-input v-model="modelData.engineMaxPowerSpeed" placeholder=""></i-input>
             </i-form-item>
           </i-col>
         </i-row>
         <i-row>
           <i-col span="6">
-            <i-form-item label="前轮规格" prop="classType">
-              <i-input v-model="modelData.classType" placeholder=""></i-input>
+            <i-form-item label="制动方式" prop="engineType">
+              <i-input v-model="modelData.engineType" placeholder=""></i-input>
             </i-form-item>
           </i-col>
           <i-col span="6">
-            <i-form-item label="后轮规格" prop="doors">
-              <i-input v-model="modelData.doors" placeholder=""></i-input>
+            <i-form-item label="档位个数" prop="gearNum">
+              <i-input v-model="modelData.gearNum" placeholder=""></i-input>
             </i-form-item>
           </i-col>
           <i-col span="6">
-            <i-form-item label="前轮距" prop="brandName">
-              <i-input v-model="modelData.brandName" placeholder=""></i-input>
+            <i-form-item label="变速箱类型" prop="gearboxType">
+              <i-input v-model="modelData.gearboxType" placeholder=""></i-input>
             </i-form-item>
           </i-col>
           <i-col span="6">
-            <i-form-item label="后轮距" prop="doors">
-              <i-input v-model="modelData.doors" placeholder=""></i-input>
+            <i-form-item label="最大速度" prop="highSpeed">
+              <i-input v-model="modelData.highSpeed" placeholder=""></i-input>
             </i-form-item>
           </i-col>
         </i-row>
         <i-row>
           <i-col span="6">
-            <i-form-item label="刹车类型" prop="classType">
-              <i-input v-model="modelData.classType" placeholder=""></i-input>
+            <i-form-item label="上市时间" prop="listedTime">
+              <bs-datepicker v-model="searchForm.listedTime" type="text" placeholder=""></bs-datepicker>
             </i-form-item>
           </i-col>
           <i-col span="6">
-            <i-form-item label="行李厢容积" prop="doors">
-              <i-input v-model="modelData.doors" placeholder=""></i-input>
+            <i-form-item label="长" prop="longMm">
+              <i-input v-model="modelData.longMm" placeholder=""></i-input>
             </i-form-item>
           </i-col>
           <i-col span="6">
-            <i-form-item label="油箱容积" prop="brandName">
-              <i-input v-model="modelData.brandName" placeholder=""></i-input>
+            <i-form-item label="宽" prop="width">
+              <i-input v-model="modelData.width" placeholder=""></i-input>
             </i-form-item>
           </i-col>
           <i-col span="6">
-            <i-form-item label="座位数" prop="classType">
-              <i-input v-model="modelData.classType" placeholder=""></i-input>
+            <i-form-item label="高" prop="hight">
+              <i-input v-model="modelData.hight" placeholder=""></i-input>
+            </i-form-item>
+          </i-col>
+        </i-row>
+        <i-row>
+          <i-col span="6">
+            <i-form-item label="前轮规格" prop="qlSize">
+              <i-input v-model="modelData.qlSize" placeholder=""></i-input>
+            </i-form-item>
+          </i-col>
+          <i-col span="6">
+            <i-form-item label="后轮规格" prop="hlSize">
+              <i-input v-model="modelData.hlSize" placeholder=""></i-input>
+            </i-form-item>
+          </i-col>
+          <i-col span="6">
+            <i-form-item label="前轮距" prop="ljQ">
+              <i-input v-model="modelData.ljQ" placeholder=""></i-input>
+            </i-form-item>
+          </i-col>
+          <i-col span="6">
+            <i-form-item label="后轮距" prop="ljH">
+              <i-input v-model="modelData.ljH" placeholder=""></i-input>
+            </i-form-item>
+          </i-col>
+        </i-row>
+        <i-row>
+          <i-col span="6">
+            <i-form-item label="刹车类型" prop="parkingType">
+              <i-input v-model="modelData.parkingType" placeholder=""></i-input>
+            </i-form-item>
+          </i-col>
+          <i-col span="6">
+            <i-form-item label="行李厢容积" prop="luggage">
+              <i-input v-model="modelData.luggage" placeholder=""></i-input>
+            </i-form-item>
+          </i-col>
+          <i-col span="6">
+            <i-form-item label="油箱容积" prop="tank">
+              <i-input v-model="modelData.tank" placeholder=""></i-input>
+            </i-form-item>
+          </i-col>
+          <i-col span="6">
+            <i-form-item label="座位数" prop="seats">
+              <i-input v-model="modelData.seats" placeholder=""></i-input>
             </i-form-item>
           </i-col>
         </i-row>
@@ -299,8 +306,8 @@
           <i-col span="12">
             <i-form-item
               label="备注"
-              prop="remark">
-              <i-input type="textarea" :rows="3" v-model="modelData.remark" placeholder=""></i-input>
+              prop="tag">
+              <i-input type="textarea" :rows="3" v-model="modelData.tag" placeholder=""></i-input>
             </i-form-item>
           </i-col>
         </i-row>

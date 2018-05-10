@@ -28,17 +28,26 @@ export default {
       this.$data.total = resp.body.totalNum;
     },
     async submitSuccess() {
+      // console.log(JSON.stringify(this.$data.modelData));
       this.$data.buttonLoading = true;
-      let url = this.$data.isAdd ? '' : '/ces/model/detail/update';
+      let url = this.$data.isAdd ? '/ces/add/carDetail' : '/ces/model/detail/update';
       let resp = await this.$http.post(url, {
-        ...this.$data.modelData
+        // ...this.$data.modelData
+        carModelDto: {
+          modelFullName: this.$data.modelData.modelFullName,
+          modelName: this.$data.modelData.modelName,
+          seriesYear: this.$data.modelData.yyyy,
+          modelImg: this.$data.modelData.modelImg
+        },
+        carDetailDto: this.$data.modelData,
+        carSeriesId: this.$data.modelData.carSeriesId
       });
       this.$data.buttonLoading = false;
-      this.$data.addModal = false;
       if (resp.success) {
         let text = this.$data.isAdd ? '添加成功' : '修改成功';
         this.$Message.success(text);
         this.getProxyPayList();
+        this.$data.addModal = false;
       }
     },
     // 提交
