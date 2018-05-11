@@ -76,12 +76,12 @@ export default {
     },
     // 上传文件之前的回掉
     uploadModelProgress() {
-      this.$data.model.fileUploading = true;
+      this.$data.modelData.fileUploading = true;
     },
     // 上传成功
     uploadModelSuccess(res, file, fileList) {
-      this.$data.model.logo = res.body.url;
-      this.$data.model.fileUploading = false;
+      this.$data.modelData.modelImg = res.body.url;
+      this.$data.modelData.fileUploading = false;
     },
     // 上传失败
     uploadModelError(err, file, fileList) {
@@ -89,7 +89,7 @@ export default {
         title: '错误提示',
         desc: err
       });
-      this.$data.model.fileUploading = false;
+      this.$data.modelData.fileUploading = false;
     },
     // 取消 按钮
     cancelFun() {

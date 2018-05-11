@@ -13,12 +13,9 @@ export default {
         currentPage: 1,
         pageSize: 15
       },
-      model: {
-        logo: '',
-        fileUploading: false
-      },
       modelData: {
-        id: null
+        id: null,
+        fileUploading: false
       },
       customerColumns: [
         {

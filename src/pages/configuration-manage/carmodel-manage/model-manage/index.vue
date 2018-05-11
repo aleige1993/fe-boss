@@ -64,11 +64,11 @@
               </div>
             </i-form-item>
             <i-form-item v-else label="品牌名称" prop="brandName">
-              <i-input disabled v-model="modelData.brandName" placeholder=""></i-input>
+              <i-input readonly v-model="modelData.brandName" placeholder=""></i-input>
             </i-form-item>
           </i-col>
           <i-col span="12">
-            <i-form-item label="子品牌名称" prop="childBrandName" :rules="{required: true, message: '子品牌名称不能为空'}">
+            <i-form-item v-if="isAdd" label="子品牌名称" prop="childBrandName" :rules="{required: true, message: '子品牌名称不能为空'}">
               <div class="flex-items">
                 <i-select :disabled="!modelData.id" v-model="modelData.childBrandName" placeholder="">
                   <i-option v-for="item in childBrandList" :key="item.name" :value="item.name">{{item.name}}</i-option>
@@ -80,7 +80,7 @@
         </i-row>
         <i-row>
           <i-col span="12">
-            <i-form-item label="车系名称" prop="carSeriesId" :rules="{required: true, message: '车系名称不能为空'}">
+            <i-form-item v-if="isAdd" label="车系名称" prop="carSeriesId" :rules="{required: true, message: '车系名称不能为空'}">
               <div class="flex-items">
                 <i-select :disabled="!modelData.id" v-model="modelData.carSeriesId" placeholder="">
                   <i-option v-for="item in series.resultList" :key="item.id" :value="item.id">{{item.seriesName}}</i-option>
@@ -88,10 +88,16 @@
                 <i-button v-if="modelData.id" @click="addSeries" type="info">新增</i-button>
               </div>
             </i-form-item>
+            <i-form-item v-else label="车系名称" prop="serialName">
+              <i-input readonly v-model="modelData.serialName" placeholder=""></i-input>
+            </i-form-item>
           </i-col>
           <i-col span="12">
-            <i-form-item label="车型全称" :rules="{required: true, message: '车型全称不能为空'}" prop="fullName">
+            <i-form-item v-if="isAdd" label="车型全称" :rules="{required: true, message: '车型全称不能为空'}" prop="fullName">
               <i-input v-model="modelData.fullName" placeholder=""></i-input>
+            </i-form-item>
+            <i-form-item v-else label="车型全称" :rules="{required: true, message: '车型全称不能为空'}" prop="modelFullName">
+              <i-input v-model="modelData.modelFullName" placeholder=""></i-input>
             </i-form-item>
           </i-col>
         </i-row>
@@ -280,8 +286,8 @@
         </i-row>
         <i-row>
           <i-col span="12">
-            <i-form-item label="车型图片" prop="logo">
-              <input type="hidden" v-model="model.logo"/>
+            <i-form-item label="车型图片" prop="modelImg">
+              <input type="hidden" v-model="modelData.modelImg"/>
               <i-upload
                 :format="['jpg','jpeg','png']"
                 :on-success="uploadModelSuccess"
@@ -293,15 +299,15 @@
                 :action="$config.HTTPBASEURL+'/common/upload'"
                 :show-upload-list="false">
                 <div class="upload-image">
-                  <div v-if="!model.logo">
+                  <div v-if="!modelData.modelImg">
                     <i-icon type="ios-cloud-upload" size="52" style="color: #3399ff"></i-icon>
                     <p>单击或拖动文件上传</p>
-                    <i-spin fix v-if="model.fileUploading">
+                    <i-spin fix v-if="modelData.fileUploading">
                       <Icon type="load-c" size=18 class="demo-spin-icon-load"></Icon>
                       <div style="margin-top: 10px">正在上传中，请勿关闭...</div>
                     </i-spin>
                   </div>
-                  <img v-else height="95" :src="model.logo" alt="">
+                  <img v-else height="95" :src="modelData.modelImg" alt="">
                 </div>
               </i-upload>
             </i-form-item>
