@@ -1,7 +1,7 @@
 <template>
   <i-form :label-width="120" label-position="right" style="position: relative">
-    <bs-form-block title="身份证信息">
-      <span slot="title">身份证信息
+    <bs-form-block title="基本信息">
+      <span slot="title">基本信息
         <span v-if="verifyInfo.idcardAuthStatus === '0'" class="text-danger">【未认证】</span>
         <span v-else class="text-primary">【已认证】</span>
       </span>
@@ -44,14 +44,14 @@
       </i-row>
     </bs-form-block>
     <bs-form-block title="银行卡信息" v-if="verifyInfo.memberCardDTOList">
-      <span slot="title">身份证信息
+      <span slot="title">银行卡信息
         <span v-if="verifyInfo.bankcardBindStatus === '0'" class="text-danger">【未核身】</span>
         <span v-else class="text-primary">【已核身】</span>
       </span>
       <i-table :loading="dataLoading" :columns="bankAccountColumns" :data="verifyInfo.memberCardDTOList"></i-table>
     </bs-form-block>
     <bs-form-block title="征信授权信息">
-      <span slot="title">身份证信息
+      <span slot="title">征信授权信息
         <span v-if="verifyInfo.creditAuthStatus === '1'" class="text-primary">【已授权】</span>
         <span v-else  class="text-danger">【未授权】</span>
       </span>
