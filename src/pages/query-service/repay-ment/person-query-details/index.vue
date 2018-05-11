@@ -86,24 +86,32 @@
     <div class="form-top-actions"></div>
     <i-tabs v-model="tabIndex" type="card" :animated="false" style="padding-bottom: 46px; position: relative">
       <i-tab-pane :label="'资金方还款计划'">
-
+        <i-table v-if="tabIndex==0" :height="tableFixHeight" :loading="dataLoading"   border ref="selection" :columns="backmoenyColumns" :data="backmoenyList"></i-table>
       </i-tab-pane>
       <i-tab-pane :label="'海乐行租金计划'">
-
+        <i-table v-if="tabIndex==1" :height="tableFixHeight" :loading="dataLoading"   border ref="selection" :columns="rentmoenyColumns" :data="rentmoenyList"></i-table>
       </i-tab-pane>
       <i-tab-pane :label="'客户付款汇总计划'">
-
+        <i-table v-if="tabIndex==2" :height="tableFixHeight" :loading="dataLoading"   border ref="selection" :columns="paymentmoenyColumns" :data="paymentmoenyList"></i-table>
       </i-tab-pane>
     </i-tabs>
   </section>
 </template>
 
 <script>
+  import backmoenyData from './backmoeny-data';
+  import rentmoenyData from './rentmoeny-data';
+  import paymentmoenyData from './paymentmoeny-data';
   export default {
     name: 'personDetails',
+    mixins: [backmoenyData, paymentmoenyData, rentmoenyData],
     data() {
       return {
-        tabIndex: 0
+        tabIndex: 0,
+        dataLoading: false,
+        backmoenyList: [],
+        rentmoenyList: [],
+        paymentmoenyList: []
       };
     },
     components: {
