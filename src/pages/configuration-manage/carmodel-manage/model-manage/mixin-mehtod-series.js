@@ -30,14 +30,14 @@ export default {
   },
   methods: {
     async getAllSeriesList() {
-      let brandNo = null;
       this.$data.brand.searchList.map(item => {
         if (item.id === this.$data.modelData.id) {
-          brandNo = item.brandNo;
+          this.$data.modelData.brandNo = item.brandNo;
+          this.$data.modelData.brandName = item.brandName;
         }
       });
       let res = await this.$http.post('/ces/getSeriesByBrand', {
-        brandNo,
+        brandNo: this.$data.modelData.brandNo,
         seriesName: ''
       });
       if (res.success) {
@@ -62,13 +62,9 @@ export default {
       });
     },
     addSeries() {
-      let id = this.$data.modelData.id;
-      this.$data.brand.searchList.map(item => {
-        if (item.id === id) {
-          this.$data.series.addFormData.brandName = item.brandName;
-        };
-      });
-      this.$data.series.addFormData.brandId = id;
+      this.$data.series.addFormData = {};
+      this.$data.series.addFormData.brandId = this.$data.modelData.id;
+      this.$data.series.addFormData.brandName = this.$data.modelData.brandName;
       this.$data.series.addModel = true;
     },
     // 上传文件之前的回掉

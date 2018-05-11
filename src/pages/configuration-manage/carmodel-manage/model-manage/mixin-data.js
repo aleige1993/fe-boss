@@ -93,17 +93,16 @@ export default {
                 style: { marginRight: '5px' },
                 on: {
                   click: async() => {
-                    // this.$data.isAdd = false;
-                    // this.$data.addModal = true;
-                    // // this.$data.fromData = params.row;
-                    // const loading = this.$Message.loading('加载中...', 0);
-                    // let resp = await this.$http.post('/ces/model/detail', {
-                    //   no: params.row.modelNo
-                    // });
-                    // loading();
-                    // if (resp.success) {
-                    //   this.$data.fromData = resp.body;
-                    // }
+                    this.$data.isAdd = false;
+                    this.$data.addModal = true;
+                    const loading = this.$Message.loading('加载中...', 0);
+                    let resp = await this.$http.post('/ces/model/detail', {
+                      no: params.row.modelNo
+                    });
+                    loading();
+                    if (resp.success) {
+                      this.$data.modelData = resp.body;
+                    }
                   }
                 }
               }, '修改'),

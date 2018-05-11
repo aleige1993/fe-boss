@@ -30,18 +30,32 @@ export default {
     async submitSuccess() {
       // console.log(JSON.stringify(this.$data.modelData));
       this.$data.buttonLoading = true;
+      let submitData = {};
+      if (this.$data.isAdd) {
+        let carSeriesId = this.$data.modelData.carSeriesId;
+        this.$data.series.resultList.map(item => {
+          if (item.id === carSeriesId) {
+            this.$data.modelData.seriesName = item.seriesName;
+          }
+        });
+        this.$data.modelData.referpriceNew = this.$data.modelData.referprice;
+        submitData = {
+          carModelDto: {
+            modelFullName: this.$data.modelData.fullName,
+            modelName: this.$data.modelData.name,
+            seriesYear: this.$data.modelData.yyyy,
+            guidancePrice: this.$data.modelData.referprice,
+            modelImg: this.$data.modelData.modelImg
+          },
+          CarDetailVo: this.$data.modelData,
+          carSeriesId
+        };
+      } else {
+        submitData = this.$data.modelData;
+      }
+      // console.log(JSON.stringify(submitData));
       let url = this.$data.isAdd ? '/ces/add/carDetail' : '/ces/model/detail/update';
-      let resp = await this.$http.post(url, {
-        // ...this.$data.modelData
-        carModelDto: {
-          modelFullName: this.$data.modelData.modelFullName,
-          modelName: this.$data.modelData.modelName,
-          seriesYear: this.$data.modelData.yyyy,
-          modelImg: this.$data.modelData.modelImg
-        },
-        carDetailDto: this.$data.modelData,
-        carSeriesId: this.$data.modelData.carSeriesId
-      });
+      let resp = await this.$http.post(url, submitData);
       this.$data.buttonLoading = false;
       if (resp.success) {
         let text = this.$data.isAdd ? '添加成功' : '修改成功';

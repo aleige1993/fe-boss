@@ -49,7 +49,7 @@
       <i-form v-if="addModal" ref="modelData" :model="modelData" label-position="right" :label-width="100">
         <i-row>
           <i-col span="12">
-            <i-form-item label="品牌名称" prop="id" :rules="{required: true, message: '品牌名称不能为空'}">
+            <i-form-item v-if="isAdd" label="品牌名称" prop="id" :rules="{required: true, message: '品牌名称不能为空'}">
               <div class="flex-items">
                 <i-select
                   v-model="modelData.id"
@@ -62,6 +62,9 @@
                 </i-select>
                 <i-button @click="addBrand" type="info">新增</i-button>
               </div>
+            </i-form-item>
+            <i-form-item v-else label="品牌名称" prop="brandName">
+              <i-input disabled v-model="modelData.brandName" placeholder=""></i-input>
             </i-form-item>
           </i-col>
           <i-col span="12">
@@ -87,15 +90,15 @@
             </i-form-item>
           </i-col>
           <i-col span="12">
-            <i-form-item label="车型全称" :rules="{required: true, message: '车型全称不能为空'}" prop="modelFullName">
-              <i-input v-model="modelData.modelFullName" placeholder=""></i-input>
+            <i-form-item label="车型全称" :rules="{required: true, message: '车型全称不能为空'}" prop="fullName">
+              <i-input v-model="modelData.fullName" placeholder=""></i-input>
             </i-form-item>
           </i-col>
         </i-row>
         <i-row>
           <i-col span="6">
-            <i-form-item label="车型名称" :rules="{required: true, message: '车型名称不能为空'}" prop="modelName">
-              <i-input v-model="modelData.modelName" placeholder=""></i-input>
+            <i-form-item label="车型名称" :rules="{required: true, message: '车型名称不能为空'}" prop="name">
+              <i-input v-model="modelData.name" placeholder=""></i-input>
             </i-form-item>
           </i-col>
           <i-col span="6">
