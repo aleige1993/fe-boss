@@ -64,7 +64,7 @@
         let resp = await this.$http.post('/biz/saveLoanBiz', _data);
         this.$data.initFormLoading = false;
         if (resp.success) {
-          this.$Message.success('保存成功');
+          this.$Message.success(_data.opeType === '1' ? '保存成功' : '审批成功');
           this.$router.push({
             name: 'loanBusinessList'
           });
