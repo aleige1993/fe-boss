@@ -10,6 +10,8 @@ export default {
       uploadFileName: '',
       searchForm: {
         'modelFullName': '',
+        'seriesName': '',
+        'seriesGroupName': '',
         currentPage: 1,
         pageSize: 15
       },
@@ -18,29 +20,25 @@ export default {
         fileUploading: false
       },
       customerColumns: [
-        {
-          title: '品牌名称',
-          key: 'modelNo'
-        },
-        {
-          title: '子品牌名称',
-          key: 'modelNo'
-        },
+        // {
+        //   title: '品牌名称',
+        //   key: 'brandName'
+        // },
+        // {
+        //   title: '子品牌名称',
+        //   key: ''
+        // },
         {
           title: '车系名称',
-          key: 'modelFullName'
+          key: 'seriesName'
         },
         {
           title: '车型名称',
-          key: 'guidancePrice'
-        },
-        {
-          title: '车辆颜色',
-          key: 'guidancePrice'
+          key: 'modelName'
         },
         {
           title: '生产年份',
-          key: 'guidancePrice'
+          key: 'seriesYear'
         },
         {
           title: '指导售价',
@@ -48,31 +46,27 @@ export default {
         },
         {
           title: '车型图片',
-          key: 'guidancePrice'
+          key: 'logo',
+          align: 'center',
+          render: (h, params) => {
+            return h('bs-big-img', {
+              attrs: {
+                style: 'margin:10px 0'
+              },
+              props: {
+                // thumbWidth: 100,
+                thumbHeight: 80,
+                fullWidth: 1000,
+                thumb: params.row.logo,
+                full: params.row.logo
+              }
+            });
+          }
         },
         {
           title: '发动机排量',
-          key: 'guidancePrice'
+          key: ''
         }
-        // {
-        //   title: '车型图片',
-        //   key: 'logo',
-        //   align: 'center',
-        //   render: (h, params) => {
-        //     return h('bs-big-img', {
-        //       attrs: {
-        //         style: 'margin:10px 0'
-        //       },
-        //       props: {
-        //         // thumbWidth: 100,
-        //         thumbHeight: 80,
-        //         fullWidth: 1000,
-        //         thumb: params.row.logo,
-        //         full: params.row.logo
-        //       }
-        //     });
-        //   }
-        // },
       ],
       customerActionColumns: [
         {

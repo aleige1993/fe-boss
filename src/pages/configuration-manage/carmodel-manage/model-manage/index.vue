@@ -18,20 +18,20 @@
           车系名称
         </i-form-item>
         <i-form-item prop="user">
-          <i-input type="text" v-model="searchForm.modelFullName" placeholder=""></i-input>
+          <i-input type="text" v-model="searchForm.seriesName" placeholder=""></i-input>
         </i-form-item>
-        <i-form-item prop="password">
-          子品牌名称
-        </i-form-item>
-        <i-form-item prop="user">
-          <i-input type="text" v-model="searchForm.modelFullName" placeholder=""></i-input>
-        </i-form-item>
-        <i-form-item prop="password">
-          品牌名称
-        </i-form-item>
-        <i-form-item prop="user">
-          <i-input type="text" v-model="searchForm.modelFullName" placeholder=""></i-input>
-        </i-form-item>
+        <!--<i-form-item prop="password">-->
+          <!--子品牌名称-->
+        <!--</i-form-item>-->
+        <!--<i-form-item prop="user">-->
+          <!--<i-input type="text" v-model="searchForm.seriesGroupName" placeholder=""></i-input>-->
+        <!--</i-form-item>-->
+        <!--<i-form-item prop="password">-->
+          <!--品牌名称-->
+        <!--</i-form-item>-->
+        <!--<i-form-item prop="user">-->
+          <!--<i-input type="text" v-model="searchForm.modelFullName" placeholder=""></i-input>-->
+        <!--</i-form-item>-->
         <i-form-item>
           <i-button @click="search" type="primary"><i-icon type="ios-search-strong"></i-icon> 搜索</i-button>
         </i-form-item>
