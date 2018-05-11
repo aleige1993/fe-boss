@@ -36,7 +36,7 @@
   </div>
 </template>
 <script>
-  import BUS from '@/bus/index.vue';
+  import BUS from '@/bus/index';
   export default {
     name: 'picFileList',
     data() {

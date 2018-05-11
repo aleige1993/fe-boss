@@ -506,7 +506,7 @@
 </template>
 
 <script>
-  import BUS from '@/bus/index.vue';
+  import BUS from '@/bus/index';
   import MixinData from './mixin-data';
   import MixinFilePicUpload from '../../../file-pic-upload-mixin'; // 抵押物办理文件 单张变多张上传
   import BsModal from '@/components/bs-modal';
