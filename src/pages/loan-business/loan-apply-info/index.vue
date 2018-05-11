@@ -373,9 +373,8 @@
           <i-col span="24">
             <i-form-item
               label="车辆品牌"
-              prop="carModel">
-              <!--:rules="{required: true, message: '车辆品牌不能为空'}"
-              -->
+              prop="carModel"
+              :rules="{required: true, message: '车辆品牌不能为空'}">
               <input type="hidden" v-model="formCar.carModel">
               <bs-carpicker :currBrand="formCar.carBrandName"
                             :currSeries="formCar.carTypeName"
