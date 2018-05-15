@@ -310,6 +310,24 @@ let MyRouter = new Router({
           ]
         },
         // 运营管理 end
+        //业务查询
+        { path: 'query', name: 'queryService', component: resolve => require(['@/pages/query-service'], resolve),
+          children: [
+            { path: '/', name: 'toleftnav', component: resolve => require(['@/pages/to-left-nav'], resolve)},
+            { path: 'repay', name: 'repayment', component: resolve => require(['@/pages/query-service/repay-ment'], resolve),
+              children: [
+                //还款计划查询
+                { path: 'detatime', name: 'detatimeQuery',component: resolve => require(['@/pages/query-service/repay-ment/detatime-query'], resolve)},
+                //应还款客户查询
+                { path: 'person', name: 'personQuery',component: resolve => require(['@/pages/query-service/repay-ment/person-query'], resolve)},
+                //应还款查询详情
+                { path: 'persondetails', name: 'persondetailsQuery',component: resolve => require(['@/pages/query-service/repay-ment/person-query-details'], resolve)},
+              ]
+            },
+          ]
+        }
+        //业务查询end
+
       ]
     }
   ],

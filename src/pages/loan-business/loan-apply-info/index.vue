@@ -318,7 +318,7 @@
               label="权利人"
               :rules="{required: true, message: '权利人不能为空'}"
               prop="carOwnerName">
-              <input type="hidden" v-model="formCar.carOwnerNo"/>
+              <!--<input type="hidden" v-model="formCar.carOwnerNo"/>-->
               <i-input v-model="formCar.carOwnerName" placeholder=""/>
             </i-form-item>
           </i-col>
@@ -373,9 +373,8 @@
           <i-col span="24">
             <i-form-item
               label="车辆品牌"
-              prop="carModel">
-              <!--:rules="{required: true, message: '车辆品牌不能为空'}"
-              -->
+              prop="carModel"
+              :rules="{required: true, message: '车辆品牌不能为空'}">
               <input type="hidden" v-model="formCar.carModel">
               <bs-carpicker :currBrand="formCar.carBrandName"
                             :currSeries="formCar.carTypeName"
@@ -686,12 +685,12 @@
         </i-row>
         <i-row>
           <i-col span="12">
-            <i-form-item label="证件类型">
-              <span v-text="formAssure.guaPersonType === '1' ? '身份证' : '营业执照'"></span>
+            <i-form-item label="证件类型"  prop="guaPersonType">
+              <span v-text="formAssure.guaPersonType == '1' ? '身份证' : '营业执照'"></span>
             </i-form-item>
           </i-col>
           <i-col span="12">
-            <i-form-item v-if="formAssure.guaPersonType === '1'" label="证件号码" prop="guaPersonCertNo"
+            <i-form-item v-if="formAssure.guaPersonType == '1'" label="证件号码" prop="guaPersonCertNo"
                          :rules="[{required: true, message: '证件号码不能为空'},
                                   {required: true, min: 18, message: '请输入正确的证件号码'},
                                   {required: true, max: 18, message: '请输入正确的证件号码'}]">
@@ -982,12 +981,12 @@
       }
     },
     watch: {
-      'formCar.custType'(newVal, oldVal) {
-        if ((oldVal !== '') && (typeof oldVal !== 'undefined')) {
-          this.$data.formCar.carOwnerName = '';
-          this.$data.formCar.carOwnerNo = '';
-        }
-      },
+//      'formCar.custType'(newVal, oldVal) {
+//        if ((oldVal !== '') && (typeof oldVal !== 'undefined')) {
+//          this.$data.formCar.carOwnerName = '';
+//          this.$data.formCar.carOwnerNo = '';
+//        }
+//      },
       'customerType'() {
         this.initPage();
       }

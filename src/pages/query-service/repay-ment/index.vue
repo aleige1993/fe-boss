@@ -1,20 +1,18 @@
 <template>
-  <div id="page-proxyreceive">
+  <div id="repay-ment">
     <router-view></router-view>
   </div>
 </template>
-
 <script>
   export default {
-    name: 'proxyReceive',
+    name: 'RepayMent',
     data() {
-      return {
-      };
+      return {};
     }
   };
 </script>
-
 <style lang="scss">
-
+  #page-operate-manager {
+    overflow-x: auto;
+  }
 </style>
-
