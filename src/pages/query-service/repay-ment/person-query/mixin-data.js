@@ -63,7 +63,7 @@ export default {
                   click: () => {
                     this.$router.push({
                       path: '/index/query/repay/persondetails/'
-                      //path: '/index/query/repay/persondetails/' + params.row.orderNo
+                      // path: '/index/query/repay/persondetails/' + params.row.orderNo
                     });
                   }
                 }

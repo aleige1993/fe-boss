@@ -129,8 +129,8 @@
                 item.cellClassName = {
                   surplusBackDays: 'warning-row'
                 };
-                return item;
               }
+              return item;
             });
           }
         } else {
