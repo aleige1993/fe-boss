@@ -24,6 +24,7 @@ export default {
           title: '线上签署状态',
           key: 'onlineSignStatus',
           render: (h, params) => {
+            // alert(params.row.onlineSignStatus);
             return h('span', {}, this.enumCode2Name(params.row.onlineSignStatus, 'ContractOnlineSignStatusEnum'));
           }
         },
@@ -33,7 +34,7 @@ export default {
           render: (h, params) => {
             return h('i-select', {
               props: {
-                // 'disabled': this.$data.isDetails,
+                'disabled': params.row.signMode === '1' && params.row.onlineSignStatus !== '1',
                 'value': params.row.signStatus
               },
               on: {
