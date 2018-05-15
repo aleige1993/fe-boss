@@ -310,6 +310,7 @@ let MyRouter = new Router({
           ]
         },
         // 运营管理 end
+
         //业务查询
         { path: 'query', name: 'queryService', component: resolve => require(['@/pages/query-service'], resolve),
           children: [

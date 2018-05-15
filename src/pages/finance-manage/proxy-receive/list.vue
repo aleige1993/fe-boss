@@ -36,7 +36,7 @@
           <bs-datepicker v-model="searchForm.receiveETime" type="text" placeholder="查询时间"></bs-datepicker>
         </i-form-item>
         <i-form-item prop="password">
-          <i-select style="width: 120px;" v-model="searchForm.orderStat" placeholder="扣款状态">
+          <i-select :disabled="isDetail" style="width: 120px;" v-model="searchForm.orderStat" placeholder="扣款状态">
             <i-option value="" style="height: 26px; color: #bbbec4">-请选择-</i-option>
             <i-option v-for="item in certTypeEnum" :value="item.itemCode" :key="item.itemCode">{{item.itemName}}</i-option>
           </i-select>
@@ -47,7 +47,7 @@
       </i-form>
     </div>
     <div class="form-top-actions" slot="topAction">
-      <i-button type="info" @click="massPayment">批量扣款</i-button>
+      <i-button v-if="!isDetail" type="info" @click="massPayment">批量扣款</i-button>
       <i-button type="primary" @click="exportExcel" :loading="buttonLoading">
         <span v-if="!buttonLoading">导出EXCEL</span>
         <span v-else>Loading...</span>
@@ -92,10 +92,10 @@
     },
     computed: {
       resultCustomerColumns() {
-        if (this.type === 'modal') {
-          return this.$data.customerColumns;
+        if (this.isDetail) {
+          return [...this.$data.customerColumns, ...this.$data.customerRemarkColumns];
         } else {
-          return [...this.$data.customerColumns, ...this.$data.customerActionColumns];
+          return [...this.$data.customerColumns, ...this.$data.customerActionColumns, ...this.$data.customerRemarkColumns];
         }
       }
     },
@@ -187,9 +187,6 @@
       }
     },
     mounted() {
-      alert(this.isDetail);
-      this.getProductList();
-      this.getProxyPayList();
       this.$data.certTypeEnum = [
         {
           'itemCode': 'D',
@@ -208,7 +205,11 @@
           'itemName': '扣款失败'
         }
       ];
-      // console.log(.get('YesNoEnum'));
+      if (this.isDetail) {
+        this.$data.searchForm.orderStat = 'F';
+      }
+      this.getProductList();
+      this.getProxyPayList();
     }
   };
 </script>
