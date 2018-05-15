@@ -17,6 +17,7 @@ export default {
     loanApplyAssureChanged(value) {
       this.$refs['formAssure'].resetFields();
       this.$data.formAssure.guaPersonType = value;
+      this.$data.formAssure.guaPersonCertType = value;
     },
     // 打开担保信息新增修改模态框
     openModalAssure() {
@@ -25,15 +26,15 @@ export default {
       this.$refs['formAssure'].resetFields();
     },
     // 担保信息提交
-    async addSuBmitAssure() {
-      await this.assureData.unshift(this.$data.formAssure);
+    addSuBmitAssure() {
+      this.$data.assureData.unshift($.extend({}, this.$data.formAssure));
       this.$data.showModalAssure = false;
       this.$Message.success('新增成功');
     },
     // 修改情况下的提交数据
     async setSuBmitAssure() {
       let index = await this.$data.formAssure._index;
-      this.$set(this.$data.assureData, index, this.$data.formAssure);
+      this.$set(this.$data.assureData, index, Object.assign({}, this.$data.formAssure));
       this.$data.showModalAssure = false;
       this.$Message.success('修改成功');
     },

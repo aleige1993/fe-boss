@@ -175,7 +175,7 @@
 </template>
 
 <script>
-  import BUS from '@/bus/index.js';
+  import BUS from '@/bus/index';
   import BsModal from '@/components/bs-modal';
   import MixinFilePicUpload from '../../../file-pic-upload-mixin'; // 抵押物办理文件 单张变多张上传
   import MixinData from './mixin-data';

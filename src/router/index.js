@@ -68,7 +68,9 @@ let MyRouter = new Router({
               ]
             },
             // 黑名单管理
-            { path: 'blacklist', component: resolve => { require(['@/pages/customer-manage/blacklist-manage'], resolve) }, name: 'customerBlacklist'}
+            { path: 'blacklist', component: resolve => { require(['@/pages/customer-manage/blacklist-manage'], resolve) }, name: 'customerBlacklist'},
+            //客户解绑
+            { path:'unbundl',name: 'unbundling',component: resolve => { require(['@/pages/customer-manage/unbundl-user'], resolve) }}
           ]
         },
         // 配置管理
@@ -251,7 +253,13 @@ let MyRouter = new Router({
               ]
             },
             // 代扣管理
-            { path: 'proxyreceive', name: 'financeProxyReceive', component: resolve => require(['@/pages/finance-manage/proxy-receive'], resolve)},
+            {
+              path: 'proxyreceive', name: 'financeProxyReceive', component: resolve => require(['@/pages/finance-manage/proxy-receive'], resolve),
+              children: [
+                { path: '/', name: 'financeProxyReceiveList', props: { isDetail: false}, component: resolve => require(['@/pages/finance-manage/proxy-receive/list.vue'], resolve)},
+                { path: 'detail', name: 'financeProxyReceiveDetail', props: { isDetail: true}, component: resolve => require(['@/pages/finance-manage/proxy-receive/list.vue'], resolve)},
+              ]
+            },
             // // 应收账单
             // { path: 'shouldreceiptorder', name: 'financeShouldReceiptOrder', component: resolve => require(['@/pages/finance-manage/shouldreceipt-order'], resolve)},
             // // 实收账单

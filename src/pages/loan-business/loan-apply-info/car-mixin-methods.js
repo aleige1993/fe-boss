@@ -24,17 +24,17 @@ export default {
     openModalCar() {
       this.$data.isAddCar = true;
       this.$data.showModalCar = true;
-      this.$refs['formCar'].resetFields();
+      this.$data.formCar = {};
     },
     // 车辆提交
     async addSuBmitCar() {
-      await this.carData.unshift(this.$data.formCar);
+      await this.carData.unshift($.extend({}, this.$data.formCar));
       this.$data.showModalCar = false;
     },
     // 修改情况下的提交数据
     async setSuBmitCar() {
       let index = await this.$data.formCar._index;
-      this.$set(this.$data.carData, index, this.$data.formCar);
+      this.$set(this.$data.carData, index, Object.assign({}, this.$data.formCar));
       this.$data.showModalCar = false;
     },
     carSuBmit() {
@@ -59,7 +59,6 @@ export default {
     setListCar(row) {
       this.$data.isAddCar = false;
       this.$data.showModalCar = true;
-      this.$data.carInfoDataIndex = row._index;
       this.$data.formCar = row;
     },
     // 删除
