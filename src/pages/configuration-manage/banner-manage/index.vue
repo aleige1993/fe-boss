@@ -163,7 +163,14 @@
         this.$data.buttonLoading = true;
         let url = this.$data.isAdd ? 'cfg/banner/add' : 'cfg/banner/modify';
         let resp = await this.$http.post(url, {
-          ...this.$data.fromData
+//          ...this.$data.fromData
+          'id': this.$data.fromData.id,
+          'title': this.$data.fromData.title,
+          'bannerUrl': this.$data.fromData.bannerUrl,
+          'linkUrl': this.$data.fromData.linkUrl,
+          'index': this.$data.fromData.index,
+          'activeStatus': this.$data.fromData.activeStatus,
+          'bannerType': this.$data.fromData.bannerType
         });
         this.$data.buttonLoading = false;
         if (resp.success) {

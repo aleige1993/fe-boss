@@ -15,26 +15,28 @@ export default {
       }
     };
   },
+  mounted() {
+    this.getBrandList();
+  },
   methods: {
-    async remoteSearchBrand(brandName = '') {
+    async getBrandList(brandName = '') {
       this.$data.brand.searchList = [];
-      if (brandName !== '') {
-        this.$data.brand.searchLoading = true;
-        let res = await this.$http.post('/ces/getMasterBrand', {
-          brandName
-        });
-        if (res.success) {
-          res.body.resultList.map(items => {
-            items.groupList.map(item => {
-              this.$data.brand.searchList.push(item);
-            });
+      this.$data.brand.searchLoading = true;
+      let res = await this.$http.post('/ces/getMasterBrand', {
+        brandName
+      });
+      if (res.success) {
+        res.body.resultList.map(items => {
+          items.groupList.map(item => {
+            this.$data.brand.searchList.push(item);
           });
-          this.$data.brand.searchLoading = false;
-        }
+        });
+        this.$data.brand.searchLoading = false;
       }
     },
     addBrand() {
       this.$data.brand.addModel = true;
+      this.$data.brand.addFormData = {};
     },
     // 上传文件之前的回掉
     uploadBrandProgress() {
@@ -64,6 +66,7 @@ export default {
           if (resp.success) {
             this.$Message.success('添加成功');
             this.$data.brand.addModel = false;
+            this.getBrandList();
           }
         } else {
           this.$Message.error('"<span style="color: red">*</span>"必填项不能为空');

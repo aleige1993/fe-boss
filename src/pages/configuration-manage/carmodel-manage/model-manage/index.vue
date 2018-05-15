@@ -41,7 +41,7 @@
       <i-button type="info" @click="add"><i class="iconfont icon-xinzeng"></i> 新增</i-button>
     </div>
     <slot name="topAction"></slot>
-    <i-table :height="tableFixHeight+88" border :loading="dataLoading" ref="selection" @on-select="selectRow" :columns="resultCustomerColumns" :data="privateCustomerLoanList"></i-table>
+    <i-table :height="tableFixHeight" border :loading="dataLoading" ref="selection" @on-select="selectRow" :columns="resultCustomerColumns" :data="privateCustomerLoanList"></i-table>
     <div class="page-container">
       <i-page :total="total" :page-size="15" :current="currentPage" @on-change="jumpPage" size="small" show-elevator show-total></i-page>
     </div>
@@ -54,10 +54,10 @@
                 <i-select
                   v-model="modelData.id"
                   placeholder=""
-                  filterable
-                  remote
-                  :remote-method="remoteSearchBrand"
-                  :loading="brand.searchLoading">
+                  filterable>
+                  <!--remote-->
+                  <!--:remote-method="remoteSearchBrand"-->
+                  <!--:loading="brand.searchLoading">-->
                   <i-option v-for="item in brand.searchList" :key="item.id" :value="item.id">{{item.brandName}}</i-option>
                 </i-select>
                 <i-button @click="addBrand" type="info">新增</i-button>
@@ -75,6 +75,9 @@
                 </i-select>
                 <i-button v-if="modelData.id" @click="addSeries" type="info">新增</i-button>
               </div>
+            </i-form-item>
+            <i-form-item v-else label="子品牌名称" prop="seriesGroupName">
+              <i-input readonly v-model="modelData.seriesGroupName" placeholder=""></i-input>
             </i-form-item>
           </i-col>
         </i-row>
