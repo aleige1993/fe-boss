@@ -251,7 +251,13 @@ let MyRouter = new Router({
               ]
             },
             // 代扣管理
-            { path: 'proxyreceive', name: 'financeProxyReceive', component: resolve => require(['@/pages/finance-manage/proxy-receive'], resolve)},
+            {
+              path: 'proxyreceive', name: 'financeProxyReceive', component: resolve => require(['@/pages/finance-manage/proxy-receive'], resolve),
+              children: [
+                { path: '/', name: 'financeProxyReceiveList', props: { isDetail: false}, component: resolve => require(['@/pages/finance-manage/proxy-receive/list.vue'], resolve)},
+                { path: 'detail', name: 'financeProxyReceiveDetail', props: { isDetail: true}, component: resolve => require(['@/pages/finance-manage/proxy-receive/list.vue'], resolve)},
+              ]
+            },
             // // 应收账单
             // { path: 'shouldreceiptorder', name: 'financeShouldReceiptOrder', component: resolve => require(['@/pages/finance-manage/shouldreceipt-order'], resolve)},
             // // 实收账单

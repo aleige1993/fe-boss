@@ -119,7 +119,9 @@ export default {
               ]);
             }
           }
-        },
+        }
+      ],
+      customerRemarkColumns: [
         {
           title: '备注',
           key: 'reqReserved',
