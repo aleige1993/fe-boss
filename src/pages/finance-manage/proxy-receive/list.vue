@@ -6,7 +6,7 @@
       <i-breadcrumb-item>代扣管理</i-breadcrumb-item>
     </i-breadcrumb>
     <div class="search-form-container">
-      <i-form inline>
+      <i-form inline ref="searchForm" :model="searchForm">
         <i-form-item prop="user">
           <i-input type="text" v-model="searchForm.projectNo" placeholder="项目编号"></i-input>
         </i-form-item>
@@ -55,7 +55,7 @@
       <a style="display: none" ref="exportExcelRef" :href="exportExcelUrl">触发导出</a>
     </div>
     <slot name="topAction"></slot>
-    <i-table :height="tableFixHeight+20" border :loading="dataLoading" ref="selection" @on-select="selectRow" @on-select-all="selectRow" :columns="resultCustomerColumns" :data="privateCustomerLoanList"></i-table>
+    <i-table :height="tableFixHeight-20" border :loading="dataLoading" ref="selection" @on-select="selectRow" @on-select-all="selectRow" :columns="resultCustomerColumns" :data="privateCustomerLoanList"></i-table>
     <div class="page-container">
       <i-page :total="total" :page-size="15" :current="currentPage" @on-change="jumpPage" size="small" show-elevator show-total></i-page>
     </div>
@@ -184,6 +184,18 @@
             this.$refs.exportExcelRef.click();
           });
         }
+      },
+      initSearchOption() {
+        this.$data.searchForm = {};
+        if (this.isDetail) {
+          this.$data.searchForm.orderStat = 'F';
+        }
+      }
+    },
+    watch: {
+      '$route'() {
+        this.initSearchOption();
+        this.getProxyPayList();
       }
     },
     mounted() {
@@ -205,9 +217,7 @@
           'itemName': '扣款失败'
         }
       ];
-      if (this.isDetail) {
-        this.$data.searchForm.orderStat = 'F';
-      }
+      this.initSearchOption();
       this.getProductList();
       this.getProxyPayList();
     }
