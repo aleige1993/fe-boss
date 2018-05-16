@@ -46,7 +46,7 @@ export default {
         },
         {
           title: '车型图片',
-          key: 'logo',
+          key: 'modelImg',
           align: 'center',
           render: (h, params) => {
             return h('bs-big-img', {
@@ -57,15 +57,15 @@ export default {
                 // thumbWidth: 100,
                 thumbHeight: 80,
                 fullWidth: 1000,
-                thumb: params.row.logo,
-                full: params.row.logo
+                thumb: params.row.modelImg,
+                full: params.row.modelImg
               }
             });
           }
         },
         {
           title: '发动机排量',
-          key: ''
+          key: 'engineExhaustForFloat'
         }
       ],
       customerActionColumns: [

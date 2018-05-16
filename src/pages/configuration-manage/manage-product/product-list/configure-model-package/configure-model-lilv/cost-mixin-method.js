@@ -121,6 +121,7 @@ export default {
       this.$data.buttonLoading = true;
       let feeTypeName = this.getFeeTypeName();
       let resModify = await this.$http.post('/pms/productFeeDetail/modify', {
+        id: this.$data.formCostModel.id,
         packageRateNo: this.$data.packageRateNo,
         feeTypeNo: this.$data.formCostModel.feeTypeNo,  // 费用类型编号
         feeTypeCode: this.$data.formCostModel.feeTypeCode,  // 费用类型代码

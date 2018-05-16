@@ -21,7 +21,7 @@ export default {
   methods: {
     async getBrandList(brandName = '') {
       this.$data.brand.searchList = [];
-      this.$data.brand.searchLoading = true;
+      // this.$data.brand.searchLoading = true;
       let res = await this.$http.post('/ces/getMasterBrand', {
         brandName
       });
@@ -31,7 +31,7 @@ export default {
             this.$data.brand.searchList.push(item);
           });
         });
-        this.$data.brand.searchLoading = false;
+        // this.$data.brand.searchLoading = false;
       }
     },
     addBrand() {
