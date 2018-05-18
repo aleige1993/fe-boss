@@ -27,9 +27,9 @@ export default {
       if (res.success) {
         res.body.resultList.map(items => {
           items.groupList.map(item => {
-            if (item.brandName === this.$data.brand.addFormData.brandName) {
-              this.$data.modelData.id = item.id;
-            }
+            // if (item.brandName === this.$data.brand.addFormData.brandName) {
+            //   this.$data.modelData.id = item.id;
+            // }
             this.$data.brand.searchList.push(item);
           });
         });
