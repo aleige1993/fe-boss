@@ -65,6 +65,7 @@ export default {
       this.$data.series.addFormData = {};
       this.$data.series.addFormData.brandId = this.$data.modelData.id;
       this.$data.series.addFormData.brandName = this.$data.modelData.brandName;
+      this.$data.series.addFormData.seriesGroupName = this.$data.modelData.childBrandName;
       this.$data.series.addModel = true;
     },
     // 上传文件之前的回掉
@@ -95,8 +96,8 @@ export default {
           this.$data.series.addLoading = false;
           if (resp.success) {
             this.$Message.success('添加成功');
-            this.getAllSeriesList();
             this.$data.series.addModel = false;
+            this.getAllSeriesList();
           }
         } else {
           this.$Message.error('"<span style="color: red">*</span>"必填项不能为空');

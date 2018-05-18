@@ -20,18 +20,18 @@
         <i-form-item prop="user">
           <i-input type="text" v-model="searchForm.seriesName" placeholder=""></i-input>
         </i-form-item>
-        <!--<i-form-item prop="password">-->
-          <!--子品牌名称-->
-        <!--</i-form-item>-->
-        <!--<i-form-item prop="user">-->
-          <!--<i-input type="text" v-model="searchForm.seriesGroupName" placeholder=""></i-input>-->
-        <!--</i-form-item>-->
-        <!--<i-form-item prop="password">-->
-          <!--品牌名称-->
-        <!--</i-form-item>-->
-        <!--<i-form-item prop="user">-->
-          <!--<i-input type="text" v-model="searchForm.modelFullName" placeholder=""></i-input>-->
-        <!--</i-form-item>-->
+        <i-form-item prop="password">
+          子品牌名称
+        </i-form-item>
+        <i-form-item prop="user">
+          <i-input type="text" v-model="searchForm.seriesGroupName" placeholder=""></i-input>
+        </i-form-item>
+        <i-form-item prop="password">
+          品牌名称
+        </i-form-item>
+        <i-form-item prop="user">
+          <i-input type="text" v-model="searchForm.modelFullName" placeholder=""></i-input>
+        </i-form-item>
         <i-form-item>
           <i-button @click="search" type="primary"><i-icon type="ios-search-strong"></i-icon> 搜索</i-button>
         </i-form-item>
@@ -70,7 +70,7 @@
           <i-col span="12">
             <i-form-item v-if="isAdd" label="子品牌名称" prop="childBrandName" :rules="{required: true, message: '子品牌名称不能为空'}">
               <div class="flex-items">
-                <i-select :disabled="!modelData.id" v-model="modelData.childBrandName" placeholder="">
+                <i-select filterable :disabled="!modelData.id" v-model="modelData.childBrandName" placeholder="">
                   <i-option v-for="item in childBrandList" :key="item.name" :value="item.name">{{item.name}}</i-option>
                 </i-select>
                 <i-button v-if="modelData.id" @click="addSeries" type="info">新增</i-button>
@@ -85,7 +85,7 @@
           <i-col span="12">
             <i-form-item v-if="isAdd" label="车系名称" prop="carSeriesId" :rules="{required: true, message: '车系名称不能为空'}">
               <div class="flex-items">
-                <i-select :disabled="!modelData.id" v-model="modelData.carSeriesId" placeholder="">
+                <i-select filterable :disabled="!modelData.childBrandName" v-model="modelData.carSeriesId" placeholder="">
                   <i-option v-for="item in series.resultList" :key="item.id" :value="item.id">{{item.seriesName}}</i-option>
                 </i-select>
                 <i-button v-if="modelData.id" @click="addSeries" type="info">新增</i-button>

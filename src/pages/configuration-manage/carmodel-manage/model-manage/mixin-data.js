@@ -20,14 +20,14 @@ export default {
         fileUploading: false
       },
       customerColumns: [
-        // {
-        //   title: '品牌名称',
-        //   key: 'brandName'
-        // },
-        // {
-        //   title: '子品牌名称',
-        //   key: ''
-        // },
+        {
+          title: '品牌名称',
+          key: 'brandName'
+        },
+        {
+          title: '子品牌名称',
+          key: ''
+        },
         {
           title: '车系名称',
           key: 'seriesName'
