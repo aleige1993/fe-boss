@@ -6,7 +6,7 @@
       <i-breadcrumb-item>代扣管理</i-breadcrumb-item>
     </i-breadcrumb>
     <div class="search-form-container">
-      <i-form inline>
+      <i-form inline ref="searchForm" :model="searchForm">
         <i-form-item prop="user">
           <i-input type="text" v-model="searchForm.projectNo" placeholder="项目编号"></i-input>
         </i-form-item>
@@ -36,7 +36,7 @@
           <bs-datepicker v-model="searchForm.receiveETime" type="text" placeholder="查询时间"></bs-datepicker>
         </i-form-item>
         <i-form-item prop="password">
-          <i-select :disabled="isDetail" style="width: 120px;" v-model="searchForm.orderStat" placeholder="扣款状态">
+          <i-select style="width: 120px;" v-model="searchForm.orderStat" placeholder="扣款状态">
             <i-option value="" style="height: 26px; color: #bbbec4">-请选择-</i-option>
             <i-option v-for="item in certTypeEnum" :value="item.itemCode" :key="item.itemCode">{{item.itemName}}</i-option>
           </i-select>
@@ -55,7 +55,7 @@
       <a style="display: none" ref="exportExcelRef" :href="exportExcelUrl">触发导出</a>
     </div>
     <slot name="topAction"></slot>
-    <i-table :height="tableFixHeight+20" border :loading="dataLoading" ref="selection" @on-select="selectRow" @on-select-all="selectRow" :columns="resultCustomerColumns" :data="privateCustomerLoanList"></i-table>
+    <i-table :height="tableFixHeight-20" border :loading="dataLoading" ref="selection" @on-select="selectRow" @on-select-all="selectRow" :columns="resultCustomerColumns" :data="privateCustomerLoanList"></i-table>
     <div class="page-container">
       <i-page :total="total" :page-size="15" :current="currentPage" @on-change="jumpPage" size="small" show-elevator show-total></i-page>
     </div>
@@ -184,6 +184,18 @@
             this.$refs.exportExcelRef.click();
           });
         }
+      },
+      initSearchOption() {
+        this.$data.searchForm = {};
+        if (this.isDetail) {
+          this.$data.searchForm.orderStat = 'F';
+        }
+      }
+    },
+    watch: {
+      '$route'() {
+        this.initSearchOption();
+        this.getProxyPayList();
       }
     },
     mounted() {
@@ -205,9 +217,7 @@
           'itemName': '扣款失败'
         }
       ];
-      if (this.isDetail) {
-        this.$data.searchForm.orderStat = 'F';
-      }
+      this.initSearchOption();
       this.getProductList();
       this.getProxyPayList();
     }

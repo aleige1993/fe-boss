@@ -130,14 +130,14 @@
                   </i-select>
                 </i-form-item>
               </i-col>
-              <i-col span="8">
-                <i-form-item v-if="!isApprove" label="贷款申报用途" prop="loanApproveCreditDTO.loanApplyUse"
-                             :rules="{required: true, message: '请输入贷款申报用途'}">
-                  <i-select :disabled="readonly" v-model="approveData.loanApproveCreditDTO.loanApplyUse">
-                    <i-option v-for="item in enumSelectData.get('LoanApplyUseEnum')" :key="item.itemCode" :value="item.itemCode">{{item.itemName}}</i-option>
-                  </i-select>
-                </i-form-item>
-              </i-col>
+              <!--<i-col span="8">-->
+                <!--<i-form-item v-if="!isApprove" label="贷款申报用途" prop="loanApproveCreditDTO.loanApplyUse"-->
+                             <!--:rules="{required: true, message: '请输入贷款申报用途'}">-->
+                  <!--<i-select :disabled="readonly" v-model="approveData.loanApproveCreditDTO.loanApplyUse">-->
+                    <!--<i-option v-for="item in enumSelectData.get('LoanApplyUseEnum')" :key="item.itemCode" :value="item.itemCode">{{item.itemName}}</i-option>-->
+                  <!--</i-select>-->
+                <!--</i-form-item>-->
+              <!--</i-col>-->
               <i-col span="8">
                 <i-form-item label="是否安装GPS" prop="loanApproveCreditDTO.isNeedGps"
                              :rules="{required: true, message: '请选择是否安装GPS'}">

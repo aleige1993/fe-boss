@@ -4,7 +4,6 @@
     <i-breadcrumb separator=">">
       <i-breadcrumb-item href="/">首页</i-breadcrumb-item>
       <i-breadcrumb-item href="/index/contract">合同管理</i-breadcrumb-item>
-
       <i-breadcrumb-item v-if="this.taskNode==='6'">待制作合同列表</i-breadcrumb-item>
       <i-breadcrumb-item v-if="this.taskNode==='8'">{{succeed?'已签署合同列表':'待签署合同列表'}}</i-breadcrumb-item>
     </i-breadcrumb>
@@ -143,18 +142,17 @@
         await this.getList();
       },
       // 设置当前处理人
-      async settingHandleUser(row) {
-        // 2018.03.22 突然又说不要做设置当前处理人了，此处注释，以防以后又变回来
-        /* let resp = await this.$http.post('/biz/sign/settingHandleUser', {
-          signNo: row.signNo
-        });
-        if (resp.success) {
-          return true;
-        } else {
-          return false;
-        }*/
-        return true;
-      },
+//      async settingHandleUser(row) {
+//        let resp = await this.$http.post('/biz/sign/settingHandleUser', {
+//          signNo: row.signNo
+//        });
+//        if (resp.success) {
+//          return true;
+//        } else {
+//          return false;
+//        }
+//        return true;
+//      },
       // 查询列表数据
       async getList(page) {
         if (this.taskNode === '8' && !this.succeed) {
