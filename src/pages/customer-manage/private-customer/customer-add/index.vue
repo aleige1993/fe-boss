@@ -11,29 +11,29 @@
       <i-tab-pane label="主体信息">
         <tab-basic-info type="page" :customer="addCustomer" @on-submit-success="basicInfoSaved"></tab-basic-info>
       </i-tab-pane>
-      <i-tab-pane :disabled="spouseDisabled" label="配偶信息">
-        <tab-spouse-info v-if="tabIndex === 1" :customer="addCustomer" :isFromDetail="isFromDetail"></tab-spouse-info>
-      </i-tab-pane>
+      <!--<i-tab-pane :disabled="spouseDisabled" label="配偶信息">-->
+        <!--<tab-spouse-info v-if="tabIndex === 1" :customer="addCustomer" :isFromDetail="isFromDetail"></tab-spouse-info>-->
+      <!--</i-tab-pane>-->
       <!-- <i-tab-pane :disabled="otherDisabled" label="联系人信息">
         <tab-contact-info v-if="tabIndex === 2" :customer="addCustomer" :isFromDetail="isFromDetail"></tab-contact-info>
       </i-tab-pane>-->
       <i-tab-pane :disabled="otherDisabled" label="银行账户信息">
-        <tab-bank-account-info v-if="tabIndex === 2" :customer="addCustomer" :isFromDetail="isFromDetail"></tab-bank-account-info>
+        <tab-bank-account-info v-if="tabIndex === 1" :customer="addCustomer" :isFromDetail="isFromDetail"></tab-bank-account-info>
       </i-tab-pane>
       <i-tab-pane :disabled="otherDisabled" label="征信信息">
-        <tab-credit-info v-if="tabIndex === 3" :customer="addCustomer" :isFromDetail="isFromDetail"></tab-credit-info>
+        <tab-credit-info v-if="tabIndex === 2" :customer="addCustomer" :isFromDetail="isFromDetail"></tab-credit-info>
       </i-tab-pane>
       <i-tab-pane :disabled="otherDisabled" label="旗下公司">
-        <tab-owe-company-info v-if="tabIndex === 4" :customer="addCustomer" :isFromDetail="isFromDetail"></tab-owe-company-info>
+        <tab-owe-company-info v-if="tabIndex === 3" :customer="addCustomer" :isFromDetail="isFromDetail"></tab-owe-company-info>
       </i-tab-pane>
       <i-tab-pane :disabled="otherDisabled" label="负面调查">
-        <tab-negative-survey-info v-if="tabIndex === 5" :customer="addCustomer" :isFromDetail="isFromDetail"></tab-negative-survey-info>
+        <tab-negative-survey-info v-if="tabIndex === 4" :customer="addCustomer" :isFromDetail="isFromDetail"></tab-negative-survey-info>
       </i-tab-pane>
       <i-tab-pane :disabled="otherDisabled" label="大数据信息">
-        <tab-business-contact-info v-if="tabIndex === 6" :customer="addCustomer" :isFromDetail="isFromDetail"></tab-business-contact-info>
+        <tab-business-contact-info v-if="tabIndex === 5" :customer="addCustomer" :isFromDetail="isFromDetail"></tab-business-contact-info>
       </i-tab-pane>
       <i-tab-pane :disabled="otherDisabled" label="诉讼情况">
-        <tab-lawsuit-info v-if="tabIndex === 7" :customer="addCustomer" :isFromDetail="isFromDetail"></tab-lawsuit-info>
+        <tab-lawsuit-info v-if="tabIndex === 6" :customer="addCustomer" :isFromDetail="isFromDetail"></tab-lawsuit-info>
       </i-tab-pane>
     </i-tabs>
   </div>
