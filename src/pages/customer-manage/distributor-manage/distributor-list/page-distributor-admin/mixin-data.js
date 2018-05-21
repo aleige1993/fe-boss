@@ -4,7 +4,6 @@ export default {
       columns1: [
         {
           title: '操作员编号',
-          width: '180',
           key: 'userNo'
         },
         {
@@ -32,7 +31,6 @@ export default {
         },
         {
           title: '启停状态',
-          width: '90',
           key: 'useStatus',
           render: (h, params) => {
             return h('span', {}, this.enumCode2Name(params.row.useStatus, 'EnableStatusEnum'));
@@ -40,7 +38,6 @@ export default {
         },
         {
           title: '二维码',
-          width: 100,
           key: 'qrCodeUrl',
           render: (h, params) => {
             return h('div', [

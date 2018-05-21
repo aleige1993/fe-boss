@@ -110,11 +110,8 @@ export default {
                       if (ok) {
                         const loading = this.$Message.loading('处理中...', 0);
                         let resp = await this.$http.post('/ces/car/detail/del', {
-                          'NoVO': {
-                            'no': params.row.modelNo
-                          }
+                          'no': params.row.modelNo
                         });
-
                         loading();
                         if (resp.success) {
                           this.$Message.success('删除成功');
