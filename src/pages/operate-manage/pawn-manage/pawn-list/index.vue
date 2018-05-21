@@ -123,6 +123,16 @@
           this.$data.pawnData = resp.body.resultList;
           this.$data.currentPage = resp.body.currentPage / 1;
           this.$data.total = resp.body.totalNum / 1;
+          if (this.status === '0') {
+            this.$data.pawnData = this.$data.pawnData.map(item => {
+              if (item.surplusBackDays < 0) {
+                item.cellClassName = {
+                  surplusBackDays: 'warning-row'
+                };
+              }
+              return item;
+            });
+          }
         } else {
           this.$data.pawnData = [];
         }
