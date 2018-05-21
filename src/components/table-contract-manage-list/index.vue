@@ -43,6 +43,13 @@
             <i-form-item prop="endDate" style="width: 120px">
               <bs-datepicker v-model="formSearch.endDate" type="text" placeholder="申请时间"></bs-datepicker>
             </i-form-item>
+            <i-form-item v-if="taskNode === '8' && !succeed" prop="certType">
+              <i-select v-model="formSearch.hasSign" style="width:150px" placeholder="线上签约状态">
+                <i-option value="" style="height: 26px; color: #bbbec4">-请选择-</i-option>
+                <i-option value="1">已完成</i-option>
+                <i-option value="2">未完成</i-option>
+              </i-select>
+            </i-form-item>
             <i-form-item style="margin-left:20px;">
               <i-button @click="search" type="primary"><i-icon type="ios-search-strong"></i-icon> 搜索</i-button>
             </i-form-item>
