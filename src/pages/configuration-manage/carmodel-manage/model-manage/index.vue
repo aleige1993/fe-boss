@@ -30,7 +30,7 @@
           品牌名称
         </i-form-item>
         <i-form-item prop="user">
-          <i-input type="text" v-model="searchForm.modelFullName" placeholder=""></i-input>
+          <i-input type="text" v-model="searchForm.brandName" placeholder=""></i-input>
         </i-form-item>
         <i-form-item>
           <i-button @click="search" type="primary"><i-icon type="ios-search-strong"></i-icon> 搜索</i-button>
@@ -92,15 +92,12 @@
               </div>
             </i-form-item>
             <i-form-item v-else label="车系名称" prop="serialName">
-              <i-input readonly v-model="modelData.serialName" placeholder=""></i-input>
+              <i-input readonly v-model="modelData.seriesName" placeholder=""></i-input>
             </i-form-item>
           </i-col>
           <i-col span="12">
-            <i-form-item v-if="isAdd" label="车型全称" :rules="{required: true, message: '车型全称不能为空'}" prop="fullName">
+            <i-form-item label="车型全称" :rules="{required: true, message: '车型全称不能为空'}" prop="fullName">
               <i-input v-model="modelData.fullName" placeholder=""></i-input>
-            </i-form-item>
-            <i-form-item v-else label="车型全称" :rules="{required: true, message: '车型全称不能为空'}" prop="modelFullName">
-              <i-input v-model="modelData.modelFullName" placeholder=""></i-input>
             </i-form-item>
           </i-col>
         </i-row>

@@ -16,7 +16,9 @@ export default {
     };
   },
   mounted() {
-    this.getBrandList();
+    if (this.$data.isAdd) {
+      this.getBrandList();
+    }
   },
   methods: {
     async getBrandList(brandName = '') {

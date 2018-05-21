@@ -12,6 +12,7 @@ export default {
         'modelFullName': '',
         'seriesName': '',
         'seriesGroupName': '',
+        'brandName': '',
         currentPage: 1,
         pageSize: 15
       },
@@ -26,7 +27,7 @@ export default {
         },
         {
           title: '子品牌名称',
-          key: ''
+          key: 'seriesGroupName'
         },
         {
           title: '车系名称',
@@ -92,7 +93,7 @@ export default {
                     });
                     loading();
                     if (resp.success) {
-                      this.$data.modelData = resp.body;
+                      this.$data.modelData = $.extend({}, resp.body, params.row);
                     }
                   }
                 }
@@ -108,9 +109,12 @@ export default {
                     Alertify.confirm('是否确认删除这条数据', async(ok) => {
                       if (ok) {
                         const loading = this.$Message.loading('处理中...', 0);
-                        let resp = await this.$http.post('/car/detail/del', {
-                          no: params.row.brandNo
+                        let resp = await this.$http.post('/ces/car/detail/del', {
+                          'NoVO': {
+                            'no': params.row.modelNo
+                          }
                         });
+
                         loading();
                         if (resp.success) {
                           this.$Message.success('删除成功');

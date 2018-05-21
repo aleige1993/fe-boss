@@ -20,12 +20,14 @@ export default {
   },
   watch: {
     'modelData.id'(newVal) {
-      if (this.$data.modelData.id) {
+      if (this.$data.isAdd && this.$data.modelData.id) {
         this.getAllSeriesList();
       }
     },
     'modelData.childBrandName'(newVal) {
-      this.setSeriesListByChildBrand();
+      if (this.$data.isAdd) {
+        this.setSeriesListByChildBrand();
+      }
     }
   },
   methods: {
