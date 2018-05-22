@@ -41,7 +41,7 @@ export default {
         this.$data.modelData.referpriceNew = this.$data.modelData.referprice;
         submitData = {
           carModelDto: {
-            modelFullName: this.$data.modelData.fullName,
+            modelFullName: this.$data.modelData.seriesName + this.$data.modelData.name,
             modelName: this.$data.modelData.name,
             seriesYear: this.$data.modelData.yyyy,
             guidancePrice: this.$data.modelData.referprice,
@@ -80,6 +80,7 @@ export default {
     },
     // 上传成功
     uploadModelSuccess(res, file, fileList) {
+      alert(res.body.url);
       this.$data.modelData.modelImg = res.body.url;
       this.$data.modelData.fileUploading = false;
     },

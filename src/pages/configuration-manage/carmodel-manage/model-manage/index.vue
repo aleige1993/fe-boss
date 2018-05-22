@@ -96,17 +96,19 @@
             </i-form-item>
           </i-col>
           <i-col span="12">
-            <i-form-item label="车型全称" :rules="{required: true, message: '车型全称不能为空'}" prop="fullName">
-              <i-input v-model="modelData.fullName" placeholder=""></i-input>
-            </i-form-item>
-          </i-col>
-        </i-row>
-        <i-row>
-          <i-col span="6">
             <i-form-item label="车型名称" :rules="{required: true, message: '车型名称不能为空'}" prop="name">
               <i-input v-model="modelData.name" placeholder=""></i-input>
             </i-form-item>
           </i-col>
+        </i-row>
+        <i-row v-if="!isAdd">
+          <i-col span="18">
+            <i-form-item label="车型全称">
+              {{modelData.seriesName + modelData.name}}
+            </i-form-item>
+          </i-col>
+        </i-row>
+        <i-row>
           <i-col span="6">
             <i-form-item label="生产年份" :rules="{required: true, message: '生产年份不能为空'}" prop="yyyy">
               <i-input v-model="modelData.yyyy" placeholder=""></i-input>
