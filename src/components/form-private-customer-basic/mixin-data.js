@@ -69,6 +69,11 @@ export default {
           cityCode: '',
           cityName: '',
           roadAddr: ''
+        },
+        memberSpouseInfoDTO: {
+          spoPhone: '', // 配偶手机号
+          spoName: '', // 配偶姓名
+          spoIdCard: '' // 配偶身份证
         }
       },
       memberSpouseInfoDTO: {

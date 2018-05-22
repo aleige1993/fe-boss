@@ -592,6 +592,9 @@ export default {
       } catch (e) {
         this.$data.initFormLoading = false;
       }
+      if (!this.$data.formData.memberSpouseInfoDTO) {
+        this.$data.formData.memberSpouseInfoDTO = this.$data.memberSpouseInfoDTO;
+      }
       this.reviseInfo();
     },
     async getDepList() {
@@ -652,10 +655,6 @@ export default {
       // 如果不是编辑，清空表单
       this.$refs['formAddCustomer'].resetFields();
       this.$data.formData.mbMemberDTO.memberType = '1';
-    }
-    if (!this.$data.formData.memberSpouseInfoDTO) {
-      this.$data.formData.memberSpouseInfoDTO = this.$data.memberSpouseInfoDTO;
-      console.log(this.$data.formData.memberSpouseInfoDTO);
     }
   }
 };
