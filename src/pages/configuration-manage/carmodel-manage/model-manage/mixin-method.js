@@ -12,7 +12,7 @@ export default {
     add() {
       this.$data.isAdd = true;
       this.$data.addModal = true;
-      this.$data.modelData = {};
+      this.$refs['modelData'].resetFields();
     },
     async getProxyPayList(page) {
       this.$data.dataLoading = true;
@@ -80,7 +80,6 @@ export default {
     },
     // 上传成功
     uploadModelSuccess(res, file, fileList) {
-      alert(res.body.url);
       this.$data.modelData.modelImg = res.body.url;
       this.$data.modelData.fileUploading = false;
     },

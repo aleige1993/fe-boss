@@ -46,7 +46,7 @@
       <i-page :total="total" :page-size="15" :current="currentPage" @on-change="jumpPage" size="small" show-elevator show-total></i-page>
     </div>
     <pt-modal :title="isAdd ? '添加车型' : '修改车型'" v-model="addModal" :width="1000" :zIndex="200" @on-close="modelData.modelFileUploading=false">
-      <i-form v-if="addModal" ref="modelData" :model="modelData" label-position="right" :label-width="100">
+      <i-form ref="modelData" :model="modelData" label-position="right" :label-width="100">
         <i-row>
           <i-col span="12">
             <i-form-item v-if="isAdd" label="品牌名称" prop="id" :rules="{required: true, message: '品牌名称不能为空'}">
