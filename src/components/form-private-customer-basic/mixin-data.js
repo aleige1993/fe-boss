@@ -69,12 +69,12 @@ export default {
           cityCode: '',
           cityName: '',
           roadAddr: ''
-        },
-        MbMemberSpouseInfoDTO: {
-          spoPhone: '', // 配偶手机号
-          spoName: '', // 配偶姓名
-          spoIdCard: '' // 配偶身份证
         }
+      },
+      memberSpouseInfoDTO: {
+        spoPhone: '', // 配偶手机号
+        spoName: '', // 配偶姓名
+        spoIdCard: '' // 配偶身份证
       },
       depColumns: [
         {
@@ -93,11 +93,11 @@ export default {
       depData: [],
       MemberType: [
         {
-          itemCode: 1,
+          itemCode: '1',
           itemName: '意向会员'
         },
         {
-          itemCode: 2,
+          itemCode: '2',
           itemName: '正式会员'
         }
       ]
