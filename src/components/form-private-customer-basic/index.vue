@@ -20,7 +20,7 @@
               <i-col span="8">
                 <i-form-item label="会员类型" prop="mbMemberDTO.memberType"
                  :rules="{required: true, message: '会员类型不能为空', trigger: 'blur'}">
-                  <i-select :disabled="isFromDetail" v-model="formData.mbMemberDTO.memberType">
+                  <i-select disabled v-model="formData.mbMemberDTO.memberType">
                     <i-option v-for="item in MemberType" :key="item.itemCode" :value="item.itemCode">{{item.itemName}}</i-option>
                   </i-select>
                 </i-form-item>
@@ -284,24 +284,24 @@
           </bs-form-block>
           <!--配偶信息-->
           <!--<bs-form-block :title="'配偶信息'" v-if="formData.mbMemberDTO.maritalStatus==='1'">-->
-          <bs-form-block :title="'配偶信息'" v-if="formData.mbMemberDTO.maritalStatus === '1' && formData.MbMemberSpouseInfoDTO">
+          <bs-form-block :title="'配偶信息'" v-if="formData.mbMemberDTO.maritalStatus === '1' && formData.memberSpouseInfoDTO">
             <i-row>
               <i-col span="8">
-                <i-form-item prop="MbMemberSpouseInfoDTO.spoName" label="配偶姓名"
+                <i-form-item prop="memberSpouseInfoDTO.spoName" label="配偶姓名"
                              :rules="{required: true, message: '姓名不能为空', trigger: 'blur'}">
-                  <i-input :readonly="isFromDetail" placeholder="姓名" v-model="formData.MbMemberSpouseInfoDTO.spoName"></i-input>
+                  <i-input :readonly="isFromDetail" placeholder="姓名" v-model="formData.memberSpouseInfoDTO.spoName"></i-input>
                 </i-form-item>
               </i-col>
               <i-col span="8">
-                <i-form-item prop="MbMemberSpouseInfoDTO.spoIdCard" label="身份证号"
+                <i-form-item prop="memberSpouseInfoDTO.spoIdCard" label="身份证号"
                              :rules="{required: true, message: '身份证号不能为空', trigger: 'blur'}">
-                  <i-input :readonly="isFromDetail" placeholder="身份证" v-model="formData.MbMemberSpouseInfoDTO.spoIdCard"></i-input>
+                  <i-input :readonly="isFromDetail" placeholder="身份证" v-model="formData.memberSpouseInfoDTO.spoIdCard"></i-input>
                 </i-form-item>
               </i-col>
               <i-col span="8">
-                <i-form-item prop="MbMemberSpouseInfoDTO.spoPhone" label="手机号"
+                <i-form-item prop="memberSpouseInfoDTO.spoPhone" label="手机号"
                              :rules="{required: true, message: '手机号不能为空', trigger: 'blur'}">
-                  <i-input :readonly="isFromDetail" placeholder="手机号" v-model="formData.MbMemberSpouseInfoDTO.spoPhone"></i-input>
+                  <i-input :readonly="isFromDetail" placeholder="手机号" v-model="formData.memberSpouseInfoDTO.spoPhone"></i-input>
                 </i-form-item>
               </i-col>
             </i-row>
@@ -579,8 +579,6 @@ export default {
         let resp = await this.$http.post('/member/find', {
           memberNo: this.id
         });
-//        console.log(1);
-//        console.log(resp);
         this.$data.initFormLoading = false;
         this.$data.formData = resp.body;
         if (resp.body.mbMemberDTO.workYears) {
@@ -593,6 +591,9 @@ export default {
         this.$emit('on-submit-success', resp.body);
       } catch (e) {
         this.$data.initFormLoading = false;
+      }
+      if (!this.$data.formData.memberSpouseInfoDTO) {
+        this.$data.formData.memberSpouseInfoDTO = this.$data.memberSpouseInfoDTO;
       }
       this.reviseInfo();
     },
@@ -653,6 +654,7 @@ export default {
     } else {
       // 如果不是编辑，清空表单
       this.$refs['formAddCustomer'].resetFields();
+      this.$data.formData.mbMemberDTO.memberType = '1';
     }
   }
 };
