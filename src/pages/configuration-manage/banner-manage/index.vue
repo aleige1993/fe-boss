@@ -138,7 +138,6 @@
         this.$data.addModal = true;
         this.$refs['fromData'].resetFields();
         this.$data.fromData.bannerNo = Tools.generateUUID();
-        console.log(this.$data.fromData.bannerNo);
       },
       async getProxyPayList(page) {
         this.$data.dataLoading = true;
