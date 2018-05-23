@@ -14,7 +14,7 @@
       <i-page :total="total" :page-size="15" :current="currentPage" @on-change="jumpPage" size="small" show-elevator show-total></i-page>
     </div>
     <pt-modal :title="isAdd ? '添加' : '修改'" v-model="addModal" :width="1000" :zIndex="200" @on-close="fileUploading=false">
-      <i-form v-if="addModal" ref="fromData" :model="fromData" label-position="left" :label-width="80">
+      <i-form ref="fromData" :model="fromData" label-position="left" :label-width="80">
         <i-form-item label="类型" prop="bannerType" :rules="{required: true, message: '请选择类型', trigger: 'blur'}">
           <i-select v-model="fromData.bannerType">
             <i-option v-for="item in bannerTypeEnum" :key="item.itemCode" :value="item.itemCode">{{item.itemName}}</i-option>
@@ -78,6 +78,7 @@
   import MixinData from './mixin-data';
   import PTModal from '@/components/bs-modal';
   import Editor from '@/components/wangeditor';
+  import Tools from '../../../utils/Tools';
   export default {
     name: 'bannerManage',
     mixins: [MixinData],
@@ -92,19 +93,13 @@
         currentPage: 1,
         bannerTypeEnum: {},
         certTypeEnum: {},
-        uploadFileName: '',
         searchForm: {
-          'projectNo': '',
-          'toAccName': '',
-          'transCardId': '',
-          'btime': '',
-          'etime': '',
-          'status': '',
           currentPage: 1,
           pageSize: 15
         },
         fromData: {
           'id': '',
+//          'bannerNo': '',
           'title': '',
           'bannerUrl': '',
           'linkUrl': '',
@@ -142,6 +137,8 @@
         this.$data.isAdd = true;
         this.$data.addModal = true;
         this.$refs['fromData'].resetFields();
+        this.$data.fromData.bannerNo = Tools.generateUUID();
+        console.log(this.$data.fromData.bannerNo);
       },
       async getProxyPayList(page) {
         this.$data.dataLoading = true;
