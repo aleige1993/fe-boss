@@ -70,7 +70,7 @@
           <i-col span="12">
             <i-form-item v-if="isAdd" label="子品牌名称" prop="childBrandName" :rules="{required: true, message: '子品牌名称不能为空'}">
               <div class="flex-items">
-                <i-select filterable :disabled="!modelData.id" v-model="modelData.childBrandName" placeholder="">
+                <i-select :disabled="!modelData.id" v-model="modelData.childBrandName" placeholder="">
                   <i-option v-for="item in childBrandList" :key="item.name" :value="item.name">{{item.name}}</i-option>
                 </i-select>
                 <i-button v-if="modelData.id" @click="addSeries" type="info">新增</i-button>
