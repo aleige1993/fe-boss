@@ -441,9 +441,7 @@
           productAlias: this.$data.formCustom.productAlias,  // 产品别名
           loanType: this.$data.formCustom.loanType,
           maxLimit: this.$data.formCustom.maxLimit,
-          status: this.$data.formCustom.status,  // 产品状态
-          divideMoneyFlag: this.$data.formCustom.divideMoneyFlag,
-          contractProperty: this.$data.formCustom.contractProperty
+          status: this.$data.formCustom.status  // 产品状态
         });
         if (resModify.success) {
           this.$data.showAddModal = false;
