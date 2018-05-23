@@ -213,7 +213,9 @@ let MyRouter = new Router({
                 { path: '/', name: 'intentionOrderList', component: resolve => require(['@/pages/loan-business/intention-order/order-list'], resolve)},
                 { path: ':orderId', name: 'intentionOrderDetail', component: resolve => require(['@/pages/loan-business/intention-order/order-detail'], resolve)},
               ]
-            }
+            },
+            // 手机验证码查询
+            { path: 'querysmscode', name: 'querySmsCode', component: resolve => require(['@/pages/loan-business/query-smscode'], resolve)},
           ]
         },
         // 贷款业务 end
