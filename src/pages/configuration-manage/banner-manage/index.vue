@@ -13,7 +13,7 @@
     <div class="page-container">
       <i-page :total="total" :page-size="15" :current="currentPage" @on-change="jumpPage" size="small" show-elevator show-total></i-page>
     </div>
-    <pt-modal :title="isAdd ? '添加' : '修改'" v-model="addModal" :width="600" :zIndex="200" @on-close="fileUploading=false">
+    <pt-modal :title="isAdd ? '添加' : '修改'" v-model="addModal" :width="1000" :zIndex="200" @on-close="fileUploading=false">
       <i-form v-if="addModal" ref="fromData" :model="fromData" label-position="left" :label-width="80">
         <i-form-item label="类型" prop="bannerType" :rules="{required: true, message: '请选择类型', trigger: 'blur'}">
           <i-select v-model="fromData.bannerType">
@@ -24,33 +24,36 @@
           <i-input v-model="fromData.title" placeholder="" ></i-input>
         </i-form-item>
         <i-form-item label="链接" prop="linkUrl">
-          <i-input v-model="fromData.linkUrl" placeholder=""></i-input>
+          <i-input disabled v-model="fromData.linkUrl" placeholder=""></i-input>
         </i-form-item>
-        <i-form-item label="选择图片" prop="bannerUrl" :rules="{required: true, message: '请选择图片', trigger: 'blur'}">
-          <input type="hidden" v-model="fromData.bannerUrl"/>
-          <i-upload
-              :format="['jpg','jpeg','png']"
-              :on-success="uploadSuccess"
-              :before-upload="uploadProgress"
-              :on-error="uploadError"
-              :max-size="uploadMaxSize"
-              :on-format-error="handleFormatError"
-              :on-exceeded-size="handleMaxSize"
-              :action="$config.HTTPBASEURL+'/common/upload'"
-              :show-upload-list="false">
-            <div class="upload-image">
-              <div v-if="!fromData.bannerUrl">
-                <i-icon type="ios-cloud-upload" size="52" style="color: #3399ff"></i-icon>
-                <p>单击或拖动文件上传</p>
-              </div>
-              <img v-else height="95" :src="fromData.bannerUrl" alt="">
-              <i-spin fix v-if="fileUploading">
-                <Icon type="load-c" size=18 class="demo-spin-icon-load"></Icon>
-                <div style="margin-top: 10px">正在上传中，请勿关闭...</div>
-              </i-spin>
-            </div>
-          </i-upload>
+        <i-form-item label="内容" prop="content">
+          <editor :editor-content="fromData.content" @change="editorContent"></editor>
         </i-form-item>
+        <!--<i-form-item label="选择图片" prop="bannerUrl" :rules="{required: true, message: '请选择图片', trigger: 'blur'}">-->
+        <!--<input type="hidden" v-model="fromData.bannerUrl"/>-->
+        <!--<i-upload-->
+        <!--:format="['jpg','jpeg','png']"-->
+        <!--:on-success="uploadSuccess"-->
+        <!--:before-upload="uploadProgress"-->
+        <!--:on-error="uploadError"-->
+        <!--:max-size="uploadMaxSize"-->
+        <!--:on-format-error="handleFormatError"-->
+        <!--:on-exceeded-size="handleMaxSize"-->
+        <!--:action="$config.HTTPBASEURL+'/common/upload'"-->
+        <!--:show-upload-list="false">-->
+        <!--<div class="upload-image">-->
+        <!--<div v-if="!fromData.bannerUrl">-->
+        <!--<i-icon type="ios-cloud-upload" size="52" style="color: #3399ff"></i-icon>-->
+        <!--<p>单击或拖动文件上传</p>-->
+        <!--</div>-->
+        <!--<img v-else height="95" :src="fromData.bannerUrl" alt="">-->
+        <!--<i-spin fix v-if="fileUploading">-->
+        <!--<Icon type="load-c" size=18 class="demo-spin-icon-load"></Icon>-->
+        <!--<div style="margin-top: 10px">正在上传中，请勿关闭...</div>-->
+        <!--</i-spin>-->
+        <!--</div>-->
+        <!--</i-upload>-->
+        <!--</i-form-item>-->
         <i-form-item label="排序" prop="index" :rules="{required: true, message: '排序不能为空', trigger: 'blur'}">
           <i-input v-model="fromData.index" placeholder="" style="width: 100%"></i-input>
         </i-form-item>
@@ -74,6 +77,7 @@
 <script>
   import MixinData from './mixin-data';
   import PTModal from '@/components/bs-modal';
+  import Editor from '@/components/wangeditor';
   export default {
     name: 'bannerManage',
     mixins: [MixinData],
@@ -106,12 +110,14 @@
           'linkUrl': '',
           'index': '',
           'activeStatus': '',
-          'bannerType': ''
+          'bannerType': '',
+          'content': ''
         }
       };
     },
     components: {
-      'pt-modal': PTModal
+      'pt-modal': PTModal,
+      Editor
     },
     computed: {
       resultCustomerColumns() {
@@ -121,11 +127,6 @@
           return [...this.$data.customerColumns, ...this.$data.customerActionColumns];
         }
       }
-    },
-    props: {
-      type: String,
-      default: 'page',
-      required: false
     },
     methods: {
       selectRow(row, index) {
@@ -159,6 +160,9 @@
         this.$data.currentPage = resp.body.currentPage / 1;
         this.$data.total = resp.body.totalNum / 1;
       },
+      editorContent(content) {
+        this.$data.fromData.content = content;
+      },
       async submitSuccess() {
         this.$data.buttonLoading = true;
         let url = this.$data.isAdd ? 'cfg/banner/add' : 'cfg/banner/modify';
@@ -190,25 +194,25 @@
           }
         });
       },
-      // 上传文件之前的回掉
-      uploadProgress() {
-        this.$data.fileUploading = true;
-      },
-      // 上传成功
-      uploadSuccess(res, file, fileList) {
-        if (this.$data.addModal) {
-          this.$data.fromData.bannerUrl = res.body.url;
-        }
-        this.$data.fileUploading = false;
-      },
-      // 上传失败
-      uploadError(err, file, fileList) {
-        this.$Notice.error({
-          title: '错误提示',
-          desc: err
-        });
-        this.$data.fileUploading = false;
-      },
+//      // 上传文件之前的回掉
+//      uploadProgress() {
+//        this.$data.fileUploading = true;
+//      },
+//      // 上传成功
+//      uploadSuccess(res, file, fileList) {
+//        if (this.$data.addModal) {
+//          this.$data.fromData.bannerUrl = res.body.url;
+//        }
+//        this.$data.fileUploading = false;
+//      },
+//      // 上传失败
+//      uploadError(err, file, fileList) {
+//        this.$Notice.error({
+//          title: '错误提示',
+//          desc: err
+//        });
+//        this.$data.fileUploading = false;
+//      },
       // 取消 按钮
       cancelFun() {
         this.$data.addModal = false;
