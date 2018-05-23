@@ -136,7 +136,9 @@
             <i-form-item
               label="合同账户属性"
               prop="contractProperty">
-              <i-select v-model="formCustom.contractProperty">
+              <i-select v-model="formCustom.contractProperty" palceholder="">
+                <i-option v-if="isAdd" value="" style="height: 26px; color: #bbbec4">请选择</i-option>
+                <i-option v-else value="-1" style="height: 26px; color: #bbbec4">请选择</i-option>
                 <i-option value="1">放款账户</i-option>
                 <i-option value="2">还款账户</i-option>
               </i-select>
