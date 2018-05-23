@@ -18,6 +18,7 @@ export default {
       },
       modelData: {
         id: null,
+        childBrandName: '',
         fileUploading: false
       },
       customerColumns: [
