@@ -371,6 +371,7 @@
             <span v-if="!brand.addLoading">提交</span>
             <span v-else>loading...</span>
           </i-button>
+          <i-button type="ghost" @click="cancelBrandFun" style="margin-left: 8px">取消</i-button>
         </i-form-item>
       </i-form>
     </pt-modal>
@@ -417,6 +418,7 @@
             <span v-if="!series.addLoading">提交</span>
             <span v-else>loading...</span>
           </i-button>
+          <i-button type="ghost" @click="cancelSeriesFun" style="margin-left: 8px">取消</i-button>
         </i-form-item>
       </i-form>
     </pt-modal>

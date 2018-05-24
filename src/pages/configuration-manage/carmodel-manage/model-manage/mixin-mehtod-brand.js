@@ -75,6 +75,9 @@ export default {
           this.$Message.error('"<span style="color: red">*</span>"必填项不能为空');
         }
       });
+    },
+    cancelBrandFun() {
+      this.$data.brand.addModel = false;
     }
   }
 };
