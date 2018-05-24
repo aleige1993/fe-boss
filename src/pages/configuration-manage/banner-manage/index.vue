@@ -137,8 +137,9 @@
         this.$data.isAdd = true;
         this.$data.addModal = true;
         this.$refs['fromData'].resetFields();
-        this.$data.fromData.bannerNo = Tools.generateUUID();
-        this.$data.fromData.linkUrl = Tools.generateUUID();
+        let bannerNo = Tools.generateUUID();
+        this.$data.fromData.bannerNo = bannerNo;
+        this.$data.fromData.linkUrl = bannerNo;
       },
       async getProxyPayList(page) {
         this.$data.dataLoading = true;
