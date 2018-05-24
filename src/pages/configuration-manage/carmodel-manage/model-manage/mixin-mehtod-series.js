@@ -45,6 +45,7 @@ export default {
       if (res.success) {
         this.$data.seriesList = res.body.resultList;
         this.setChildBrandList();
+        this.setSeriesListByChildBrand();
       }
     },
     setChildBrandList() {
