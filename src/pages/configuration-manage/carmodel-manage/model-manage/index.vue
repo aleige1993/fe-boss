@@ -104,7 +104,7 @@
         <i-row v-if="!isAdd">
           <i-col span="18">
             <i-form-item label="车型全称">
-              {{modelData.seriesName + modelData.name}}
+              {{modelData.seriesName + ' ' +modelData.name}}
             </i-form-item>
           </i-col>
         </i-row>
