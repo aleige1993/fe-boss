@@ -6,6 +6,6 @@ module.exports = {
   HTTPMOCK_TIMEOUT: 500,
   XHRLOG: false, // 是否console出ajax的详细信息；右上角的Notice是否打印url和code
   HTTPBASEURL: '""',
-  HTTPFEH5URL: '"http://192.168.200.173:8090"'
+  HTTPFEH5URL: '"http://10.164.238.16:9085"'
   // HTTPFEH5URL: '"https://feh5.songchedai.com"'
 };

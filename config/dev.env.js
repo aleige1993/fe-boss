@@ -11,5 +11,4 @@ module.exports = merge(prodEnv, {
    // HTTPBASEURL: '"http://10.164.238.14:9093"' // 开发服务器
   HTTPBASEURL: '"http://10.164.238.15:8080"', // 测试服务器
   // HTTPBASEURL: '"http://192.168.201.200:8089"' // 厉洪叶
-  HTTPFEH5URL: '"http://192.168.200.173:8090"'
 });

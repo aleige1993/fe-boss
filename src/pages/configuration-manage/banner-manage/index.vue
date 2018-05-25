@@ -231,7 +231,6 @@
       }
     },
     mounted() {
-      console.log(this.$config);
       this.getProxyPayList();
       this.$data.bannerTypeEnum = [
         {
