@@ -400,7 +400,7 @@
                   <!--:currCity="formData.mbMemberWorkDTO.cityName"-->
                   <!--@on-change="selectCompanyDistance">-->
                   <!--</bs-dispicker>-->
-                  <i-input v-model="formData.mbMemberWorkDTO.roadAddr" placeholder="街道信息" ></i-input>
+                  <i-input v-model="formData.mbMemberWorkDTO.roadAddr" placeholder="" ></i-input>
                 </i-form-item>
               </i-col>
             </i-row>
@@ -457,7 +457,7 @@
                   <i-select v-model="formData.mbMemberDTO.sourceWay" placeholder="来源渠道">
                     <i-option value="" style="height: 26px; color: #bbbec4">-请选择-</i-option>
                     <i-option v-for="item in enumSelectData.get('BizChannelEnum')" :key="item.itemCode" :value="item.itemCode">{{item.itemName}}</i-option>
-                  </i-select>
+                  </i-select>                                    
                 </i-form-item>
               </i-col>
             </i-row>

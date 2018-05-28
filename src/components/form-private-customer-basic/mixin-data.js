@@ -73,13 +73,13 @@ export default {
         memberSpouseInfoDTO: {
           spoPhone: '', // 配偶手机号
           spoName: '', // 配偶姓名
-          spoIdCard: '' // 配偶身份证
+          spoCardNo: '' // 配偶身份证
         }
       },
       memberSpouseInfoDTO: {
         spoPhone: '', // 配偶手机号
         spoName: '', // 配偶姓名
-        spoIdCard: '' // 配偶身份证
+        spoCardNo: '' // 配偶身份证
       },
       depColumns: [
         {
