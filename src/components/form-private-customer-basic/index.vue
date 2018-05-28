@@ -176,7 +176,7 @@
                 <i-form-item v-if="!isFromDetail" label="户籍地址" prop="mbMemberDTO.censusDistrictName"
                              :rules="{required: true, message: '请输入户籍地址', trigger: 'blur'}">
                   <input type="hidden" v-model="formData.mbMemberDTO.censusDistrictName">
-                  <bs-dispicker readonly :currProvince="formData.mbMemberDTO.censusProvinceName"
+                  <bs-dispicker readonly  :currProvince="formData.mbMemberDTO.censusProvinceName"
                                 :currDistrict="formData.mbMemberDTO.censusDistrictName"
                                 :currCity="formData.mbMemberDTO.censusCityName"
                                 @on-change="selectCensusDistance">
@@ -293,9 +293,9 @@
                 </i-form-item>
               </i-col>
               <i-col span="8">
-                <i-form-item prop="memberSpouseInfoDTO.spoIdCard" label="身份证号"
+                <i-form-item prop="memberSpouseInfoDTO.spoCardNo" label="身份证号"
                              :rules="{required: true, message: '身份证号不能为空', trigger: 'blur'}">
-                  <i-input :readonly="isFromDetail" placeholder="身份证" v-model="formData.memberSpouseInfoDTO.spoIdCard"></i-input>
+                  <i-input :readonly="isFromDetail" placeholder="身份证" v-model="formData.memberSpouseInfoDTO.spoCardNo"></i-input>
                 </i-form-item>
               </i-col>
               <i-col span="8">
@@ -400,7 +400,7 @@
                   <!--:currCity="formData.mbMemberWorkDTO.cityName"-->
                   <!--@on-change="selectCompanyDistance">-->
                   <!--</bs-dispicker>-->
-                  <i-input v-model="formData.mbMemberWorkDTO.roadAddr" placeholder="街道信息" ></i-input>
+                  <i-input v-model="formData.mbMemberWorkDTO.roadAddr" placeholder="" ></i-input>
                 </i-form-item>
               </i-col>
             </i-row>
@@ -595,7 +595,6 @@ export default {
       if (!this.$data.formData.memberSpouseInfoDTO) {
         this.$data.formData.memberSpouseInfoDTO = this.$data.memberSpouseInfoDTO;
       }
-      this.reviseInfo();
     },
     async getDepList() {
       let resp = await this.$http.post('/common/dept/tree', {});
@@ -632,8 +631,6 @@ export default {
         this.$data.formData.mbMemberDTO.censusCityName = data.address.censusCityName;
         this.$data.formData.mbMemberDTO.censusDistrictCode = data.address.censusDistrictCode;
         this.$data.formData.mbMemberDTO.censusDistrictName = data.address.censusDistrictName;
-//        console.log('isd', isd);
-//        console.log('resp', resp);
       }
     },
     handleMaxSize(file) {
