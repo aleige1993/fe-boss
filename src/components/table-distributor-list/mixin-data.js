@@ -126,6 +126,11 @@ export default {
           }
         },
         {
+          title: '创建人',
+          key: 'createUserCode',
+          width: 80
+        },
+        {
           title: '渠道商状态', // 0:未授信1-授信申请中2-已授信5-授信过期6-冻结
           width: 100,
           key: 'merchantStatus',

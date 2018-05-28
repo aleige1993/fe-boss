@@ -20,12 +20,14 @@ export default {
   },
   watch: {
     'modelData.id'(newVal) {
-      if (this.$data.modelData.id) {
+      if (this.$data.isAdd && this.$data.modelData.id) {
         this.getAllSeriesList();
       }
     },
     'modelData.childBrandName'(newVal) {
-      this.setSeriesListByChildBrand();
+      if (this.$data.isAdd) {
+        this.setSeriesListByChildBrand();
+      }
     }
   },
   methods: {
@@ -43,6 +45,7 @@ export default {
       if (res.success) {
         this.$data.seriesList = res.body.resultList;
         this.setChildBrandList();
+        this.setSeriesListByChildBrand();
       }
     },
     setChildBrandList() {
@@ -65,6 +68,7 @@ export default {
       this.$data.series.addFormData = {};
       this.$data.series.addFormData.brandId = this.$data.modelData.id;
       this.$data.series.addFormData.brandName = this.$data.modelData.brandName;
+      this.$data.series.addFormData.seriesGroupName = this.$data.modelData.childBrandName;
       this.$data.series.addModel = true;
     },
     // 上传文件之前的回掉
@@ -95,13 +99,16 @@ export default {
           this.$data.series.addLoading = false;
           if (resp.success) {
             this.$Message.success('添加成功');
-            this.getAllSeriesList();
             this.$data.series.addModel = false;
+            this.getAllSeriesList();
           }
         } else {
           this.$Message.error('"<span style="color: red">*</span>"必填项不能为空');
         }
       });
+    },
+    cancelSeriesFun() {
+      this.$data.series.addModel = false;
     }
   }
 };

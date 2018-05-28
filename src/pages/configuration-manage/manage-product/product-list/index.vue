@@ -131,6 +131,19 @@
             </i-form-item>
           </i-col>
         </i-row>
+        <i-row>
+          <i-col span="8">
+            <i-form-item
+              label="合同账户属性"
+              prop="contractProperty">
+              <i-select v-model="formCustom.contractProperty" palceholder="">
+                <i-option value="0" style="height: 26px; color: #bbbec4">-请选择-</i-option>
+                <i-option value="1">放款账户</i-option>
+                <i-option value="2">还款账户</i-option>
+              </i-select>
+            </i-form-item>
+          </i-col>
+        </i-row>
         <bs-form-block :title="'产品特性'" v-if="!isAdd">
           <div class="form-top-actions">
             <i-button @click="openModalFeature" type="info"><i class="iconfont icon-xinzeng"></i>&nbsp;新增</i-button>
@@ -268,7 +281,8 @@
           loanType: '',
           maxLimit: '',
           status: '',  // 产品状态
-          divideMoneyFlag: '' // 是否分账
+          divideMoneyFlag: '', // 是否分账
+          contractProperty: '' // 合同账户属性
         }
       };
     },
@@ -389,7 +403,8 @@
           loanType: this.$data.formCustom.loanType,
           maxLimit: this.$data.formCustom.maxLimit,
           status: this.$data.formCustom.status,
-          divideMoneyFlag: this.$data.formCustom.divideMoneyFlag
+          divideMoneyFlag: this.$data.formCustom.divideMoneyFlag,
+          contractProperty: this.$data.formCustom.contractProperty
         });
         this.$data.buttonLoading = false; // 关闭按钮的loading状态
         if (resAdd.success) {
@@ -429,7 +444,8 @@
           loanType: this.$data.formCustom.loanType,
           maxLimit: this.$data.formCustom.maxLimit,
           status: this.$data.formCustom.status,  // 产品状态
-          divideMoneyFlag: this.$data.formCustom.divideMoneyFlag
+          divideMoneyFlag: this.$data.formCustom.divideMoneyFlag,
+          contractProperty: this.$data.formCustom.contractProperty
         });
         if (resModify.success) {
           this.$data.showAddModal = false;

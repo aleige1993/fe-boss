@@ -16,22 +16,25 @@ export default {
     };
   },
   mounted() {
-    this.getBrandList();
+    if (this.$data.isAdd) {
+      this.getBrandList();
+    }
   },
   methods: {
     async getBrandList(brandName = '') {
       this.$data.brand.searchList = [];
-      // this.$data.brand.searchLoading = true;
       let res = await this.$http.post('/ces/getMasterBrand', {
         brandName
       });
       if (res.success) {
         res.body.resultList.map(items => {
           items.groupList.map(item => {
+            // if (item.brandName === this.$data.brand.addFormData.brandName) {
+            //   this.$data.modelData.id = item.id;
+            // }
             this.$data.brand.searchList.push(item);
           });
         });
-        // this.$data.brand.searchLoading = false;
       }
     },
     addBrand() {
@@ -72,6 +75,9 @@ export default {
           this.$Message.error('"<span style="color: red">*</span>"必填项不能为空');
         }
       });
+    },
+    cancelBrandFun() {
+      this.$data.brand.addModel = false;
     }
   }
 };

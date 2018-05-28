@@ -5,6 +5,7 @@ import UserLogin from '@/utils/UserLogin';
 /* eslint-disable */
 import Errors from '@/pages/errors';
 import PageNotFound from '@/pages/errors';
+
 Vue.use(Router);
 let MyRouter = new Router({
   routes: [
@@ -150,25 +151,15 @@ let MyRouter = new Router({
               ]
             },
             // 车型管理 end
-
             // banner管理
-            {
-              path: 'bannermanage', name: 'bannerManage', component: resolve => require(['@/pages/configuration-manage/banner-manage'], resolve),
-            },
+            {path: 'bannermanage', name: 'bannerManage', component: resolve => require(['@/pages/configuration-manage/banner-manage'], resolve)},
             // banner管理 end
-
             // 短信管理
-            {
-              path: 'smsmanage', name: 'smsManage', component: resolve => require(['@/pages/configuration-manage/sms-manage'], resolve),
-            },
+            {path: 'smsmanage', name: 'smsManage', component: resolve => require(['@/pages/configuration-manage/sms-manage'], resolve)},
             // 短信管理 end
-
             // 支持银行
-            {
-              path: 'supportbank', name: 'supportBank', component: resolve => require(['@/pages/configuration-manage/support-bank'], resolve),
-            },
+            {path: 'supportbank', name: 'supportBank', component: resolve => require(['@/pages/configuration-manage/support-bank'], resolve)},
             // 支持银行 end
-
           ]
         },// 配置管理end
         // 贷款业务
@@ -213,7 +204,9 @@ let MyRouter = new Router({
                 { path: '/', name: 'intentionOrderList', component: resolve => require(['@/pages/loan-business/intention-order/order-list'], resolve)},
                 { path: ':orderId', name: 'intentionOrderDetail', component: resolve => require(['@/pages/loan-business/intention-order/order-detail'], resolve)},
               ]
-            }
+            },
+            // 手机验证码查询
+            { path: 'querysmscode', name: 'querySmsCode', component: resolve => require(['@/pages/loan-business/query-smscode'], resolve)},
           ]
         },
         // 贷款业务 end

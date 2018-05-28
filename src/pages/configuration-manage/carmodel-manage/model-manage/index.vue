@@ -20,18 +20,18 @@
         <i-form-item prop="user">
           <i-input type="text" v-model="searchForm.seriesName" placeholder=""></i-input>
         </i-form-item>
-        <!--<i-form-item prop="password">-->
-          <!--子品牌名称-->
-        <!--</i-form-item>-->
-        <!--<i-form-item prop="user">-->
-          <!--<i-input type="text" v-model="searchForm.seriesGroupName" placeholder=""></i-input>-->
-        <!--</i-form-item>-->
-        <!--<i-form-item prop="password">-->
-          <!--品牌名称-->
-        <!--</i-form-item>-->
-        <!--<i-form-item prop="user">-->
-          <!--<i-input type="text" v-model="searchForm.modelFullName" placeholder=""></i-input>-->
-        <!--</i-form-item>-->
+        <i-form-item prop="password">
+          子品牌名称
+        </i-form-item>
+        <i-form-item prop="user">
+          <i-input type="text" v-model="searchForm.seriesGroupName" placeholder=""></i-input>
+        </i-form-item>
+        <i-form-item prop="password">
+          品牌名称
+        </i-form-item>
+        <i-form-item prop="user">
+          <i-input type="text" v-model="searchForm.brandName" placeholder=""></i-input>
+        </i-form-item>
         <i-form-item>
           <i-button @click="search" type="primary"><i-icon type="ios-search-strong"></i-icon> 搜索</i-button>
         </i-form-item>
@@ -46,7 +46,7 @@
       <i-page :total="total" :page-size="15" :current="currentPage" @on-change="jumpPage" size="small" show-elevator show-total></i-page>
     </div>
     <pt-modal :title="isAdd ? '添加车型' : '修改车型'" v-model="addModal" :width="1000" :zIndex="200" @on-close="modelData.modelFileUploading=false">
-      <i-form v-if="addModal" ref="modelData" :model="modelData" label-position="right" :label-width="100">
+      <i-form ref="modelData" :model="modelData" label-position="right" :label-width="100">
         <i-row>
           <i-col span="12">
             <i-form-item v-if="isAdd" label="品牌名称" prop="id" :rules="{required: true, message: '品牌名称不能为空'}">
@@ -70,7 +70,7 @@
           <i-col span="12">
             <i-form-item v-if="isAdd" label="子品牌名称" prop="childBrandName" :rules="{required: true, message: '子品牌名称不能为空'}">
               <div class="flex-items">
-                <i-select :disabled="!modelData.id" v-model="modelData.childBrandName" placeholder="">
+                <i-select filterable :disabled="!modelData.id" v-model="modelData.childBrandName" placeholder="">
                   <i-option v-for="item in childBrandList" :key="item.name" :value="item.name">{{item.name}}</i-option>
                 </i-select>
                 <i-button v-if="modelData.id" @click="addSeries" type="info">新增</i-button>
@@ -85,31 +85,30 @@
           <i-col span="12">
             <i-form-item v-if="isAdd" label="车系名称" prop="carSeriesId" :rules="{required: true, message: '车系名称不能为空'}">
               <div class="flex-items">
-                <i-select :disabled="!modelData.id" v-model="modelData.carSeriesId" placeholder="">
+                <i-select filterable :disabled="!modelData.childBrandName" v-model="modelData.carSeriesId" placeholder="">
                   <i-option v-for="item in series.resultList" :key="item.id" :value="item.id">{{item.seriesName}}</i-option>
                 </i-select>
                 <i-button v-if="modelData.id" @click="addSeries" type="info">新增</i-button>
               </div>
             </i-form-item>
             <i-form-item v-else label="车系名称" prop="serialName">
-              <i-input readonly v-model="modelData.serialName" placeholder=""></i-input>
+              <i-input readonly v-model="modelData.seriesName" placeholder=""></i-input>
             </i-form-item>
           </i-col>
           <i-col span="12">
-            <i-form-item v-if="isAdd" label="车型全称" :rules="{required: true, message: '车型全称不能为空'}" prop="fullName">
-              <i-input v-model="modelData.fullName" placeholder=""></i-input>
-            </i-form-item>
-            <i-form-item v-else label="车型全称" :rules="{required: true, message: '车型全称不能为空'}" prop="modelFullName">
-              <i-input v-model="modelData.modelFullName" placeholder=""></i-input>
-            </i-form-item>
-          </i-col>
-        </i-row>
-        <i-row>
-          <i-col span="6">
             <i-form-item label="车型名称" :rules="{required: true, message: '车型名称不能为空'}" prop="name">
               <i-input v-model="modelData.name" placeholder=""></i-input>
             </i-form-item>
           </i-col>
+        </i-row>
+        <i-row v-if="!isAdd">
+          <i-col span="18">
+            <i-form-item label="车型全称">
+              {{modelData.seriesName + ' ' +modelData.name}}
+            </i-form-item>
+          </i-col>
+        </i-row>
+        <i-row>
           <i-col span="6">
             <i-form-item label="生产年份" :rules="{required: true, message: '生产年份不能为空'}" prop="yyyy">
               <i-input v-model="modelData.yyyy" placeholder=""></i-input>
@@ -372,6 +371,7 @@
             <span v-if="!brand.addLoading">提交</span>
             <span v-else>loading...</span>
           </i-button>
+          <i-button type="ghost" @click="cancelBrandFun" style="margin-left: 8px">取消</i-button>
         </i-form-item>
       </i-form>
     </pt-modal>
@@ -418,6 +418,7 @@
             <span v-if="!series.addLoading">提交</span>
             <span v-else>loading...</span>
           </i-button>
+          <i-button type="ghost" @click="cancelSeriesFun" style="margin-left: 8px">取消</i-button>
         </i-form-item>
       </i-form>
     </pt-modal>

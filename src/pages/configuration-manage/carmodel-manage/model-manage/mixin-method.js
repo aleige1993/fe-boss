@@ -12,7 +12,7 @@ export default {
     add() {
       this.$data.isAdd = true;
       this.$data.addModal = true;
-      this.$data.modelData = {};
+      this.$refs['modelData'].resetFields();
     },
     async getProxyPayList(page) {
       this.$data.dataLoading = true;
@@ -41,7 +41,7 @@ export default {
         this.$data.modelData.referpriceNew = this.$data.modelData.referprice;
         submitData = {
           carModelDto: {
-            modelFullName: this.$data.modelData.fullName,
+            modelFullName: this.$data.modelData.seriesName + this.$data.modelData.name,
             modelName: this.$data.modelData.name,
             seriesYear: this.$data.modelData.yyyy,
             guidancePrice: this.$data.modelData.referprice,
