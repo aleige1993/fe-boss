@@ -110,10 +110,16 @@
     },
     computed: {
       resultCustomerColumns() {
-        if (this.isDetail) {
-          return [...this.$data.customerColumns, ...this.$data.remarkColumns];
-        } else {
-          return [...this.$data.customerCheckboxColumns, ...this.$data.customerColumns, ...this.$data.customerActionColumns, ...this.$data.remarkColumns];
+        if (this.flag === '0' && this.isDetail) {
+          return [...this.$data.defaultColumns, ...this.$data.stateColums, ...this.$data.remarkColumns];
+        } else if (this.flag === '0' && !this.isDetail) {
+          return [...this.$data.checkboxColumns, ...this.$data.defaultColumns,
+            ...this.$data.stateColums, ...this.$data.actionColumns, ...this.$data.remarkColumns];
+        } else if (this.flag === '1' && this.isDetail) {
+          return [...this.$data.defaultColumns, ...this.$data.endTimeColums, ...this.$data.stateColums, ...this.$data.remarkColumns];
+        } else if (this.flag === '1' && !this.isDetail) {
+          return [...this.$data.checkboxColumns, ...this.$data.defaultColumns, ...this.$data.endTimeColums,
+            ...this.$data.stateColums, ...this.$data.actionColumns, ...this.$data.remarkColumns];
         }
       }
     },
