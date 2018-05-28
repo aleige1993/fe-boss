@@ -1,18 +1,14 @@
-import BsTooltip from '@/components/bs-tooltip';
 export default {
-  components: {
-    BsTooltip
-  },
   data() {
     return {
-      customerCheckboxColumns: [
+      checkboxColumns: [
         {
           type: 'selection',
           width: 60,
           align: 'center'
         }
       ],
-      customerColumns: [
+      defaultColumns: [
         {
           title: '项目编号',
           key: 'projectNo',
@@ -86,23 +82,32 @@ export default {
         {
           title: '付款完成时间',
           key: 'transEndtime',
-          width: 160
-        },
+          width: 160,
+          render: (h, params) => {
+            let time = this.flag === '0' ? params.row.transEndtime : params.row.gmtModified;
+            return h('span', {}, time);
+          }
+        }
+      ],
+      endTimeColums: [
+        {
+          title: '云贷放款日',
+          key: 'transEndtime',
+          width: 110,
+          render: (h, params) => {
+            let transEndtime = params.row.transEndtime;
+            if (transEndtime) {
+              return h('span', {}, transEndtime.substring(0, 10));
+            }
+          }
+        }
+      ],
+      stateColums: [
         {
           title: '支付流水号',
           key: 'transNo',
           width: 240
         },
-        // {
-        //   title: '支付渠道',
-        //   key: 'flag',
-        //   width: 80,
-        //   fixed: 'right',
-        //   align: 'center',
-        //   render: (h, params) => {
-        //     return params.row.flag === '0' ? '宝付' : '云贷';
-        //   }
-        // },
         {
           title: '付款状态',
           key: 'state',
@@ -115,16 +120,6 @@ export default {
             } else if (params.row.state === '1') {
               return h('span', {}, '成功');
             } else if (params.row.state === '-1') {
-              // return h(BsTooltip, {
-              //   props: {
-              //     showText: '失败',
-              //     tipText: `失败原因：${params.row.transRemark}`,
-              //     placement: params.index <= 1 ? 'bottom-start' : 'top-start',
-              //     // width: '100',
-              //     wordBreak: 'break-all',
-              //     whiteSpace: 'normal'
-              //   }
-              // });
               return h('span', {}, '失败');
             } else if (params.row.state === '2') {
               return h('span', {}, '已退款');
@@ -134,7 +129,7 @@ export default {
           }
         }
       ],
-      customerActionColumns: [
+      actionColumns: [
         {
           title: '操作',
           key: 'action',
