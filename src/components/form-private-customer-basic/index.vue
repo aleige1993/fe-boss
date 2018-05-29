@@ -454,7 +454,7 @@
               <i-col span="8">
                 <i-form-item label="来源渠道" prop="mbMemberDTO.sourceWay"
                    :rules="{required: true, message: '来源渠道不能为空', trigger: 'blur'}">
-                  <i-select v-model="formData.mbMemberDTO.sourceWay" placeholder="来源渠道">
+                  <i-select :disabled="isFromDetail" v-model="formData.mbMemberDTO.sourceWay" placeholder="来源渠道">
                     <i-option value="" style="height: 26px; color: #bbbec4">-请选择-</i-option>
                     <i-option v-for="item in enumSelectData.get('BizChannelEnum')" :key="item.itemCode" :value="item.itemCode">{{item.itemName}}</i-option>
                   </i-select>
@@ -642,7 +642,7 @@ export default {
   },
   mounted() {
     let pageFrom = this.$route.query.from;
-    this.$data.isshow = (pageFrom === 'modify');
+    this.$data.isshow = (pageFrom === 'modify') || (pageFrom === 'detail');
     this.$data.isFromDetail = (pageFrom === 'detail');
     this.getDepList();
     // 如果有id，初始化页面数据
