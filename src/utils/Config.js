@@ -3,5 +3,6 @@ export default {
   // ENV: process.env.ENV,
   HTTPMOCK_TIMEOUT: process.env.HTTPMOCK_TIMEOUT,
   XHRLOG: process.env.XHRLOG, // 是否console出ajax的详细信息；右上角的Notice是否打印url和code
-  HTTPBASEURL: process.env.HTTPBASEURL // 开发服务器
+  HTTPBASEURL: process.env.HTTPBASEURL,
+  HTTPFEH5URL: process.env.HTTPFEH5URL
 };

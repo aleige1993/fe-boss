@@ -93,7 +93,7 @@ export default {
         {
           title: '云贷放款日',
           key: 'transEndtime',
-          width: 100,
+          width: 110,
           render: (h, params) => {
             let transEndtime = params.row.transEndtime;
             if (transEndtime) {
