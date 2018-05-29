@@ -38,10 +38,11 @@ export default {
             this.$data.modelData.seriesName = item.seriesName;
           }
         });
+        this.$data.modelData.fullName = this.$data.modelData.seriesName + ' ' + this.$data.modelData.name;
         this.$data.modelData.referpriceNew = this.$data.modelData.referprice;
         submitData = {
           carModelDto: {
-            modelFullName: this.$data.modelData.seriesName + this.$data.modelData.name,
+            modelFullName: this.$data.modelData.fullName,
             modelName: this.$data.modelData.name,
             seriesYear: this.$data.modelData.yyyy,
             guidancePrice: this.$data.modelData.referprice,
