@@ -31,6 +31,7 @@ export default {
     async submitSuccess() {
       // console.log(JSON.stringify(this.$data.modelData));
       this.$data.buttonLoading = true;
+      this.$data.modelData.fullName = this.$data.modelData.seriesName + ' ' + this.$data.modelData.name;
       let submitData = {};
       if (this.$data.isAdd) {
         let carSeriesId = this.$data.modelData.carSeriesId;
@@ -39,7 +40,6 @@ export default {
             this.$data.modelData.seriesName = item.seriesName;
           }
         });
-        this.$data.modelData.fullName = this.$data.modelData.seriesName + ' ' + this.$data.modelData.name;
         this.$data.modelData.referpriceNew = this.$data.modelData.referprice;
         submitData = {
           carModelDto: {
