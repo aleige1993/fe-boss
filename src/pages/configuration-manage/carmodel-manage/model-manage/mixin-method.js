@@ -31,16 +31,18 @@ export default {
     async submitSuccess() {
       // console.log(JSON.stringify(this.$data.modelData));
       this.$data.buttonLoading = true;
-      this.$data.modelData.fullName = this.$data.modelData.seriesName + ' ' + this.$data.modelData.name;
+      let carSeriesId = this.$data.modelData.carSeriesId;
       let submitData = {};
       if (this.$data.isAdd) {
-        let carSeriesId = this.$data.modelData.carSeriesId;
         this.$data.series.resultList.map(item => {
           if (item.id === carSeriesId) {
             this.$data.modelData.seriesName = item.seriesName;
           }
         });
         this.$data.modelData.referpriceNew = this.$data.modelData.referprice;
+      }
+      this.$data.modelData.fullName = this.$data.modelData.seriesName + ' ' + this.$data.modelData.name;
+      if (this.$data.isAdd) {
         submitData = {
           carModelDto: {
             modelFullName: this.$data.modelData.fullName,
