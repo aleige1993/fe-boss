@@ -16,7 +16,8 @@ export default {
         currentPage: 1,
         pageSize: 15
       },
-      modelData: {
+      modelData: {},
+      modelDataInit: {
         id: null,
         childBrandName: '',
         fileUploading: false
@@ -94,7 +95,7 @@ export default {
                     });
                     loading();
                     if (resp.success) {
-                      this.$data.modelData = $.extend({}, resp.body, params.row);
+                      this.$data.modelData = $.extend({}, this.$data.modelDataInit, resp.body, params.row);
                     }
                   }
                 }

@@ -13,6 +13,7 @@ export default {
       this.$data.isAdd = true;
       this.$data.addModal = true;
       this.$refs['modelData'].resetFields();
+      this.$data.modelData = this.$data.modelDataInit;
     },
     async getProxyPayList(page) {
       this.$data.dataLoading = true;
