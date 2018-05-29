@@ -120,8 +120,13 @@
             </i-form-item>
           </i-col>
           <i-col span="6">
+            <i-form-item label="引擎" prop="engine" :rules="{required: true, message: '发动机排量不能为空'}">
+              <i-input v-model="modelData.engine" placeholder="例：1.8T 190马力 L4"></i-input>
+            </i-form-item>
+          </i-col>
+          <i-col span="6">
             <i-form-item label="发动机排量" prop="engineExhaustForFloat" :rules="{required: true, message: '发动机排量不能为空'}">
-              <i-input v-model="modelData.engineExhaustForFloat" placeholder="例：1.8T 190马力 L4"></i-input>
+              <i-input v-model="modelData.engineExhaustForFloat" placeholder="例：1.8T"></i-input>
             </i-form-item>
           </i-col>
           <!--<i-col span="6">-->
