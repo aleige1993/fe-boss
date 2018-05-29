@@ -46,7 +46,7 @@
       <i-page :total="total" :page-size="15" :current="currentPage" @on-change="jumpPage" size="small" show-elevator show-total></i-page>
     </div>
     <pt-modal :title="isAdd ? '添加车型' : '修改车型'" v-model="addModal" :width="1000" :zIndex="200" @on-close="modelData.modelFileUploading=false">
-      <i-form ref="modelData" :model="modelData" label-position="right" :label-width="100">
+      <i-form v-if="modelData" ref="modelData" :model="modelData" label-position="right" :label-width="100">
         <i-row>
           <i-col span="12">
             <i-form-item v-if="isAdd" label="品牌名称" prop="id" :rules="{required: true, message: '品牌名称不能为空'}">
@@ -104,7 +104,7 @@
         <i-row v-if="!isAdd">
           <i-col span="18">
             <i-form-item label="车型全称">
-              {{modelData.seriesName + ' ' +modelData.name}}
+              {{modelData.seriesName + ' ' + modelData.name}}
             </i-form-item>
           </i-col>
         </i-row>
@@ -120,8 +120,13 @@
             </i-form-item>
           </i-col>
           <i-col span="6">
-            <i-form-item label="发动机排量" :rules="{required: true, message: '发动机排量不能为空'}" prop="engineExhaustForFloat">
-              <i-input v-model="modelData.engineExhaustForFloat" placeholder=""></i-input>
+            <i-form-item label="引擎" prop="engine" :rules="{required: true, message: '发动机排量不能为空'}">
+              <i-input v-model="modelData.engine" placeholder="例：1.8T 190马力 L4"></i-input>
+            </i-form-item>
+          </i-col>
+          <i-col span="6">
+            <i-form-item label="发动机排量" prop="engineExhaustForFloat" :rules="{required: true, message: '发动机排量不能为空'}">
+              <i-input v-model="modelData.engineExhaustForFloat" placeholder="例：1.8T"></i-input>
             </i-form-item>
           </i-col>
           <!--<i-col span="6">-->
