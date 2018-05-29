@@ -104,7 +104,7 @@
         <i-row v-if="!isAdd">
           <i-col span="18">
             <i-form-item label="车型全称">
-              {{modelData.seriesName + ' ' +modelData.name}}
+              {{modelData.fullName}}
             </i-form-item>
           </i-col>
         </i-row>
@@ -120,16 +120,16 @@
             </i-form-item>
           </i-col>
           <i-col span="6">
-            <i-form-item label="发动机排量" :rules="{required: true, message: '发动机排量不能为空'}" prop="engineExhaustForFloat">
-              <i-input v-model="modelData.engineExhaustForFloat" placeholder=""></i-input>
+            <i-form-item label="发动机排量" prop="engineExhaustForFloat" :rules="{required: true, message: '发动机排量不能为空'}">
+              <i-input v-model="modelData.engineExhaustForFloat" placeholder="例：1.8T 190马力 L4"></i-input>
             </i-form-item>
           </i-col>
           <!--<i-col span="6">-->
-            <!--<i-form-item label="车辆颜色" prop="colorType">-->
-              <!--<i-select v-model="modelData.colorType" placeholder="">-->
-                <!--<i-option v-for="item in enumSelectData.get('CarColorEnum')" :key="item.itemCode" :value="item.itemCode">{{item.itemName}}</i-option>-->
-              <!--</i-select>-->
-            <!--</i-form-item>-->
+          <!--<i-form-item label="车辆颜色" prop="colorType">-->
+          <!--<i-select v-model="modelData.colorType" placeholder="">-->
+          <!--<i-option v-for="item in enumSelectData.get('CarColorEnum')" :key="item.itemCode" :value="item.itemCode">{{item.itemName}}</i-option>-->
+          <!--</i-select>-->
+          <!--</i-form-item>-->
           <!--</i-col>-->
         </i-row>
         <i-row>
