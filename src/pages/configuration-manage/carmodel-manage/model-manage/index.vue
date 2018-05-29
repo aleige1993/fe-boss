@@ -125,11 +125,11 @@
             </i-form-item>
           </i-col>
           <!--<i-col span="6">-->
-          <!--<i-form-item label="车辆颜色" prop="colorType">-->
-          <!--<i-select v-model="modelData.colorType" placeholder="">-->
-          <!--<i-option v-for="item in enumSelectData.get('CarColorEnum')" :key="item.itemCode" :value="item.itemCode">{{item.itemName}}</i-option>-->
-          <!--</i-select>-->
-          <!--</i-form-item>-->
+            <!--<i-form-item label="车辆颜色" prop="colorType">-->
+              <!--<i-select v-model="modelData.colorType" placeholder="">-->
+                <!--<i-option v-for="item in enumSelectData.get('CarColorEnum')" :key="item.itemCode" :value="item.itemCode">{{item.itemName}}</i-option>-->
+              <!--</i-select>-->
+            <!--</i-form-item>-->
           <!--</i-col>-->
         </i-row>
         <i-row>
