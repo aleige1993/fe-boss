@@ -7,7 +7,7 @@
         <li v-for="second in secondMenuList">
           <bs-collepse v-if="second.childMenus.length"  :title="second.name">
             <ul class="second-nav">
-              <li v-for="thirdMenu in second.childMenus"><router-link :to="thirdMenu.url">{{thirdMenu.name || 'aaa'}}</router-link></li>
+              <li v-for="thirdMenu in second.childMenus"><router-link v-if="thirdMenu.menuId" :to="thirdMenu.url">{{thirdMenu.name}}</router-link></li>
             </ul>
           </bs-collepse>
           <!--<router-link v-else :to="second.url"><Icon v-bind:class="{active: isOpen}" type="ios-arrow-right"></Icon> {{second.name}}</router-link>-->
