@@ -689,6 +689,6 @@ let result = [
   ...ary, ...menuList, ...product,
   ...invest, ...customerManage, ...enumSelectData,
   ...employerManage, ...department, ...companyCredit,
-  ...loanbusiness, ...carDropList, ...distributor,
+  ...loanbusiness, ...carDropList, ...distributor
 ];
 export default result;
