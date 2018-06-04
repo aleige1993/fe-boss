@@ -188,31 +188,33 @@
           </i-col>
           <i-col span="8">
             <i-form-item label="部门名称"
-                         prop="bizDepartmentCode"
+                         prop="deptId"
                          :rules="{required: true, message: '请选择部门名称', trigger: 'blur'}">
-              <input type="hidden" v-model="formData.bizDepartmentCode"/>
-              <i-input v-model="formData.bizDepartmentName" :readonly="true" placeholder="">
-                <i-button @click="selectDepartmentModal=!selectDepartmentModal" slot="append">选择部门名称 <Icon type="ios-more"></Icon></i-button>
+              <input type="hidden" v-model="formData.deptId"/>
+              <i-input v-model="formData.Dname" :readonly="true" placeholder="">
+                <i-button v-if="!readonly" @click="selectDepartmentModal=!selectDepartmentModal" slot="append">选择部门名称 <Icon type="ios-more"></Icon></i-button>
               </i-input>
             </i-form-item>
           </i-col>
           <i-col span="8">
-            <i-form-item label="客户经理"
-                         prop="custMgrNo"
-                         :rules="{required: true, message: '请选择客户经理', trigger: 'blur'}">
-              <input type="hidden" v-model="formData.custMgrNo"/>
-              <i-input v-model="formData.custMgrName" :readonly="true" placeholder="">
-                <i-button v-if="!isFromDetail" @click="showSelectEmployer=!showSelectEmployer" slot="append">选择客户经理 <Icon type="ios-more"></Icon></i-button>
+            <i-form-item label="客户经理" prop="cnameId">
+              <input type="hidden" v-model="formData.cnameId"/>
+              <i-input v-model="formData.Cname" :readonly="true" placeholder="">
+                <i-button v-if="!readonly" @click="showSelectEmployer=!showSelectEmployer" slot="append">选择客户经理 <Icon type="ios-more"></Icon></i-button>
               </i-input>
             </i-form-item>
           </i-col>
         </i-row>
         <i-row>
           <i-col span="24">
-            <i-form-item label="订单所属地区" prop="censusDistrictName">
-              <bs-dispicker :currProvince="formData.censusProvinceName"
-                            :currDistrict="formData.censusDistrictName"
-                            :currCity="formData.censusCityName"
+            <i-form-item label="订单所属地区"
+                         prop="provinId"
+                         :rules="{required: true, message: '请选择订单所属地区-省份', trigger: 'blur'}">
+              <input type="hidden" v-model="formData.provinId"/>
+              <bs-dispicker :readonly="readonly"
+                            :currProvince="formData.provinName"
+                            :currDistrict="formData.citiesName"
+                            :currCity="formData.districtName"
                             @on-change="selectCensusDistance">
               </bs-dispicker>
             </i-form-item>
@@ -924,23 +926,23 @@
         this.$data.depData = resp.body.children;
       },
       selectDep(id, row, data) {
-        this.$data.formData.bizDepartmentCode = data.id;
-        this.$data.formData.bizDepartmentName = data.text;
+        this.$data.formData.deptId = data.id;
+        this.$data.formData.Dname = data.text;
         this.$data.selectDepartmentModal = false;
       },
       selectEmployer(row, index) {
-        this.$data.formData.custMgrNo = row.userCode;
-        this.$data.formData.custMgrName = row.userName;
+        this.$data.formData.cnameId = row.userCode;
+        this.$data.formData.Cname = row.userName;
         this.$data.showSelectEmployer = false;
       },
       // 订单所属地区联动
       selectCensusDistance(distance) {
-        this.$data.formData.censusProvinceCode = distance.provinceCode;
-        this.$data.formData.censusProvinceName = distance.provinceName;
-        this.$data.formData.censusCityCode = distance.cityCode;
-        this.$data.formData.censusCityName = distance.cityName;
-        this.$data.formData.censusDistrictCode = distance.districtCode;
-        this.$data.formData.censusDistrictName = distance.districtName;
+        this.$data.formData.provinId = distance.provinceCode;
+        this.$data.formData.provinName = distance.provinceName;
+        this.$data.formData.citiesId = distance.cityCode;
+        this.$data.formData.citiesName = distance.cityName;
+        this.$data.formData.districtId = distance.districtCode;
+        this.$data.formData.districtName = distance.districtName;
       }
     },
     watch: {
