@@ -21,9 +21,9 @@
             <i-row>
               <i-col span="8">
                 <i-form-item label="姓名">
-                  <i-button type="text" @click="gotoPersonal" v-text="formData.mbMemberDTO.name"></i-button>
+                  <span v-text="formData.mbMemberDTO.name"></span>&nbsp;
                   <i-button type="success" @click="gotoPersonal">查看客户详情</i-button>
-                  <i-button v-if="!readonly" type="primary" @click="selectPersonalModal=!selectPersonalModal">选择姓名 <i-icon type="ios-more"></i-icon></i-button>
+                  <!--<i-button v-if="!readonly" type="primary" @click="selectPersonalModal=!selectPersonalModal">选择姓名 <i-icon type="ios-more"></i-icon></i-button>-->
                 </i-form-item>
               </i-col>
               <i-col span="8">
