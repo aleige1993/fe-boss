@@ -9,12 +9,6 @@ export default {
     search() {
       this.getProxyPayList(1);
     },
-    add() {
-      this.$data.isAdd = true;
-      this.$data.addModal = true;
-      this.$refs['modelData'].resetFields();
-      this.$data.modelData = this.$data.modelDataInit;
-    },
     async getProxyPayList(page) {
       this.$data.dataLoading = true;
       if (page) {
@@ -28,6 +22,30 @@ export default {
       this.$data.currentPage = resp.body.currentPage;
       this.$data.total = resp.body.totalNum;
     },
+    // 选择类型
+    add() {
+      this.$data.addTypeModal = true;
+      this.$data.addTypeData = '';
+    },
+    selectAddType() {
+      if (this.$data.addTypeData === '1') {
+        this.$data.isAdd = true;
+        this.$data.addModal = true;
+        this.$refs['modelData'].resetFields();
+        this.$data.modelData = this.$data.modelDataInit;
+      } else if (this.$data.addTypeData === '2') {
+        this.$data.isSecondAdd = true;
+        this.$data.addSecondModal = true;
+        this.$refs['secondModelData'].resetFields();
+        this.$data.secondModelData = this.$data.secondModelDataInit;
+      } else {
+        this.$Message.error('请选择添加类型');
+      }
+    },
+    cancelAddType() {
+      this.$data.addTypeModal = false;
+    },
+    // 新车
     async submitSuccess() {
       // console.log(JSON.stringify(this.$data.modelData));
       this.$data.buttonLoading = true;
@@ -98,6 +116,22 @@ export default {
     // 取消 按钮
     cancelFun() {
       this.$data.addModal = false;
+    },
+    // 二手车
+    submitSecondSuccess() {
+
+    },
+    submitSecondFun() {
+      this.$refs['secondModelData'].validate((valid) => {
+        if (valid) {
+          this.submitSecondSuccess();
+        } else {
+          this.$Message.error('"<span style="color: red">*</span>"必填项不能为空');
+        }
+      });
+    },
+    cancelSecondFun() {
+      this.$data.addSecondModal = false;
     }
   },
   mounted() {
