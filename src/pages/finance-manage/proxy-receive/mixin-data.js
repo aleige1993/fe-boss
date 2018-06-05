@@ -27,6 +27,11 @@ export default {
           width: 160
         },
         {
+          title: '还款期数',
+          key: 'receiveTimes',
+          width: 100
+        },
+        {
           title: '代扣金额',
           key: 'txnAmt',
           width: 120

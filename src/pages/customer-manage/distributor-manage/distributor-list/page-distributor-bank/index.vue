@@ -91,7 +91,9 @@
               <i-option v-for="item in bankList" :key="item.bankCode" :value="item.bankCode">{{item.bankName}}</i-option>
             </i-select>
           </i-form-item>
-          <i-form-item label="开户行" prop="openBankName">
+          <i-form-item label="开户行"
+                       prop="openBankName"
+                       :rules="{required: true, message: '开户行不能为空', type: 'string', trigger: 'blur'}">
             <i-input type="text" v-model="formData.openBankName" placeholder=""></i-input>
           </i-form-item>
           <i-form-item label="开户行号" prop="openBankNo">
