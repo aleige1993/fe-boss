@@ -106,7 +106,8 @@
             </i-form-item>
           </i-col>
           <input type="hidden" :value="formData.merchantNo"/>
-          <i-col span="8" v-if="formData.loandType!=='1'">
+          <!--<i-col span="8" v-if="formData.loandType!=='1'">-->
+          <i-col span="8" v-if="formData.productName.indexOf('车主贷') > -1">
             <i-form-item label="经销商" prop="merchantAbbr">
               <input type="hidden" v-model="formData.merchantAbbr"/>
               <i-input v-model="formData.merchantAbbr" :readonly="true" placeholder="">
