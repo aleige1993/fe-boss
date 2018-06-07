@@ -1054,12 +1054,12 @@
       },
       selectDep(id, row, data) {
         this.$data.formData.deptId = data.id;
-        this.$data.formData.Dname = data.text;
+        this.$data.formData.dname = data.text;
         this.$data.selectDepartmentModal = false;
       },
       selectEmployer(row, index) {
         this.$data.formData.cnameId = row.userCode;
-        this.$data.formData.Cname = row.userName;
+        this.$data.formData.cname = row.userName;
         this.$data.showSelectEmployer = false;
       },
       // 订单所属地区联动
