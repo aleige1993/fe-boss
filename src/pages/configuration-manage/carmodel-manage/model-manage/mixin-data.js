@@ -15,9 +15,8 @@ export default {
       isSecondAdd: false, // 二手车
       addSecondModal: false,
       secondButtonLoading: false,
-      secondModelData: {},
-      secondModelDataInit: {
-        id: null
+      secondModelData: {
+        modelId: ''
       },
       total: 0,
       currentPage: 1,

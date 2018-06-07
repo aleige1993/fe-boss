@@ -37,7 +37,6 @@ export default {
         this.$data.isSecondAdd = true;
         this.$data.addSecondModal = true;
         this.$refs['secondModelData'].resetFields();
-        this.$data.secondModelData = this.$data.secondModelDataInit;
       } else {
         this.$Message.error('请选择添加类型');
       }
@@ -84,6 +83,7 @@ export default {
         this.$Message.success(text);
         this.getProxyPayList();
         this.$data.addModal = false;
+        this.$data.addTypeModal = false;
       }
     },
     // 提交
@@ -118,8 +118,15 @@ export default {
       this.$data.addModal = false;
     },
     // 二手车
-    submitSecondSuccess() {
-
+    async submitSecondSuccess() {
+      this.$data.secondButtonLoading = true;
+      let resp = await this.$http.post('/ces/add/secondHandCar', this.$data.secondModelData);
+      this.$data.secondButtonLoading = false;
+      if (resp.success) {
+        this.$Message.success('添加成功');
+        this.getProxyPayList();
+        this.$data.addSecondModal = false;
+      }
     },
     submitSecondFun() {
       this.$refs['secondModelData'].validate((valid) => {

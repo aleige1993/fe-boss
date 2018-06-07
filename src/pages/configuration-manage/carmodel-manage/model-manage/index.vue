@@ -450,12 +450,12 @@
     <!--添加二手车-->
     <pt-modal title="添加" v-model="addSecondModal" :width="600" :zIndex="200">
       <i-form v-if="secondModelData" ref="secondModelData" :model="secondModelData" label-position="left" :label-width="80">
-        <i-form-item label="车型ID" prop="id" :rules="{required: true, message: '车型ID不能为空', trigger: 'blur'}">
-          <i-input v-model="secondModelData.id" placeholder=""></i-input>
+        <i-form-item label="车型ID" prop="modelId" :rules="{required: true, message: '车型ID不能为空', trigger: 'blur'}">
+          <i-input v-model="secondModelData.modelId" placeholder=""></i-input>
         </i-form-item>
         <i-form-item class="text-right">
-          <i-button type="primary" @click="submitSecondFun" :loading="series.addLoading">
-            <span v-if="!series.addLoading">提交</span>
+          <i-button type="primary" @click="submitSecondFun" :loading="secondButtonLoading">
+            <span v-if="!secondButtonLoading">提交</span>
             <span v-else>loading...</span>
           </i-button>
           <i-button type="ghost" @click="cancelSecondFun" style="margin-left: 8px">取消</i-button>
