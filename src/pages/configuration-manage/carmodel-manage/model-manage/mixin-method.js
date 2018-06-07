@@ -126,6 +126,7 @@ export default {
         this.$Message.success('添加成功');
         this.getProxyPayList();
         this.$data.addSecondModal = false;
+        this.$data.addTypeModal = false;
       }
     },
     submitSecondFun() {
