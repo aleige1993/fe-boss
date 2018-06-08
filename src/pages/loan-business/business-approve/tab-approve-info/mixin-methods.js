@@ -138,7 +138,7 @@ export default {
     */
     // ReqDataObj={ loanNo, productNo, productPeriods, carBuyAmt, custLevel, carType }
     async getProductApproveInfo(ReqDataObj) {
-      if (!ReqDataObj.productN || !this.applyBasicInfo.custType) {
+      if (!ReqDataObj.productNo || !this.applyBasicInfo.custType) {
         return false;
       }
       this.$data.initPageLoading = true;
