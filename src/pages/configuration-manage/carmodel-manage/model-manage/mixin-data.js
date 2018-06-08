@@ -16,9 +16,6 @@ export default {
       addSecondModal: false,
       secondButtonLoading: false,
       secondModelData: {},
-      secondModelDataInit: {
-        id: null
-      },
       total: 0,
       currentPage: 1,
       dataLoading: false,

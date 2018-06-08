@@ -454,8 +454,8 @@
           <i-input v-model="secondModelData.id" placeholder=""></i-input>
         </i-form-item>
         <i-form-item class="text-right">
-          <i-button type="primary" @click="submitSecondFun" :loading="series.addLoading">
-            <span v-if="!series.addLoading">提交</span>
+          <i-button type="primary" @click="submitSecondFun" :loading="secondButtonLoading">
+            <span v-if="!secondButtonLoading">提交</span>
             <span v-else>loading...</span>
           </i-button>
           <i-button type="ghost" @click="cancelSecondFun" style="margin-left: 8px">取消</i-button>
