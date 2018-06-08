@@ -210,7 +210,7 @@
           <i-col span="24">
             <i-form-item label="订单所属地区"
                          prop="provinId"
-                         :rules="{required: true, message: '请选择订单所属地区-省份', trigger: 'blur'}">
+                         :rules="{required: true, message: '请选择订单所属地区', trigger: 'blur'}">
               <input type="hidden" v-model="formData.provinId"/>
               <bs-dispicker :readonly="readonly"
                             :currProvince="formData.provinName"
