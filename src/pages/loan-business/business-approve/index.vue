@@ -8,30 +8,28 @@
     <div class="form-top-actions"></div>
     <i-tabs v-model="tabIndex" type="card" :animated="false" style="padding-bottom: 46px;">
       <i-tab-pane :label="'基本信息'" name="tabBasicInfo" v-if="approveHistoryData">
-        <apply-info v-if="tabIndex === 'tabBasicInfo'" ref="applyInfo"
+        <apply-info ref="applyInfo"
                     :customerType="formData.custType"
                     :applyBasicInfo="formData" :loanAction="'firstApprove'"
                     :readonly="applyInfoReadonly || isFromDetail" @on-approve-info="approveInfoRefresh">
         </apply-info>
       </i-tab-pane>
       <i-tab-pane label="人行征信报告" name="tabCreditInfo" v-if="approveHistoryData && ((taskNode !== '1' && taskNode !== '0') || isContainApproveCheck) && !isRecordRole" :disabled="formData.custType === '2'">
-        <div v-if="tabIndex === 'tabCreditInfo'">
-          <i-checkbox v-if="showCreditCheckbox" v-model="isHasCheckCreditReport">&nbsp;&nbsp;已查看征信报告</i-checkbox>
+        <i-checkbox v-if="showCreditCheckbox" v-model="isHasCheckCreditReport">&nbsp;&nbsp;已查看征信报告</i-checkbox>
 
-          <div v-if="isCreditEerror" style="color: red; padding: 20px 0">暂无征信查询结果！</div>
-          <br>
-          <br>
-          <p style="text-align: center;background: #f7f7f7;">
-            <span style="color: #f89406;font-size: 14px;line-height: 30px;" v-if="creditReportURLLoading"><Icon style="vertical-align: middle" type="load-c" size=14 class="demo-spin-icon-load"></Icon> 人行征信报告生成中...</span>
-          </p>
-          <iframe style="border:1px solid #f5f5f5" :src="creditReportURL" width="100%" :height="iframeHeight" frameborder="0"></iframe>
-        </div>
+        <div v-if="isCreditEerror" style="color: red; padding: 20px 0">暂无征信查询结果！</div>
+        <br>
+        <br>
+        <p style="text-align: center;background: #f7f7f7;">
+          <span style="color: #f89406;font-size: 14px;line-height: 30px;" v-if="creditReportURLLoading"><Icon style="vertical-align: middle" type="load-c" size=14 class="demo-spin-icon-load"></Icon> 人行征信报告生成中...</span>
+        </p>
+        <iframe style="border:1px solid #f5f5f5" :src="creditReportURL" width="100%" :height="iframeHeight" frameborder="0"></iframe>
       </i-tab-pane>
       <i-tab-pane label="联系人信息" name="tabContactInfo" v-if="approveHistoryData">
         <tab-big-data :customerType="formData.custType" :applyBasicInfo="formData" v-if="tabIndex === 'tabContactInfo'"> </tab-big-data>
       </i-tab-pane>
       <i-tab-pane :label="'审批信息'" name="tabApproveInfo" v-if="approveHistoryData && ((taskNode !== '1' && taskNode !== '0') || isContainApproveCheck) && !isRecordRole">
-        <approve-info v-if="tabIndex === 'tabApproveInfo'" ref="approveInfo" :applyBasicInfo="formData" :isFromDetail="isFromDetail"
+        <approve-info ref="approveInfo" :applyBasicInfo="formData" :isFromDetail="isFromDetail"
                       @on-result-change="approveResultChanged"
                       :readonly="firstApproveInfoReadonly || isFromDetail" :isApprove="isApprove">
         </approve-info>
@@ -88,7 +86,7 @@
         isCreditEerror: false, // 暂无征信查询结果 时显示
         creditReportURLLoading: false,
         iframeHeight: 460,
-        tabIndex: 'tabBasicInfo',
+        tabIndex: 0,
         initFormLoading: false,
         submitApproveLoading: false,
         memberNo: '1',

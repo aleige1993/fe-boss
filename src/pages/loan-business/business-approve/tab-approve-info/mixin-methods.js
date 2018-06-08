@@ -138,6 +138,9 @@ export default {
     */
     // ReqDataObj={ loanNo, productNo, productPeriods, carBuyAmt, custLevel, carType }
     async getProductApproveInfo(ReqDataObj) {
+      if (!ReqDataObj.productN || !this.applyBasicInfo.custType) {
+        return false;
+      }
       this.$data.initPageLoading = true;
       let resp = await this.$http.post('/biz/queryApproveProductCredit', {
         productNo: ReqDataObj.productNo,
