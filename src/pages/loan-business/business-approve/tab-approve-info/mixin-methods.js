@@ -222,6 +222,9 @@ export default {
      * @returns {Promise.<void>}
      */
     async getBankList() {
+      if (!this.applyBasicInfo.custType) {
+        return false;
+      }
       let loanNo = this.$route.query.id;
       let paymentCustNo = '';
       if (this.$data.approveData.loanApproveCreditDTO.loanMode === '1') {
