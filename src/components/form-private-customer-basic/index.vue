@@ -176,7 +176,7 @@
                 <i-form-item v-if="!isFromDetail" label="户籍地址" prop="mbMemberDTO.censusDistrictName"
                              :rules="{required: true, message: '请输入户籍地址', trigger: 'blur'}">
                   <input type="hidden" v-model="formData.mbMemberDTO.censusDistrictName">
-                  <bs-dispicker readonly  :currProvince="formData.mbMemberDTO.censusProvinceName"
+                  <bs-dispicker :currProvince="formData.mbMemberDTO.censusProvinceName"
                                 :currDistrict="formData.mbMemberDTO.censusDistrictName"
                                 :currCity="formData.mbMemberDTO.censusCityName"
                                 @on-change="selectCensusDistance">
