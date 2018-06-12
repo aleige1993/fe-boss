@@ -309,15 +309,6 @@
           <!--工作信息 职业类型不是自由职业者时才需要-->
           <bs-form-block v-if="formData.mbMemberDTO.workType !== '2'" :title="'工作信息'">
             <i-row>
-              <!--<i-col span="8">-->
-                <!--<i-form-item label="单位名称"-->
-                             <!--prop="mbMemberWorkDTO.companyName"-->
-                             <!--:rules="{required: true, message: '请选择单位', trigger: 'change'}">-->
-                  <!--<i-input :readonly="true" v-model="formData.mbMemberWorkDTO.companyName">-->
-                    <!--<i-button v-if="!isFromDetail" type="primary" @click="showSelectCompany=!showSelectCompany" slot="append">选择公司 <Icon type="ios-more"></Icon></i-button>-->
-                  <!--</i-input>-->
-                <!--</i-form-item>-->
-              <!--</i-col>-->
               <i-col span="8">
                 <i-form-item label="单位名称"
                              prop="mbMemberWorkDTO.companyName"
@@ -325,13 +316,22 @@
                   <i-input :readonly="isFromDetail" v-model="formData.mbMemberWorkDTO.companyName"/>
                 </i-form-item>
               </i-col>
-              <!--<i-col span="8">-->
-                <!--<i-form-item label="统一社会信用代码"-->
-                             <!--prop="mbMemberWorkDTO.creditCode"-->
-                             <!--:rules="{required: true, message: '统一社会信用代码不能为空', trigger: 'blur'}">-->
-                  <!--<i-input :readonly="isFromDetail" v-model="formData.mbMemberWorkDTO.creditCode"/>-->
-                <!--</i-form-item>-->
-              <!--</i-col>-->
+              <i-col span="8">
+                <i-form-item label="统一社会信用代码"
+                             prop="mbMemberWorkDTO.creditCode"
+                             :rules="{required: true, message: '统一社会信用代码不能为空', trigger: 'blur'}">
+                  <i-input :readonly="isFromDetail" v-model="formData.mbMemberWorkDTO.creditCode"/>
+                </i-form-item>
+              </i-col>
+              <i-col span="8">
+                <i-form-item label="单位成立时间"
+                             prop="mbMemberWorkDTO.regDate"
+                             :rules="{required: true, message: '请选择单位成立时间', trigger: 'blur'}">
+                  <bs-datepicker v-model="formData.mbMemberWorkDTO.regDate" :readonly="isFromDetail"></bs-datepicker>
+                </i-form-item>
+              </i-col>
+            </i-row>
+            <i-row>
               <i-col span="8">
                 <i-form-item label="单位性质"
                              prop="mbMemberWorkDTO.unitType"
@@ -351,80 +351,25 @@
                   </i-select>
                 </i-form-item>
               </i-col>
-              <!--<i-col span="8">-->
-                <!--<i-form-item label="行业类别"-->
-                             <!--prop="mbMemberWorkDTO.industryType"-->
-                             <!--:rules="{required: true, message: '请选择行业类别', trigger: 'blur'}">-->
-                  <!--<input  v-model="formData.mbMemberWorkDTO.industryType" type="hidden" />-->
-                  <!--&lt;!&ndash;<i-input :readonly="true" :value="enumCode2Name(formData.mbMemberWorkDTO.industryType, 'IndustryTypeEnum')" placeholder="自动带入"></i-input>&ndash;&gt;-->
-                  <!--<i-select :disabled="isFromDetail" v-model="formData.mbMemberWorkDTO.industryType">-->
-                    <!--<i-option v-for="item in enumSelectData.get('IndustryTypeEnum')" :key="item.itemCode" :value="item.itemCode">{{item.itemName}}</i-option>-->
-                  <!--</i-select>-->
-                <!--</i-form-item>-->
-              <!--</i-col>-->
-            </i-row>
-            <i-row>
-              <!--<i-col span="8">-->
-                <!--&lt;!&ndash;<i-form-item label="入职时间">&ndash;&gt;-->
-                  <!--&lt;!&ndash;<bs-datepicker :readonly="isFromDetail" v-model="formData.mbMemberWorkDTO.joinDate"></bs-datepicker>&ndash;&gt;-->
-                <!--&lt;!&ndash;</i-form-item>&ndash;&gt;-->
-              <!--</i-col>-->
-              <!--<i-col span="8">-->
-                <!--&lt;!&ndash;<i-form-item label="所属部门">&ndash;&gt;-->
-                  <!--&lt;!&ndash;<i-input :readonly="isFromDetail" v-model="formData.mbMemberWorkDTO.department"></i-input>&ndash;&gt;-->
-                <!--&lt;!&ndash;</i-form-item>&ndash;&gt;-->
-              <!--</i-col>-->
-            </i-row>
-            <i-row>
-              <!--<i-col span="8">-->
-                <!--<i-form-item label="月收入">-->
-                  <!--<i-input :readonly="isFromDetail" v-model="formData.mbMemberWorkDTO.monthRevenue">-->
-                    <!--<span v-if="formData.mbMemberWorkDTO.monthRevenue" slot="append">元</span>-->
-                  <!--</i-input>-->
-                <!--</i-form-item>-->
-              <!--</i-col>-->
               <i-col span="8">
                 <i-form-item label="单位电话"
                              prop="mbMemberWorkDTO.companyTel"
-                             :rules="{required: true, message: '请输入公司电话', trigger: 'blur'}">
+                             :rules="{required: true, message: '请输入单位电话', trigger: 'blur'}">
                   <i-input :readonly="isFromDetail" v-model="formData.mbMemberWorkDTO.companyTel" placeholder=""></i-input>
                 </i-form-item>
               </i-col>
+            </i-row>
+            <i-row>
+            </i-row>
+            <i-row>
               <i-col span="8">
-                <i-form-item label="公司地址" v-if="!isFromDetail"
+                <i-form-item label="单位地址"
                              prop="mbMemberWorkDTO.roadAddr"
-                             :rules="{required: true, message: '请输入公司地址', trigger: 'blur'}">
-                  <!--<input type="hidden" v-model="formData.mbMemberWorkDTO.cityCode">-->
-                  <!--<bs-dispicker :currProvince="formData.mbMemberWorkDTO.provinceName"-->
-                  <!--:currDistrict="formData.mbMemberWorkDTO.districtName"-->
-                  <!--:currCity="formData.mbMemberWorkDTO.cityName"-->
-                  <!--@on-change="selectCompanyDistance">-->
-                  <!--</bs-dispicker>-->
-                  <i-input v-model="formData.mbMemberWorkDTO.roadAddr" placeholder="" ></i-input>
+                             :rules="{required: true, message: '请输入单位地址', trigger: 'blur'}">
+                  <i-input :readonly="isFromDetail" v-model="formData.mbMemberWorkDTO.roadAddr" placeholder="" ></i-input>
                 </i-form-item>
               </i-col>
             </i-row>
-            <!--<i-row>-->
-              <!--<i-col span="18">-->
-                <!--<i-form-item label="公司地址" v-if="!isFromDetail"-->
-                             <!--prop="mbMemberWorkDTO.cityCode"-->
-                             <!--:rules="{required: true, message: '请输入公司地址', trigger: 'blur'}">-->
-                  <!--<input type="hidden" v-model="formData.mbMemberWorkDTO.cityCode">-->
-                  <!--&lt;!&ndash;<bs-dispicker :currProvince="formData.mbMemberWorkDTO.provinceName"&ndash;&gt;-->
-                                <!--&lt;!&ndash;:currDistrict="formData.mbMemberWorkDTO.districtName"&ndash;&gt;-->
-                                <!--&lt;!&ndash;:currCity="formData.mbMemberWorkDTO.cityName"&ndash;&gt;-->
-                                <!--&lt;!&ndash;@on-change="selectCompanyDistance">&ndash;&gt;-->
-                  <!--&lt;!&ndash;</bs-dispicker>&ndash;&gt;-->
-                  <!--<i-input v-model="formData.mbMemberWorkDTO.roadAddr" placeholder="街道信息" style="width: 220px;"></i-input>-->
-                <!--</i-form-item>-->
-                <!--&lt;!&ndash;<i-form-item v-else label="公司地址">&ndash;&gt;-->
-                  <!--&lt;!&ndash;{{formData.mbMemberWorkDTO.provinceName}}&ndash;&gt;-->
-                  <!--&lt;!&ndash;{{formData.mbMemberWorkDTO.cityName}}&ndash;&gt;-->
-                  <!--&lt;!&ndash;{{formData.mbMemberWorkDTO.districtName}}&ndash;&gt;-->
-                  <!--&lt;!&ndash;{{formData.mbMemberWorkDTO.roadAddr}}&ndash;&gt;-->
-                <!--&lt;!&ndash;</i-form-item>&ndash;&gt;-->
-              <!--</i-col>-->
-            <!--</i-row>-->
           </bs-form-block>
           <bs-form-block v-if="type==='page'" :title="'来源信息'">
             <i-row>
