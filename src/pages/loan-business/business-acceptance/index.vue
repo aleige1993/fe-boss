@@ -60,11 +60,8 @@
     methods: {
       // 保存的ajax
       async saveLoanBiz(_data) {
+        _data.loanCarVOS[0].carEvalVoList = _data.loanCarVOS[0].loanCarEvalDTOList;
         this.$data.initFormLoading = true;
-        let loanCarEvalDTOList = _data.loanCarVOS[0].loanCarEvalDTOList;
-        if (loanCarEvalDTOList) {
-          _data.loanCarVOS[0].carEvalVoList = loanCarEvalDTOList;
-        }
         let resp = await this.$http.post('/biz/saveLoanBiz', _data);
         this.$data.initFormLoading = false;
         if (resp.success) {
