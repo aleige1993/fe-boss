@@ -189,9 +189,8 @@
           </i-col>
           <i-col span="8">
             <i-form-item label="部门名称"
-                         prop="deptId"
-                         :rules="{required: true, message: '请选择部门名称', trigger: 'blur'}">
-              <input type="hidden" v-model="formData.deptId"/>
+                         prop="dname"
+                         :rules="{required: true, message: '请选择部门名称'}">
               <i-input v-model="formData.dname" :readonly="true" placeholder="">
                 <i-button v-if="!readonly" @click="selectDepartmentModal=!selectDepartmentModal" slot="append">选择部门名称 <Icon type="ios-more"></Icon></i-button>
               </i-input>
@@ -199,7 +198,6 @@
           </i-col>
           <i-col span="8">
             <i-form-item label="客户经理" prop="cnameId">
-              <input type="hidden" v-model="formData.cnameId"/>
               <i-input v-model="formData.cname" :readonly="true" placeholder="">
                 <i-button v-if="!readonly" @click="showSelectEmployer=!showSelectEmployer" slot="append">选择客户经理 <Icon type="ios-more"></Icon></i-button>
               </i-input>
@@ -209,9 +207,8 @@
         <i-row>
           <i-col span="24">
             <i-form-item label="订单所属地区"
-                         prop="provinId"
-                         :rules="{required: true, message: '请选择订单所属地区', trigger: 'blur'}">
-              <input type="hidden" v-model="formData.provinId"/>
+                         prop="provinName"
+                         :rules="{required: true, message: '请选择订单所属地区'}">
               <bs-dispicker :readonly="readonly"
                             :currProvince="formData.provinName"
                             :currCity="formData.citiesName"
