@@ -6,6 +6,7 @@
   outline: none;
 }
 body{
+  min-width: 1280px;
   margin: 0;
   padding: 0;
   line-height:1;
@@ -38,25 +39,25 @@ h1,h2,h3,h4,h5,h6 {
 /*
  * 添加class=“scrollBarStyle” 修改webkit内核的浏览器滚动条
  */
-.scrollBarStyle {
-  &::-webkit-scrollbar {
-    width: 6px;
-    height: 10px;
-  }
-  &::-webkit-scrollbar-button {
-    display: none;
-  }
-  &::-webkit-scrollbar-track {
-    display: none;
-  }
-  &::-webkit-scrollbar-thumb {
-    background: #c5dcef;
-    border-radius: 5px;
-    &:hover {
-      background: #add1f0;
-    }
-  }
-}
+//.scrollBarStyle {
+//  &::-webkit-scrollbar {
+//    width: 6px;
+//    height: 10px;
+//  }
+//  &::-webkit-scrollbar-button {
+//    display: none;
+//  }
+//  &::-webkit-scrollbar-track {
+//    display: none;
+//  }
+//  &::-webkit-scrollbar-thumb {
+//    background: #c5dcef;
+//    border-radius: 5px;
+//    &:hover {
+//      background: #add1f0;
+//    }
+//  }
+//}
 
 // ivew-ui reset 样式覆盖
 // 修改iView 确定交互框的位置
@@ -125,8 +126,8 @@ h1,h2,h3,h4,h5,h6 {
 .block-body {
   // overflow-x: auto;
 }
-.ivu-table-wrapper {
-  min-width: 1118px;
+//.ivu-table-wrapper {
+  //min-width: 1118px;
   /*
   * 修改webkit内核的浏览器滚动条
   */
@@ -152,7 +153,7 @@ h1,h2,h3,h4,h5,h6 {
   /*
   * end 修改webkit内核的浏览器滚动条
   */
-}
+//}
 // (iView)对于模态框内的table不做最小宽度控制
 .pt-modal-dialog .ivu-table-wrapper {
   min-width: 0px;

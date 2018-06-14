@@ -95,7 +95,7 @@
             </i-row>
           </bs-form-block>
           <bs-form-block :title="'费用收取落实'">
-            <div class="scrollBarStyle" style="width: 100%; overflow-x: auto">
+            <div class="scrollBarStyle">
               <i-table :loading="feeTableLoading" border ref="selection" :columns="feeColumns" :data="feeData"></i-table>
             </div>
           </bs-form-block>
@@ -173,7 +173,7 @@
             </i-form>
           </bs-form-block>
           <bs-form-block :title="'放款条件'">
-            <div class="scrollBarStyle" style="width: 100%; overflow-x: auto">
+            <div class="scrollBarStyle">
               <i-table :loading="conditionLoading" border ref="selection" :columns="conditionColumns" :data="conditionData"></i-table>
             </div>
           </bs-form-block>

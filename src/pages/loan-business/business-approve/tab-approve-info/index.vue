@@ -158,12 +158,12 @@
           </bs-form-block>
           <!--资金方信息-->
           <bs-form-block :title="'资金方信息'">
-            <div class="scrollBarStyle" style="width: 100%; overflow-x: auto">
+            <div class="scrollBarStyle">
               <i-table :columns="loanFundPartyCol" :data="approveData.loanCapitalDTOS"></i-table>
             </div>
           </bs-form-block>
           <bs-form-block :title="'费用收取方案'">
-            <div class="scrollBarStyle" style="width: 100%; overflow-x: auto">
+            <div class="scrollBarStyle">
               <i-table ref="feeMethodsTable" :columns="feeMethodCol" :data="approveData.loanApproveFeePlanDTOS"></i-table>
             </div>
             <i-row v-if="approveData.loanApproveFeePlanDTOS.length>0" style="margin-top: 10px;">
@@ -240,7 +240,7 @@
             <div class="form-top-actions" v-if="!readonly">
               <i-button type="primary" @click="conditionForm = {} ; addConditionModal = !addConditionModal">添加放款条件</i-button>
             </div>
-            <div class="scrollBarStyle" style="width: 100%; overflow-x: auto">
+            <div class="scrollBarStyle">
               <i-table :columns="loanPaymentConditionCol" :data="approveData.loanPaymentConditionDTOS"></i-table>
             </div>
           </bs-form-block>
