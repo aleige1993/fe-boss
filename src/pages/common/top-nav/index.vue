@@ -78,6 +78,7 @@ export default {
 </script>
 <style lang="scss" scoped>
 #common-topnav{
+  min-width: 1200px;
   height: 50px;
   box-shadow: 0 4px 4px #dddde0;
   background-color: #fff;
