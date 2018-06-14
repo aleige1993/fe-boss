@@ -29,7 +29,7 @@
                 <div v-if="creditStatus==='5'||creditStatus==='6'" class="form-top-actions">
                   <i-button type="primary" @click="addOutApproveModal = !addOutApproveModal">添加现场尽调信息</i-button>
                 </div>
-                <div class="scrollBarStyle" style="width: 100%; overflow-x: auto">
+                <div class="scrollBarStyle">
                   <i-table :columns="outApproveColumns" :data="approveData.creditCheckItemsList"></i-table>
                 </div>
               </i-col>
@@ -91,7 +91,7 @@
             <div v-if="creditStatus==='5'||creditStatus==='6'" class="form-top-actions">
               <i-button type="primary" @click="openAddCreditPlanModal">添加用信方案</i-button>
             </div>
-            <div class="scrollBarStyle" style="width: 100%; overflow-x: auto">
+            <div class="scrollBarStyle">
               <i-table :columns="creditPlanColumns" :data="approveData.creditPlanList"></i-table>
             </div>
           </bs-form-block>

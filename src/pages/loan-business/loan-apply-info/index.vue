@@ -244,13 +244,13 @@
     </bs-modal>
 
     <bs-form-block :title="'贷款准入规则'">
-      <div class="scrollBarStyle" style="width: 100%; overflow-x: auto">
+      <div class="scrollBarStyle">
         <i-table :columns="accessRuleCol" :data="loanApproveRuleDTOS"></i-table>
       </div>
     </bs-form-block>
     <!--车辆信息-->
     <bs-form-block :title="'车辆信息'">
-      <div class="scrollBarStyle" style="width: 100%; overflow-x: auto">
+      <div class="scrollBarStyle">
         <div class="form-top-actions" v-if="!readonly">
           <i-button @click="openModalCar" type="info"><i class="iconfont icon-xinzeng"></i>&nbsp;新增</i-button>
         </div>
@@ -262,7 +262,7 @@
       <div class="form-top-actions" v-if="!readonly">
         <i-button @click="openModalAssure" type="info"><i class="iconfont icon-xinzeng"></i>&nbsp;新增</i-button>
       </div>
-      <div class="scrollBarStyle" style="width: 100%; overflow-x: auto">
+      <div class="scrollBarStyle">
         <i-table :loading="assureDataLoading" border ref="selection" :columns="assureColumns" :data="assureData"></i-table>
       </div>
     </bs-form-block>

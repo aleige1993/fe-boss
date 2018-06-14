@@ -21,13 +21,13 @@
         <div v-if="tabIndex==='tabHK'">
           <!--资金方信息-->
           <bs-form-block :title="'资金方信息'">
-            <div class="scrollBarStyle" style="width: 100%; overflow-x: auto">
+            <div class="scrollBarStyle">
               <i-table border :loading="loanCapitalListLoading" ref="proTable" :columns="loanCapitalColumns" :data="loanCapitalData"></i-table>
             </div>
           </bs-form-block>
           <!--资金方还款计划表-->
           <bs-form-block :title="'资金方还款计划表'">
-            <div class="scrollBarStyle" style="width: 100%; overflow-x: auto">
+            <div class="scrollBarStyle">
               <i-table border :loading="capitalPlanCapitalListLoading" ref="capitalTable" :columns="repayPlanCapitalColumns" :data="repayPlanCapitalList"></i-table>
             </div>
           </bs-form-block>
@@ -59,7 +59,7 @@
           </bs-form-block>
           <!--租金还款计划表-->
           <bs-form-block :title="'租金还款计划表'">
-            <div class="scrollBarStyle" style="width: 100%; overflow-x: auto">
+            <div class="scrollBarStyle">
               <i-table border :loading="rentPlanCapitalListLoading" ref="rentTable" :columns="repayPlanRentalColumns" :data="repayPlanRentalList"></i-table>
             </div>
           </bs-form-block>

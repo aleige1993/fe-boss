@@ -55,7 +55,7 @@
         </bs-form-block>
         <!--合同信息-->
         <bs-form-block :title="'合同信息'">
-          <div class="scrollBarStyle" style="width: 100%; overflow-x: auto">
+          <div class="scrollBarStyle">
             <div v-if="!this.$data.isDetails" class="form-top-actions" style="padding-top:0;">
               <i-button @click="backChannelFun" :loading="backChannelLoading">
                 <span v-if="!backChannelLoading"><Icon type="backspace"></Icon> 退回至渠道商</span>

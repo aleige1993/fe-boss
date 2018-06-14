@@ -10,7 +10,7 @@
     <br>
     <br>
     <bs-form-block :title="'审核历史意见'">
-      <div class="scrollBarStyle" style="width: 100%; overflow-x: auto">
+      <div class="scrollBarStyle">
         <i-table :height="tableFixHeight" border :loading="dataLoading" ref="tableHistory" :columns="columns1" :data="data1"></i-table>
       </div>
     </bs-form-block>

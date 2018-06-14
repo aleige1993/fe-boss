@@ -126,7 +126,7 @@ h1,h2,h3,h4,h5,h6 {
 .block-body {
   // overflow-x: auto;
 }
-.ivu-table-wrapper {
+//.ivu-table-wrapper {
   //min-width: 1118px;
   /*
   * 修改webkit内核的浏览器滚动条
@@ -153,7 +153,7 @@ h1,h2,h3,h4,h5,h6 {
   /*
   * end 修改webkit内核的浏览器滚动条
   */
-}
+//}
 // (iView)对于模态框内的table不做最小宽度控制
 .pt-modal-dialog .ivu-table-wrapper {
   min-width: 0px;

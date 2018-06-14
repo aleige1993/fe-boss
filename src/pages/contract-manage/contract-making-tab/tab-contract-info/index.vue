@@ -54,13 +54,13 @@
   </i-form>
   <!--车辆信息-->
   <bs-form-block :title="'车辆信息'">
-    <div class="scrollBarStyle" style="width: 100%; overflow-x: auto">
+    <div class="scrollBarStyle">
       <i-table border :loading="carListLoading" ref="proTable" :columns="carColumns" :data="carData"></i-table>
     </div>
   </bs-form-block>
   <!--担保信息-->
   <bs-form-block :title="'担保信息'">
-    <div class="scrollBarStyle" style="width: 100%; overflow-x: auto">
+    <div class="scrollBarStyle">
       <i-table border :loading="guaPersonListLoading" ref="proTable" :columns="guaPersonColumns" :data="guaPersonData"></i-table>
     </div>
   </bs-form-block>
@@ -139,7 +139,7 @@
   </bs-form-block>
   <!--费用收取方案-->
   <bs-form-block :title="'费用收取方案'">
-    <div class="scrollBarStyle" style="width: 100%; overflow-x: auto">
+    <div class="scrollBarStyle">
       <i-table border :loading="feeTakeLoading" ref="proTable" :columns="feeTakeColumns" :data="feeTakeData"></i-table>
     </div>
   </bs-form-block>
