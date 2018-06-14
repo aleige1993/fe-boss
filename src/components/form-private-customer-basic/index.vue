@@ -318,9 +318,9 @@
               </i-col>
               <i-col span="8">
                 <i-form-item label="统一社会信用代码"
-                             prop="mbMemberWorkDTO.creditCode"
+                             prop="mbMemberWorkDTO.companyCode"
                              :rules="{required: true, message: '统一社会信用代码不能为空', trigger: 'blur'}">
-                  <i-input :readonly="isFromDetail" v-model="formData.mbMemberWorkDTO.creditCode"/>
+                  <i-input :readonly="isFromDetail" v-model="formData.mbMemberWorkDTO.companyCode"/>
                 </i-form-item>
               </i-col>
               <i-col span="8">

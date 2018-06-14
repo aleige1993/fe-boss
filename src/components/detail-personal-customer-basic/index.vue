@@ -221,8 +221,8 @@
                 </i-form-item>
               </i-col>
               <i-col span="8">
-                <i-form-item label="统一社会信用代码" prop="mbMemberWorkDTO.creditCode">
-                  <span v-text="formData.mbMemberWorkDTO.creditCode"></span>
+                <i-form-item label="统一社会信用代码" prop="mbMemberWorkDTO.companyCode">
+                  <span v-text="formData.mbMemberWorkDTO.companyCode"></span>
                 </i-form-item>
               </i-col>
               <i-col span="8">
@@ -239,7 +239,7 @@
               </i-col>
               <i-col span="8">
                 <i-form-item label="职务" prop="mbMemberWorkDTO.duty">
-                  <span v-text="enumCode2Name('' + formData.mbMemberWorkDTO.duty, 'UnitTypeEnum')"></span>
+                  <span v-text="enumCode2Name('' + formData.mbMemberWorkDTO.duty, 'DutyEnum')"></span>
                 </i-form-item>
               </i-col>
               <i-col span="8">
