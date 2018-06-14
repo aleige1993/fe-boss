@@ -216,61 +216,42 @@
           <bs-form-block v-if="showDetail && formData.mbMemberDTO.workType !== '2'" :title="'工作信息'">
             <i-row>
               <i-col span="8">
-                <i-form-item label="单位名称"
-                             prop="mbMemberWorkDTO.companyName">
+                <i-form-item label="单位名称" prop="mbMemberWorkDTO.companyName">
                   <span v-text="formData.mbMemberWorkDTO.companyName"></span>
                 </i-form-item>
               </i-col>
               <i-col span="8">
-                <i-form-item label="单位性质"
-                             prop="mbMemberWorkDTO.unitType">
+                <i-form-item label="统一社会信用代码" prop="mbMemberWorkDTO.creditCode">
+                  <span v-text="formData.mbMemberWorkDTO.creditCode"></span>
+                </i-form-item>
+              </i-col>
+              <i-col span="8">
+                <i-form-item label="单位成立时间" prop="mbMemberWorkDTO.regDate">
+                  <span v-text="formData.mbMemberWorkDTO.regDate"></span>
+                </i-form-item>
+              </i-col>
+            </i-row>
+            <i-row>
+              <i-col span="8">
+                <i-form-item label="单位性质" prop="mbMemberWorkDTO.unitType">
                   <span v-text="enumCode2Name('' + formData.mbMemberWorkDTO.unitType, 'UnitTypeEnum')"></span>
                 </i-form-item>
               </i-col>
               <i-col span="8">
-                <i-form-item label="行业类别"
-                             prop="mbMemberWorkDTO.industryType">
-                  <span v-text="enumCode2Name('' + formData.mbMemberWorkDTO.industryType, 'IndustryTypeEnum')"></span>
-                </i-form-item>
-              </i-col>
-            </i-row>
-            <i-row>
-              <i-col span="8">
                 <i-form-item label="职务" prop="mbMemberWorkDTO.duty">
-                  <span v-text="enumCode2Name('' + formData.mbMemberWorkDTO.duty, 'DutyEnum')"></span>
+                  <span v-text="enumCode2Name('' + formData.mbMemberWorkDTO.duty, 'UnitTypeEnum')"></span>
                 </i-form-item>
               </i-col>
               <i-col span="8">
-                <i-form-item label="入职时间" prop="mbMemberWorkDTO.joinDate">
-                  <span v-text="formData.mbMemberWorkDTO.joinDate"></span>
-                </i-form-item>
-              </i-col>
-              <i-col span="8">
-                <i-form-item label="所属部门" prop="mbMemberWorkDTO.department">
-                  <span v-text="formData.mbMemberWorkDTO.department"></span>
-                </i-form-item>
-              </i-col>
-            </i-row>
-            <i-row>
-              <i-col span="8">
-                <i-form-item label="月收入" prop="mbMemberWorkDTO.monthRevenue">
-                  <span v-if="formData.mbMemberWorkDTO.monthRevenue">{{formData.mbMemberWorkDTO.monthRevenue || ''}} 元</span>
-                  <!--<span v-text="enumCode2Name('' + formData.mbMemberWorkDTO.monthRevenue, 'MonthRevenueEnum')"></span>-->
-                </i-form-item>
-              </i-col>
-              <i-col span="8">
-                <i-form-item label="单位电话"
-                             prop="mbMemberWorkDTO.companyTel">
+                <i-form-item label="单位电话" prop="mbMemberWorkDTO.companyTel">
                   <span v-text="formData.mbMemberWorkDTO.companyTel"></span>
                 </i-form-item>
-                <i-form-item label="公司地址"
-                             prop="mbMemberWorkDTO.cityCode">
-                  <span>
-                    {{formData.mbMemberWorkDTO.provinceName}}
-                    {{formData.mbMemberWorkDTO.cityName}}
-                    {{formData.mbMemberWorkDTO.districtName}}
-                    {{formData.mbMemberWorkDTO.roadAddr}}
-                  </span>
+              </i-col>
+            </i-row>
+            <i-row>
+              <i-col span="8">
+                <i-form-item label="单位地址" prop="mbMemberWorkDTO.roadAddr">
+                  <span v-text="formData.mbMemberWorkDTO.roadAddr"></span>
                 </i-form-item>
               </i-col>
             </i-row>
