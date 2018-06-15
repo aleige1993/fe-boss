@@ -38,9 +38,17 @@
         searchForm: {
           userName: '',
           userCode: '',
-          mobile: ''
+          mobile: '',
+          deptId: ''
         }
       };
+    },
+    props: {
+      deptId: {
+        type: String,
+        required: false,
+        default: ''
+      }
     },
     methods: {
       async getEmployerList(page) {
@@ -48,6 +56,7 @@
         if (page) {
           this.$data.searchForm.currentPage = page;
         }
+        this.$data.searchForm.deptId = this.deptId;
         let resp = await this.$http.post('/common/user/page', this.$data.searchForm);
         this.$data.dataLoading = false;
         if (resp.success) {
