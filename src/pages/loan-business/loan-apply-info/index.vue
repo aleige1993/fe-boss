@@ -198,7 +198,7 @@
           <i-col span="8">
             <i-form-item label="客户经理" prop="cnameId">
               <i-input v-model="formData.cname" :readonly="true" placeholder="">
-                <i-button v-if="!readonly" @click="showSelectEmployer=!showSelectEmployer" slot="append">选择客户经理 <Icon type="ios-more"></Icon></i-button>
+                <i-button v-if="!readonly && formData.dname !== ''"  @click="showSelectEmployer=!showSelectEmployer" slot="append">选择客户经理 <Icon type="ios-more"></Icon></i-button>
               </i-input>
             </i-form-item>
           </i-col>
@@ -236,7 +236,7 @@
     </bs-modal>
     <!-- 选择客户经理的弹窗 -->
     <bs-modal title="选择客户经理" :width="1200" v-model="showSelectEmployer">
-      <table-employer-list @on-row-dbclick="selectEmployer"></table-employer-list>
+      <table-employer-list v-if="showSelectEmployer" :deptId="formData.deptId" @on-row-dbclick="selectEmployer"></table-employer-list>
     </bs-modal>
 
     <bs-form-block :title="'贷款准入规则'">
@@ -921,6 +921,7 @@
       async getDepList() {
         let resp = await this.$http.post('/common/dept/tree', {});
         this.$data.depData = resp.body.children;
+        this.$data.depData = this.$data.depData.filter(item => item.text.indexOf('事业部') > -1);
       },
       selectDep(id, row, data) {
         this.$data.formData.deptId = data.id;
