@@ -364,8 +364,8 @@
             <i-row>
               <i-col span="8">
                 <i-form-item label="单位地址"
-                             prop="mbMemberWorkDTO.roadAddr">
-                             <!--:rules="{required: true, message: '请输入单位地址', trigger: 'blur'}">-->
+                             prop="mbMemberWorkDTO.roadAddr"
+                             :rules="{required: true, message: '请输入单位地址', trigger: 'blur'}">
                   <i-input :readonly="isFromDetail" v-model="formData.mbMemberWorkDTO.roadAddr" placeholder="" ></i-input>
                 </i-form-item>
               </i-col>
