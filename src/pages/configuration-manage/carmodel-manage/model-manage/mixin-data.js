@@ -1,13 +1,24 @@
 export default {
   data() {
     return {
-      isAdd: true,
+      addTypeModal: false, // 选择添加类型
+      addTypeData: '',
+      isAdd: true, // 新车
       addModal: false,
-      dataLoading: false,
       buttonLoading: false,
+      modelData: {},
+      modelDataInit: {
+        id: null,
+        childBrandName: '',
+        fileUploading: false
+      },
+      isSecondAdd: false, // 二手车
+      addSecondModal: false,
+      secondButtonLoading: false,
+      secondModelData: {},
       total: 0,
       currentPage: 1,
-      uploadFileName: '',
+      dataLoading: false,
       searchForm: {
         'modelFullName': '',
         'seriesName': '',
@@ -15,12 +26,6 @@ export default {
         'brandName': '',
         currentPage: 1,
         pageSize: 15
-      },
-      modelData: {},
-      modelDataInit: {
-        id: null,
-        childBrandName: '',
-        fileUploading: false
       },
       customerColumns: [
         {

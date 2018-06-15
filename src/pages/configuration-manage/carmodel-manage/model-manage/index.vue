@@ -45,6 +45,25 @@
     <div class="page-container">
       <i-page :total="total" :page-size="15" :current="currentPage" @on-change="jumpPage" size="small" show-elevator show-total></i-page>
     </div>
+
+    <pt-modal title="添加类型" v-model="addTypeModal" :width="600" :zIndex="200">
+      <i-form v-if="addTypeModal" label-position="left" :label-width="80">
+        <i-form-item style="padding: 20px 0 30px;" label="添加类型" prop="addTypeData">
+          <i-select v-model="addTypeData" type="text" placeholder="">
+            <i-option value="" style="height: 26px; color: #bbbec4">-请选择-</i-option>
+            <i-option value="1">新车</i-option>
+            <i-option value="2">二手车</i-option>
+          </i-select>
+        </i-form-item>
+        <i-form-item class="text-right">
+          <i-button type="primary" @click="selectAddType">
+            <span>确定</span>
+          </i-button>
+          <i-button type="ghost" @click="cancelAddType" style="margin-left: 8px">取消</i-button>
+        </i-form-item>
+      </i-form>
+    </pt-modal>
+
     <pt-modal :title="isAdd ? '添加车型' : '修改车型'" v-model="addModal" :width="1000" :zIndex="200" @on-close="modelData.modelFileUploading=false">
       <i-form v-if="modelData" ref="modelData" :model="modelData" label-position="right" :label-width="100">
         <i-row>
@@ -424,6 +443,22 @@
             <span v-else>loading...</span>
           </i-button>
           <i-button type="ghost" @click="cancelSeriesFun" style="margin-left: 8px">取消</i-button>
+        </i-form-item>
+      </i-form>
+    </pt-modal>
+
+    <!--添加二手车-->
+    <pt-modal title="添加" v-model="addSecondModal" :width="600" :zIndex="200">
+      <i-form v-if="secondModelData" ref="secondModelData" :model="secondModelData" label-position="left" :label-width="80">
+        <i-form-item label="车型ID" prop="id" :rules="{required: true, message: '车型ID不能为空', trigger: 'blur'}">
+          <i-input v-model="secondModelData.id" placeholder=""></i-input>
+        </i-form-item>
+        <i-form-item class="text-right">
+          <i-button type="primary" @click="submitSecondFun" :loading="secondButtonLoading">
+            <span v-if="!secondButtonLoading">提交</span>
+            <span v-else>loading...</span>
+          </i-button>
+          <i-button type="ghost" @click="cancelSecondFun" style="margin-left: 8px">取消</i-button>
         </i-form-item>
       </i-form>
     </pt-modal>
