@@ -18,7 +18,7 @@
     </div>
     <i-table :height="tableFixHeight" :loading="dataLoading" @on-row-dblclick="selectRow" border ref="selection" :columns="employerColumns" :data="employerList"></i-table>
     <div class="page-container">
-      <i-page :total="total" :page-size="15" :current="currentPage" @on-change="jumpPage" size="small" show-elevator show-total></i-page>
+      <i-page :total="searchForm.total" :page-size="searchForm.pageSize" :current="searchForm.currentPage" @on-change="jumpPage" size="small" show-elevator show-total></i-page>
     </div>
   </div>
 </template>
@@ -32,14 +32,15 @@
       return {
         showAddModal: false,
         dataLoading: false,
-        total: 0,
-        currentPage: 1,
         certTypeEnum: [],
         searchForm: {
           userName: '',
           userCode: '',
           mobile: '',
-          deptId: ''
+          deptId: '',
+          total: 0,
+          currentPage: 1,
+          pageSize: 10
         }
       };
     },
@@ -61,8 +62,8 @@
         this.$data.dataLoading = false;
         if (resp.success) {
           this.$data.employerList = resp.body.resultList;
-          this.$data.currentPage = resp.body.currentPage / 1;
-          this.$data.total = resp.body.totalNum / 1;
+          this.$data.searchForm.currentPage = resp.body.currentPage / 1;
+          this.$data.searchForm.total = resp.body.totalNum / 1;
         }
       },
       jumpPage(page) {
