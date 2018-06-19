@@ -17,9 +17,9 @@
       </i-form>
     </div>
     <i-table :height="tableFixHeight" :loading="dataLoading" @on-row-dblclick="selectRow" border ref="selection" :columns="employerColumns" :data="employerList"></i-table>
-    <div class="page-container">
-      <i-page :total="searchForm.total" :page-size="searchForm.pageSize" :current="searchForm.currentPage" @on-change="jumpPage" size="small" show-elevator show-total></i-page>
-    </div>
+    <!--<div class="page-container">-->
+      <!--<i-page :total="searchForm.total" :page-size="searchForm.pageSize" :current="searchForm.currentPage" @on-change="jumpPage" size="small" show-elevator show-total></i-page>-->
+    <!--</div>-->
   </div>
 </template>
 <script>
@@ -40,7 +40,7 @@
           deptId: '',
           total: 0,
           currentPage: 1,
-          pageSize: 10
+          pageSize: 99999999
         }
       };
     },
