@@ -199,6 +199,7 @@
             <i-form-item label="客户经理" prop="cnameId">
               <i-input v-model="formData.cname" :readonly="true" placeholder="">
                 <i-button v-if="!readonly && formData.dname !== ''"  @click="showSelectEmployer=!showSelectEmployer" slot="append">选择客户经理 <Icon type="ios-more"></Icon></i-button>
+                <i-button v-if="!readonly && formData.dname === ''"  slot="append"><Icon type="ios-more"></Icon></i-button>
               </i-input>
             </i-form-item>
           </i-col>
@@ -944,6 +945,10 @@
       }
     },
     watch: {
+      'formData.dname'() {
+        this.$data.formData.cnameId = '';
+        this.$data.formData.cname = '';
+      },
       'formCar.custType'(newVal, oldVal) {
         if ((oldVal !== '') && (typeof oldVal !== 'undefined')) {
           this.$data.formCar.carOwnerName = '';
