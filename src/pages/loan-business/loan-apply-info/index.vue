@@ -106,7 +106,8 @@
             </i-form-item>
           </i-col>
           <input type="hidden" :value="formData.merchantNo"/>
-          <i-col span="8" v-if="formData.loandType!=='1'">
+          <!--<i-col span="8" v-if="formData.loandType!=='1'">-->
+          <i-col span="8" v-if="formData.productName.indexOf('车主贷') > -1">
             <i-form-item label="经销商" prop="merchantAbbr">
               <input type="hidden" v-model="formData.merchantAbbr"/>
               <i-input v-model="formData.merchantAbbr" :readonly="true" placeholder="">
@@ -199,7 +200,6 @@
             <i-form-item label="客户经理" prop="cnameId">
               <i-input v-model="formData.cname" :readonly="true" placeholder="">
                 <i-button v-if="!readonly && formData.dname !== ''"  @click="showSelectEmployer=!showSelectEmployer" slot="append">选择客户经理 <Icon type="ios-more"></Icon></i-button>
-                <i-button v-if="!readonly && formData.dname === ''"  slot="append"><Icon type="ios-more"></Icon></i-button>
               </i-input>
             </i-form-item>
           </i-col>
@@ -241,13 +241,13 @@
     </bs-modal>
 
     <bs-form-block :title="'贷款准入规则'">
-      <div class="scrollBarStyle" style="width: 100%; overflow-x: auto">
+      <div class="scrollBarStyle">
         <i-table :columns="accessRuleCol" :data="loanApproveRuleDTOS"></i-table>
       </div>
     </bs-form-block>
     <!--车辆信息-->
     <bs-form-block :title="'车辆信息'">
-      <div class="scrollBarStyle" style="width: 100%; overflow-x: auto">
+      <div class="scrollBarStyle">
         <div class="form-top-actions" v-if="!readonly">
           <i-button @click="openModalCar" type="info"><i class="iconfont icon-xinzeng"></i>&nbsp;新增</i-button>
         </div>
@@ -259,7 +259,7 @@
       <div class="form-top-actions" v-if="!readonly">
         <i-button @click="openModalAssure" type="info"><i class="iconfont icon-xinzeng"></i>&nbsp;新增</i-button>
       </div>
-      <div class="scrollBarStyle" style="width: 100%; overflow-x: auto">
+      <div class="scrollBarStyle">
         <i-table :loading="assureDataLoading" border ref="selection" :columns="assureColumns" :data="assureData"></i-table>
       </div>
     </bs-form-block>
@@ -337,18 +337,60 @@
             </i-form-item>
           </i-col>
           <!--权利人-->
-          <i-col span="8" v-if="formCar.custType=='1' || formCar.custType=='2'">
+          <!--<i-col span="8" v-if="formCar.custType=='1' || formCar.custType=='2'">-->
+            <!--<i-form-item-->
+              <!--label="权利人"-->
+              <!--:rules="{required: true, message: '权利人不能为空'}"-->
+              <!--prop="carOwnerNo">-->
+              <!--<input type="hidden" v-model="formCar.carOwnerNo"/>-->
+              <!--<i-input v-if="formCar.custType=='1'" v-model="formCar.carOwnerName" :readonly="true" placeholder="选择权利人">-->
+                <!--<i-button @click="showSelectObligee=!showSelectObligee" slot="append">选择权利人 <Icon type="ios-more"></Icon></i-button>-->
+              <!--</i-input>-->
+              <!--<i-input v-if="formCar.custType=='2'" v-model="formCar.carOwnerName" :readonly="true" placeholder="选择企业权利人">-->
+                <!--<i-button @click="showSelectCompanyOwner=!showSelectCompanyOwner" slot="append">选择企业权利人 <Icon type="ios-more"></Icon></i-button>-->
+              <!--</i-input>-->
+            <!--</i-form-item>-->
+          <!--</i-col>-->
+        </i-row>
+        <i-row>
+          <!--权利人-->
+          <i-col span="8">
             <i-form-item
               label="权利人"
               :rules="{required: true, message: '权利人不能为空'}"
-              prop="carOwnerNo">
-              <input type="hidden" v-model="formCar.carOwnerNo"/>
-              <i-input v-if="formCar.custType=='1'" v-model="formCar.carOwnerName" :readonly="true" placeholder="选择权利人">
-                <i-button @click="showSelectObligee=!showSelectObligee" slot="append">选择权利人 <Icon type="ios-more"></Icon></i-button>
-              </i-input>
-              <i-input v-if="formCar.custType=='2'" v-model="formCar.carOwnerName" :readonly="true" placeholder="选择企业权利人">
-                <i-button @click="showSelectCompanyOwner=!showSelectCompanyOwner" slot="append">选择企业权利人 <Icon type="ios-more"></Icon></i-button>
-              </i-input>
+              prop="carOwnerName">
+              <!--<input type="hidden" v-model="formCar.carOwnerNo"/>-->
+              <i-input v-model="formCar.carOwnerName" placeholder=""/>
+            </i-form-item>
+          </i-col>
+          <i-col span="8">
+            <i-form-item label="证件类型" prop="guaPersonType">
+              <!--<i-select :disabled="true" v-model="formAssure.guaPersonCertType">-->
+              <!--<i-option v-for="item in enumSelectData.get('CertTypeEnum')" :key="item.itemCode"-->
+              <!--:value="item.itemCode">{{item.itemName}}-->
+              <!--</i-option>-->
+              <!--</i-select>-->
+              <span v-text="formCar.custType === '2' ? '营业执照' : '身份证'"></span>
+            </i-form-item>
+          </i-col>
+          <i-col span="8">
+            <!--<i-form-item-->
+              <!--label="证件号码"-->
+              <!--prop="idCode"-->
+              <!--:rules="{required: true, message: '证件号码不能为空'}">-->
+              <!--<i-input v-model="formCar.idCode" placeholder=""></i-input>-->
+            <!--</i-form-item>-->
+            <i-form-item v-if="formCar.custType === '1'" label="证件号码" prop="carOwnerNumber"
+                         :rules="[{required: true, message: '证件号码不能为空'},
+                                  {required: true, min: 18, message: '请输入正确的证件号码'},
+                                  {required: true, max: 18, message: '请输入正确的证件号码'}]">
+              <i-input v-model="formCar.carOwnerNumber"/>
+            </i-form-item>
+            <i-form-item v-else label="统一社会信用代码" prop="carOwnerNumber"
+                         :rules="[{required: true, message: '统一社会信用代码不能为空'},
+                                  {required: true, min: 18, message: '请输入正确的统一社会信用代码'},
+                                  {required: true, max: 18, message: '请输入正确的统一社会信用代码'}]">
+              <i-input v-model="formCar.carOwnerNumber"/>
             </i-form-item>
           </i-col>
         </i-row>
@@ -372,9 +414,8 @@
           <i-col span="24">
             <i-form-item
               label="车辆品牌"
-              prop="carModel">
-              <!--:rules="{required: true, message: '车辆品牌不能为空'}"
-              -->
+              prop="carModel"
+              :rules="{required: true, message: '车辆品牌不能为空'}">
               <input type="hidden" v-model="formCar.carModel">
               <bs-carpicker :currBrand="formCar.carBrandName"
                             :currSeries="formCar.carTypeName"
@@ -592,70 +633,155 @@
     </bs-modal>
     <!--担保信息的新增修改模态框-->
     <bs-modal :title="isAddAssure ? '新增' : '编辑'" v-model="showModalAssure" :width="800">
-      <i-form v-if="showModalAssure" ref="formAssure" :model="formAssure" label-position="right" :label-width="120">
+      <!--<i-form ref="formAssure" :model="formAssure" label-position="right" :label-width="120">-->
+        <!--<i-row>-->
+          <!--<i-col span="12">-->
+            <!--<i-form-item label="担保人类型" prop="guaPersonType"-->
+                         <!--:rules="{required: true, message: '请选择担保人类型'}">-->
+              <!--<i-select v-model="formAssure.guaPersonType" @on-change="loanApplyAssureChanged">-->
+                <!--<i-option v-for="item in enumSelectData.get('CustTypeEnum')" :key="item.itemCode" :value="item.itemCode">{{item.itemName}}</i-option>-->
+              <!--</i-select>-->
+            <!--</i-form-item>-->
+          <!--</i-col>-->
+          <!--<i-col span="12">-->
+            <!--<i-form-item :label="formAssure.guaPersonType==''? '':'保证人'" prop="guaPersonName"-->
+              <!--:rules="{required: true, message: '请选择担保人'}">-->
+              <!--<input type="hidden" v-model="formAssure.guaPersonCertNo" placeholder=""/>-->
+              <!--<input type="hidden" v-model="formAssure.guaPersonNo" placeholder=""/>-->
+              <!--<input type="hidden" v-model="formAssure.guaPersonName"/>-->
+              <!--<i-input v-if="formAssure.guaPersonType=='1'" v-model="formAssure.guaPersonName" :readonly="true" placeholder="选择保证人">-->
+                <!--<i-button @click="showSelectGua=!showSelectGua" slot="append">选择保证人 <Icon type="ios-more"></Icon></i-button>-->
+              <!--</i-input>-->
+              <!--<i-input v-if="formAssure.guaPersonType=='2'" v-model="formAssure.guaPersonName" :readonly="true" placeholder="选择企业保证人">-->
+                <!--<i-button @click="showSelectCompanyGua=!showSelectCompanyGua" slot="append">选择企业保证人 <Icon type="ios-more"></Icon></i-button>-->
+              <!--</i-input>-->
+            <!--</i-form-item>-->
+          <!--</i-col>-->
+        <!--</i-row>-->
+        <!--<i-row>-->
+          <!--<i-col span="12">-->
+            <!--<i-form-item label="证件号码" prop="guaPersonCertNo">-->
+              <!--<i-input :readonly="true" v-model="formAssure.guaPersonCertNo"></i-input>-->
+            <!--</i-form-item>-->
+          <!--</i-col>-->
+          <!--<i-col span="12">-->
+            <!--<i-form-item label="联系电话" prop="guaPersonMobile">-->
+              <!--<i-input v-model="formAssure.guaPersonMobile"></i-input>-->
+            <!--</i-form-item>-->
+          <!--</i-col>-->
+        <!--</i-row>-->
+        <!--<i-row>-->
+          <!--<i-col span="12">-->
+            <!--<i-form-item label="担保方式" prop="guaType">-->
+              <!--<i-select v-model="formAssure.guaType">-->
+                <!--<i-option v-for="item in enumSelectData.get('GuaranteeTypeEnum')" :key="item.itemCode" :value="item.itemCode">{{item.itemName}}</i-option>-->
+              <!--</i-select>-->
+            <!--</i-form-item>-->
+          <!--</i-col>-->
+          <!--<i-col span="12">-->
+            <!--<i-form-item label="与债务人关系" prop="relation">-->
+              <!--<i-select v-model="formAssure.relation">-->
+                <!--<i-option v-for="item in enumSelectData.get('RelativeEnum')" :key="item.itemCode" :value="item.itemCode">{{item.itemName}}</i-option>-->
+              <!--</i-select>-->
+            <!--</i-form-item>-->
+          <!--</i-col>-->
+        <!--</i-row>-->
+        <!--<i-row>-->
+          <!--<i-col span="12">-->
+            <!--<i-form-item label="联系地址" prop="guaPersonAddr">-->
+              <!--<i-input v-model="formAssure.guaPersonAddr"></i-input>-->
+            <!--</i-form-item>-->
+          <!--</i-col>-->
+        <!--</i-row>-->
+        <!--<i-form-item label="备注" prop="remark">-->
+          <!--<i-input type="textarea" :rows="2" v-model="formAssure.remark"></i-input>-->
+        <!--</i-form-item>-->
+
+        <!--<i-form-item class="text-right">-->
+          <!--<i-button type="primary" @click="assureSuBmit">提交</i-button>-->
+        <!--</i-form-item>-->
+      <!--</i-form>-->
+      <i-form ref="formAssure" :model="formAssure" label-position="right" :label-width="120">
         <i-row>
           <i-col span="12">
             <i-form-item label="担保人类型" prop="guaPersonType"
                          :rules="{required: true, message: '请选择担保人类型'}">
-              <i-select v-model="formAssure.guaPersonType" @on-change="loanApplyAssureChanged">
-                <i-option v-for="item in enumSelectData.get('CustTypeEnum')" :key="item.itemCode" :value="item.itemCode">{{item.itemName}}</i-option>
+              <i-select v-model="formAssure.guaPersonType">
+                <i-option v-for="item in enumSelectData.get('CustTypeEnum')" :key="item.itemCode"
+                          :value="item.itemCode">{{item.itemName}}
+                </i-option>
               </i-select>
             </i-form-item>
           </i-col>
           <i-col span="12">
-            <i-form-item :label="formAssure.guaPersonType==''? '':'保证人'" prop="guaPersonName"
-              :rules="{required: true, message: '请选择担保人'}">
-              <input type="hidden" v-model="formAssure.guaPersonCertNo" placeholder=""/>
-              <input type="hidden" v-model="formAssure.guaPersonNo" placeholder=""/>
-              <input type="hidden" v-model="formAssure.guaPersonName"/>
-              <i-input v-if="formAssure.guaPersonType=='1'" v-model="formAssure.guaPersonName" :readonly="true" placeholder="选择保证人">
-                <i-button @click="showSelectGua=!showSelectGua" slot="append">选择保证人 <Icon type="ios-more"></Icon></i-button>
-              </i-input>
-              <i-input v-if="formAssure.guaPersonType=='2'" v-model="formAssure.guaPersonName" :readonly="true" placeholder="选择企业保证人">
-                <i-button @click="showSelectCompanyGua=!showSelectCompanyGua" slot="append">选择企业保证人 <Icon type="ios-more"></Icon></i-button>
-              </i-input>
+            <i-form-item v-if="formAssure.guaPersonType === '1'" label="担保人" prop="guaPersonName"
+                         :rules="{required: true, message: '担保人不能为空'}">
+              <i-input v-model="formAssure.guaPersonName"/>
+            </i-form-item>
+            <i-form-item v-else label="担保公司" prop="guaPersonName"
+                         :rules="{required: true, message: '担保公司不能为空'}">
+              <i-input v-model="formAssure.guaPersonName"/>
             </i-form-item>
           </i-col>
         </i-row>
         <i-row>
           <i-col span="12">
-            <i-form-item label="证件号码" prop="guaPersonCertNo">
-              <i-input :readonly="true" v-model="formAssure.guaPersonCertNo"></i-input>
+            <i-form-item label="证件类型"  prop="guaPersonType">
+              <span v-text="formAssure.guaPersonType == '1' ? '身份证' : '营业执照'"></span>
             </i-form-item>
           </i-col>
           <i-col span="12">
-            <i-form-item label="联系电话" prop="guaPersonMobile">
+            <i-form-item v-if="formAssure.guaPersonType == '1'" label="证件号码" prop="guaPersonCertNo"
+                         :rules="[{required: true, message: '证件号码不能为空'},
+                                  {required: true, min: 18, message: '请输入正确的证件号码'},
+                                  {required: true, max: 18, message: '请输入正确的证件号码'}]">
+              <i-input v-model="formAssure.guaPersonCertNo"/>
+            </i-form-item>
+            <i-form-item v-else label="统一社会信用代码" prop="guaPersonCertNo"
+                         :rules="[{required: true, message: '统一社会信用代码不能为空'},
+                                  {required: true, min: 18, message: '请输入正确的统一社会信用代码'},
+                                  {required: true, max: 18, message: '请输入正确的统一社会信用代码'}]">
+              <i-input v-model="formAssure.guaPersonCertNo"/>
+            </i-form-item>
+          </i-col>
+        </i-row>
+        <i-row>
+          <i-col span="12">
+            <i-form-item label="担保方式" prop="guaType"
+                         :rules="{required: true, message: '请选择担保方式'}">
+              <i-select v-model="formAssure.guaType">
+                <i-option v-for="item in enumSelectData.get('GuaranteeTypeEnum')" :key="item.itemCode"
+                          :value="item.itemCode">{{item.itemName}}
+                </i-option>
+              </i-select>
+            </i-form-item>
+          </i-col>
+          <i-col span="12">
+            <i-form-item label="与债务人关系" prop="relation"
+                         :rules="{required: true, message: '请选择与债务人关系'}">
+              <i-select v-model="formAssure.relation">
+                <i-option v-for="item in enumSelectData.get('RelativeEnum')" :key="item.itemCode"
+                          :value="item.itemCode">{{item.itemName}}
+                </i-option>
+              </i-select>
+            </i-form-item>
+          </i-col>
+        </i-row>
+        <i-row>
+          <i-col span="12">
+            <i-form-item label="联系电话" prop="guaPersonMobile"
+                         :rules="{required: true, message: '联系电话不能为空'}">
               <i-input v-model="formAssure.guaPersonMobile"></i-input>
             </i-form-item>
           </i-col>
         </i-row>
-        <i-row>
-          <i-col span="12">
-            <i-form-item label="担保方式" prop="guaType">
-              <i-select v-model="formAssure.guaType">
-                <i-option v-for="item in enumSelectData.get('GuaranteeTypeEnum')" :key="item.itemCode" :value="item.itemCode">{{item.itemName}}</i-option>
-              </i-select>
-            </i-form-item>
-          </i-col>
-          <i-col span="12">
-            <i-form-item label="与债务人关系" prop="relation">
-              <i-select v-model="formAssure.relation">
-                <i-option v-for="item in enumSelectData.get('RelativeEnum')" :key="item.itemCode" :value="item.itemCode">{{item.itemName}}</i-option>
-              </i-select>
-            </i-form-item>
-          </i-col>
-        </i-row>
-        <i-row>
-          <i-col span="12">
-            <i-form-item label="联系地址" prop="guaPersonAddr">
-              <i-input v-model="formAssure.guaPersonAddr"></i-input>
-            </i-form-item>
-          </i-col>
-        </i-row>
+        <i-form-item label="联系地址" prop="guaPersonAddr"
+                     :rules="{required: true, message: '联系地址不能为空'}">
+          <i-input v-model="formAssure.guaPersonAddr"></i-input>
+        </i-form-item>
         <i-form-item label="备注" prop="remark">
           <i-input type="textarea" :rows="2" v-model="formAssure.remark"></i-input>
         </i-form-item>
-
         <i-form-item class="text-right">
           <i-button type="primary" @click="assureSuBmit">提交</i-button>
         </i-form-item>
@@ -945,16 +1071,12 @@
       }
     },
     watch: {
-      'formData.dname'() {
-        this.$data.formData.cnameId = '';
-        this.$data.formData.cname = '';
-      },
-      'formCar.custType'(newVal, oldVal) {
-        if ((oldVal !== '') && (typeof oldVal !== 'undefined')) {
-          this.$data.formCar.carOwnerName = '';
-          this.$data.formCar.carOwnerNo = '';
-        }
-      },
+//      'formCar.custType'(newVal, oldVal) {
+//        if ((oldVal !== '') && (typeof oldVal !== 'undefined')) {
+//          this.$data.formCar.carOwnerName = '';
+//          this.$data.formCar.carOwnerNo = '';
+//        }
+//      },
       'customerType'() {
         this.initPage();
       }
