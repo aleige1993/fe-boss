@@ -186,9 +186,8 @@ export default {
       } else {
         this.$refs['formData'].validate((valid) => {
           if (!valid) {
-            this.$Notice.error({
-              title: '错误提示', desc: '请先完善申请信息'
-            });
+            $('html, body')[0].scrollTop = $('#loanApplyInfo').offset().top - 110;
+            this.$Message.error('请先完善申请信息');
           }
           _valid = valid;
         });
