@@ -53,6 +53,14 @@ export default {
       this.$data.costDataLoading = false;
       if (resp.success) {
         this.$data.costdata = resp.body.resultList;
+        this.$data.costdata = this.$data.costdata.map(item => {
+          if (item.incomeType === '1') { // 切换成按利率
+            item.fixedAmount = ''; // 按固定金额
+          } else if (item.incomeType === '2') {
+            item.ratio = ''; // 按利率
+          }
+          return item;
+        });
       } else {
         this.$data.costdata = [];
       }
@@ -121,6 +129,7 @@ export default {
       this.$data.buttonLoading = true;
       let feeTypeName = this.getFeeTypeName();
       let resModify = await this.$http.post('/pms/productFeeDetail/modify', {
+        id: this.$data.formCostModel.id,
         packageRateNo: this.$data.packageRateNo,
         feeTypeNo: this.$data.formCostModel.feeTypeNo,  // 费用类型编号
         feeTypeCode: this.$data.formCostModel.feeTypeCode,  // 费用类型代码
