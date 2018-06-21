@@ -172,18 +172,23 @@
               </i-col>
             </i-row>
             <i-row>
-              <i-col span="18">
-                <i-form-item v-if="!isFromDetail" label="户籍地址" prop="mbMemberDTO.censusDistrictName"
-                             :rules="{required: true, message: '请输入户籍地址', trigger: 'blur'}">
+              <i-col span="18" v-if="!isFromDetail" class="basicinfo-address">
+                <i-form-item label="户籍地址" prop="mbMemberDTO.censusDistrictName"
+                             :rules="{required: true, message: '请选择省市区'}">
                   <input type="hidden" v-model="formData.mbMemberDTO.censusDistrictName">
                   <bs-dispicker :currProvince="formData.mbMemberDTO.censusProvinceName"
-                                :currDistrict="formData.mbMemberDTO.censusDistrictName"
                                 :currCity="formData.mbMemberDTO.censusCityName"
+                                :currDistrict="formData.mbMemberDTO.censusDistrictName"
                                 @on-change="selectCensusDistance">
                   </bs-dispicker>
+                </i-form-item>
+                <i-form-item label="" prop="mbMemberDTO.censusRoadAddr"
+                             :rules="{required: true, message: '街道信息不能为空'}">
                   <i-input placeholder="街道信息" v-model="formData.mbMemberDTO.censusRoadAddr" style="width: 320px;"></i-input>
                 </i-form-item>
-                <i-form-item v-else label="户籍地址">
+              </i-col>
+              <i-col span="18" v-else>
+                <i-form-item label="户籍地址">
                   {{formData.mbMemberDTO.censusProvinceName}}
                   {{formData.mbMemberDTO.censusCityName}}
                   {{formData.mbMemberDTO.censusDistrictName}}
@@ -192,17 +197,22 @@
               </i-col>
             </i-row>
             <i-row>
-              <i-col span="18">
-                <i-form-item v-if="!isFromDetail" label="居住地址" prop="mbMemberDTO.nowDistrictName"
-                             :rules="{required: true, message: '请输入居住地址', trigger: 'blur'}">
+              <i-col span="18" v-if="!isFromDetail" class="basicinfo-address">
+                <i-form-item label="居住地址" prop="mbMemberDTO.nowDistrictName"
+                             :rules="{required: true, message: '请选择省市区', trigger: 'blur'}">
                   <input type="hidden" v-model="formData.mbMemberDTO.nowDistrictName">
                   <bs-dispicker ref="censusDispicker" :currProvince="formData.mbMemberDTO.nowProvinceName"
                                 :currDistrict="formData.mbMemberDTO.nowDistrictName"
                                 :currCity="formData.mbMemberDTO.nowCityName"
                                 @on-change="selectNowDistance"></bs-dispicker>
+                </i-form-item>
+                <i-form-item label="" prop="mbMemberDTO.nowRoadAddr"
+                             :rules="{required: true, message: '街道信息不能为空'}">
                   <i-input placeholder="街道信息" v-model="formData.mbMemberDTO.nowRoadAddr" style="width: 320px;"></i-input>
                 </i-form-item>
-                <i-form-item v-else label="居住地址">
+              </i-col>
+              <i-col span="18" v-else>
+                <i-form-item label="居住地址">
                   {{formData.mbMemberDTO.nowProvinceName}}
                   {{formData.mbMemberDTO.nowCityName}}
                   {{formData.mbMemberDTO.nowDistrictName}}
@@ -602,4 +612,13 @@ export default {
 };
 </script>
 <style lang="scss" scoped>
+  .basicinfo-address {
+    width: 100%;
+    .ivu-form-item {
+      display: inline-block;
+      &:last-child {
+        margin-left: -120px;
+      }
+    }
+  }
 </style>
