@@ -138,6 +138,12 @@ export default {
               this.submitApproveData(submitUrl, submitData);
             }
           });
+        } else {
+          this.$Message.error('请先完善审批信息');
+          this.$data.tabIndex = 'tabApproveInfo';
+          setTimeout(() => {
+            $('html, body')[0].scrollTop = $('#busApproveInfo').offset().top + 130;
+          }, 200);
         }
       }
     }
