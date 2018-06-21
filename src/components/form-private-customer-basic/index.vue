@@ -8,13 +8,21 @@
               <i-col span="8">
                 <i-form-item :prop="'mbMemberDTO.name'" label="姓名"
                   :rules="{required: true, message: '姓名不能为空', trigger: 'blur'}">
-                  <i-input :readonly="isFromDetail" placeholder="姓名" v-model="formData.mbMemberDTO.name"></i-input>
+                  <i-input :readonly="isshow" placeholder="姓名" v-model="formData.mbMemberDTO.name"></i-input>
                 </i-form-item>
               </i-col>
               <i-col span="8">
                 <i-form-item label="注册手机号" prop="mbMemberDTO.mobile"
                   :rules="{required: true, message: '手机号不能为空', trigger: 'blur'}">
                   <i-input :readonly="isFromDetail" v-model="formData.mbMemberDTO.mobile" placeholder="手机号"></i-input>
+                </i-form-item>
+              </i-col>
+              <i-col span="8">
+                <i-form-item label="会员类型" prop="mbMemberDTO.memberType"
+                 :rules="{required: true, message: '会员类型不能为空', trigger: 'blur'}">
+                  <i-select disabled v-model="formData.mbMemberDTO.memberType">
+                    <i-option v-for="item in MemberType" :key="item.itemCode" :value="item.itemCode">{{item.itemName}}</i-option>
+                  </i-select>
                 </i-form-item>
               </i-col>
             </i-row>
@@ -57,7 +65,7 @@
               <i-col span="8">
                 <i-form-item label="证件号码" prop="mbMemberDTO.certNo"
                   :rules="{required: true, message: '证件号码不能为空', trigger: 'blur'}">
-                  <i-input :readonly="isFromDetail" v-model.lazy="formData.mbMemberDTO.certNo"></i-input>
+                  <i-input :readonly="isshow" v-model.lazy="formData.mbMemberDTO.certNo" @on-blur="reviseInfo"></i-input>
                 </i-form-item>
               </i-col>
               <i-col span="8">
@@ -71,22 +79,20 @@
             </i-row>
             <i-row>
               <i-col span="8">
-                <i-form-item label="性别" prop="mbMemberDTO.sex"
-                  :rules="{required: true, message: '请选择性别', trigger: 'change'}">
-                  <i-select :disabled="isFromDetail" v-model="formData.mbMemberDTO.sex">
+                <i-form-item label="性别" prop="mbMemberDTO.sex">
+                  <i-select disabled v-model="formData.mbMemberDTO.sex" placeholder="系统自动解析">
                     <i-option v-for="item in enumSelectData.get('SexEnum')"  :key="item.itemCode" :value="item.itemCode">{{item.itemName}}</i-option>
                   </i-select>
                 </i-form-item>
               </i-col>
               <i-col span="8">
-                <i-form-item label="出生日期" prop="mbMemberDTO.birthday"
-                  :rules="{required: true, message: '请选择出生日期', trigger: 'change'}">
-                  <bs-datepicker :readonly="isFromDetail" v-model="formData.mbMemberDTO.birthday"></bs-datepicker>
+                <i-form-item label="出生日期" prop="mbMemberDTO.birthday" >
+                  <bs-datepicker placeholder="系统自动解析" readonly v-model="formData.mbMemberDTO.birthday"></bs-datepicker>
                 </i-form-item>
               </i-col>
               <i-col span="8">
                 <i-form-item label="年龄">
-                  <i-input :readonly="true" v-model="age" placeholder="根据出生日期计算"></i-input>
+                  <i-input :readonly="true" v-model="age" placeholder="系统自动解析"></i-input>
                 </i-form-item>
               </i-col>
             </i-row>
@@ -94,8 +100,8 @@
               <i-col span="8">
                 <i-form-item label="婚姻状况" prop="mbMemberDTO.maritalStatus"
                   :rules="{required: true, message: '请选择婚况', trigger: 'change'}">
-                  <i-select :disabled="isFromDetail" v-model="formData.mbMemberDTO.maritalStatus">
-                    <i-option v-for="item in enumSelectData.get('MaritalStatusEnum')"  :key="item.itemCode" :value="item.itemCode">{{item.itemName}}</i-option>
+                  <i-select :disabled="isFromDetail" v-model="formData.mbMemberDTO.maritalStatus" >
+                    <i-option v-for="item in enumSelectData.get('MaritalStatusEnum')"  :key="item.itemCode" :value="item.itemCode" >{{item.itemName}}</i-option>
                   </i-select>
                 </i-form-item>
               </i-col>
@@ -166,18 +172,23 @@
               </i-col>
             </i-row>
             <i-row>
-              <i-col span="18">
-                <i-form-item v-if="!isFromDetail" label="户籍地址" prop="mbMemberDTO.censusDistrictName"
-                             :rules="{required: true, message: '请输入户籍地址', trigger: 'blur'}">
+              <i-col span="18" v-if="!isFromDetail" class="basicinfo-address">
+                <i-form-item label="户籍地址" prop="mbMemberDTO.censusDistrictName"
+                             :rules="{required: true, message: '请选择省市区'}">
                   <input type="hidden" v-model="formData.mbMemberDTO.censusDistrictName">
                   <bs-dispicker :currProvince="formData.mbMemberDTO.censusProvinceName"
-                                :currDistrict="formData.mbMemberDTO.censusDistrictName"
                                 :currCity="formData.mbMemberDTO.censusCityName"
+                                :currDistrict="formData.mbMemberDTO.censusDistrictName"
                                 @on-change="selectCensusDistance">
                   </bs-dispicker>
+                </i-form-item>
+                <i-form-item label="" prop="mbMemberDTO.censusRoadAddr"
+                             :rules="{required: true, message: '街道信息不能为空'}">
                   <i-input placeholder="街道信息" v-model="formData.mbMemberDTO.censusRoadAddr" style="width: 320px;"></i-input>
                 </i-form-item>
-                <i-form-item v-else label="户籍地址">
+              </i-col>
+              <i-col span="18" v-else>
+                <i-form-item label="户籍地址">
                   {{formData.mbMemberDTO.censusProvinceName}}
                   {{formData.mbMemberDTO.censusCityName}}
                   {{formData.mbMemberDTO.censusDistrictName}}
@@ -186,17 +197,22 @@
               </i-col>
             </i-row>
             <i-row>
-              <i-col span="18">
-                <i-form-item v-if="!isFromDetail" label="居住地址" prop="mbMemberDTO.nowDistrictName"
-                             :rules="{required: true, message: '请输入居住地址', trigger: 'blur'}">
+              <i-col span="18" v-if="!isFromDetail" class="basicinfo-address">
+                <i-form-item label="居住地址" prop="mbMemberDTO.nowDistrictName"
+                             :rules="{required: true, message: '请选择省市区', trigger: 'blur'}">
                   <input type="hidden" v-model="formData.mbMemberDTO.nowDistrictName">
                   <bs-dispicker ref="censusDispicker" :currProvince="formData.mbMemberDTO.nowProvinceName"
                                 :currDistrict="formData.mbMemberDTO.nowDistrictName"
                                 :currCity="formData.mbMemberDTO.nowCityName"
                                 @on-change="selectNowDistance"></bs-dispicker>
+                </i-form-item>
+                <i-form-item label="" prop="mbMemberDTO.nowRoadAddr"
+                             :rules="{required: true, message: '街道信息不能为空'}">
                   <i-input placeholder="街道信息" v-model="formData.mbMemberDTO.nowRoadAddr" style="width: 320px;"></i-input>
                 </i-form-item>
-                <i-form-item v-else label="居住地址">
+              </i-col>
+              <i-col span="18" v-else>
+                <i-form-item label="居住地址">
                   {{formData.mbMemberDTO.nowProvinceName}}
                   {{formData.mbMemberDTO.nowCityName}}
                   {{formData.mbMemberDTO.nowDistrictName}}
@@ -276,18 +292,56 @@
               </i-col>
             </i-row>
           </bs-form-block>
+          <!--配偶信息-->
+          <!--<bs-form-block :title="'配偶信息'" v-if="formData.mbMemberDTO.maritalStatus==='1'">-->
+          <bs-form-block :title="'配偶信息'" v-if="formData.mbMemberDTO.maritalStatus === '1' && formData.memberSpouseInfoDTO">
+            <i-row>
+              <i-col span="8">
+                <i-form-item prop="memberSpouseInfoDTO.spoName" label="配偶姓名"
+                             :rules="{required: true, message: '姓名不能为空', trigger: 'blur'}">
+                  <i-input :readonly="isFromDetail" placeholder="姓名" v-model="formData.memberSpouseInfoDTO.spoName"></i-input>
+                </i-form-item>
+              </i-col>
+              <i-col span="8">
+                <i-form-item prop="memberSpouseInfoDTO.spoCardNo" label="身份证号"
+                             :rules="{required: true, message: '身份证号不能为空', trigger: 'blur'}">
+                  <i-input :readonly="isFromDetail" placeholder="身份证" v-model="formData.memberSpouseInfoDTO.spoCardNo"></i-input>
+                </i-form-item>
+              </i-col>
+              <i-col span="8">
+                <i-form-item prop="memberSpouseInfoDTO.spoPhone" label="手机号"
+                             :rules="{required: true, message: '手机号不能为空', trigger: 'blur'}">
+                  <i-input :readonly="isFromDetail" placeholder="手机号" v-model="formData.memberSpouseInfoDTO.spoPhone"></i-input>
+                </i-form-item>
+              </i-col>
+            </i-row>
+          </bs-form-block>
           <!--工作信息 职业类型不是自由职业者时才需要-->
           <bs-form-block v-if="formData.mbMemberDTO.workType !== '2'" :title="'工作信息'">
             <i-row>
               <i-col span="8">
                 <i-form-item label="单位名称"
                              prop="mbMemberWorkDTO.companyName"
-                             :rules="{required: true, message: '请选择单位', trigger: 'change'}">
-                  <i-input :readonly="true" v-model="formData.mbMemberWorkDTO.companyName">
-                    <i-button v-if="!isFromDetail" type="primary" @click="showSelectCompany=!showSelectCompany" slot="append">选择公司 <Icon type="ios-more"></Icon></i-button>
-                  </i-input>
+                             :rules="{required: true, message: '单位名称不能为空', trigger: 'blur'}">
+                  <i-input :readonly="isFromDetail" v-model="formData.mbMemberWorkDTO.companyName"/>
                 </i-form-item>
               </i-col>
+              <i-col span="8">
+                <i-form-item label="统一社会信用代码"
+                             prop="mbMemberWorkDTO.companyCode"
+                             :rules="{required: true, message: '统一社会信用代码不能为空', trigger: 'blur'}">
+                  <i-input :readonly="isFromDetail" v-model="formData.mbMemberWorkDTO.companyCode"/>
+                </i-form-item>
+              </i-col>
+              <i-col span="8">
+                <i-form-item label="单位成立时间"
+                             prop="mbMemberWorkDTO.regDate"
+                             :rules="{required: true, message: '请选择单位成立时间', trigger: 'blur'}">
+                  <bs-datepicker v-model="formData.mbMemberWorkDTO.regDate" :readonly="isFromDetail"></bs-datepicker>
+                </i-form-item>
+              </i-col>
+            </i-row>
+            <i-row>
               <i-col span="8">
                 <i-form-item label="单位性质"
                              prop="mbMemberWorkDTO.unitType"
@@ -300,19 +354,6 @@
                 </i-form-item>
               </i-col>
               <i-col span="8">
-                <i-form-item label="行业类别"
-                             prop="mbMemberWorkDTO.industryType"
-                             :rules="{required: true, message: ' ', trigger: 'blur'}">
-                  <input  v-model="formData.mbMemberWorkDTO.industryType" type="hidden" />
-                  <!--<i-input :readonly="true" :value="enumCode2Name(formData.mbMemberWorkDTO.industryType, 'IndustryTypeEnum')" placeholder="自动带入"></i-input>-->
-                  <i-select :disabled="isFromDetail" v-model="formData.mbMemberWorkDTO.industryType">
-                    <i-option v-for="item in enumSelectData.get('IndustryTypeEnum')" :key="item.itemCode" :value="item.itemCode">{{item.itemName}}</i-option>
-                  </i-select>
-                </i-form-item>
-              </i-col>
-            </i-row>
-            <i-row>
-              <i-col span="8">
                 <i-form-item label="职务" prop="mbMemberWorkDTO.duty"
                              :rules="{required: true, message: '请选择职务', trigger: 'change'}">
                   <i-select :disabled="isFromDetail" v-model="formData.mbMemberWorkDTO.duty">
@@ -321,51 +362,21 @@
                 </i-form-item>
               </i-col>
               <i-col span="8">
-                <i-form-item label="入职时间">
-                  <bs-datepicker :readonly="isFromDetail" v-model="formData.mbMemberWorkDTO.joinDate"></bs-datepicker>
-                </i-form-item>
-              </i-col>
-              <i-col span="8">
-                <i-form-item label="所属部门">
-                  <i-input :readonly="isFromDetail" v-model="formData.mbMemberWorkDTO.department"></i-input>
-                </i-form-item>
-              </i-col>
-            </i-row>
-            <i-row>
-              <i-col span="8">
-                <i-form-item label="月收入">
-                  <i-input :readonly="isFromDetail" v-model="formData.mbMemberWorkDTO.monthRevenue">
-                    <span v-if="formData.mbMemberWorkDTO.monthRevenue" slot="append">元</span>
-                  </i-input>
-                </i-form-item>
-              </i-col>
-              <i-col span="8">
                 <i-form-item label="单位电话"
                              prop="mbMemberWorkDTO.companyTel"
-                             :rules="{required: true, message: '请输入公司电话', trigger: 'blur'}">
+                             :rules="{required: true, message: '请输入单位电话', trigger: 'blur'}">
                   <i-input :readonly="isFromDetail" v-model="formData.mbMemberWorkDTO.companyTel" placeholder=""></i-input>
                 </i-form-item>
               </i-col>
-
             </i-row>
             <i-row>
-              <i-col span="18">
-                <i-form-item label="公司地址" v-if="!isFromDetail"
-                             prop="mbMemberWorkDTO.cityCode"
-                             :rules="{required: true, message: '请输入公司地址', trigger: 'blur'}">
-                  <input type="hidden" v-model="formData.mbMemberWorkDTO.cityCode">
-                  <bs-dispicker :currProvince="formData.mbMemberWorkDTO.provinceName"
-                                :currDistrict="formData.mbMemberWorkDTO.districtName"
-                                :currCity="formData.mbMemberWorkDTO.cityName"
-                                @on-change="selectCompanyDistance">
-                  </bs-dispicker>
-                  <i-input v-model="formData.mbMemberWorkDTO.roadAddr" placeholder="街道信息" style="width: 220px;"></i-input>
-                </i-form-item>
-                <i-form-item v-else label="公司地址">
-                  {{formData.mbMemberWorkDTO.provinceName}}
-                  {{formData.mbMemberWorkDTO.cityName}}
-                  {{formData.mbMemberWorkDTO.districtName}}
-                  {{formData.mbMemberWorkDTO.roadAddr}}
+            </i-row>
+            <i-row>
+              <i-col span="8">
+                <i-form-item label="单位地址"
+                             prop="mbMemberWorkDTO.roadAddr"
+                             :rules="{required: true, message: '请输入单位地址', trigger: 'blur'}">
+                  <i-input :readonly="isFromDetail" v-model="formData.mbMemberWorkDTO.roadAddr" placeholder="" ></i-input>
                 </i-form-item>
               </i-col>
             </i-row>
@@ -391,6 +402,17 @@
                   <i-input v-model="formData.mbMemberDTO.custMgrName" :readonly="true" placeholder="选择客户经理">
                     <i-button v-if="!isFromDetail" @click="showSelectEmployer=!showSelectEmployer" slot="append">选择客户经理 <Icon type="ios-more"></Icon></i-button>
                   </i-input>
+                </i-form-item>
+              </i-col>
+            </i-row>
+            <i-row>
+              <i-col span="8">
+                <i-form-item label="来源渠道" prop="mbMemberDTO.sourceWay"
+                   :rules="{required: true, message: '来源渠道不能为空', trigger: 'blur'}">
+                  <i-select :disabled="isFromDetail" v-model="formData.mbMemberDTO.sourceWay" placeholder="来源渠道">
+                    <i-option value="" style="height: 26px; color: #bbbec4">-请选择-</i-option>
+                    <i-option v-for="item in enumSelectData.get('BizChannelEnum')" :key="item.itemCode" :value="item.itemCode">{{item.itemName}}</i-option>
+                  </i-select>
                 </i-form-item>
               </i-col>
             </i-row>
@@ -441,6 +463,7 @@ export default {
       checkingCertNo: false,
       submitLoading: false,
       isFromDetail: false,
+      isshow: false,
       initFormLoading: false,
       showSelectCompany: false,
       selectDepartmentModal: false,
@@ -487,7 +510,6 @@ export default {
       this.$data.showSelectEmployer = false;
     },
     selectCompanyCustomer(row, index) {
-      // console.log(row);
       let companyName = row.corpName;
       let companyCode = row.corpNo;
       let companyType = row.corpType;
@@ -525,6 +547,9 @@ export default {
       } catch (e) {
         this.$data.initFormLoading = false;
       }
+      if (!this.$data.formData.memberSpouseInfoDTO) {
+        this.$data.formData.memberSpouseInfoDTO = this.$data.memberSpouseInfoDTO;
+      }
     },
     async getDepList() {
       let resp = await this.$http.post('/common/dept/tree', {});
@@ -535,6 +560,34 @@ export default {
       this.$data.formData.mbMemberDTO.bizDepartmentName = data.text;
       this.$data.selectDepartmentModal = false;
     },
+    async reviseInfo() {
+//      let _this = this;
+//      $.ajax({
+//        url: 'http://10.164.238.14:9093/common/user/card/info',
+//        type: 'post',
+//        data: {
+//          idNo: _this.$data.formData.mbMemberDTO.certNo
+//        },
+//        success: (data) => {
+//
+//        }
+//      });
+      if (this.$data.formData.mbMemberDTO.certNo) {
+        let isd = this.$data.formData.mbMemberDTO.certNo;
+        let resp = await this.$http.post('/common/user/card/info', {
+          'idNo': isd
+        });
+        let data = resp.body;
+        this.$data.formData.mbMemberDTO.birthday = data.birthday;
+        this.$data.formData.mbMemberDTO.sex = data.sex;
+        this.$data.formData.mbMemberDTO.censusProvinceCode = data.address.censusProvinceCode;
+        this.$data.formData.mbMemberDTO.censusProvinceName = data.address.censusProvinceName;
+        this.$data.formData.mbMemberDTO.censusCityCode = data.address.censusCityCode;
+        this.$data.formData.mbMemberDTO.censusCityName = data.address.censusCityName;
+        this.$data.formData.mbMemberDTO.censusDistrictCode = data.address.censusDistrictCode;
+        this.$data.formData.mbMemberDTO.censusDistrictName = data.address.censusDistrictName;
+      }
+    },
     handleMaxSize(file) {
       this.$Notice.warning({
         title: '上传文件过大',
@@ -542,8 +595,9 @@ export default {
       });
     }
   },
-  async mounted() {
+  mounted() {
     let pageFrom = this.$route.query.from;
+    this.$data.isshow = (pageFrom === 'modify') || (pageFrom === 'detail');
     this.$data.isFromDetail = (pageFrom === 'detail');
     this.getDepList();
     // 如果有id，初始化页面数据
@@ -552,9 +606,19 @@ export default {
     } else {
       // 如果不是编辑，清空表单
       this.$refs['formAddCustomer'].resetFields();
+      this.$data.formData.mbMemberDTO.memberType = '1';
     }
   }
 };
 </script>
 <style lang="scss" scoped>
+  .basicinfo-address {
+    width: 100%;
+    .ivu-form-item {
+      display: inline-block;
+      &:last-child {
+        margin-left: -120px;
+      }
+    }
+  }
 </style>

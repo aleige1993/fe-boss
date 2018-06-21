@@ -98,6 +98,7 @@ export default {
     },
     // 提交
     submitBasicInfo() {
+      // console.log(' this.$data.formData', this.$data.formData);
       this.$data.formData.mbMemberDTO.status = '';
       let _data = this.$data.formData;
       _data.mbMemberDTO.status = '1';

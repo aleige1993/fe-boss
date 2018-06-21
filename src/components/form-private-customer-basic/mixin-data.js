@@ -49,7 +49,9 @@ export default {
           bizDepartmentName: '',
           joinStartDate: '', // 开始合作时间
           custMgrNo: '', // 客户经理编号
-          custMgrName: '' // 客户经理姓名
+          custMgrName: '', // 客户经理姓名
+          sourceWay: '', // 来源渠道
+          memberType: '' // 会员类型
         },
         mbMemberWorkDTO: {
           companyName: '',
@@ -67,7 +69,17 @@ export default {
           cityCode: '',
           cityName: '',
           roadAddr: ''
+        },
+        memberSpouseInfoDTO: {
+          spoPhone: '', // 配偶手机号
+          spoName: '', // 配偶姓名
+          spoCardNo: '' // 配偶身份证
         }
+      },
+      memberSpouseInfoDTO: {
+        spoPhone: '', // 配偶手机号
+        spoName: '', // 配偶姓名
+        spoCardNo: '' // 配偶身份证
       },
       depColumns: [
         {
@@ -83,7 +95,17 @@ export default {
           handler: ''
         }
       ],
-      depData: []
+      depData: [],
+      MemberType: [
+        {
+          itemCode: '1',
+          itemName: '意向会员'
+        },
+        {
+          itemCode: '2',
+          itemName: '正式会员'
+        }
+      ]
     };
   }
 };
