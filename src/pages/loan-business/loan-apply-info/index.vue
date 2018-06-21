@@ -5,7 +5,7 @@
     <company-customer-info :readonly="readonly" v-if="customerType == '2'" :corpNo="memberNo" @on-select-company="selectCompany"></company-customer-info>
     <i-form ref="formData" :model="formData" label-position="right" :label-width="160">
       <!--申请信息-->
-      <bs-form-block :title="'申请信息'">
+      <bs-form-block :title="'申请信息'" id="loanApplyInfo">
         <i-row>
           <!--产品名称-->
           <i-col span="8">

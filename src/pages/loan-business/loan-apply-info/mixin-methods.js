@@ -186,11 +186,17 @@ export default {
       } else {
         this.$refs['formData'].validate((valid) => {
           if (!valid) {
-            this.$Notice.error({
-              title: '错误提示', desc: '请先完善申请信息'
-            });
+            $('html, body')[0].scrollTop = $('#loanApplyInfo').offset().top - 110;
+            this.$Message.error('请先完善申请信息');
           }
           _valid = valid;
+        });
+        this.$data.loanApproveRuleDTOS.map(item => {
+          if (_valid && item.status === '') {
+            $('html, body')[0].scrollTop = $('#accessRuleInfo').offset().top - 110;
+            this.$Message.error(`贷款准入规则"${item.loanApproveName}"初审意见不能为空`);
+            _valid = false;
+          }
         });
       }
       return _valid;
