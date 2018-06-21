@@ -199,7 +199,7 @@
         </i-row>
       </bs-form-block>
     </i-form>
-    <bs-form-block :title="'贷款准入规则'">
+    <bs-form-block :title="'贷款准入规则'" id="accessRuleInfo">
       <div class="scrollBarStyle" style="width: 100%; overflow-x: auto">
         <i-table :columns="accessRuleCol" :data="loanApproveRuleDTOS"></i-table>
       </div>

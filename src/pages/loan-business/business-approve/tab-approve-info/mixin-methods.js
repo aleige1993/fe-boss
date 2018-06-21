@@ -333,10 +333,12 @@ export default {
       } else {
         this.$refs['busApproveForm'].validate((valid) => {
           if (!valid) {
-            this.$Notice.error({
-              title: '错误提示',
-              desc: '请先完善审批信息'
-            });
+            // this.$Notice.error({
+            //   title: '错误提示',
+            //   desc: '请先完善审批信息'
+            // });
+            $('html, body')[0].scrollTop = 0;
+            this.$Message.error('请先完善审批信息');
           }
           _valid = valid;
         });

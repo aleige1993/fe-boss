@@ -118,7 +118,7 @@ export default {
           // 点击提价时给用户一个确认交互
           if (submitData.loanApproveDTO.result === '' || submitData.loanApproveDTO.opinion === '') {
             this.$Message.error({
-              content: '请完善审核意见信息！',
+              content: '请完善审核意见！',
               duration: 2
             });
             this.$data.tabIndex = 'tabApproveInfo';
