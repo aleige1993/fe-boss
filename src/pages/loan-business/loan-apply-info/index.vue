@@ -207,7 +207,7 @@
         <i-row>
           <i-col span="24">
             <i-form-item label="订单所属地区"
-                         prop="provinName"
+                         prop="citiesName"
                          :rules="{required: true, message: '请选择订单所属地区'}">
               <bs-dispicker :readonly="readonly"
                             :currProvince="formData.provinName"
@@ -215,6 +215,7 @@
                             :currDistrict="formData.districtName"
                             @on-change="selectCensusDistance">
               </bs-dispicker>
+              <span v-if="!readonly">(省市必选，区非必选)</span>
             </i-form-item>
           </i-col>
         </i-row>
