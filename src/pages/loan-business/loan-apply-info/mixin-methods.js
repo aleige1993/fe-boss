@@ -283,6 +283,7 @@ export default {
           this.$data.loanData = loanDocResp.body.resultList || [];
         }
       } else {
+        this.$data.memberNo = '';
         this.$refs['formData'].resetFields();
       }
     }

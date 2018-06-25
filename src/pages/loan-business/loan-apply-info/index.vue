@@ -1093,7 +1093,7 @@
 //          this.$data.formCar.carOwnerNo = '';
 //        }
 //      },
-      'customerType'() {
+      '$route'() {
         this.initPage();
       }
     }
