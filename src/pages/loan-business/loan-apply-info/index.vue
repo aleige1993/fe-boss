@@ -198,9 +198,15 @@
           </i-col>
           <i-col span="8">
             <i-form-item label="客户经理" prop="cnameId">
-              <i-input v-model="formData.cname" :readonly="true" placeholder="">
-                <i-button v-if="!readonly && formData.dname !== ''"  @click="showSelectEmployer=!showSelectEmployer" slot="append">选择客户经理 <Icon type="ios-more"></Icon></i-button>
-                <i-button v-if="!readonly && formData.dname === ''"  slot="append"><Icon type="ios-more"></Icon></i-button>
+              <!--<i-input v-model="formData.cname" :readonly="true" placeholder="">-->
+                <!--<i-button v-if="!readonly && formData.dname !== ''"  @click="showSelectEmployer=!showSelectEmployer" slot="append">选择客户经理 <Icon type="ios-more"></Icon></i-button>-->
+                <!--<i-button v-if="!readonly && formData.dname === ''"  slot="append"><Icon type="ios-more"></Icon></i-button>-->
+              <!--</i-input>-->
+              <i-input v-if="readonly" v-model="formData.cname" :readonly="true" placeholder="" />
+              <i-input v-else v-model="formData.cname" :readonly="true" placeholder="">
+                <i-button v-if="formData.dname === ''"  slot="append"><Icon type="ios-more"></Icon></i-button>
+                <i-button v-if="formData.dname !== '' && formData.cname === ''"  @click="showSelectEmployer=!showSelectEmployer" slot="append">选择客户经理 <Icon type="ios-more"></Icon></i-button>
+                <i-button v-if="formData.dname !== '' && formData.cname !== ''"  @click="cancelEmployer" slot="append">取消选择 <Icon type="ios-more"></Icon></i-button>
               </i-input>
             </i-form-item>
           </i-col>
@@ -1061,6 +1067,10 @@
         this.$data.formData.cnameId = row.userCode;
         this.$data.formData.cname = row.userName;
         this.$data.showSelectEmployer = false;
+      },
+      cancelEmployer() {
+        this.$data.formData.cnameId = '';
+        this.$data.formData.cname = '';
       },
       // 订单所属地区联动
       selectCensusDistance(distance) {
