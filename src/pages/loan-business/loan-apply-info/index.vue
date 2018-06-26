@@ -248,7 +248,7 @@
       <table-employer-list v-if="showSelectEmployer" :deptId="formData.deptId" @on-row-dbclick="selectEmployer"></table-employer-list>
     </bs-modal>
 
-    <bs-form-block :title="'贷款准入规则'">
+    <bs-form-block :title="'贷款准入规则'" id="accessRuleInfo">
       <div class="scrollBarStyle">
         <i-table :columns="accessRuleCol" :data="loanApproveRuleDTOS"></i-table>
       </div>
