@@ -964,7 +964,7 @@
             this.$data.contractInfoForm.loanApprove = this.$data.loanApprove;
             await this.createContractAjax();
             // 告知父组件的 已经点击了“生成按钮”，此时已经生成了合同
-            this.$emit('on-create-contracted');
+            this.$emit('on-create-contracted', this.$data.contractInfoForm.contractInfo.loanContractFileList.length > 0);
           } else {
             this.$Message.error('"<span style="color: red">*</span>"必填项不能为空');
           }
