@@ -956,9 +956,11 @@
       }
     },
     watch: {
-      'formData.dname'() {
-        this.$data.formData.cnameId = '';
-        this.$data.formData.cname = '';
+      'formData.dname'(newVal, oldVal) {
+        if (oldVal && oldVal.length) {
+          this.$data.formData.cnameId = '';
+          this.$data.formData.cname = '';
+        }
       },
       'formCar.custType'(newVal, oldVal) {
         if ((oldVal !== '') && (typeof oldVal !== 'undefined')) {
