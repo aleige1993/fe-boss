@@ -69,6 +69,7 @@ export default {
   position: fixed;
   top: 110px;
   left: 0;
+  z-index: 99;
   height: calc(100% - 110px);
   overflow-y: auto;
   /*
