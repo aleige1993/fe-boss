@@ -5,7 +5,7 @@
     <company-customer-info :readonly="readonly" v-if="customerType == '2'" :corpNo="memberNo" @on-select-company="selectCompany"></company-customer-info>
     <i-form ref="formData" :model="formData" label-position="right" :label-width="160">
       <!--申请信息-->
-      <bs-form-block :title="'申请信息'">
+      <bs-form-block :title="'申请信息'" id="loanApplyInfo">
         <i-row>
           <!--产品名称-->
           <i-col span="8">
@@ -106,7 +106,8 @@
             </i-form-item>
           </i-col>
           <input type="hidden" :value="formData.merchantNo"/>
-          <i-col span="8" v-if="formData.loandType!=='1'">
+          <!--<i-col span="8" v-if="formData.loandType!=='1'">-->
+          <i-col span="8" v-if="formData.productName.indexOf('车主贷') > -1">
             <i-form-item label="经销商" prop="merchantAbbr">
               <input type="hidden" v-model="formData.merchantAbbr"/>
               <i-input v-model="formData.merchantAbbr" :readonly="true" placeholder="">
@@ -186,27 +187,75 @@
               </i-select>
             </i-form-item>
           </i-col>
-        </i-row>
-        <i-row v-if="formData.provinceName">
-          <i-col>
-            <i-form-item label="投放城市">
-              <span>
-                {{formData.provinceName}}
-                {{formData.cityName}}
-              </span>
+          <i-col span="8">
+            <i-form-item label="部门名称"
+                         prop="dname"
+                         :rules="{required: true, message: '请选择部门名称'}">
+              <i-input v-model="formData.dname" :readonly="true" placeholder="">
+                <i-button v-if="!readonly" @click="selectDepartmentModal=!selectDepartmentModal" slot="append">选择部门名称 <Icon type="ios-more"></Icon></i-button>
+              </i-input>
+            </i-form-item>
+          </i-col>
+          <i-col span="8">
+            <i-form-item label="客户经理" prop="cnameId">
+              <!--<i-input v-model="formData.cname" :readonly="true" placeholder="">-->
+                <!--<i-button v-if="!readonly && formData.dname !== ''"  @click="showSelectEmployer=!showSelectEmployer" slot="append">选择客户经理 <Icon type="ios-more"></Icon></i-button>-->
+                <!--<i-button v-if="!readonly && formData.dname === ''"  slot="append"><Icon type="ios-more"></Icon></i-button>-->
+              <!--</i-input>-->
+              <i-input v-if="readonly" v-model="formData.cname" :readonly="true" placeholder="" />
+              <i-input v-else v-model="formData.cname" :readonly="true" placeholder="">
+                <i-button v-if="formData.dname === ''"  slot="append"><Icon type="ios-more"></Icon></i-button>
+                <i-button v-if="formData.dname !== '' && formData.cname === ''"  @click="showSelectEmployer=!showSelectEmployer" slot="append">选择客户经理 <Icon type="ios-more"></Icon></i-button>
+                <i-button v-if="formData.dname !== '' && formData.cname !== ''"  @click="cancelEmployer" slot="append">取消选择 <Icon type="ios-more"></Icon></i-button>
+              </i-input>
             </i-form-item>
           </i-col>
         </i-row>
+        <i-row>
+          <i-col span="24">
+            <i-form-item label="订单所属地区"
+                         prop="citiesName"
+                         :rules="{required: true, message: '请选择订单所属地区'}">
+              <bs-dispicker :readonly="readonly"
+                            :currProvince="formData.provinName"
+                            :currCity="formData.citiesName"
+                            :currDistrict="formData.districtName"
+                            @on-change="selectCensusDistance">
+              </bs-dispicker>
+              <span v-if="!readonly">(省市必选，区非必选)</span>
+            </i-form-item>
+          </i-col>
+        </i-row>
+        <!--<i-row v-if="formData.provinceName">-->
+          <!--<i-col>-->
+            <!--<i-form-item label="投放城市">-->
+              <!--<span>-->
+                <!--{{formData.provinceName}}-->
+                <!--{{formData.cityName}}-->
+              <!--</span>-->
+            <!--</i-form-item>-->
+          <!--</i-col>-->
+        <!--</i-row>-->
       </bs-form-block>
     </i-form>
+
+    <!-- 选择业务拓展部门的弹窗 -->
+    <bs-modal :width="880" v-model="selectDepartmentModal" title="选择业务拓展部门">
+      <tree-grid v-if="selectDepartmentModal" @on-row-dblclick="selectDep" :columns="depColumns" :data="depData"></tree-grid>
+    </bs-modal>
+    <!-- 选择客户经理的弹窗 -->
+    <bs-modal title="选择客户经理" :width="1200" v-model="showSelectEmployer">
+      <table-employer-list v-if="showSelectEmployer" :deptId="formData.deptId" @on-row-dbclick="selectEmployer"></table-employer-list>
+    </bs-modal>
+
     <bs-form-block :title="'贷款准入规则'">
-      <div class="scrollBarStyle" style="width: 100%; overflow-x: auto">
+      <div class="scrollBarStyle">
         <i-table :columns="accessRuleCol" :data="loanApproveRuleDTOS"></i-table>
       </div>
     </bs-form-block>
     <!--车辆信息-->
     <bs-form-block :title="'车辆信息'">
-      <div class="scrollBarStyle" style="width: 100%; overflow-x: auto">
+      <div class="scrollBarStyle">
         <div class="form-top-actions" v-if="!readonly">
           <i-button @click="openModalCar" type="info"><i class="iconfont icon-xinzeng"></i>&nbsp;新增</i-button>
         </div>
@@ -218,7 +267,7 @@
       <div class="form-top-actions" v-if="!readonly">
         <i-button @click="openModalAssure" type="info"><i class="iconfont icon-xinzeng"></i>&nbsp;新增</i-button>
       </div>
-      <div class="scrollBarStyle" style="width: 100%; overflow-x: auto">
+      <div class="scrollBarStyle">
         <i-table :loading="assureDataLoading" border ref="selection" :columns="assureColumns" :data="assureData"></i-table>
       </div>
     </bs-form-block>
@@ -897,6 +946,9 @@
   import loanMixinData from './loan-mixin-data';
   import loanMixinMethods from './loan-mixin-methods';
   import BsCarpicker from '@/components/bs-carpicker';
+  import TreeGrid from '@/components/bs-tree-grid';
+  import TableEmployerList from '@/components/table-employer-list';
+  import BsDispicker from '@/components/bs-dispicker';
   export default {
     name: 'loanAcceptBasicInfo',
     mixins: [MixinData, MixinMethods, carMixinData, carMixinMethods, assureMixinData, assureMixinMethods, loanMixinData, loanMixinMethods],
@@ -906,7 +958,24 @@
         loanCarPicVOListModalData: [],
         carListRowData: {}, // 点击“查看/上传车辆图片”按钮时当前行的车辆数据
         isDistributor: false, // 选择渠道商弹窗是否显示为“选择经销商”
-        seeCarPictureModal: false // 上传/查看车辆图片弹窗
+        seeCarPictureModal: false, // 上传/查看车辆图片弹窗
+        selectDepartmentModal: false, // 部门选择
+        depColumns: [
+          {
+            headerText: '',
+            headerAlign: 'center',
+            dataAlign: 'center',
+            width: '20'
+          },
+          {
+            headerText: '部门名称',
+            dataField: 'text',
+            headerAlign: 'center',
+            handler: ''
+          }
+        ],
+        depData: [],
+        showSelectEmployer: false // 员工选择
       };
     },
     components: {
@@ -919,7 +988,10 @@
       'bs-carpicker': BsCarpicker,
       LoanFileList,
       CarPictureList,
-      TableDistributorList
+      TableDistributorList,
+      TableEmployerList,
+      TreeGrid,
+      BsDispicker
     },
     props: {
       customerType: String,
@@ -941,6 +1013,7 @@
     },
     mounted() {
       this.initPage();
+      this.getDepList();
     },
     methods: {
       // 更改了用户等级后，需要重新加载用信方案(重新调用接口-queryApproveProductCredit)
@@ -978,16 +1051,51 @@
       merchantClick() {
         this.$data.showSelectDistributor = true;
         this.$data.isDistributor = false;
+      },
+      // 选择部门/员工
+      async getDepList() {
+        let resp = await this.$http.post('/common/dept/tree', {});
+        this.$data.depData = resp.body.children;
+        this.$data.depData = this.$data.depData.filter(item => item.text.indexOf('事业部') > -1);
+      },
+      selectDep(id, row, data) {
+        this.$data.formData.deptId = data.id;
+        this.$data.formData.dname = data.text;
+        this.$data.selectDepartmentModal = false;
+      },
+      selectEmployer(row, index) {
+        this.$data.formData.cnameId = row.userCode;
+        this.$data.formData.cname = row.userName;
+        this.$data.showSelectEmployer = false;
+      },
+      cancelEmployer() {
+        this.$data.formData.cnameId = '';
+        this.$data.formData.cname = '';
+      },
+      // 订单所属地区联动
+      selectCensusDistance(distance) {
+        this.$data.formData.provinId = distance.provinceCode;
+        this.$data.formData.provinName = distance.provinceName;
+        this.$data.formData.citiesId = distance.cityCode;
+        this.$data.formData.citiesName = distance.cityName;
+        this.$data.formData.districtId = distance.districtCode;
+        this.$data.formData.districtName = distance.districtName;
       }
     },
     watch: {
+      'formData.dname'(newVal, oldVal) {
+        if (oldVal && oldVal.length) {
+          this.$data.formData.cnameId = '';
+          this.$data.formData.cname = '';
+        }
+      },
 //      'formCar.custType'(newVal, oldVal) {
 //        if ((oldVal !== '') && (typeof oldVal !== 'undefined')) {
 //          this.$data.formCar.carOwnerName = '';
 //          this.$data.formCar.carOwnerNo = '';
 //        }
 //      },
-      'customerType'() {
+      '$route'() {
         this.initPage();
       }
     }

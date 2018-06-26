@@ -138,6 +138,9 @@ export default {
     */
     // ReqDataObj={ loanNo, productNo, productPeriods, carBuyAmt, custLevel, carType }
     async getProductApproveInfo(ReqDataObj) {
+      if (!ReqDataObj.productNo || !this.applyBasicInfo.custType) {
+        return false;
+      }
       this.$data.initPageLoading = true;
       let resp = await this.$http.post('/biz/queryApproveProductCredit', {
         productNo: ReqDataObj.productNo,
@@ -219,6 +222,9 @@ export default {
      * @returns {Promise.<void>}
      */
     async getBankList() {
+      if (!this.applyBasicInfo.custType) {
+        return false;
+      }
       let loanNo = this.$route.query.id;
       let paymentCustNo = '';
       if (this.$data.approveData.loanApproveCreditDTO.loanMode === '1') {

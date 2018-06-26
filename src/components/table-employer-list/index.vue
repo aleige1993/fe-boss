@@ -17,9 +17,9 @@
       </i-form>
     </div>
     <i-table :height="tableFixHeight" :loading="dataLoading" @on-row-dblclick="selectRow" border ref="selection" :columns="employerColumns" :data="employerList"></i-table>
-    <div class="page-container">
-      <i-page :total="total" :page-size="15" :current="currentPage" @on-change="jumpPage" size="small" show-elevator show-total></i-page>
-    </div>
+    <!--<div class="page-container">-->
+      <!--<i-page :total="searchForm.total" :page-size="searchForm.pageSize" :current="searchForm.currentPage" @on-change="jumpPage" size="small" show-elevator show-total></i-page>-->
+    <!--</div>-->
   </div>
 </template>
 <script>
@@ -32,15 +32,24 @@
       return {
         showAddModal: false,
         dataLoading: false,
-        total: 0,
-        currentPage: 1,
         certTypeEnum: [],
         searchForm: {
           userName: '',
           userCode: '',
-          mobile: ''
+          mobile: '',
+          deptId: '',
+          total: 0,
+          currentPage: 1,
+          pageSize: 99999999
         }
       };
+    },
+    props: {
+      deptId: {
+        type: String,
+        required: false,
+        default: ''
+      }
     },
     methods: {
       async getEmployerList(page) {
@@ -48,12 +57,13 @@
         if (page) {
           this.$data.searchForm.currentPage = page;
         }
+        this.$data.searchForm.deptId = this.deptId;
         let resp = await this.$http.post('/common/user/page', this.$data.searchForm);
         this.$data.dataLoading = false;
         if (resp.success) {
           this.$data.employerList = resp.body.resultList;
-          this.$data.currentPage = resp.body.currentPage / 1;
-          this.$data.total = resp.body.totalNum / 1;
+          this.$data.searchForm.currentPage = resp.body.currentPage / 1;
+          this.$data.searchForm.total = resp.body.totalNum / 1;
         }
       },
       jumpPage(page) {

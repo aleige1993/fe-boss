@@ -449,7 +449,7 @@
       }
     },
     mounted() {
-      // TODO
+      this.getPageInitData();
     },
     watch: {
       'applyBasicInfo'(newVal, oldVal) {
