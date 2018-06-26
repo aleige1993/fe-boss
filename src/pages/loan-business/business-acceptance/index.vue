@@ -93,6 +93,7 @@
           _dataTemp.opeType = '2';
           // 验证审核意见
           if (!this.$refs.personalInfo.validateResultTest()) {
+            $('html, body')[0].scrollTop = $('body')[0].clientHeight; // 滚动条滚动到底部
             return;
           }
           this.saveLoanBiz(_dataTemp);

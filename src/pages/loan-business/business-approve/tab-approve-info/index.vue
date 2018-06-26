@@ -2,7 +2,7 @@
   <div id="tab-loan-approve">
     <i-row>
       <i-col span="24">
-        <i-form label-position="right" ref="busApproveForm" :model="approveData" :label-width="140">
+        <i-form label-position="right" ref="busApproveForm" :model="approveData" id="busApproveInfo" :label-width="140">
           <bs-form-block :title="'初审信息'">
             <i-row>
               <i-col span="24">
@@ -208,7 +208,7 @@
             </i-row>
           </bs-form-block>
           <!--还款账户信息-->
-          <bs-form-block :title="'还款账户信息'">`
+          <bs-form-block :title="'还款账户信息'">
             <i-row>
               <i-col span="8">
                 <i-form-item label="账户名" prop="loanRePaymentAccountDTOS.acctName"
