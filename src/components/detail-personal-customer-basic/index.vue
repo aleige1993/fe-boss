@@ -23,7 +23,7 @@
                 <i-form-item label="姓名">
                   <span v-text="formData.mbMemberDTO.name"></span>
                   <i-button style="margin-left: 5px" type="success" @click="gotoPersonal">查看客户详情</i-button>
-                  <!--<i-button v-if="!readonly" type="primary" @click="selectPersonalModal=!selectPersonalModal">选择姓名 <i-icon type="ios-more"></i-icon></i-button>-->
+                  <i-button v-if="!readonly && !loanNo" type="primary" @click="selectPersonalModal=!selectPersonalModal">选择姓名 <i-icon type="ios-more"></i-icon></i-button>
                 </i-form-item>
               </i-col>
               <i-col span="8">
@@ -320,6 +320,9 @@ export default {
         let birthday = this.$data.formData.mbMemberDTO.birthday;
         return Tools.getAgeFromBirthday(birthday);
       }
+    },
+    loanNo() {
+      return this.$route.query.id;
     }
   },
   components: {

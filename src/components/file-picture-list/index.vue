@@ -36,7 +36,7 @@
   </div>
 </template>
 <script>
-  import BUS from '@/bus/index.js';
+  import BUS from '@/bus/index';
   export default {
     name: 'picFileList',
     data() {
