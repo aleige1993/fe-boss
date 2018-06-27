@@ -5,9 +5,9 @@
       <i-breadcrumb-item href="/index/loanbusiness">贷款业务</i-breadcrumb-item>
       <i-breadcrumb-item>{{breadcrumbName}}</i-breadcrumb-item>
     </i-breadcrumb>
-    <div class="form-block-title">
-      {{breadcrumbName}}
-    </div>
+    <!--<div class="form-block-title">-->
+      <!--{{breadcrumbName}}-->
+    <!--</div>-->
     <div class="search-form-container">
       <i-form inline :model="searchForm" ref="loanSearchForm">
         <i-form-item prop="loanNo">
@@ -75,7 +75,7 @@
       </i-form>
     </div>
     <slot name="topAction"></slot>
-    <i-table :height="tableFixHeight" :loading="dataLoading" @on-row-dblclick="selectRow" border ref="selection" :columns="resultCustomerColumns" :data="privateCustomerLoanList"></i-table>
+    <i-table :height="tableFixHeight + 20" :loading="dataLoading" @on-row-dblclick="selectRow" border ref="selection" :columns="resultCustomerColumns" :data="privateCustomerLoanList"></i-table>
     <div class="page-container">
       <i-page :total="total" :page-size="15" :current="currentPage" @on-change="jumpPage" size="small" show-elevator show-total></i-page>
     </div>
@@ -146,6 +146,11 @@
         type: String,
         default: '业务查询',
         required: false
+      },
+      'detailtabs': {
+        type: String,
+        default: '全部显示',
+        required: false
       }
     },
     methods: {
@@ -208,13 +213,20 @@
             from: 'detail'
           }
         });
+      },
+      initSearchOptions() {
+        this.$refs['loanSearchForm'].resetFields();
+        this.$data.searchForm.taskNode = this.taskNode;
+        this.$data.searchForm.status = this.status;
       }
     },
     watch: {
       'taskNode'() {
-        this.$refs['loanSearchForm'].resetFields();
-        this.$data.searchForm.taskNode = this.taskNode;
-        this.$data.searchForm.status = this.status;
+        this.initSearchOptions();
+        this.getPrivateCustomerLoanList();
+      },
+      'detailtabs'() {
+        this.initSearchOptions();
         this.getPrivateCustomerLoanList();
       }
     },
