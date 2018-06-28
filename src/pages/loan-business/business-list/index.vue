@@ -5,28 +5,28 @@
       <i-breadcrumb-item href="/index/loanbusiness">贷款业务</i-breadcrumb-item>
       <i-breadcrumb-item>{{breadcrumbName}}</i-breadcrumb-item>
     </i-breadcrumb>
-    <div class="form-block-title">
-      {{breadcrumbName}}
-    </div>
+    <!--<div class="form-block-title">-->
+      <!--{{breadcrumbName}}-->
+    <!--</div>-->
     <div class="search-form-container">
       <i-form inline :model="searchForm" ref="loanSearchForm">
         <i-form-item prop="loanNo">
-          <i-input type="text" v-model="searchForm.loanNo" placeholder="项目编号"></i-input>
+          <i-input type="text" v-model="searchForm.loanNo" placeholder="项目编号" @on-change="searchAll('loanNo')" @on-enter="search"></i-input>
         </i-form-item>
         <i-form-item prop="custName">
-          <i-input v-model="searchForm.custName" type="text" placeholder="客户名称"></i-input>
+          <i-input v-model="searchForm.custName" type="text" placeholder="客户名称" @on-change="searchAll('custName')" @on-enter="search"></i-input>
         </i-form-item>
         <i-form-item prop="certType">
-          <i-select style="width: 120px;" v-model="searchForm.certType" placeholder="证件类型">
+          <i-select style="width: 120px;" v-model="searchForm.certType" placeholder="证件类型" @on-change="search">
             <i-option value="" style="height: 26px; color: #bbbec4">-请选择-</i-option>
             <i-option v-for="item in enumSelectData.get('CertTypeEnum')" :key="item.itemCode" :value="item.itemCode">{{item.itemName}}</i-option>
           </i-select>
         </i-form-item>
         <i-form-item prop="certNo">
-          <i-input v-model="searchForm.certNo" type="text" placeholder="证件号码"></i-input>
+          <i-input v-model="searchForm.certNo" type="text" placeholder="证件号码" @on-change="searchAll('certNo')" @on-enter="search"></i-input>
         </i-form-item>
         <i-form-item prop="productNo">
-          <i-select v-model="searchForm.productNo" type="text" placeholder="产品" style="width: 180px;">
+          <i-select v-model="searchForm.productNo" type="text" placeholder="产品" style="width: 180px;" @on-change="search">
             <i-option value="" style="height: 26px; color: #bbbec4">-请选择-</i-option>
             <i-option v-for="product in productList" :value="product.productNo" :key="product.productNo">{{product.productName}}</i-option>
           </i-select>
@@ -35,38 +35,38 @@
           <!--<i-input v-model="searchForm.orderNo" type="text" placeholder="渠道业务编号"></i-input>-->
         <!--</i-form-item>-->
         <i-form-item prop="merchantAbbr">
-          <i-input v-model="searchForm.merchantAbbr" type="text" placeholder="经销商名称"></i-input>
+          <i-input v-model="searchForm.merchantAbbr" type="text" placeholder="经销商名称" @on-change="searchAll('merchantAbbr')" @on-enter="search"></i-input>
         </i-form-item>
         <i-form-item prop="channelName">
-          <i-input v-model="searchForm.channelName" type="text" placeholder="渠道商名称"></i-input>
+          <i-input v-model="searchForm.channelName" type="text" placeholder="渠道商名称" @on-change="searchAll('channelName')" @on-enter="search"></i-input>
         </i-form-item>
         <i-form-item prop="loanChannel">
-          <i-select style="width: 120px;" v-model="searchForm.loanChannel" placeholder="来源渠道">
+          <i-select style="width: 120px;" v-model="searchForm.loanChannel" placeholder="来源渠道" @on-change="search">
             <i-option value="" style="height: 26px; color: #bbbec4">-请选择-</i-option>
             <i-option v-for="item in enumSelectData.get('BizChannelEnum')" :key="item.itemCode" :value="item.itemCode">{{item.itemName}}</i-option>
           </i-select>
         </i-form-item>
         <i-form-item prop="loanChannel" v-if="taskNode===''">
-          <i-select style="width: 120px;" v-model="searchForm.taskNode" placeholder="任务节点">
+          <i-select style="width: 120px;" v-model="searchForm.taskNode" placeholder="任务节点" @on-change="search">
             <i-option value="" style="height: 26px; color: #bbbec4">-请选择-</i-option>
             <i-option v-for="item in enumSelectData.get('LoanBizNodeEnum')" :key="item.itemCode" :value="item.itemCode">{{item.itemName}}</i-option>
           </i-select>
         </i-form-item>
         <i-form-item prop="loanChannel" v-if="taskNode===''">
-          <i-select style="width: 120px;" v-model="searchForm.status" placeholder="状态">
+          <i-select style="width: 120px;" v-model="searchForm.status" placeholder="状态" @on-change="search">
             <i-option value="" style="height: 26px; color: #bbbec4">-请选择-</i-option>
             <i-option v-for="item in enumSelectData.get('BizStatusEnum')" :key="item.itemCode" :value="item.itemCode">{{item.itemName}}</i-option>
           </i-select>
         </i-form-item>
         <div style="display: inline-block">
           <i-form-item prop="applyStartTime">
-            <bs-datepicker v-model="searchForm.applyStartTime" type="text" placeholder="申请时间"></bs-datepicker>
+            <bs-datepicker v-model="searchForm.applyStartTime" type="text" placeholder="申请时间" @on-change="search"></bs-datepicker>
           </i-form-item>
           <i-form-item>
             -
           </i-form-item>
           <i-form-item prop="applyEndTime">
-            <bs-datepicker v-model="searchForm.applyEndTime" type="text" placeholder="申请时间"></bs-datepicker>
+            <bs-datepicker v-model="searchForm.applyEndTime" type="text" placeholder="申请时间" @on-change="search"></bs-datepicker>
           </i-form-item>
         </div>
         <i-form-item>
@@ -75,7 +75,7 @@
       </i-form>
     </div>
     <slot name="topAction"></slot>
-    <i-table :height="tableFixHeight" :loading="dataLoading" @on-row-dblclick="selectRow" border ref="selection" :columns="resultCustomerColumns" :data="privateCustomerLoanList"></i-table>
+    <i-table :height="tableFixHeight + 20" :loading="dataLoading" @on-row-dblclick="selectRow" border ref="selection" :columns="resultCustomerColumns" :data="privateCustomerLoanList"></i-table>
     <div class="page-container">
       <i-page :total="total" :page-size="15" :current="currentPage" @on-change="jumpPage" size="small" show-elevator show-total></i-page>
     </div>
@@ -146,6 +146,11 @@
         type: String,
         default: '业务查询',
         required: false
+      },
+      'detailtabs': {
+        type: String,
+        default: '全部显示',
+        required: false
       }
     },
     methods: {
@@ -199,6 +204,11 @@
         }
         this.getPrivateCustomerLoanList(1, false);
       },
+      searchAll(name) {
+        if (this.$data.searchForm[name] === '') {
+          this.search();
+        }
+      },
       selectRow(row, index) {
         this.$router.push({
           path: '/index/loanbusiness/detail',
@@ -208,13 +218,20 @@
             from: 'detail'
           }
         });
+      },
+      initSearchOptions() {
+        this.$refs['loanSearchForm'].resetFields();
+        this.$data.searchForm.taskNode = this.taskNode;
+        this.$data.searchForm.status = this.status;
       }
     },
     watch: {
       'taskNode'() {
-        this.$refs['loanSearchForm'].resetFields();
-        this.$data.searchForm.taskNode = this.taskNode;
-        this.$data.searchForm.status = this.status;
+        this.initSearchOptions();
+        this.getPrivateCustomerLoanList();
+      },
+      'detailtabs'() {
+        this.initSearchOptions();
         this.getPrivateCustomerLoanList();
       }
     },
