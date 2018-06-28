@@ -11,10 +11,10 @@
     <div class="search-form-container">
       <i-form inline :model="searchForm" ref="loanSearchForm">
         <i-form-item prop="loanNo">
-          <i-input type="text" v-model="searchForm.loanNo" placeholder="项目编号" @on-enter="search"></i-input>
+          <i-input type="text" v-model="searchForm.loanNo" placeholder="项目编号" @on-change="searchAll('loanNo')" @on-enter="search"></i-input>
         </i-form-item>
         <i-form-item prop="custName">
-          <i-input v-model="searchForm.custName" type="text" placeholder="客户名称" @on-enter="search"></i-input>
+          <i-input v-model="searchForm.custName" type="text" placeholder="客户名称" @on-change="searchAll('custName')" @on-enter="search"></i-input>
         </i-form-item>
         <i-form-item prop="certType">
           <i-select style="width: 120px;" v-model="searchForm.certType" placeholder="证件类型" @on-change="search">
@@ -23,7 +23,7 @@
           </i-select>
         </i-form-item>
         <i-form-item prop="certNo">
-          <i-input v-model="searchForm.certNo" type="text" placeholder="证件号码" @on-enter="search"></i-input>
+          <i-input v-model="searchForm.certNo" type="text" placeholder="证件号码" @on-change="searchAll('certNo')" @on-enter="search"></i-input>
         </i-form-item>
         <i-form-item prop="productNo">
           <i-select v-model="searchForm.productNo" type="text" placeholder="产品" style="width: 180px;" @on-change="search">
@@ -35,10 +35,10 @@
           <!--<i-input v-model="searchForm.orderNo" type="text" placeholder="渠道业务编号"></i-input>-->
         <!--</i-form-item>-->
         <i-form-item prop="merchantAbbr">
-          <i-input v-model="searchForm.merchantAbbr" type="text" placeholder="经销商名称" @on-enter="search"></i-input>
+          <i-input v-model="searchForm.merchantAbbr" type="text" placeholder="经销商名称" @on-change="searchAll('merchantAbbr')" @on-enter="search"></i-input>
         </i-form-item>
         <i-form-item prop="channelName">
-          <i-input v-model="searchForm.channelName" type="text" placeholder="渠道商名称" @on-enter="search"></i-input>
+          <i-input v-model="searchForm.channelName" type="text" placeholder="渠道商名称" @on-change="searchAll('channelName')" @on-enter="search"></i-input>
         </i-form-item>
         <i-form-item prop="loanChannel">
           <i-select style="width: 120px;" v-model="searchForm.loanChannel" placeholder="来源渠道" @on-change="search">
@@ -199,6 +199,11 @@
         }
         this.getPrivateCustomerLoanList(1, false);
       },
+      searchAll(name) {
+        if (this.$data.searchForm[name] === '') {
+          this.search();
+        }
+      },
       selectRow(row, index) {
         this.$router.push({
           path: '/index/loanbusiness/detail',
@@ -216,11 +221,6 @@
         this.$data.searchForm.taskNode = this.taskNode;
         this.$data.searchForm.status = this.status;
         this.getPrivateCustomerLoanList();
-      },
-      'searchForm'() {
-        if (this.$data.searchForm.loanNo === '') {
-          this.search();
-        }
       }
     },
     mounted() {
