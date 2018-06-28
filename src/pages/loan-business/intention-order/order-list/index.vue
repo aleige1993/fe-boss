@@ -11,37 +11,37 @@
     <div class="search-form-container">
       <i-form inline>
         <i-form-item>
-          <i-input type="text" v-model="searchForm.orderNo" placeholder="订单编号"></i-input>
+          <i-input type="text" v-model="searchForm.orderNo" placeholder="订单编号" @on-change="searchAll('orderNo')" @on-enter="search"></i-input>
         </i-form-item>
         <i-form-item  >
-         <i-input v-model="searchForm.RealName" type="text" placeholder="客户名称"></i-input>
+         <i-input v-model="searchForm.RealName" type="text" placeholder="客户名称" @on-change="searchAll('RealName')" @on-enter="search"></i-input>
         </i-form-item>
         <i-form-item  >
-          <i-select v-model="searchForm.productName" type="text" placeholder="产品" style="width: 180px;">
+          <i-select v-model="searchForm.productName" type="text" placeholder="产品" style="width: 180px;" @on-change="search">
             <i-option value="" style="height: 26px; color: #bbbec4">-请选择-</i-option>
             <i-option v-for="product in productList" :value="product.productName" :key="product.productNo">{{product.productName}}</i-option>
           </i-select>
         </i-form-item>
         <i-form-item>
-          <i-select style="width: 120px;" v-model="searchForm.channelNo" placeholder="来源终端">
+          <i-select style="width: 120px;" v-model="searchForm.channelNo" placeholder="来源终端" @on-change="search">
             <i-option value="" style="height: 26px; color: #bbbec4">-请选择-</i-option>
             <i-option v-for="item in enumSelectData.get('BizChannelEnum')" :value="item.itemCode" :key="item.itemCode">{{item.itemName}}</i-option>
           </i-select>
         </i-form-item>
         <i-form-item>
-          <i-select v-model="searchForm.orderStatus" type="text" placeholder="订单状态" style="width: 120px">
+          <i-select v-model="searchForm.orderStatus" type="text" placeholder="订单状态" style="width: 120px" @on-change="search">
             <i-option value="" style="height: 26px; color: #bbbec4">-请选择-</i-option>
             <i-option v-for="item in enumSelectData.get('MbOrderStatusEnum')" :value="item.itemCode" :key="item.itemCode">{{item.itemName}}</i-option>
           </i-select>
         </i-form-item>
         <i-form-item>
-          <bs-datepicker v-model="searchForm.applyTimeStart" type="text" placeholder="下单时间"></bs-datepicker>
+          <bs-datepicker v-model="searchForm.applyTimeStart" type="text" placeholder="下单时间" @on-change="search"></bs-datepicker>
         </i-form-item>
         <i-form-item>
           -
         </i-form-item>
         <i-form-item>
-          <bs-datepicker v-model="searchForm.applyTimeEnd" type="text" placeholder="下单时间"></bs-datepicker>
+          <bs-datepicker v-model="searchForm.applyTimeEnd" type="text" placeholder="下单时间" @on-change="search"></bs-datepicker>
         </i-form-item>
         <i-form-item>
           <i-button @click="search" type="primary"><i-icon type="ios-search-strong"></i-icon> 搜索</i-button>
@@ -109,6 +109,11 @@
       },
       search() {
         this.getCustomerIntentionOrderList(1);
+      },
+      searchAll(name) {
+        if (this.$data.searchForm[name] === '') {
+          this.search();
+        }
       },
       selectRow(row, index) {
         // this.$emit('on-row-dbclick', row, index);
