@@ -91,7 +91,9 @@
         memberNo: '1',
         corpNo: '1',
         creditReportURL: '',
-        approveResult: ''
+        approveResult: '',
+        tabsName: this.$route.query.tabs, // 是否全部显示
+        defaultTabsName: encodeURIComponent('全部显示')
       };
     },
     computed: {
@@ -117,7 +119,7 @@
         return location.href.indexOf('detail') !== -1;
       },
       showAllTabs() {
-        return encodeURIComponent('全部显示') === (this.$route.query.tabs || '全部显示');
+        return this.$data.defaultTabsName === (this.$route.query.tabs || this.$data.defaultTabsName);
       }
       // 是否是录单岗
 //      isRecordRole() {
