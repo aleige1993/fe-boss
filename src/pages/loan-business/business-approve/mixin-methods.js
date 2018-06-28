@@ -24,7 +24,6 @@ export default {
       let loanNo = this.$route.query.id;
       if (loanNo) {
         this.$data.creditReportURLLoading = true;
-        await bsWait(4000);
         let resp = await this.$http.post('/biz/getCreditReportURL', {
           loanNo
         });

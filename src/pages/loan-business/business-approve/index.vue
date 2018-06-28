@@ -15,16 +15,15 @@
         </apply-info>
       </i-tab-pane>
       <i-tab-pane v-if="showAllTabs" label="人行征信报告" name="tabCreditInfo" :disabled="formData.custType === '2'">
-        <div v-if="creditReportURLLoading" style="text-align: center;background: #f7f7f7;">
-          <span style="color: #f89406;font-size: 14px;line-height: 30px;"><Icon style="vertical-align: middle" type="load-c" size=14 class="demo-spin-icon-load"></Icon> 人行征信报告生成中...</span>
-        </div>
-        <div v-else>
-          <div v-if="!creditReportURL" style="color: red; text-align: center">暂无征信查询结果！</div>
-          <div v-else>
-            <i-checkbox v-if="showCreditCheckbox && !isFromDetail" v-model="isHasCheckCreditReport">&nbsp;&nbsp;已查看征信报告</i-checkbox>
-            <iframe style="border:1px solid #f5f5f5" :src="creditReportURL" width="100%" :height="iframeHeight" frameborder="0"></iframe>
-          </div>
-        </div>
+        <i-checkbox v-if="showCreditCheckbox" v-model="isHasCheckCreditReport">&nbsp;&nbsp;已查看征信报告</i-checkbox>
+
+        <div v-if="isCreditEerror" style="color: red; padding: 20px 0">暂无征信查询结果！</div>
+        <br>
+        <br>
+        <p style="text-align: center;background: #f7f7f7;">
+          <span style="color: #f89406;font-size: 14px;line-height: 30px;" v-if="creditReportURLLoading"><Icon style="vertical-align: middle" type="load-c" size=14 class="demo-spin-icon-load"></Icon> 人行征信报告生成中...</span>
+        </p>
+        <iframe style="border:1px solid #f5f5f5" :src="creditReportURL" width="100%" :height="iframeHeight" frameborder="0"></iframe>
       </i-tab-pane>
       <i-tab-pane v-if="showAllTabs" label="联系人信息" name="tabContactInfo">
         <tab-big-data :customerType="formData.custType" :applyBasicInfo="formData" v-if="tabIndex === 'tabContactInfo'"> </tab-big-data>
