@@ -163,7 +163,8 @@ export default {
                       query: {
                         id: params.row.loanNo,
                         status: params.row.taskNode,
-                        from: 'detail'
+                        from: 'detail',
+                        tabs: encodeURIComponent(this.detailtabs)
                       }
                     });
                   }

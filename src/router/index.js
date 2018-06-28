@@ -169,6 +169,7 @@ let MyRouter = new Router({
             { path: '/', name: 'toleftnav', component: resolve => require(['@/pages/to-left-nav'], resolve)},
             // 贷款业务-业务审批
             { path: 'alllist', name: 'loanBusinessList',  props: { 'taskNode': '', status: '', breadcrumbName: '所有订单列表'}, component: resolve => require(['@/pages/loan-business/business-list'], resolve)},
+            { path: 'orderlist', name: 'loanBusinessOrderList',  props: { 'taskNode': '', status: '', breadcrumbName: '订单列表', detailtabs: '不全部显示'}, component: resolve => require(['@/pages/loan-business/business-list'], resolve)},
             { path: 'mypending', name: 'loanBusinessMyPendingList',  props: { 'taskNode': '0;1', status: '0;1;3', breadcrumbName: '待提交订单列表'}, component: resolve => require(['@/pages/loan-business/business-list'], resolve)},
             { path: 'firstapprove', name: 'loanBusinessFirstApproveList', props: { 'taskNode': '3', status: '0;1;3', breadcrumbName: '业务初审'}, component: resolve => require(['@/pages/loan-business/business-list'], resolve)},
             { path: 'firststageapprove', name: 'loanBusinessFirstStageApproveList', props: { 'taskNode': '4', status: '0;1;3', breadcrumbName: '业务一级审批'}, component: resolve => require(['@/pages/loan-business/business-list'], resolve)},
