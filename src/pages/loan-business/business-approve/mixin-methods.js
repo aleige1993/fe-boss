@@ -23,17 +23,17 @@ export default {
     async getCreditReportUrl() {
       let loanNo = this.$route.query.id;
       if (loanNo) {
-        // this.$data.creditReportURLLoading = true;
+        this.$data.creditReportURLLoading = true;
         let resp = await this.$http.post('/biz/getCreditReportURL', {
           loanNo
         });
-        // this.$data.creditReportURLLoading = false;
+        this.$data.creditReportURLLoading = false;
         if (resp.success) {
-          // this.$data.showCreditCheckbox = true;
+          this.$data.showCreditCheckbox = true;
           this.$data.creditReportURL = resp.body.creditFinalURL;
         } else {
-          // this.$data.showCreditCheckbox = false;
-          // this.$data.isCreditError = true; // 显示 “暂无征信查询结果” 的提示语
+          this.$data.showCreditCheckbox = false;
+          this.$data.isCreditEerror = true; // 显示 “暂无征信查询结果” 的提示语
         }
       }
     },
