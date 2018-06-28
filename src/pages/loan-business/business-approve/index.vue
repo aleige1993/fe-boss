@@ -25,10 +25,10 @@
         </p>
         <iframe style="border:1px solid #f5f5f5" :src="creditReportURL" width="100%" :height="iframeHeight" frameborder="0"></iframe>
       </i-tab-pane>
-      <i-tab-pane label="联系人信息" name="tabContactInfo">
+      <i-tab-pane v-if="showAllTabs" label="联系人信息" name="tabContactInfo">
         <tab-big-data :customerType="formData.custType" :applyBasicInfo="formData" v-if="tabIndex === 'tabContactInfo'"> </tab-big-data>
       </i-tab-pane>
-      <i-tab-pane :label="'审批信息'" name="tabApproveInfo" v-if="taskNode !== '1' && taskNode !== '0'  && !isRecordRole">
+      <i-tab-pane :label="'审批信息'" name="tabApproveInfo">
         <approve-info ref="approveInfo" :applyBasicInfo="formData" :isFromDetail="isFromDetail"
                       @on-result-change="approveResultChanged"
                       :readonly="firstApproveInfoReadonly || isFromDetail" :isApprove="isApprove">
@@ -92,7 +92,9 @@
         memberNo: '1',
         corpNo: '1',
         creditReportURL: '',
-        approveResult: ''
+        approveResult: '',
+        tabsName: this.$route.query.tabs, // 是否全部显示
+        defaultTabsName: encodeURIComponent('全部显示')
       };
     },
     computed: {
