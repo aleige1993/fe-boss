@@ -7,7 +7,6 @@
       <i-breadcrumb-item>个人业务合同制作</i-breadcrumb-item>
     </i-breadcrumb>
     <br>
-    <br>
     <i-tabs v-model="tabIndex" :animated="false" type="card">
       <i-tab-pane label="合同信息" name="tabInfo">
         <tab-contract-info ref="contractInfo"
@@ -178,9 +177,9 @@
         this.$data.approveStatus = val;
       },
       // 合同信息里 点击了“生成合同”
-      isCreateContractFun() {
+      isCreateContractFun(status) {
         this.$data.isClickContracting = false;
-        this.$data.isCreateContract = true;
+        this.$data.isCreateContract = status;
       },
       //  合同信息里 点击了“生成合同”loading状态时
       isClickGeneratingFun() {
@@ -247,7 +246,7 @@
         if (this.$route.query.taskNode === '6') {
           // 初审时 审核意见的结论是“同意”的情况下才判断是否已点击“生成合同”
           if (!this.$data.isCreateContract && this.$data.approveStatus === 'A') {
-            this.$Message.warning('请生成合同！');
+            this.$Message.warning('合同信息不能为空！');
             this.$data.tabIndex = 'tabInfo';
             return;
           }
