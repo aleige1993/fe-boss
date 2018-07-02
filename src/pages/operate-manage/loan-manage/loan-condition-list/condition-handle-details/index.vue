@@ -812,49 +812,51 @@
       },
       // 提交的ajax
       async allSubimt() {
-        if (this.$data.carData.length === 0) {
-          this.$Message.error({
-            content: '没有车辆信息，无法提交！',
-            duration: 2
-          });
-          return;
-        }
-        // 权证回传方式为《先入库后抵押》时 车辆信息中须配置好“办理抵押” 通过其中的必填项“办理时间”字段判断
-        for (let item of this.$data.carData) {
-          if (this.$data.warrantType === '2' && (typeof item.makeDate === 'undefined' || item.makeDate === '' || item.makeDate === null)) {
+        if (this.$data.formData.approveStatus === 'A') {
+          if (this.$data.carData.length === 0) {
             this.$Message.error({
-              content: '车辆信息中须配置好“办理抵押”！',
+              content: '没有车辆信息，无法提交！',
               duration: 2
             });
             return;
           }
-        }
-        // 权证回传方式为《先入库后抵押》时 回传天数必填
-        for (let item of this.$data.carData) {
-          if (this.$data.warrantType === '1' && (typeof item.backDays === 'undefined' || item.backDays === '')) {
-            this.$Message.error({
-              content: '车辆信息中须配置好“回传天数”！',
-              duration: 2
-            });
-            return;
-          }
-        }
-        let conditionArray = this.$data.conditionData;
-        if (conditionArray && conditionArray.length > 0) {
-          for (let item of conditionArray) {
-            if (!item.remark || item.remark === '') {
+          // 权证回传方式为《先入库后抵押》时 车辆信息中须配置好“办理抵押” 通过其中的必填项“办理时间”字段判断
+          for (let item of this.$data.carData) {
+            if (this.$data.warrantType === '2' && (typeof item.makeDate === 'undefined' || item.makeDate === '' || item.makeDate === null)) {
               this.$Message.error({
-                content: '放款条件中的“备注”不能为空！',
+                content: '车辆信息中须配置好“办理抵押”！',
                 duration: 2
               });
               return;
             }
-            if (!item.status || item.status === '') {
+          }
+          // 权证回传方式为《先入库后抵押》时 回传天数必填
+          for (let item of this.$data.carData) {
+            if (this.$data.warrantType === '1' && (typeof item.backDays === 'undefined' || item.backDays === '')) {
               this.$Message.error({
-                content: '放款条件中的“落实状态”不能为空！',
+                content: '车辆信息中须配置好“回传天数”！',
                 duration: 2
               });
               return;
+            }
+          }
+          let conditionArray = this.$data.conditionData;
+          if (conditionArray && conditionArray.length > 0) {
+            for (let item of conditionArray) {
+              if (!item.remark || item.remark === '') {
+                this.$Message.error({
+                  content: '放款条件中的“备注”不能为空！',
+                  duration: 2
+                });
+                return;
+              }
+              if (!item.status || item.status === '') {
+                this.$Message.error({
+                  content: '放款条件中的“落实状态”不能为空！',
+                  duration: 2
+                });
+                return;
+              }
             }
           }
         }
@@ -891,6 +893,7 @@
           } else {
             this.$data.tabIndex = 'info';
             this.$Message.error('<span style="color: red">*</span>项不能为空');
+            $('html, body')[0].scrollTop = $('body')[0].clientHeight; // 滚动条滚动到底部
           }
         });
       },
