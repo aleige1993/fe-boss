@@ -5,13 +5,12 @@
       <i-breadcrumb-item href="/">首页</i-breadcrumb-item>
       <i-breadcrumb-item href="/index/contract">合同管理</i-breadcrumb-item>
       <i-breadcrumb-item v-if="this.taskNode==='6'">待制作合同列表</i-breadcrumb-item>
-      <i-breadcrumb-item v-if="this.taskNode==='8'">{{succeed?'已签署合同列表':'待签署合同列表'}}</i-breadcrumb-item>
+      <i-breadcrumb-item v-if="this.taskNode==='8'">
+        {{succeed?'已签署合同':'待签署合同'}}{{query?'查询':'列表'}}
+      </i-breadcrumb-item>
     </i-breadcrumb>
     <i-row>
       <i-col span="24">
-        <div class="form-block-title">
-          查询条件
-        </div>
         <div class="search-form-container">
           <i-form inline ref="formSearch" :model="formSearch" label-position="right">
             <i-form-item prop="loanNo" style="margin-right:20px;">
@@ -43,12 +42,19 @@
             <i-form-item prop="endDate" style="width: 120px">
               <bs-datepicker v-model="formSearch.endDate" type="text" placeholder="申请时间"></bs-datepicker>
             </i-form-item>
+            <!--<i-form-item v-if="taskNode === '8' && !succeed" prop="certType">-->
+              <!--<i-select v-model="formSearch.hasSign" style="width:150px" placeholder="线上签约状态">-->
+                <!--<i-option value="" style="height: 26px; color: #bbbec4">-请选择-</i-option>-->
+                <!--<i-option value="1">已完成</i-option>-->
+                <!--<i-option value="2">未完成</i-option>-->
+              <!--</i-select>-->
+            <!--</i-form-item>-->
             <i-form-item style="margin-left:20px;">
               <i-button @click="search" type="primary"><i-icon type="ios-search-strong"></i-icon> 搜索</i-button>
             </i-form-item>
           </i-form>
         </div>
-        <i-table :height="tableFixHeight+48" border :loading="dataLoading" ref="contractTable" :columns="columns" :data="data1"></i-table>
+        <i-table :height="tableFixHeight+58" border :loading="dataLoading" ref="contractTable" :columns="tableColumns" :data="data1"></i-table>
         <div class="page-container">
           <i-page :total="total" :page-size="pageSize" :current="currentPage" @on-change="jumpPage" size="small" show-elevator show-total></i-page>
         </div>
@@ -84,6 +90,19 @@
         }
       };
     },
+    computed: {
+      tableColumns() {
+        if (this.taskNode === '8' && !this.succeed) {
+          this.$data.columns = [...this.$data.columnsHasSign, ...this.$data.columns1];
+        } else {
+          this.$data.columns = this.$data.columns1;
+        }
+        if (!this.query) {
+          this.$data.columns = [...this.$data.columns, ...this.$data.columnsAction];
+        }
+        return this.$data.columns;
+      }
+    },
     props: {
       taskNode: {
         type: String,
@@ -99,10 +118,18 @@
         type: Boolean,
         required: false,
         default: false
+      },
+      query: {
+        type: Boolean,
+        required: false,
+        default: false
       }
     },
     watch: {
       'succeed'() {
+        this.initFun();
+      },
+      'query'() {
         this.initFun();
       }
     },
@@ -131,6 +158,7 @@
         }
       },
       async initFun() {
+        this.$refs['formSearch'].resetFields();
         if (this.$route.query.currentPage) {
           this.$data.currentPage = this.$route.query.currentPage / 1;
         }
@@ -142,29 +170,23 @@
         await this.getList();
       },
       // 设置当前处理人
-      async settingHandleUser(row) {
-        // 2018.03.22 突然又说不要做设置当前处理人了，此处注释，以防以后又变回来
-        /* let resp = await this.$http.post('/biz/sign/settingHandleUser', {
-          signNo: row.signNo
-        });
-        if (resp.success) {
-          return true;
-        } else {
-          return false;
-        }*/
-        return true;
-      },
+//      async settingHandleUser(row) {
+//        let resp = await this.$http.post('/biz/sign/settingHandleUser', {
+//          signNo: row.signNo
+//        });
+//        if (resp.success) {
+//          return true;
+//        } else {
+//          return false;
+//        }
+//        return true;
+//      },
       // 查询列表数据
       async getList(page) {
-        if (this.taskNode === '8' && !this.succeed) {
-          this.$data.columns = [...this.$data.columnsHasSign, ...this.$data.columns1];
-        } else {
-          this.$data.columns = this.$data.columns1;
-        }
-        this.$data.dataLoading = true;
         if (page) {
           this.$data.currentPage = page;
         }
+        this.$data.dataLoading = true;
         let resp = await this.$http.post('/biz/sign/page', {
           status: this.$data.statusData,
           taskNode: this.taskNode,

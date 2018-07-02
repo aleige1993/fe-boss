@@ -4,167 +4,432 @@ export default [
     on: true,
     type: 'get',
     resp: {
-      reCode: '0000',
-      body: {
+      'body': {
         'childMenus': [
-          // 客户档案
           {
-            name: '客户档案',
-            url: '/index/customer',
-            childMenus: [
+            'childMenus': [
               {
-                name: '个人客户管理',
-                url: '/index/customer/privatecustomer',
-                childMenus: [
-                  { name: '个人客户列表', url: '/index/customer/privatecustomer' },
-                  { name: '个人客户添加', url: '/index/customer/privatecustomer/add' }
-                ]
-              },
-              {
-                name: '企业客户管理',
-                url: '',
-                childMenus: [
-                  { name: '企业客户列表', url: '/index/customer/companycustomer' },
-                  { name: '企业客户添加', url: '/index/customer/companycustomer/modify' }
-                ]
-              },
-              {
-                name: '黑名单管理',
-                url: '',
-                childMenus: [
-                  { name: '黑名单列表', url: '/index/customer/blacklist' }
-                ]
-              },
-              {
-                name: '渠道商管理',
-                url: '',
-                childMenus: [
-                  { name: '渠道商列表', url: '/index/customer/distributor' },
-                  { name: '渠道商授信审核', url: '/index/customer/distributor/credit' },
-                  { name: '渠道商角色管理', url: '/index/customer/distributor/role' },
-                  { name: '渠道商权限管理', url: '/index/customer/distributor/module' }
-                ]
+                'childMenus': [
+                  {
+                    'childMenus': [],
+                    'gmtCreate': null,
+                    'gmtModified': null,
+                    'icon': '',
+                    'menuId': 144,
+                    'name': '所有订单列表',
+                    'orderNum': null,
+                    'parentId': 143,
+                    'perms': '',
+                    'type': 1,
+                    'url': '/index/loanbusiness/alllist'
+                  },
+                  {
+                    '$ref': '$.body.childMenus[0].childMenus[0].childMenus[0]'
+                  }
+                ],
+                'gmtCreate': null,
+                'gmtModified': null,
+                'icon': '',
+                'menuId': 143,
+                'name': '业务查询',
+                'orderNum': 3,
+                'parentId': 122,
+                'perms': '',
+                'type': 1,
+                'url': '/index/loanbusiness'
               }
-            ]
+            ],
+            'gmtCreate': null,
+            'gmtModified': null,
+            'icon': '',
+            'menuId': 122,
+            'name': '贷款业务',
+            'orderNum': 1,
+            'parentId': 98,
+            'perms': '',
+            'type': 1,
+            'url': '/index/loanbusiness'
           },
-          // 贷款业务
           {
-            name: '贷款业务',
-            url: '/index/loanbusiness',
-            childMenus: [
+            'childMenus': [
               {
-                name: '业务受理',
-                url: '/index/loanbusiness',
-                childMenus: [
-                  { name: '个人业务登记', url: '/index/loanbusiness/accept' },
-                  { name: '公司业务登记', url: '/index/loanbusiness/companyaccept' }
-                  /* { name: '我的草稿', url: '/index/customer/companycustomer/modify' }*/
-                ]
-              },
-              {
-                name: '业务审批',
-                url: '/index/loanbusiness/firststageapprove',
-                childMenus: [
-                  { name: '业务初审', url: '/index/loanbusiness/firststageapprove' }
-                ]
-              },
-              {
-                name: '业务查询',
-                url: '/index/loanbusiness/alllist',
-                childMenus: [
-                  { name: '所有订单列表', url: '/index/loanbusiness/alllist' },
-                  { name: '待提交订单列表', url: '/index/loanbusiness/mypending' },
-                  { name: 'APP订单列表', url: '/index/loanbusiness/intentionorder' }
-                ]
-              },
-              /* {
-                name: '业务审批',
-                url: '',
-                childMenus: [
-                  { name: '黑名单列表', url: '/index/customer/blacklist' }
-                ]
-              },*/
-              { name: '公司授信管理',
-                url: '/index/loanbusiness/credit',
-                childMenus: [
-                  { name: '公司授信查询', url: '/index/loanbusiness/credit' },
-                  { name: '公司授信申请', url: '/index/loanbusiness/credit/apply' },
-                  { name: '公司授信初审', url: '/index/loanbusiness/credit/pending' },
-                  { name: '公司授信外审', url: '/index/loanbusiness/credit/externalapprove' },
-                  { name: '公司授信审批', url: '/index/loanbusiness/credit/approve' }
-                ]
+                'childMenus': [
+                  {
+                    'childMenus': [],
+                    'gmtCreate': null,
+                    'gmtModified': null,
+                    'icon': '',
+                    'menuId': 201,
+                    'name': '已签署合同列表',
+                    'orderNum': 3,
+                    'parentId': 184,
+                    'perms': '',
+                    'type': 1,
+                    'url': '/index/contract/signSucceed'
+                  },
+                  {
+                    '$ref': '$.body.childMenus[1].childMenus[0].childMenus[0]'
+                  },
+                  {
+                    'childMenus': [],
+                    'gmtCreate': null,
+                    'gmtModified': null,
+                    'icon': '',
+                    'menuId': 202,
+                    'name': '待签署合同列表',
+                    'orderNum': 2,
+                    'parentId': 184,
+                    'perms': '',
+                    'type': 1,
+                    'url': '/index/contract/sign'
+                  },
+                  {
+                    'childMenus': [],
+                    'gmtCreate': null,
+                    'gmtModified': null,
+                    'icon': '',
+                    'menuId': 203,
+                    'name': '待制作合同列表',
+                    'orderNum': 1,
+                    'parentId': 184,
+                    'perms': '',
+                    'type': 1,
+                    'url': '/index/contract/list'
+                  }
+                ],
+                'gmtCreate': null,
+                'gmtModified': null,
+                'icon': '',
+                'menuId': 184,
+                'name': '合同管理',
+                'orderNum': null,
+                'parentId': 181,
+                'perms': '',
+                'type': 1,
+                'url': '/index/contract/list'
               }
-            ]
+            ],
+            'gmtCreate': null,
+            'gmtModified': null,
+            'icon': '',
+            'menuId': 181,
+            'name': '合同管理',
+            'orderNum': 2,
+            'parentId': 98,
+            'perms': '',
+            'type': 1,
+            'url': '/index/contract'
           },
-          // 合同管理(原签约合同)
           {
-            name: '合同管理',
-            url: '/index/contract',
-            childMenus: [
+            'childMenus': [
               {
-                name: '合同管理',
-                url: '/index/contract/list',
-                childMenus: [
-                  { name: '待制作合同列表', url: '/index/contract/list' },
-                  { name: '待签署合同确认', url: '/index/contract/sign' },
-                  { name: '已签署合同列表', url: '/index/contract/signSucceed' }
-                ]
-              }
-            ]
-          },
-          // 运营管理
-          {
-            name: '运营管理',
-            url: '/index/operate',
-            childMenus: [
-              { name: '放款管理',
-                url: '/index/operate/loan',
-                childMenus: [
-                  { name: '放款条件落实', url: '/index/operate/loan' },
-                  { name: '放款费用落实', url: '/index/operate/loan/fee' },
-                  { name: '放款审批', url: '/index/operate/loan/approval' }
-                ]
-              },
-              { name: '权证管理',
-                url: '/index/operate/pawn',
-                childMenus: [
-                  { name: '权证待办列表', url: '/index/operate/pawn' }
-                ]
-              }
-            ]
-          },
-          // 配置管理
-          {
-            name: '配置管理',
-            url: '/index/conf',
-            childMenus: [
-              {
-                name: '产品配置',
-                url: '/index/conf/product',
-                childMenus: [
-                  { name: '产品列表', url: '/index/conf/product' },
-                  { name: '贷款材料配置', url: '/index/conf/product/loan' },
-                  { name: '费用类型配置', url: '/index/conf/product/cost' },
-                  { name: '准入规则配置', url: '/index/conf/product/rule' },
-                  { name: '放款条件配置', url: '/index/conf/product/lending' },
-                  { name: '归档材料配置', url: '/index/conf/product/file' }
-                  /* { name: '产品匹配配置', url: '/index/conf/product/match' }*/
-                ]
+                'childMenus': [
+                  {
+                    'childMenus': [],
+                    'gmtCreate': null,
+                    'gmtModified': null,
+                    'icon': '',
+                    'menuId': 193,
+                    'name': '放款条件落实',
+                    'orderNum': null,
+                    'parentId': 192,
+                    'perms': '',
+                    'type': 1,
+                    'url': '/index/operate/loan'
+                  },
+                  {
+                    'childMenus': [],
+                    'gmtCreate': null,
+                    'gmtModified': null,
+                    'icon': '',
+                    'menuId': 194,
+                    'name': 'GPS安装落实',
+                    'orderNum': null,
+                    'parentId': 192,
+                    'perms': '',
+                    'type': 1,
+                    'url': '/index/operate/loan/GPS'
+                  }
+                ],
+                'gmtCreate': null,
+                'gmtModified': null,
+                'icon': '',
+                'menuId': 192,
+                'name': '放款管理',
+                'orderNum': 1,
+                'parentId': 189,
+                'perms': '',
+                'type': 1,
+                'url': '/index/operate/loan'
               },
               {
-                name: '资方管理',
-                url: '/index/conf/invest',
-                childMenus: [
-                  { name: '资方维护', url: '/index/conf/invest/' },
-                  { name: '资方映射配置', url: '/index/conf/invest/mapping' },
-                  { name: '合同模板维护', url: '/index/conf/invest/contract' }
-                ]
+                'childMenus': [
+                  {
+                    'childMenus': [],
+                    'gmtCreate': null,
+                    'gmtModified': null,
+                    'icon': '',
+                    'menuId': 191,
+                    'name': '权证待办列表',
+                    'orderNum': 1,
+                    'parentId': 190,
+                    'perms': '',
+                    'type': 1,
+                    'url': '/index/operate/pawn'
+                  }
+                ],
+                'gmtCreate': null,
+                'gmtModified': null,
+                'icon': '',
+                'menuId': 190,
+                'name': '权证管理',
+                'orderNum': 2,
+                'parentId': 189,
+                'perms': '',
+                'type': 1,
+                'url': '/index/operate/pawn'
               }
-            ]
+            ],
+            'gmtCreate': null,
+            'gmtModified': null,
+            'icon': '',
+            'menuId': 189,
+            'name': '运营管理',
+            'orderNum': 3,
+            'parentId': 98,
+            'perms': '',
+            'type': 1,
+            'url': '/index/operate'
+          },
+          {
+            'childMenus': [
+              {
+                'childMenus': [
+                  {
+                    'childMenus': [],
+                    'gmtCreate': null,
+                    'gmtModified': null,
+                    'icon': '',
+                    'menuId': 215,
+                    'name': '一次放款查询',
+                    'orderNum': 3,
+                    'parentId': 150,
+                    'perms': '',
+                    'type': 1,
+                    'url': '/index/financemanage/proxypay/detail1'
+                  },
+                  {
+                    '$ref': '$.body.childMenus[3].childMenus[0].childMenus[0]'
+                  },
+                  {
+                    '$ref': '$.body.childMenus[3].childMenus[0].childMenus[0]'
+                  },
+                  {
+                    'childMenus': [],
+                    'gmtCreate': null,
+                    'gmtModified': null,
+                    'icon': '',
+                    'menuId': 216,
+                    'name': '二次放款查询',
+                    'orderNum': 4,
+                    'parentId': 150,
+                    'perms': '',
+                    'type': 1,
+                    'url': '/index/financemanage/proxypay/detail2'
+                  },
+                  {
+                    '$ref': '$.body.childMenus[3].childMenus[0].childMenus[3]'
+                  },
+                  {
+                    '$ref': '$.body.childMenus[3].childMenus[0].childMenus[3]'
+                  }
+                ],
+                'gmtCreate': null,
+                'gmtModified': null,
+                'icon': '',
+                'menuId': 150,
+                'name': '代付管理',
+                'orderNum': null,
+                'parentId': 148,
+                'perms': '',
+                'type': 1,
+                'url': '/index/financemanage/proxypay'
+              },
+              {
+                'childMenus': [
+                  {
+                    'childMenus': [],
+                    'gmtCreate': null,
+                    'gmtModified': null,
+                    'icon': '',
+                    'menuId': 219,
+                    'name': '代扣查询',
+                    'orderNum': null,
+                    'parentId': 172,
+                    'perms': '',
+                    'type': 2,
+                    'url': '/index/financemanage/proxyreceive/detail'
+                  }
+                ],
+                'gmtCreate': null,
+                'gmtModified': null,
+                'icon': '',
+                'menuId': 172,
+                'name': '代扣管理',
+                'orderNum': null,
+                'parentId': 148,
+                'perms': '',
+                'type': 1,
+                'url': '/index/financemanage/proxyreceive'
+              }
+            ],
+            'gmtCreate': null,
+            'gmtModified': null,
+            'icon': '',
+            'menuId': 148,
+            'name': '财务管理',
+            'orderNum': 4,
+            'parentId': 98,
+            'perms': '',
+            'type': 1,
+            'url': '/index/financemanage'
+          },
+          {
+            'childMenus': [
+              {
+                'childMenus': [
+                  {
+                    'childMenus': [],
+                    'gmtCreate': null,
+                    'gmtModified': null,
+                    'icon': '',
+                    'menuId': 106,
+                    'name': '个人客户列表',
+                    'orderNum': null,
+                    'parentId': 100,
+                    'perms': '',
+                    'type': 1,
+                    'url': '/index/customer/privatecustomer'
+                  },
+                  {
+                    'childMenus': [],
+                    'gmtCreate': null,
+                    'gmtModified': null,
+                    'icon': '',
+                    'menuId': 107,
+                    'name': '个人客户添加',
+                    'orderNum': null,
+                    'parentId': 100,
+                    'perms': '',
+                    'type': 1,
+                    'url': '/index/customer/privatecustomer/add'
+                  }
+                ],
+                'gmtCreate': null,
+                'gmtModified': null,
+                'icon': '',
+                'menuId': 100,
+                'name': '个人客户管理',
+                'orderNum': null,
+                'parentId': 99,
+                'perms': '',
+                'type': 1,
+                'url': ''
+              },
+              {
+                'childMenus': [
+                  {
+                    'childMenus': [],
+                    'gmtCreate': null,
+                    'gmtModified': null,
+                    'icon': '',
+                    'menuId': 136,
+                    'name': '渠道商列表',
+                    'orderNum': null,
+                    'parentId': 135,
+                    'perms': '',
+                    'type': 1,
+                    'url': '/index/customer/distributor'
+                  }
+                ],
+                'gmtCreate': null,
+                'gmtModified': null,
+                'icon': '',
+                'menuId': 135,
+                'name': '渠道商管理',
+                'orderNum': null,
+                'parentId': 99,
+                'perms': '',
+                'type': 0,
+                'url': ''
+              },
+              {
+                'childMenus': [
+                  {
+                    'childMenus': [],
+                    'gmtCreate': null,
+                    'gmtModified': null,
+                    'icon': '',
+                    'menuId': 109,
+                    'name': '企业客户列表',
+                    'orderNum': null,
+                    'parentId': 108,
+                    'perms': '',
+                    'type': 1,
+                    'url': '/index/customer/companycustomer'
+                  },
+                  {
+                    'childMenus': [],
+                    'gmtCreate': null,
+                    'gmtModified': null,
+                    'icon': '',
+                    'menuId': 110,
+                    'name': '企业客户新增',
+                    'orderNum': null,
+                    'parentId': 108,
+                    'perms': '',
+                    'type': 1,
+                    'url': '/index/customer/companycustomer/modify'
+                  }
+                ],
+                'gmtCreate': null,
+                'gmtModified': null,
+                'icon': '',
+                'menuId': 108,
+                'name': '企业客户管理',
+                'orderNum': null,
+                'parentId': 99,
+                'perms': '',
+                'type': 0,
+                'url': ''
+              }
+            ],
+            'gmtCreate': null,
+            'gmtModified': null,
+            'icon': '',
+            'menuId': 99,
+            'name': '客户档案',
+            'orderNum': 6,
+            'parentId': 98,
+            'perms': '',
+            'type': 1,
+            'url': '/index/customer'
           }
-          // 配置管理 end
-        ]
-      }
+        ],
+        'gmtCreate': null,
+        'gmtModified': null,
+        'icon': '',
+        'menuId': 98,
+        'name': '运营支撑管理系统',
+        'orderNum': 5,
+        'parentId': 0,
+        'perms': '',
+        'type': 0,
+        'url': ''
+      },
+      'reCode': '0000',
+      'reMsg': '成功',
+      'success': true
     }
   }
 ];

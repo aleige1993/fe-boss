@@ -10,6 +10,7 @@ import companyCredit from './company-credit';
 import loanbusiness from './loanbusiness';
 import carDropList from './car-droplist';
 import distributor from './distributor';
+import repment from './repment';
 
 let ary = [
   {

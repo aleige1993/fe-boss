@@ -43,7 +43,20 @@ export default {
           render: (h, params) => {
             return h('span', {}, this.enumCode2Name(params.row.signStatus, 'BizStatusEnum'));
           }
-        },
+        }
+      ],
+      columnsHasSign: [
+        {
+          title: '线上签约状态', // succeed
+          fixed: 'right',
+          width: 100,
+          key: 'hasSign',
+          render: (h, params) => {
+            return h('span', {}, params.row.hasSign === '1' ? '签约已完成' : '签约未完成');
+          }
+        }
+      ],
+      columnsAction: [
         {
           title: '操作',
           fixed: 'right',
@@ -75,18 +88,7 @@ export default {
           }
         }
       ],
-      data1: [],
-      columnsHasSign: [
-        {
-          title: '线上签约状态', // succeed
-          fixed: 'right',
-          width: 100,
-          key: 'hasSign',
-          render: (h, params) => {
-            return h('span', {}, params.row.hasSign === '1' ? '签约已完成' : '签约未完成');
-          }
-        }
-      ]
+      data1: []
     };
   },
   methods: {

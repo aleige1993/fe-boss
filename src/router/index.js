@@ -69,7 +69,9 @@ let MyRouter = new Router({
               ]
             },
             // 黑名单管理
-            { path: 'blacklist', component: resolve => { require(['@/pages/customer-manage/blacklist-manage'], resolve) }, name: 'customerBlacklist'}
+            { path: 'blacklist', component: resolve => { require(['@/pages/customer-manage/blacklist-manage'], resolve) }, name: 'customerBlacklist'},
+            //客户解绑
+            { path:'unbundl',name: 'unbundling',component: resolve => { require(['@/pages/customer-manage/unbundl-user'], resolve) }}
           ]
         },
         // 配置管理
@@ -220,6 +222,8 @@ let MyRouter = new Router({
             { path: 'making', name: 'loanContractMakingTab', component: resolve => require(['@/pages/contract-manage/contract-making-tab'], resolve)},
             // 合同管理->待签署合同列表
             { path: 'sign', name: 'loanContractSign', component: resolve => require(['@/pages/contract-manage/contract-signing'], resolve)},
+            // 合同管理->待签署合同查询
+            { path: 'signQuery', name: 'loanContractSignQuery', props:{ query: true }, component: resolve => require(['@/pages/contract-manage/contract-signing'], resolve)},
             // 合同管理->待签署合同列表-详情页面 / 查看合同详情
             { path: 'signDetails', name: 'loanContractSignDetails', component: resolve => require(['@/pages/contract-manage/contract-signing-details-tab'], resolve)},
             // 合同管理->已签署合同列表
@@ -302,6 +306,25 @@ let MyRouter = new Router({
           ]
         },
         // 运营管理 end
+
+        //业务查询
+        { path: 'query', name: 'queryService', component: resolve => require(['@/pages/query-service'], resolve),
+          children: [
+            { path: '/', name: 'toleftnav', component: resolve => require(['@/pages/to-left-nav'], resolve)},
+            { path: 'repay', name: 'repayment', component: resolve => require(['@/pages/query-service/repay-ment'], resolve),
+              children: [
+                //还款计划查询
+                { path: 'detatime', name: 'detatimeQuery',component: resolve => require(['@/pages/query-service/repay-ment/detatime-query'], resolve)},
+                //应还款客户查询
+                { path: 'person', name: 'personQuery',component: resolve => require(['@/pages/query-service/repay-ment/person-query'], resolve)},
+                //应还款查询详情
+                { path: 'persondetails', name: 'persondetailsQuery',component: resolve => require(['@/pages/query-service/repay-ment/person-query-details'], resolve)},
+              ]
+            },
+          ]
+        }
+        //业务查询end
+
       ]
     }
   ],
