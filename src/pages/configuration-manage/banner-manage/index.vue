@@ -169,7 +169,7 @@
         this.$data.fromData.bannerNo = Tools.generateUUID();
       },
       createLink() {
-        this.$data.fromData.linkUrl = this.$config.HTTPFEH5URL + '/#/newsdetail?id=' + this.$data.fromData.bannerNo;
+        this.$data.fromData.linkUrl = Tools.getFeH5Host() + '/#/newsdetail?id=' + this.$data.fromData.bannerNo;
       },
       editorContent(content) {
         this.$data.fromData.content = content;
