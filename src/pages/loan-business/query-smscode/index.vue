@@ -13,14 +13,14 @@
               <i-col span="24">
                 <i-form-item label="手机号" prop="mobile"
                              :rules="{required: true, message: '手机号不能为空'}">
-                  <i-input type="text" v-model="formData.mobile"></i-input>
+                  <i-input type="text" v-model="formData.mobile" @on-enter="submitFun"></i-input>
                 </i-form-item>
               </i-col>
             </i-row>
-            <i-row v-if="resultMsg">
+            <i-row>
               <i-col span="24">
-                <i-form-item label="查询结果" prop="resultMsg">
-                  {{resultMsg}}
+                <i-form-item label="查询结果">
+                  <i-input readonly type="text" v-model="resultMsg"></i-input>
                 </i-form-item>
               </i-col>
             </i-row>
