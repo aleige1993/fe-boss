@@ -4,7 +4,6 @@
     <i-breadcrumb separator=">">
       <i-breadcrumb-item href="/">首页</i-breadcrumb-item>
       <i-breadcrumb-item href="/index/contract">合同管理</i-breadcrumb-item>
-
       <i-breadcrumb-item v-if="this.taskNode==='6'">待制作合同列表</i-breadcrumb-item>
       <i-breadcrumb-item v-if="this.taskNode==='8'">{{succeed?'已签署合同列表':'待签署合同列表'}}</i-breadcrumb-item>
     </i-breadcrumb>
@@ -208,7 +207,6 @@
               loanNo: row.loanNo, // 项目编号（业务申请编号）
               signNo: row.signNo, // 签约编号
               custName: row.custName // 客户名称
-
             }
           });
         }

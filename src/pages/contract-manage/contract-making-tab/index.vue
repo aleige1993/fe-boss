@@ -7,7 +7,6 @@
       <i-breadcrumb-item>个人业务合同制作</i-breadcrumb-item>
     </i-breadcrumb>
     <br>
-    <br>
     <i-tabs v-model="tabIndex" :animated="false" type="card">
       <i-tab-pane label="合同信息" name="tabInfo">
         <tab-contract-info ref="contractInfo"
