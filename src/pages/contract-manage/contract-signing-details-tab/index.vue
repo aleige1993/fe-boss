@@ -6,6 +6,7 @@
     <i-breadcrumb-item href="/index/contract">合同管理</i-breadcrumb-item>
     <i-breadcrumb-item>{{isDetails?'合同详情':'合同签署确认详情'}}</i-breadcrumb-item>
   </i-breadcrumb>
+  <br>
   <i-tabs v-model="tabIndex" :animated="false" type="card">
     <i-tab-pane label="签约确认信息">
       <i-form inline ref="formData" :moedl="formData" label-position="right" :label-width="100" style="padding-top: 20px">
@@ -190,10 +191,8 @@
       };
     },
     async mounted() {
-      if (this.$route.query.isDetails === 'true' || (this.$route.query.isDetails)) {
+      if (this.$route.query.isDetails === 'true') {
         this.$data.isDetails = true;
-      } else {
-        this.$data.isDetails = false;
       }
       await this.getFindSignConfirmInfo(); // 获取合同签约确认详情
       this.examineGetlist(); // 获取审批历史信息列表data

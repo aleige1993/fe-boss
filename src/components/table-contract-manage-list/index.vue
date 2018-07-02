@@ -229,7 +229,6 @@
               loanNo: row.loanNo, // 项目编号（业务申请编号）
               signNo: row.signNo, // 签约编号
               custName: row.custName // 客户名称
-
             }
           });
         }
