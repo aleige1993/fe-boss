@@ -148,5 +148,15 @@ export default {
     }
     m = Math.pow(10, Math.max(sq1, sq2));
     return (num1 * m + num2 * m) / m;
+  },
+  /**
+   * 获取H5链接域名
+   */
+  getFeH5Host() {
+    if (window.location.href.indexOf('http://boss.songcw.com') > -1) {
+      return 'https://feh5.songchedai.com';
+    } else {
+      return 'http://10.164.238.16:9085';
+    }
   }
 };

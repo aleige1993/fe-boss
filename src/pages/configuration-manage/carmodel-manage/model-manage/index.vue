@@ -130,7 +130,7 @@
         <i-row>
           <i-col span="6">
             <i-form-item label="生产年份" :rules="{required: true, message: '生产年份不能为空'}" prop="yyyy">
-              <i-input v-model="modelData.yyyy" placeholder=""></i-input>
+              <i-input v-model="modelData.yyyy" placeholder="例：2018" maxlength="4"></i-input>
             </i-form-item>
           </i-col>
           <i-col span="6">
