@@ -148,7 +148,7 @@
         ],
         seePictureModal: false,
         backChannelLoading: false,
-        isDetails: false,
+        isDetails: this.$route.query.isDetails,
         currentPageExamine: 1,
         pageSizeExamine: 15,
         totalExamine: 0,
@@ -191,9 +191,7 @@
       };
     },
     async mounted() {
-      if (this.$route.query.isDetails === 'true') {
-        this.$data.isDetails = true;
-      }
+//      alert(this.$data.isDetails);
       await this.getFindSignConfirmInfo(); // 获取合同签约确认详情
       this.examineGetlist(); // 获取审批历史信息列表data
     },
