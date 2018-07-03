@@ -1,15 +1,15 @@
 <template>
   <div class="image-dialog" style="display: inline-block; position: relative">
-    <ul :id="vmId">
-      <li style="cursor: pointer">
-        <img :width="thumbWidth" :height="thumbHeight" :data-original="full" :src="thumb" alt="">
+    <img class="viewer" @click="imageView(thumb)" :width="thumbWidth" :height="thumbHeight" :src="thumb" alt="">
+    <slot name="icon-remove"></slot>
+    <ul :id="id" style="display: none">
+      <li v-for="img in imageList">
+        <img :width="thumbWidth" :height="thumbHeight" :data-original="img.src" :src="img.src" alt="">
       </li>
     </ul>
-    <slot name="icon-remove"></slot>
   </div>
 </template>
 <script>
-  // import {} from '../../assets/js/viewer-jquery.min';
   import Tools from '@/utils/Tools';
   export default {
     name: '',
@@ -22,26 +22,34 @@
     },
     data() {
       return {
-        vmId: ''
+        id: `bs-big-img-${Tools.generateUUID()}`,
+        imageList: []
       };
     },
-    methods: {},
+    methods: {
+      imageView(thumb) {
+        let _this = this;
+        if (!_this.$data.imageList.length) {
+          $('img.viewer').each(function() {
+            _this.$data.imageList.push({
+              src: $(this).attr('src')
+            });
+          });
+        }
+        _this.$nextTick(function() {
+          let $viewer = $('#' + _this.$data.id);
+          $viewer.viewer();
+          $('img[src="' + thumb + '"]', $viewer).trigger('click');
+        });
+      }
+    },
     mounted() {
       if (!$.fn.viewer) {
         require('../../assets/js/viewer-jquery.min');
       }
-      let _id = `bs-big-img-${Tools.generateUUID()}`;
-      this.$data.vmId = _id;
-      setTimeout(function() {
-        $('#' + _id).viewer();
-        // viewer.show();
-      }, 500);
     }
   };
 </script>
 <style lang="scss">
-@import '../../assets/style/viewer.min.css';
-.viewer-prev, .viewer-next{
-  display: none !important;
-}
+  @import '../../assets/style/viewer.min.css';
 </style>
