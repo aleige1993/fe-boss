@@ -57,7 +57,7 @@
         <!--合同信息-->
         <bs-form-block :title="'合同信息'">
           <div class="scrollBarStyle">
-            <div v-if="!this.$data.isDetails" class="form-top-actions" style="padding-top:0;">
+            <div v-if="!isDetails" class="form-top-actions" style="padding-top:0;">
               <i-button @click="backChannelFun" :loading="backChannelLoading">
                 <span v-if="!backChannelLoading"><Icon type="backspace"></Icon> 退回至渠道商</span>
                 <span v-else>loading...</span>
@@ -148,7 +148,6 @@
         ],
         seePictureModal: false,
         backChannelLoading: false,
-        isDetails: this.$route.query.isDetails,
         currentPageExamine: 1,
         pageSizeExamine: 15,
         totalExamine: 0,
@@ -190,8 +189,12 @@
         }
       };
     },
+    computed: {
+      isDetails() {
+        return this.$route.query.isDetails === 'true';
+      }
+    },
     async mounted() {
-//      alert(this.$data.isDetails);
       await this.getFindSignConfirmInfo(); // 获取合同签约确认详情
       this.examineGetlist(); // 获取审批历史信息列表data
     },

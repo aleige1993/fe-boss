@@ -152,7 +152,6 @@
     }
     .list-files{
       padding: 10px;
-
     }
   }
   .icon-remove{
