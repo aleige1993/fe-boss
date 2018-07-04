@@ -1,8 +1,10 @@
 <template>
-  <div class="image-dialog" style="display: inline-block; position: relative">
-    <img class="viewer" @click="imageView(thumb)" :width="thumbWidth" :height="thumbHeight" :src="thumb" alt="">
-    <slot name="icon-remove"></slot>
-    <ul :id="id" style="display: none">
+  <div class="bs-big-img2">
+    <div class="image-dialog" style="display: inline-block; position: relative">
+      <img style="cursor: pointer" class="image-viewer" @click="imageView(thumb)" :width="thumbWidth" :height="thumbHeight" :src="thumb" alt="">
+      <slot name="icon-remove"></slot>
+    </div>
+    <ul v-if="createViewer" id="imageViewer" style="display: none">
       <li v-for="img in imageList">
         <img :width="thumbWidth" :height="thumbHeight" :data-original="img.src" :src="img.src" alt="">
       </li>
@@ -10,9 +12,8 @@
   </div>
 </template>
 <script>
-  import Tools from '@/utils/Tools';
   export default {
-    name: '',
+    name: 'bs-big-img2',
     props: {
       thumb: String,
       full: String,
@@ -22,22 +23,26 @@
     },
     data() {
       return {
-        id: `bs-big-img-${Tools.generateUUID()}`,
         imageList: []
       };
+    },
+    computed: {
+      createViewer() {
+        return $('#imageViewer').length === 0;
+      }
     },
     methods: {
       imageView(thumb) {
         let _this = this;
         if (!_this.$data.imageList.length) {
-          $('img.viewer').each(function() {
+          $('img.image-viewer').each(function() {
             _this.$data.imageList.push({
               src: $(this).attr('src')
             });
           });
         }
         _this.$nextTick(function() {
-          let $viewer = $('#' + _this.$data.id);
+          let $viewer = $('#imageViewer');
           $viewer.viewer();
           $('img[src="' + thumb + '"]', $viewer).trigger('click');
         });
