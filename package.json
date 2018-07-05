@@ -60,6 +60,7 @@
     "semver": "^5.3.0",
     "shelljs": "^0.7.6",
     "url-loader": "^0.5.8",
+    "viewerjs": "^1.1.0",
     "vue-loader": "^13.0.4",
     "vue-smooth-picker": "^0.3.0",
     "vue-style-loader": "^3.0.1",
