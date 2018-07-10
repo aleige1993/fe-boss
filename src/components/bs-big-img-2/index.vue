@@ -1,18 +1,18 @@
 <template>
-  <div class="image-dialog" style="display: inline-block; position: relative">
-    <ul :id="vmId">
-      <li style="cursor: pointer">
-        <img :width="thumbWidth" :height="thumbHeight" :data-original="full" :src="thumb" alt="">
-      </li>
+  <div class="bs-big-img2">
+    <div class="image-dialog">
+      <img class="image-viewer" @click="imageView(thumb)"
+           :width="thumbWidth" :height="thumbHeight" :src="thumb" alt="">
+      <slot name="icon-remove"></slot>
+    </div>
+    <ul v-if="crrateViewer" id="image-viewer-container">
     </ul>
-    <slot name="icon-remove"></slot>
   </div>
 </template>
 <script>
-  // import {} from '../../assets/js/viewer-jquery.min';
-  import Tools from '@/utils/Tools';
+  import Viewer from 'viewerjs';
   export default {
-    name: '',
+    name: 'bs-big-img2',
     props: {
       thumb: String,
       full: String,
@@ -20,28 +20,38 @@
       thumbHeight: Number,
       fullWidth: Number
     },
-    data() {
-      return {
-        vmId: ''
-      };
-    },
-    methods: {},
-    mounted() {
-      if (!$.fn.viewer) {
-        require('../../assets/js/viewer-jquery.min');
+    computed: {
+      crrateViewer() {
+        return $('#image-viewer-container').length === 0;
       }
-      let _id = `bs-big-img-${Tools.generateUUID()}`;
-      this.$data.vmId = _id;
-      setTimeout(function() {
-        $('#' + _id).viewer();
-        // viewer.show();
-      }, 500);
+    },
+    methods: {
+      imageView(thumb) {
+        this.Viewer = new Viewer(document.getElementById('image-viewer-container'), {
+          url: 'data-original',
+          transition: false,
+          loading: true
+        });
+        $('img[src="' + thumb + '"]', '#image-viewer-container').trigger('click');
+      }
+    },
+    mounted() {
+      $(`<li v-for="image in imageList">
+        <img width="${this.thumbWidth}" height="${this.thumbHeight}" src="${this.thumb}" alt="">
+      </li>`).appendTo($('#image-viewer-container'));
     }
   };
 </script>
 <style lang="scss">
-@import '../../assets/style/viewer.min.css';
-.viewer-prev, .viewer-next{
-  display: none !important;
-}
+  @import '../../assets/style/viewer.min.css';
+  .image-dialog {
+    position: relative;
+    display: inline-block;
+  }
+  .image-viewer {
+    cursor: pointer;
+  }
+  #image-viewer-container {
+    display: none;
+  }
 </style>
