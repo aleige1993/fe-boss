@@ -1,8 +1,8 @@
 <template>
   <div>
-    <div class="form-top-actions" v-if="!isFromDetail" style="padding-top: 0">
-      <i-button type="primary" @click="openAddModal"><i class="iconfont icon-xinzeng"></i> 新增</i-button>
-    </div>
+    <!--<div class="form-top-actions" v-if="!isFromDetail" style="padding-top: 0">-->
+      <!--<i-button type="primary" @click="openAddModal"><i class="iconfont icon-xinzeng"></i> 新增</i-button>-->
+    <!--</div>-->
     <i-table :height="tableFixHeight+98" :loading="dataLoading" :columns="bankAccountColumns" :data="bankAccountDatas"></i-table>
     <!--添加联系人模态框-->
     <pt-modal title="添加联系人" v-model="addBankModal">
