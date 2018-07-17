@@ -8,6 +8,9 @@
         <i-form-item>
           <i-button type="primary" @click="searchContactBooks"><i-icon type="ios-search-strong"></i-icon> 搜索</i-button>
         </i-form-item>
+        <i-form-item v-if="isShow">
+          <i-button type="primary" @click="deleteContents" >批量删除联系人信息</i-button>
+        </i-form-item>
       </i-form>
     </div>
     <i-tabs v-model="tabIndex" :animated="false">
@@ -46,6 +49,7 @@
     props: ['customerType', 'applyBasicInfo'],
     data() {
       return {
+        isShow: false,
         tabIndex: 0,
         loadingContactBook: false,
         contactBookTotal: 0,
@@ -58,6 +62,7 @@
       };
     },
     mounted() {
+      this.ValidaQuery();
       this.getEmergencyContact();
       this.getContactBooks();
       this.getCallInList();
