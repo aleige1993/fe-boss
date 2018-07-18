@@ -135,7 +135,7 @@
           </i-col>
           <i-col span="6">
             <i-form-item label="指导售价" :rules="{required: true, message: '指导售价不能为空'}" prop="referprice">
-              <i-input v-model="modelData.referprice" placeholder="" @on-keyup="vidPrice"   >
+              <i-input v-model="modelData.referprice" placeholder="" @on-blur="vidPrice"  @on-keyup="vidPrice" >
                 <span slot="append">元</span>
               </i-input>
             </i-form-item>
