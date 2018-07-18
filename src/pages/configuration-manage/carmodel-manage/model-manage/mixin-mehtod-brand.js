@@ -78,6 +78,10 @@ export default {
     },
     cancelBrandFun() {
       this.$data.brand.addModel = false;
+    },
+    vidPrice(e) {
+      let price = this.$data.modelData.referprice;
+      this.$data.modelData.referprice = price.replace(/[^\d.]/g, '');
     }
   }
 };
