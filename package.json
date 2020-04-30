@@ -47,7 +47,7 @@
     "http-proxy-middleware": "^0.17.3",
     "iview": "2.13.1",
     "iview-loader": "1.0.0",
-    "jquery": "^2.1.4",
+    "jquery": "^3.5.0",
     "mockjs": "^1.0.1-beta3",
     "node-sass": "^4.5.3",
     "opn": "^5.1.0",
